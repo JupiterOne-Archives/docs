@@ -1,0 +1,26 @@
+{
+  "name": "docs-community",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "repository": "git@github.com:JupiterOne/docs-community.git",
+  "author": "Bryanschauerte <bryan.schauerte@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "./bin/run-tests.local.sh",
+    "start": "tsc && node ./dist/index.js",
+    "dev": "yarn ts-node ./src/index.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@types/node": "^16.11.6",
+    "typescript": "^4.4.4"
+  },
+  "devDependencies": {
+    "@jupiterone/dev-tools": "^8.2.0",
+    "@jupiterone/typescript-tools": "^15.0.0",
+    "@types/supertest": "^2.0.11",
+    "supertest": "^6.1.6",
+    "ts-node": "^10.4.0"
+  }
+}
