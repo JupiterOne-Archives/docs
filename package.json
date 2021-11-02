@@ -16,11 +16,13 @@
   },
   "dependencies": {
     "@types/node": "^16.11.6",
+    "lodash": "^4.17.21",
     "typescript": "^4.4.4"
   },
   "devDependencies": {
     "@jupiterone/dev-tools": "^8.2.0",
     "@jupiterone/typescript-tools": "^15.0.0",
+    "@types/lodash": "^4.14.176",
     "@types/supertest": "^2.0.11",
     "simple-git": "^2.47.0",
     "supertest": "^6.1.6",
