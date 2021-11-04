@@ -20,174 +20,166 @@ export interface KnowledgeBase {
 export interface KnowledgeCategory {
   knowledgeBaseID: null | number; // 1 is the docs
   parentID: null | number; // unique id of the parent
-  preCreationID?: string; // ID we can use to find the correct knowledgeCategory to add vanillas knowledgeBaseID to this
+  hasChildren: boolean; // to determine if its creation order matters
   path?: string; // the path we use during diff
   name: string;
+  displayName: string;
   desciption: string;
   sort?: number | null;
   sortChildren?: null | 'name' | 'dateInserted' | 'dateInsertedDesc' | 'manual';
   foreignID?: null | number; // to link to external srcs
 }
 export interface Article {
-  parentCategory?: Category;
-  articleName: string;
+  knowledgeCategoryID: number | null;
+  name: string;
+  body: string;
+  format:
+    | 'text'
+    | 'textex'
+    | 'markdown'
+    | 'wysiwyg'
+    | 'html'
+    | 'bbcode'
+    | 'rich';
+  local: string;
+  sort?: number;
+  discussionId?: number;
+  foreignID?: null | string;
+  fileRehosting?: {
+    description: string;
+    enabled: boolean;
+    requestHeaders: any;
+  };
+  // things not on vanilla schema
+  fileName: string;
   path: string;
-  ArticleID?: string;
+  ArticleID?: string; //(will need to remove or edit the previous Article)
 }
 
-// const categoryStartingPoint = {
-//   parentCategory: null,
-//   categoryName: null,
-//   path: null,
-// };
+const createArticleChange = (
+  knowledgeCategoryChanges: string, // diff string of a .md file
+  path: string
+): Article => {
+  let displayName = '';
 
-// const articleStartingPoint: Article = {
-//   articleName: '',
-//   path: '',
-// };
-
-// live inside of knowledge base
-// const createArticleStucture = (
-//   diff: string,
-//   workingIndex: number = 1,
-//   article: Article = articleStartingPoint
-// ) => {
-//   const diffSplit = diff.split('/');
-//   if (diff.length === workingIndex && article) {
-//     return article;
-//   }
-//   if (!article.parentCategory) {
-//     article.parentCategory = {
-//       parentCategory: null,
-//       categoryName: diffSplit[diffSplit.length - workingIndex],
-//       path: diff.slice(
-//         0,
-//         diff.indexOf(diffSplit[diffSplit.length - workingIndex])
-//       ),
-//       displayAs: 'discussions',
-//     };
-//   } else {
-//   }
-
-//   if (diff[diff.length - workingIndex]) {
-//   }
-// };
-// this will be the first children of the '/docs' folder
-// interface SortChangesReturn {
-//   knowledgeCategoryChanges: string[];
-//   nestedKnowledgeCategoryChanges: string[];
-// }
-// const sortChanges = (diffArray: string[]): SortChangesReturn => {
-//   const knowledgeCategoryChanges: string[] = [];
-//   const nestedKnowledgeCategoryChanges: string[] = [];
-//   diffArray.forEach((item) => {
-//     const splitItems = item.split('/');
-//     if (
-//       splitItems.length === 1 &&
-//       splitItems[splitItems.length - 1].endsWith('.md')
-//     ) {
-//       knowledgeCategoryChanges.push(item);
-//     } else {
-//       nestedKnowledgeCategoryChanges.push(item);
-//     }
-//   });
-
-//   console.log(knowledgeCategoryChanges, 'knowledgeCategoryChanges');
-//   console.log(nestedKnowledgeCategoryChanges, 'nestedKnowledgeCategoryChanges');
-//   return { knowledgeCategoryChanges, nestedKnowledgeCategoryChanges };
-// };
-
-// for md docs right at the docs level
-const createRootKnowledgeCategoryChange = (
-  // the category of the actual markdown file
-  knowledgeCategoryChanges: string // diff string of a .md file
-): KnowledgeCategory => {
-  const kb: KnowledgeCategory = {
-    parentID: null, //will need to get it, for sub folders
-    knowledgeBaseID: 1, //will need to get it for nested. the docs knowledge base is 1 so for non nested we can use that
-    name: knowledgeCategoryChanges
+  if (knowledgeCategoryChanges.startsWith('index')) {
+    const pathSplit = path.split('/');
+    let replacementName = pathSplit[pathSplit.length - 2];
+    displayName = replacementName
       .split('-')
       .map((item) => `${item[0].toUpperCase()}${item.substring(1)}`)
-      .join(' '),
-    desciption: knowledgeCategoryChanges
+      .join(' ');
+  } else {
+    const splitOnExtention = knowledgeCategoryChanges.split('.')[0];
+    displayName = splitOnExtention
       .split('-')
       .map((item) => `${item[0].toUpperCase()}${item.substring(1)}`)
-      .join(' '),
-    path: knowledgeCategoryChanges,
-    preCreationID: knowledgeCategoryChanges,
+      .join(' ');
+  }
+
+  const kb: Article = {
+    knowledgeCategoryID: null, //will need to get it, for sub folders
+    fileName: knowledgeCategoryChanges,
+    name: displayName,
+    body: 'body of the new article',
+    path: path,
+    format: 'markdown',
+    local: 'en',
   };
 
   return kb;
 };
-
+interface HandleNestedKnowledgeCategoryChangesProps {
+  nestedCategoryChanges: string[];
+  completed?: (KnowledgeCategory | Article)[];
+  knowledgeCategoriesAlreadyHandled?: string[];
+  originalChangesArray: string[];
+  parentIndex: number;
+}
 // recursively create Knowledge categories per directory change. One parent KnowledgeCategory per directory.
 const handleNestedKnowledgeCategoryChanges = (
-  nestedCategoryChanges: string[], //diff paths split on /
-  completed: KnowledgeCategory[] = [],
-  knowledgeCategoriesAlreadyHandled: string[] = []
+  input: HandleNestedKnowledgeCategoryChangesProps
 ) => {
-  if (nestedCategoryChanges.length === 0) {
+  if (input.nestedCategoryChanges.length === 0) {
     return {
-      completed,
+      completed: input.completed,
     };
   }
-  const tempNestedCategoryChanges = nestedCategoryChanges;
-  const tempHandled = knowledgeCategoriesAlreadyHandled;
-  const tempCompleted = completed;
-  const target = tempNestedCategoryChanges.pop();
-  console.log('****** TARGET', target, '****** TARGET');
+  let tempParentIndex = input.parentIndex;
+
+  const tempNestedCategoryChanges = input.nestedCategoryChanges;
+  const tempHandled = input.knowledgeCategoriesAlreadyHandled || [];
+  const tempCompleted = input.completed || [];
+  const target = tempNestedCategoryChanges.shift();
+
   if (target === undefined) {
-    return { completed, knowledgeCategoriesAlreadyHandled };
+    return {
+      completed: input.completed,
+      knowledgeCategoriesAlreadyHandled:
+        input.knowledgeCategoriesAlreadyHandled,
+    };
   }
 
   const directorySplitBySlash = target.split('/');
-  const identifierForDirectoryOrMarkdownFile = directorySplitBySlash[0];
+
+  const identifierForDirectoryOrFile = directorySplitBySlash.shift();
+
+  const createAnotherIterationForDirectory = directorySplitBySlash.length >= 1;
+
+  if (createAnotherIterationForDirectory) {
+    tempNestedCategoryChanges.unshift(directorySplitBySlash.join('/'));
+  }
 
   if (
-    !knowledgeCategoriesAlreadyHandled.includes(
-      identifierForDirectoryOrMarkdownFile
-    )
+    identifierForDirectoryOrFile &&
+    !tempHandled.includes(identifierForDirectoryOrFile)
   ) {
-    tempHandled.push(identifierForDirectoryOrMarkdownFile);
-    if (identifierForDirectoryOrMarkdownFile.endsWith('.md')) {
-      const markDownFileToKnowledgeCategory =
-        createRootKnowledgeCategoryChange(target);
+    tempHandled.push(identifierForDirectoryOrFile);
+    if (
+      identifierForDirectoryOrFile.endsWith('.md') ||
+      identifierForDirectoryOrFile.endsWith('.rst')
+    ) {
+      const markDownFileToKnowledgeCategory = createArticleChange(
+        target,
+        input.originalChangesArray[tempParentIndex]
+      );
       tempCompleted.push(markDownFileToKnowledgeCategory);
     } else {
-      console.log('&&*&*&*&&', tempHandled, 'firstDirectory');
-
       const kb: KnowledgeCategory = {
         parentID: null, //will need to get it, for sub folders
-        preCreationID: identifierForDirectoryOrMarkdownFile,
         knowledgeBaseID: 1, //will need to get it for nested. the docs knowledge base is 1 so for non nested we can use that
-        name: identifierForDirectoryOrMarkdownFile
+        name: identifierForDirectoryOrFile,
+        displayName: identifierForDirectoryOrFile
           .split('-')
           .map((item) => `${item[0].toUpperCase()}${item.substring(1)}`)
           .join(' '),
-        desciption: identifierForDirectoryOrMarkdownFile
-          .split('-')
-          .map((item) => `${item[0].toUpperCase()}${item.substring(1)}`)
-          .join(' '),
-        path: target,
+        desciption: '',
+        path: input.originalChangesArray[tempParentIndex],
+        hasChildren: true,
       };
       tempCompleted.push(kb);
-      //     nst directorySplitBySlash = target.split('/');
-      // const identifierForDirectoryOrMarkdownFile = directorySplitBySlash[0];
+
       const nextCategoryAddition = target.substring(
-        identifierForDirectoryOrMarkdownFile.length + 1 // plus one for the slash
+        identifierForDirectoryOrFile.length + 1 // plus one for the slash
       );
+
       if (nextCategoryAddition.length) {
         tempNestedCategoryChanges.push(nextCategoryAddition);
       }
     }
   }
 
+  if (!createAnotherIterationForDirectory) {
+    tempParentIndex += 1;
+  }
   if (tempNestedCategoryChanges.length) {
-    handleNestedKnowledgeCategoryChanges(
-      tempNestedCategoryChanges,
-      tempCompleted,
-      tempHandled
-    );
+    handleNestedKnowledgeCategoryChanges({
+      nestedCategoryChanges: tempNestedCategoryChanges,
+      completed: tempCompleted,
+      knowledgeCategoriesAlreadyHandled: tempHandled,
+      originalChangesArray: input.originalChangesArray,
+      parentIndex: tempParentIndex,
+    });
   }
   return {
     completed: tempCompleted,
@@ -195,78 +187,20 @@ const handleNestedKnowledgeCategoryChanges = (
   };
 };
 
-const createListOfArticles = (diffArray: string[]) => {
-  const files: Article[] = [];
-
-  diffArray.forEach((d) => {
-    let splitDiff = d.split('/');
-    const articleName = splitDiff[splitDiff.length - 1];
-    if (!files.some((file) => file.articleName === articleName)) {
-      let parentCategory: Category = {
-        parentCategory: null,
-        categoryName: null,
-        path: null,
-        displayAs: 'discussions',
-      };
-
-      if (
-        splitDiff[splitDiff.length - 2] &&
-        splitDiff[splitDiff.length - 2] !== PATH_OF_DIRECTORY_TO_WATCH
-      ) {
-        parentCategory = {
-          parentCategory: null,
-          categoryName: splitDiff[splitDiff.length - 2],
-          path: d.slice(0, d.indexOf(splitDiff[splitDiff.length - 2])),
-        };
-        if (splitDiff[splitDiff.length - 3]) {
-          parentCategory.parentCategory = {
-            parentCategory: null,
-            categoryName: splitDiff[splitDiff.length - 3],
-            path: d.slice(0, d.indexOf(splitDiff[splitDiff.length - 3])),
-          };
-          if (splitDiff[splitDiff.length - 4]) {
-            parentCategory.parentCategory.parentCategory = {
-              parentCategory: null,
-              categoryName: splitDiff[splitDiff.length - 4],
-              path: d.slice(0, d.indexOf(splitDiff[splitDiff.length - 4])),
-            };
-          }
-        }
-      }
-
-      const article: Article = {
-        parentCategory: parentCategory,
-        articleName: articleName,
-        path: d,
-      };
-
-      files.push(article);
-    }
-  });
-  return files;
-};
-
 export const diffToProcedures = (gitDiffArray: string[]) => {
-  // const proceedures = [];
-  // let structure: any = {};
   const filteredChanges = gitDiffArray.filter((diff) =>
     diff.startsWith(PATH_OF_DIRECTORY_TO_WATCH)
   );
   const gitDiffWithOutDocs = filteredChanges.map((diff) =>
     diff.substring(PATH_OF_DIRECTORY_TO_WATCH.length)
   );
-
-  // const knowledgeCategorysNeededForArticles = createRootKnowledgeCategoryChange(
-  //   knowledgeCategoryChanges
-  // );
-  // console.log(
-  //   knowledgeCategorysNeededForArticles,
-  //   'knowledgeCategorysNeededForArticles'
-  // );
-  console.log(gitDiffWithOutDocs, 'gitDiffWithOutDocs');
-  const stuff = handleNestedKnowledgeCategoryChanges(gitDiffWithOutDocs);
+  console.log('files with changes', gitDiffWithOutDocs);
+  const stuff = handleNestedKnowledgeCategoryChanges({
+    nestedCategoryChanges: [...gitDiffWithOutDocs], // need to create a new array for each
+    originalChangesArray: [...gitDiffWithOutDocs], // need to create a new array for each
+    parentIndex: 0,
+  });
   console.log('***************', stuff, '&&&&&&&&&&');
-  createListOfArticles(filteredChanges);
 
   // create proceedures things needed.
   // Will need to find the deepest part of intersection,
