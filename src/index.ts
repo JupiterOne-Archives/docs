@@ -1,5 +1,6 @@
 import { diffToProcedures } from './diffToProcedures';
 import { getDiffFromHead } from './gitDifference';
+import { fetchWrapper } from './proceduresToVanillaRequests';
 
 const showDiff = async () => {
   let x = null;
@@ -12,7 +13,10 @@ const showDiff = async () => {
   if (x) {
     const diffArray = x.trim().split('\n');
 
-    diffToProcedures(diffArray);
+    const procedures = diffToProcedures(diffArray);
+    if (procedures && procedures.length > 0) {
+      fetchWrapper(procedures);
+    }
   }
 };
 
