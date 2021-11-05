@@ -1,60 +1,6 @@
 // name from the view point of changed files
 const PATH_OF_DIRECTORY_TO_WATCH = 'docs/';
-
-// const isDirectory = (diff: string) => !diff.endsWith('.md');
-export interface Category {
-  parentCategory: Category | null;
-  categoryName: string | null;
-  path: string | null;
-  categoryID?: string;
-  displayAs?: string;
-}
-
-export interface KnowledgeBase {
-  uriCode: string; // the location of the knowledge base
-  viewType: string; // guide or help
-  name: string;
-  desciption: string;
-  sortArticles: 'manual' | 'name' | 'dateInserted' | 'dateInsertedDesc';
-}
-export interface KnowledgeCategory {
-  knowledgeBaseID: null | number; // 1 is the docs
-  parentID: null | number; // unique id of the parent
-  hasChildren: boolean; // to determine if its creation order matters
-  path?: string; // the path we use during diff
-  name: string;
-  displayName: string;
-  desciption: string;
-  sort?: number | null;
-  sortChildren?: null | 'name' | 'dateInserted' | 'dateInsertedDesc' | 'manual';
-  foreignID?: null | number; // to link to external srcs
-}
-export interface Article {
-  knowledgeCategoryID: number | null;
-  name: string;
-  body: string;
-  format:
-    | 'text'
-    | 'textex'
-    | 'markdown'
-    | 'wysiwyg'
-    | 'html'
-    | 'bbcode'
-    | 'rich';
-  local: string;
-  sort?: number;
-  discussionId?: number;
-  foreignID?: null | string;
-  fileRehosting?: {
-    description: string;
-    enabled: boolean;
-    requestHeaders: any;
-  };
-  // things not on vanilla schema
-  fileName: string;
-  path: string;
-  ArticleID?: string; //(will need to remove or edit the previous Article)
-}
+import { Article, KnowledgeCategory } from './types';
 
 const createArticleChange = (
   knowledgeCategoryChanges: string, // diff string of a .md file
@@ -89,6 +35,11 @@ const createArticleChange = (
 
   return kb;
 };
+
+export interface HandleNestedKnowledgeCategoryChangesReturn {
+  completed?: (KnowledgeCategory | Article)[];
+  knowledgeCategoriesAlreadyHandled?: string[];
+}
 interface HandleNestedKnowledgeCategoryChangesProps {
   nestedCategoryChanges: string[];
   completed?: (KnowledgeCategory | Article)[];
@@ -99,7 +50,7 @@ interface HandleNestedKnowledgeCategoryChangesProps {
 // recursively create Knowledge categories per directory change. One parent KnowledgeCategory per directory.
 const handleNestedKnowledgeCategoryChanges = (
   input: HandleNestedKnowledgeCategoryChangesProps
-) => {
+): HandleNestedKnowledgeCategoryChangesReturn => {
   if (input.nestedCategoryChanges.length === 0) {
     return {
       completed: input.completed,
@@ -194,17 +145,11 @@ export const diffToProcedures = (gitDiffArray: string[]) => {
   const gitDiffWithOutDocs = filteredChanges.map((diff) =>
     diff.substring(PATH_OF_DIRECTORY_TO_WATCH.length)
   );
-  console.log('files with changes', gitDiffWithOutDocs);
-  const stuff = handleNestedKnowledgeCategoryChanges({
+
+  const { completed } = handleNestedKnowledgeCategoryChanges({
     nestedCategoryChanges: [...gitDiffWithOutDocs], // need to create a new array for each
     originalChangesArray: [...gitDiffWithOutDocs], // need to create a new array for each
     parentIndex: 0,
   });
-  console.log('***************', stuff, '&&&&&&&&&&');
-
-  // create proceedures things needed.
-  // Will need to find the deepest part of intersection,
-  //query to see if the category(that intersection) exists, if not make it, get its id.
-  // go up each level of depth checking for categories and making as needed. storing ids within the procedures'Categories.
-  // directory before Article is special - it contains a type of 'discussion'
+  return completed;
 };
