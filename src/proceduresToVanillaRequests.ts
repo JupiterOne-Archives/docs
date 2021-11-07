@@ -1,16 +1,7 @@
-import Axios from 'axios-observable';
-import { retry } from 'rxjs';
+import HttpClient from './httpClient';
 // import { getKnowledgeCategoryReturn } from './mocks';
 import { Article, KnowledgeCategory, VanillaKnowledgeCategory } from './types';
-const Arthorization =
-  'Bearer va.7YJcKgRxs_CwgHcfyUxxVPj0-9zPBNLl.NQlIdA.L_L1KFi';
 
-export const onErrorWithKnowledge = (e: any) => {
-  console.log(e, 'next');
-};
-// const mocked = () => {
-//   return new Promise((resolve) => resolve(getKnowledgeCategoryReturn));
-// };
 export const handleKnowledgeCategorysSuccess = (success: {
   data: VanillaKnowledgeCategory[];
 }) => {
@@ -18,21 +9,17 @@ export const handleKnowledgeCategorysSuccess = (success: {
   return success.data;
 };
 
-export const getKnowedgeBases = async () => {
-  return Axios.request({
-    method: 'GET',
-    url: 'https://jupiterone.vanillastaging.com/api/v2/knowledge-categories',
-    headers: {
-      Arthorization,
-    },
-  })
-
-    .pipe(retry(3))
-    .subscribe({
-      complete: () => console.log('complete'),
-      next: handleKnowledgeCategorysSuccess,
-      error: onErrorWithKnowledge,
-    });
+export const getKnowedgeCategoriesAddInfoToProcedures = async (
+  client: HttpClient,
+  procedures: (Article | KnowledgeCategory)[]
+) => {
+  const categories = (await client.get('knowledge-categories')) as {
+    data: VanillaKnowledgeCategory[];
+  };
+  console.log(categories, 'handleKnowledgeCategorysSuccess');
+  if (categories) {
+    return addExistingKnowledgeCategoriesProps(procedures, categories.data);
+  }
 };
 
 const isKnowledgeCategory = (
@@ -70,11 +57,16 @@ export const fetchWrapper = async (
   procedures: (Article | KnowledgeCategory)[]
 ) => {
   if (procedures && procedures.length) {
-    const existingKnowledgeBases = getKnowedgeBases();
-    // if(existingKnowledgeBases){
-    addExistingKnowledgeCategoriesProps(procedures, existingKnowledgeBases);
-    console.log('procedures', procedures);
-    console.log(existingKnowledgeBases, 'existingKnowledgeBases');
-    // }
+    const httpClient = new HttpClient();
+    const existingKnowledgeBases = getKnowedgeCategoriesAddInfoToProcedures(
+      httpClient,
+      procedures
+    );
+
+    if (existingKnowledgeBases) {
+      // addExistingKnowledgeCategoriesProps(procedures, existingKnowledgeBases);
+      console.log('procedures', procedures);
+      console.log(existingKnowledgeBases, 'existingKnowledgeBases');
+    }
   }
 };
