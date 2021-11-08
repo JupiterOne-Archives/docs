@@ -1,12 +1,14 @@
 import axios from 'axios';
-const DEV_URL = 'https://jupiterone.vanillastaging.com/api/v2/';
+const DEV_URL = 'https://jupiterone.vanillastaging.com/api/v2';
 const Authorization =
   'Bearer va.7YJcKgRxs_CwgHcfyUxxVPj0-9zPBNLl.NQlIdA.L_L1KFi';
 
 interface HeaderProps {
   [key: string]: string;
 }
-
+interface OptionsProps {
+  params?: { [key: string]: string | number };
+}
 enum RESTTypes {
   POST = 'post',
   PUT = 'put',
@@ -38,11 +40,12 @@ export default class HttpClient {
     return { ...headers, Arthorization: this.headers.Authorization };
   }
 
-  get(relativeUrl: string) {
+  get(relativeUrl: string, options?: OptionsProps) {
     return this.makeRequest({
       relativeUrl,
       headers: this.buildHeaders(),
       method: RESTTypes.GET,
+      options,
     });
   }
 
@@ -78,17 +81,20 @@ export default class HttpClient {
     body,
     headers,
     method,
+    options = {},
   }: {
     relativeUrl: string;
     body?: string;
     headers: HeaderProps;
     method: RESTTypes;
+    options?: OptionsProps;
   }) {
     return axios.request({
       url: this.buildUrl(relativeUrl),
       headers: this.buildHeaders(headers),
       data: body,
       method,
+      ...options,
     });
   }
 }
