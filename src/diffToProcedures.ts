@@ -2,25 +2,26 @@
 const PATH_OF_DIRECTORY_TO_WATCH = 'docs/';
 import { Article, KnowledgeCategory } from './types';
 
+const createDisplayName = (name: string) => {
+  return name
+    .split(/-|_/g)
+    .map((item) => `${item[0].toUpperCase()}${item.substring(1)}`)
+    .join(' ');
+};
+
 const createArticleChange = (
-  knowledgeCategoryChanges: string, // diff string of a .md file
+  knowledgeCategoryChanges: string, // diff string of a file
   path: string
 ): Article => {
   let displayName = '';
 
   if (knowledgeCategoryChanges.startsWith('index')) {
+    const splitOnExtention = knowledgeCategoryChanges.split('.')[0];
+    displayName = createDisplayName(splitOnExtention);
+  } else {
     const pathSplit = path.split('/');
     let replacementName = pathSplit[pathSplit.length - 2];
-    displayName = replacementName
-      .split('-')
-      .map((item) => `${item[0].toUpperCase()}${item.substring(1)}`)
-      .join(' ');
-  } else {
-    const splitOnExtention = knowledgeCategoryChanges.split('.')[0];
-    displayName = splitOnExtention
-      .split('-')
-      .map((item) => `${item[0].toUpperCase()}${item.substring(1)}`)
-      .join(' ');
+    displayName = createDisplayName(replacementName);
   }
 
   const kb: Article = {
@@ -96,14 +97,13 @@ const handleNestedKnowledgeCategoryChanges = (
       );
       tempCompleted.push(markDownFileToKnowledgeCategory);
     } else {
+      let displayName = createDisplayName(identifierForDirectoryOrFile);
+
       const kb: KnowledgeCategory = {
         parentID: null, //will need to get it, for sub folders
         knowledgeBaseID: 1, //will need to get it for nested. the docs knowledge base is 1 so for non nested we can use that
         name: identifierForDirectoryOrFile,
-        displayName: identifierForDirectoryOrFile
-          .split('-')
-          .map((item) => `${item[0].toUpperCase()}${item.substring(1)}`)
-          .join(' '),
+        displayName,
         desciption: '',
         path: input.originalChangesArray[tempParentIndex],
         hasChildren: true,

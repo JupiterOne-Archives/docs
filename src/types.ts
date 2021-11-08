@@ -7,6 +7,7 @@ export interface KnowledgeBase {
 }
 export interface KnowledgeCategory {
   knowledgeBaseID: null | number; // 1 is the docs
+  knowledgeCategoryID?: null | number;
   parentID: null | number; // unique id of the parent
   hasChildren: boolean; // to determine if its creation order matters
   path?: string; // the path we use during diff
@@ -14,8 +15,9 @@ export interface KnowledgeCategory {
   displayName: string;
   desciption: string;
   sort?: number | null;
+  url?: string | null;
   sortChildren?: null | 'name' | 'dateInserted' | 'dateInsertedDesc' | 'manual';
-  foreignID?: null | number; // to link to external srcs
+  foreignID?: null | string; // to link to external srcs
 }
 export interface Article {
   knowledgeCategoryID: number | null;
