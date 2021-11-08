@@ -8,7 +8,7 @@ export interface KnowledgeBase {
 export interface KnowledgeCategory {
   knowledgeBaseID: null | number; // 1 is the docs
   knowledgeCategoryID?: null | number;
-  parentID: null | number; // unique id of the parent
+  parentID: null | number; // unique id of the parent, if its right after the /docs folder its 1(knowledgeBaseID)
   hasChildren: boolean; // to determine if its creation order matters
   path?: string; // the path we use during diff
   name: string;
@@ -21,6 +21,7 @@ export interface KnowledgeCategory {
 }
 export interface Article {
   knowledgeCategoryID: number | null;
+  articleID: number | null;
   name: string;
   body: string;
   format:
@@ -31,7 +32,7 @@ export interface Article {
     | 'html'
     | 'bbcode'
     | 'rich';
-  local: string;
+  locale: string;
   sort?: number;
   discussionId?: number;
   foreignID?: null | string;
@@ -64,4 +65,98 @@ export interface VanillaKnowledgeCategory {
   childCategoryCount: number;
   url: string;
   foreignID: null | string;
+}
+export interface VanillaArticlePatch {
+  articleID: number;
+  body: string | null;
+  dateInserted: string;
+  dateUpdated: string;
+  excerpt: string | null;
+  insertUserID: number;
+  knowledgeCategoryID: number | null;
+  locale: string; //'en'
+  name: string | null;
+  outline: {
+    level: number;
+    ref: string; //Heading blot reference id. Ex: #title
+    text: string; // heading text line
+  }[];
+  score: number;
+  discussionID: number;
+  foreignID?: string | null;
+  fileRehosting?: {
+    description: string;
+    enabled: boolean;
+    requestHandler: string[];
+  };
+}
+
+export interface VanillaArticle {
+  articleID: number;
+  knowledgeCategoryID: number | null;
+  body: string | null;
+  dateInserted: string;
+  dateUpdated: string;
+  excerpt: string | null;
+  insertUserID: number;
+  locale: string; //'en'
+  name: string | null;
+  outline: {
+    level: number;
+    ref: string; //Heading blot reference id. Ex: #title
+    text: string; // heading text line
+  };
+  score: number;
+  seoDescription: string | null;
+  slug: string;
+  status: 'undeleted' | 'deleted' | 'published';
+  translationStatus?: 'up-to-date' | 'out-of-date' | 'not-translated'; // from schema.. but also can see 'published'.. what else is missing?
+  updateUserID: number;
+  featured?: boolean;
+  dateFeatured?: string;
+  url: string;
+  views: number;
+  foreignID?: string | null;
+  // articleID: 4,
+  // articleRevisionID: 5,
+  // knowledgeCategoryID: 7,
+  // knowledgeBaseID: 1,
+  // name: 'compliance art',
+  // seoName: null,
+  // seoDescription: null,
+  // slug: '4-compliance-art',
+  // sort: null,
+  // score: 0,
+  // views: 0,
+  // url: 'https://jupiterone.vanillastaging.com/kb/articles/4-compliance-art',
+  // insertUserID: 12,
+  // dateInserted: '2021-11-03T16:50:22+00:00',
+  // updateUserID: 12,
+  // dateUpdated: '2021-11-03T16:50:22+00:00',
+  // insertUser: {
+  //   userID: 12,
+  //   name: 'Carter Hesterman',
+  //   url: 'https://jupiterone.vanillastaging.com/profile/Carter%20Hesterman',
+  //   photoUrl: 'https://w8.vanillicon.com/v2/89e33ddc07b00da9d5c485f42bf08d0a.svg',
+  //   dateLastActive: '2021-11-08T15:14:24+00:00',
+  //   banned: 0,
+  //   punished: 0,
+  //   private: false,
+  //   label: 'admin'
+  // },
+  // updateUser: {
+  //   userID: 0,
+  //   name: 'unknown',
+  //   url: 'https://jupiterone.vanillastaging.com/profile/',
+  //   photoUrl: 'https://w3.vanillicon.com/v2/310b86e0b62b828562fc91c7be5380a9.svg',
+  //   dateLastActive: '2021-11-08T18:51:33+00:00',
+  //   banned: 0,
+  //   punished: 0,
+  //   private: false
+  // },
+  // status: 'published',
+  // locale: 'en',
+  // featured: false,
+  // translationStatus: 'up-to-date',
+  // foreignID: null
 }

@@ -1,89 +1,35 @@
+import fs from 'fs';
 import HttpClient from './httpClient';
-// import { getKnowledgeCategoryReturn } from './mocks';
 import { Article, KnowledgeCategory, VanillaKnowledgeCategory } from './types';
+import { getAllArticles, getKnowedgeCategories } from './VanillaAPI';
 
-export const handleKnowledgeCategorysSuccess = (success: {
-  data: VanillaKnowledgeCategory[];
-}) => {
-  console.log(success.data, 'next');
-  return success.data;
-};
-
-export const getKnowedgeCategories = async (client: HttpClient) => {
-  try {
-    const categories = (await client.get('knowledge-categories')) as {
-      data: VanillaKnowledgeCategory[];
-    };
-
-    if (categories) {
-      return categories.data;
+export const markdownToString = async (filePath: string) => {
+  fs.readFile(filePath, (err, buffer) => {
+    if (err) {
+      console.error(err, 'Error with file buffer', filePath);
+      return;
     }
-  } catch (error) {
-    console.error(error, 'Error in getting categories');
-  }
-
-  return [];
+    return buffer.toString();
+  });
 };
 
-export const getArticles = async (
-  client: HttpClient,
-  knowledgeCategoryID: number
-) => {
-  try {
-    const articles = (await client.get('/articles', {
-      params: {
-        limit: 500,
-        knowledgeCategoryID, // docs dont say it.. but this is required
-      },
-    })) as {
-      data: Article[];
-    };
-
-    if (articles) {
-      return articles.data;
-    }
-  } catch (e) {
-    console.log(e, 'errrrr');
-  }
-
-  return [];
-};
-
-export const getAllArticles = async (
-  client: HttpClient,
-  existingknowledgeCategoryInfo: VanillaKnowledgeCategory[]
-) => {
-  const allArticlesPromises = existingknowledgeCategoryInfo.map((c) =>
-    getArticles(client, c.knowledgeCategoryID)
-  );
-  let resolved: Article[][] = [];
-  for (
-    let promiseIndex = 0;
-    promiseIndex < allArticlesPromises.length;
-    promiseIndex++
-  ) {
-    const resolvedPromise = await allArticlesPromises[promiseIndex];
-    resolved.push(resolvedPromise);
-  }
-
-  if (resolved) {
-    return resolved.flat();
-  }
-
-  return [];
-};
-
-const isKnowledgeCategory = (
+const isKnowledgeCategoryType = (
   procedure: Article | KnowledgeCategory
 ): procedure is KnowledgeCategory => {
   return (procedure as KnowledgeCategory).hasChildren;
+};
+
+const isArticleType = (
+  procedure: Article | KnowledgeCategory
+): procedure is Article => {
+  return Boolean((procedure as Article).format);
 };
 
 const addVanillaCategoryToProcedure = (
   procedure: Article | KnowledgeCategory,
   vanillaReturn: VanillaKnowledgeCategory[]
 ) => {
-  if (isKnowledgeCategory(procedure)) {
+  if (isKnowledgeCategoryType(procedure)) {
     let procedureTarget: KnowledgeCategory = procedure;
     const match = vanillaReturn.filter(
       (v) => v.name === procedureTarget.displayName
@@ -122,36 +68,76 @@ const addExistingKnowledgeCategoriesToProceedures = (
   return proceduresWithVanillaCategoryInfo;
 };
 
+export const addVanillaArticleInfoToProcedure = (
+  procedure: Article,
+  vanillaArticles: Article[]
+) => {
+  let procedureTarget = procedure;
+  const match = vanillaArticles.filter((v) => v.name === procedureTarget.name);
+  if (match.length) {
+    procedureTarget = {
+      ...procedureTarget,
+      knowledgeCategoryID: match[0].knowledgeCategoryID,
+      articleID: match[0].articleID, // used in path
+      locale: 'en',
+      format: 'markdown',
+    };
+  }
+
+  return procedureTarget;
+};
+
+export const addVanillaArticlesToProcedures = (
+  procedures: (Article | KnowledgeCategory)[],
+  vanillaArticles: Article[]
+) => {
+  const proceduresWithVanillaCategoryInfo: (Article | KnowledgeCategory)[] = [];
+  procedures.forEach((p) => {
+    if (isArticleType(p)) {
+      proceduresWithVanillaCategoryInfo.push(
+        addVanillaArticleInfoToProcedure(p, vanillaArticles)
+      );
+    } else {
+      proceduresWithVanillaCategoryInfo.push(p);
+    }
+  });
+  return proceduresWithVanillaCategoryInfo;
+};
+
 export const proceduresToVanillaRequests = async (
   procedures: (Article | KnowledgeCategory)[]
 ) => {
-  console.log(
-    'PPPPPPPPPPPPPPPPPPPPPP--------',
-    procedures,
-    '------PPPPPPPPPPPPPPPPPPPPPP'
-  );
   if (procedures && procedures.length) {
     const httpClient = new HttpClient();
 
     const existingknowledgeCategoryInfo = await getKnowedgeCategories(
       httpClient
     );
-    console.log(existingknowledgeCategoryInfo, 'existingknowledgeCategoryInfo');
+
     const articles = await getAllArticles(
       httpClient,
       existingknowledgeCategoryInfo
     );
-    console.log('arty', articles);
 
     const proceduresWithVanillaCategories =
       addExistingKnowledgeCategoriesToProceedures(
         procedures,
         existingknowledgeCategoryInfo
       );
-
     console.log(
+      'proceduresWithVanillaCategories((((((',
       proceduresWithVanillaCategories,
       'proceduresWithVanillaCategories'
     );
+    const proceduresWithArticleInfo = addVanillaArticlesToProcedures(
+      procedures,
+      articles
+    );
+    console.log(
+      'proceduresWithArticleInfo*********FINAL FORM',
+      proceduresWithArticleInfo,
+      'FINAL FORM---proceduresWithVanillaCategories'
+    );
+    // make categories first, return their ID on the procedure so the article can be tied to it.
   }
 };

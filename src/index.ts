@@ -3,15 +3,10 @@ import { getDiffFromHead } from './gitDifference';
 import { proceduresToVanillaRequests } from './proceduresToVanillaRequests';
 
 const showDiff = async () => {
-  let x = null;
-  try {
-    x = await getDiffFromHead();
-  } catch (e) {
-    console.log('ERRR', e);
-  }
+  let diff = await getDiffFromHead();
 
-  if (x) {
-    const diffArray = x.trim().split('\n');
+  if (diff && diff.length) {
+    const diffArray = diff.trim().split('\n');
 
     const procedures = diffToProcedures(diffArray);
     if (procedures && procedures.length > 0) {
