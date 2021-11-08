@@ -25,13 +25,14 @@ const createArticleChange = (
   }
 
   const kb: Article = {
-    knowledgeCategoryID: null, //will need to get it, for sub folders
+    knowledgeCategoryID: null, //will need to create it and get it- for sub folders
+    articleID: null,
     fileName: knowledgeCategoryChanges,
     name: displayName,
-    body: 'body of the new article',
+    body: '',
     path: path,
     format: 'markdown',
-    local: 'en',
+    locale: 'en',
   };
 
   return kb;

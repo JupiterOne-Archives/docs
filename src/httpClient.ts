@@ -6,6 +6,9 @@ const Authorization =
 interface HeaderProps {
   [key: string]: string;
 }
+export interface BodyProps {
+  [key: string]: string | number | null;
+}
 interface OptionsProps {
   params?: { [key: string]: string | number };
 }
@@ -49,16 +52,16 @@ export default class HttpClient {
     });
   }
 
-  post(relativeUrl: string, body: string, headers: HeaderProps) {
+  post(relativeUrl: string, body: BodyProps, headers?: HeaderProps) {
     return this.makeRequest({
       relativeUrl,
-      headers,
+      headers: headers ? headers : {},
       body,
       method: RESTTypes.POST,
     });
   }
 
-  patch(relativeUrl: string, body: string, headers: HeaderProps) {
+  patch(relativeUrl: string, body: BodyProps, headers: HeaderProps) {
     return this.makeRequest({
       relativeUrl,
       body,
@@ -67,7 +70,7 @@ export default class HttpClient {
     });
   }
 
-  delete(relativeUrl: string, headers: HeaderProps, body?: string) {
+  delete(relativeUrl: string, headers: HeaderProps, body?: BodyProps) {
     return this.makeRequest({
       relativeUrl,
       body,
@@ -84,7 +87,7 @@ export default class HttpClient {
     options = {},
   }: {
     relativeUrl: string;
-    body?: string;
+    body?: BodyProps;
     headers: HeaderProps;
     method: RESTTypes;
     options?: OptionsProps;
