@@ -1,5 +1,5 @@
-import HttpClient, { BodyProps } from './httpClient';
-import { Article, VanillaKnowledgeCategory } from './types';
+import HttpClient from './httpClient';
+import { VanillaArticle, VanillaKnowledgeCategory } from './types';
 
 export const getKnowedgeCategories = async (client: HttpClient) => {
   try {
@@ -17,6 +17,42 @@ export const getKnowedgeCategories = async (client: HttpClient) => {
   return [];
 };
 
+export const createKnowledgeCategory = async (
+  client: HttpClient,
+  bodyOfRequest: Partial<VanillaKnowledgeCategory>
+) => {
+  // only required - totally not the same as the docs
+  // {"name":"bryan test categroy two","parentID":1}
+  try {
+    const category = await client.post('/knowledge-category', bodyOfRequest);
+
+    if (category) {
+      return category.data;
+    }
+  } catch (e) {
+    console.error(e, 'Create Knowledge Category error');
+  }
+
+  return {};
+};
+
+export const deleteKnowledgeCategory = async(
+  client: HttpClient,
+  knowledgeCategoryID: number
+)=>{
+  let success = true
+  try {
+    await client.delete(`knowledge-categories/${knowledgeCategoryID}`)
+
+  
+  } catch (e) {
+    success = false
+    console.error(e, 'error deleting');
+  }
+
+  return success
+}
+
 export const getArticles = async (
   client: HttpClient,
   knowledgeCategoryID: number
@@ -28,7 +64,7 @@ export const getArticles = async (
         knowledgeCategoryID, // docs dont say it.. but this is required
       },
     })) as {
-      data: Article[];
+      data: VanillaArticle[];
     };
 
     if (articles) {
@@ -48,7 +84,7 @@ export const getAllArticles = async (
   const allArticlesPromises = existingknowledgeCategoryInfo.map((c) =>
     getArticles(client, c.knowledgeCategoryID)
   );
-  let resolved: Article[][] = [];
+  let resolved: VanillaArticle[][] = [];
   for (
     let promiseIndex = 0;
     promiseIndex < allArticlesPromises.length;
@@ -65,28 +101,11 @@ export const getAllArticles = async (
   return [];
 };
 
-export const createCategory = async (
-  client: HttpClient,
-  bodyOfRequest: BodyProps
-) => {
-  // only required - totally not the same as the docs
-  // {"name":"bryan test categroy two","parentID":1}
-  try {
-    const category = await client.post('/category', bodyOfRequest);
 
-    if (category) {
-      return category.data;
-    }
-  } catch (e) {
-    console.error(e, 'Create Category error');
-  }
-
-  return {};
-};
 
 export const createArticle = async (
   client: HttpClient,
-  bodyOfRequest: BodyProps
+  bodyOfRequest: Partial<VanillaArticle>
 ) => {
   // only required - totally not the same as the docs
   // {
@@ -108,3 +127,42 @@ export const createArticle = async (
 
   return {};
 };
+
+export const deleteArticle = async (
+  client: HttpClient,
+  articleID: number
+)=>{
+
+  try {
+    const article = await client.patch(
+      `/articles/${articleID}/status`,{articleID, status:'deleted'});
+
+    if (article) {
+      return article.data;
+    }
+  } catch (e) {
+    console.error(e, 'Create Article error');
+  }
+
+  return {};
+}
+
+
+export const editArticle = async (
+  client: HttpClient,
+  articleID: number,
+  edits:Partial<VanillaArticle>
+)=>{
+
+  try {
+    const article = await client.patch(`/articles/${articleID}`,edits);
+
+    if (article) {
+      return article.data;
+    }
+  } catch (e) {
+    console.error(e, 'Create Article error');
+  }
+
+  return {};
+}

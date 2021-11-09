@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { KnowledgeCategory, VanillaArticle } from './types';
 const DEV_URL = 'https://jupiterone.vanillastaging.com/api/v2';
 const Authorization =
   '';
@@ -6,9 +7,7 @@ const Authorization =
 interface HeaderProps {
   [key: string]: string;
 }
-export interface BodyProps {
-  [key: string]: string | number | null;
-}
+
 interface OptionsProps {
   params?: { [key: string]: string | number };
 }
@@ -52,7 +51,7 @@ export default class HttpClient {
     });
   }
 
-  post(relativeUrl: string, body: BodyProps, headers?: HeaderProps) {
+  post(relativeUrl: string, body: Partial<VanillaArticle|KnowledgeCategory>, headers?: HeaderProps) {
     return this.makeRequest({
       relativeUrl,
       headers: headers ? headers : {},
@@ -61,20 +60,20 @@ export default class HttpClient {
     });
   }
 
-  patch(relativeUrl: string, body: BodyProps, headers: HeaderProps) {
+  patch(relativeUrl: string, body: Partial<VanillaArticle|KnowledgeCategory>, headers?: HeaderProps) {
     return this.makeRequest({
       relativeUrl,
       body,
-      headers,
+      headers:headers||{},
       method: RESTTypes.PATCH,
     });
   }
 
-  delete(relativeUrl: string, headers: HeaderProps, body?: BodyProps) {
+  delete(relativeUrl: string, headers?: HeaderProps, body?: Partial<VanillaArticle|KnowledgeCategory>) {
     return this.makeRequest({
       relativeUrl,
       body,
-      headers,
+      headers:headers||{},
       method: RESTTypes.DELETE,
     });
   }
@@ -87,7 +86,7 @@ export default class HttpClient {
     options = {},
   }: {
     relativeUrl: string;
-    body?: BodyProps;
+    body?: Partial<VanillaArticle|KnowledgeCategory>;
     headers: HeaderProps;
     method: RESTTypes;
     options?: OptionsProps;
