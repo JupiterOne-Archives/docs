@@ -3,6 +3,7 @@ const PATH_OF_DIRECTORY_TO_WATCH = 'docs/';
 import { Article, KnowledgeCategory } from './types';
 
 const createDisplayName = (name: string) => {
+
   return name
     .split(/-|_/g)
     .map((item) => `${item[0].toUpperCase()}${item.substring(1)}`)
@@ -14,14 +15,15 @@ const createArticleChange = (
   path: string
 ): Article => {
   let displayName = '';
-
+// we dont want articles to be called 'index'
   if (knowledgeCategoryChanges.startsWith('index')) {
-    const splitOnExtention = knowledgeCategoryChanges.split('.')[0];
-    displayName = createDisplayName(splitOnExtention);
-  } else {
     const pathSplit = path.split('/');
     let replacementName = pathSplit[pathSplit.length - 2];
     displayName = createDisplayName(replacementName);
+  } else {
+ 
+    const splitOnExtention = knowledgeCategoryChanges.split('.')[0];
+    displayName = createDisplayName(splitOnExtention);
   }
 
   const kb: Article = {
@@ -142,11 +144,13 @@ const handleNestedKnowledgeCategoryChanges = (
 export const diffToProcedures = (gitDiffArray: string[]) => {
   const filteredChanges = gitDiffArray.filter((diff) =>
     diff.startsWith(PATH_OF_DIRECTORY_TO_WATCH)
-  );
+  ).filter((diff) =>
+  !diff.endsWith('.json')
+);
   const gitDiffWithOutDocs = filteredChanges.map((diff) =>
     diff.substring(PATH_OF_DIRECTORY_TO_WATCH.length)
   );
-
+console.log(gitDiffWithOutDocs, 'gitDiffWithOutDocs')
   const { completed } = handleNestedKnowledgeCategoryChanges({
     nestedCategoryChanges: [...gitDiffWithOutDocs], // need to create a new array for each
     originalChangesArray: [...gitDiffWithOutDocs], // need to create a new array for each

@@ -1,9 +1,11 @@
 import fs from 'fs';
+import path from 'path';
 import HttpClient from './httpClient';
-import { Article, KnowledgeCategory, VanillaKnowledgeCategory } from './types';
+import { Article, KnowledgeCategory, VanillaArticle, VanillaKnowledgeCategory } from './types';
 import { getAllArticles, getKnowedgeCategories } from './VanillaAPI';
 
 export const markdownToString = async (filePath: string) => {
+  // we also want to use this to see if the file got deleted! the git diff wont differenitate
   fs.readFile(filePath, (err, buffer) => {
     if (err) {
       console.error(err, 'Error with file buffer', filePath);
@@ -70,7 +72,7 @@ const addExistingKnowledgeCategoriesToProceedures = (
 
 export const addVanillaArticleInfoToProcedure = (
   procedure: Article,
-  vanillaArticles: Article[]
+  vanillaArticles: VanillaArticle[]
 ) => {
   let procedureTarget = procedure;
   const match = vanillaArticles.filter((v) => v.name === procedureTarget.name);
@@ -89,7 +91,7 @@ export const addVanillaArticleInfoToProcedure = (
 
 export const addVanillaArticlesToProcedures = (
   procedures: (Article | KnowledgeCategory)[],
-  vanillaArticles: Article[]
+  vanillaArticles: VanillaArticle[]
 ) => {
   const proceduresWithVanillaCategoryInfo: (Article | KnowledgeCategory)[] = [];
   procedures.forEach((p) => {
@@ -103,6 +105,38 @@ export const addVanillaArticlesToProcedures = (
   });
   return proceduresWithVanillaCategoryInfo;
 };
+
+export const useProceduresForVanillaRequests = (
+  procedures: (Article | KnowledgeCategory)[],
+
+  completedProcedures?:(Article | KnowledgeCategory)[])=>{
+
+  // this needs to be syncronous, going in order of the procedures. 
+  // for example - a new folder with a markdown file, we need to make a 
+  // new knowledgeCategory and use its id to create the new article
+const procedureWorkedOn = procedures.shift()
+if(!procedureWorkedOn){
+  return completedProcedures
+}
+
+if(isArticleType(procedureWorkedOn)){
+  if(procedureWorkedOn.articleID===null){
+// create a new article
+  }else{
+    // edit an existing
+  }
+  // console.log(path.resolve(__dirname, 'docs', 'questions'), 'PPPPPPPPPPPTHATSSSSSS')
+}else{
+  if(!procedureWorkedOn.knowledgeCategoryID){
+// create a KnowledgeCategory
+  } else{
+    // edit an existing knowledgeCategory
+  }
+
+}
+
+
+}
 
 export const proceduresToVanillaRequests = async (
   procedures: (Article | KnowledgeCategory)[]
@@ -133,11 +167,13 @@ export const proceduresToVanillaRequests = async (
       procedures,
       articles
     );
+    
     console.log(
       'proceduresWithArticleInfo*********FINAL FORM',
       proceduresWithArticleInfo,
       'FINAL FORM---proceduresWithVanillaCategories'
     );
+    
     // make categories first, return their ID on the procedure so the article can be tied to it.
   }
 };
