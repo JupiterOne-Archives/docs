@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { KnowledgeCategory, VanillaArticle } from './types';
-const DEV_URL = 'https://jupiterone.vanillastaging.com/api/v2';
-const Authorization =
-  'Bearer va.7YJcKgRxs_CwgHcfyUxxVPj0-9zPBNLl.NQlIdA.L_L1KFi';
+import {
+  DEV_URL,
+  Authorization
+} from './constants'
+
 
 interface HeaderProps {
   [key: string]: string;
@@ -19,8 +21,10 @@ enum RESTTypes {
   DELETE = 'delete',
 }
 
+
 export default class HttpClient {
   baseUrl = '';
+  testingFlag = process.argv.slice(2).includes('testing');
   headers: HeaderProps = {};
   constructor(baseUrl = DEV_URL) {
     this.baseUrl = baseUrl;
@@ -77,6 +81,36 @@ export default class HttpClient {
       method: RESTTypes.DELETE,
     });
   }
+  makePseudoRequest({
+    relativeUrl,
+    body,
+    headers,
+    method,
+    options = {},
+    dataReturned
+  }: {
+    relativeUrl: string;
+    body?: Partial<VanillaArticle|KnowledgeCategory>;
+    headers: HeaderProps;
+    method: RESTTypes;
+    options?: OptionsProps;
+    dataReturned:any
+  }) {
+
+    return new Promise((resolve)=>{
+      setTimeout(()=>{
+        resolve({
+          url: this.buildUrl(relativeUrl),
+          headers: this.buildHeaders(headers),
+          data: dataReturned,
+          body,
+          method,
+          ...options,
+        })
+      })
+    })
+ 
+  }
 
   makeRequest({
     relativeUrl,
@@ -91,6 +125,44 @@ export default class HttpClient {
     method: RESTTypes;
     options?: OptionsProps;
   }) {
+
+
+    if(this.testingFlag){
+      let dataReturned = {}
+      console.log('PSeudoREQUEST')
+      if(method ===RESTTypes.GET){
+
+          dataReturned = []
+
+      }
+      if(method ===RESTTypes.POST){
+if(relativeUrl.startsWith('knowledge-categories/')){
+  dataReturned = {
+    knowledgeCategoryID:(Math.floor(Math.random() * 10)+1)
+  }
+}else{
+  dataReturned = {
+    articleID:(Math.floor(Math.random() * 10)+1)
+  }
+}
+        
+
+    }
+    if(method ===RESTTypes.PATCH){
+
+      dataReturned = {}
+
+  }
+
+      return this.makePseudoRequest({
+        relativeUrl,
+        body,
+        headers,
+        method,
+        options,
+        dataReturned
+      })
+    }
     return axios.request({
       url: this.buildUrl(relativeUrl),
       headers: this.buildHeaders(headers),

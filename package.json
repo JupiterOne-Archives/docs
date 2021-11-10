@@ -12,6 +12,7 @@
     "start": "tsc && node ./dist/index.js",
     "run": "yarn ts-node ./src/index.ts",
     "build": "tsc",
+    "watch-and-run-fake-httpClient": "ts-node-dev --respawn -- src/index.ts testing",
     "watch-and-run": "ts-node-dev --respawn -- src/index.ts"
   },
   "dependencies": {

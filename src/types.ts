@@ -48,23 +48,34 @@ export interface Article {
 }
 
 export interface VanillaKnowledgeCategory {
-  knowledgeCategoryID: number;
+  knowledgeCategoryID: number | null | undefined;
   name: string;
   parentID: number | null;
   knowledgeBaseID: number;
-  sortChildren: null;
-  sort: number;
-  insertUserID: number;
-  dateInserted: string;
-  updateUserID: number;
-  dateUpdated: string;
-  lastUpdatedArticleID: null | string;
-  lastUpdatedUserID: null | string;
-  articleCount: number;
-  articleCountRecursive: number;
-  childCategoryCount: number;
-  url: string;
-  foreignID: null | string;
+  sortChildren?: null;
+  sort?: number;
+  insertUserID?: number;
+  dateInserted?: string;
+  updateUserID?: number;
+  dateUpdated?: string;
+  lastUpdatedArticleID?: null | string;
+  lastUpdatedUserID?: null | string;
+  articleCount?: number;
+  articleCountRecursive?: number;
+  childCategoryCount?: number;
+  url?: string;
+  foreignID?: null | string;
+
+
+
+
+  // addition we added
+
+  path?: string; // the path we use during diff
+requestCompleted?:boolean;
+  displayName?: string;
+  desciption?: string;
+hasChildren?:boolean;// to determine if its creation order matters
 }
 export interface VanillaArticlePatch {
   articleID: number;
@@ -100,16 +111,16 @@ export interface VanillaArticlePatch {
 }
 
 export interface VanillaArticle {
-  articleID: number;
+  articleID: number|null|undefined;
   knowledgeCategoryID: number | null;
   body: string | null;
-  dateInserted: string;
-  dateUpdated: string;
-  excerpt: string | null;
-  insertUserID: number;
+  dateInserted?: string;
+  dateUpdated?: string;
+  excerpt?: string | null;
+  insertUserID?: number;
   locale: string; //'en'
   name: string | null;
-  outline: {
+  outline?: {
     level: number;
     ref: string; //Heading blot reference id. Ex: #title
     text: string; // heading text line
@@ -122,18 +133,23 @@ export interface VanillaArticle {
   | 'html'
   | 'bbcode'
   | 'rich';
-  score: number;
-  seoDescription: string | null;
-  slug: string;
-  status: 'undeleted' | 'deleted' | 'published';
+  score?: number;
+  seoDescription?: string | null;
+  slug?: string;
+  status?: 'undeleted' | 'deleted' | 'published';
   translationStatus?: 'up-to-date' | 'out-of-date' | 'not-translated'; // from schema.. but also can see 'published'.. what else is missing?
-  updateUserID: number;
+  updateUserID?: number;
   featured?: boolean;
   dateFeatured?: string;
-  url: string;
-  views: number;
+  url?: string;
+  views?: number;
   foreignID?: string | null;
   sort?:number;
+
+// things we have added
+  path?: string;
+  fileName?:string;
+  requestCompleted?:boolean;
   // articleID: 4,
   // articleRevisionID: 5,
   // knowledgeCategoryID: 7,
