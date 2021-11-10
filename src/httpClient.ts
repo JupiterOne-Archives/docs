@@ -43,7 +43,7 @@ export default class HttpClient {
   ): HeaderProps {
     this.headers.Authorization = Authorization;
 
-    return { ...headers, Arthorization: this.headers.Authorization };
+    return { ...headers, Authorization: this.headers.Authorization };
   }
 
   get(relativeUrl: string, options?: OptionsProps) {

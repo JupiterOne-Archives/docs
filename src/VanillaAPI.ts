@@ -33,10 +33,10 @@ export const createKnowledgeCategory = async (
   // {"name":"bryan test categroy two","parentID":1}
   console.log({bodyOfRequest}, 'CREATE NO LEDGE WEEEEEEE')
   try {
-    const category = (await client.post('/knowledge-category', bodyOfRequest)) as {
+    const category = (await client.post('/knowledge-categories', bodyOfRequest)) as {
       data: VanillaKnowledgeCategory;
     };
-
+console.log(category, 'CR K return');
     if (category) {
       return category.data;
     }
@@ -55,7 +55,7 @@ export const editKnowledgeCategory = async (
 
 
   try {
-    const category = (await client.patch(`/knowledge-category/${knowledgeCategoryID}`, bodyOfRequest)) as {
+    const category = (await client.patch(`/knowledge-categories/${knowledgeCategoryID}`, bodyOfRequest)) as {
       data: VanillaKnowledgeCategory;
     };
 
