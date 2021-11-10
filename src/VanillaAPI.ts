@@ -106,7 +106,8 @@ export const getAllArticles = async (
 export const createArticle = async (
   client: HttpClient,
   bodyOfRequest: Partial<VanillaArticle>
-) => {
+):Promise<VanillaArticle|undefined> => {
+
   // only required - totally not the same as the docs
   // {
   //   "body": "this is the body of the article",
@@ -116,16 +117,20 @@ export const createArticle = async (
   //   "name": "postman - article five",
   //   "sort": 0}
   try {
-    const article = await client.post('/articles', bodyOfRequest);
+    const article = (await client.post('/articles', bodyOfRequest)) as {
+      data: VanillaArticle;
+    };
 
     if (article) {
       return article.data;
     }
   } catch (e) {
+
     console.error(e, 'Create Article error');
+
   }
 
-  return {};
+  
 };
 
 export const deleteArticle = async (
