@@ -76,6 +76,14 @@ export interface VanillaArticlePatch {
   knowledgeCategoryID: number | null;
   locale: string; //'en'
   name: string | null;
+  format:
+  | 'text'
+  | 'textex'
+  | 'markdown'
+  | 'wysiwyg'
+  | 'html'
+  | 'bbcode'
+  | 'rich';
   outline: {
     level: number;
     ref: string; //Heading blot reference id. Ex: #title
@@ -106,6 +114,14 @@ export interface VanillaArticle {
     ref: string; //Heading blot reference id. Ex: #title
     text: string; // heading text line
   };
+  format:
+  | 'text'
+  | 'textex'
+  | 'markdown'
+  | 'wysiwyg'
+  | 'html'
+  | 'bbcode'
+  | 'rich';
   score: number;
   seoDescription: string | null;
   slug: string;
@@ -117,6 +133,7 @@ export interface VanillaArticle {
   url: string;
   views: number;
   foreignID?: string | null;
+  sort?:number;
   // articleID: 4,
   // articleRevisionID: 5,
   // knowledgeCategoryID: 7,

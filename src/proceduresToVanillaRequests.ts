@@ -2,11 +2,12 @@ import fs from 'fs';
 import path from 'path';
 import HttpClient from './httpClient';
 import { Article, KnowledgeCategory, VanillaArticle, VanillaKnowledgeCategory } from './types';
-import { getAllArticles, getKnowedgeCategories } from './VanillaAPI';
+import { getAllArticles, getKnowedgeCategories, createKnowledgeCategory,createArticle,editArticle } from './VanillaAPI';
 
-export const markdownToString = async (filePath: string) => {
+export const markdownToString = async (filePath: string):Promise<string|void> => {
   // we also want to use this to see if the file got deleted! the git diff wont differenitate
-  fs.readFile(filePath, (err, buffer) => {
+const fileLocation = path.join(__dirname,'../docs',`/${filePath}`)
+ return fs.readFile(fileLocation, (err, buffer) => {
     if (err) {
       console.error(err, 'Error with file buffer', filePath);
       return;
@@ -106,26 +107,84 @@ export const addVanillaArticlesToProcedures = (
   return proceduresWithVanillaCategoryInfo;
 };
 
-export const useProceduresForVanillaRequests = (
+const procedureToArticle = async (
+  httpClient:HttpClient,
+  procedureWorkedOn:Article,
+  previousknowledgeCategoryID:null|number|undefined,
+  completedProcedures:(Article | KnowledgeCategory)[]
+  ):Promise<Article> =>{
+  if(procedureWorkedOn.articleID===null &&completedProcedures?.length){
+    // create a new article
+    // needs the knowledgeCategory of previous procedure
+    
+    if(!previousknowledgeCategoryID){
+      console.error('something went wrong, did not receive kcID')
+      return procedureWorkedOn
+    }
+    const body =await markdownToString(procedureWorkedOn.path)
+    console.log(body, '**************BODY****',body, '&&&&&&&&&&')
+    if(body){
+      const articleRequest:Partial<VanillaArticle>=  {
+        body,
+        format: "markdown",
+       knowledgeCategoryID:previousknowledgeCategoryID,
+        locale: "en",
+        name: procedureWorkedOn.name,
+        sort: 0
+      }
+      const createdArticle = await createArticle(httpClient,articleRequest)
+      if(createdArticle?.articleID){
+        procedureWorkedOn= addVanillaArticleInfoToProcedure(procedureWorkedOn,[createdArticle])
+      }
+      
+    }
+    
+    
+      }else{
+        const body =await markdownToString(procedureWorkedOn.path)
+console.log(body, '**************BODY****',body, '&&&&&&&&&&')
+if(body && procedureWorkedOn.articleID){
+  const articleRequest:Partial<VanillaArticle>=  {
+    body,
+    format: "markdown",
+   knowledgeCategoryID:previousknowledgeCategoryID,
+    locale: "en",
+    name: procedureWorkedOn.name,
+    sort: 0
+  }
+  const createdArticle = await editArticle(httpClient,procedureWorkedOn.articleID,articleRequest)
+  if(createdArticle?.articleID){
+    procedureWorkedOn= addVanillaArticleInfoToProcedure(procedureWorkedOn,[createdArticle])
+  }
+  }
+      }
+      return procedureWorkedOn
+}
+
+export const useProceduresForVanillaRequests =async (
   procedures: (Article | KnowledgeCategory)[],
 
   completedProcedures?:(Article | KnowledgeCategory)[])=>{
-
+    const httpClient = new HttpClient();
+    let tempCompletedProcedures=completedProcedures?[...completedProcedures]:[]
+    let tempProcedures = [...procedures]
+    const previousknowledgeCategoryID = tempCompletedProcedures[tempCompletedProcedures.length-1]?.knowledgeCategoryID
   // this needs to be syncronous, going in order of the procedures. 
   // for example - a new folder with a markdown file, we need to make a 
   // new knowledgeCategory and use its id to create the new article
-const procedureWorkedOn = procedures.shift()
+let procedureWorkedOn = tempProcedures.shift()
 if(!procedureWorkedOn){
   return completedProcedures
 }
 
 if(isArticleType(procedureWorkedOn)){
-  if(procedureWorkedOn.articleID===null){
-// create a new article
-  }else{
-    // edit an existing
-  }
-  // console.log(path.resolve(__dirname, 'docs', 'questions'), 'PPPPPPPPPPPTHATSSSSSS')
+  procedureWorkedOn=await procedureToArticle(
+    httpClient,
+    procedureWorkedOn,
+    previousknowledgeCategoryID,
+    tempCompletedProcedures
+    )
+
 }else{
   if(!procedureWorkedOn.knowledgeCategoryID){
 // create a KnowledgeCategory
@@ -135,7 +194,8 @@ if(isArticleType(procedureWorkedOn)){
 
 }
 
-
+tempCompletedProcedures.push(procedureWorkedOn)
+useProceduresForVanillaRequests(tempProcedures,tempCompletedProcedures)
 }
 
 export const proceduresToVanillaRequests = async (
