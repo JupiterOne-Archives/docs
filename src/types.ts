@@ -150,6 +150,7 @@ export interface VanillaArticle {
   path?: string;
   fileName?:string;
   requestCompleted?:boolean;
+  displayName?:string;
   // articleID: 4,
   // articleRevisionID: 5,
   // knowledgeCategoryID: 7,

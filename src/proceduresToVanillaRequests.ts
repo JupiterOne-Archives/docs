@@ -19,7 +19,7 @@ if(!supportedTypeOfFile){
   return FLAG_FOR_DELETE
 }
 try{
-  const blockingReadOfFile =fs.readFileSync(fileLocation)
+  const blockingReadOfFile =await fs.readFileSync(fileLocation)
   if(blockingReadOfFile){
 
     return blockingReadOfFile.toString()
@@ -112,6 +112,7 @@ const procedureToArticle = async (
 
   ):Promise<VanillaArticle> =>{
     let tempProcedureWorkedOn = {...procedureWorkedOn}
+    console.log('procedureToArticle', previousknowledgeCategoryID, {procedureWorkedOn})
   if(tempProcedureWorkedOn.articleID===null &&previousknowledgeCategoryID){
     // create a new article
     // needs the knowledgeCategory of previous procedure
@@ -121,14 +122,14 @@ const procedureToArticle = async (
       return tempProcedureWorkedOn
     }
     const body = await markdownToString(tempProcedureWorkedOn?.path)
-    console.log(body, '**************BODY****',body, '&&&&&&&&&&')
+
     if(body !=FLAG_FOR_DELETE){
       const articleRequest:Partial<VanillaArticle>=  {
         body,
         format: "markdown",
        knowledgeCategoryID:previousknowledgeCategoryID,
         locale: "en",
-        name: procedureWorkedOn.name,
+        name: `${tempProcedureWorkedOn.displayName}-generated`,
         sort: 0
       }
       const createdArticle = await createArticle(httpClient,articleRequest)
@@ -141,14 +142,14 @@ const procedureToArticle = async (
     
       }else{
         const body = await markdownToString(tempProcedureWorkedOn.path);
-console.log(body, '**************BODY****',body, '&&&&&&&&&&')
-if(body &&body!==FLAG_FOR_DELETE && tempProcedureWorkedOn.articleID){
+
+if(body &&body!==FLAG_FOR_DELETE && tempProcedureWorkedOn.articleID ){
   const articleRequest:Partial<VanillaArticle>=  {
     body,
     format: "markdown",
    knowledgeCategoryID:previousknowledgeCategoryID,
     locale: "en",
-    name: tempProcedureWorkedOn.name,
+    name: `${tempProcedureWorkedOn.displayName}-generated`,
     sort: 0
   }
   const createdArticle = await editArticle(httpClient,tempProcedureWorkedOn.articleID,articleRequest)
@@ -180,10 +181,15 @@ const procedureToKnowledgeCategory = async (
 
   if(!tempProcedureWorkedOn.knowledgeCategoryID){
     // create a KnowledgeCategory
-    const reqData ={name:tempProcedureWorkedOn.name,parentID:previousknowledgeCategoryID?previousknowledgeCategoryID:1}
+    const reqData ={
+      name:`${tempProcedureWorkedOn.displayName}-generated`,
+      parentID:previousknowledgeCategoryID?previousknowledgeCategoryID:1
+    }
+    console.log('procedureToKnowledgeCategory reqData', reqData)
     let createdKnowledgeCategory = await createKnowledgeCategory(httpClient, reqData)
     if(createdKnowledgeCategory){
       tempProcedureWorkedOn=addVanillaCategoryToProcedure(tempProcedureWorkedOn, [createdKnowledgeCategory])
+      console.log('SUCCESS tempProcedureWorkedOn',tempProcedureWorkedOn)
     }
     
       } else{
@@ -191,7 +197,7 @@ const procedureToKnowledgeCategory = async (
         if(!tempProcedureWorkedOn.knowledgeCategoryID ){
           return tempProcedureWorkedOn
         }
-        const reqData ={name:tempProcedureWorkedOn.name,parentID:previousknowledgeCategoryID?previousknowledgeCategoryID:1}
+        const reqData ={name:`${tempProcedureWorkedOn.displayName}-generated`,parentID:previousknowledgeCategoryID?previousknowledgeCategoryID:1}
         const categoryEdit = await editKnowledgeCategory(httpClient, tempProcedureWorkedOn.knowledgeCategoryID,reqData)
        if(categoryEdit){
         tempProcedureWorkedOn = addVanillaCategoryToProcedure(tempProcedureWorkedOn,[categoryEdit])
@@ -221,7 +227,7 @@ if(!procedureWorkedOn){
   console.log('COMPLETEDDDDDDDD',completedProcedures)
   return completedProcedures
 }
-console.log('WORKING ON ',procedureWorkedOn?.path, procedureWorkedOn.name)
+console.log('completedProcedures array',completedProcedures)
 if(isArticleType(procedureWorkedOn)){
   procedureWorkedOn = await procedureToArticle(
     httpClient,
