@@ -1,7 +1,15 @@
 import HttpClient from './httpClient';
 import { VanillaArticle, VanillaKnowledgeCategory } from './types';
 
-export const getKnowedgeCategories = async (client: HttpClient) => {
+
+// interface NotFound {
+// data:{
+//   message:string;
+//   status:number;
+//   des
+// }
+// }
+export const getKnowedgeCategories = async (client: HttpClient):Promise<VanillaKnowledgeCategory[]> => {
   try {
     const categories = (await client.get('knowledge-categories')) as {
       data: VanillaKnowledgeCategory[];
@@ -20,11 +28,14 @@ export const getKnowedgeCategories = async (client: HttpClient) => {
 export const createKnowledgeCategory = async (
   client: HttpClient,
   bodyOfRequest: Partial<VanillaKnowledgeCategory>
-) => {
+):Promise<VanillaKnowledgeCategory|undefined> => {
   // only required - totally not the same as the docs
   // {"name":"bryan test categroy two","parentID":1}
+  console.log({bodyOfRequest}, 'CREATE NO LEDGE WEEEEEEE')
   try {
-    const category = await client.post('/knowledge-category', bodyOfRequest);
+    const category = (await client.post('/knowledge-category', bodyOfRequest)) as {
+      data: VanillaKnowledgeCategory;
+    };
 
     if (category) {
       return category.data;
@@ -33,13 +44,34 @@ export const createKnowledgeCategory = async (
     console.error(e, 'Create Knowledge Category error');
   }
 
-  return {};
+
 };
 
+export const editKnowledgeCategory = async (
+  client: HttpClient,
+  knowledgeCategoryID:number,
+  bodyOfRequest: Partial<VanillaKnowledgeCategory>
+):Promise<VanillaKnowledgeCategory|undefined> => {
+
+
+  try {
+    const category = (await client.patch(`/knowledge-category/${knowledgeCategoryID}`, bodyOfRequest)) as {
+      data: VanillaKnowledgeCategory;
+    };
+
+    if (category) {
+      return category.data;
+    }
+  } catch (e) {
+    console.error(e, 'Create Knowledge Category error');
+  }
+
+
+};
 export const deleteKnowledgeCategory = async(
   client: HttpClient,
   knowledgeCategoryID: number
-)=>{
+):Promise<boolean>=>{
   let success = true
   try {
     await client.delete(`knowledge-categories/${knowledgeCategoryID}`)
@@ -55,9 +87,12 @@ export const deleteKnowledgeCategory = async(
 
 export const getArticles = async (
   client: HttpClient,
-  knowledgeCategoryID: number
-) => {
+  knowledgeCategoryID: number | null | undefined
+):Promise<VanillaArticle[]> => {
   try {
+    if(!knowledgeCategoryID){
+      return []
+    }
     const articles = (await client.get('/articles', {
       params: {
         limit: 500,
@@ -80,10 +115,10 @@ export const getArticles = async (
 export const getAllArticles = async (
   client: HttpClient,
   existingknowledgeCategoryInfo: VanillaKnowledgeCategory[]
-) => {
-  const allArticlesPromises = existingknowledgeCategoryInfo.map((c) =>
-    getArticles(client, c.knowledgeCategoryID)
-  );
+):Promise<VanillaArticle[]> => {
+  const tempExistingknowledgeCategoryInfo: VanillaKnowledgeCategory[] = existingknowledgeCategoryInfo?[...existingknowledgeCategoryInfo]:[]
+  const filteredExistingknowledgeCategoryInfo = tempExistingknowledgeCategoryInfo.filter(ek=>!!ek.knowledgeCategoryID)
+  const allArticlesPromises = filteredExistingknowledgeCategoryInfo.map((c) =>getArticles(client, c.knowledgeCategoryID));
   let resolved: VanillaArticle[][] = [];
   for (
     let promiseIndex = 0;
@@ -91,7 +126,10 @@ export const getAllArticles = async (
     promiseIndex++
   ) {
     const resolvedPromise = await allArticlesPromises[promiseIndex];
-    resolved.push(resolvedPromise);
+    if(resolvedPromise){
+      resolved.push(resolvedPromise);
+    }
+    
   }
 
   if (resolved) {
@@ -116,6 +154,7 @@ export const createArticle = async (
   //   "locale": "en",
   //   "name": "postman - article five",
   //   "sort": 0}
+  console.log('CREATE ARTICLE',{bodyOfRequest})
   try {
     const article = (await client.post('/articles', bodyOfRequest)) as {
       data: VanillaArticle;
@@ -136,11 +175,13 @@ export const createArticle = async (
 export const deleteArticle = async (
   client: HttpClient,
   articleID: number
-)=>{
+):Promise<VanillaArticle|undefined> => {
 
   try {
-    const article = await client.patch(
-      `/articles/${articleID}/status`,{articleID, status:'deleted'});
+    const article = (await client.patch(
+      `/articles/${articleID}/status`,{articleID, status:'deleted'})) as {
+        data: VanillaArticle;
+      };;
 
     if (article) {
       return article.data;
@@ -149,7 +190,7 @@ export const deleteArticle = async (
     console.error(e, 'Create Article error');
   }
 
-  return {};
+
 }
 
 
@@ -157,10 +198,12 @@ export const editArticle = async (
   client: HttpClient,
   articleID: number,
   edits:Partial<VanillaArticle>
-)=>{
+):Promise<VanillaArticle|undefined>=>{
 
   try {
-    const article = await client.patch(`/articles/${articleID}`,edits);
+    const article = (await client.patch(`/articles/${articleID}`,edits)) as {
+      data: VanillaArticle;
+    };
 
     if (article) {
       return article.data;
@@ -169,5 +212,5 @@ export const editArticle = async (
     console.error(e, 'Create Article error');
   }
 
-  return {};
+
 }
