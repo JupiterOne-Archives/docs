@@ -1,11 +1,17 @@
+import { diffToProcedures } from './diffToProcedures';
 import { getDiffFromHead } from './gitDifference';
+import { proceduresToVanillaRequests } from './proceduresToVanillaRequests';
 
 const showDiff = async () => {
-  try {
-    const x = await getDiffFromHead();
-    console.log(x?.split(/\n/), 'x'); // trim out non docs directories
-  } catch (e) {
-    console.log('ERRR', e);
+  let diff = await getDiffFromHead();
+
+  if (diff && diff.length) {
+    const diffArray = diff.trim().split('\n');
+
+    const procedures = diffToProcedures(diffArray);
+    if (procedures && procedures.length > 0) {
+      proceduresToVanillaRequests(procedures);
+    }
   }
 };
 
