@@ -1,11 +1,14 @@
 import simpleGit, { SimpleGit } from 'simple-git';
 
-export const getDiffFromHead = async () => {
+export const getDiffFromHead: () => Promise<string> = async () => {
+  let diff = '';
   try {
     const git: SimpleGit = await simpleGit();
     const resolvedDiff = await git.diff(['--name-only', 'HEAD~1']);
-    return resolvedDiff;
+    diff = resolvedDiff;
   } catch (e) {
-    throw e;
+    console.error(`failure on simplegit,`, e);
+    throw new Error('failure on simplegit');
   }
+  return diff;
 };
