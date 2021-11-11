@@ -11,7 +11,7 @@ generated/
 
 .terraform/
 *.tfstate
-
+src/auth.ts
 *.log
 *.bak
 *.bak.*

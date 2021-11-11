@@ -7,12 +7,12 @@ export interface KnowledgeBase {
 }
 export interface KnowledgeCategory {
   knowledgeBaseID: null | number; // 1 is the docs
-  knowledgeCategoryID?: null | number;
+  knowledgeCategoryID: null | number;
   parentID: null | number; // unique id of the parent, if its right after the /docs folder its 1(knowledgeBaseID)
-  hasChildren: boolean; // to determine if its creation order matters
+  childrenPath: string; // key added to add correct articles to category
   path?: string; // the path we use during diff
   name: string;
-  displayName: string;
+  // displayName: string;
   desciption: string;
   sort?: number | null;
   url?: string | null;
@@ -48,23 +48,35 @@ export interface Article {
 }
 
 export interface VanillaKnowledgeCategory {
-  knowledgeCategoryID: number;
+  knowledgeCategoryID: number | null;
   name: string;
   parentID: number | null;
   knowledgeBaseID: number;
-  sortChildren: null;
-  sort: number;
-  insertUserID: number;
-  dateInserted: string;
-  updateUserID: number;
-  dateUpdated: string;
-  lastUpdatedArticleID: null | string;
-  lastUpdatedUserID: null | string;
-  articleCount: number;
-  articleCountRecursive: number;
-  childCategoryCount: number;
-  url: string;
-  foreignID: null | string;
+  sortChildren?: null;
+  sort?: number;
+  insertUserID?: number;
+  dateInserted?: string;
+  updateUserID?: number;
+  dateUpdated?: string;
+  lastUpdatedArticleID?: null | string;
+  lastUpdatedUserID?: null | string;
+  articleCount?: number;
+  articleCountRecursive?: number;
+  childCategoryCount?: number;
+  url?: string;
+  foreignID?: null | string;
+  fileName: null|string;
+
+
+
+
+  // addition we added
+
+  path?: string; // the path we use during diff
+requestCompleted?:boolean;
+  displayName?: string;
+  desciption?: string;
+  childrenPath: string; // key added to add correct articles to category
 }
 export interface VanillaArticlePatch {
   articleID: number;
@@ -100,16 +112,16 @@ export interface VanillaArticlePatch {
 }
 
 export interface VanillaArticle {
-  articleID: number;
+  articleID: number|null|undefined;
   knowledgeCategoryID: number | null;
   body: string | null;
-  dateInserted: string;
-  dateUpdated: string;
-  excerpt: string | null;
-  insertUserID: number;
+  dateInserted?: string;
+  dateUpdated?: string;
+  excerpt?: string | null;
+  insertUserID?: number;
   locale: string; //'en'
   name: string | null;
-  outline: {
+  outline?: {
     level: number;
     ref: string; //Heading blot reference id. Ex: #title
     text: string; // heading text line
@@ -122,18 +134,24 @@ export interface VanillaArticle {
   | 'html'
   | 'bbcode'
   | 'rich';
-  score: number;
-  seoDescription: string | null;
-  slug: string;
-  status: 'undeleted' | 'deleted' | 'published';
+  score?: number;
+  seoDescription?: string | null;
+  slug?: string;
+  status?: 'undeleted' | 'deleted' | 'published';
   translationStatus?: 'up-to-date' | 'out-of-date' | 'not-translated'; // from schema.. but also can see 'published'.. what else is missing?
-  updateUserID: number;
+  updateUserID?: number;
   featured?: boolean;
   dateFeatured?: string;
-  url: string;
-  views: number;
+  url?: string;
+  views?: number;
   foreignID?: string | null;
   sort?:number;
+
+// things we have added
+  path?: string;
+  fileName:null|string;
+  requestCompleted?:boolean;
+  // displayName?:string;
   // articleID: 4,
   // articleRevisionID: 5,
   // knowledgeCategoryID: 7,
