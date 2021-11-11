@@ -4,7 +4,7 @@ The JupiterOne Query Language (J1QL) is a query language for querying data
 stored by JupiterOne. The execution of a J1QL query seamlessly queries a full
 text search, entity-relationship graph, and any other future data stores, as
 needed. By design, the query language does not intend to make these data store
-boundaries obvious to query authors. Instead its much more fun
+boundaries obvious to query authors. Instead its much mor
 
 ## Language Features
 

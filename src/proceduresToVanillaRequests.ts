@@ -47,11 +47,11 @@ const addVanillaCategoryToProcedure = (
   procedure: VanillaKnowledgeCategory,
   vanillaReturn: VanillaKnowledgeCategory[]
 ) => {
-  console.log(vanillaReturn,'vanillaReturnvanillaReturn')
+  console.log(vanillaReturn,'vanillaReturnvanillaReturn', procedure)
 let tempVanillaReturn: VanillaKnowledgeCategory[] = vanillaReturn||[]
     let procedureTarget: VanillaKnowledgeCategory = procedure;
     const match = tempVanillaReturn.filter(
-      (v) => v.name === procedureTarget.displayName
+      (v) => v.name === procedureTarget.name
     );
     if (match.length) {
       procedureTarget = {
@@ -105,10 +105,12 @@ export const addVanillaArticlesToProcedures = (
   return proceduresWithVanillaCategoryInfo;
 };
 
+
+
 const procedureToArticle = async (
   httpClient:HttpClient,
   procedureWorkedOn:VanillaArticle,
-  previousknowledgeCategoryID:null|number|undefined,
+  previousknowledgeCategoryID:null|number,
 
   ):Promise<VanillaArticle> =>{
     let tempProcedureWorkedOn = {...procedureWorkedOn}
@@ -118,7 +120,7 @@ const procedureToArticle = async (
     // needs the knowledgeCategory of previous procedure
     
     if(!previousknowledgeCategoryID){
-      console.error('something went wrong, did not receive kcID')
+
       return tempProcedureWorkedOn
     }
     const body = await markdownToString(tempProcedureWorkedOn?.path)
@@ -129,7 +131,7 @@ const procedureToArticle = async (
         format: "markdown",
        knowledgeCategoryID:previousknowledgeCategoryID,
         locale: "en",
-        name: `${tempProcedureWorkedOn.displayName}-generated`,
+        name: tempProcedureWorkedOn.name,
         sort: 0
       }
       const createdArticle = await createArticle(httpClient,articleRequest)
@@ -149,7 +151,7 @@ if(body &&body!==FLAG_FOR_DELETE && tempProcedureWorkedOn.articleID ){
     format: "markdown",
    knowledgeCategoryID:previousknowledgeCategoryID,
     locale: "en",
-    name: `${tempProcedureWorkedOn.displayName}-generated`,
+    name: tempProcedureWorkedOn.name,
     sort: 0
   }
   const createdArticle = await editArticle(httpClient,tempProcedureWorkedOn.articleID,articleRequest)
@@ -182,22 +184,24 @@ const procedureToKnowledgeCategory = async (
   if(!tempProcedureWorkedOn.knowledgeCategoryID){
     // create a KnowledgeCategory
     const reqData ={
-      name:`${tempProcedureWorkedOn.displayName}-generated`,
+      name:tempProcedureWorkedOn.name,
       parentID:previousknowledgeCategoryID?previousknowledgeCategoryID:1
     }
-    console.log('procedureToKnowledgeCategory reqData', reqData)
+
     let createdKnowledgeCategory = await createKnowledgeCategory(httpClient, reqData)
+
     if(createdKnowledgeCategory){
       tempProcedureWorkedOn=addVanillaCategoryToProcedure(tempProcedureWorkedOn, [createdKnowledgeCategory])
-      console.log('SUCCESS tempProcedureWorkedOn',tempProcedureWorkedOn)
+
     }
+
     
       } else{
         // edit existing category
         if(!tempProcedureWorkedOn.knowledgeCategoryID ){
           return tempProcedureWorkedOn
         }
-        const reqData ={name:`${tempProcedureWorkedOn.displayName}-generated`,parentID:previousknowledgeCategoryID?previousknowledgeCategoryID:1}
+        const reqData ={name:tempProcedureWorkedOn.name,parentID:previousknowledgeCategoryID?previousknowledgeCategoryID:1}
         const categoryEdit = await editKnowledgeCategory(httpClient, tempProcedureWorkedOn.knowledgeCategoryID,reqData)
        if(categoryEdit){
         tempProcedureWorkedOn = addVanillaCategoryToProcedure(tempProcedureWorkedOn,[categoryEdit])
@@ -206,7 +210,23 @@ const procedureToKnowledgeCategory = async (
       }
       return tempProcedureWorkedOn
 }
+const getPreviousKnowledgeID = (
+  completedProcedures?:(VanillaArticle | VanillaKnowledgeCategory)[]
+):number|null=>{
+  // articles HAVE to reside in a knowledgeCategory. when TWO or more procedures are in a row, we need to find the closest (before) knowledgeCategory
+  if(!completedProcedures?.length){
+    return null
+  }
+  let previousknowledgeCategoryID = completedProcedures[completedProcedures.length-1]?.knowledgeCategoryID||null;
+console.log(completedProcedures)
+    for(let pIndex=completedProcedures.length-1; pIndex>=0;pIndex--){
+      if(completedProcedures[pIndex].knowledgeCategoryID &&previousknowledgeCategoryID==null){
+        previousknowledgeCategoryID = completedProcedures[pIndex].knowledgeCategoryID
+      }
+        }
+return previousknowledgeCategoryID
 
+}
 export const useProceduresForVanillaRequests =async (
   procedures: (VanillaArticle | VanillaKnowledgeCategory)[],
 
@@ -216,18 +236,19 @@ export const useProceduresForVanillaRequests =async (
     const httpClient = new HttpClient();
     let tempCompletedProcedures=completedProcedures?[...completedProcedures]:[]
     let tempProcedures = [...procedures]
-    
-    const previousknowledgeCategoryID = tempCompletedProcedures[tempCompletedProcedures.length-1]?.knowledgeCategoryID
+
+    const previousknowledgeCategoryID = getPreviousKnowledgeID(tempCompletedProcedures)
+console.log(previousknowledgeCategoryID,'previousknowledgeCategoryID')
   // this needs to be syncronous, going in order of the procedures. 
   // for example - a new folder with a markdown file, we need to make a 
   // new knowledgeCategory and use its id to create the new article
 let procedureWorkedOn = tempProcedures.shift()
 
 if(!procedureWorkedOn){
-  console.log('COMPLETEDDDDDDDD',completedProcedures)
+
   return completedProcedures
 }
-console.log('completedProcedures array',completedProcedures)
+
 if(isArticleType(procedureWorkedOn)){
   procedureWorkedOn = await procedureToArticle(
     httpClient,
@@ -252,10 +273,11 @@ export const proceduresToVanillaRequests = async (
 ) => {
   if (procedures && procedures.length) {
     const httpClient = new HttpClient();
-
+console.log(procedures, 'PROCEDRES')
     const existingknowledgeCategoryInfo = await getKnowedgeCategories(
       httpClient
     );
+
     let articles =await getAllArticles(
       httpClient,
       existingknowledgeCategoryInfo
@@ -273,15 +295,12 @@ export const proceduresToVanillaRequests = async (
     })
      
 
-    console.log(
-      'proceduresWithVanillaCategories((((((',
-      proceduresWithVanillaCategories,
-      'proceduresWithVanillaCategories'
-    );
+ 
     const proceduresWithArticleInfo = articles?.length?addVanillaArticlesToProcedures(
-      procedures,
+      proceduresWithVanillaCategories,
       articles
-    ):procedures;
+    ):proceduresWithVanillaCategories;
+
    const finishedProcedures= await useProceduresForVanillaRequests(proceduresWithArticleInfo)
     console.log(finishedProcedures, 'Finished')
 
