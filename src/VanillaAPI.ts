@@ -2,20 +2,22 @@ import HttpClient from './httpClient';
 import { VanillaArticle, VanillaKnowledgeCategory } from './types';
 
 
-// interface NotFound {
-// data:{
-//   message:string;
-//   status:number;
-//   des
-// }
-// }
+interface ErrorType {
+
+  message:string;
+  status:number;
+  errors:any[]
+}
+const isErrorType = <T>(response:ErrorType|T):response is ErrorType=>{
+  return (response as ErrorType).message!==undefined
+}
 export const getKnowedgeCategories = async (client: HttpClient):Promise<VanillaKnowledgeCategory[]> => {
   try {
     const categories = (await client.get('knowledge-categories')) as {
-      data: VanillaKnowledgeCategory[];
+      data: VanillaKnowledgeCategory[]|ErrorType;
     };
 
-    if (categories) {
+    if (!isErrorType(categories.data)) {
       return categories.data;
     }
   } catch (error) {
@@ -34,14 +36,14 @@ export const createKnowledgeCategory = async (
   console.log({bodyOfRequest}, 'CREATE NO LEDGE WEEEEEEE')
   try {
     const category = (await client.post('/knowledge-categories', bodyOfRequest)) as {
-      data: VanillaKnowledgeCategory;
+      data: VanillaKnowledgeCategory|ErrorType;
     };
 console.log(category, 'CR K return');
-    if (category) {
+    if (!isErrorType(category.data)) {
       return category.data;
     }
   } catch (e) {
-    console.error(e, 'Create Knowledge Category error');
+    console.error(e, 'Create Knowledge Category error', {e});
   }
 
 
@@ -56,10 +58,10 @@ export const editKnowledgeCategory = async (
 
   try {
     const category = (await client.patch(`/knowledge-categories/${knowledgeCategoryID}`, bodyOfRequest)) as {
-      data: VanillaKnowledgeCategory;
+      data: VanillaKnowledgeCategory|ErrorType;
     };
 
-    if (category) {
+    if (!isErrorType(category.data)) {
       return category.data;
     }
   } catch (e) {
@@ -99,14 +101,14 @@ export const getArticles = async (
         knowledgeCategoryID, // docs dont say it.. but this is required
       },
     })) as {
-      data: VanillaArticle[];
+      data: VanillaArticle[]|ErrorType;
     };
 
-    if (articles) {
+    if (!isErrorType(articles.data)) {
       return articles.data;
     }
   } catch (e) {
-    console.log(e, 'errrrr');
+    console.log({e}, 'errrrr');
   }
 
   return [];
@@ -157,10 +159,10 @@ export const createArticle = async (
   console.log('CREATE ARTICLE',{bodyOfRequest})
   try {
     const article = (await client.post('/articles', bodyOfRequest)) as {
-      data: VanillaArticle;
+      data: VanillaArticle|ErrorType;
     };
 
-    if (article) {
+    if(!isErrorType(article.data)){
       return article.data;
     }
   } catch (e) {
@@ -180,14 +182,14 @@ export const deleteArticle = async (
   try {
     const article = (await client.patch(
       `/articles/${articleID}/status`,{articleID, status:'deleted'})) as {
-        data: VanillaArticle;
+        data: VanillaArticle|ErrorType;
       };;
 
-    if (article) {
+    if (!isErrorType(article.data)) {
       return article.data;
     }
   } catch (e) {
-    console.error(e, 'Create Article error');
+    console.error(e, 'Create Article error', {e});
   }
 
 
@@ -202,14 +204,14 @@ export const editArticle = async (
 
   try {
     const article = (await client.patch(`/articles/${articleID}`,edits)) as {
-      data: VanillaArticle;
+      data: VanillaArticle|ErrorType;
     };
 
-    if (article) {
+    if (!isErrorType(article.data)) {
       return article.data;
     }
   } catch (e) {
-    console.error(e, 'Create Article error');
+    console.error(e, 'Create Article error',{e});
   }
 
 

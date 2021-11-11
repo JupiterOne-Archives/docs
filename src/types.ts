@@ -7,12 +7,12 @@ export interface KnowledgeBase {
 }
 export interface KnowledgeCategory {
   knowledgeBaseID: null | number; // 1 is the docs
-  knowledgeCategoryID?: null | number;
+  knowledgeCategoryID: null | number;
   parentID: null | number; // unique id of the parent, if its right after the /docs folder its 1(knowledgeBaseID)
   hasChildren: boolean; // to determine if its creation order matters
   path?: string; // the path we use during diff
   name: string;
-  displayName: string;
+  // displayName: string;
   desciption: string;
   sort?: number | null;
   url?: string | null;
@@ -48,7 +48,7 @@ export interface Article {
 }
 
 export interface VanillaKnowledgeCategory {
-  knowledgeCategoryID: number | null | undefined;
+  knowledgeCategoryID: number | null;
   name: string;
   parentID: number | null;
   knowledgeBaseID: number;
@@ -150,7 +150,7 @@ export interface VanillaArticle {
   path?: string;
   fileName?:string;
   requestCompleted?:boolean;
-  displayName?:string;
+  // displayName?:string;
   // articleID: 4,
   // articleRevisionID: 5,
   // knowledgeCategoryID: 7,
