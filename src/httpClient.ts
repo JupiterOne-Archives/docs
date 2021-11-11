@@ -129,7 +129,6 @@ export default class HttpClient {
 
     if(this.testingFlag){
       let dataReturned = {}
-      console.log('PSeudoREQUEST')
       if(method ===RESTTypes.GET){
 
           dataReturned = []
