@@ -106,11 +106,10 @@ const handleNestedKnowledgeCategoryChanges = (
         parentID: null, //will need to get it, for sub folders
         knowledgeBaseID: 1, //will need to get it for nested. the docs knowledge base is 1 so for non nested we can use that
         name: displayName,
-
         desciption: '',
         knowledgeCategoryID:null,
         path: input.originalChangesArray[tempParentIndex],
-        hasChildren: true,
+        hasChildren: [directorySplitBySlash[tempParentIndex]],
       };
       tempCompleted.push(kb);
 

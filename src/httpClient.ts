@@ -55,8 +55,8 @@ export default class HttpClient {
     });
   }
 
-  post(relativeUrl: string, body: Partial<VanillaArticle|KnowledgeCategory>, headers?: HeaderProps) {
-    
+  post(relativeUrl: string, body: Partial<VanillaArticle | KnowledgeCategory>, headers?: HeaderProps) {
+
     return this.makeRequest({
       relativeUrl,
       headers: headers ? headers : {},
@@ -65,20 +65,20 @@ export default class HttpClient {
     });
   }
 
-  patch(relativeUrl: string, body: Partial<VanillaArticle|KnowledgeCategory>, headers?: HeaderProps) {
+  patch(relativeUrl: string, body: Partial<VanillaArticle | KnowledgeCategory>, headers?: HeaderProps) {
     return this.makeRequest({
       relativeUrl,
       body,
-      headers:headers||{},
+      headers: headers || {},
       method: RESTTypes.PATCH,
     });
   }
 
-  delete(relativeUrl: string, headers?: HeaderProps, body?: Partial<VanillaArticle|KnowledgeCategory>) {
+  delete(relativeUrl: string, headers?: HeaderProps, body?: Partial<VanillaArticle | KnowledgeCategory>) {
     return this.makeRequest({
       relativeUrl,
       body,
-      headers:headers||{},
+      headers: headers || {},
       method: RESTTypes.DELETE,
     });
   }
@@ -91,15 +91,15 @@ export default class HttpClient {
     dataReturned
   }: {
     relativeUrl: string;
-    body?: Partial<VanillaArticle|KnowledgeCategory>;
+    body?: Partial<VanillaArticle | KnowledgeCategory>;
     headers: HeaderProps;
     method: RESTTypes;
     options?: OptionsProps;
-    dataReturned:any
+    dataReturned: any
   }) {
 
-    return new Promise((resolve)=>{
-      setTimeout(()=>{
+    return new Promise((resolve) => {
+      setTimeout(() => {
         resolve({
           url: this.buildUrl(relativeUrl),
           headers: this.buildHeaders(headers),
@@ -110,7 +110,7 @@ export default class HttpClient {
         })
       })
     })
- 
+
   }
 
   makeRequest({
@@ -121,38 +121,38 @@ export default class HttpClient {
     options = {},
   }: {
     relativeUrl: string;
-    body?: Partial<VanillaArticle|KnowledgeCategory>;
+    body?: Partial<VanillaArticle | KnowledgeCategory>;
     headers: HeaderProps;
     method: RESTTypes;
     options?: OptionsProps;
   }) {
 
 
-    if(this.testingFlag){
+    if (this.testingFlag) {
       let dataReturned = {}
-      if(method ===RESTTypes.GET){
+      if (method === RESTTypes.GET) {
 
-          dataReturned = []
+        dataReturned = []
 
       }
-      if(method ===RESTTypes.POST){
-if(relativeUrl.startsWith('knowledge-categories/')){
-  dataReturned = {
-    knowledgeCategoryID:(Math.floor(Math.random() * 10)+1)
-  }
-}else{
-  dataReturned = {
-    articleID:(Math.floor(Math.random() * 10)+1)
-  }
-}
-        
+      if (method === RESTTypes.POST) {
+        if (relativeUrl.startsWith('knowledge-categories/')) {
+          dataReturned = {
+            knowledgeCategoryID: (Math.floor(Math.random() * 10) + 1)
+          }
+        } else {
+          dataReturned = {
+            articleID: (Math.floor(Math.random() * 10) + 1)
+          }
+        }
 
-    }
-    if(method ===RESTTypes.PATCH){
 
-      dataReturned = {}
+      }
+      if (method === RESTTypes.PATCH) {
 
-  }
+        dataReturned = {}
+
+      }
 
       return this.makePseudoRequest({
         relativeUrl,
