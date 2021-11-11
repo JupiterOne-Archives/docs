@@ -11,7 +11,7 @@ test two
 ![](https://us.v-cdn.net/6035554/uploads/UBHB4S1V1DSB/api-key-access-view.png)
 If you are a user within the group that had API key access enabled, you will see
 an API key icon. _Note that it may take a few minutes for the feature to be
-initialized for the first time._
+initialized for the first time._dd
 
 You generate a new API key or manage existing keys from this view.
 

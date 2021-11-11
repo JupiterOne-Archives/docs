@@ -6,7 +6,7 @@ Ensure all relevant managed integrations are properly configured to be working;
 for SOC 2, you’ll need to make a determination as to which integrations are
 necessary based on your in-scope environment, e.g., the relevant system
 components, infrastructure, tooling, etc. that are necessary to provide your
-service or product to your customers. 
+service or product to your customers. df
 
 Once configured, integrations will automatically start collecting data about
 your environment at a recurring cadence.

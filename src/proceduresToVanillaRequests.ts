@@ -34,7 +34,7 @@ export const markdownToString = async (filePath?: string): Promise<string> => {
 const isKnowledgeCategoryType = (
   procedure: VanillaArticle | VanillaKnowledgeCategory
 ): procedure is VanillaKnowledgeCategory => {
-  return Boolean((procedure as VanillaKnowledgeCategory).hasChildren);
+  return Boolean((procedure as VanillaKnowledgeCategory).childrenPath != undefined);
 };
 
 const isArticleType = (
@@ -209,19 +209,29 @@ const procedureToKnowledgeCategory = async (
 }
 const getPreviousKnowledgeID = (
   completedProcedures: (VanillaArticle | VanillaKnowledgeCategory)[],
-  procedureWorkedOn:VanillaArticle | VanillaKnowledgeCategory
+  procedureWorkedOn: (VanillaArticle | VanillaKnowledgeCategory)
 ): number | null => {
   // articles HAVE to reside in a knowledgeCategory. when TWO or more procedures are in a row, we need to find the closest (before) knowledgeCategory
   if (!completedProcedures?.length) {
     return null
   }
   let previousknowledgeCategoryID = completedProcedures[completedProcedures.length - 1]?.knowledgeCategoryID || null;
-console.log(procedureWorkedOn,'procedureWorkedOnprocedureWorkedOn')
-  for (let pIndex = completedProcedures.length - 1; pIndex >= 0; pIndex--) {
-    if (completedProcedures[pIndex].knowledgeCategoryID && previousknowledgeCategoryID == null) {
-      previousknowledgeCategoryID = completedProcedures[pIndex].knowledgeCategoryID
+
+  if (procedureWorkedOn.fileName) {
+    const proceduredPathSplit = procedureWorkedOn.path?.split('/')
+    const indexOfFilename = proceduredPathSplit?.indexOf(procedureWorkedOn.fileName)
+
+    for (let pIndex = completedProcedures.length - 1; pIndex >= 0; pIndex--) {
+
+      if (proceduredPathSplit && indexOfFilename && completedProcedures[pIndex].fileName === proceduredPathSplit[indexOfFilename - 1]) {
+        previousknowledgeCategoryID = completedProcedures[pIndex].knowledgeCategoryID
+      }
+
+
     }
   }
+
+
   return previousknowledgeCategoryID
 
 }
@@ -235,18 +245,18 @@ export const useProceduresForVanillaRequests = async (
   let tempCompletedProcedures = completedProcedures ? [...completedProcedures] : []
   let tempProcedures = [...procedures]
   let previousknowledgeCategoryID = null
-  
+
 
   // this needs to be syncronous, going in order of the procedures. 
   // for example - a new folder with a markdown file, we need to make a 
   // new knowledgeCategory and use its id to create the new article
   let procedureWorkedOn = tempProcedures.shift()
- 
+
   if (!procedureWorkedOn) {
 
     return tempCompletedProcedures
   }
-  previousknowledgeCategoryID = getPreviousKnowledgeID(tempCompletedProcedures,procedureWorkedOn)
+  previousknowledgeCategoryID = getPreviousKnowledgeID(tempCompletedProcedures, procedureWorkedOn)
   if (isArticleType(procedureWorkedOn)) {
     procedureWorkedOn = await procedureToArticle(
       httpClient,
@@ -297,7 +307,7 @@ export const proceduresToVanillaRequests = async (
       proceduresWithVanillaCategories,
       articles
     ) : proceduresWithVanillaCategories;
-console.log("proceduresWithArticleInfo-",proceduresWithArticleInfo,'-proceduresWithArticleInfo')
+
     const finishedProcedures = await useProceduresForVanillaRequests(proceduresWithArticleInfo)
     console.log(finishedProcedures, 'Finished')
 
