@@ -11,25 +11,25 @@ const createDisplayName = (name: string) => {
 };
 
 const createArticleChange = (
-  knowledgeCategoryChanges: string, // diff string of a file
+  articleChanges: string, // diff string of a file
   path: string
 ): VanillaArticle => {
   let displayName = '';
 // we dont want articles to be called 'index'
-  if (knowledgeCategoryChanges.startsWith('index')) {
+  if (articleChanges.startsWith('index')) {
     const pathSplit = path.split('/');
     let replacementName = pathSplit[pathSplit.length - 2];
     displayName = createDisplayName(replacementName);
   } else {
  
-    const splitOnExtention = knowledgeCategoryChanges.split('.')[0];
+    const splitOnExtention = articleChanges.split('.')[0];
     displayName = createDisplayName(splitOnExtention);
   }
 
   const kb: VanillaArticle = {
     knowledgeCategoryID: null, //will need to create it and get it- for sub folders
     articleID: null,
-    fileName: knowledgeCategoryChanges,
+    fileName: articleChanges,
     name: displayName,
     body: '',
     path: path,
@@ -106,10 +106,11 @@ const handleNestedKnowledgeCategoryChanges = (
         parentID: null, //will need to get it, for sub folders
         knowledgeBaseID: 1, //will need to get it for nested. the docs knowledge base is 1 so for non nested we can use that
         name: displayName,
+        fileName:identifierForDirectoryOrFile,
         desciption: '',
         knowledgeCategoryID:null,
         path: input.originalChangesArray[tempParentIndex],
-        hasChildren: [directorySplitBySlash[tempParentIndex]],
+        childrenPath: identifierForDirectoryOrFile,
       };
       tempCompleted.push(kb);
 
