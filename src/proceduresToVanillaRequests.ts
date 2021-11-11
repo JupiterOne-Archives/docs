@@ -47,7 +47,7 @@ const addVanillaCategoryToProcedure = (
   procedure: VanillaKnowledgeCategory,
   vanillaReturn: VanillaKnowledgeCategory[]
 ) => {
-  console.log(vanillaReturn,'vanillaReturnvanillaReturn', procedure)
+
 let tempVanillaReturn: VanillaKnowledgeCategory[] = vanillaReturn||[]
     let procedureTarget: VanillaKnowledgeCategory = procedure;
     const match = tempVanillaReturn.filter(
@@ -114,7 +114,7 @@ const procedureToArticle = async (
 
   ):Promise<VanillaArticle> =>{
     let tempProcedureWorkedOn = {...procedureWorkedOn}
-    console.log('procedureToArticle', previousknowledgeCategoryID, {procedureWorkedOn})
+
   if(tempProcedureWorkedOn.articleID===null &&previousknowledgeCategoryID){
     // create a new article
     // needs the knowledgeCategory of previous procedure
@@ -218,7 +218,7 @@ const getPreviousKnowledgeID = (
     return null
   }
   let previousknowledgeCategoryID = completedProcedures[completedProcedures.length-1]?.knowledgeCategoryID||null;
-console.log(completedProcedures)
+
     for(let pIndex=completedProcedures.length-1; pIndex>=0;pIndex--){
       if(completedProcedures[pIndex].knowledgeCategoryID &&previousknowledgeCategoryID==null){
         previousknowledgeCategoryID = completedProcedures[pIndex].knowledgeCategoryID
@@ -238,7 +238,7 @@ export const useProceduresForVanillaRequests =async (
     let tempProcedures = [...procedures]
 
     const previousknowledgeCategoryID = getPreviousKnowledgeID(tempCompletedProcedures)
-console.log(previousknowledgeCategoryID,'previousknowledgeCategoryID')
+
   // this needs to be syncronous, going in order of the procedures. 
   // for example - a new folder with a markdown file, we need to make a 
   // new knowledgeCategory and use its id to create the new article
@@ -273,7 +273,7 @@ export const proceduresToVanillaRequests = async (
 ) => {
   if (procedures && procedures.length) {
     const httpClient = new HttpClient();
-console.log(procedures, 'PROCEDRES')
+
     const existingknowledgeCategoryInfo = await getKnowedgeCategories(
       httpClient
     );
