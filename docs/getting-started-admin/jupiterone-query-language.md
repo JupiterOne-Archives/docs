@@ -6,6 +6,9 @@ text search, entity-relationship graph, and any other future data stores, as
 needed. By design, the query language does not intend to make these data store
 boundaries obvious to query authors. Instead its much more fun
 
+test
+![](../assets/api-key-access-group-enable.png)
+
 ## Language Features
 
 - Seamlessly blend full-text search and graph queries

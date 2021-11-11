@@ -9,7 +9,7 @@ interface ErrorType {
   errors:any[]
 }
 const isErrorType = <T>(response:ErrorType|T):response is ErrorType=>{
-  return (response as ErrorType).message!==undefined
+  return (response as ErrorType)?.message!==undefined
 }
 export const getKnowedgeCategories = async (client: HttpClient):Promise<VanillaKnowledgeCategory[]> => {
   try {
@@ -17,7 +17,7 @@ export const getKnowedgeCategories = async (client: HttpClient):Promise<VanillaK
       data: VanillaKnowledgeCategory[]|ErrorType;
     };
 
-    if (!isErrorType(categories.data)) {
+    if (!isErrorType(categories?.data)) {
       return categories.data;
     }
   } catch (error) {
@@ -33,13 +33,13 @@ export const createKnowledgeCategory = async (
 ):Promise<VanillaKnowledgeCategory|undefined> => {
   // only required - totally not the same as the docs
   // {"name":"bryan test categroy two","parentID":1}
-  console.log({bodyOfRequest}, 'CREATE NO LEDGE WEEEEEEE')
+
   try {
     const category = (await client.post('/knowledge-categories', bodyOfRequest)) as {
       data: VanillaKnowledgeCategory|ErrorType;
     };
-console.log(category, 'CR K return');
-    if (!isErrorType(category.data)) {
+
+    if (!isErrorType(category?.data)) {
       return category.data;
     }
   } catch (e) {
@@ -108,7 +108,7 @@ export const getArticles = async (
       return articles.data;
     }
   } catch (e) {
-    console.log({e}, 'errrrr');
+    console.error({e}, 'errrrr');
   }
 
   return [];
@@ -156,7 +156,7 @@ export const createArticle = async (
   //   "locale": "en",
   //   "name": "postman - article five",
   //   "sort": 0}
-  console.log('CREATE ARTICLE',{bodyOfRequest})
+
   try {
     const article = (await client.post('/articles', bodyOfRequest)) as {
       data: VanillaArticle|ErrorType;

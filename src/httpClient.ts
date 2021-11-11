@@ -56,6 +56,7 @@ export default class HttpClient {
   }
 
   post(relativeUrl: string, body: Partial<VanillaArticle|KnowledgeCategory>, headers?: HeaderProps) {
+    
     return this.makeRequest({
       relativeUrl,
       headers: headers ? headers : {},
