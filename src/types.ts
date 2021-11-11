@@ -9,7 +9,7 @@ export interface KnowledgeCategory {
   knowledgeBaseID: null | number; // 1 is the docs
   knowledgeCategoryID: null | number;
   parentID: null | number; // unique id of the parent, if its right after the /docs folder its 1(knowledgeBaseID)
-  hasChildren: boolean; // to determine if its creation order matters
+  hasChildren: string[]; // key added to add correct articles to category
   path?: string; // the path we use during diff
   name: string;
   // displayName: string;
@@ -75,7 +75,7 @@ export interface VanillaKnowledgeCategory {
 requestCompleted?:boolean;
   displayName?: string;
   desciption?: string;
-hasChildren?:boolean;// to determine if its creation order matters
+  hasChildren: string[]; // key added to add correct articles to category
 }
 export interface VanillaArticlePatch {
   articleID: number;
