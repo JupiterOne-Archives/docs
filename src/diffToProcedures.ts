@@ -1,7 +1,7 @@
 // name from the view point of changed files
-const PATH_OF_DIRECTORY_TO_WATCH = 'docs/';
-import { Article, KnowledgeCategory } from './types';
 
+import { VanillaArticle, VanillaKnowledgeCategory } from './types';
+import {PATH_OF_DIRECTORY_TO_WATCH,SUPPORTED_FILE_TYPE_EXTENTIONS} from './constants'
 const createDisplayName = (name: string) => {
 
   return name
@@ -11,25 +11,25 @@ const createDisplayName = (name: string) => {
 };
 
 const createArticleChange = (
-  knowledgeCategoryChanges: string, // diff string of a file
+  articleChanges: string, // diff string of a file
   path: string
-): Article => {
+): VanillaArticle => {
   let displayName = '';
 // we dont want articles to be called 'index'
-  if (knowledgeCategoryChanges.startsWith('index')) {
+  if (articleChanges.startsWith('index')) {
     const pathSplit = path.split('/');
     let replacementName = pathSplit[pathSplit.length - 2];
     displayName = createDisplayName(replacementName);
   } else {
  
-    const splitOnExtention = knowledgeCategoryChanges.split('.')[0];
+    const splitOnExtention = articleChanges.split('.')[0];
     displayName = createDisplayName(splitOnExtention);
   }
 
-  const kb: Article = {
+  const kb: VanillaArticle = {
     knowledgeCategoryID: null, //will need to create it and get it- for sub folders
     articleID: null,
-    fileName: knowledgeCategoryChanges,
+    fileName: articleChanges,
     name: displayName,
     body: '',
     path: path,
@@ -41,12 +41,12 @@ const createArticleChange = (
 };
 
 export interface HandleNestedKnowledgeCategoryChangesReturn {
-  completed?: (KnowledgeCategory | Article)[];
+  completed?: (VanillaKnowledgeCategory | VanillaArticle)[];
   knowledgeCategoriesAlreadyHandled?: string[];
 }
 interface HandleNestedKnowledgeCategoryChangesProps {
   nestedCategoryChanges: string[];
-  completed?: (KnowledgeCategory | Article)[];
+  completed?: (VanillaKnowledgeCategory | VanillaArticle)[];
   knowledgeCategoriesAlreadyHandled?: string[];
   originalChangesArray: string[];
   parentIndex: number;
@@ -102,14 +102,15 @@ const handleNestedKnowledgeCategoryChanges = (
     } else {
       let displayName = createDisplayName(identifierForDirectoryOrFile);
 
-      const kb: KnowledgeCategory = {
+      const kb: VanillaKnowledgeCategory = {
         parentID: null, //will need to get it, for sub folders
         knowledgeBaseID: 1, //will need to get it for nested. the docs knowledge base is 1 so for non nested we can use that
-        name: identifierForDirectoryOrFile,
-        displayName,
+        name: displayName,
+        fileName:identifierForDirectoryOrFile,
         desciption: '',
+        knowledgeCategoryID:null,
         path: input.originalChangesArray[tempParentIndex],
-        hasChildren: true,
+        childrenPath: identifierForDirectoryOrFile,
       };
       tempCompleted.push(kb);
 
@@ -142,15 +143,24 @@ const handleNestedKnowledgeCategoryChanges = (
 };
 
 export const diffToProcedures = (gitDiffArray: string[]) => {
+
   const filteredChanges = gitDiffArray.filter((diff) =>
     diff.startsWith(PATH_OF_DIRECTORY_TO_WATCH)
-  ).filter((diff) =>
-  !diff.endsWith('.json')
+  ).filter((diff) =>{
+    let diffIsOfCorrectType = false
+    SUPPORTED_FILE_TYPE_EXTENTIONS.forEach(ext =>{
+      if(diff.includes(ext)){
+        diffIsOfCorrectType = true
+      }
+    })
+    return diffIsOfCorrectType
+  }
+  
 );
   const gitDiffWithOutDocs = filteredChanges.map((diff) =>
     diff.substring(PATH_OF_DIRECTORY_TO_WATCH.length)
   );
-console.log(gitDiffWithOutDocs, 'gitDiffWithOutDocs')
+
   const { completed } = handleNestedKnowledgeCategoryChanges({
     nestedCategoryChanges: [...gitDiffWithOutDocs], // need to create a new array for each
     originalChangesArray: [...gitDiffWithOutDocs], // need to create a new array for each
