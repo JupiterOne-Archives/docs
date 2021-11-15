@@ -1,5 +1,5 @@
 import HttpClient from './httpClient';
-import { VanillaArticle, VanillaKnowledgeCategory } from './types';
+import { VanillaArticle, VanillaKnowledgeCategory } from './utils/types';
 
 
 interface ErrorType {
@@ -121,7 +121,7 @@ export const getAllArticles = async (
   const tempExistingknowledgeCategoryInfo: VanillaKnowledgeCategory[] = existingknowledgeCategoryInfo?[...existingknowledgeCategoryInfo]:[]
   const filteredExistingknowledgeCategoryInfo = tempExistingknowledgeCategoryInfo.filter(ek=>!!ek.knowledgeCategoryID)
   const allArticlesPromises = filteredExistingknowledgeCategoryInfo.map((c) =>getArticles(client, c.knowledgeCategoryID));
-  let resolved: VanillaArticle[][] = [];
+  const resolved: VanillaArticle[][] = [];
   for (
     let promiseIndex = 0;
     promiseIndex < allArticlesPromises.length;
