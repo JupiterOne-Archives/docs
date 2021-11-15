@@ -1,54 +1,23 @@
-import fs from 'fs';
-import path from 'path';
-import HttpClient from './httpClient';
-import { VanillaArticle, VanillaKnowledgeCategory } from './types';
-import { getAllArticles, getKnowedgeCategories, createKnowledgeCategory, createArticle, editArticle, editKnowledgeCategory, deleteArticle } from './VanillaAPI';
-import { FLAG_FOR_DELETE, SUPPORTED_FILE_TYPE_EXTENTIONS } from './constants'
+
+import HttpClient from '../httpClient';
+import { VanillaArticle, VanillaKnowledgeCategory } from '../utils/types';
+import { getAllArticles, getKnowedgeCategories, createKnowledgeCategory, createArticle, editArticle, editKnowledgeCategory, deleteArticle } from '../VanillaAPI';
+import { FLAG_FOR_DELETE } from '../utils/constants'
+import { markdownToString } from './utils'
+import {
+  isKnowledgeCategoryType,
+  isArticleType
+} from '../utils'
 
 
-export const markdownToString = async (filePath?: string): Promise<string> => {
-  // we also want to use this to see if the file got deleted! the git diff wont differenitate
-  const fileLocation = path.join(__dirname, '../docs', `/${filePath}`)
-  let supportedTypeOfFile = false
-  SUPPORTED_FILE_TYPE_EXTENTIONS.forEach(extention => {
-    if (fileLocation.endsWith(extention)) {
-      supportedTypeOfFile = true
-    }
-  })
-  if (!supportedTypeOfFile) {
-    return FLAG_FOR_DELETE
-  }
-  try {
-    const blockingReadOfFile = await fs.readFileSync(fileLocation)
-    if (blockingReadOfFile) {
 
-      return blockingReadOfFile.toString()
-    }
-  } catch (error) {
-    return FLAG_FOR_DELETE
-  }
 
-  return FLAG_FOR_DELETE
-};
-
-const isKnowledgeCategoryType = (
-  procedure: VanillaArticle | VanillaKnowledgeCategory
-): procedure is VanillaKnowledgeCategory => {
-  return Boolean((procedure as VanillaKnowledgeCategory).childrenPath != undefined);
-};
-
-const isArticleType = (
-  procedure: VanillaArticle | VanillaKnowledgeCategory
-): procedure is VanillaArticle => {
-  return Boolean((procedure as VanillaArticle).format);
-};
-
-const addVanillaCategoryToProcedure = (
+export const addVanillaCategoryToProcedure = (
   procedure: VanillaKnowledgeCategory,
   vanillaReturn: VanillaKnowledgeCategory[]
 ) => {
 
-  let tempVanillaReturn: VanillaKnowledgeCategory[] = vanillaReturn || []
+  const tempVanillaReturn: VanillaKnowledgeCategory[] = vanillaReturn || []
   let procedureTarget: VanillaKnowledgeCategory = procedure;
   const match = tempVanillaReturn.filter(
     (v) => v.name === procedureTarget.name
@@ -123,7 +92,7 @@ const procedureToArticle = async (
 
       return tempProcedureWorkedOn
     }
-    const body = await markdownToString(tempProcedureWorkedOn?.path)
+    const body = markdownToString(tempProcedureWorkedOn?.path)
 
     if (body != FLAG_FOR_DELETE) {
       const articleRequest: Partial<VanillaArticle> = {
@@ -143,7 +112,7 @@ const procedureToArticle = async (
 
 
   } else {
-    const body = await markdownToString(tempProcedureWorkedOn.path);
+    const body = markdownToString(tempProcedureWorkedOn.path);
 
     if (body && body !== FLAG_FOR_DELETE && tempProcedureWorkedOn.articleID) {
       const articleRequest: Partial<VanillaArticle> = {
@@ -188,7 +157,7 @@ const procedureToKnowledgeCategory = async (
       parentID: previousknowledgeCategoryID ? previousknowledgeCategoryID : 1
     }
 
-    let createdKnowledgeCategory = await createKnowledgeCategory(httpClient, reqData)
+    const createdKnowledgeCategory = await createKnowledgeCategory(httpClient, reqData)
 
     if (createdKnowledgeCategory) {
       tempProcedureWorkedOn = addVanillaCategoryToProcedure(tempProcedureWorkedOn, [createdKnowledgeCategory])
@@ -231,7 +200,6 @@ const getPreviousKnowledgeID = (
     }
   }
 
-
   return previousknowledgeCategoryID
 
 }
@@ -242,8 +210,8 @@ export const useProceduresForVanillaRequests = async (
 ) => {
 
   const httpClient = new HttpClient();
-  let tempCompletedProcedures = completedProcedures ? [...completedProcedures] : []
-  let tempProcedures = [...procedures]
+  const tempCompletedProcedures = completedProcedures ? [...completedProcedures] : []
+  const tempProcedures = [...procedures]
   let previousknowledgeCategoryID = null
 
 
@@ -273,7 +241,7 @@ export const useProceduresForVanillaRequests = async (
   }
 
   tempCompletedProcedures.push(procedureWorkedOn)
-  useProceduresForVanillaRequests(tempProcedures, tempCompletedProcedures)
+  await useProceduresForVanillaRequests(tempProcedures, tempCompletedProcedures)
 }
 
 export const proceduresToVanillaRequests = async (
@@ -286,7 +254,7 @@ export const proceduresToVanillaRequests = async (
       httpClient
     );
 
-    let articles = await getAllArticles(
+    const articles = await getAllArticles(
       httpClient,
       existingknowledgeCategoryInfo
     );
@@ -310,6 +278,8 @@ export const proceduresToVanillaRequests = async (
 
     const finishedProcedures = await useProceduresForVanillaRequests(proceduresWithArticleInfo)
     console.log(finishedProcedures, 'Finished')
+    return finishedProcedures
+
 
 
     // make categories first, return their ID on the procedure so the article can be tied to it.

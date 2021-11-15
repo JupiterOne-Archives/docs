@@ -46,6 +46,10 @@ export interface Article {
   path: string;
   ArticleID?: string; //(will need to remove or edit the previous Article)
 }
+export enum ProcedureTypeEnum{
+  Category='Category',
+Article='Article',
+}
 
 export interface VanillaKnowledgeCategory {
   knowledgeCategoryID: number | null;
@@ -71,7 +75,7 @@ export interface VanillaKnowledgeCategory {
 
 
   // addition we added
-
+procedureType:ProcedureTypeEnum;
   path?: string; // the path we use during diff
 requestCompleted?:boolean;
   displayName?: string;
@@ -151,6 +155,7 @@ export interface VanillaArticle {
   path?: string;
   fileName:null|string;
   requestCompleted?:boolean;
+  procedureType:ProcedureTypeEnum;
   // displayName?:string;
   // articleID: 4,
   // articleRevisionID: 5,

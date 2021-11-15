@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { KnowledgeCategory, VanillaArticle } from './types';
+import { KnowledgeCategory, VanillaArticle } from './utils/types';
 import {
   DEV_URL,
   Authorization
-} from './constants'
+} from './utils/constants'
 
 
 interface HeaderProps {
