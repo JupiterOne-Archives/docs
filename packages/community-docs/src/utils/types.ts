@@ -3,7 +3,7 @@ export interface KnowledgeBase {
   viewType: string; // guide or help
   name: string;
   desciption: string;
-  sortArticles: 'manual' | 'name' | 'dateInserted' | 'dateInsertedDesc';
+  sortArticles: "manual" | "name" | "dateInserted" | "dateInsertedDesc";
 }
 export interface KnowledgeCategory {
   knowledgeBaseID: null | number; // 1 is the docs
@@ -16,7 +16,7 @@ export interface KnowledgeCategory {
   desciption: string;
   sort?: number | null;
   url?: string | null;
-  sortChildren?: null | 'name' | 'dateInserted' | 'dateInsertedDesc' | 'manual';
+  sortChildren?: null | "name" | "dateInserted" | "dateInsertedDesc" | "manual";
   foreignID?: null | string; // to link to external srcs
 }
 export interface Article {
@@ -25,13 +25,13 @@ export interface Article {
   name: string;
   body: string;
   format:
-    | 'text'
-    | 'textex'
-    | 'markdown'
-    | 'wysiwyg'
-    | 'html'
-    | 'bbcode'
-    | 'rich';
+    | "text"
+    | "textex"
+    | "markdown"
+    | "wysiwyg"
+    | "html"
+    | "bbcode"
+    | "rich";
   locale: string;
   sort?: number;
   discussionId?: number;
@@ -46,9 +46,9 @@ export interface Article {
   path: string;
   ArticleID?: string; //(will need to remove or edit the previous Article)
 }
-export enum ProcedureTypeEnum{
-  Category='Category',
-Article='Article',
+export enum ProcedureTypeEnum {
+  Category = "Category",
+  Article = "Article",
 }
 
 export interface VanillaKnowledgeCategory {
@@ -69,17 +69,14 @@ export interface VanillaKnowledgeCategory {
   childCategoryCount?: number;
   url?: string;
   foreignID?: null | string;
-  fileName: null|string;
-
-
-
+  fileName: null | string;
 
   // addition we added
-procedureType:ProcedureTypeEnum;
+  procedureType: ProcedureTypeEnum;
   path?: string; // the path we use during diff
-requestCompleted?:boolean;
+  requestCompleted?: boolean;
   displayName?: string;
-  desciption?: string;
+  description?: string;
   childrenPath: string; // key added to add correct articles to category
 }
 export interface VanillaArticlePatch {
@@ -93,13 +90,13 @@ export interface VanillaArticlePatch {
   locale: string; //'en'
   name: string | null;
   format:
-  | 'text'
-  | 'textex'
-  | 'markdown'
-  | 'wysiwyg'
-  | 'html'
-  | 'bbcode'
-  | 'rich';
+    | "text"
+    | "textex"
+    | "markdown"
+    | "wysiwyg"
+    | "html"
+    | "bbcode"
+    | "rich";
   outline: {
     level: number;
     ref: string; //Heading blot reference id. Ex: #title
@@ -116,7 +113,7 @@ export interface VanillaArticlePatch {
 }
 
 export interface VanillaArticle {
-  articleID: number|null|undefined;
+  articleID: number | null;
   knowledgeCategoryID: number | null;
   body: string | null;
   dateInserted?: string;
@@ -131,31 +128,31 @@ export interface VanillaArticle {
     text: string; // heading text line
   };
   format:
-  | 'text'
-  | 'textex'
-  | 'markdown'
-  | 'wysiwyg'
-  | 'html'
-  | 'bbcode'
-  | 'rich';
+    | "text"
+    | "textex"
+    | "markdown"
+    | "wysiwyg"
+    | "html"
+    | "bbcode"
+    | "rich";
   score?: number;
   seoDescription?: string | null;
   slug?: string;
-  status?: 'undeleted' | 'deleted' | 'published';
-  translationStatus?: 'up-to-date' | 'out-of-date' | 'not-translated'; // from schema.. but also can see 'published'.. what else is missing?
+  status?: "undeleted" | "deleted" | "published";
+  translationStatus?: "up-to-date" | "out-of-date" | "not-translated"; // from schema.. but also can see 'published'.. what else is missing?
   updateUserID?: number;
   featured?: boolean;
   dateFeatured?: string;
   url?: string;
   views?: number;
   foreignID?: string | null;
-  sort?:number;
+  sort?: number;
 
-// things we have added
+  // things we have added
   path?: string;
-  fileName:null|string;
-  requestCompleted?:boolean;
-  procedureType:ProcedureTypeEnum;
+  fileName: null | string;
+  requestCompleted?: boolean;
+  procedureType: ProcedureTypeEnum;
   // displayName?:string;
   // articleID: 4,
   // articleRevisionID: 5,

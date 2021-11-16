@@ -6,7 +6,6 @@
   "author": "Bryanschauerte <bryan.schauerte@gmail.com>",
   "license": "NONE",
   "private": true,
-
   "scripts": {
     "run": "yarn ts-node ./src/index.ts",
     "watch-and-run-fake-httpClient": "ts-node-dev --respawn -- src/index.ts testing",
@@ -31,6 +30,7 @@
     "@jupiterone/platform-sdk-logging": "^2.1.1",
     "@jupiterone/platform-sdk-test-tools": "^1.1.0",
     "@jupiterone/typescript-tools": "^15.0.0",
+    "@types/jest": "^27.0.2",
     "@types/lodash": "^4.14.176",
     "@types/supertest": "^2.0.11",
     "concurrently": "^6.4.0",
