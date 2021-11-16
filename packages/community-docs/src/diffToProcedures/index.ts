@@ -146,13 +146,11 @@ export const diffToProcedures = (gitDiffArray: string[]) => {
 
   const gitDiffWithOutDocs = filterDiffs(gitDiffArray);
 
-  console.log('EX files', gitDiffWithOutDocs)
-console.log('STARTx', gitDiffWithOutDocs,'endE')
   const { completed } = handleNestedKnowledgeCategoryChanges({
     nestedCategoryChanges: [...gitDiffWithOutDocs], // need to create a new array for each
     originalChangesArray: [...gitDiffWithOutDocs], // need to create a new array for each
     parentIndex: 0,
   });
-  console.log('COMPLETEDDDD', completed)
+
   return completed;
 };
