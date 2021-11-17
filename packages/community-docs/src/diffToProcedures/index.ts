@@ -1,28 +1,24 @@
 // name from the view point of changed files
 
-import { VanillaArticle, VanillaKnowledgeCategory } from './types';
-import {PATH_OF_DIRECTORY_TO_WATCH,SUPPORTED_FILE_TYPE_EXTENTIONS} from './constants'
-const createDisplayName = (name: string) => {
+import {
+  ProcedureTypeEnum,
+  VanillaArticle,
+  VanillaKnowledgeCategory,
+} from "../utils/types";
+import { createDisplayName, filterDiffs } from "./utils";
 
-  return name
-    .split(/-|_/g)
-    .map((item) => `${item[0].toUpperCase()}${item.substring(1)}`)
-    .join(' ');
-};
-
-const createArticleChange = (
+export const createArticleChange = (
   articleChanges: string, // diff string of a file
   path: string
 ): VanillaArticle => {
-  let displayName = '';
-// we dont want articles to be called 'index'
-  if (articleChanges.startsWith('index')) {
-    const pathSplit = path.split('/');
-    let replacementName = pathSplit[pathSplit.length - 2];
+  let displayName = "";
+  // we dont want articles to be called 'index'
+  if (articleChanges.startsWith("index")) {
+    const pathSplit = path.split("/");
+    const replacementName = pathSplit[pathSplit.length - 2];
     displayName = createDisplayName(replacementName);
   } else {
- 
-    const splitOnExtention = articleChanges.split('.')[0];
+    const splitOnExtention = articleChanges.split(".")[0];
     displayName = createDisplayName(splitOnExtention);
   }
 
@@ -31,10 +27,11 @@ const createArticleChange = (
     articleID: null,
     fileName: articleChanges,
     name: displayName,
-    body: '',
+    body: "",
     path: path,
-    format: 'markdown',
-    locale: 'en',
+    format: "markdown",
+    locale: "en",
+    procedureType: ProcedureTypeEnum.Article,
   };
 
   return kb;
@@ -44,7 +41,7 @@ export interface HandleNestedKnowledgeCategoryChangesReturn {
   completed?: (VanillaKnowledgeCategory | VanillaArticle)[];
   knowledgeCategoriesAlreadyHandled?: string[];
 }
-interface HandleNestedKnowledgeCategoryChangesProps {
+export interface HandleNestedKnowledgeCategoryChangesProps {
   nestedCategoryChanges: string[];
   completed?: (VanillaKnowledgeCategory | VanillaArticle)[];
   knowledgeCategoriesAlreadyHandled?: string[];
@@ -52,14 +49,15 @@ interface HandleNestedKnowledgeCategoryChangesProps {
   parentIndex: number;
 }
 // recursively create Knowledge categories per directory change. One parent KnowledgeCategory per directory.
-const handleNestedKnowledgeCategoryChanges = (
+export const handleNestedKnowledgeCategoryChanges = (
   input: HandleNestedKnowledgeCategoryChangesProps
 ): HandleNestedKnowledgeCategoryChangesReturn => {
   if (input.nestedCategoryChanges.length === 0) {
     return {
-      completed: input.completed,
+      completed: input.completed || [],
     };
   }
+
   let tempParentIndex = input.parentIndex;
 
   const tempNestedCategoryChanges = input.nestedCategoryChanges;
@@ -75,14 +73,14 @@ const handleNestedKnowledgeCategoryChanges = (
     };
   }
 
-  const directorySplitBySlash = target.split('/');
+  const directorySplitBySlash = target.split("/");
 
   const identifierForDirectoryOrFile = directorySplitBySlash.shift();
 
   const createAnotherIterationForDirectory = directorySplitBySlash.length >= 1;
 
   if (createAnotherIterationForDirectory) {
-    tempNestedCategoryChanges.unshift(directorySplitBySlash.join('/'));
+    tempNestedCategoryChanges.unshift(directorySplitBySlash.join("/"));
   }
 
   if (
@@ -91,8 +89,8 @@ const handleNestedKnowledgeCategoryChanges = (
   ) {
     tempHandled.push(identifierForDirectoryOrFile);
     if (
-      identifierForDirectoryOrFile.endsWith('.md') ||
-      identifierForDirectoryOrFile.endsWith('.rst')
+      identifierForDirectoryOrFile.endsWith(".md") ||
+      identifierForDirectoryOrFile.endsWith(".rst")
     ) {
       const markDownFileToKnowledgeCategory = createArticleChange(
         target,
@@ -100,17 +98,18 @@ const handleNestedKnowledgeCategoryChanges = (
       );
       tempCompleted.push(markDownFileToKnowledgeCategory);
     } else {
-      let displayName = createDisplayName(identifierForDirectoryOrFile);
+      const displayName = createDisplayName(identifierForDirectoryOrFile);
 
       const kb: VanillaKnowledgeCategory = {
         parentID: null, //will need to get it, for sub folders
         knowledgeBaseID: 1, //will need to get it for nested. the docs knowledge base is 1 so for non nested we can use that
         name: displayName,
-        fileName:identifierForDirectoryOrFile,
-        desciption: '',
-        knowledgeCategoryID:null,
+        fileName: identifierForDirectoryOrFile,
+        description: "",
+        knowledgeCategoryID: null,
         path: input.originalChangesArray[tempParentIndex],
         childrenPath: identifierForDirectoryOrFile,
+        procedureType: ProcedureTypeEnum.Category,
       };
       tempCompleted.push(kb);
 
@@ -143,28 +142,13 @@ const handleNestedKnowledgeCategoryChanges = (
 };
 
 export const diffToProcedures = (gitDiffArray: string[]) => {
-
-  const filteredChanges = gitDiffArray.filter((diff) =>
-    diff.startsWith(PATH_OF_DIRECTORY_TO_WATCH)
-  ).filter((diff) =>{
-    let diffIsOfCorrectType = false
-    SUPPORTED_FILE_TYPE_EXTENTIONS.forEach(ext =>{
-      if(diff.includes(ext)){
-        diffIsOfCorrectType = true
-      }
-    })
-    return diffIsOfCorrectType
-  }
-  
-);
-  const gitDiffWithOutDocs = filteredChanges.map((diff) =>
-    diff.substring(PATH_OF_DIRECTORY_TO_WATCH.length)
-  );
+  const gitDiffWithOutDocs = filterDiffs(gitDiffArray);
 
   const { completed } = handleNestedKnowledgeCategoryChanges({
     nestedCategoryChanges: [...gitDiffWithOutDocs], // need to create a new array for each
     originalChangesArray: [...gitDiffWithOutDocs], // need to create a new array for each
     parentIndex: 0,
   });
+  console.log(completed, "completed-handleNestedKnowledgeCategoryChanges");
   return completed;
 };
