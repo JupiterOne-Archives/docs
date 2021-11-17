@@ -19,33 +19,33 @@ export interface KnowledgeCategory {
   sortChildren?: null | "name" | "dateInserted" | "dateInsertedDesc" | "manual";
   foreignID?: null | string; // to link to external srcs
 }
-export interface Article {
-  knowledgeCategoryID: number | null;
-  articleID: number | null;
-  name: string;
-  body: string;
-  format:
-    | "text"
-    | "textex"
-    | "markdown"
-    | "wysiwyg"
-    | "html"
-    | "bbcode"
-    | "rich";
-  locale: string;
-  sort?: number;
-  discussionId?: number;
-  foreignID?: null | string;
-  fileRehosting?: {
-    description: string;
-    enabled: boolean;
-    requestHeaders: any;
-  };
-  // things not on vanilla schema
-  fileName: string;
-  path: string;
-  ArticleID?: string; //(will need to remove or edit the previous Article)
-}
+// export interface Article {
+//   knowledgeCategoryID: number | null;
+//   articleID: number | null;
+//   name: string;
+//   body: string;
+//   format:
+//     | "text"
+//     | "textex"
+//     | "markdown"
+//     | "wysiwyg"
+//     | "html"
+//     | "bbcode"
+//     | "rich";
+//   locale: string;
+//   sort?: number;
+//   discussionId?: number;
+//   foreignID?: null | string;
+//   fileRehosting?: {
+//     description: string;
+//     enabled: boolean;
+//     requestHeaders: any;
+//   };
+//   // things not on vanilla schema
+//   fileName: string;
+//   path: string;
+//   ArticleID?: string; //(will need to remove or edit the previous Article)
+// }
 export enum ProcedureTypeEnum {
   Category = "Category",
   Article = "Article",
