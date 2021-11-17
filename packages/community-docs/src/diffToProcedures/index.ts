@@ -1,25 +1,24 @@
 // name from the view point of changed files
 
-import { VanillaArticle, VanillaKnowledgeCategory,ProcedureTypeEnum } from '../utils/types';
 import {
-  filterDiffs,
-  createDisplayName
-}from './utils'
-
+  ProcedureTypeEnum,
+  VanillaArticle,
+  VanillaKnowledgeCategory,
+} from "../utils/types";
+import { createDisplayName, filterDiffs } from "./utils";
 
 export const createArticleChange = (
   articleChanges: string, // diff string of a file
   path: string
 ): VanillaArticle => {
-  let displayName = '';
-// we dont want articles to be called 'index'
-  if (articleChanges.startsWith('index')) {
-    const pathSplit = path.split('/');
+  let displayName = "";
+  // we dont want articles to be called 'index'
+  if (articleChanges.startsWith("index")) {
+    const pathSplit = path.split("/");
     const replacementName = pathSplit[pathSplit.length - 2];
     displayName = createDisplayName(replacementName);
   } else {
- 
-    const splitOnExtention = articleChanges.split('.')[0];
+    const splitOnExtention = articleChanges.split(".")[0];
     displayName = createDisplayName(splitOnExtention);
   }
 
@@ -28,11 +27,11 @@ export const createArticleChange = (
     articleID: null,
     fileName: articleChanges,
     name: displayName,
-    body: '',
+    body: "",
     path: path,
-    format: 'markdown',
-    locale: 'en',
-    procedureType:ProcedureTypeEnum.Article
+    format: "markdown",
+    locale: "en",
+    procedureType: ProcedureTypeEnum.Article,
   };
 
   return kb;
@@ -55,7 +54,7 @@ export const handleNestedKnowledgeCategoryChanges = (
 ): HandleNestedKnowledgeCategoryChangesReturn => {
   if (input.nestedCategoryChanges.length === 0) {
     return {
-      completed: input.completed||[],
+      completed: input.completed || [],
     };
   }
 
@@ -74,14 +73,14 @@ export const handleNestedKnowledgeCategoryChanges = (
     };
   }
 
-  const directorySplitBySlash = target.split('/');
+  const directorySplitBySlash = target.split("/");
 
   const identifierForDirectoryOrFile = directorySplitBySlash.shift();
 
   const createAnotherIterationForDirectory = directorySplitBySlash.length >= 1;
 
   if (createAnotherIterationForDirectory) {
-    tempNestedCategoryChanges.unshift(directorySplitBySlash.join('/'));
+    tempNestedCategoryChanges.unshift(directorySplitBySlash.join("/"));
   }
 
   if (
@@ -90,8 +89,8 @@ export const handleNestedKnowledgeCategoryChanges = (
   ) {
     tempHandled.push(identifierForDirectoryOrFile);
     if (
-      identifierForDirectoryOrFile.endsWith('.md') ||
-      identifierForDirectoryOrFile.endsWith('.rst')
+      identifierForDirectoryOrFile.endsWith(".md") ||
+      identifierForDirectoryOrFile.endsWith(".rst")
     ) {
       const markDownFileToKnowledgeCategory = createArticleChange(
         target,
@@ -105,12 +104,12 @@ export const handleNestedKnowledgeCategoryChanges = (
         parentID: null, //will need to get it, for sub folders
         knowledgeBaseID: 1, //will need to get it for nested. the docs knowledge base is 1 so for non nested we can use that
         name: displayName,
-        fileName:identifierForDirectoryOrFile,
-        desciption: '',
-        knowledgeCategoryID:null,
+        fileName: identifierForDirectoryOrFile,
+        description: "",
+        knowledgeCategoryID: null,
         path: input.originalChangesArray[tempParentIndex],
         childrenPath: identifierForDirectoryOrFile,
-        procedureType:ProcedureTypeEnum.Category
+        procedureType: ProcedureTypeEnum.Category,
       };
       tempCompleted.push(kb);
 
@@ -143,7 +142,6 @@ export const handleNestedKnowledgeCategoryChanges = (
 };
 
 export const diffToProcedures = (gitDiffArray: string[]) => {
-
   const gitDiffWithOutDocs = filterDiffs(gitDiffArray);
 
   const { completed } = handleNestedKnowledgeCategoryChanges({

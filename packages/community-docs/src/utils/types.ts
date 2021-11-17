@@ -2,7 +2,7 @@ export interface KnowledgeBase {
   uriCode: string; // the location of the knowledge base
   viewType: string; // guide or help
   name: string;
-  desciption: string;
+  description: string;
   sortArticles: "manual" | "name" | "dateInserted" | "dateInsertedDesc";
 }
 export interface KnowledgeCategory {
@@ -13,7 +13,7 @@ export interface KnowledgeCategory {
   path?: string; // the path we use during diff
   name: string;
   // displayName: string;
-  desciption: string;
+  description: string;
   sort?: number | null;
   url?: string | null;
   sortChildren?: null | "name" | "dateInserted" | "dateInsertedDesc" | "manual";
