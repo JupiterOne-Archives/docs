@@ -1,0 +1,6 @@
+---
+terraform:
+  - provision-environment
+  - provision-api-gateway
+  - provision-apps-gateway
+  - community-docs

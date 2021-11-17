@@ -1,10 +1,6 @@
-import axios from 'axios';
-import { KnowledgeCategory, VanillaArticle } from './types';
-import {
-  DEV_URL,
-  Authorization
-} from './constants'
-
+import axios from "axios";
+import { KnowledgeCategory, VanillaArticle } from "./utils";
+import { Authorization, DEV_URL } from "./utils/constants";
 
 interface HeaderProps {
   [key: string]: string;
@@ -14,31 +10,30 @@ interface OptionsProps {
   params?: { [key: string]: string | number };
 }
 enum RESTTypes {
-  POST = 'post',
-  PUT = 'put',
-  GET = 'get',
-  PATCH = 'patch',
-  DELETE = 'delete',
+  POST = "post",
+  PUT = "put",
+  GET = "get",
+  PATCH = "patch",
+  DELETE = "delete",
 }
 
-
 export default class HttpClient {
-  baseUrl = '';
-  testingFlag = process.argv.slice(2).includes('testing');
+  baseUrl = "";
+  testingFlag = process.argv.slice(2).includes("testing");
   headers: HeaderProps = {};
   constructor(baseUrl = DEV_URL) {
     this.baseUrl = baseUrl;
   }
 
   buildUrl(relativeUrl: string) {
-    return relativeUrl.startsWith('/')
+    return relativeUrl.startsWith("/")
       ? this.baseUrl + relativeUrl
       : `${this.baseUrl}/${relativeUrl}`;
   }
 
   buildHeaders(
     headers: HeaderProps = {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     }
   ): HeaderProps {
     this.headers.Authorization = Authorization;
@@ -55,8 +50,11 @@ export default class HttpClient {
     });
   }
 
-  post(relativeUrl: string, body: Partial<VanillaArticle | KnowledgeCategory>, headers?: HeaderProps) {
-
+  post(
+    relativeUrl: string,
+    body: Partial<VanillaArticle | KnowledgeCategory>,
+    headers?: HeaderProps
+  ) {
     return this.makeRequest({
       relativeUrl,
       headers: headers ? headers : {},
@@ -65,7 +63,11 @@ export default class HttpClient {
     });
   }
 
-  patch(relativeUrl: string, body: Partial<VanillaArticle | KnowledgeCategory>, headers?: HeaderProps) {
+  patch(
+    relativeUrl: string,
+    body: Partial<VanillaArticle | KnowledgeCategory>,
+    headers?: HeaderProps
+  ) {
     return this.makeRequest({
       relativeUrl,
       body,
@@ -74,7 +76,11 @@ export default class HttpClient {
     });
   }
 
-  delete(relativeUrl: string, headers?: HeaderProps, body?: Partial<VanillaArticle | KnowledgeCategory>) {
+  delete(
+    relativeUrl: string,
+    headers?: HeaderProps,
+    body?: Partial<VanillaArticle | KnowledgeCategory>
+  ) {
     return this.makeRequest({
       relativeUrl,
       body,
@@ -88,16 +94,15 @@ export default class HttpClient {
     headers,
     method,
     options = {},
-    dataReturned
+    dataReturned,
   }: {
     relativeUrl: string;
     body?: Partial<VanillaArticle | KnowledgeCategory>;
     headers: HeaderProps;
     method: RESTTypes;
     options?: OptionsProps;
-    dataReturned: any
+    dataReturned: any;
   }) {
-
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve({
@@ -107,10 +112,9 @@ export default class HttpClient {
           body,
           method,
           ...options,
-        })
-      })
-    })
-
+        });
+      });
+    });
   }
 
   makeRequest({
@@ -126,32 +130,24 @@ export default class HttpClient {
     method: RESTTypes;
     options?: OptionsProps;
   }) {
-
-
     if (this.testingFlag) {
-      let dataReturned = {}
+      let dataReturned = {};
       if (method === RESTTypes.GET) {
-
-        dataReturned = []
-
+        dataReturned = [];
       }
       if (method === RESTTypes.POST) {
-        if (relativeUrl.startsWith('knowledge-categories/')) {
+        if (relativeUrl.startsWith("knowledge-categories/")) {
           dataReturned = {
-            knowledgeCategoryID: (Math.floor(Math.random() * 10) + 1)
-          }
+            knowledgeCategoryID: Math.floor(Math.random() * 10) + 1,
+          };
         } else {
           dataReturned = {
-            articleID: (Math.floor(Math.random() * 10) + 1)
-          }
+            articleID: Math.floor(Math.random() * 10) + 1,
+          };
         }
-
-
       }
       if (method === RESTTypes.PATCH) {
-
-        dataReturned = {}
-
+        dataReturned = {};
       }
 
       return this.makePseudoRequest({
@@ -160,8 +156,8 @@ export default class HttpClient {
         headers,
         method,
         options,
-        dataReturned
-      })
+        dataReturned,
+      });
     }
     return axios.request({
       url: this.buildUrl(relativeUrl),

@@ -1,22 +1,45 @@
 {
   "name": "docs-community",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "index.js",
   "repository": "git@github.com:JupiterOne/docs-community.git",
   "author": "Bryanschauerte <bryan.schauerte@gmail.com>",
-  "license": "MIT",
+  "license": "NONE",
   "private": true,
-  "type": "module",
+  "sideEffects": false,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
+    "lint": "eslint --ext .ts,.js .",
+    "start:containers": "docker-compose up $1",
+    "stop:containers": "docker-compose down",
     "test": "./bin/run-tests.local.sh",
-    "start": "tsc && node ./dist/index.js",
-    "run": "yarn ts-node ./src/index.ts",
-    "build": "tsc",
-    "watch-and-run-fake-httpClient": "ts-node-dev --respawn -- src/index.ts testing",
-    "watch-and-run": "ts-node-dev --respawn -- src/index.ts"
+    "test:unit": "./bin/run-tests.unit.sh",
+    "test:ci": "./bin/run-tests.ci.sh",
+    "format:prettier": "prettier --write '**/*.{js,jsx,ts,tsx,md,json,yaml}'",
+    "format": "yarn format:prettier && yarn tsconfig:repair",
+    "tsconfig:repair": "check-tsconfig --monorepo --repair",
+    "tsconfig:check": "check-tsconfig --monorepo --no-repair",
+    "clean": "rm -rf ./work ./deploy/terraform/dist && lerna run clean",
+    "type-check": "yarn tsconfig:repair --quiet && echo 'Checking types...' && ttsc -b `find ./packages -maxdepth 2 -name tsconfig.json` && echo 'Type check success'",
+    "precompile": "yarn clean",
+    "compile": "yarn tsconfig:repair --quiet; echo 'Compiling...'; lerna run compile",
+    "postcompile": "echo 'Finished compiling'",
+    "autocompile": "yarn compile --watch",
+    "bundle": "yarn compile && ./bin/bundle.sh",
+    "plan": "yarn bundle && yarn jupiterone-manual-deploy -t jupiterone-dev -a plan",
+    "deploy": "yarn bundle && yarn jupiterone-manual-deploy -t jupiterone-dev",
+
+
+    "updatePackages": "yarn lernaupdate",
+    "versionTypesPackage": "./bin/run-version-types-package.sh",
+    "start": "cd packages/community-docs; yarn start",
+
+    "verify-types-versions": "./bin/run-verify-types-versions.sh"
   },
   "dependencies": {
-    "@types/node": "^16.11.6",
+    "@types/node": "^16.11.7",
     "axios": "^0.24.0",
     "lodash": "^4.17.21",
     "rxjs": "^7.4.0",
@@ -24,9 +47,13 @@
   },
   "devDependencies": {
     "@jupiterone/dev-tools": "^8.2.0",
+    "@jupiterone/platform-sdk-logging": "^2.1.1",
+    "@jupiterone/platform-sdk-test-tools": "^1.1.0",
     "@jupiterone/typescript-tools": "^15.0.0",
     "@types/lodash": "^4.14.176",
     "@types/supertest": "^2.0.11",
+    "lerna": "^4.0.0",
+    "lerna-update-wizard": "^0.17.8",
     "simple-git": "^2.47.0",
     "supertest": "^6.1.6",
     "ts-node": "^10.4.0",
