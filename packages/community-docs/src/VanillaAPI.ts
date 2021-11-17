@@ -1,3 +1,5 @@
+import FormData from "form-data";
+import fs from "fs";
 import HttpClient from "./httpClient";
 import {
   ProcedureTypeEnum,
@@ -9,6 +11,21 @@ interface ErrorType {
   message: string;
   status: number;
   errors: any[];
+}
+
+interface MediaPostReturn {
+  url: string;
+  name: string;
+  type: string;
+  size: number;
+  width: number;
+  height: number;
+  displaySize: string;
+  mediaID: number;
+  dateInserted: string;
+  insertUserID: number;
+  foreignType: string;
+  foreignID: number;
 }
 const isErrorType = <T>(response: ErrorType | T): response is ErrorType => {
   return (response as ErrorType)?.message !== undefined;
@@ -303,4 +320,37 @@ export const editArticle = async (
   } catch (e) {
     console.error(e, "Create Article error", { e });
   }
+};
+
+export const postImage = async (client: HttpClient, data: FormData) => {
+  try {
+    const image = (await client.uploadMedia(data)) as {
+      data: MediaPostReturn | ErrorType;
+    };
+    if (!isErrorType(image?.data)) {
+      return image.data;
+    }
+  } catch (error) {
+    console.error(error, "Error uploading image");
+  }
+};
+
+export const uploadImageAndReturnUrl = async (
+  imagePath: string,
+  originalMarkdownSrc: string
+): Promise<string> => {
+  const httpClient = new HttpClient();
+  const form = new FormData();
+  const imageFile = fs.createReadStream(imagePath);
+
+  form.append("file", imageFile);
+  try {
+    const postImageResponse = await postImage(httpClient, form as any);
+    if (postImageResponse && postImageResponse?.url) {
+      return postImageResponse && postImageResponse?.url;
+    }
+  } catch (error) {
+    return originalMarkdownSrc;
+  }
+  return originalMarkdownSrc;
 };
