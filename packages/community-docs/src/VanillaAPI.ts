@@ -1,5 +1,9 @@
 import HttpClient from "./httpClient";
-import { VanillaArticle, VanillaKnowledgeCategory } from "./utils/types";
+import {
+  ProcedureTypeEnum,
+  VanillaArticle,
+  VanillaKnowledgeCategory,
+} from "./utils/types";
 
 interface ErrorType {
   message: string;
@@ -28,7 +32,10 @@ export const getArticles = async (
     };
 
     if (!isErrorType(articles.data)) {
-      return articles.data;
+      return articles.data.map((a) => ({
+        ...a,
+        procedureType: ProcedureTypeEnum.Article,
+      }));
     }
   } catch (e) {
     console.error({ e }, "errrrr");
@@ -78,7 +85,10 @@ export const getKnowedgeCategories = async (
     };
 
     if (!isErrorType(categories?.data)) {
-      return categories.data;
+      return categories.data.map((c) => ({
+        ...c,
+        procedureType: ProcedureTypeEnum.Category,
+      }));
     }
   } catch (error) {
     console.error(error, "Error in getting categories");
@@ -93,7 +103,7 @@ export const createKnowledgeCategory = async (
 ): Promise<VanillaKnowledgeCategory | undefined> => {
   // only required - totally not the same as the docs
   // {"name":"bryan test categroy two","parentID":1}
-
+  console.log(client.post, "Post");
   try {
     const category = (await client.post(
       "/knowledge-categories",
@@ -101,9 +111,12 @@ export const createKnowledgeCategory = async (
     )) as {
       data: VanillaKnowledgeCategory | ErrorType;
     };
-
+    console.log(category, "SJSJSJSJSJS");
     if (!isErrorType(category?.data)) {
-      return category.data;
+      return {
+        ...category.data,
+        procedureType: ProcedureTypeEnum.Category,
+      };
     }
   } catch (e) {
     console.error(e, "Create Knowledge Category error", { e });
@@ -124,7 +137,10 @@ export const editKnowledgeCategory = async (
     };
 
     if (!isErrorType(category.data)) {
-      return category.data;
+      return {
+        ...category.data,
+        procedureType: ProcedureTypeEnum.Category,
+      };
     }
   } catch (e) {
     console.error(e, "Create Knowledge Category error");
@@ -170,6 +186,7 @@ export const deleteKnowledgeCategory = async (
   }
   // if(!isErrorType(catagory?.data)&&catagory.data?.articleCountRecursive !==0){
   //   haveToDeleteChildArticles=true
+  // LEAVING in case we need to do it
   // }
   if (!isErrorType(catagory?.data) && catagory.data?.childCategoryCount !== 0) {
     haveToDeleteChildCategories = false;
@@ -234,22 +251,13 @@ export const createArticle = async (
   client: HttpClient,
   bodyOfRequest: Partial<VanillaArticle>
 ): Promise<VanillaArticle | undefined> => {
-  // only required - totally not the same as the docs
-  // {
-  //   "body": "this is the body of the article",
-  //   "format": "markdown",
-  //  "knowledgeCategoryID": 10,
-  //   "locale": "en",
-  //   "name": "postman - article five",
-  //   "sort": 0}
-
   try {
     const article = (await client.post("/articles", bodyOfRequest)) as {
       data: VanillaArticle | ErrorType;
     };
 
     if (!isErrorType(article.data)) {
-      return article.data;
+      return { ...article.data, procedureType: ProcedureTypeEnum.Article };
     }
   } catch (e) {
     console.error(e, "Create Article error");
@@ -272,7 +280,7 @@ export const deleteArticle = async (
     };
 
     if (!isErrorType(article.data)) {
-      return article.data;
+      return { ...article.data, procedureType: ProcedureTypeEnum.Article };
     }
   } catch (e) {
     console.error(e, "Create Article error", { e });
@@ -290,7 +298,7 @@ export const editArticle = async (
     };
 
     if (!isErrorType(article.data)) {
-      return article.data;
+      return { ...article.data, procedureType: ProcedureTypeEnum.Article };
     }
   } catch (e) {
     console.error(e, "Create Article error", { e });

@@ -1,9 +1,4 @@
-import HttpClientMOCKER from "../httpClientMOCKER";
-import {
-  FLAG_FOR_DELETE,
-  VanillaArticle,
-  VanillaKnowledgeCategory,
-} from "../utils";
+import { FLAG_FOR_DELETE, VanillaArticle } from "../utils";
 import {
   createArticle,
   createKnowledgeCategory,
@@ -16,30 +11,37 @@ import {
   addVanillaArticleInfoToProcedure,
   addVanillaArticlesToProcedures,
   addVanillaCategoryToProcedure,
+  getPreviousKnowledgeID,
   procedureToArticle,
   procedureToKnowledgeCategory,
   useProceduresForVanillaRequests,
 } from "./";
 import {
+  expectedDeleteANDCreatesPROCEDURES,
   matchingProcedureKnowledgeCategory,
   matchingVanillaKnowledgeArticle,
   procedureArticle,
   procedureKnowledgeCategory,
   PROCEDURES,
   proceduresMock,
+  PROCEDURESWithOneDeleteArticleAndCreates,
   SHAPEWEWANT,
+  vanillaArticleWithInfo,
   vanillaKnowledgeArticle,
   vanillaKnowledgeCategory,
 } from "./mocks";
-// jest.mock("../httpClient")
+import { markdownToString } from "./utils";
 jest.mock("../VanillaAPI");
+jest.mock("./utils");
 
 describe("ProceduresToVanillaRequests", () => {
   let mockCreateKnowledgeCategory =
     createKnowledgeCategory as jest.MockedFunction<
       typeof createKnowledgeCategory
     >;
-
+  let mockMarkdownToString = markdownToString as jest.MockedFunction<
+    typeof markdownToString
+  >;
   let mockEditKnowledgeCategory = editKnowledgeCategory as jest.MockedFunction<
     typeof editKnowledgeCategory
   >;
@@ -67,6 +69,9 @@ describe("ProceduresToVanillaRequests", () => {
   beforeEach(() => {
     mockCreateArticle = createArticle as jest.MockedFunction<
       typeof createArticle
+    >;
+    mockMarkdownToString = markdownToString as jest.MockedFunction<
+      typeof markdownToString
     >;
     mockDeleteKnowledgeCategory =
       deleteKnowledgeCategory as jest.MockedFunction<
@@ -104,7 +109,7 @@ describe("ProceduresToVanillaRequests", () => {
     it("returns addition of knowledge return to the procedure", () => {
       const expected = {
         childrenPath: "compliance-reporting",
-        desciption: "",
+        description: "",
         fileName: "compliance-reporting",
         foreignID: undefined,
         knowledgeBaseID: 1,
@@ -159,7 +164,7 @@ describe("ProceduresToVanillaRequests", () => {
       const expected = [
         {
           childrenPath: "getting-started-admin",
-          desciption: "",
+          description: "",
           fileName: "getting-started-admin",
           knowledgeBaseID: 1,
           knowledgeCategoryID: null,
@@ -192,7 +197,7 @@ describe("ProceduresToVanillaRequests", () => {
         },
         {
           childrenPath: "compliance-reporting",
-          desciption: "",
+          description: "",
           fileName: "compliance-reporting",
           knowledgeBaseID: 1,
           knowledgeCategoryID: null,
@@ -395,7 +400,7 @@ describe("ProceduresToVanillaRequests", () => {
       });
       const expected = {
         childrenPath: "soc2-reporting",
-        desciption: "",
+        description: "",
         fileName: "soc2-reporting",
         foreignID: undefined,
         knowledgeBaseID: 1,
@@ -440,7 +445,7 @@ describe("ProceduresToVanillaRequests", () => {
         });
         const expected = {
           childrenPath: "soc2-reporting",
-          desciption: "",
+          description: "",
           fileName: "soc2-reporting",
           foreignID: undefined,
           knowledgeBaseID: 1,
@@ -497,28 +502,133 @@ describe("ProceduresToVanillaRequests", () => {
     });
   });
 
+  describe("getPreviousKnowledgeID", () => {
+    it("returns null when there is no previous knowledge category", () => {
+      const expected = null;
+      const actualWithEmptyArray = getPreviousKnowledgeID([]);
+      const actualWithNoCategories = getPreviousKnowledgeID([
+        vanillaArticleWithInfo,
+        vanillaArticleWithInfo,
+      ]);
+      expect(actualWithEmptyArray).toEqual(expected);
+      expect(actualWithNoCategories).toEqual(expected);
+    });
+    it("returns knowledgeCategoryID of nearest Category", () => {
+      const knowledgeCategoryID = 827;
+      const targetForKnowledgeCategory = {
+        ...vanillaKnowledgeCategory,
+        knowledgeCategoryID,
+      };
+      const expected = knowledgeCategoryID;
+      const actualWithEmptyArray = getPreviousKnowledgeID([
+        vanillaKnowledgeCategory,
+        vanillaArticleWithInfo,
+        targetForKnowledgeCategory,
+        vanillaArticleWithInfo,
+      ]);
+
+      expect(actualWithEmptyArray).toEqual(expected);
+    });
+  });
+
   describe("useProceduresForVanillaRequests", () => {
-    it("adds the correct parentID and KnowledgeCategories!!!", async () => {
-      const createArticle = (knowledgeCategoryID: number, articleID: number) =>
-        ({
-          knowledgeCategoryID,
-          articleID,
-        } as VanillaArticle);
-      const createCategory = (): VanillaKnowledgeCategory => ({});
-      const HttpClientMock = new HttpClientMOCKER({
-        get: [1, 2, 3, 4, 5],
-        post: [6, 7, 8, 9, 10],
-        patch: [11, 12, 13, 14, 15],
-        delete: [16, 17, 18, 19],
+    beforeEach(() => {
+      mockMarkdownToString.mockReset();
+      mockCreateArticle.mockReset();
+      mockCreateKnowledgeCategory.mockReset();
+    });
+    it("handles all new items", async () => {
+      mockMarkdownToString.mockReturnValue("Im markdown. LOOK AT ME.");
+      mockCreateArticle
+        .mockResolvedValueOnce({
+          ...vanillaArticleWithInfo,
+          knowledgeCategoryID: 22,
+          articleID: 11,
+          name: "Jupiterone Query Language Copy",
+        })
+        .mockResolvedValueOnce({
+          ...vanillaArticleWithInfo,
+          knowledgeCategoryID: 22,
+          articleID: 12,
+
+          name: "Jupiterone Query Language",
+        })
+        .mockResolvedValueOnce({
+          ...vanillaArticleWithInfo,
+          knowledgeCategoryID: 33,
+          articleID: 21,
+          name: "Soc2 With Jupiterone Copy",
+        })
+        .mockResolvedValueOnce({
+          ...vanillaArticleWithInfo,
+          knowledgeCategoryID: 33,
+          articleID: 22,
+
+          name: "Soc2 With Jupiterone",
+        });
+      mockCreateKnowledgeCategory
+        .mockResolvedValueOnce({
+          ...vanillaKnowledgeCategory,
+          parentID: 1,
+          knowledgeBaseID: 1,
+          name: "Getting Started Admin",
+          description: "",
+          knowledgeCategoryID: 22,
+        })
+
+        .mockResolvedValueOnce({
+          ...vanillaKnowledgeCategory,
+          parentID: 22,
+          knowledgeBaseID: 1,
+          name: "Compliance Reporting",
+
+          knowledgeCategoryID: 33,
+        });
+
+      const actual = await useProceduresForVanillaRequests(PROCEDURES, []);
+
+      expect(actual).toEqual(SHAPEWEWANT);
+    });
+    it("handles addition and removal of an articles", async () => {
+      const editArticle =
+        PROCEDURESWithOneDeleteArticleAndCreates[2] as VanillaArticle;
+      const deleteArticle =
+        PROCEDURESWithOneDeleteArticleAndCreates[1] as VanillaArticle;
+      mockMarkdownToString
+        .mockReturnValueOnce(FLAG_FOR_DELETE)
+        .mockReturnValue("Im markdown. LOOK AT ME.");
+      mockEditArticle.mockResolvedValue(editArticle);
+      mockDeleteArticle.mockResolvedValue(deleteArticle);
+      mockCreateArticle
+
+        .mockResolvedValueOnce({
+          ...vanillaArticleWithInfo,
+          knowledgeCategoryID: 33,
+          articleID: 21,
+          name: "Soc2 With Jupiterone Copy",
+        })
+        .mockResolvedValueOnce({
+          ...vanillaArticleWithInfo,
+          knowledgeCategoryID: 33,
+          articleID: 22,
+
+          name: "Soc2 With Jupiterone",
+        });
+      mockCreateKnowledgeCategory.mockResolvedValueOnce({
+        ...vanillaKnowledgeCategory,
+        parentID: 22,
+        knowledgeBaseID: 1,
+        name: "Compliance Reporting",
+
+        knowledgeCategoryID: 33,
       });
-      // SHAPEWEWANT,
 
       const actual = await useProceduresForVanillaRequests(
-        PROCEDURES,
-        [],
-        HttpClientMock
+        PROCEDURESWithOneDeleteArticleAndCreates,
+        []
       );
-      expect(actual).toEqual(SHAPEWEWANT);
+
+      expect(actual).toEqual(expectedDeleteANDCreatesPROCEDURES);
     });
   });
 });
