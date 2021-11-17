@@ -6,8 +6,11 @@ import {
 } from "../utils/constants";
 
 export const markdownToString = (filePath?: string): string => {
+  console.log(__dirname, "__dirname");
+  console.log(filePath, "filePath");
   // we also want to use this to see if the file got deleted! the git diff wont differenitate
-  const fileLocation = path.join(__dirname, "../docs", `/${filePath}`);
+  const fileLocation = path.join(__dirname, "../../../../docs", `/${filePath}`);
+  console.log(fileLocation, "filelocationnnn");
   let supportedTypeOfFile = false;
   SUPPORTED_FILE_TYPE_EXTENTIONS.forEach((extention) => {
     if (fileLocation.endsWith(extention)) {

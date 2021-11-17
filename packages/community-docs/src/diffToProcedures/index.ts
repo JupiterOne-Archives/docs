@@ -149,6 +149,6 @@ export const diffToProcedures = (gitDiffArray: string[]) => {
     originalChangesArray: [...gitDiffWithOutDocs], // need to create a new array for each
     parentIndex: 0,
   });
-
+  console.log(completed, "completed-handleNestedKnowledgeCategoryChanges");
   return completed;
 };

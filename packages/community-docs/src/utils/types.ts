@@ -19,33 +19,7 @@ export interface KnowledgeCategory {
   sortChildren?: null | "name" | "dateInserted" | "dateInsertedDesc" | "manual";
   foreignID?: null | string; // to link to external srcs
 }
-// export interface Article {
-//   knowledgeCategoryID: number | null;
-//   articleID: number | null;
-//   name: string;
-//   body: string;
-//   format:
-//     | "text"
-//     | "textex"
-//     | "markdown"
-//     | "wysiwyg"
-//     | "html"
-//     | "bbcode"
-//     | "rich";
-//   locale: string;
-//   sort?: number;
-//   discussionId?: number;
-//   foreignID?: null | string;
-//   fileRehosting?: {
-//     description: string;
-//     enabled: boolean;
-//     requestHeaders: any;
-//   };
-//   // things not on vanilla schema
-//   fileName: string;
-//   path: string;
-//   ArticleID?: string; //(will need to remove or edit the previous Article)
-// }
+
 export enum ProcedureTypeEnum {
   Category = "Category",
   Article = "Article",
@@ -153,47 +127,4 @@ export interface VanillaArticle {
   fileName: null | string;
   requestCompleted?: boolean;
   procedureType: ProcedureTypeEnum;
-  // displayName?:string;
-  // articleID: 4,
-  // articleRevisionID: 5,
-  // knowledgeCategoryID: 7,
-  // knowledgeBaseID: 1,
-  // name: 'compliance art',
-  // seoName: null,
-  // seoDescription: null,
-  // slug: '4-compliance-art',
-  // sort: null,
-  // score: 0,
-  // views: 0,
-  // url: 'https://jupiterone.vanillastaging.com/kb/articles/4-compliance-art',
-  // insertUserID: 12,
-  // dateInserted: '2021-11-03T16:50:22+00:00',
-  // updateUserID: 12,
-  // dateUpdated: '2021-11-03T16:50:22+00:00',
-  // insertUser: {
-  //   userID: 12,
-  //   name: 'Carter Hesterman',
-  //   url: 'https://jupiterone.vanillastaging.com/profile/Carter%20Hesterman',
-  //   photoUrl: 'https://w8.vanillicon.com/v2/89e33ddc07b00da9d5c485f42bf08d0a.svg',
-  //   dateLastActive: '2021-11-08T15:14:24+00:00',
-  //   banned: 0,
-  //   punished: 0,
-  //   private: false,
-  //   label: 'admin'
-  // },
-  // updateUser: {
-  //   userID: 0,
-  //   name: 'unknown',
-  //   url: 'https://jupiterone.vanillastaging.com/profile/',
-  //   photoUrl: 'https://w3.vanillicon.com/v2/310b86e0b62b828562fc91c7be5380a9.svg',
-  //   dateLastActive: '2021-11-08T18:51:33+00:00',
-  //   banned: 0,
-  //   punished: 0,
-  //   private: false
-  // },
-  // status: 'published',
-  // locale: 'en',
-  // featured: false,
-  // translationStatus: 'up-to-date',
-  // foreignID: null
 }
