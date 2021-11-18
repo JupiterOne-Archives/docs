@@ -12,7 +12,11 @@ import {
   getAllArticles,
   getKnowedgeCategories,
 } from "../VanillaAPI";
-import { directoryExists, markdownToString } from "./utils";
+import {
+  directoryExists,
+  getMarkdownImageSrcMap,
+  markdownToString,
+} from "./utils";
 
 export const addVanillaCategoryToProcedure = (
   procedure: VanillaKnowledgeCategory,
@@ -78,6 +82,18 @@ export const addVanillaArticlesToProcedures = (
   return proceduresWithVanillaCategoryInfo;
 };
 
+export const addImagesToArticleMarkdown = async (markdownAsString: string) => {
+  if (!markdownAsString || !markdownAsString.length) {
+    return "";
+  }
+  const alteredMarkdown = markdownAsString;
+  const imageSrcMap = getMarkdownImageSrcMap(alteredMarkdown);
+  if (!imageSrcMap.length) {
+    return alteredMarkdown;
+  }
+  return alteredMarkdown;
+};
+
 export const procedureToArticle = async (
   httpClient: HttpClient,
   procedureWorkedOn: VanillaArticle,
@@ -85,9 +101,11 @@ export const procedureToArticle = async (
   bodyMock?: string
 ): Promise<VanillaArticle> => {
   let tempProcedureWorkedOn = { ...procedureWorkedOn };
-  tempProcedureWorkedOn.body = bodyMock
+  const bodyOfArticle = bodyMock
     ? bodyMock
     : markdownToString(tempProcedureWorkedOn?.path);
+  tempProcedureWorkedOn.body = await addImagesToArticleMarkdown(bodyOfArticle);
+  // add images to body
 
   if (
     tempProcedureWorkedOn.articleID === null &&

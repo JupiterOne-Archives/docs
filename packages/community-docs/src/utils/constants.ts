@@ -7,3 +7,4 @@ export const DEV_URL: string = "https://jupiterone.vanillastaging.com/api/v2";
 export const Authorization: string = authToken;
 export const POST_DELAY_TIME: number = 1200;
 export const SUPPORTED_MEDIA_TYPES = ["png", "jpg", "jpeg", "gif"];
+export const MARKDOWN_IMAGE_REGEX = /\]\((..\/assets.*?)\)/g;

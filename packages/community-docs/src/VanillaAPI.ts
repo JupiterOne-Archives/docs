@@ -120,7 +120,7 @@ export const createKnowledgeCategory = async (
 ): Promise<VanillaKnowledgeCategory | undefined> => {
   // only required - totally not the same as the docs
   // {"name":"bryan test categroy two","parentID":1}
-  console.log(client.post, "Post");
+
   try {
     const category = (await client.post(
       "/knowledge-categories",
@@ -128,7 +128,7 @@ export const createKnowledgeCategory = async (
     )) as {
       data: VanillaKnowledgeCategory | ErrorType;
     };
-    console.log(category, "SJSJSJSJSJS");
+
     if (!isErrorType(category?.data)) {
       return {
         ...category.data,

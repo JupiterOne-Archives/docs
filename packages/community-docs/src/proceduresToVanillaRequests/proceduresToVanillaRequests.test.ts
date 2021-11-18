@@ -8,6 +8,7 @@ import {
   editKnowledgeCategory,
 } from "../VanillaAPI";
 import {
+  addImagesToArticleMarkdown,
   addVanillaArticleInfoToProcedure,
   addVanillaArticlesToProcedures,
   addVanillaCategoryToProcedure,
@@ -629,6 +630,20 @@ describe("ProceduresToVanillaRequests", () => {
       );
 
       expect(actual).toEqual(expectedDeleteANDCreatesPROCEDURES);
+    });
+  });
+  describe("addImagesToArticleMarkdown", () => {
+    it("returns empty string when no input supplied", async () => {
+      const actual = await addImagesToArticleMarkdown("");
+      const expected = "";
+      expect(actual).toEqual(expected);
+    });
+    it("returns inputted string when length of imageSrcMap is 0", async () => {
+      const inputedString =
+        "markdown turned into a string and does not contain ()[assets/images]";
+      const actual = await addImagesToArticleMarkdown(inputedString);
+      const expected = inputedString;
+      expect(actual).toEqual(expected);
     });
   });
 });
