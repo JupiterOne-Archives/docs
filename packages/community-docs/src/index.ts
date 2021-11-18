@@ -24,7 +24,6 @@ const ex = [
 export const updateCommunityDocsWithPathOverride = async (
   relativePathAtDoc = ex
 ) => {
-  console.log("running", ex);
   const procedures = diffToProcedures(ex);
   if (procedures && procedures.length > 0) {
     return await proceduresToVanillaRequests(procedures);

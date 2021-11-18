@@ -1,5 +1,9 @@
 import path from "path";
-import { PATH_OF_DIRECTORY_TO_WATCH, SUPPORTED_MEDIA_TYPES } from "../utils";
+import {
+  MARKDOWN_IMAGE_REGEX,
+  PATH_OF_DIRECTORY_TO_WATCH,
+  SUPPORTED_MEDIA_TYPES,
+} from "../utils";
 
 export const getMediaPath = (imagePath: string): string => {
   // we also want to use this to see if the file got deleted! the git diff wont differenitate
@@ -29,9 +33,8 @@ export const getMediaPath = (imagePath: string): string => {
 
 // }
 
-export const markdownAssetRegularExpression = new RegExp(
-  /\]\((..\/assets.*?)\)/g
-);
+export const markdownAssetRegularExpression = new RegExp(MARKDOWN_IMAGE_REGEX);
+
 export const replaceBodyLinks = (body: string, newLocation: string): any => {
   const bodyTemp = `${body}`;
   // make a new regular expression that matches exactly to target the uploading image src in the markdown

@@ -1,4 +1,5 @@
 import axios from "axios";
+import FormData from "form-data";
 import { KnowledgeCategory, VanillaArticle } from "./utils";
 import { Authorization, DEV_URL } from "./utils/constants";
 
@@ -47,6 +48,25 @@ export default class HttpClient {
       headers: this.buildHeaders(),
       method: RESTTypes.GET,
       options,
+    });
+  }
+
+  uploadMedia(data: FormData) {
+    return axios.request({
+      url: this.buildUrl("media"),
+      headers: {
+        // 'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+        accept: "application/json",
+        "Accept-Language": "en-US,en;q=0.8",
+        "Content-Type": `multipart/form-data`,
+        Authorization: this.headers.Authorization,
+      },
+      data: {
+        body: {
+          image: data,
+        },
+      },
+      method: RESTTypes.POST,
     });
   }
 
