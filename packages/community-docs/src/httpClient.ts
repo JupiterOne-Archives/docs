@@ -52,21 +52,21 @@ export default class HttpClient {
   }
 
   uploadMedia(data: FormData) {
-    return axios.request({
-      url: this.buildUrl("media"),
-      headers: {
-        // 'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-        accept: "application/json",
-        "Accept-Language": "en-US,en;q=0.8",
-        "Content-Type": `multipart/form-data`,
-        Authorization: this.headers.Authorization,
-      },
-      data: {
-        body: {
-          image: data,
-        },
-      },
-      method: RESTTypes.POST,
+    const headers = {
+      // 'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+      Accept: "*/*",
+      "Accept-Language": "en-US,en;q=0.8",
+      "Content-Type": `multipart/form-data`,
+      connection: "keep-alive",
+      Authorization: Authorization,
+      withCredentials: true,
+      ...data.getHeaders(),
+    };
+    console.log("IMN sssdfsdfsdfsdfsdf", headers);
+    console.log("PAPAPAPAP", this.buildUrl("media"));
+    return axios.post(this.buildUrl("media"), {
+      headers,
+      data,
     });
   }
 

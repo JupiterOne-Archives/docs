@@ -1,12 +1,12 @@
 import FormData from "form-data";
 import fs from "fs";
+import path from "path";
 import HttpClient from "./httpClient";
 import {
   ProcedureTypeEnum,
   VanillaArticle,
   VanillaKnowledgeCategory,
 } from "./utils/types";
-
 interface ErrorType {
   message: string;
   status: number;
@@ -327,30 +327,60 @@ export const postImage = async (client: HttpClient, data: FormData) => {
     const image = (await client.uploadMedia(data)) as {
       data: MediaPostReturn | ErrorType;
     };
+    console.log("djdjdjIMAGE ", image);
     if (!isErrorType(image?.data)) {
       return image.data;
     }
   } catch (error) {
+    console.dir("sssssssEEEERRRRO ", error);
     console.error(error, "Error uploading image");
   }
 };
+// function checkFileExists(filepath: string) {
+//   console.log("checking thing", filepath);
+//   return new Promise((resolve, reject) => {
+//     fs.access(filepath, fs.constants.F_OK, (error) => {
+//       resolve(!error);
+//     });
+//   });
+// }
 
 export const uploadImageAndReturnUrl = async (
-  imagePath: string,
-  originalMarkdownSrc: string
+  imagePath: string
 ): Promise<string> => {
   const httpClient = new HttpClient();
   const form = new FormData();
-  const imageFile = fs.createReadStream(imagePath);
+  console.log(imagePath, "image upload imagePath ");
+  const mediaLocation = imagePath.substring(3);
+  const fileLocation = path.join(
+    __dirname,
+    "../../../docs",
+    `/${mediaLocation}`
+  );
+  console.log(fileLocation, "fileLocationsssjj");
 
-  form.append("file", imageFile);
   try {
-    const postImageResponse = await postImage(httpClient, form as any);
-    if (postImageResponse && postImageResponse?.url) {
-      return postImageResponse && postImageResponse?.url;
+    const imageFile = fs.readFileSync(fileLocation);
+
+    console.log(imageFile, "IM IMAGE fjsjljsjsjsj");
+    form.append("file", imageFile);
+    try {
+      console.log("SUCCESSSSSJWERRRREEE");
+      const postImageResponse = await postImage(httpClient, form);
+      console.log("POST respons", postImageResponse, "--End post reponse");
+      if (postImageResponse && postImageResponse?.url) {
+        return postImageResponse.url;
+      }
+    } catch (error) {
+      console.error(error, "Error uploading image");
+      console.log("POST respons", error, "--End post reponse");
+      return imagePath;
     }
-  } catch (error) {
-    return originalMarkdownSrc;
+  } catch (e) {
+    console.log(e, "FAILLED");
   }
-  return originalMarkdownSrc;
+
+  console.log("DONT EXIST");
+
+  return imagePath;
 };
