@@ -3,7 +3,6 @@ import path from "path";
 import {
   FLAG_FOR_DELETE,
   SUPPORTED_FILE_TYPE_EXTENTIONS,
-  MARKDOWN_IMAGE_REGEX
 } from "../utils/constants";
 
 export const markdownToString = (filePath?: string): string => {
@@ -47,17 +46,4 @@ export const directoryExists = (filePath?: string): boolean => {
   }
 
   return false;
-};
-
-export const getMarkdownImageSrcMap = (markdownAsString:string) => {
-   const markdownAssetRegularExpression = new RegExp(MARKDOWN_IMAGE_REGEX);
-    const bodyTemp = `${markdownAsString}`;
-    // make a new regular expression that matches exactly to target the uploading image src in the markdown
-    const matches = [...bodyTemp.matchAll(markdownAssetRegularExpression)]
-    return bodyTemp.replace(
-      markdownAssetRegularExpression,
-      "](https://us.v-cdn.net/6035554/uploads/2QGC57M0ZHO4/api-key-access-view.png)"
-    );
-
-  return [];
 };

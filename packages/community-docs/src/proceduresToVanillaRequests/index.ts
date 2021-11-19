@@ -1,4 +1,9 @@
 import HttpClient from "../httpClient";
+import {
+  getMarkdownImageSrcs,
+  isSupportedMediaType,
+  modifyBodyImageLink,
+} from "../linksAndMediaHandlers";
 import { isArticleType, isKnowledgeCategoryType } from "../utils";
 import { FLAG_FOR_DELETE } from "../utils/constants";
 import { VanillaArticle, VanillaKnowledgeCategory } from "../utils/types";
@@ -11,12 +16,9 @@ import {
   editKnowledgeCategory,
   getAllArticles,
   getKnowedgeCategories,
+  uploadImageAndReturnUrl,
 } from "../VanillaAPI";
-import {
-  directoryExists,
-  getMarkdownImageSrcMap,
-  markdownToString,
-} from "./utils";
+import { directoryExists, markdownToString } from "./utils";
 
 export const addVanillaCategoryToProcedure = (
   procedure: VanillaKnowledgeCategory,
@@ -81,17 +83,35 @@ export const addVanillaArticlesToProcedures = (
   });
   return proceduresWithVanillaCategoryInfo;
 };
+export const uploadImagesAndAddToMarkdown = async (
+  imageSrcArray: string[],
+  markdownAsString: string
+) => {
+  let markdownTarget = markdownAsString;
+  const supportedImages = imageSrcArray.filter((m) => isSupportedMediaType(m));
+  for (let i = 0; i < supportedImages.length; i++) {
+    const newLocation = await uploadImageAndReturnUrl(supportedImages[i]);
+    console.log("uplading", i, newLocation);
+    markdownTarget = modifyBodyImageLink(
+      markdownTarget,
+      supportedImages[i],
+      newLocation
+    );
+  }
 
+  return markdownTarget;
+};
 export const addImagesToArticleMarkdown = async (markdownAsString: string) => {
   if (!markdownAsString || !markdownAsString.length) {
     return "";
   }
   const alteredMarkdown = markdownAsString;
-  const imageSrcMap = getMarkdownImageSrcMap(alteredMarkdown);
-  if (!imageSrcMap.length) {
+  const imageSrcArray = getMarkdownImageSrcs(alteredMarkdown);
+  if (!imageSrcArray.length) {
     return alteredMarkdown;
+  } else {
+    return await uploadImagesAndAddToMarkdown(imageSrcArray, markdownAsString);
   }
-  return alteredMarkdown;
 };
 
 export const procedureToArticle = async (
@@ -335,7 +355,7 @@ export const proceduresToVanillaRequests = async (
     const finishedProcedures = await useProceduresForVanillaRequests(
       proceduresWithArticleInfo
     );
-    console.log(finishedProcedures, "Finished");
+
     return finishedProcedures;
 
     // make categories first, return their ID on the procedure so the article can be tied to it.
