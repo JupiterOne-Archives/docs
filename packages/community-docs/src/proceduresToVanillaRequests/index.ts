@@ -91,7 +91,6 @@ export const uploadImagesAndAddToMarkdown = async (
   const supportedImages = imageSrcArray.filter((m) => isSupportedMediaType(m));
   for (let i = 0; i < supportedImages.length; i++) {
     const newLocation = await uploadImageAndReturnUrl(supportedImages[i]);
-    console.log("uplading", i, newLocation);
     markdownTarget = modifyBodyImageLink(
       markdownTarget,
       supportedImages[i],
@@ -117,15 +116,11 @@ export const addImagesToArticleMarkdown = async (markdownAsString: string) => {
 export const procedureToArticle = async (
   httpClient: HttpClient,
   procedureWorkedOn: VanillaArticle,
-  previousknowledgeCategoryID: null | number,
-  bodyMock?: string
+  previousknowledgeCategoryID: null | number
 ): Promise<VanillaArticle> => {
   let tempProcedureWorkedOn = { ...procedureWorkedOn };
-  const bodyOfArticle = bodyMock
-    ? bodyMock
-    : markdownToString(tempProcedureWorkedOn?.path);
+  const bodyOfArticle = await markdownToString(tempProcedureWorkedOn?.path);
   tempProcedureWorkedOn.body = await addImagesToArticleMarkdown(bodyOfArticle);
-  // add images to body
 
   if (
     tempProcedureWorkedOn.articleID === null &&
@@ -134,6 +129,7 @@ export const procedureToArticle = async (
     if (!previousknowledgeCategoryID) {
       return tempProcedureWorkedOn;
     }
+
     tempProcedureWorkedOn.knowledgeCategoryID = previousknowledgeCategoryID;
 
     if (tempProcedureWorkedOn.body != FLAG_FOR_DELETE) {
@@ -156,7 +152,6 @@ export const procedureToArticle = async (
     }
   } else {
     if (
-      tempProcedureWorkedOn.body &&
       tempProcedureWorkedOn.body !== FLAG_FOR_DELETE &&
       tempProcedureWorkedOn.articleID
     ) {
@@ -207,8 +202,7 @@ export const procedureToArticle = async (
 export const procedureToKnowledgeCategory = async (
   httpClient: HttpClient,
   procedureWorkedOn: VanillaKnowledgeCategory,
-  previousknowledgeCategoryID: null | number,
-  mockShouldEdit?: boolean
+  previousknowledgeCategoryID: null | number
 ): Promise<VanillaKnowledgeCategory> => {
   let tempProcedureWorkedOn = { ...procedureWorkedOn };
 
@@ -234,7 +228,11 @@ export const procedureToKnowledgeCategory = async (
       name: tempProcedureWorkedOn.name,
       parentID: previousknowledgeCategoryID ? previousknowledgeCategoryID : 1,
     };
-    if (mockShouldEdit || directoryExists(tempProcedureWorkedOn?.path)) {
+    const directoryExistsResult = await directoryExists(
+      tempProcedureWorkedOn?.path
+    );
+    console.log(directoryExistsResult, "******sjsjs", tempProcedureWorkedOn);
+    if (tempProcedureWorkedOn?.path && directoryExistsResult) {
       const categoryEdit = await editKnowledgeCategory(
         httpClient,
         tempProcedureWorkedOn.knowledgeCategoryID,

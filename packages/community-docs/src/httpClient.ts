@@ -1,15 +1,8 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig, AxiosRequestHeaders } from "axios";
 import FormData from "form-data";
 import { KnowledgeCategory, VanillaArticle } from "./utils";
 import { Authorization, DEV_URL } from "./utils/constants";
 
-interface HeaderProps {
-  [key: string]: string;
-}
-
-interface OptionsProps {
-  params?: { [key: string]: string | number };
-}
 enum RESTTypes {
   POST = "post",
   PUT = "put",
@@ -20,8 +13,7 @@ enum RESTTypes {
 
 export default class HttpClient {
   baseUrl = "";
-  testingFlag = process.argv.slice(2).includes("testing");
-  headers: HeaderProps = {};
+  headers: AxiosRequestHeaders = {};
   constructor(baseUrl = DEV_URL) {
     this.baseUrl = baseUrl;
   }
@@ -33,16 +25,16 @@ export default class HttpClient {
   }
 
   buildHeaders(
-    headers: HeaderProps = {
+    headers: AxiosRequestHeaders = {
       "Content-Type": "application/json",
     }
-  ): HeaderProps {
+  ): AxiosRequestHeaders {
     this.headers.Authorization = Authorization;
 
     return { ...headers, Authorization: this.headers.Authorization };
   }
 
-  get(relativeUrl: string, options?: OptionsProps) {
+  get(relativeUrl: string, options?: AxiosRequestConfig) {
     return this.makeRequest({
       relativeUrl,
       headers: this.buildHeaders(),
@@ -53,27 +45,20 @@ export default class HttpClient {
 
   uploadMedia(data: FormData) {
     const headers = {
-      // 'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-      Accept: "*/*",
-      "Accept-Language": "en-US,en;q=0.8",
-      "Content-Type": `multipart/form-data`,
-      connection: "keep-alive",
-      Authorization: Authorization,
-      withCredentials: true,
       ...data.getHeaders(),
     };
-    console.log("IMN sssdfsdfsdfsdfsdf", headers);
-    console.log("PAPAPAPAP", this.buildUrl("media"));
-    return axios.post(this.buildUrl("media"), {
+    return axios.post(this.buildUrl("media"), data, {
       headers,
-      data,
+      params: {
+        access_token: Authorization.split(" ")[1],
+      },
     });
   }
 
   post(
     relativeUrl: string,
     body: Partial<VanillaArticle | KnowledgeCategory>,
-    headers?: HeaderProps
+    headers?: AxiosRequestHeaders
   ) {
     return this.makeRequest({
       relativeUrl,
@@ -86,7 +71,7 @@ export default class HttpClient {
   patch(
     relativeUrl: string,
     body: Partial<VanillaArticle | KnowledgeCategory>,
-    headers?: HeaderProps
+    headers?: AxiosRequestHeaders
   ) {
     return this.makeRequest({
       relativeUrl,
@@ -98,7 +83,7 @@ export default class HttpClient {
 
   delete(
     relativeUrl: string,
-    headers?: HeaderProps,
+    headers?: AxiosRequestHeaders,
     body?: Partial<VanillaArticle | KnowledgeCategory>
   ) {
     return this.makeRequest({
@@ -108,32 +93,12 @@ export default class HttpClient {
       method: RESTTypes.DELETE,
     });
   }
-  makePseudoRequest({
-    relativeUrl,
-    body,
-    headers,
-    method,
-    options = {},
-    dataReturned,
-  }: {
-    relativeUrl: string;
-    body?: Partial<VanillaArticle | KnowledgeCategory>;
-    headers: HeaderProps;
-    method: RESTTypes;
-    options?: OptionsProps;
-    dataReturned: any;
-  }) {
+
+  debounceRequests(request: Promise<any>, timeout = 5000) {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve({
-          url: this.buildUrl(relativeUrl),
-          headers: this.buildHeaders(headers),
-          data: dataReturned,
-          body,
-          method,
-          ...options,
-        });
-      });
+        resolve(request);
+      }, timeout);
     });
   }
 
@@ -146,46 +111,20 @@ export default class HttpClient {
   }: {
     relativeUrl: string;
     body?: Partial<VanillaArticle | KnowledgeCategory>;
-    headers: HeaderProps;
+    headers: AxiosRequestHeaders;
     method: RESTTypes;
-    options?: OptionsProps;
+    options?: AxiosRequestConfig;
   }) {
-    if (this.testingFlag) {
-      let dataReturned = {};
-      if (method === RESTTypes.GET) {
-        dataReturned = [];
-      }
-      if (method === RESTTypes.POST) {
-        if (relativeUrl.startsWith("knowledge-categories/")) {
-          dataReturned = {
-            knowledgeCategoryID: Math.floor(Math.random() * 10) + 1,
-          };
-        } else {
-          dataReturned = {
-            articleID: Math.floor(Math.random() * 10) + 1,
-          };
-        }
-      }
-      if (method === RESTTypes.PATCH) {
-        dataReturned = {};
-      }
-
-      return this.makePseudoRequest({
-        relativeUrl,
-        body,
-        headers,
+    console.log("making request to ", relativeUrl, body, method, options);
+    return this.debounceRequests(
+      axios.request({
+        url: this.buildUrl(relativeUrl),
+        headers: this.buildHeaders(headers),
+        data: body,
         method,
-        options,
-        dataReturned,
-      });
-    }
-    return axios.request({
-      url: this.buildUrl(relativeUrl),
-      headers: this.buildHeaders(headers),
-      data: body,
-      method,
-      ...options,
-    });
+        ...options,
+      })
+    );
   }
 }
 

@@ -1,12 +1,14 @@
 import FormData from "form-data";
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
 import HttpClient from "./httpClient";
+import { PATH_OF_DIRECTORY_TO_WATCH } from "./utils/constants";
 import {
   ProcedureTypeEnum,
   VanillaArticle,
   VanillaKnowledgeCategory,
 } from "./utils/types";
+
 interface ErrorType {
   message: string;
   status: number;
@@ -118,9 +120,6 @@ export const createKnowledgeCategory = async (
   client: HttpClient,
   bodyOfRequest: Partial<VanillaKnowledgeCategory>
 ): Promise<VanillaKnowledgeCategory | undefined> => {
-  // only required - totally not the same as the docs
-  // {"name":"bryan test categroy two","parentID":1}
-
   try {
     const category = (await client.post(
       "/knowledge-categories",
@@ -163,74 +162,120 @@ export const editKnowledgeCategory = async (
     console.error(e, "Create Knowledge Category error");
   }
 };
+
 export const deleteKnowledgeCategory = async (
   client: HttpClient,
   knowledgeCategoryID: number,
-  doForReal?: boolean
+  endIt?: boolean
 ): Promise<boolean> => {
-  let success = true;
-  // THIS NEEDS TO BE SLLLLLOWED DOWN BEFORE ACTUAL RUNNING!!!!!!
-  // return true
-  if (!doForReal) {
-    return new Promise((resolve) => {
-      resolve(true);
-    });
-  }
-  let haveToDeleteChildArticles = false;
-  let haveToDeleteChildCategories = false;
-  let catagory;
-  try {
-    catagory = (await client.get(
-      `knowledge-categories/${knowledgeCategoryID}`
-    )) as {
-      data:
-        | {
-            articleCount: number;
-            articleCountRecursive: number;
-            childCategoryCount: number;
-          }
-        | ErrorType;
-    };
-  } catch (catError) {
+  if (endIt) {
     return true;
   }
+  let success = true;
 
-  if (!isErrorType(catagory?.data) && catagory.data?.articleCount !== 0) {
-    haveToDeleteChildArticles = true;
-    const articles = await getArticles(client, knowledgeCategoryID);
-    await deleteAllArticles(client, articles);
-    return await deleteKnowledgeCategory(client, knowledgeCategoryID);
+  console.log("trying to delete", knowledgeCategoryID);
+  try {
+    //hopefully its empty...
+    await client.delete(`knowledge-categories/${knowledgeCategoryID}`);
+  } catch (e) {
+    success = false;
+    console.error(e, "attempt to delete non-empty category");
+    // try {
+    //   const articles = await getArticles(client, knowledgeCategoryID);
+
+    //   await deleteAllArticles(client, articles);
+    //   return deleteKnowledgeCategory(client, knowledgeCategoryID);
+    // } catch (e) {
+    //   console.log("Error deleting all articles within category");
+    // }
+
+    //categories
+    // try {
+    //   const categories = await getKnowedgeCategories(client);
+    //   if (categories?.length) {
+    //     categories.filter(
+    //       (c) =>
+    //         c.parentID === knowledgeCategoryID &&
+    //         c?.knowledgeCategoryID !== null
+    //     );
+    //     if (categories[0] && categories[0].knowledgeCategoryID) {
+    //       return await deleteKnowledgeCategory(
+    //         client,
+    //         categories[0].knowledgeCategoryID
+    //       );
+    //     }
+    //   }
+    //   await deleteKnowledgeCategory(client, knowledgeCategoryID);
+    // } catch (e) {
+    //   console.log("Error deleting all nested categories", e);
+    // }
+    // end categories
   }
+
+  // THIS NEEDS TO BE SLLLLLOWED DOWN BEFORE ACTUAL RUNNING!!!!!!
+  // return true
+  // if (!doForReal) {
+  //   return new Promise((resolve) => {
+  //     resolve(true);
+  //   });
+  // }
+
+  // let haveToDeleteChildArticles = false;
+  // let haveToDeleteChildCategories = false;
+  // let catagory;
+  // try {
+  //   catagory = (await client.get(
+  //     `knowledge-categories/${knowledgeCategoryID}`
+  //   )) as {
+  //     data:
+  //       | {
+  //           articleCount: number;
+  //           articleCountRecursive: number;
+  //           childCategoryCount: number;
+  //         }
+  //       | ErrorType;
+  //   };
+  // } catch (catError) {
+  //   return true;
+  // }
+
+  // if (!isErrorType(catagory?.data) && catagory.data?.articleCount !== 0) {
+  //   haveToDeleteChildArticles = true;
+  //   const articles = await getArticles(client, knowledgeCategoryID);
+  //   await deleteAllArticles(client, articles);
+  //   return await deleteKnowledgeCategory(client, knowledgeCategoryID);
+  // }
   // if(!isErrorType(catagory?.data)&&catagory.data?.articleCountRecursive !==0){
   //   haveToDeleteChildArticles=true
   // LEAVING in case we need to do it
   // }
-  if (!isErrorType(catagory?.data) && catagory.data?.childCategoryCount !== 0) {
-    haveToDeleteChildCategories = false;
-    const categories = await getKnowedgeCategories(client);
-    if (categories?.length) {
-      categories.filter(
-        (c) =>
-          c.parentID === knowledgeCategoryID && c?.knowledgeCategoryID !== null
-      );
-      if (categories[0] && categories[0].knowledgeCategoryID) {
-        await deleteKnowledgeCategory(
-          client,
-          categories[0].knowledgeCategoryID
-        );
-      }
-    }
-  }
+  // if (!isErrorType(catagory?.data) && catagory.data?.childCategoryCount !== 0) {
+  //   haveToDeleteChildCategories = false;
+  //   const categories = await getKnowedgeCategories(client);
+  //   if (categories?.length) {
+  //     categories.filter(
+  //       (c) =>
+  //         c.parentID === knowledgeCategoryID && c?.knowledgeCategoryID !== null
+  //     );
+  //     if (categories[0] && categories[0].knowledgeCategoryID) {
+  //       return await deleteKnowledgeCategory(
+  //         client,
+  //         categories[0].knowledgeCategoryID
+  //       );
+  //     }
+  //   }
+  // }
 
-  if (!haveToDeleteChildArticles && !haveToDeleteChildCategories) {
-    try {
-      await client.delete(`knowledge-categories/${knowledgeCategoryID}`);
-    } catch (e) {
-      success = false;
-      console.error(e, "error deleting");
-    }
-  }
-
+  // if (!haveToDeleteChildArticles && !haveToDeleteChildCategories) {
+  //   try {
+  //     await client.delete(`knowledge-categories/${knowledgeCategoryID}`);
+  //   } catch (e) {
+  //     success = false;
+  //     console.error(e, "error deleting");
+  //   }
+  // }
+  // return await deleteKnowledgeCategory(client, knowledgeCategoryID, success)
+  console.log("return of delete", success);
   return success;
 };
 
@@ -327,60 +372,46 @@ export const postImage = async (client: HttpClient, data: FormData) => {
     const image = (await client.uploadMedia(data)) as {
       data: MediaPostReturn | ErrorType;
     };
-    console.log("djdjdjIMAGE ", image);
+
     if (!isErrorType(image?.data)) {
       return image.data;
     }
   } catch (error) {
-    console.dir("sssssssEEEERRRRO ", error);
-    console.error(error, "Error uploading image");
+    console.error(
+      JSON.stringify(error, null, 2),
+      "Error uploading image",
+      error?.data?.errors
+    );
   }
 };
-// function checkFileExists(filepath: string) {
-//   console.log("checking thing", filepath);
-//   return new Promise((resolve, reject) => {
-//     fs.access(filepath, fs.constants.F_OK, (error) => {
-//       resolve(!error);
-//     });
-//   });
-// }
 
 export const uploadImageAndReturnUrl = async (
   imagePath: string
 ): Promise<string> => {
   const httpClient = new HttpClient();
   const form = new FormData();
-  console.log(imagePath, "image upload imagePath ");
   const mediaLocation = imagePath.substring(3);
+  const mediaLocationChopped = imagePath.split("/");
+  const imageName = mediaLocationChopped[mediaLocationChopped.length - 1];
+  console.log(imageName, "imagePath", imagePath);
   const fileLocation = path.join(
     __dirname,
-    "../../../docs",
-    `/${mediaLocation}`
+    `../../../${PATH_OF_DIRECTORY_TO_WATCH}/`,
+    `${mediaLocation}`
   );
-  console.log(fileLocation, "fileLocationsssjj");
+  console.log(fileLocation, "FILLLEEE");
 
   try {
-    const imageFile = fs.readFileSync(fileLocation);
+    const imageFile = await fs.readFile(fileLocation);
+    form.append("file", imageFile, imageName);
+    const postImageResponse = await postImage(httpClient, form);
 
-    console.log(imageFile, "IM IMAGE fjsjljsjsjsj");
-    form.append("file", imageFile);
-    try {
-      console.log("SUCCESSSSSJWERRRREEE");
-      const postImageResponse = await postImage(httpClient, form);
-      console.log("POST respons", postImageResponse, "--End post reponse");
-      if (postImageResponse && postImageResponse?.url) {
-        return postImageResponse.url;
-      }
-    } catch (error) {
-      console.error(error, "Error uploading image");
-      console.log("POST respons", error, "--End post reponse");
-      return imagePath;
+    if (postImageResponse && postImageResponse?.url) {
+      return postImageResponse.url;
     }
   } catch (e) {
-    console.log(e, "FAILLED");
+    console.log("file doesnt exist escape", e);
   }
-
-  console.log("DONT EXIST");
 
   return imagePath;
 };

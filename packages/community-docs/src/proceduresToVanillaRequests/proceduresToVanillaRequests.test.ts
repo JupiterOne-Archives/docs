@@ -31,7 +31,7 @@ import {
   vanillaKnowledgeArticle,
   vanillaKnowledgeCategory,
 } from "./mocks";
-import { markdownToString } from "./utils";
+import { directoryExists, markdownToString } from "./utils";
 jest.mock("../VanillaAPI");
 jest.mock("./utils");
 
@@ -42,6 +42,9 @@ describe("ProceduresToVanillaRequests", () => {
     >;
   let mockMarkdownToString = markdownToString as jest.MockedFunction<
     typeof markdownToString
+  >;
+  let mockDirectoryExists = directoryExists as jest.MockedFunction<
+    typeof directoryExists
   >;
   let mockEditKnowledgeCategory = editKnowledgeCategory as jest.MockedFunction<
     typeof editKnowledgeCategory
@@ -73,6 +76,9 @@ describe("ProceduresToVanillaRequests", () => {
     >;
     mockMarkdownToString = markdownToString as jest.MockedFunction<
       typeof markdownToString
+    >;
+    mockDirectoryExists = directoryExists as jest.MockedFunction<
+      typeof directoryExists
     >;
     mockDeleteKnowledgeCategory =
       deleteKnowledgeCategory as jest.MockedFunction<
@@ -247,12 +253,11 @@ describe("ProceduresToVanillaRequests", () => {
         const actual = await procedureToArticle(
           mockHttpclient,
           procedureWithNoArticle,
-          null,
-          "fackeBody"
+          null
         );
         expect(actual).toEqual({
           articleID: null,
-          body: "fackeBody",
+          body: "",
           fileName: "soc2-with-jupiterone-copy.md",
           format: "markdown",
           knowledgeCategoryID: null,
@@ -277,13 +282,12 @@ describe("ProceduresToVanillaRequests", () => {
         const actual = await procedureToArticle(
           mockHttpclient,
           procedureWithNoArticle,
-          previousknowledgeCategoryID,
-          "fackeBody"
+          previousknowledgeCategoryID
         );
 
         expect(actual).toEqual({
           articleID,
-          body: "fackeBody",
+          body: "",
           fileName: "soc2-with-jupiterone-copy.md",
           format: "markdown",
           knowledgeCategoryID: previousknowledgeCategoryID,
@@ -293,7 +297,7 @@ describe("ProceduresToVanillaRequests", () => {
           procedureType: "Article",
         });
         expect(mockCreateArticle).toHaveBeenCalledWith(mockHttpclient, {
-          body: "fackeBody",
+          body: "",
           format: "markdown",
           knowledgeCategoryID: articleID,
           locale: "en",
@@ -318,21 +322,19 @@ describe("ProceduresToVanillaRequests", () => {
         mockEditArticle.mockResolvedValue({
           articleID,
           name: "Soc2 With Jupiterone Copy",
-
           knowledgeCategoryID: previousknowledgeCategoryID,
         } as any);
         const actual = await procedureToArticle(
           mockHttpclient,
           procedureWithArticle,
-          previousknowledgeCategoryID,
-          "fackeBody"
+          previousknowledgeCategoryID
         );
         expect(actual).toEqual({
           knowledgeCategoryID: previousknowledgeCategoryID,
           articleID,
           fileName: "soc2-with-jupiterone-copy.md",
           name: "Soc2 With Jupiterone Copy",
-          body: "fackeBody",
+          body: "",
           path: "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
           format: "markdown",
           locale: "en",
@@ -342,7 +344,7 @@ describe("ProceduresToVanillaRequests", () => {
           mockHttpclient,
           articleID,
           {
-            body: "fackeBody",
+            body: "",
             format: "markdown",
             knowledgeCategoryID: previousknowledgeCategoryID,
             locale: "en",
@@ -356,8 +358,9 @@ describe("ProceduresToVanillaRequests", () => {
       beforeEach(() => {
         mockDeleteArticle.mockReset();
       });
-      it("deletes existing article when body empty", async () => {
+      it("deletes existing article when body contains delete flag", async () => {
         mockDeleteArticle.mockResolvedValue({} as any);
+        mockMarkdownToString.mockResolvedValue(FLAG_FOR_DELETE);
         const articleID = 234;
         const previousknowledgeCategoryID = 8;
         const mockHttpclient = {} as any;
@@ -369,8 +372,7 @@ describe("ProceduresToVanillaRequests", () => {
         const actual = await procedureToArticle(
           mockHttpclient,
           procedureWithArticle,
-          previousknowledgeCategoryID,
-          FLAG_FOR_DELETE
+          previousknowledgeCategoryID
         );
         expect(actual).toEqual({
           articleID: 234,
@@ -383,6 +385,10 @@ describe("ProceduresToVanillaRequests", () => {
           path: "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
           procedureType: "Article",
         });
+        expect(mockDeleteArticle).toHaveBeenCalledWith(
+          mockHttpclient,
+          articleID
+        );
       });
     });
   });
@@ -391,6 +397,7 @@ describe("ProceduresToVanillaRequests", () => {
       mockCreateKnowledgeCategory.mockReset();
     });
     it("Creates", async () => {
+      mockDirectoryExists.mockResolvedValue(true);
       const procedureKnowledgeCategoryNOKCID = {
         ...procedureKnowledgeCategorytemp,
       };
@@ -432,6 +439,7 @@ describe("ProceduresToVanillaRequests", () => {
     describe("Edits", () => {
       beforeEach(() => {
         mockEditKnowledgeCategory.mockReset();
+        mockDirectoryExists.mockResolvedValue(true);
       });
       it("edits when file exists", async () => {
         const knowledgeCategoryID = 111;
@@ -463,8 +471,7 @@ describe("ProceduresToVanillaRequests", () => {
         const actual = await procedureToKnowledgeCategory(
           mockHttpclient,
           procedureKnowledgeCategoryNOKCID,
-          22,
-          true
+          22
         );
         expect(mockEditKnowledgeCategory).toHaveBeenLastCalledWith(
           mockHttpclient,
@@ -480,6 +487,7 @@ describe("ProceduresToVanillaRequests", () => {
     describe("Deletes", () => {
       it("deletes when file does not exist", async () => {
         const knowledgeCategoryID = 111;
+        mockDirectoryExists.mockResolvedValue(false);
         const procedureKnowledgeCategoryNOKCID = {
           ...procedureKnowledgeCategorytemp,
           knowledgeCategoryID,
@@ -539,7 +547,7 @@ describe("ProceduresToVanillaRequests", () => {
       mockCreateKnowledgeCategory.mockReset();
     });
     it("handles all new items", async () => {
-      mockMarkdownToString.mockReturnValue("Im markdown. LOOK AT ME.");
+      mockMarkdownToString.mockResolvedValue("Im markdown. LOOK AT ME.");
       mockCreateArticle
         .mockResolvedValueOnce({
           ...vanillaArticleWithInfo,
@@ -596,12 +604,11 @@ describe("ProceduresToVanillaRequests", () => {
       const deleteArticle =
         PROCEDURESWithOneDeleteArticleAndCreates[1] as VanillaArticle;
       mockMarkdownToString
-        .mockReturnValueOnce(FLAG_FOR_DELETE)
-        .mockReturnValue("Im markdown. LOOK AT ME.");
+        .mockResolvedValueOnce(FLAG_FOR_DELETE)
+        .mockResolvedValue("Im markdown. LOOK AT ME.");
       mockEditArticle.mockResolvedValue(editArticle);
       mockDeleteArticle.mockResolvedValue(deleteArticle);
       mockCreateArticle
-
         .mockResolvedValueOnce({
           ...vanillaArticleWithInfo,
           knowledgeCategoryID: 33,
@@ -612,7 +619,6 @@ describe("ProceduresToVanillaRequests", () => {
           ...vanillaArticleWithInfo,
           knowledgeCategoryID: 33,
           articleID: 22,
-
           name: "Soc2 With Jupiterone",
         });
       mockCreateKnowledgeCategory.mockResolvedValueOnce({
@@ -620,7 +626,6 @@ describe("ProceduresToVanillaRequests", () => {
         parentID: 22,
         knowledgeBaseID: 1,
         name: "Compliance Reporting",
-
         knowledgeCategoryID: 33,
       });
 
