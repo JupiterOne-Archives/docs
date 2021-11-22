@@ -1,13 +1,18 @@
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
 import {
   FLAG_FOR_DELETE,
+  PATH_OF_DIRECTORY_TO_WATCH,
   SUPPORTED_FILE_TYPE_EXTENTIONS,
 } from "../utils/constants";
 
-export const markdownToString = (filePath?: string): string => {
+export const markdownToString = async (filePath?: string): Promise<string> => {
   // we also want to use this to see if the file got deleted! the git diff wont differenitate
-  const fileLocation = path.join(__dirname, "../../../../docs", `/${filePath}`);
+  const fileLocation = path.join(
+    __dirname,
+    `../../../../${PATH_OF_DIRECTORY_TO_WATCH}`,
+    `/${filePath}`
+  );
 
   let supportedTypeOfFile = false;
   SUPPORTED_FILE_TYPE_EXTENTIONS.forEach((extention) => {
@@ -19,7 +24,7 @@ export const markdownToString = (filePath?: string): string => {
     return FLAG_FOR_DELETE;
   }
   try {
-    const blockingReadOfFile = fs.readFileSync(fileLocation);
+    const blockingReadOfFile = await fs.readFile(fileLocation);
     if (blockingReadOfFile) {
       return blockingReadOfFile.toString();
     }
@@ -30,14 +35,20 @@ export const markdownToString = (filePath?: string): string => {
   return FLAG_FOR_DELETE;
 };
 
-export const directoryExists = (filePath?: string): boolean => {
+export const directoryExists = async (filePath?: string): Promise<boolean> => {
   // we also want to use this to see if the file got deleted! the git diff wont differenitate
-  const fileLocation = path.join(__dirname, "../docs", `/${filePath}`);
   if (!filePath) {
     return false;
   }
+
+  const fileLocation = path.join(
+    __dirname,
+    `../../../../${PATH_OF_DIRECTORY_TO_WATCH}`,
+    `/${filePath}`
+  );
+
   try {
-    const blockingReadOfFile = fs.readFileSync(fileLocation);
+    const blockingReadOfFile = await fs.readFile(fileLocation);
     if (blockingReadOfFile) {
       return true;
     }
@@ -45,5 +56,5 @@ export const directoryExists = (filePath?: string): boolean => {
     return false;
   }
 
-  return false;
+  return true;
 };

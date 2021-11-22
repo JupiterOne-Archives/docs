@@ -300,7 +300,7 @@ export const PROCEDURESWithOneDeleteArticleAndCreates = [
     articleID: 11,
     fileName: "jupiterone-query-language-copy.md",
     name: "Jupiterone Query Language Copy",
-    body: "",
+    body: "FILE_DOES_NOT_EXIST",
     path: "getting-started-admin/jupiterone-query-language-copy.md",
     format: "markdown",
     locale: "en",
