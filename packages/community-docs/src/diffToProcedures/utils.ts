@@ -18,7 +18,7 @@ export const filterDiffs = (gitDiffArray: string[]) => {
     .map((diff) => diff.substring(`${PATH_OF_DIRECTORY_TO_WATCH}/`.length));
 
   filteredArray.sort((a, b) => a.split("/").length - b.split("/").length);
-
+  console.log(filteredArray, "FIltered and sorted");
   return filteredArray;
 };
 

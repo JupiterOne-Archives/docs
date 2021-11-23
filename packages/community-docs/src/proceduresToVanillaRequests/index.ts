@@ -5,20 +5,25 @@ import {
   modifyBodyImageLink,
 } from "../linksAndMediaHandlers";
 import { isArticleType, isKnowledgeCategoryType } from "../utils";
-import { FLAG_FOR_DELETE } from "../utils/constants";
+import {
+  FLAG_FOR_DELETE,
+  KNOWN_CATEGORY_BEEN_DELETED,
+} from "../utils/constants";
 import { VanillaArticle, VanillaKnowledgeCategory } from "../utils/types";
 import {
   createArticle,
   createKnowledgeCategory,
+  deleteAllFlaggedCategories,
   deleteArticle,
-  deleteKnowledgeCategory,
   editArticle,
-  editKnowledgeCategory,
   getAllArticles,
   getKnowedgeCategories,
-  uploadImageAndReturnUrl,
 } from "../VanillaAPI";
-import { directoryExists, markdownToString } from "./utils";
+import {
+  directoryExists,
+  kCategoriesByPathSize,
+  markdownToString,
+} from "./utils";
 
 export const addVanillaCategoryToProcedure = (
   procedure: VanillaKnowledgeCategory,
@@ -33,7 +38,7 @@ export const addVanillaCategoryToProcedure = (
     procedureTarget = {
       ...procedureTarget,
       knowledgeCategoryID: match[0].knowledgeCategoryID,
-      parentID: match[0].parentID,
+      parentID: match[0].parentID || 1,
       knowledgeBaseID: match[0].knowledgeBaseID,
       sortChildren: match[0].sortChildren,
       sort: match[0].sort,
@@ -83,6 +88,8 @@ export const addVanillaArticlesToProcedures = (
   });
   return proceduresWithVanillaCategoryInfo;
 };
+
+// noope
 export const uploadImagesAndAddToMarkdown = async (
   imageSrcArray: string[],
   markdownAsString: string
@@ -90,7 +97,7 @@ export const uploadImagesAndAddToMarkdown = async (
   let markdownTarget = markdownAsString;
   const supportedImages = imageSrcArray.filter((m) => isSupportedMediaType(m));
   for (let i = 0; i < supportedImages.length; i++) {
-    const newLocation = await uploadImageAndReturnUrl(supportedImages[i]);
+    const newLocation = "na, lets go faster"; //await uploadImageAndReturnUrl(supportedImages[i]);
     markdownTarget = modifyBodyImageLink(
       markdownTarget,
       supportedImages[i],
@@ -100,6 +107,7 @@ export const uploadImagesAndAddToMarkdown = async (
 
   return markdownTarget;
 };
+
 export const addImagesToArticleMarkdown = async (markdownAsString: string) => {
   if (!markdownAsString || !markdownAsString.length) {
     return "";
@@ -205,72 +213,122 @@ export const procedureToKnowledgeCategory = async (
   previousknowledgeCategoryID: null | number
 ): Promise<VanillaKnowledgeCategory> => {
   let tempProcedureWorkedOn = { ...procedureWorkedOn };
-
-  if (tempProcedureWorkedOn.knowledgeCategoryID === null) {
-    const reqData = {
-      name: tempProcedureWorkedOn.name,
-      parentID: previousknowledgeCategoryID ? previousknowledgeCategoryID : 1,
-    };
-
-    const createdKnowledgeCategory = await createKnowledgeCategory(
-      httpClient,
-      reqData
-    );
-
-    if (createdKnowledgeCategory) {
-      tempProcedureWorkedOn = addVanillaCategoryToProcedure(
+  const directoryExistsResult = directoryExists(tempProcedureWorkedOn?.path);
+  console.log(
+    procedureWorkedOn,
+    "XYZprocedureWosssdffrkedOn",
+    directoryExistsResult,
+    "CAAAAT"
+  );
+  if (tempProcedureWorkedOn.knowledgeCategoryID !== null) {
+    if (directoryExistsResult) {
+      // no changes have occured to the category (basically just the name is used for kcategory)
+      return tempProcedureWorkedOn;
+    } else {
+      console.log(
+        "Flaggind thing for delete",
         tempProcedureWorkedOn,
-        [createdKnowledgeCategory]
+        directoryExistsResult
       );
+      // kCategories get handled for delete later
+      tempProcedureWorkedOn = {
+        ...tempProcedureWorkedOn,
+        description: FLAG_FOR_DELETE,
+      };
     }
   } else {
-    const reqData = {
-      name: tempProcedureWorkedOn.name,
-      parentID: previousknowledgeCategoryID ? previousknowledgeCategoryID : 1,
-    };
-    const directoryExistsResult = await directoryExists(
-      tempProcedureWorkedOn?.path
-    );
-    console.log(directoryExistsResult, "******sjsjs", tempProcedureWorkedOn);
-    if (tempProcedureWorkedOn?.path && directoryExistsResult) {
-      const categoryEdit = await editKnowledgeCategory(
+    if (directoryExistsResult) {
+      const reqData = {
+        name: tempProcedureWorkedOn.name,
+        parentID: previousknowledgeCategoryID ? previousknowledgeCategoryID : 1,
+      };
+      const createdKnowledgeCategory = await createKnowledgeCategory(
         httpClient,
-        tempProcedureWorkedOn.knowledgeCategoryID,
         reqData
       );
-      if (categoryEdit) {
+
+      if (createdKnowledgeCategory) {
         tempProcedureWorkedOn = addVanillaCategoryToProcedure(
           tempProcedureWorkedOn,
-          [categoryEdit]
+          [createdKnowledgeCategory]
         );
       }
     } else {
-      const categoryDelete = await deleteKnowledgeCategory(
-        httpClient,
-        tempProcedureWorkedOn.knowledgeCategoryID
-      );
-      if (categoryDelete) {
-        tempProcedureWorkedOn = {
-          ...tempProcedureWorkedOn,
-          description: "deleted",
-        };
-      }
+      tempProcedureWorkedOn.description = KNOWN_CATEGORY_BEEN_DELETED;
     }
   }
+
   return tempProcedureWorkedOn;
 };
 
+export const removeDeletedCategories = async (
+  httpClient: HttpClient,
+  procedures: (VanillaArticle | VanillaKnowledgeCategory)[]
+) => {
+  // at this point all vanillaArticles that need deleting should be deleted.
+  const deletedKCategories: VanillaKnowledgeCategory[] = procedures.filter(
+    isKnowledgeCategoryType
+  );
+  const kCategoriesByIncreasingPathSize =
+    kCategoriesByPathSize(deletedKCategories);
+
+  const categoriesDelete = await deleteAllFlaggedCategories(
+    httpClient,
+    kCategoriesByIncreasingPathSize
+  );
+
+  if (categoriesDelete) {
+    return {
+      categoriesDeleted: categoriesDelete,
+      procedures,
+    };
+  }
+
+  return {
+    categoriesDeleted: categoriesDelete,
+    procedures,
+  };
+};
+
 export const getPreviousKnowledgeID = (
-  completedProcedures: (VanillaArticle | VanillaKnowledgeCategory)[]
+  completedProcedures: (VanillaArticle | VanillaKnowledgeCategory)[],
+  procedureBeingWorkedOn: VanillaArticle | VanillaKnowledgeCategory
 ): number | null => {
   const tempCompletedProcedures = [...completedProcedures];
-  const categoryOnlyProcedures = tempCompletedProcedures.filter(
-    (p) => p.procedureType === "Category"
-  );
+  const categoryOnlyProcedures: VanillaKnowledgeCategory[] =
+    tempCompletedProcedures.filter(isKnowledgeCategoryType) || [];
   if (!categoryOnlyProcedures.length) {
     return null;
   }
   const lastCategoryInArray = categoryOnlyProcedures.pop();
+  if (isArticleType(procedureBeingWorkedOn)) {
+    return lastCategoryInArray?.knowledgeCategoryID || null;
+  }
+  if (
+    lastCategoryInArray &&
+    procedureBeingWorkedOn.fileName &&
+    lastCategoryInArray.fileName
+  ) {
+    const workingChildrenPathSplit =
+      procedureBeingWorkedOn.childrenPath.split("/");
+    const indexOfLastCatFileName = workingChildrenPathSplit.indexOf(
+      lastCategoryInArray.fileName
+    );
+    // console.log(indexOfLastCatFileName, "weee");
+    if (indexOfLastCatFileName === -1) {
+      return getPreviousKnowledgeID(
+        categoryOnlyProcedures,
+        procedureBeingWorkedOn
+      );
+    }
+    return lastCategoryInArray.knowledgeCategoryID;
+
+    // const lastCategoryPathSplit = lastCategoryInArray.childrenPath.split("/");
+    // console.log(
+    //   workingChildrenPathSplit.indexOf(lastCategoryInArray.fileName),
+    //   "weee2"
+    // );
+  }
 
   return lastCategoryInArray?.knowledgeCategoryID || null;
 };
@@ -296,8 +354,12 @@ export const useProceduresForVanillaRequests = async (
     return tempCompletedProcedures;
   }
 
-  previousknowledgeCategoryID = getPreviousKnowledgeID(tempCompletedProcedures);
+  previousknowledgeCategoryID = getPreviousKnowledgeID(
+    tempCompletedProcedures,
+    procedureWorkedOn
+  );
   if (isArticleType(procedureWorkedOn)) {
+    console.log("article being worked on", procedureWorkedOn);
     procedureWorkedOn = await procedureToArticle(
       httpClient,
       procedureWorkedOn,
@@ -305,6 +367,7 @@ export const useProceduresForVanillaRequests = async (
     );
   }
   if (isKnowledgeCategoryType(procedureWorkedOn)) {
+    console.log("category being worked on", procedureWorkedOn);
     procedureWorkedOn = await procedureToKnowledgeCategory(
       httpClient,
       procedureWorkedOn,
@@ -326,7 +389,7 @@ export const proceduresToVanillaRequests = async (
 ) => {
   if (procedures && procedures.length) {
     const httpClient = new HttpClient();
-
+    console.log("PPPDDJDJDJD", procedures);
     const existingknowledgeCategoryInfo = await getKnowedgeCategories(
       httpClient
     );
@@ -350,8 +413,15 @@ export const proceduresToVanillaRequests = async (
         )
       : proceduresWithVanillaCategories;
 
-    const finishedProcedures = await useProceduresForVanillaRequests(
-      proceduresWithArticleInfo
+    const proceduresNeedingDeleteCategories =
+      await useProceduresForVanillaRequests(proceduresWithArticleInfo);
+    console.log(
+      proceduresNeedingDeleteCategories,
+      "proceduresNeedingDeleteCategories"
+    );
+    const { procedures: finishedProcedures } = await removeDeletedCategories(
+      httpClient,
+      proceduresNeedingDeleteCategories
     );
 
     return finishedProcedures;
