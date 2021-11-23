@@ -2,7 +2,7 @@ import FormData from "form-data";
 import fs from "fs/promises";
 import path from "path";
 import HttpClient from "./httpClient";
-import { PATH_OF_DIRECTORY_TO_WATCH } from "./utils/constants";
+import { FLAG_FOR_DELETE, PATH_OF_DIRECTORY_TO_WATCH } from "./utils/constants";
 import {
   ProcedureTypeEnum,
   VanillaArticle,
@@ -165,118 +165,69 @@ export const editKnowledgeCategory = async (
 
 export const deleteKnowledgeCategory = async (
   client: HttpClient,
-  knowledgeCategoryID: number,
-  endIt?: boolean
-): Promise<boolean> => {
-  if (endIt) {
-    return true;
-  }
-  let success = true;
+  knowledgeCategory: VanillaKnowledgeCategory
+): Promise<VanillaKnowledgeCategory> => {
+  const tempKnowledgeCategory: VanillaKnowledgeCategory = knowledgeCategory;
 
-  console.log("trying to delete", knowledgeCategoryID);
   try {
-    //hopefully its empty...
-    await client.delete(`knowledge-categories/${knowledgeCategoryID}`);
+    await client.delete(
+      `knowledge-categories/${knowledgeCategory.knowledgeCategoryID}`
+    );
+    tempKnowledgeCategory.description = "been deleted";
   } catch (e) {
-    success = false;
-    console.error(e, "attempt to delete non-empty category");
-    // try {
-    //   const articles = await getArticles(client, knowledgeCategoryID);
-
-    //   await deleteAllArticles(client, articles);
-    //   return deleteKnowledgeCategory(client, knowledgeCategoryID);
-    // } catch (e) {
-    //   console.log("Error deleting all articles within category");
-    // }
-
-    //categories
-    // try {
-    //   const categories = await getKnowedgeCategories(client);
-    //   if (categories?.length) {
-    //     categories.filter(
-    //       (c) =>
-    //         c.parentID === knowledgeCategoryID &&
-    //         c?.knowledgeCategoryID !== null
-    //     );
-    //     if (categories[0] && categories[0].knowledgeCategoryID) {
-    //       return await deleteKnowledgeCategory(
-    //         client,
-    //         categories[0].knowledgeCategoryID
-    //       );
-    //     }
-    //   }
-    //   await deleteKnowledgeCategory(client, knowledgeCategoryID);
-    // } catch (e) {
-    //   console.log("Error deleting all nested categories", e);
-    // }
-    // end categories
+    console.error(
+      e,
+      "attempt to delete non-empty category",
+      tempKnowledgeCategory
+    );
+    return tempKnowledgeCategory;
   }
 
-  // THIS NEEDS TO BE SLLLLLOWED DOWN BEFORE ACTUAL RUNNING!!!!!!
-  // return true
-  // if (!doForReal) {
-  //   return new Promise((resolve) => {
-  //     resolve(true);
-  //   });
-  // }
+  return tempKnowledgeCategory;
+};
 
-  // let haveToDeleteChildArticles = false;
-  // let haveToDeleteChildCategories = false;
-  // let catagory;
-  // try {
-  //   catagory = (await client.get(
-  //     `knowledge-categories/${knowledgeCategoryID}`
-  //   )) as {
-  //     data:
-  //       | {
-  //           articleCount: number;
-  //           articleCountRecursive: number;
-  //           childCategoryCount: number;
-  //         }
-  //       | ErrorType;
-  //   };
-  // } catch (catError) {
-  //   return true;
-  // }
+export const deleteAllFlaggedCategories = async (
+  client: HttpClient,
+  flaggedForDeletedKnowledgeCategorys: VanillaKnowledgeCategory[]
+): Promise<VanillaKnowledgeCategory[]> => {
+  const tempExistingknowledgeCategories: VanillaKnowledgeCategory[] =
+    flaggedForDeletedKnowledgeCategorys
+      ? [...flaggedForDeletedKnowledgeCategorys]
+      : [];
 
-  // if (!isErrorType(catagory?.data) && catagory.data?.articleCount !== 0) {
-  //   haveToDeleteChildArticles = true;
-  //   const articles = await getArticles(client, knowledgeCategoryID);
-  //   await deleteAllArticles(client, articles);
-  //   return await deleteKnowledgeCategory(client, knowledgeCategoryID);
-  // }
-  // if(!isErrorType(catagory?.data)&&catagory.data?.articleCountRecursive !==0){
-  //   haveToDeleteChildArticles=true
-  // LEAVING in case we need to do it
-  // }
-  // if (!isErrorType(catagory?.data) && catagory.data?.childCategoryCount !== 0) {
-  //   haveToDeleteChildCategories = false;
-  //   const categories = await getKnowedgeCategories(client);
-  //   if (categories?.length) {
-  //     categories.filter(
-  //       (c) =>
-  //         c.parentID === knowledgeCategoryID && c?.knowledgeCategoryID !== null
-  //     );
-  //     if (categories[0] && categories[0].knowledgeCategoryID) {
-  //       return await deleteKnowledgeCategory(
-  //         client,
-  //         categories[0].knowledgeCategoryID
-  //       );
-  //     }
-  //   }
-  // }
-
-  // if (!haveToDeleteChildArticles && !haveToDeleteChildCategories) {
-  //   try {
-  //     await client.delete(`knowledge-categories/${knowledgeCategoryID}`);
-  //   } catch (e) {
-  //     success = false;
-  //     console.error(e, "error deleting");
-  //   }
-  // }
-  // return await deleteKnowledgeCategory(client, knowledgeCategoryID, success)
-  console.log("return of delete", success);
-  return success;
+  const filteredExistingknowledgeCategoryWithFlags =
+    tempExistingknowledgeCategories.filter(
+      (ek) =>
+        ek.knowledgeCategoryID !== null && ek?.description === FLAG_FOR_DELETE
+    );
+  const allDeletePromises = filteredExistingknowledgeCategoryWithFlags.map(
+    (c) => {
+      if (c.knowledgeCategoryID) {
+        return deleteKnowledgeCategory(client, c);
+      }
+    }
+  );
+  const resolved: VanillaKnowledgeCategory[] = [];
+  for (
+    let promiseIndex = 0;
+    promiseIndex < allDeletePromises.length;
+    promiseIndex++
+  ) {
+    const resolvedPromise = await allDeletePromises[promiseIndex];
+    if (resolvedPromise) {
+      resolved.push(resolvedPromise);
+    }
+  }
+  const categoriesAfterIteration = resolved.flat();
+  const categoriesNOTDeletedYet = categoriesAfterIteration.filter(
+    (c) => c.description === FLAG_FOR_DELETE
+  );
+  if (categoriesNOTDeletedYet.length) {
+    console.log(categoriesNOTDeletedYet, "OHJsdfsdf");
+    return deleteAllFlaggedCategories(client, categoriesNOTDeletedYet);
+  }
+  console.log(categoriesAfterIteration, "categoriesAfterIteration");
+  return categoriesAfterIteration;
 };
 
 export const getAllArticles = async (

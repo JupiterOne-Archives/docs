@@ -19,13 +19,14 @@ const ex = [
   `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/compliance-reporting/soc2-with-jupiterone.md`,
   `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/jupiterone-query-language-copy.md`,
   `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/jupiterone-query-language.md`,
+  `${PATH_OF_DIRECTORY_TO_WATCH}/after-getting-started/rock_and-roll.md`,
 ];
 
 export const updateCommunityDocsWithPathOverride = async (
   relativePathAtDoc = ex
 ) => {
   const procedures = diffToProcedures(ex);
-  console.log(procedures, "proceduresprocedures", ex);
+  console.log(procedures, "proceduresproceduresNEW", ex);
   if (procedures && procedures.length > 0) {
     return await proceduresToVanillaRequests(procedures);
   }

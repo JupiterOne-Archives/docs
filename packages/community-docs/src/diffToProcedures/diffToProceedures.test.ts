@@ -78,9 +78,10 @@ describe("diffToProceedures", () => {
   describe("handleNestedKnowledgeCategoryChanges", () => {
     it("returns expected sequence of procedures", () => {
       const expected = expectHandleNestedKnowledgeCategoryChanges;
+      const diffs = [...exampleDiffs, "rock-and-roll/rocks.md"];
       const { completed } = handleNestedKnowledgeCategoryChanges({
-        nestedCategoryChanges: [...exampleDiffs], // need to create a new array for each
-        originalChangesArray: [...exampleDiffs], // need to create a new array for each
+        nestedCategoryChanges: [...diffs], // need to create a new array for each
+        originalChangesArray: [...diffs], // need to create a new array for each
         parentIndex: 0,
       });
       expect(expected).toEqual(completed);
