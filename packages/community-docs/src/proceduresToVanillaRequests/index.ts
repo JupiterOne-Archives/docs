@@ -4,6 +4,7 @@ import {
   isSupportedMediaType,
   modifyBodyImageLink,
 } from "../linksAndMediaHandlers";
+import { Logger } from "../Logging";
 import { isArticleType, isKnowledgeCategoryType } from "../utils";
 import {
   FLAG_FOR_DELETE,
@@ -73,6 +74,7 @@ export const addVanillaArticlesToProcedures = (
   procedures: (VanillaArticle | VanillaKnowledgeCategory)[],
   vanillaArticles: VanillaArticle[]
 ) => {
+  Logger.info(`Adding vanilla article information to procedures`);
   const proceduresWithVanillaCategoryInfo: (
     | VanillaArticle
     | VanillaKnowledgeCategory
@@ -89,11 +91,11 @@ export const addVanillaArticlesToProcedures = (
   return proceduresWithVanillaCategoryInfo;
 };
 
-// noope
 export const uploadImagesAndAddToMarkdown = async (
   imageSrcArray: string[],
   markdownAsString: string
 ) => {
+  Logger.info(`Uploading and adding images: ${imageSrcArray}`);
   let markdownTarget = markdownAsString;
   const supportedImages = imageSrcArray.filter((m) => isSupportedMediaType(m));
   for (let i = 0; i < supportedImages.length; i++) {
@@ -201,7 +203,6 @@ export const procedureToArticle = async (
         );
       }
     }
-    // tempProcedureWorkedOn.body = bodyMock ? bodyMock : FLAG_FOR_DELETE;
   }
 
   return tempProcedureWorkedOn;
@@ -214,22 +215,11 @@ export const procedureToKnowledgeCategory = async (
 ): Promise<VanillaKnowledgeCategory> => {
   let tempProcedureWorkedOn = { ...procedureWorkedOn };
   const directoryExistsResult = directoryExists(tempProcedureWorkedOn?.path);
-  console.log(
-    procedureWorkedOn,
-    "XYZprocedureWosssdffrkedOn",
-    directoryExistsResult,
-    "CAAAAT"
-  );
+
   if (tempProcedureWorkedOn.knowledgeCategoryID !== null) {
     if (directoryExistsResult) {
-      // no changes have occured to the category (basically just the name is used for kcategory)
       return tempProcedureWorkedOn;
     } else {
-      console.log(
-        "Flaggind thing for delete",
-        tempProcedureWorkedOn,
-        directoryExistsResult
-      );
       // kCategories get handled for delete later
       tempProcedureWorkedOn = {
         ...tempProcedureWorkedOn,
@@ -265,6 +255,7 @@ export const removeDeletedCategories = async (
   httpClient: HttpClient,
   procedures: (VanillaArticle | VanillaKnowledgeCategory)[]
 ) => {
+  Logger.info(`Removing deleted categories`);
   // at this point all vanillaArticles that need deleting should be deleted.
   const deletedKCategories: VanillaKnowledgeCategory[] = procedures.filter(
     isKnowledgeCategoryType
@@ -351,7 +342,6 @@ export const useProceduresForVanillaRequests = async (
     procedureWorkedOn
   );
   if (isArticleType(procedureWorkedOn)) {
-    console.log("article being worked on", procedureWorkedOn);
     procedureWorkedOn = await procedureToArticle(
       httpClient,
       procedureWorkedOn,
@@ -359,7 +349,6 @@ export const useProceduresForVanillaRequests = async (
     );
   }
   if (isKnowledgeCategoryType(procedureWorkedOn)) {
-    console.log("category being worked on", procedureWorkedOn);
     procedureWorkedOn = await procedureToKnowledgeCategory(
       httpClient,
       procedureWorkedOn,
@@ -381,16 +370,16 @@ export const proceduresToVanillaRequests = async (
 ) => {
   if (procedures && procedures.length) {
     const httpClient = new HttpClient();
-    console.log("PPPDDJDJDJD", procedures);
+    Logger.info(`Getting knowledgeCategories`);
     const existingknowledgeCategoryInfo = await getKnowedgeCategories(
       httpClient
     );
-
+    Logger.info(`Getting Articles`);
     const articles = await getAllArticles(
       httpClient,
       existingknowledgeCategoryInfo
     );
-
+    Logger.info(`Mapping Vanilla responses to procedures`);
     const proceduresWithVanillaCategories = procedures.map((p) => {
       if (isKnowledgeCategoryType(p)) {
         return addVanillaCategoryToProcedure(p, existingknowledgeCategoryInfo);
@@ -407,17 +396,12 @@ export const proceduresToVanillaRequests = async (
 
     const proceduresNeedingDeleteCategories =
       await useProceduresForVanillaRequests(proceduresWithArticleInfo);
-    console.log(
-      proceduresNeedingDeleteCategories,
-      "proceduresNeedingDeleteCategories"
-    );
+
     const { procedures: finishedProcedures } = await removeDeletedCategories(
       httpClient,
       proceduresNeedingDeleteCategories
     );
-
+    Logger.info(`FINISHED WITH PROCEDURES: ${finishedProcedures}`);
     return finishedProcedures;
-
-    // make categories first, return their ID on the procedure so the article can be tied to it.
   }
 };

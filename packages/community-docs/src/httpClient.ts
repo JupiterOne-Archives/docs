@@ -1,8 +1,8 @@
 import axios, { AxiosRequestConfig, AxiosRequestHeaders } from "axios";
 import FormData from "form-data";
+import { Logger } from "./Logging";
 import { KnowledgeCategory, VanillaArticle } from "./utils";
 import { Authorization, DEV_URL } from "./utils/constants";
-
 enum RESTTypes {
   POST = "post",
   PUT = "put",
@@ -115,7 +115,9 @@ export default class HttpClient {
     method: RESTTypes;
     options?: AxiosRequestConfig;
   }) {
-    console.log("making request to ", relativeUrl, body, method, options);
+    Logger.info(
+      `making debounced request to relativeUrl:${relativeUrl}\n body:${body}\n, method: ${method}\n, options:${options}\n`
+    );
     return this.debounceRequests(
       axios.request({
         url: this.buildUrl(relativeUrl),

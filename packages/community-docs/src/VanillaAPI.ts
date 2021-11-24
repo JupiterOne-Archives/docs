@@ -2,6 +2,7 @@ import FormData from "form-data";
 import fs from "fs/promises";
 import path from "path";
 import HttpClient from "./httpClient";
+import { Logger } from "./Logging";
 import { FLAG_FOR_DELETE, PATH_OF_DIRECTORY_TO_WATCH } from "./utils/constants";
 import {
   ProcedureTypeEnum,
@@ -57,7 +58,7 @@ export const getArticles = async (
       }));
     }
   } catch (e) {
-    console.error({ e }, "errrrr");
+    Logger.error(`getArticles error: ${JSON.stringify(e)}`);
   }
 
   return [];
@@ -110,7 +111,7 @@ export const getKnowedgeCategories = async (
       }));
     }
   } catch (error) {
-    console.error(error, "Error in getting categories");
+    Logger.error(`getKnowedgeCategories error: ${JSON.stringify(error)}`);
   }
 
   return [];
@@ -135,7 +136,7 @@ export const createKnowledgeCategory = async (
       };
     }
   } catch (e) {
-    console.error(e, "Create Knowledge Category error", { e });
+    Logger.error(`createKnowledgeCategory error: ${JSON.stringify(e)}`);
   }
 };
 
@@ -159,7 +160,7 @@ export const editKnowledgeCategory = async (
       };
     }
   } catch (e) {
-    console.error(e, "Create Knowledge Category error");
+    Logger.error(`editKnowledgeCategory error: ${JSON.stringify(e)}`);
   }
 };
 
@@ -175,11 +176,7 @@ export const deleteKnowledgeCategory = async (
     );
     tempKnowledgeCategory.description = "been deleted";
   } catch (e) {
-    console.error(
-      e,
-      "attempt to delete non-empty category",
-      tempKnowledgeCategory
-    );
+    Logger.error(`deleteKnowledgeCategory error: ${JSON.stringify(e)}`);
     return tempKnowledgeCategory;
   }
 
@@ -223,10 +220,9 @@ export const deleteAllFlaggedCategories = async (
     (c) => c.description === FLAG_FOR_DELETE
   );
   if (categoriesNOTDeletedYet.length) {
-    console.log(categoriesNOTDeletedYet, "OHJsdfsdf");
     return deleteAllFlaggedCategories(client, categoriesNOTDeletedYet);
   }
-  console.log(categoriesAfterIteration, "categoriesAfterIteration");
+
   return categoriesAfterIteration;
 };
 
@@ -273,7 +269,7 @@ export const createArticle = async (
       return { ...article.data, procedureType: ProcedureTypeEnum.Article };
     }
   } catch (e) {
-    console.error(e, "Create Article error");
+    Logger.error(`createArticle error: ${JSON.stringify(e)}`);
   }
 };
 
@@ -296,7 +292,7 @@ export const deleteArticle = async (
       return { ...article.data, procedureType: ProcedureTypeEnum.Article };
     }
   } catch (e) {
-    console.error(e, "Create Article error", { e });
+    Logger.error(`deleteArticle error: ${JSON.stringify(e)}`);
   }
 };
 
@@ -314,7 +310,7 @@ export const editArticle = async (
       return { ...article.data, procedureType: ProcedureTypeEnum.Article };
     }
   } catch (e) {
-    console.error(e, "Create Article error", { e });
+    Logger.error(`editArticle error: ${JSON.stringify(e)}`);
   }
 };
 
@@ -328,10 +324,8 @@ export const postImage = async (client: HttpClient, data: FormData) => {
       return image.data;
     }
   } catch (error) {
-    console.error(
-      JSON.stringify(error, null, 2),
-      "Error uploading image",
-      error?.data?.errors
+    Logger.error(
+      `postImageError:\n${JSON.stringify(data)} error: ${JSON.stringify(error)}`
     );
   }
 };
@@ -344,13 +338,12 @@ export const uploadImageAndReturnUrl = async (
   const mediaLocation = imagePath.substring(3);
   const mediaLocationChopped = imagePath.split("/");
   const imageName = mediaLocationChopped[mediaLocationChopped.length - 1];
-  console.log(imageName, "imagePath", imagePath);
+
   const fileLocation = path.join(
     __dirname,
     `../../../${PATH_OF_DIRECTORY_TO_WATCH}/`,
     `${mediaLocation}`
   );
-  console.log(fileLocation, "FILLLEEE");
 
   try {
     const imageFile = await fs.readFile(fileLocation);
@@ -361,7 +354,11 @@ export const uploadImageAndReturnUrl = async (
       return postImageResponse.url;
     }
   } catch (e) {
-    console.log("file doesnt exist escape", e);
+    Logger.error(
+      `uploadImageAndReturnUrl: file does not exist (${fileLocation})\n error: ${JSON.stringify(
+        e
+      )}`
+    );
   }
 
   return imagePath;
