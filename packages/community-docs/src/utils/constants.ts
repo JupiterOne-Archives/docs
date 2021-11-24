@@ -9,3 +9,4 @@ export const POST_DELAY_TIME: number = 1200;
 export const SUPPORTED_MEDIA_TYPES = ["png", "jpg", "jpeg", "gif"];
 export const MARKDOWN_IMAGE_REGEX = /\]\((..\/assets.*?)\)/;
 export const KNOWN_CATEGORY_BEEN_DELETED = "KNOWN_CATEGORY_BEEN_DELETED";
+export const SHOULD_REALLY_UPLOAD_IMAGES = false;

@@ -9,6 +9,7 @@ import { isArticleType, isKnowledgeCategoryType } from "../utils";
 import {
   FLAG_FOR_DELETE,
   KNOWN_CATEGORY_BEEN_DELETED,
+  SHOULD_REALLY_UPLOAD_IMAGES,
 } from "../utils/constants";
 import { VanillaArticle, VanillaKnowledgeCategory } from "../utils/types";
 import {
@@ -19,6 +20,7 @@ import {
   editArticle,
   getAllArticles,
   getKnowedgeCategories,
+  uploadImageAndReturnUrl,
 } from "../VanillaAPI";
 import {
   directoryExists,
@@ -99,12 +101,14 @@ export const uploadImagesAndAddToMarkdown = async (
   let markdownTarget = markdownAsString;
   const supportedImages = imageSrcArray.filter((m) => isSupportedMediaType(m));
   for (let i = 0; i < supportedImages.length; i++) {
-    const newLocation = "na, lets go faster"; //await uploadImageAndReturnUrl(supportedImages[i]);
-    markdownTarget = modifyBodyImageLink(
-      markdownTarget,
-      supportedImages[i],
-      newLocation
-    );
+    if (SHOULD_REALLY_UPLOAD_IMAGES) {
+      const newLocation = await uploadImageAndReturnUrl(supportedImages[i]);
+      markdownTarget = modifyBodyImageLink(
+        markdownTarget,
+        supportedImages[i],
+        newLocation
+      );
+    }
   }
 
   return markdownTarget;
