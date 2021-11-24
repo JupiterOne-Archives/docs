@@ -101,4 +101,4 @@ export const updateCommunityDocsWithPathOverride = async (
   }
 };
 
-export default addFullSubFolderManually("asset-management");
+export default replaceVanillaWithDirectoryToWatch();
