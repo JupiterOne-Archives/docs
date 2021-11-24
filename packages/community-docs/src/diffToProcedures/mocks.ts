@@ -6,8 +6,8 @@ export const expectedSortedChanges = [
     fileName: "getting-started-admin",
     description: "",
     knowledgeCategoryID: null,
-    path: "getting-started-admin/jupiterone-query-language-copy.md",
-    childrenPath: "getting-started-admin",
+    path: "getting-started-admin",
+    childrenPath: "getting-started-admin/jupiterone-query-language-copy.md",
     procedureType: "Category",
   },
   {
@@ -39,8 +39,9 @@ export const expectedSortedChanges = [
     fileName: "compliance-reporting",
     description: "",
     knowledgeCategoryID: null,
-    path: "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
-    childrenPath: "compliance-reporting",
+    path: "getting-started-admin/compliance-reporting",
+    childrenPath:
+      "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
     procedureType: "Category",
   },
   {
@@ -75,8 +76,9 @@ export const expectHandleNestedKnowledgeCategoryChanges = [
     fileName: "getting-started-admin",
     description: "",
     knowledgeCategoryID: null,
-    path: "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
-    childrenPath: "getting-started-admin",
+    path: "getting-started-admin",
+    childrenPath:
+      "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
     procedureType: "Category",
   },
   {
@@ -86,8 +88,9 @@ export const expectHandleNestedKnowledgeCategoryChanges = [
     fileName: "compliance-reporting",
     description: "",
     knowledgeCategoryID: null,
-    path: "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
-    childrenPath: "compliance-reporting",
+    path: "getting-started-admin/compliance-reporting",
+    childrenPath:
+      "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
     procedureType: "Category",
   },
   {
@@ -132,6 +135,28 @@ export const expectHandleNestedKnowledgeCategoryChanges = [
     path: "getting-started-admin/jupiterone-query-language.md",
     format: "markdown",
     locale: "en",
+    procedureType: "Article",
+  },
+  {
+    childrenPath: "rock-and-roll/rocks.md",
+    description: "",
+    fileName: "rock-and-roll",
+    knowledgeBaseID: 1,
+    knowledgeCategoryID: null,
+    name: "Rock And Roll",
+    parentID: null,
+    path: "rock-and-roll",
+    procedureType: "Category",
+  },
+  {
+    articleID: null,
+    body: "",
+    fileName: "rocks.md",
+    format: "markdown",
+    knowledgeCategoryID: null,
+    locale: "en",
+    name: "Rocks",
+    path: "rock-and-roll/rocks.md",
     procedureType: "Article",
   },
 ];

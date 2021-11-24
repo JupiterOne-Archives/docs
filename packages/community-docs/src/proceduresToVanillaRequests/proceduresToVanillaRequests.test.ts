@@ -1,36 +1,47 @@
-import { FLAG_FOR_DELETE, VanillaArticle } from "../utils";
+import {
+  FLAG_FOR_DELETE,
+  KNOWN_CATEGORY_BEEN_DELETED,
+  ProcedureTypeEnum,
+  VanillaArticle,
+  VanillaKnowledgeCategory,
+} from "../utils";
 import {
   createArticle,
   createKnowledgeCategory,
+  deleteAllFlaggedCategories,
   deleteArticle,
-  deleteKnowledgeCategory,
   editArticle,
   editKnowledgeCategory,
 } from "../VanillaAPI";
 import {
+  addImagesToArticleMarkdown,
   addVanillaArticleInfoToProcedure,
   addVanillaArticlesToProcedures,
   addVanillaCategoryToProcedure,
   getPreviousKnowledgeID,
   procedureToArticle,
   procedureToKnowledgeCategory,
+  removeDeletedCategories,
   useProceduresForVanillaRequests,
 } from "./";
 import {
+  childVanillaKnowledgeCategory,
   expectedDeleteANDCreatesPROCEDURES,
   matchingProcedureKnowledgeCategory,
   matchingVanillaKnowledgeArticle,
   procedureArticle,
   procedureKnowledgeCategory,
   PROCEDURES,
+  PROCEDURESKCategoriesDELETED,
   proceduresMock,
+  PROCEDURESWithKCategoriesToDelete,
   PROCEDURESWithOneDeleteArticleAndCreates,
   SHAPEWEWANT,
   vanillaArticleWithInfo,
   vanillaKnowledgeArticle,
   vanillaKnowledgeCategory,
 } from "./mocks";
-import { markdownToString } from "./utils";
+import { directoryExists, markdownToString } from "./utils";
 jest.mock("../VanillaAPI");
 jest.mock("./utils");
 
@@ -42,12 +53,19 @@ describe("ProceduresToVanillaRequests", () => {
   let mockMarkdownToString = markdownToString as jest.MockedFunction<
     typeof markdownToString
   >;
+  let mockDirectoryExists = directoryExists as jest.MockedFunction<
+    typeof directoryExists
+  >;
   let mockEditKnowledgeCategory = editKnowledgeCategory as jest.MockedFunction<
     typeof editKnowledgeCategory
   >;
-  let mockDeleteKnowledgeCategory =
-    deleteKnowledgeCategory as jest.MockedFunction<
-      typeof deleteKnowledgeCategory
+  // let mockDeleteKnowledgeCategory =
+  //   deleteKnowledgeCategory as jest.MockedFunction<
+  //     typeof deleteKnowledgeCategory
+  //   >;
+  let mockDeleteAllFlaggedCategories =
+    deleteAllFlaggedCategories as jest.MockedFunction<
+      typeof deleteAllFlaggedCategories
     >;
 
   let mockCreateArticle = createArticle as jest.MockedFunction<
@@ -67,15 +85,23 @@ describe("ProceduresToVanillaRequests", () => {
   let proceduresMocktemp = proceduresMock;
 
   beforeEach(() => {
+    mockDirectoryExists.mockReturnValue(true);
     mockCreateArticle = createArticle as jest.MockedFunction<
       typeof createArticle
     >;
     mockMarkdownToString = markdownToString as jest.MockedFunction<
       typeof markdownToString
     >;
-    mockDeleteKnowledgeCategory =
-      deleteKnowledgeCategory as jest.MockedFunction<
-        typeof deleteKnowledgeCategory
+    mockDirectoryExists = directoryExists as jest.MockedFunction<
+      typeof directoryExists
+    >;
+    // mockDeleteKnowledgeCategory =
+    //   deleteKnowledgeCategory as jest.MockedFunction<
+    //     typeof deleteKnowledgeCategory
+    //   >;
+    mockDeleteAllFlaggedCategories =
+      deleteAllFlaggedCategories as jest.MockedFunction<
+        typeof deleteAllFlaggedCategories
       >;
     mockEditKnowledgeCategory = editKnowledgeCategory as jest.MockedFunction<
       typeof editKnowledgeCategory
@@ -246,12 +272,11 @@ describe("ProceduresToVanillaRequests", () => {
         const actual = await procedureToArticle(
           mockHttpclient,
           procedureWithNoArticle,
-          null,
-          "fackeBody"
+          null
         );
         expect(actual).toEqual({
           articleID: null,
-          body: "fackeBody",
+          body: "",
           fileName: "soc2-with-jupiterone-copy.md",
           format: "markdown",
           knowledgeCategoryID: null,
@@ -276,13 +301,12 @@ describe("ProceduresToVanillaRequests", () => {
         const actual = await procedureToArticle(
           mockHttpclient,
           procedureWithNoArticle,
-          previousknowledgeCategoryID,
-          "fackeBody"
+          previousknowledgeCategoryID
         );
 
         expect(actual).toEqual({
           articleID,
-          body: "fackeBody",
+          body: "",
           fileName: "soc2-with-jupiterone-copy.md",
           format: "markdown",
           knowledgeCategoryID: previousknowledgeCategoryID,
@@ -292,7 +316,7 @@ describe("ProceduresToVanillaRequests", () => {
           procedureType: "Article",
         });
         expect(mockCreateArticle).toHaveBeenCalledWith(mockHttpclient, {
-          body: "fackeBody",
+          body: "",
           format: "markdown",
           knowledgeCategoryID: articleID,
           locale: "en",
@@ -317,21 +341,19 @@ describe("ProceduresToVanillaRequests", () => {
         mockEditArticle.mockResolvedValue({
           articleID,
           name: "Soc2 With Jupiterone Copy",
-
           knowledgeCategoryID: previousknowledgeCategoryID,
         } as any);
         const actual = await procedureToArticle(
           mockHttpclient,
           procedureWithArticle,
-          previousknowledgeCategoryID,
-          "fackeBody"
+          previousknowledgeCategoryID
         );
         expect(actual).toEqual({
           knowledgeCategoryID: previousknowledgeCategoryID,
           articleID,
           fileName: "soc2-with-jupiterone-copy.md",
           name: "Soc2 With Jupiterone Copy",
-          body: "fackeBody",
+          body: "",
           path: "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
           format: "markdown",
           locale: "en",
@@ -341,7 +363,7 @@ describe("ProceduresToVanillaRequests", () => {
           mockHttpclient,
           articleID,
           {
-            body: "fackeBody",
+            body: "",
             format: "markdown",
             knowledgeCategoryID: previousknowledgeCategoryID,
             locale: "en",
@@ -355,8 +377,9 @@ describe("ProceduresToVanillaRequests", () => {
       beforeEach(() => {
         mockDeleteArticle.mockReset();
       });
-      it("deletes existing article when body empty", async () => {
+      it("deletes existing article when body contains delete flag", async () => {
         mockDeleteArticle.mockResolvedValue({} as any);
+        mockMarkdownToString.mockResolvedValue(FLAG_FOR_DELETE);
         const articleID = 234;
         const previousknowledgeCategoryID = 8;
         const mockHttpclient = {} as any;
@@ -368,8 +391,7 @@ describe("ProceduresToVanillaRequests", () => {
         const actual = await procedureToArticle(
           mockHttpclient,
           procedureWithArticle,
-          previousknowledgeCategoryID,
-          FLAG_FOR_DELETE
+          previousknowledgeCategoryID
         );
         expect(actual).toEqual({
           articleID: 234,
@@ -382,7 +404,46 @@ describe("ProceduresToVanillaRequests", () => {
           path: "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
           procedureType: "Article",
         });
+        expect(mockDeleteArticle).toHaveBeenCalledWith(
+          mockHttpclient,
+          articleID
+        );
       });
+    });
+  });
+  describe("deleteAllFlaggedCategories", () => {
+    beforeEach(() => {
+      mockDeleteAllFlaggedCategories.mockReset();
+    });
+    it("returns obj with procedures, categoriesDeleted", async () => {
+      mockDeleteAllFlaggedCategories.mockResolvedValue(
+        PROCEDURESKCategoriesDELETED
+      );
+      const expected = {
+        procedures: PROCEDURESWithKCategoriesToDelete,
+        categoriesDeleted: PROCEDURESKCategoriesDELETED,
+      };
+      const mockHttpclient = {} as any;
+      const actual = await removeDeletedCategories(
+        mockHttpclient,
+        PROCEDURESWithKCategoriesToDelete
+      );
+      expect(actual).toEqual(expected);
+    });
+    it("handles empty array", async () => {
+      const noneToDelete: VanillaKnowledgeCategory[] = [];
+      mockDeleteAllFlaggedCategories.mockResolvedValue(noneToDelete as any);
+      const expected = {
+        procedures: PROCEDURESWithKCategoriesToDelete,
+        categoriesDeleted: noneToDelete,
+      };
+      const mockHttpclient = {} as any;
+      const actual = await removeDeletedCategories(
+        mockHttpclient,
+        PROCEDURESWithKCategoriesToDelete
+      );
+      expect(actual).toEqual(expected);
+      expect(PROCEDURESWithKCategoriesToDelete).toEqual(actual.procedures);
     });
   });
   describe("procedureToKnowledgeCategory", () => {
@@ -390,6 +451,7 @@ describe("ProceduresToVanillaRequests", () => {
       mockCreateKnowledgeCategory.mockReset();
     });
     it("Creates", async () => {
+      mockDirectoryExists.mockReturnValue(true);
       const procedureKnowledgeCategoryNOKCID = {
         ...procedureKnowledgeCategorytemp,
       };
@@ -399,15 +461,16 @@ describe("ProceduresToVanillaRequests", () => {
         knowledgeCategoryID,
       });
       const expected = {
-        childrenPath: "soc2-reporting",
+        childrenPath:
+          "getting-started-admin/soc2-reporting/soc2-with-jupiterone-copy.md",
         description: "",
         fileName: "soc2-reporting",
         foreignID: undefined,
         knowledgeBaseID: 1,
         knowledgeCategoryID,
         name: "Soc2 Reporting",
-        parentID: null,
-        path: "getting-started-admin/soc2-reporting/soc2-with-jupiterone-copy.md",
+        parentID: 1,
+        path: "getting-started-admin/soc2-reporting",
         procedureType: "Category",
         sort: undefined,
         sortChildren: undefined,
@@ -431,73 +494,65 @@ describe("ProceduresToVanillaRequests", () => {
     describe("Edits", () => {
       beforeEach(() => {
         mockEditKnowledgeCategory.mockReset();
+        mockDirectoryExists.mockReturnValue(true);
       });
-      it("edits when file exists", async () => {
+      it("returns procedure when file exists and has knowledgeCategoryID", async () => {
         const knowledgeCategoryID = 111;
-        const procedureKnowledgeCategoryNOKCID = {
+        mockDirectoryExists.mockReturnValue(true);
+        const procedureKnowledgeCategoryWITHKCID = {
           ...procedureKnowledgeCategorytemp,
           knowledgeCategoryID,
         };
 
         mockEditKnowledgeCategory.mockResolvedValue({
-          ...procedureKnowledgeCategoryNOKCID,
+          ...procedureKnowledgeCategoryWITHKCID,
           knowledgeCategoryID,
         });
-        const expected = {
-          childrenPath: "soc2-reporting",
-          description: "",
-          fileName: "soc2-reporting",
-          foreignID: undefined,
-          knowledgeBaseID: 1,
-          knowledgeCategoryID,
-          name: "Soc2 Reporting",
-          parentID: null,
-          path: "getting-started-admin/soc2-reporting/soc2-with-jupiterone-copy.md",
-          procedureType: "Category",
-          sort: undefined,
-          sortChildren: undefined,
-          url: undefined,
-        };
+        const expected = procedureKnowledgeCategoryWITHKCID;
         const mockHttpclient = {} as any;
         const actual = await procedureToKnowledgeCategory(
           mockHttpclient,
-          procedureKnowledgeCategoryNOKCID,
-          22,
-          true
+          procedureKnowledgeCategoryWITHKCID,
+          22
         );
-        expect(mockEditKnowledgeCategory).toHaveBeenLastCalledWith(
-          mockHttpclient,
-          knowledgeCategoryID,
-          {
-            name: "Soc2 Reporting",
-            parentID: 22,
-          }
-        );
+
         expect(actual).toEqual(expected);
       });
     });
-    describe("Deletes", () => {
-      it("deletes when file does not exist", async () => {
+    describe("Delete", () => {
+      it(" Marks kcategories for delete when kcategory file does not exist", async () => {
         const knowledgeCategoryID = 111;
+        mockDirectoryExists.mockReturnValue(false);
         const procedureKnowledgeCategoryNOKCID = {
           ...procedureKnowledgeCategorytemp,
           knowledgeCategoryID,
           path: "getting-started-admin/soc2-repzzzorting/soc2-with-jupiterone-copy.md",
         };
-
-        mockDeleteKnowledgeCategory.mockResolvedValue(true);
-
         const mockHttpclient = {} as any;
         const actual = await procedureToKnowledgeCategory(
           mockHttpclient,
           procedureKnowledgeCategoryNOKCID,
           22
         );
-        expect(mockDeleteKnowledgeCategory).toHaveBeenLastCalledWith(
+
+        expect(actual.description).toEqual(FLAG_FOR_DELETE);
+      });
+      it(" Marks kcategories AS deleted when missing kcategory file and knowledgeCategoryID", async () => {
+        const knowledgeCategoryID = null;
+        mockDirectoryExists.mockReturnValue(false);
+        const procedureKnowledgeCategoryNOKCID = {
+          ...procedureKnowledgeCategorytemp,
+          knowledgeCategoryID,
+          path: "getting-started-admin/soc2-repzzzorting/soc2-with-jupiterone-copy.md",
+        };
+        const mockHttpclient = {} as any;
+        const actual = await procedureToKnowledgeCategory(
           mockHttpclient,
-          knowledgeCategoryID
+          procedureKnowledgeCategoryNOKCID,
+          22
         );
-        expect(actual.description).toEqual("deleted");
+
+        expect(actual.description).toEqual(KNOWN_CATEGORY_BEEN_DELETED);
       });
     });
   });
@@ -505,11 +560,14 @@ describe("ProceduresToVanillaRequests", () => {
   describe("getPreviousKnowledgeID", () => {
     it("returns null when there is no previous knowledge category", () => {
       const expected = null;
-      const actualWithEmptyArray = getPreviousKnowledgeID([]);
-      const actualWithNoCategories = getPreviousKnowledgeID([
-        vanillaArticleWithInfo,
-        vanillaArticleWithInfo,
-      ]);
+      const actualWithEmptyArray = getPreviousKnowledgeID(
+        [],
+        vanillaKnowledgeCategory
+      );
+      const actualWithNoCategories = getPreviousKnowledgeID(
+        [vanillaArticleWithInfo, vanillaArticleWithInfo],
+        childVanillaKnowledgeCategory
+      );
       expect(actualWithEmptyArray).toEqual(expected);
       expect(actualWithNoCategories).toEqual(expected);
     });
@@ -520,14 +578,134 @@ describe("ProceduresToVanillaRequests", () => {
         knowledgeCategoryID,
       };
       const expected = knowledgeCategoryID;
-      const actualWithEmptyArray = getPreviousKnowledgeID([
-        vanillaKnowledgeCategory,
-        vanillaArticleWithInfo,
-        targetForKnowledgeCategory,
-        vanillaArticleWithInfo,
-      ]);
+      const actualWithEmptyArray = getPreviousKnowledgeID(
+        [
+          vanillaKnowledgeCategory,
+          vanillaArticleWithInfo,
+          targetForKnowledgeCategory,
+          vanillaArticleWithInfo,
+        ],
+        childVanillaKnowledgeCategory
+      );
 
       expect(actualWithEmptyArray).toEqual(expected);
+    });
+    it("new parent category gets null as knowledgeCategoryID", () => {
+      const anotherParentCategory = {
+        parentID: 1,
+        knowledgeBaseID: 1,
+        name: "Getting Started Admin",
+        fileName: "getting-started-admin",
+        description: "",
+        knowledgeCategoryID: 49,
+        path: "getting-started-admin",
+        childrenPath: "getting-started-admin/jupiterone-query-language-copy.md",
+        procedureType: "Category",
+        sortChildren: null,
+        sort: 0,
+        url: "",
+        foreignID: null,
+      } as VanillaKnowledgeCategory;
+      const tester = {
+        parentID: 1,
+        knowledgeBaseID: 1,
+        name: "After started Admin",
+        fileName: "after-started-admin",
+        description: "",
+        knowledgeCategoryID: null,
+        path: "after-started-admin",
+        childrenPath: "after-started-admin/rock/rolls.md",
+        procedureType: "Category",
+        sortChildren: null,
+        sort: 0,
+        url: "",
+        foreignID: null,
+      } as VanillaKnowledgeCategory;
+      const cousinNotParent = {
+        parentID: 8,
+        knowledgeBaseID: 1,
+        name: "Compliance Reporting",
+        fileName: "compliance-reporting",
+        description: "",
+        knowledgeCategoryID: 23,
+        path: "getting-started-admin/compliance-reporting",
+        childrenPath:
+          "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
+        procedureType: ProcedureTypeEnum.Category,
+      } as VanillaKnowledgeCategory;
+
+      const returnedId = getPreviousKnowledgeID(
+        [anotherParentCategory, cousinNotParent],
+        tester
+      );
+
+      expect(returnedId).toEqual(null);
+    });
+    it("no matching categories in completed procedures", () => {
+      const testerParent = {
+        parentID: 1,
+        knowledgeBaseID: 1,
+        name: "After Started Admin",
+        fileName: "after-started-admin",
+        description: "",
+        knowledgeCategoryID: 12,
+        path: "after-started-admin",
+        childrenPath: "after-started-admin/rock/rolls.md",
+        procedureType: "Category",
+        sortChildren: null,
+        sort: 0,
+        url: "",
+        foreignID: null,
+      } as VanillaKnowledgeCategory;
+      const otherRootCategory = {
+        parentID: 1,
+        knowledgeBaseID: 1,
+        name: "Getting Started Admin",
+        fileName: "getting-started-admin",
+        description: "",
+        knowledgeCategoryID: 49,
+        path: "getting-started-admin",
+        childrenPath: "getting-started-admin/jupiterone-query-language-copy.md",
+        procedureType: "Category",
+        sortChildren: null,
+        sort: 0,
+        url: "",
+        foreignID: null,
+      } as VanillaKnowledgeCategory;
+      const tester = {
+        parentID: 1,
+        knowledgeBaseID: 1,
+        name: "Rock",
+        fileName: "rock",
+        description: "",
+        knowledgeCategoryID: null,
+        path: "after-started-admin/rock",
+        childrenPath: "after-started-admin/rock/rolls.md",
+        procedureType: "Category",
+        sortChildren: null,
+        sort: 0,
+        url: "",
+        foreignID: null,
+      } as VanillaKnowledgeCategory;
+      const cousinNotParent = {
+        parentID: 8,
+        knowledgeBaseID: 1,
+        name: "Compliance Reporting",
+        fileName: "compliance-reporting",
+        description: "",
+        knowledgeCategoryID: 23,
+        path: "getting-started-admin/compliance-reporting",
+        childrenPath:
+          "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
+        procedureType: ProcedureTypeEnum.Category,
+      } as VanillaKnowledgeCategory;
+
+      const returnedId = getPreviousKnowledgeID(
+        [testerParent, otherRootCategory, cousinNotParent],
+        tester
+      );
+
+      expect(returnedId).toEqual(12);
     });
   });
 
@@ -538,7 +716,8 @@ describe("ProceduresToVanillaRequests", () => {
       mockCreateKnowledgeCategory.mockReset();
     });
     it("handles all new items", async () => {
-      mockMarkdownToString.mockReturnValue("Im markdown. LOOK AT ME.");
+      mockDirectoryExists.mockReturnValue(true);
+      mockMarkdownToString.mockResolvedValue("Im markdown. LOOK AT ME.");
       mockCreateArticle
         .mockResolvedValueOnce({
           ...vanillaArticleWithInfo,
@@ -590,17 +769,17 @@ describe("ProceduresToVanillaRequests", () => {
       expect(actual).toEqual(SHAPEWEWANT);
     });
     it("handles addition and removal of an articles", async () => {
+      mockDirectoryExists.mockReturnValue(true);
       const editArticle =
         PROCEDURESWithOneDeleteArticleAndCreates[2] as VanillaArticle;
       const deleteArticle =
         PROCEDURESWithOneDeleteArticleAndCreates[1] as VanillaArticle;
       mockMarkdownToString
-        .mockReturnValueOnce(FLAG_FOR_DELETE)
-        .mockReturnValue("Im markdown. LOOK AT ME.");
+        .mockResolvedValueOnce(FLAG_FOR_DELETE)
+        .mockResolvedValue("Im markdown. LOOK AT ME.");
       mockEditArticle.mockResolvedValue(editArticle);
       mockDeleteArticle.mockResolvedValue(deleteArticle);
       mockCreateArticle
-
         .mockResolvedValueOnce({
           ...vanillaArticleWithInfo,
           knowledgeCategoryID: 33,
@@ -611,7 +790,6 @@ describe("ProceduresToVanillaRequests", () => {
           ...vanillaArticleWithInfo,
           knowledgeCategoryID: 33,
           articleID: 22,
-
           name: "Soc2 With Jupiterone",
         });
       mockCreateKnowledgeCategory.mockResolvedValueOnce({
@@ -619,7 +797,6 @@ describe("ProceduresToVanillaRequests", () => {
         parentID: 22,
         knowledgeBaseID: 1,
         name: "Compliance Reporting",
-
         knowledgeCategoryID: 33,
       });
 
@@ -629,6 +806,20 @@ describe("ProceduresToVanillaRequests", () => {
       );
 
       expect(actual).toEqual(expectedDeleteANDCreatesPROCEDURES);
+    });
+  });
+  describe("addImagesToArticleMarkdown", () => {
+    it("returns empty string when no input supplied", async () => {
+      const actual = await addImagesToArticleMarkdown("");
+      const expected = "";
+      expect(actual).toEqual(expected);
+    });
+    it("returns inputted string when length of imageSrcMap is 0", async () => {
+      const inputedString =
+        "markdown turned into a string and does not contain ()[assets/images]";
+      const actual = await addImagesToArticleMarkdown(inputedString);
+      const expected = inputedString;
+      expect(actual).toEqual(expected);
     });
   });
 });

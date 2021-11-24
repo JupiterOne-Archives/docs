@@ -15,8 +15,8 @@ export const filterDiffs = (gitDiffArray: string[]) => {
       });
       return diffIsOfCorrectType;
     })
-    .map((diff) => diff.substring(PATH_OF_DIRECTORY_TO_WATCH.length));
-  //
+    .map((diff) => diff.substring(`${PATH_OF_DIRECTORY_TO_WATCH}/`.length));
+
   filteredArray.sort((a, b) => a.split("/").length - b.split("/").length);
 
   return filteredArray;

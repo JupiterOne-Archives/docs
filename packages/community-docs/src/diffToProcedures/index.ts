@@ -1,12 +1,12 @@
 // name from the view point of changed files
 
+import { Logger } from "../Logging";
 import {
   ProcedureTypeEnum,
   VanillaArticle,
   VanillaKnowledgeCategory,
 } from "../utils/types";
 import { createDisplayName, filterDiffs } from "./utils";
-
 export const createArticleChange = (
   articleChanges: string, // diff string of a file
   path: string
@@ -88,18 +88,21 @@ export const handleNestedKnowledgeCategoryChanges = (
     !tempHandled.includes(identifierForDirectoryOrFile)
   ) {
     tempHandled.push(identifierForDirectoryOrFile);
-    if (
-      identifierForDirectoryOrFile.endsWith(".md") ||
-      identifierForDirectoryOrFile.endsWith(".rst")
-    ) {
-      const markDownFileToKnowledgeCategory = createArticleChange(
+    if (identifierForDirectoryOrFile.endsWith(".md")) {
+      const markDownFileToKnowledgeArticle = createArticleChange(
         target,
         input.originalChangesArray[tempParentIndex]
       );
-      tempCompleted.push(markDownFileToKnowledgeCategory);
+      tempCompleted.push(markDownFileToKnowledgeArticle);
     } else {
       const displayName = createDisplayName(identifierForDirectoryOrFile);
 
+      const path = input.originalChangesArray[tempParentIndex];
+      const pathOfCategory = path.substring(
+        0,
+        path.indexOf(identifierForDirectoryOrFile) +
+          identifierForDirectoryOrFile.length
+      );
       const kb: VanillaKnowledgeCategory = {
         parentID: null, //will need to get it, for sub folders
         knowledgeBaseID: 1, //will need to get it for nested. the docs knowledge base is 1 so for non nested we can use that
@@ -107,8 +110,8 @@ export const handleNestedKnowledgeCategoryChanges = (
         fileName: identifierForDirectoryOrFile,
         description: "",
         knowledgeCategoryID: null,
-        path: input.originalChangesArray[tempParentIndex],
-        childrenPath: identifierForDirectoryOrFile,
+        path: pathOfCategory,
+        childrenPath: path,
         procedureType: ProcedureTypeEnum.Category,
       };
       tempCompleted.push(kb);
@@ -142,13 +145,14 @@ export const handleNestedKnowledgeCategoryChanges = (
 };
 
 export const diffToProcedures = (gitDiffArray: string[]) => {
+  Logger.info(`Diffs marked as changes: ${gitDiffArray}`);
   const gitDiffWithOutDocs = filterDiffs(gitDiffArray);
-
+  Logger.info(`Filtered Diffs used to generate procedures: ${gitDiffArray}`);
   const { completed } = handleNestedKnowledgeCategoryChanges({
     nestedCategoryChanges: [...gitDiffWithOutDocs], // need to create a new array for each
     originalChangesArray: [...gitDiffWithOutDocs], // need to create a new array for each
     parentIndex: 0,
   });
-  console.log(completed, "completed-handleNestedKnowledgeCategoryChanges");
+  Logger.info(`Procedures Generated`);
   return completed;
 };
