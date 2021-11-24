@@ -2,6 +2,7 @@
 
 ## 1. Configure integrations
 
+CHANGES MADE
 Ensure all relevant managed integrations are properly configured to be working;
 for SOC 2, you’ll need to make a determination as to which integrations are
 necessary based on your in-scope environment, e.g., the relevant system
@@ -23,11 +24,12 @@ Additional support documentation:
 
 Review all of the templated, out-of-the-box policies + procedures, ensuring they
 accurately represent your organization’s principles/processes, tailoring and/or
-adding your own documentation where relevant. 
+adding your own documentation where relevant.
 
 Out of the box, the policies app comes with templated policies + procedures that
 can be edited/modified. Additionally, you can add your own policies + procedures
-+ remove/delete documents that aren’t relevant to your organization.
+
+- remove/delete documents that aren’t relevant to your organization.
 
 ![policies](../assets/policies-1.png)
 
@@ -50,7 +52,7 @@ Additional support documentation:
 
 ## 3. Import compliance framework
 
-Import the **SOC 2 Security Controls** compliance framework within the Compliance app. 
+Import the **SOC 2 Security Controls** compliance framework within the Compliance app.
 
 ![import-framework](../assets/import-framework.gif)
 
@@ -63,7 +65,7 @@ Additional support documentation:
 ## 4. Adding, editing, removing controls (control mapping)
 
 Within the default SOC 2 framework, templated controls are mapped to the Common
-Criteria required to meet the 'Security' Trust Service Category. 
+Criteria required to meet the 'Security' Trust Service Category.
 
 There is the functionality within JupiterOne to add controls, remove controls,
 and/or update control wording by editing the JSON (or CSV) framework
@@ -75,29 +77,30 @@ specification.
 
 For each control, the desired outcome is the corresponding evidence will suffice
 to demonstrate reasonable assurance the control has been designed + implemented
-(SOC 2 Type I) + operating effectively over the review period (SOC 2 Type II). 
+(SOC 2 Type I) + operating effectively over the review period (SOC 2 Type II).
 
 By default, for the standard controls within the SOC 2 framework in JupiterOne,
 more than half the controls have partial to full evidence already mapped, by way
 of JupiterOne query language (J1QL) managed queries.
 
 1. For each control, review default mapped evidence, if applicable.
-    1. If the evidence is satisfactory (as you'd expect for output), move on to the next control.
-    1. If the evidence isn’t satisfactory, i.e., incorrect or incomplete:
-        1.  Review the mapped queries + tailor the queries so the returned output is as expected.
+   1. If the evidence is satisfactory (as you'd expect for output), move on to the next control.
+   1. If the evidence isn’t satisfactory, i.e., incorrect or incomplete:
+      1. Review the mapped queries + tailor the queries so the returned output is as expected.
 
 ![edit-query](../assets/editing-queries.gif)
 
-Additional support documentation: 
+Additional support documentation:
 
 [J1QL query tutorial](https://support.jupiterone.io/hc/en-us/articles/360022720434-4-9-J1QL-Query-Tutorial)\
 [Search quickstart](https://support.jupiterone.io/hc/en-us/articles/360022705414-2-9-Search-Quickstart)\
-[J1QL language specs](https://support.jupiterone.io/hc/en-us/articles/360022722014-J1QL-Language-Specs) 
+[J1QL language specs](https://support.jupiterone.io/hc/en-us/articles/360022722014-J1QL-Language-Specs)
 
 ### Add additional queries
+
 1. Adding a new query, or,
 
-Additional support documentation: 
+Additional support documentation:
 
 [J1QL query tutorial](https://support.jupiterone.io/hc/en-us/articles/360022720434-4-9-J1QL-Query-Tutorial)\
 [Search quickstart](https://support.jupiterone.io/hc/en-us/articles/360022705414-2-9-Search-Quickstart)\
@@ -114,6 +117,7 @@ Additional support documentation:
 [All questions + queries](https://ask.us.jupiterone.io/filter?tagFilter=all)
 
 ### Adding additional evidence
+
 1. Link additional evidence, i.e., hyperlink
 1. Upload additional evidence, e.g., spreadsheets, compressed files, etc.
 1. Add notes/attestations

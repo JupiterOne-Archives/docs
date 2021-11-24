@@ -8,7 +8,6 @@
   "private": true,
   "scripts": {
     "run": "yarn ts-node ./src/index.ts",
-    "watch-and-run-fake-httpClient": "ts-node-dev --respawn -- src/index.ts testing",
     "watch-and-run": "ts-node-dev --respawn -- src/index.ts",
     "test": "jest",
     "clean": "rm -rf ./dist ./coverage",
@@ -19,9 +18,14 @@
     "start": "concurrently 'yarn autobuild' 'yarn watch-and-run'"
   },
   "dependencies": {
+    "@types/glob": "^7.2.0",
     "@types/node": "^16.11.7",
+    "@types/qs": "^6.9.7",
     "axios": "^0.24.0",
+    "form-data": "^4.0.0",
+    "glob": "^7.2.0",
     "lodash": "^4.17.21",
+    "qs": "^6.10.1",
     "rxjs": "^7.4.0",
     "typescript": "^4.4.4"
   },
