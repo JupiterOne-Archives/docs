@@ -51,7 +51,6 @@ export const directoryExists = (filePath?: string): boolean => {
   try {
     return fsSync.existsSync(fileLocation);
   } catch (e) {
-    console.error(e, "FIle does not exist");
     return false;
   }
 };
