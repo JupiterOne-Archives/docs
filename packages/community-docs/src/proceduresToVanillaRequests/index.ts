@@ -309,12 +309,10 @@ export const getPreviousKnowledgeID = (
     procedureBeingWorkedOn.fileName &&
     lastCategoryInArray.fileName
   ) {
-    const workingChildrenPathSplit =
-      procedureBeingWorkedOn.childrenPath.split("/");
-    const indexOfLastCatFileName = workingChildrenPathSplit.indexOf(
+    const indexOfLastCatFileName = procedureBeingWorkedOn.childrenPath.indexOf(
       lastCategoryInArray.fileName
     );
-    // console.log(indexOfLastCatFileName, "weee");
+
     if (indexOfLastCatFileName === -1) {
       return getPreviousKnowledgeID(
         categoryOnlyProcedures,
@@ -322,15 +320,9 @@ export const getPreviousKnowledgeID = (
       );
     }
     return lastCategoryInArray.knowledgeCategoryID;
-
-    // const lastCategoryPathSplit = lastCategoryInArray.childrenPath.split("/");
-    // console.log(
-    //   workingChildrenPathSplit.indexOf(lastCategoryInArray.fileName),
-    //   "weee2"
-    // );
   }
 
-  return lastCategoryInArray?.knowledgeCategoryID || null;
+  return null;
 };
 
 export const useProceduresForVanillaRequests = async (

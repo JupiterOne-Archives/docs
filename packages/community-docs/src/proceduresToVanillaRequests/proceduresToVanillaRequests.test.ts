@@ -590,8 +590,74 @@ describe("ProceduresToVanillaRequests", () => {
 
       expect(actualWithEmptyArray).toEqual(expected);
     });
-    it("returns knowledgeCategoryID of next category with matching patch", () => {
-      const nearestParentCategory = {
+    it("new parent category gets null as knowledgeCategoryID", () => {
+      const anotherParentCategory = {
+        parentID: 1,
+        knowledgeBaseID: 1,
+        name: "Getting Started Admin",
+        fileName: "getting-started-admin",
+        description: "",
+        knowledgeCategoryID: 49,
+        path: "getting-started-admin",
+        childrenPath: "getting-started-admin/jupiterone-query-language-copy.md",
+        procedureType: "Category",
+        sortChildren: null,
+        sort: 0,
+        url: "",
+        foreignID: null,
+      } as VanillaKnowledgeCategory;
+      const tester = {
+        parentID: 1,
+        knowledgeBaseID: 1,
+        name: "After started Admin",
+        fileName: "after-started-admin",
+        description: "",
+        knowledgeCategoryID: null,
+        path: "after-started-admin",
+        childrenPath: "after-started-admin/rock/rolls.md",
+        procedureType: "Category",
+        sortChildren: null,
+        sort: 0,
+        url: "",
+        foreignID: null,
+      } as VanillaKnowledgeCategory;
+      const cousinNotParent = {
+        parentID: 8,
+        knowledgeBaseID: 1,
+        name: "Compliance Reporting",
+        fileName: "compliance-reporting",
+        description: "",
+        knowledgeCategoryID: 23,
+        path: "getting-started-admin/compliance-reporting",
+        childrenPath:
+          "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
+        procedureType: ProcedureTypeEnum.Category,
+      } as VanillaKnowledgeCategory;
+
+      const returnedId = getPreviousKnowledgeID(
+        [anotherParentCategory, cousinNotParent],
+        tester
+      );
+
+      expect(returnedId).toEqual(null);
+    });
+    it("no matching categories in completed procedures", () => {
+      const testerParent = {
+        parentID: 1,
+        knowledgeBaseID: 1,
+        name: "After Started Admin",
+        fileName: "after-started-admin",
+        description: "",
+        knowledgeCategoryID: 12,
+        path: "after-started-admin",
+        childrenPath: "after-started-admin/rock/rolls.md",
+        procedureType: "Category",
+        sortChildren: null,
+        sort: 0,
+        url: "",
+        foreignID: null,
+      } as VanillaKnowledgeCategory;
+      const otherRootCategory = {
         parentID: 1,
         knowledgeBaseID: 1,
         name: "Getting Started Admin",
@@ -613,8 +679,8 @@ describe("ProceduresToVanillaRequests", () => {
         fileName: "rock",
         description: "",
         knowledgeCategoryID: null,
-        path: "getting-started-admin/rock",
-        childrenPath: "getting-started-admin/rock/rolls.md",
+        path: "after-started-admin/rock",
+        childrenPath: "after-started-admin/rock/rolls.md",
         procedureType: "Category",
         sortChildren: null,
         sort: 0,
@@ -635,11 +701,11 @@ describe("ProceduresToVanillaRequests", () => {
       } as VanillaKnowledgeCategory;
 
       const returnedId = getPreviousKnowledgeID(
-        [nearestParentCategory, cousinNotParent],
+        [testerParent, otherRootCategory, cousinNotParent],
         tester
       );
 
-      expect(returnedId).toEqual(49);
+      expect(returnedId).toEqual(12);
     });
   });
 
