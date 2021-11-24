@@ -51,6 +51,7 @@ export const vanillaKnowledgeCategory = {
     "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
   procedureType: ProcedureTypeEnum.Category,
 } as VanillaKnowledgeCategory;
+
 export const childVanillaKnowledgeCategory = {
   parentID: 23,
   knowledgeBaseID: 1,
