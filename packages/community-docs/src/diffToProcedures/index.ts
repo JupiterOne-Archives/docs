@@ -1,12 +1,12 @@
 // name from the view point of changed files
 
+import { Logger } from "../Logging";
 import {
   ProcedureTypeEnum,
   VanillaArticle,
   VanillaKnowledgeCategory,
 } from "../utils/types";
 import { createDisplayName, filterDiffs } from "./utils";
-
 export const createArticleChange = (
   articleChanges: string, // diff string of a file
   path: string
@@ -145,13 +145,14 @@ export const handleNestedKnowledgeCategoryChanges = (
 };
 
 export const diffToProcedures = (gitDiffArray: string[]) => {
+  Logger.info(`Diffs marked as changes: ${gitDiffArray}`);
   const gitDiffWithOutDocs = filterDiffs(gitDiffArray);
-
+  Logger.info(`Filtered Diffs used to generate procedures: ${gitDiffArray}`);
   const { completed } = handleNestedKnowledgeCategoryChanges({
     nestedCategoryChanges: [...gitDiffWithOutDocs], // need to create a new array for each
     originalChangesArray: [...gitDiffWithOutDocs], // need to create a new array for each
     parentIndex: 0,
   });
-  console.log(completed, "ssss-handleNestedKnowledgeCategoryChanges");
+  Logger.info(`Procedures Generated`);
   return completed;
 };
