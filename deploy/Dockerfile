@@ -16,10 +16,10 @@ WORKDIR ${BUILD_DIR}/deploy
 # Install dependencies needed by the deploy container which typically
 # just consists of @jupiterone/terraform-modules which are shared modules
 # that we can use in terraform files.
-RUN yarn install --cache-folder .ycache && \
-  rm -rf .npmrc .ycache && \
-  mkdir -p ./terraform/modules && \
+RUN yarn install
+RUN mkdir -p ./terraform/modules && \
   cp -R ./node_modules/@jupiterone/terraform-modules/* ./terraform/modules
+
 
 # Copy artifacts from previous stage into final stage.
 # The old stage is discarded and will not be found in the final docker image.
