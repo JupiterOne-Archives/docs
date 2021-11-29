@@ -12,11 +12,8 @@
   ],
   "scripts": {
     "lint": "eslint --ext .ts,.js .",
-    "start:containers": "docker-compose up $1",
-    "stop:containers": "docker-compose down",
     "test": "./bin/run-tests.local.sh",
     "test:unit": "./bin/run-tests.unit.sh",
-    "test:ci": "./bin/run-tests.ci.sh",
     "format:prettier": "prettier --write '**/*.{js,jsx,ts,tsx,md,json,yaml}'",
     "format": "yarn format:prettier && yarn tsconfig:repair",
     "tsconfig:repair": "check-tsconfig --monorepo --repair",
@@ -30,12 +27,9 @@
     "bundle": "yarn compile && ./bin/bundle.sh",
     "plan": "yarn bundle && yarn jupiterone-manual-deploy -t jupiterone-dev -a plan",
     "deploy": "yarn bundle && yarn jupiterone-manual-deploy -t jupiterone-dev",
-
-
     "updatePackages": "yarn lernaupdate",
     "versionTypesPackage": "./bin/run-version-types-package.sh",
-    "start": "cd packages/community-docs; yarn start",
-
+    "start": "cd packages/community-docs; yarn publishDiffs",
     "verify-types-versions": "./bin/run-verify-types-versions.sh"
   },
   "dependencies": {
