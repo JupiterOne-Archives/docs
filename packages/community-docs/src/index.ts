@@ -9,12 +9,20 @@ import { PATH_OF_DIRECTORY_TO_WATCH } from "./utils/constants";
 // function to be used to use changes merged to github to be converted to procedures that alter Vanillia forums
 export const updateCommunityDocs = async () => {
   const diff = await getDiffFromHead();
+  console.log(`Diffs: ${diff}`);
+  Logger.info(`Diffs: ${diff}`);
 
   if (diff && diff.length) {
     const diffArray = diff.trim().split("\n");
     const procedures = diffToProcedures(diffArray);
+    Logger.info(`list of procedures: ${procedures}`);
     if (procedures && procedures.length > 0) {
-      return await proceduresToVanillaRequests(procedures);
+      const completedProcedures = await proceduresToVanillaRequests(procedures);
+      console.log(`Completed: ${completedProcedures}`);
+      Logger.info(`Completed: ${completedProcedures}`);
+    } else {
+      console.log(`Completed - no procedures generated`);
+      Logger.info(`Completed - no procedures generated`);
     }
   }
 };
@@ -105,4 +113,4 @@ export const updateCommunityDocsWithPathOverride = async (
   }
 };
 
-export default replaceVanillaWithDirectoryToWatch();
+export default updateCommunityDocs();
