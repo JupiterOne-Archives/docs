@@ -5,6 +5,8 @@ import { getDiffFromHead } from "./gitDifference";
 import { Logger } from "./Logging";
 import { proceduresToVanillaRequests } from "./proceduresToVanillaRequests";
 import { PATH_OF_DIRECTORY_TO_WATCH } from "./utils/constants";
+
+// function to be used to use changes merged to github to be converted to procedures that alter Vanillia forums
 export const updateCommunityDocs = async () => {
   const diff = await getDiffFromHead();
 
@@ -16,14 +18,6 @@ export const updateCommunityDocs = async () => {
     }
   }
 };
-// example
-const ex = [
-  `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md`,
-  `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/compliance-reporting/soc2-with-jupiterone.md`,
-  `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/jupiterone-query-language-copy.md`,
-  `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/jupiterone-query-language.md`,
-  `${PATH_OF_DIRECTORY_TO_WATCH}/after-getting-started/rock_and-roll.md`,
-];
 
 const getDirectories = (src: string, cb: (err: any, res: any) => any) => {
   glob(src + "/**/*", cb);
@@ -55,6 +49,7 @@ export const replaceVanillaWithDirectoryToWatch = async () => {
   }
 };
 
+// converts all items in the PATH_OF_DIRECTORY_TO_WATCH into Vanilla forum items
 export const addFullSubFolderManually = async (folderName: string) => {
   const directoryLocation = path.join(
     __dirname,
@@ -85,8 +80,17 @@ export const addFullSubFolderManually = async (folderName: string) => {
   }
 };
 
+const exampleOfPathsOfChanges = [
+  `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md`,
+  `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/compliance-reporting/soc2-with-jupiterone.md`,
+  `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/jupiterone-query-language-copy.md`,
+  `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/jupiterone-query-language.md`,
+  `${PATH_OF_DIRECTORY_TO_WATCH}/after-getting-started/rock_and-roll.md`,
+];
+
+// Handy for debugging
 export const updateCommunityDocsWithPathOverride = async (
-  relativePath = ex
+  relativePath = exampleOfPathsOfChanges
 ) => {
   if (relativePath && relativePath.length) {
     const trimmedDirectories = relativePath.map((result) =>
