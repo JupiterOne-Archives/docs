@@ -15,11 +15,13 @@ export const updateCommunityDocs = async () => {
   if (diff && diff.length) {
     const diffArray = diff.trim().split("\n");
     const procedures = diffToProcedures(diffArray);
+
     Logger.info(`list of procedures: ${procedures}`);
     if (procedures && procedures.length > 0) {
       const completedProcedures = await proceduresToVanillaRequests(procedures);
       console.log(`Completed: ${completedProcedures}`);
       Logger.info(`Completed: ${completedProcedures}`);
+      return completedProcedures;
     } else {
       console.log(`Completed - no procedures generated`);
       Logger.info(`Completed - no procedures generated`);
@@ -113,4 +115,4 @@ export const updateCommunityDocsWithPathOverride = async (
   }
 };
 
-export default updateCommunityDocs();
+export default updateCommunityDocs;

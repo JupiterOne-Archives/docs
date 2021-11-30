@@ -6,6 +6,7 @@ import {
 } from "../linksAndMediaHandlers";
 import { Logger } from "../Logging";
 import { isArticleType, isKnowledgeCategoryType } from "../utils";
+import { createDisplayName } from "../utils/common";
 import {
   FLAG_FOR_DELETE,
   KNOWN_CATEGORY_BEEN_DELETED,
@@ -27,13 +28,13 @@ import {
   kCategoriesByPathSize,
   markdownToString,
 } from "./utils";
-
 export const addVanillaCategoryToProcedure = (
   procedure: VanillaKnowledgeCategory,
   vanillaReturn: VanillaKnowledgeCategory[]
 ) => {
   const tempVanillaReturn: VanillaKnowledgeCategory[] = vanillaReturn || [];
   let procedureTarget: VanillaKnowledgeCategory = procedure;
+
   const match = tempVanillaReturn.filter(
     (v) => v.name === procedureTarget.name
   );
@@ -57,6 +58,7 @@ export const addVanillaArticleInfoToProcedure = (
   vanillaArticles: VanillaArticle[]
 ) => {
   let procedureTarget = procedure;
+
   const match = vanillaArticles.filter((v) => v.name === procedureTarget.name);
 
   if (match.length) {
@@ -77,20 +79,20 @@ export const addVanillaArticlesToProcedures = (
   vanillaArticles: VanillaArticle[]
 ) => {
   Logger.info(`Adding vanilla article information to procedures`);
-  const proceduresWithVanillaCategoryInfo: (
+  const proceduresWithVanillaArticleInfo: (
     | VanillaArticle
     | VanillaKnowledgeCategory
   )[] = [];
   procedures.forEach((p) => {
     if (isArticleType(p)) {
-      proceduresWithVanillaCategoryInfo.push(
+      proceduresWithVanillaArticleInfo.push(
         addVanillaArticleInfoToProcedure(p, vanillaArticles)
       );
     } else {
-      proceduresWithVanillaCategoryInfo.push(p);
+      proceduresWithVanillaArticleInfo.push(p);
     }
   });
-  return proceduresWithVanillaCategoryInfo;
+  return proceduresWithVanillaArticleInfo;
 };
 
 export const uploadImagesAndAddToMarkdown = async (
@@ -177,7 +179,7 @@ export const procedureToArticle = async (
         name: tempProcedureWorkedOn.name,
         sort: 0,
       };
-
+      tempProcedureWorkedOn;
       const editedArticle = await editArticle(
         httpClient,
         tempProcedureWorkedOn.articleID,
@@ -185,7 +187,7 @@ export const procedureToArticle = async (
       );
 
       if (editedArticle?.articleID) {
-        procedureWorkedOn = addVanillaArticleInfoToProcedure(
+        tempProcedureWorkedOn = addVanillaArticleInfoToProcedure(
           tempProcedureWorkedOn,
           [editedArticle]
         );
@@ -234,7 +236,10 @@ export const procedureToKnowledgeCategory = async (
     if (directoryExistsResult) {
       const reqData = {
         name: tempProcedureWorkedOn.name,
-        parentID: previousknowledgeCategoryID ? previousknowledgeCategoryID : 1,
+        parentID:
+          previousknowledgeCategoryID !== null
+            ? previousknowledgeCategoryID
+            : 1,
       };
       const createdKnowledgeCategory = await createKnowledgeCategory(
         httpClient,
@@ -287,8 +292,26 @@ export const removeDeletedCategories = async (
 
 export const getPreviousKnowledgeID = (
   completedProcedures: (VanillaArticle | VanillaKnowledgeCategory)[],
-  procedureBeingWorkedOn: VanillaArticle | VanillaKnowledgeCategory
+  procedureBeingWorkedOn: VanillaArticle | VanillaKnowledgeCategory,
+  existingknowledgeCategoryInfo: VanillaKnowledgeCategory[]
 ): number | null => {
+  const tempExistingknowledgeCategoryInfo = [...existingknowledgeCategoryInfo];
+
+  const pathSplit = procedureBeingWorkedOn?.path?.split("/");
+  if (pathSplit && procedureBeingWorkedOn?.fileName) {
+    const indexInPath = pathSplit?.indexOf(procedureBeingWorkedOn?.fileName);
+    if (pathSplit[indexInPath - 1]) {
+      const targetCategory = pathSplit[indexInPath - 1];
+      const nameToLookFor = createDisplayName(targetCategory);
+      const matches = tempExistingknowledgeCategoryInfo.filter(
+        (c) => c.name === nameToLookFor
+      );
+      if (matches && matches.length) {
+        return matches[0].knowledgeCategoryID;
+      }
+    }
+  }
+
   const tempCompletedProcedures = [...completedProcedures];
   const categoryOnlyProcedures: VanillaKnowledgeCategory[] =
     tempCompletedProcedures.filter(isKnowledgeCategoryType) || [];
@@ -311,7 +334,8 @@ export const getPreviousKnowledgeID = (
     if (indexOfLastCatFileName === -1) {
       return getPreviousKnowledgeID(
         categoryOnlyProcedures,
-        procedureBeingWorkedOn
+        procedureBeingWorkedOn,
+        existingknowledgeCategoryInfo
       );
     }
     return lastCategoryInArray.knowledgeCategoryID;
@@ -322,8 +346,10 @@ export const getPreviousKnowledgeID = (
 
 export const useProceduresForVanillaRequests = async (
   procedures: (VanillaArticle | VanillaKnowledgeCategory)[],
-  completedProcedures?: (VanillaArticle | VanillaKnowledgeCategory)[],
-  httpHandling: HttpClient = new HttpClient()
+
+  httpHandling: HttpClient,
+  existingknowledgeCategoryInfo: VanillaKnowledgeCategory[],
+  completedProcedures?: (VanillaArticle | VanillaKnowledgeCategory)[]
 ): Promise<(VanillaArticle | VanillaKnowledgeCategory)[]> => {
   const httpClient = httpHandling;
   const tempCompletedProcedures = completedProcedures
@@ -343,8 +369,10 @@ export const useProceduresForVanillaRequests = async (
 
   previousknowledgeCategoryID = getPreviousKnowledgeID(
     tempCompletedProcedures,
-    procedureWorkedOn
+    procedureWorkedOn,
+    existingknowledgeCategoryInfo
   );
+
   if (isArticleType(procedureWorkedOn)) {
     procedureWorkedOn = await procedureToArticle(
       httpClient,
@@ -364,8 +392,10 @@ export const useProceduresForVanillaRequests = async (
 
   return await useProceduresForVanillaRequests(
     tempProcedures,
-    tempCompletedProcedures,
-    httpHandling
+
+    httpHandling,
+    existingknowledgeCategoryInfo,
+    tempCompletedProcedures
   );
 };
 
@@ -378,10 +408,16 @@ export const proceduresToVanillaRequests = async (
     const existingknowledgeCategoryInfo = await getKnowedgeCategories(
       httpClient
     );
+
     Logger.info(`Getting Articles`);
     const articles = await getAllArticles(
       httpClient,
       existingknowledgeCategoryInfo
+    );
+    console.log(
+      existingknowledgeCategoryInfo,
+      "existingknowledgeCategoryInfo",
+      articles
     );
     Logger.info(`Mapping Vanilla responses to procedures`);
     const proceduresWithVanillaCategories = procedures.map((p) => {
@@ -391,15 +427,20 @@ export const proceduresToVanillaRequests = async (
       return p;
     });
 
-    const proceduresWithArticleInfo = articles?.length
-      ? addVanillaArticlesToProcedures(
-          proceduresWithVanillaCategories,
-          articles
-        )
-      : proceduresWithVanillaCategories;
+    const proceduresWithArticleInfo =
+      articles?.length !== 0
+        ? addVanillaArticlesToProcedures(
+            proceduresWithVanillaCategories,
+            articles
+          )
+        : proceduresWithVanillaCategories;
 
     const proceduresNeedingDeleteCategories =
-      await useProceduresForVanillaRequests(proceduresWithArticleInfo);
+      await useProceduresForVanillaRequests(
+        proceduresWithArticleInfo,
+        httpClient,
+        existingknowledgeCategoryInfo
+      );
 
     const { procedures: finishedProcedures } = await removeDeletedCategories(
       httpClient,
@@ -408,4 +449,6 @@ export const proceduresToVanillaRequests = async (
     Logger.info(`FINISHED WITH PROCEDURES: ${finishedProcedures}`);
     return finishedProcedures;
   }
+  Logger.info(`FINISHED WITH PROCEDURES: NONE`);
+  return [];
 };

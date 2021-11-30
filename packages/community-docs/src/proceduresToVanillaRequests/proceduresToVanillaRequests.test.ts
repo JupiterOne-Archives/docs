@@ -59,10 +59,7 @@ describe("ProceduresToVanillaRequests", () => {
   let mockEditKnowledgeCategory = editKnowledgeCategory as jest.MockedFunction<
     typeof editKnowledgeCategory
   >;
-  // let mockDeleteKnowledgeCategory =
-  //   deleteKnowledgeCategory as jest.MockedFunction<
-  //     typeof deleteKnowledgeCategory
-  //   >;
+
   let mockDeleteAllFlaggedCategories =
     deleteAllFlaggedCategories as jest.MockedFunction<
       typeof deleteAllFlaggedCategories

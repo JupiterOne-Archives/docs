@@ -260,6 +260,7 @@ export const createArticle = async (
   client: HttpClient,
   bodyOfRequest: Partial<VanillaArticle>
 ): Promise<VanillaArticle | undefined> => {
+  console.log("create article", bodyOfRequest);
   try {
     const article = (await client.post("/articles", bodyOfRequest)) as {
       data: VanillaArticle | ErrorType;
@@ -301,6 +302,7 @@ export const editArticle = async (
   articleID: number,
   edits: Partial<VanillaArticle>
 ): Promise<VanillaArticle | undefined> => {
+  console.log("eddit article", articleID);
   try {
     const article = (await client.patch(`/articles/${articleID}`, edits)) as {
       data: VanillaArticle | ErrorType;

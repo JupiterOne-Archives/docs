@@ -1,13 +1,13 @@
 // name from the view point of changed files
 
 import { Logger } from "../Logging";
+import { createDisplayName } from "../utils/common";
 import {
   ProcedureTypeEnum,
   VanillaArticle,
   VanillaKnowledgeCategory,
 } from "../utils/types";
-import { createDisplayName, filterDiffs } from "./utils";
-
+import { filterDiffs } from "./utils";
 export const createArticleChange = (
   articleChanges: string, // diff string of a file
   path: string
