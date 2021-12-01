@@ -1,5 +1,4 @@
-import fsSync from "fs";
-import fs from "fs/promises";
+import { default as fs, default as fsSync } from "fs";
 import path from "path";
 import {
   FLAG_FOR_DELETE,
@@ -26,7 +25,7 @@ export const markdownToString = async (filePath?: string): Promise<string> => {
     return FLAG_FOR_DELETE;
   }
   try {
-    const blockingReadOfFile = await fs.readFile(fileLocation);
+    const blockingReadOfFile = await fs.promises.readFile(fileLocation);
     if (blockingReadOfFile) {
       return blockingReadOfFile.toString();
     }

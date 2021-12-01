@@ -21,10 +21,3 @@ export const filterDiffs = (gitDiffArray: string[]) => {
 
   return filteredArray;
 };
-
-export const createDisplayName = (name: string) => {
-  return name
-    .split(/-|_/g)
-    .map((item) => `${item[0].toUpperCase()}${item.substring(1)}`)
-    .join(" ");
-};

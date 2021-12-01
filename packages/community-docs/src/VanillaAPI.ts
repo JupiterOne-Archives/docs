@@ -1,5 +1,5 @@
 import FormData from "form-data";
-import fs from "fs/promises";
+import fs from "fs";
 import path from "path";
 import HttpClient from "./httpClient";
 import { Logger } from "./Logging";
@@ -95,26 +95,51 @@ export const deleteAllArticles = async (
 
   return [];
 };
-
 export const getKnowedgeCategories = async (
-  client: HttpClient
+  client: HttpClient,
+  fetchedCategories?: VanillaKnowledgeCategory[],
+  currentPage?: number,
+  areMorePages?: boolean
 ): Promise<VanillaKnowledgeCategory[]> => {
+  const fetchedCategoriesTemp = fetchedCategories ? [...fetchedCategories] : [];
+  let page = currentPage ? currentPage : 1;
+  const pageInfo = `&page=${page}`;
+  let areMorePagesTemp = areMorePages ? areMorePages : false;
+
   try {
-    const categories = (await client.get("knowledge-categories")) as {
+    const categories = (await client.get(
+      `knowledge-categories?limit=100${pageInfo}`
+    )) as {
       data: VanillaKnowledgeCategory[] | ErrorType;
+      headers: any;
     };
 
+    if (categories?.headers.link) {
+      areMorePagesTemp = categories?.headers.link.indexOf('rel="next"') !== -1;
+    }
     if (!isErrorType(categories?.data)) {
-      return categories.data.map((c) => ({
-        ...c,
-        procedureType: ProcedureTypeEnum.Category,
-      }));
+      categories.data.forEach((c) => {
+        fetchedCategoriesTemp.push({
+          ...c,
+          procedureType: ProcedureTypeEnum.Category,
+        });
+      });
     }
   } catch (error) {
     Logger.error(`getKnowedgeCategories error: ${JSON.stringify(error)}`);
   }
 
-  return [];
+  if (areMorePagesTemp) {
+    page++;
+    return await getKnowedgeCategories(
+      client,
+      fetchedCategoriesTemp,
+      page,
+      areMorePagesTemp
+    );
+  }
+
+  return fetchedCategoriesTemp;
 };
 
 export const createKnowledgeCategory = async (
@@ -122,10 +147,10 @@ export const createKnowledgeCategory = async (
   bodyOfRequest: Partial<VanillaKnowledgeCategory>
 ): Promise<VanillaKnowledgeCategory | undefined> => {
   try {
-    const category = (await client.post(
-      "/knowledge-categories",
-      bodyOfRequest
-    )) as {
+    const category = (await client.post("/knowledge-categories", {
+      ...bodyOfRequest,
+      knowledgeBaseID: 1,
+    })) as {
       data: VanillaKnowledgeCategory | ErrorType;
     };
 
@@ -238,6 +263,7 @@ export const getAllArticles = async (
     getArticles(client, c.knowledgeCategoryID)
   );
   const resolved: VanillaArticle[][] = [];
+
   for (
     let promiseIndex = 0;
     promiseIndex < allArticlesPromises.length;
@@ -346,7 +372,7 @@ export const uploadImageAndReturnUrl = async (
   );
 
   try {
-    const imageFile = await fs.readFile(fileLocation);
+    const imageFile = await fs.promises.readFile(fileLocation);
     form.append("file", imageFile, imageName);
     const postImageResponse = await postImage(httpClient, form);
 

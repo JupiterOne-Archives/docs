@@ -9,7 +9,7 @@ import {
   expectedSortedChanges,
   expectHandleNestedKnowledgeCategoryChanges,
 } from "./mocks";
-import { createDisplayName, filterDiffs } from "./utils";
+import { filterDiffs } from "./utils";
 
 describe("diffToProceedures", () => {
   let exampleDiffs = [
@@ -25,18 +25,6 @@ describe("diffToProceedures", () => {
       "getting-started-admin/jupiterone-query-language-copy.md",
       "getting-started-admin/jupiterone-query-language.md",
     ];
-  });
-  describe("createDisplayName", () => {
-    it("handles dashes", () => {
-      const expected = "Folder Name";
-      const actual = createDisplayName("folder-name");
-      expect(actual).toEqual(expected);
-    });
-    it("handles underscores", () => {
-      const expected = "Folder Name";
-      const actual = createDisplayName("folder_name");
-      expect(actual).toEqual(expected);
-    });
   });
 
   describe("createArticleChange", () => {
