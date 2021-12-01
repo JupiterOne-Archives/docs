@@ -18,7 +18,7 @@ pipeline {
 
         sh 'yarn lint'
 
-        sh 'test:unit'
+        sh 'yarn test:unit'
 
         securityScan()
 
