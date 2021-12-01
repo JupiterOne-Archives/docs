@@ -1,5 +1,5 @@
 import FormData from "form-data";
-import fs from "fs/promises";
+import fs from "fs";
 import path from "path";
 import HttpClient from "./httpClient";
 import { Logger } from "./Logging";
@@ -372,7 +372,7 @@ export const uploadImageAndReturnUrl = async (
   );
 
   try {
-    const imageFile = await fs.readFile(fileLocation);
+    const imageFile = await fs.promises.readFile(fileLocation);
     form.append("file", imageFile, imageName);
     const postImageResponse = await postImage(httpClient, form);
 
