@@ -1,7 +1,7 @@
 # Query using internal metadata
 
 JupiterOne assigns metadata to resources and sometimes it is helpful to leverage
-them in queries. Here are some examples.
+them in queries. Here are some examples to take a look at.
 
 > See [this doc][1] for a complete list and description of each metadata property.
 
