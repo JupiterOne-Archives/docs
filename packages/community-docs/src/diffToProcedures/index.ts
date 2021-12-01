@@ -8,6 +8,7 @@ import {
   VanillaKnowledgeCategory,
 } from "../utils/types";
 import { filterDiffs } from "./utils";
+
 export const createArticleChange = (
   articleChanges: string, // diff string of a file
   path: string
