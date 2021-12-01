@@ -121,7 +121,7 @@ export interface VanillaArticle {
   views?: number;
   foreignID?: string | null;
   sort?: number;
-
+  knowledgeBaseID?: number;
   // things we have added
   path?: string;
   fileName: null | string;

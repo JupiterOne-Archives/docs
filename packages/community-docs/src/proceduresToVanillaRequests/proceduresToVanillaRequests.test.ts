@@ -288,12 +288,14 @@ describe("ProceduresToVanillaRequests", () => {
         const procedureWithNoArticle = procedureArticletemp;
         const previousknowledgeCategoryID = 26;
         const articleID = 26;
-        mockCreateArticle.mockReset();
-        mockCreateArticle.mockResolvedValue({
+        const mockVanillaReturn = {
           articleID,
           name: "Soc2 With Jupiterone Copy",
           knowledgeCategoryID: previousknowledgeCategoryID,
-        } as any);
+        } as any;
+
+        mockCreateArticle.mockReset();
+        mockCreateArticle.mockResolvedValue(mockVanillaReturn);
         const mockHttpclient = {} as any;
         const actual = await procedureToArticle(
           mockHttpclient,
@@ -301,17 +303,7 @@ describe("ProceduresToVanillaRequests", () => {
           previousknowledgeCategoryID
         );
 
-        expect(actual).toEqual({
-          articleID,
-          body: "",
-          fileName: "soc2-with-jupiterone-copy.md",
-          format: "markdown",
-          knowledgeCategoryID: previousknowledgeCategoryID,
-          locale: "en",
-          name: "Soc2 With Jupiterone Copy",
-          path: "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
-          procedureType: "Article",
-        });
+        expect(actual).toEqual(mockVanillaReturn);
         expect(mockCreateArticle).toHaveBeenCalledWith(mockHttpclient, {
           body: "",
           format: "markdown",
@@ -334,28 +326,19 @@ describe("ProceduresToVanillaRequests", () => {
           articleID,
           knowledgeCategoryID: previousknowledgeCategoryID,
         };
-        const mockHttpclient = {} as any;
-        mockEditArticle.mockResolvedValue({
+        const mockVanillaReturnValue = {
           articleID,
           name: "Soc2 With Jupiterone Copy",
           knowledgeCategoryID: previousknowledgeCategoryID,
-        } as any);
+        } as any;
+        const mockHttpclient = {} as any;
+        mockEditArticle.mockResolvedValue(mockVanillaReturnValue);
         const actual = await procedureToArticle(
           mockHttpclient,
           procedureWithArticle,
           previousknowledgeCategoryID
         );
-        expect(actual).toEqual({
-          knowledgeCategoryID: previousknowledgeCategoryID,
-          articleID,
-          fileName: "soc2-with-jupiterone-copy.md",
-          name: "Soc2 With Jupiterone Copy",
-          body: "",
-          path: "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
-          format: "markdown",
-          locale: "en",
-          procedureType: "Article",
-        });
+        expect(actual).toEqual(mockVanillaReturnValue);
         expect(mockEditArticle).toHaveBeenCalledWith(
           mockHttpclient,
           articleID,
@@ -375,7 +358,8 @@ describe("ProceduresToVanillaRequests", () => {
         mockDeleteArticle.mockReset();
       });
       it("deletes existing article when body contains delete flag", async () => {
-        mockDeleteArticle.mockResolvedValue({} as any);
+        const mockReturnForDelete = { name: "vanilla return" } as any;
+        mockDeleteArticle.mockResolvedValue(mockReturnForDelete);
         mockMarkdownToString.mockResolvedValue(FLAG_FOR_DELETE);
         const articleID = 234;
         const previousknowledgeCategoryID = 8;
@@ -390,17 +374,7 @@ describe("ProceduresToVanillaRequests", () => {
           procedureWithArticle,
           previousknowledgeCategoryID
         );
-        expect(actual).toEqual({
-          articleID: 234,
-          body: "FILE_DOES_NOT_EXIST",
-          fileName: "soc2-with-jupiterone-copy.md",
-          format: "markdown",
-          knowledgeCategoryID: 8,
-          locale: "en",
-          name: "Soc2 With Jupiterone Copy",
-          path: "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
-          procedureType: "Article",
-        });
+        expect(actual).toEqual(mockReturnForDelete);
         expect(mockDeleteArticle).toHaveBeenCalledWith(
           mockHttpclient,
           articleID
@@ -466,7 +440,7 @@ describe("ProceduresToVanillaRequests", () => {
         knowledgeBaseID: 1,
         knowledgeCategoryID,
         name: "Soc2 Reporting",
-        parentID: 1,
+        parentID: null,
         path: "getting-started-admin/soc2-reporting",
         procedureType: "Category",
         sort: undefined,
@@ -484,6 +458,7 @@ describe("ProceduresToVanillaRequests", () => {
         {
           name: "Soc2 Reporting",
           parentID: 22,
+          knowledgeBaseID: 1,
         }
       );
       expect(actual).toEqual(expected);
@@ -559,11 +534,13 @@ describe("ProceduresToVanillaRequests", () => {
       const expected = null;
       const actualWithEmptyArray = getPreviousKnowledgeID(
         [],
-        vanillaKnowledgeCategory
+        vanillaKnowledgeCategory,
+        []
       );
       const actualWithNoCategories = getPreviousKnowledgeID(
         [vanillaArticleWithInfo, vanillaArticleWithInfo],
-        childVanillaKnowledgeCategory
+        childVanillaKnowledgeCategory,
+        []
       );
       expect(actualWithEmptyArray).toEqual(expected);
       expect(actualWithNoCategories).toEqual(expected);
@@ -582,7 +559,8 @@ describe("ProceduresToVanillaRequests", () => {
           targetForKnowledgeCategory,
           vanillaArticleWithInfo,
         ],
-        childVanillaKnowledgeCategory
+        childVanillaKnowledgeCategory,
+        [targetForKnowledgeCategory, vanillaKnowledgeCategory]
       );
 
       expect(actualWithEmptyArray).toEqual(expected);
@@ -633,7 +611,8 @@ describe("ProceduresToVanillaRequests", () => {
 
       const returnedId = getPreviousKnowledgeID(
         [anotherParentCategory, cousinNotParent],
-        tester
+        tester,
+        [anotherParentCategory, cousinNotParent]
       );
 
       expect(returnedId).toEqual(null);
@@ -699,7 +678,8 @@ describe("ProceduresToVanillaRequests", () => {
 
       const returnedId = getPreviousKnowledgeID(
         [testerParent, otherRootCategory, cousinNotParent],
-        tester
+        tester,
+        [cousinNotParent]
       );
 
       expect(returnedId).toEqual(12);
@@ -713,6 +693,7 @@ describe("ProceduresToVanillaRequests", () => {
       mockCreateKnowledgeCategory.mockReset();
     });
     it("handles all new items", async () => {
+      const mockHttpclient = {} as any;
       mockDirectoryExists.mockReturnValue(true);
       mockMarkdownToString.mockResolvedValue("Im markdown. LOOK AT ME.");
       mockCreateArticle
@@ -761,11 +742,16 @@ describe("ProceduresToVanillaRequests", () => {
           knowledgeCategoryID: 33,
         });
 
-      const actual = await useProceduresForVanillaRequests(PROCEDURES, []);
+      const actual = await useProceduresForVanillaRequests(
+        PROCEDURES,
+        mockHttpclient,
+        []
+      );
 
       expect(actual).toEqual(SHAPEWEWANT);
     });
     it("handles addition and removal of an articles", async () => {
+      const mockHttpclient = {} as any;
       mockDirectoryExists.mockReturnValue(true);
       const editArticle =
         PROCEDURESWithOneDeleteArticleAndCreates[2] as VanillaArticle;
@@ -789,6 +775,7 @@ describe("ProceduresToVanillaRequests", () => {
           articleID: 22,
           name: "Soc2 With Jupiterone",
         });
+
       mockCreateKnowledgeCategory.mockResolvedValueOnce({
         ...vanillaKnowledgeCategory,
         parentID: 22,
@@ -799,6 +786,8 @@ describe("ProceduresToVanillaRequests", () => {
 
       const actual = await useProceduresForVanillaRequests(
         PROCEDURESWithOneDeleteArticleAndCreates,
+        mockHttpclient,
+        [],
         []
       );
 
