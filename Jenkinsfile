@@ -42,7 +42,7 @@ pipeline {
 
             sh 'jupiterone-build'
                     withCredentials([
-          string(credentialsId: 'vanilla_staging_auth_token', variable: 'TOKEN')
+          string(credentialsId: 'vanilla_staging_env_token', variable: 'TOKEN')
         ]) {
           sh '''
             TOKEN="$TOKEN" yarn start
