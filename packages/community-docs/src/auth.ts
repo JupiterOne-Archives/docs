@@ -1,2 +1,1 @@
-export const authToken =
-  '';
+export const authToken = `Bearer ${process.env.TOKEN}`;
