@@ -7,7 +7,7 @@
   "license": "NONE",
   "private": true,
   "scripts": {
-    "publishDiffs": "yarn ts-node ./src/runDiff.ts",
+    "publishDiffs": "yarn ts-node ./src/runDiff.ts $TOKEN",
     "watch-and-run": "ts-node-dev --respawn -- src/index.ts",
     "test": "jest",
     "clean": "rm -rf ./dist ./coverage",
