@@ -118,14 +118,24 @@ export default class HttpClient {
     Logger.info(
       `making debounced request to relativeUrl:${relativeUrl}\n body:${body}\n, method: ${method}\n, options:${options}\n`
     );
+
     return this.debounceRequests(
-      axios.request({
-        url: this.buildUrl(relativeUrl),
-        headers: this.buildHeaders(headers),
-        data: body,
-        method,
-        ...options,
-      })
+      axios
+        .request({
+          url: this.buildUrl(relativeUrl),
+          headers: this.buildHeaders(headers),
+          data: body,
+          method,
+          ...options,
+        })
+        .catch((e) => {
+          if (e?.response?.status === 403) {
+            console.log("Error from Vanilla Auth");
+            return Promise.reject(e);
+          } else {
+            return Promise.reject(e);
+          }
+        })
     );
   }
 }

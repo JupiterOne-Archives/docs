@@ -1,5 +1,9 @@
 # docs-community
 
+# Needs
+
+Token from vanilla to pass in when running locally.
+
 ## Overview
 
 ### How the scripts functions

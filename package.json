@@ -16,7 +16,7 @@
     "test:unit": "./bin/run-tests.unit.sh",
     "bundle": "cd packages/community-docs; yarn compile",
     "deploy": "yarn bundle && yarn jupiterone-manual-deploy -t jupiterone-dev",
-    "start": "cd packages/community-docs; yarn publishDiffs"
+    "start": "cd packages/community-docs; yarn publishDiffs $TOKEN"
   },
   "dependencies": {
     "@types/node": "^16.11.7",
