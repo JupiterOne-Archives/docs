@@ -29,6 +29,7 @@ pipeline {
 
     stage("Deploy") {
       when { branch "main" }
+      agent { label 'ecs-builder-node12' }
       steps {
          initBuild()
             sh 'yarn install --frozen-lockfile'
