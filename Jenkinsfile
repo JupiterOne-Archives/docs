@@ -41,14 +41,11 @@ pipeline {
             sh 'yarn bundle'
 
             sh 'jupiterone-build'
-                    withCredentials([
-          string(credentialsId: 'vanilla_staging_env_token', variable: 'TOKEN')
-        ]) {
-          sh '''
-            TOKEN="$TOKEN" yarn start
-          '''
 
-        }
+
+          sh '''
+            TOKEN="$vanilla_staging_env_token" yarn start
+          '''
             
       }
     }
