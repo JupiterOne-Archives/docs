@@ -26,7 +26,9 @@ pipeline {
         withCredentials([
           string(credentialsId: 'VANILLIA_STAGING_ENV_TOKEN', variable: 'TOKEN')
         ]) {
-          sh `TOKEN=${TOKEN} yarn start`
+     sh '''
+            TOKEN="$TOKEN" yarn start
+          '''
 
         }
 
