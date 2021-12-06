@@ -13,7 +13,8 @@ import {
   getKnowedgeCategories,
 } from "./VanillaAPI";
 
-// function to be used to use changes merged to github to be converted to procedures that alter Vanillia forums
+// Main function to be used to use changes to markdown files merged to github to be converted
+// to procedures that alter Vanillia forums
 export const updateCommunityDocs = async () => {
   const diff = await getDiffFromHead();
 
@@ -37,8 +38,8 @@ export const updateCommunityDocs = async () => {
 const getDirectories = (src: string, cb: (err: any, res: any) => any) => {
   glob(src + "/**/*", cb);
 };
-
-export const replaceVanillaWithDirectoryToWatch = async () => {
+// converts all items in the PATH_OF_DIRECTORY_TO_WATCH into Vanilla forum items
+export const updateVanillaWithDirectoryToWatch = async () => {
   const directoryLocation = path.join(
     __dirname,
     `../../../${PATH_OF_DIRECTORY_TO_WATCH}/`
@@ -53,7 +54,7 @@ export const replaceVanillaWithDirectoryToWatch = async () => {
     });
   });
   const fullArrayOfAllItems: string[] = await directoryPromise;
-  console.log(fullArrayOfAllItems, "fulll");
+
   if (fullArrayOfAllItems) {
     const trimmedDirectories = fullArrayOfAllItems.map((result) =>
       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
@@ -65,7 +66,6 @@ export const replaceVanillaWithDirectoryToWatch = async () => {
   }
 };
 
-// converts all items in the PATH_OF_DIRECTORY_TO_WATCH into Vanilla forum items
 export const addFullSubFolderManually = async (folderName: string) => {
   const directoryLocation = path.join(
     __dirname,
@@ -95,18 +95,19 @@ export const addFullSubFolderManually = async (folderName: string) => {
     }
   }
 };
+
+// Useful for when you need a clean slate.
+// Removes Articles and Categories from Vanilla rather than having to click through their UI
 export const deleteAllThingsCurrentlyOnVanillaForum = async () => {
   const httpClient = new HttpClient();
   const knowledgeCategories = await getKnowedgeCategories(httpClient);
-  // const filtered = knowledgeCategories.filter(
-  //   (k) => k.name === "Compliance test midnight"
-  // );
 
   Logger.info(`Getting Articles for DELETION`);
   const articles = await getAllArticles(httpClient, knowledgeCategories);
   for (let articleIndex = 0; articleIndex < articles.length; articleIndex++) {
     try {
-      console.log("deleting thing:", articles[articleIndex]?.name, "-Deleting");
+      Logger.info(`deleting Article:${articles[articleIndex]?.name}`);
+
       await deleteArticle(httpClient, articles[articleIndex].articleID);
     } catch (articleDeleteError) {
       Logger.error(`DELETE ALL ARTICLE ERROR: \n ${articleDeleteError}`);
@@ -119,10 +120,8 @@ export const deleteAllThingsCurrentlyOnVanillaForum = async () => {
     knowledgeCategoryIndex++
   ) {
     try {
-      console.log(
-        "deleting thing:",
-        knowledgeCategories[knowledgeCategoryIndex].name,
-        "-Deleting"
+      Logger.info(
+        `deleting item:${knowledgeCategories[knowledgeCategoryIndex].name}`
       );
       await deleteKnowledgeCategory(
         httpClient,
