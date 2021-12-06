@@ -4,6 +4,7 @@ const getDiffAndReportIssues = async () => {
   try {
     console.log("Running updateCommunityDocs");
     const completed = await updateCommunityDocs();
+    console.log(`Bearer ${process.env.TOKEN}`, "request tk");
     if (completed !== undefined) {
       console.log("Completed", completed);
     } else {
