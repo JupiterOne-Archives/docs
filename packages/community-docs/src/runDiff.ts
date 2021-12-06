@@ -5,7 +5,7 @@ const getDiffAndReportIssues = async () => {
     console.log("Running updateCommunityDocs");
     const completed = await updateCommunityDocs();
     console.log(`Bearer ${process.env.TOKEN}`, "request tk");
-    console.log("here?", process.env.VANILLIA_STAGING_ENV_TOKEN);
+    console.log("ENV?", process.env);
     if (completed !== undefined) {
       console.log("Completed", completed);
     } else {
