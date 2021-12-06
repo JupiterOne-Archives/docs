@@ -1,9 +1,9 @@
-import { updateCommunityDocs } from "./";
+import { replaceVanillaWithDirectoryToWatch } from "./";
 
 const getDiffAndReportIssues = async () => {
   try {
-    console.log("Running updateCommunityDocs");
-    const completed = await updateCommunityDocs();
+    console.log("Running replaceVanillaWithDirectoryToWatch");
+    const completed = await replaceVanillaWithDirectoryToWatch();
     console.log(`Bearer ${process.env.TOKEN}`, "request tk");
     console.log("ENV?", process.env);
     if (completed !== undefined) {
@@ -13,7 +13,7 @@ const getDiffAndReportIssues = async () => {
     }
     console.log(completed, "Completed console log");
   } catch (error) {
-    console.log("Failure on updateCommunityDocs: ", error);
+    console.log("Failure on replaceVanillaWithDirectoryToWatch: ", error);
   }
 };
 export default getDiffAndReportIssues();
