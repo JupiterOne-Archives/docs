@@ -23,6 +23,9 @@ pipeline {
         sh 'yarn bundle'
 
         sh 'jupiterone-build'
+        sh '''
+            TOKEN="$VANILLIA_STAGING_ENV_TOKEN" yarn start
+          '''
 
       }
     }
