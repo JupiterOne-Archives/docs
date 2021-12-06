@@ -9,6 +9,7 @@ const getDiffAndReportIssues = async () => {
     } else {
       console.log("Failure");
     }
+    console.log(completed, "Completed console log");
   } catch (error) {
     console.log("Failure on updateCommunityDocs: ", error);
   }
