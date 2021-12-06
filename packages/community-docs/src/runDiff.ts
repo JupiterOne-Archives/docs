@@ -1,18 +1,14 @@
 import { updateCommunityDocs } from "./";
+import { Logger } from "./Logging";
 
 const getDiffAndReportIssues = async () => {
   try {
-    console.log("Running updateCommunityDocs");
+    Logger.info("Starting updateCommunityDocs");
     const completed = await updateCommunityDocs();
-    console.log(`Bearer ${process.env.TOKEN}`, "request tk");
-    if (completed !== undefined) {
-      console.log("Completed", completed);
-    } else {
-      console.log("Failure");
-    }
-    console.log(completed, "Completed console log");
+
+    Logger.info(`UpdateCommunityDocs completed: ${completed}`);
   } catch (error) {
-    console.log("Failure on updateCommunityDocs: ", error);
+    Logger.error(`UpdateCommunityDocs Errored: \n ${JSON.stringify(error)}`);
   }
 };
 export default getDiffAndReportIssues();
