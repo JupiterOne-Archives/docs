@@ -44,7 +44,7 @@ pipeline {
 
 
           sh '''
-            TOKEN="$vanilla_staging_env_token" yarn start
+            TOKEN="$VANILLIA_STAGING_ENV_TOKEN" yarn start
           '''
             
       }
