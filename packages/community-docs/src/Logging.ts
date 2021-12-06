@@ -1,18 +1,18 @@
-const fs = require("fs");
-import path from "path";
+// const fs = require("fs");
+// import path from "path";
 
-const loggingLocation = (fileName: string) =>
-  path.join(__dirname, "logs", `./${fileName}`);
+// const loggingLocation = (fileName: string) =>
+//   path.join(__dirname, "logs", `./${fileName}`);
 
-const infoStream = fs.createWriteStream(loggingLocation("info.md"), {
-  encoding: "utf-8",
-});
-const errorStream = fs.createWriteStream(loggingLocation("error.md"), {
-  encoding: "utf-8",
-});
-const debugStream = fs.createWriteStream(loggingLocation("debug.md"), {
-  encoding: "utf-8",
-});
+// const infoStream = fs.createWriteStream(loggingLocation("info.md"), {
+//   encoding: "utf-8",
+// });
+// const errorStream = fs.createWriteStream(loggingLocation("error.md"), {
+//   encoding: "utf-8",
+// });
+// const debugStream = fs.createWriteStream(loggingLocation("debug.md"), {
+//   encoding: "utf-8",
+// });
 
 export const Logger: {
   info: (message: string) => void;
@@ -21,14 +21,17 @@ export const Logger: {
 } = {
   info: (msg) => {
     const message = new Date().toISOString() + " : " + "\n" + msg + "\n";
-    infoStream.write(message);
+    console.log(message, "MESSAGE&Info");
+    // infoStream.write(message);
   },
   debug: (msg) => {
     const message = new Date().toISOString() + " : " + "\n" + msg + "\n";
-    debugStream.write(message);
+    console.log(message, "MESSAGE&debug");
+    // debugStream.write(message);
   },
   error: (msg) => {
     const message = new Date().toISOString() + " : " + "\n" + msg + "\n";
-    errorStream.write(message);
+    console.log(message, "MESSAGE&Error");
+    // errorStream.write(message);
   },
 };

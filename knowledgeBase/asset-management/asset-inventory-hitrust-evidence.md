@@ -1,5 +1,4 @@
 @deprecated
-Bryan changes
 
 # Collect HITRUST evidences using JupiterOne Asset Inventory app
 
