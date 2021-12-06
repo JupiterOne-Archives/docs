@@ -116,7 +116,7 @@ export default class HttpClient {
     options?: AxiosRequestConfig;
   }) {
     Logger.info(
-      `making debounced request to relativeUrl:${relativeUrl}\n body:${body}\n, method: ${method}\n, options:${options}\n`
+      `making debounced request to relativeUrl:${relativeUrl}\n, method: ${method}\n`
     );
 
     return this.debounceRequests(
@@ -130,7 +130,7 @@ export default class HttpClient {
         })
         .catch((e) => {
           if (e?.response?.status === 403) {
-            console.log("Error from Vanilla Auth");
+            console.log("Error from Vanilla Auth! Check the TOKEN");
             return Promise.reject(e);
           } else {
             return Promise.reject(e);

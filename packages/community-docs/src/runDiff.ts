@@ -1,18 +1,14 @@
-import { replaceVanillaWithDirectoryToWatch } from "./";
+import { updateCommunityDocs } from "./";
+import { Logger } from "./Logging";
 
 const getDiffAndReportIssues = async () => {
   try {
-    console.log("Running replaceVanillaWithDirectoryToWatch");
-    const completed = await replaceVanillaWithDirectoryToWatch();
+    Logger.info("Starting updateCommunityDocs");
+    const completed = await updateCommunityDocs();
 
-    if (completed !== undefined) {
-      console.log("Completed", completed);
-    } else {
-      console.log("Failure");
-    }
-    console.log(completed, "Completed console log");
+    Logger.info(`UpdateCommunityDocs completed: ${completed}`);
   } catch (error) {
-    console.log("Failure on replaceVanillaWithDirectoryToWatch: ", error);
+    Logger.error(`UpdateCommunityDocs Errored: \n ${JSON.stringify(error)}`);
   }
 };
 export default getDiffAndReportIssues();
