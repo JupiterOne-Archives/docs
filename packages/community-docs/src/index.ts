@@ -53,13 +53,12 @@ export const replaceVanillaWithDirectoryToWatch = async () => {
     });
   });
   const fullArrayOfAllItems: string[] = await directoryPromise;
+  console.log(fullArrayOfAllItems, "fulll");
   if (fullArrayOfAllItems) {
     const trimmedDirectories = fullArrayOfAllItems.map((result) =>
       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
-    const procedures = diffToProcedures(
-      trimmedDirectories.filter((d) => d.indexOf("main-folder") !== -1)
-    );
+    const procedures = diffToProcedures(trimmedDirectories);
     if (procedures && procedures.length > 0) {
       return await proceduresToVanillaRequests(procedures);
     }
