@@ -10,7 +10,6 @@ export const getDiffFromHead: () => Promise<string> = async () => {
       diff = resolvedDiff;
     }
   } catch (e) {
-    console.log(e);
     Logger.error(`failure on simplegit,\n ${JSON.stringify(e)}`);
     throw new Error("failure on simplegit");
   }

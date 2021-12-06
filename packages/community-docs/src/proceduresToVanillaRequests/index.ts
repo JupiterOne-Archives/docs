@@ -81,11 +81,8 @@ export const addVanillaArticlesToProcedures = (
   vanillaArticles: VanillaArticle[]
 ) => {
   Logger.info(`Adding vanilla article information to procedures`);
-  // const proceduresWithVanillaArticleInfo: (
-  //   | VanillaArticle
-  //   | VanillaKnowledgeCategory
-  // )[] = [];
-  const k = procedures.map((p) => {
+
+  return procedures.map((p) => {
     if (isArticleType(p)) {
       const articleWithVanilla = addVanillaArticleInfoToProcedure(
         p,
@@ -97,10 +94,6 @@ export const addVanillaArticlesToProcedures = (
       return p;
     }
   });
-
-  return k;
-  // console.log("WITH INFOOO", proceduresWithVanillaArticleInfo);
-  // return proceduresWithVanillaArticleInfo;
 };
 
 export const uploadImagesAndAddToMarkdown = async (
@@ -146,10 +139,7 @@ export const procedureToArticle = async (
   const bodyOfArticle = await markdownToString(tempProcedureWorkedOn?.path);
   tempProcedureWorkedOn.body = await addImagesToArticleMarkdown(bodyOfArticle);
 
-  if (
-    tempProcedureWorkedOn.articleID === null &&
-    procedureWorkedOn.knowledgeCategoryID === null
-  ) {
+  if (tempProcedureWorkedOn.articleID === null) {
     if (!previousknowledgeCategoryID) {
       return tempProcedureWorkedOn;
     }
@@ -165,6 +155,7 @@ export const procedureToArticle = async (
         name: tempProcedureWorkedOn.name,
         sort: 0,
       };
+
       const createdArticle = await createArticle(httpClient, articleRequest);
 
       if (createdArticle?.articleID) {
