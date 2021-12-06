@@ -1,4 +1,5 @@
 @deprecated
+Bryan changes
 
 # Collect HITRUST evidences using JupiterOne Asset Inventory app
 
@@ -9,44 +10,44 @@ JupiterOne Asset Inventory app.
 
 **Listing of in-scope servers and their classifications and owners**
 
-Use *Quick Filter* to select **Class** `Host`, and then select your production
+Use _Quick Filter_ to select **Class** `Host`, and then select your production
 account in tag.AccountName in Filter panel
 
 **Explanation and Location of Any Unencrypted PHI**
 
-Use *Quick Filter* to select **Class** `Host` and `DataStore`, and then select
-`true` for `tag.PHI` in *Filter Panel*. The resulting table/screenshot should
-show that all Data Stores tagged with PHI should be encrypted.  Note that this
-requires proper tagging at the source.  The tag name does not have to be PHI.
+Use _Quick Filter_ to select **Class** `Host` and `DataStore`, and then select
+`true` for `tag.PHI` in _Filter Panel_. The resulting table/screenshot should
+show that all Data Stores tagged with PHI should be encrypted. Note that this
+requires proper tagging at the source. The tag name does not have to be PHI.
 
 **Evidence of At-Rest Encryption for Example Server**
 
-Use *Quick Filter* to select **Class** `DataStore` and **Type**
+Use _Quick Filter_ to select **Class** `DataStore` and **Type**
 `aws_ebs_volume`, and then select your production account in `tag.AccountName`
-in *Filter Panel*. The table should show all encrypted volumes.
+in _Filter Panel_. The table should show all encrypted volumes.
 
 **Firewall rules**
 
-Use *Quick Filter* to select **Class** `Firewall`, and then
-select your production account in `tag.AccountName` in *Filter Panel*.
+Use _Quick Filter_ to select **Class** `Firewall`, and then
+select your production account in `tag.AccountName` in _Filter Panel_.
 
 **System Configuration Compliance (AWS)**
 
-Use *Quick Filter* to select **Class** `ControlPolicy`, **Type**
+Use _Quick Filter_ to select **Class** `ControlPolicy`, **Type**
 `aws_config_rule`, and then select your production account in `tag.AccountName`
-in *Filter Panel*. Note that if the `aws_config_rule` is the only available
+in _Filter Panel_. Note that if the `aws_config_rule` is the only available
 **Type** under `ControlPolicy`, the **Type** filter will be hidden.
 
 **Listing of Production and Database servers**
 
-Use *Quick Filter* to select
+Use _Quick Filter_ to select
 **Class** `Host` and `DataStore`, and then select your production account in
-`tag.AccountName` in *Filter Panel*.
+`tag.AccountName` in _Filter Panel_.
 
 **Explanation of All Shared/Group and Generic User Accounts Maintained on the Network Domain and Each In-Scope Application**
 
-Use *Quick Filter* to select **Class** `AccessRole`, and then select your
-production account in `tag.AccountName` in *Filter Panel*. Note that you may
+Use _Quick Filter_ to select **Class** `AccessRole`, and then select your
+production account in `tag.AccountName` in _Filter Panel_. Note that you may
 need to update the role description in AWS if it's not there already. The
 description serves as the explanation of use.
 
