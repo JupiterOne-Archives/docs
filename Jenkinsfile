@@ -42,10 +42,14 @@ pipeline {
 
             sh 'jupiterone-build'
 
+            withCredentials([
+              string(credentialsId: 'VANILLIA_STAGING_ENV_TOKEN', variable: 'TOKEN')
+                ]) {
+                  sh '''
+                    TOKEN="$TOKEN" yarn start
+                  '''
 
-          sh '''
-            TOKEN="$VANILLIA_STAGING_ENV_TOKEN" yarn start
-          '''
+                }
             
       }
     }
