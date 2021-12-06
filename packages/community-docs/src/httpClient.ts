@@ -130,7 +130,7 @@ export default class HttpClient {
         })
         .catch((e) => {
           if (e?.response?.status === 403) {
-            console.log("Error from Vanilla Auth! Check the TOKEN");
+            Logger.error("Error from Vanilla Auth! Check the TOKEN");
             return Promise.reject(e);
           } else {
             return Promise.reject(e);

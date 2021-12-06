@@ -13,6 +13,30 @@ import {
   getKnowedgeCategories,
 } from "./VanillaAPI";
 
+export const getAllSubChanges = async (gitChange: string) => {
+  if (gitChange.indexOf(".") != -1) {
+    return [gitChange];
+  }
+  const directoryLocation = path.join(__dirname, `../../../`, gitChange);
+
+  const directoryPromise = new Promise<string[]>((resolve, reject) => {
+    return getDirectories(directoryLocation, (err, matches) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(matches as string[]);
+      }
+    });
+  });
+  return await directoryPromise;
+};
+
+// what is used to chop up folder aditions/removals
+
+const getDirectories = (src: string, cb: (err: any, res: any) => any) => {
+  glob(src + "/**/*", cb);
+};
+
 // Main function to be used to use changes to markdown files merged to github to be converted
 // to procedures that alter Vanillia forums
 export const updateCommunityDocs = async () => {
@@ -21,12 +45,28 @@ export const updateCommunityDocs = async () => {
   Logger.info(`Diffs: ${diff}`);
 
   if (diff && diff.length) {
-    const diffArray = diff.trim().split("\n");
-    const procedures = diffToProcedures(diffArray);
+    const diffChanges = diff.trim().split("\n");
 
+    const nested: string[] = [];
+    for (let i = 0; i < diffChanges.length; i++) {
+      nested.push(diffChanges[i]);
+      const fullArrayOfAllItems: string[] = await getAllSubChanges(
+        diffChanges[i]
+      );
+
+      fullArrayOfAllItems.forEach((item) => {
+        nested.push(item);
+      });
+    }
+    const nestedWithRemovedPath = nested.map((path) =>
+      path.substring(path.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
+    );
+
+    const procedures = diffToProcedures(nestedWithRemovedPath);
     Logger.info(`list of procedures: ${procedures}`);
     if (procedures && procedures.length > 0) {
       const completedProcedures = await proceduresToVanillaRequests(procedures);
+
       Logger.info(`Completed: ${completedProcedures}`);
       return completedProcedures;
     } else {
@@ -35,9 +75,6 @@ export const updateCommunityDocs = async () => {
   }
 };
 
-const getDirectories = (src: string, cb: (err: any, res: any) => any) => {
-  glob(src + "/**/*", cb);
-};
 // converts all items in the PATH_OF_DIRECTORY_TO_WATCH into Vanilla forum items
 export const updateVanillaWithDirectoryToWatch = async () => {
   const directoryLocation = path.join(
