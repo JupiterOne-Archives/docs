@@ -46,7 +46,6 @@ export const updateCommunityDocs = async () => {
 
   if (diff && diff.length) {
     const diffChanges = diff.trim().split("\n");
-
     const nested: string[] = [];
     for (let i = 0; i < diffChanges.length; i++) {
       nested.push(diffChanges[i]);
