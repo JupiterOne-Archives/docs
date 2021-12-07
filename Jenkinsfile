@@ -10,7 +10,7 @@ pipeline {
 
   stages {
     stage('Build and scan') {
-      agent { label 'ecs-builder-node12' }
+      agent { label 'ecs-builder-node14' }
       steps {
         initBuild()
         securityScan()
@@ -29,7 +29,7 @@ pipeline {
 
     stage("Deploy") {
       when { branch "main" }
-      agent { label 'ecs-builder-node12' }
+      agent { label 'ecs-builder-node14' }
       steps {
          initBuild()
             sh 'yarn install --frozen-lockfile'
