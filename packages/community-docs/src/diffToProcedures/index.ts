@@ -150,11 +150,14 @@ export const diffToProcedures = (gitDiffArray: string[]) => {
   Logger.info(`Diffs marked as changes: ${gitDiffArray}`);
   const gitDiffWithOutDocs = filterDiffs(gitDiffArray);
   Logger.info(`Filtered Diffs used to generate procedures: ${gitDiffArray}`);
-  const { completed } = handleNestedKnowledgeCategoryChanges({
-    nestedCategoryChanges: [...gitDiffWithOutDocs], // need to create a new array for each
-    originalChangesArray: [...gitDiffWithOutDocs], // need to create a new array for each
-    parentIndex: 0,
-  });
-  Logger.info(`Procedures Generated`);
-  return completed;
+  if (gitDiffWithOutDocs && gitDiffWithOutDocs.length) {
+    const { completed } = handleNestedKnowledgeCategoryChanges({
+      nestedCategoryChanges: [...gitDiffWithOutDocs], // need to create a new array for each
+      originalChangesArray: [...gitDiffWithOutDocs], // need to create a new array for each
+      parentIndex: 0,
+    });
+    Logger.info(`Procedures Generated`);
+    return completed;
+  }
+  return [];
 };
