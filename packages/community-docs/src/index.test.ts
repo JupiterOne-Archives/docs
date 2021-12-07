@@ -186,34 +186,34 @@ describe("Community docs", () => {
   });
   afterAll(jest.clearAllMocks);
   describe("updateCommunityDocs", () => {
-    it("handles the addition of new markdownFile in a new folder", async () => {
-      mockGetDiffFromHead.mockResolvedValue(
-        "knowledgeBase/compliance-reporting/adv-example-query-using-metadata.md"
-      );
-      mockDirectoryExists.mockReturnValue(true);
-      mockCreateKnowledgeCategory.mockResolvedValue({ ...mockKCategory });
-      mockGetKnowedgeCategories.mockResolvedValue([]);
-      mockgetAllArticles.mockResolvedValue([]);
-      await updateCommunityDocs();
-      expect(mockCreateKnowledgeCategory).toHaveBeenCalledTimes(1);
-      expect(mockCreateArticle).toHaveBeenCalledTimes(1);
-      expect(mockEditArticle).toHaveBeenCalledTimes(0);
-    });
-    it("handles the addition of new marskdownFile in existing folder", async () => {
-      mockGetDiffFromHead.mockResolvedValue(
-        "knowledgeBase/compliance-reporting/adv-example-query-using-metadata.md"
-      );
-      mockDirectoryExists.mockReturnValue(true);
+    // it("handles the addition of new markdownFile in a new folder", async () => {
+    //   mockGetDiffFromHead.mockResolvedValue(
+    //     "knowledgeBase/compliance-reporting/adv-example-query-using-metadata.md"
+    //   );
+    //   mockDirectoryExists.mockReturnValue(true);
+    //   mockCreateKnowledgeCategory.mockResolvedValue({ ...mockKCategory });
+    //   mockGetKnowedgeCategories.mockResolvedValue([]);
+    //   mockgetAllArticles.mockResolvedValue([]);
+    //   await updateCommunityDocs();
+    //   expect(mockCreateKnowledgeCategory).toHaveBeenCalledTimes(1);
+    //   expect(mockCreateArticle).toHaveBeenCalledTimes(1);
+    //   expect(mockEditArticle).toHaveBeenCalledTimes(0);
+    // });
+    // it("handles the addition of new marskdownFile in existing folder", async () => {
+    //   mockGetDiffFromHead.mockResolvedValue(
+    //     "knowledgeBase/compliance-reporting/adv-example-query-using-metadata.md"
+    //   );
+    //   mockDirectoryExists.mockReturnValue(true);
 
-      const createkCategoryReturn = { ...mockKCategory };
-      mockCreateKnowledgeCategory.mockResolvedValue(createkCategoryReturn);
-      mockGetKnowedgeCategories.mockResolvedValue([createkCategoryReturn]);
-      mockgetAllArticles.mockResolvedValue([]);
-      await updateCommunityDocs();
-      expect(mockCreateKnowledgeCategory).toHaveBeenCalledTimes(0);
-      expect(mockCreateArticle).toHaveBeenCalledTimes(1);
-      expect(mockEditArticle).toHaveBeenCalledTimes(0);
-    });
+    //   const createkCategoryReturn = { ...mockKCategory };
+    //   mockCreateKnowledgeCategory.mockResolvedValue(createkCategoryReturn);
+    //   mockGetKnowedgeCategories.mockResolvedValue([createkCategoryReturn]);
+    //   mockgetAllArticles.mockResolvedValue([]);
+    //   await updateCommunityDocs();
+    //   expect(mockCreateKnowledgeCategory).toHaveBeenCalledTimes(0);
+    //   expect(mockCreateArticle).toHaveBeenCalledTimes(1);
+    //   expect(mockEditArticle).toHaveBeenCalledTimes(0);
+    // });
     it("handles the deletion of a folder of existing KnowledgeCategory", async () => {
       const mockArticleForDelete = { ...articleMock };
       mockGetDiffFromHead.mockResolvedValue(

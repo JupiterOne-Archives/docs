@@ -34,16 +34,11 @@ export const addVanillaCategoryToProcedure = (
   const match = tempVanillaReturn.filter(
     (v) => v.name === procedureTarget.name
   );
+
   if (match.length) {
     procedureTarget = {
       ...procedureTarget,
-      knowledgeCategoryID: match[0].knowledgeCategoryID,
-      parentID: match[0].parentID || 1,
-      knowledgeBaseID: match[0].knowledgeBaseID,
-      sortChildren: match[0].sortChildren,
-      sort: match[0].sort,
-      url: match[0].url,
-      foreignID: match[0].foreignID,
+      ...match[0],
     };
   }
 
@@ -209,15 +204,17 @@ export const procedureToKnowledgeCategory = async (
   let tempProcedureWorkedOn = { ...procedureWorkedOn };
   const directoryExistsResult = directoryExists(tempProcedureWorkedOn?.path);
   console.log("PPPDPD", procedureWorkedOn);
+  console.log(directoryExistsResult, "directoryExistsResult");
   if (tempProcedureWorkedOn.knowledgeCategoryID !== null) {
     if (directoryExistsResult) {
       return tempProcedureWorkedOn;
     } else {
       // kCategories get handled for delete later
-      return (tempProcedureWorkedOn = {
+      tempProcedureWorkedOn = {
         ...tempProcedureWorkedOn,
         description: FLAG_FOR_DELETE,
-      });
+      };
+      return tempProcedureWorkedOn;
     }
   } else {
     if (directoryExistsResult) {
@@ -264,7 +261,7 @@ export const removeDeletedCategories = async (
   const deletedKCategories: VanillaKnowledgeCategory[] = procedures.filter(
     isKnowledgeCategoryType
   );
-
+  console.log(deletedKCategories, "deletedKCategories");
   const categoriesDelete = await deleteAllFlaggedCategories(
     httpClient,
     deletedKCategories
@@ -373,7 +370,10 @@ export const useProceduresForVanillaRequests = async (
   const tempProcedures = [...procedures];
   const tempExistingKnowledgeCategoryInfo = [...existingknowledgeCategoryInfo];
   let previousknowledgeCategoryID = null;
-
+  console.log(
+    "existingknowledgeCategoryInfoexistingknowledgeCategoryInfo",
+    existingknowledgeCategoryInfo
+  );
   // this needs to be syncronous, going in order of the procedures.
   // for example - a new folder with a markdown file, we need to make a
   // new knowledgeCategory and use its id to create the new article
@@ -401,25 +401,24 @@ export const useProceduresForVanillaRequests = async (
   });
 
   if (isKnowledgeCategoryType(procedureWorkedOn)) {
-    if (
-      hasDonePrevFromVanilla.length ||
-      hasDonePrevFromCompletedProcedures.length
-    ) {
-      tempExistingKnowledgeCategoryInfo.push(procedureWorkedOn);
-      previousknowledgeCategoryID =
-        hasDonePrevFromVanilla[0].knowledgeCategoryID ||
-        hasDonePrevFromVanilla[0].knowledgeCategoryID;
-    } else {
-      procedureWorkedOn = await procedureToKnowledgeCategory(
-        httpClient,
-        procedureWorkedOn,
-        previousknowledgeCategoryID
-      );
-      tempExistingKnowledgeCategoryInfo.push(procedureWorkedOn);
-
-      previousknowledgeCategoryID = procedureWorkedOn.knowledgeCategoryID;
-      tempProcedures[0].knowledgeCategoryID = previousknowledgeCategoryID;
-    }
+    // if (
+    //   hasDonePrevFromVanilla.length ||
+    //   hasDonePrevFromCompletedProcedures.length
+    // ) {
+    //   tempExistingKnowledgeCategoryInfo.push(procedureWorkedOn);
+    //   previousknowledgeCategoryID =
+    //     hasDonePrevFromVanilla[0].knowledgeCategoryID ||
+    //     hasDonePrevFromVanilla[0].knowledgeCategoryID;
+    // } else {
+    procedureWorkedOn = await procedureToKnowledgeCategory(
+      httpClient,
+      procedureWorkedOn,
+      previousknowledgeCategoryID
+    );
+    tempExistingKnowledgeCategoryInfo.push(procedureWorkedOn);
+    previousknowledgeCategoryID = procedureWorkedOn.knowledgeCategoryID;
+    tempProcedures[0].knowledgeCategoryID = previousknowledgeCategoryID;
+    // }
   }
   if (isArticleType(procedureWorkedOn)) {
     procedureWorkedOn = await procedureToArticle(
@@ -449,6 +448,7 @@ export const proceduresToVanillaRequests = async (
     const existingknowledgeCategoryInfo = await getKnowedgeCategories(
       httpClient
     );
+    console.log(existingknowledgeCategoryInfo, "sssdfs");
     Logger.info(`Getting Articles`);
     const articles = await getAllArticles(
       httpClient,
@@ -457,12 +457,17 @@ export const proceduresToVanillaRequests = async (
 
     Logger.info(`Mapping Vanilla responses to procedures`);
     const proceduresWithVanillaCategories = procedures.map((p) => {
+      console.log("ssjsjsjsjsj CAT", p);
       if (isKnowledgeCategoryType(p)) {
+        console.log("ISSSS CAT", p);
         return addVanillaCategoryToProcedure(p, existingknowledgeCategoryInfo);
       }
       return p;
     });
-
+    console.log(
+      proceduresWithVanillaCategories,
+      "proceduresWithVanillaCategoriesproceduresWithVanillaCategories"
+    );
     const proceduresWithArticleInfo = addVanillaArticlesToProcedures(
       proceduresWithVanillaCategories,
       articles
@@ -482,7 +487,7 @@ export const proceduresToVanillaRequests = async (
       .filter(isKnowledgeCategoryType)
       .filter((c) => c.description === FLAG_FOR_DELETE);
     console.log(
-      proceduresNeedingDeleteCategories,
+      deletableCategories,
       "proceduresNeedingDeleteCategoriesproceduresNeedingDeleteCategories"
     );
     console.log(deletableCategories, "deletableCategories");
