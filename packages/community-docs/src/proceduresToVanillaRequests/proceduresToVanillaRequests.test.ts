@@ -2,6 +2,7 @@ import {
   FLAG_FOR_DELETE,
   KNOWN_CATEGORY_BEEN_DELETED,
   ProcedureTypeEnum,
+  VanillaArticle,
   VanillaKnowledgeCategory,
 } from "../utils";
 import {
@@ -25,6 +26,7 @@ import {
 } from "./";
 import {
   childVanillaKnowledgeCategory,
+  expectedDeleteANDCreatesPROCEDURES,
   matchingProcedureKnowledgeCategory,
   matchingVanillaKnowledgeArticle,
   procedureArticle,
@@ -33,6 +35,7 @@ import {
   PROCEDURESKCategoriesDELETED,
   proceduresMock,
   PROCEDURESWithKCategoriesToDelete,
+  PROCEDURESWithOneDeleteArticleAndCreates,
   SHAPEWEWANT,
   vanillaArticleWithInfo,
   vanillaKnowledgeArticle,
@@ -747,49 +750,49 @@ describe("ProceduresToVanillaRequests", () => {
 
       expect(actual).toEqual(SHAPEWEWANT);
     });
-    // it("handles addition and removal of an articles", async () => {
-    //   const mockHttpclient = {} as any;
-    //   mockDirectoryExists.mockReturnValue(true);
-    //   const editArticle =
-    //     PROCEDURESWithOneDeleteArticleAndCreates[2] as VanillaArticle;
-    //   const deleteArticle =
-    //     PROCEDURESWithOneDeleteArticleAndCreates[1] as VanillaArticle;
-    //   mockMarkdownToString
-    //     .mockResolvedValueOnce(FLAG_FOR_DELETE)
-    //     .mockResolvedValue("Im markdown. LOOK AT ME.");
-    //   mockEditArticle.mockResolvedValue(editArticle);
-    //   mockDeleteArticle.mockResolvedValue(deleteArticle);
-    //   mockCreateArticle
-    //     .mockResolvedValueOnce({
-    //       ...vanillaArticleWithInfo,
-    //       knowledgeCategoryID: 33,
-    //       articleID: 21,
-    //       name: "Soc2 With Jupiterone Copy",
-    //     })
-    //     .mockResolvedValueOnce({
-    //       ...vanillaArticleWithInfo,
-    //       knowledgeCategoryID: 33,
-    //       articleID: 22,
-    //       name: "Soc2 With Jupiterone",
-    //     });
+    it("handles addition and removal of an articles", async () => {
+      const mockHttpclient = {} as any;
+      mockDirectoryExists.mockReturnValue(true);
+      const editArticle =
+        PROCEDURESWithOneDeleteArticleAndCreates[2] as VanillaArticle;
+      const deleteArticle =
+        PROCEDURESWithOneDeleteArticleAndCreates[1] as VanillaArticle;
+      mockMarkdownToString
+        .mockResolvedValueOnce(FLAG_FOR_DELETE)
+        .mockResolvedValue("Im markdown. LOOK AT ME.");
+      mockEditArticle.mockResolvedValue(editArticle);
+      mockDeleteArticle.mockResolvedValue(deleteArticle);
+      mockCreateArticle
+        .mockResolvedValueOnce({
+          ...vanillaArticleWithInfo,
+          knowledgeCategoryID: 33,
+          articleID: 21,
+          name: "Soc2 With Jupiterone Copy",
+        })
+        .mockResolvedValueOnce({
+          ...vanillaArticleWithInfo,
+          knowledgeCategoryID: 33,
+          articleID: 22,
+          name: "Soc2 With Jupiterone",
+        });
 
-    //   mockCreateKnowledgeCategory.mockResolvedValueOnce({
-    //     ...vanillaKnowledgeCategory,
-    //     parentID: 22,
-    //     knowledgeBaseID: 1,
-    //     name: "Compliance Reporting",
-    //     knowledgeCategoryID: 33,
-    //   });
+      mockCreateKnowledgeCategory.mockResolvedValueOnce({
+        ...vanillaKnowledgeCategory,
+        parentID: 22,
+        knowledgeBaseID: 1,
+        name: "Compliance Reporting",
+        knowledgeCategoryID: 33,
+      });
 
-    //   const actual = await useProceduresForVanillaRequests(
-    //     PROCEDURESWithOneDeleteArticleAndCreates,
-    //     mockHttpclient,
-    //     [],
-    //     []
-    //   );
+      const actual = await useProceduresForVanillaRequests(
+        PROCEDURESWithOneDeleteArticleAndCreates,
+        mockHttpclient,
+        [],
+        []
+      );
 
-    //   expect(actual).toEqual(expectedDeleteANDCreatesPROCEDURES);
-    // });
+      expect(actual).toEqual(expectedDeleteANDCreatesPROCEDURES);
+    });
   });
   describe("addImagesToArticleMarkdown", () => {
     it("returns empty string when no input supplied", async () => {
