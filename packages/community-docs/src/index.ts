@@ -5,6 +5,7 @@ import { getDiffFromHead } from "./gitDifference";
 import HttpClient from "./httpClient";
 import { Logger } from "./Logging";
 import { proceduresToVanillaRequests } from "./proceduresToVanillaRequests";
+// import { getAllSubChanges } from "./utils/common";
 import { PATH_OF_DIRECTORY_TO_WATCH } from "./utils/constants";
 import {
   deleteArticle,
@@ -47,8 +48,8 @@ export const updateCommunityDocs = async () => {
   if (diff && diff.length) {
     const diffChanges = diff.trim().split("\n");
     const nested: string[] = [];
+
     for (let i = 0; i < diffChanges.length; i++) {
-      nested.push(diffChanges[i]);
       const fullArrayOfAllItems: string[] = await getAllSubChanges(
         diffChanges[i]
       );
@@ -57,12 +58,12 @@ export const updateCommunityDocs = async () => {
         nested.push(item);
       });
     }
-    const nestedWithRemovedPath = nested.map((path) =>
+    const nestedMergedWithOriginal = [...diffChanges, ...nested];
+    const nestedWithRemovedPath = nestedMergedWithOriginal.map((path) =>
       path.substring(path.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
-
     const procedures = diffToProcedures(nestedWithRemovedPath);
-    Logger.info(`list of procedures: ${procedures}`);
+    Logger.info(`list of procedures: ${JSON.stringify(procedures, null, " ")}`);
     if (procedures && procedures.length > 0) {
       const completedProcedures = await proceduresToVanillaRequests(procedures);
 

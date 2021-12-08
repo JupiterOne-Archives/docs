@@ -3,7 +3,12 @@ import fs from "fs";
 import path from "path";
 import HttpClient from "./httpClient";
 import { Logger } from "./Logging";
-import { FLAG_FOR_DELETE, PATH_OF_DIRECTORY_TO_WATCH } from "./utils/constants";
+import { kCategoriesByPathSize } from "./proceduresToVanillaRequests/utils";
+import {
+  FLAG_FOR_DELETE,
+  KNOWN_CATEGORY_BEEN_DELETED,
+  PATH_OF_DIRECTORY_TO_WATCH,
+} from "./utils/constants";
 import {
   ProcedureTypeEnum,
   VanillaArticle,
@@ -216,12 +221,14 @@ export const deleteAllFlaggedCategories = async (
     flaggedForDeletedKnowledgeCategorys
       ? [...flaggedForDeletedKnowledgeCategorys]
       : [];
-
-  const filteredExistingknowledgeCategoryWithFlags =
-    tempExistingknowledgeCategories.filter(
-      (ek) =>
-        ek.knowledgeCategoryID !== null && ek?.description === FLAG_FOR_DELETE
-    );
+  const orderedCategories = kCategoriesByPathSize(
+    tempExistingknowledgeCategories
+  );
+  const filteredExistingknowledgeCategoryWithFlags = orderedCategories.filter(
+    (ek) =>
+      ek.knowledgeCategoryID !== null &&
+      ek?.description === (KNOWN_CATEGORY_BEEN_DELETED || FLAG_FOR_DELETE)
+  );
   const allDeletePromises = filteredExistingknowledgeCategoryWithFlags.map(
     (c) => {
       if (c.knowledgeCategoryID) {
