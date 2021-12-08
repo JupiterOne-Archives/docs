@@ -47,7 +47,6 @@ export const updateCommunityDocs = async () => {
 
   if (diff && diff.length) {
     const diffChanges = diff.trim().split("\n");
-    console.log(diffChanges, "difff");
     const nested: string[] = [];
 
     for (let i = 0; i < diffChanges.length; i++) {
@@ -63,7 +62,6 @@ export const updateCommunityDocs = async () => {
     const nestedWithRemovedPath = nestedMergedWithOriginal.map((path) =>
       path.substring(path.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
-    console.log(nestedWithRemovedPath, "nestedWithRemovedPath");
     const procedures = diffToProcedures(nestedWithRemovedPath);
     Logger.info(`list of procedures: ${JSON.stringify(procedures, null, " ")}`);
     if (procedures && procedures.length > 0) {
