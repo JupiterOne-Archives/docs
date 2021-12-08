@@ -24,3 +24,18 @@ to define what is critical.`;
 export const criticalAsset = "../assets/asset-critical.png";
 export const gearImage = "../assets/icons/gear.png";
 export const assetDefinition = "../assets/asset-definition.png";
+
+export const markdownAsStringWithInternalLinks = `
+Depending on the size of the uploaded file, the entities and relationships may not
+show up in the Inventory Table right away.  Hold tight!  JupiterOne is processing your
+data, and it will show up in your Inventory soon.
+After you import your data, you can analyze and visualize your complete 
+infrastructure and [security cyber asset inventory](asset-inventory-filters.md) using the J1 Assets app. 
+See [API doc](../jupiterone-api.md#entityandrelationshipsynchronization) for more details.
+dimension of your digital universe. J1 provides [instructions](configure-integrations.md) on how 
+[10]: ../queries/common-qq-training.md
+[11]: ../queries/common-qq-endpoint.md
+[1]: ./schemas/bulk-upload.md
+[2]: ./jupiterone-api.md#entity-and-relationship-synchronization
+[1]: ../../docs/data-model/org-grc.md
+`;
