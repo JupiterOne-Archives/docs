@@ -92,10 +92,7 @@ describe("ProceduresToVanillaRequests", () => {
     mockDirectoryExists = directoryExists as jest.MockedFunction<
       typeof directoryExists
     >;
-    // mockDeleteKnowledgeCategory =
-    //   deleteKnowledgeCategory as jest.MockedFunction<
-    //     typeof deleteKnowledgeCategory
-    //   >;
+
     mockDeleteAllFlaggedCategories =
       deleteAllFlaggedCategories as jest.MockedFunction<
         typeof deleteAllFlaggedCategories
@@ -129,9 +126,10 @@ describe("ProceduresToVanillaRequests", () => {
 
       expect(actual).toEqual(expected);
     });
-    it("returns addition of knowledge return to the procedure", () => {
+    it("returns procedure with info from vanilla api mapped to it", () => {
       const expected = {
-        childrenPath: "compliance-reporting",
+        childrenPath:
+          "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
         description: "",
         fileName: "compliance-reporting",
         foreignID: undefined,
@@ -139,9 +137,10 @@ describe("ProceduresToVanillaRequests", () => {
         knowledgeCategoryID: 23,
         name: "Compliance Reporting",
         parentID: 8,
-        path: "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
+
         procedureType: "Category",
         sort: undefined,
+        path: "getting-started-admin/compliance-reporting",
         sortChildren: undefined,
         url: undefined,
       };
