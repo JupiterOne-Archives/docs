@@ -382,16 +382,16 @@ export const useProceduresForVanillaRequests = async (
     existingknowledgeCategoryInfo
   );
 
-  const hasDonePrevFromVanilla: (VanillaArticle | VanillaKnowledgeCategory)[] =
-    tempExistingKnowledgeCategoryInfo.filter((e) => {
-      return e.name === procedureWorkedOn?.name;
-    });
-  const hasDonePrevFromCompletedProcedures: (
-    | VanillaArticle
-    | VanillaKnowledgeCategory
-  )[] = tempCompletedProcedures.filter((e) => {
-    return e.name === procedureWorkedOn?.name;
-  });
+  // const hasDonePrevFromVanilla: (VanillaArticle | VanillaKnowledgeCategory)[] =
+  //   tempExistingKnowledgeCategoryInfo.filter((e) => {
+  //     return e.name === procedureWorkedOn?.name;
+  //   });
+  // const hasDonePrevFromCompletedProcedures: (
+  //   | VanillaArticle
+  //   | VanillaKnowledgeCategory
+  // )[] = tempCompletedProcedures.filter((e) => {
+  //   return e.name === procedureWorkedOn?.name;
+  // });
 
   if (isKnowledgeCategoryType(procedureWorkedOn)) {
     // if (
