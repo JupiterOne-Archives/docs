@@ -38,4 +38,5 @@ dimension of your digital universe. J1 provides [instructions](configure-integra
 [1]: ./schemas/bulk-upload.md
 [2]: ./jupiterone-api.md#entity-and-relationship-synchronization
 [1]: ../../docs/data-model/org-grc.md
+Learn more [here] (https://github.com/JupiterOne/docs/blob/main/docs/parameters.md#jupiterone-parameter-service). 
 `;
