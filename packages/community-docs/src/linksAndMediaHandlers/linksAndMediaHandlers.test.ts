@@ -95,6 +95,7 @@ describe("linksAndMediaHandlers", () => {
         "/schemas/bulk-upload",
         "/jupiterone-api",
         "/../docs/data-model/org-grc",
+        "//github.com/JupiterOne/docs/blob/main/docs/parameters",
       ];
       const actual = getMarkdownInternalReferences(
         markdownAsStringWithInternalLinks
@@ -118,6 +119,7 @@ describe("linksAndMediaHandlers", () => {
         "./schemas/bulk-upload.md",
         "./jupiterone-api.md",
         "../../docs/data-model/org-grc.md",
+        "https://github.com/JupiterOne/docs/blob/main/docs/parameters.md",
       ];
       const actual = fullMarkdownReferencePath(
         markdownAsStringWithInternalLinks
