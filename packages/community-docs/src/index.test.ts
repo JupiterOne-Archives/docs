@@ -17,7 +17,6 @@ import {
   editArticle,
   getAllArticles,
   getKnowedgeCategories,
-  uploadImageAndReturnUrl,
 } from "./VanillaAPI";
 jest.mock("./httpClient", () => {
   const mGit = {
@@ -107,10 +106,6 @@ describe("Community docs", () => {
   >;
 
   let mockEditArticle = editArticle as jest.MockedFunction<typeof editArticle>;
-  let mockuploadImageAndReturnUrl =
-    uploadImageAndReturnUrl as jest.MockedFunction<
-      typeof uploadImageAndReturnUrl
-    >;
 
   let mockgetAllArticles = getAllArticles as jest.MockedFunction<
     typeof getAllArticles
@@ -141,10 +136,6 @@ describe("Community docs", () => {
     mockgetAllArticles = getAllArticles as jest.MockedFunction<
       typeof getAllArticles
     >;
-    mockuploadImageAndReturnUrl =
-      uploadImageAndReturnUrl as jest.MockedFunction<
-        typeof uploadImageAndReturnUrl
-      >;
     mockDeleteArticle = deleteArticle as jest.MockedFunction<
       typeof deleteArticle
     >;
