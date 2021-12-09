@@ -1,10 +1,11 @@
+import { VanillaArticle } from "../utils";
 import {
   fullMarkdownReferencePath,
+  getArticleNameFromReference,
   getMarkdownImageSrcs,
-  getMarkdownInternalLinks,
-  getMarkdownInternalReferences,
   isSupportedMediaType,
-  modifyBodyImageLink,
+  modifyBodyLink,
+  replaceMarkdownReferencesWithVanillaSlugs,
 } from "./";
 import {
   assetDefinition,
@@ -13,6 +14,7 @@ import {
   markdownAsString,
   markdownAsStringNOImages,
   markdownAsStringWithInternalLinks,
+  markdownAsStringWithNOInternalLinks,
 } from "./mockMarkdown";
 describe("linksAndMediaHandlers", () => {
   describe("getMarkdownImageSrcs", () => {
@@ -27,10 +29,10 @@ describe("linksAndMediaHandlers", () => {
       expect(actual).toEqual(expected);
     });
   });
-  describe("modifyBodyImageLink", () => {
+  describe("modifyBodyLink", () => {
     it("returns same string when no regex match", async () => {
       const replacementText = "Hotdog";
-      const actual = modifyBodyImageLink(
+      const actual = modifyBodyLink(
         markdownAsString,
         "whatsforlunch",
         replacementText
@@ -41,7 +43,7 @@ describe("linksAndMediaHandlers", () => {
     });
     it("returns altered string with assetLocation replaced with newLocation", async () => {
       const replacementText = "Hotdog";
-      const actual = modifyBodyImageLink(
+      const actual = modifyBodyLink(
         markdownAsString,
         criticalAsset,
         replacementText
@@ -64,45 +66,7 @@ describe("linksAndMediaHandlers", () => {
       expect(actual).toEqual(expected);
     });
   });
-  describe("getMarkdownInternalLinks", () => {
-    it("returns empty array when no links found", () => {
-      const expected: string[] = [];
-      const actual = getMarkdownInternalLinks("");
-      expect(actual).toEqual(expected);
-    });
-    it("returns matches on MARKDOWN_REGEX_LINK_MARKDOWN_FILE", () => {
-      const expected: string[] = [
-        "asset-inventory-filters.md",
-        "configure-integrations.md",
-      ];
-      const actual = getMarkdownInternalLinks(
-        markdownAsStringWithInternalLinks
-      );
-      expect(actual).toEqual(expected);
-    });
-  });
-  describe("getMarkdownInternalReferences", () => {
-    it("returns empty array when no links found", () => {
-      const expected: string[] = [];
-      const actual = getMarkdownInternalReferences("");
-      expect(actual).toEqual(expected);
-    });
-    it("returns matches on MARKDOWN_REGEX_NON_LINK_FILE_PATH", () => {
-      const expected: string[] = [
-        "/jupiterone-api",
-        "/queries/common-qq-training",
-        "/queries/common-qq-endpoint",
-        "/schemas/bulk-upload",
-        "/jupiterone-api",
-        "/../docs/data-model/org-grc",
-        "//github.com/JupiterOne/docs/blob/main/docs/parameters",
-      ];
-      const actual = getMarkdownInternalReferences(
-        markdownAsStringWithInternalLinks
-      );
-      expect(actual).toEqual(expected);
-    });
-  });
+
   describe("fullMarkdownReferencePath", () => {
     it("returns empty array when no links found", () => {
       const expected: string[] = [];
@@ -111,6 +75,7 @@ describe("linksAndMediaHandlers", () => {
     });
     it("returns matches on MARKDOWN_REGEX_FULL_MARKDOWN_PATH", () => {
       const expected: string[] = [
+        "../asset-inventory-filters.md",
         "asset-inventory-filters.md",
         "../jupiterone-api.md",
         "configure-integrations.md",
@@ -124,6 +89,109 @@ describe("linksAndMediaHandlers", () => {
       const actual = fullMarkdownReferencePath(
         markdownAsStringWithInternalLinks
       );
+      expect(actual).toEqual(expected);
+    });
+  });
+  describe("replaceMarkdownReferencesWithVanillaSlugs", () => {
+    it("returns the markdownAsAString without changes when there are no matches", () => {
+      const markdownWithNoInternalMarkdownRefs =
+        markdownAsStringWithNOInternalLinks;
+      const expected = markdownWithNoInternalMarkdownRefs;
+      const allArticles: VanillaArticle[] = [
+        {
+          name: "Bulk Upload",
+          slug: "https://jupiterone.vanillastaging.com/kb/articles/471-bulk-upload",
+        },
+        {
+          name: "Bulk Upload Not",
+          slug: "https://jupiterone.vanillastaging.com/kb/articles/472-bulk-upload-not",
+        },
+      ] as VanillaArticle[];
+      const actual = replaceMarkdownReferencesWithVanillaSlugs(
+        markdownWithNoInternalMarkdownRefs,
+        allArticles
+      );
+      expect(actual).toEqual(expected);
+    });
+
+    it("returns the markdownAsAString without changes when there are no matching articles", () => {
+      const markdownWithInternalMarkdownRefs =
+        markdownAsStringWithInternalLinks;
+      const expected = markdownWithInternalMarkdownRefs;
+      const allArticles: VanillaArticle[] = [
+        {
+          name: "Bulky Upload",
+          slug: "https://jupiterone.vanillastaging.com/kb/articles/471-bulk-upload",
+        },
+        {
+          name: "Bulky Upload Not",
+          slug: "https://jupiterone.vanillastaging.com/kb/articles/472-bulk-upload-not",
+        },
+      ] as VanillaArticle[];
+      const actual = replaceMarkdownReferencesWithVanillaSlugs(
+        markdownWithInternalMarkdownRefs,
+        allArticles
+      );
+
+      expect(actual).toEqual(expected);
+    });
+
+    it("returns the markdownAsAString with new links", () => {
+      const markdownWithInternalMarkdownRefs =
+        markdownAsStringWithInternalLinks;
+      const matchingArticle = {
+        name: "Bulk Upload",
+        slug: "https://jupiterone.vanillastaging.com/kb/articles/471-bulk-upload",
+      };
+      const allArticles: VanillaArticle[] = [
+        matchingArticle,
+        {
+          name: "Bulk Upload Not",
+          slug: "https://jupiterone.vanillastaging.com/kb/articles/472-bulk-upload-not",
+        },
+      ] as VanillaArticle[];
+      const actual = replaceMarkdownReferencesWithVanillaSlugs(
+        markdownWithInternalMarkdownRefs,
+        allArticles
+      );
+
+      expect(actual.indexOf(matchingArticle.slug) != -1).toEqual(true);
+    });
+  });
+  describe("getArticleNameFromReference", () => {
+    it("returns noFile for empty match", () => {
+      const match: string = "";
+      const expected = "NoFile";
+      const actual = getArticleNameFromReference(match);
+      expect(actual).toEqual(expected);
+    });
+    it("returns the filename", () => {
+      const match: string = "../asset-inventory-filters.md";
+      const expected = "Asset Inventory Filters";
+      const actual = getArticleNameFromReference(match);
+      expect(actual).toEqual(expected);
+
+      const matchTwo: string = "asset-inventory-filters.md";
+      const expectedTwo = "Asset Inventory Filters";
+      const actualTwo = getArticleNameFromReference(matchTwo);
+      expect(actualTwo).toEqual(expectedTwo);
+
+      const matchThree: string = "../queries/common-qq-training.md";
+      const expectedThree = "Common Qq Training";
+      const actualThree = getArticleNameFromReference(matchThree);
+      expect(actualThree).toEqual(expectedThree);
+
+      const matchFour: string =
+        "https://github.com/JupiterOne/docs/blob/main/docs/parameters.md";
+      const expectedFour = "Parameters";
+      const actualFour = getArticleNameFromReference(matchFour);
+      expect(actualFour).toEqual(expectedFour);
+    });
+    it("handles url-type links", () => {
+      const match: string =
+        "https://github.com/JupiterOne/docs/blob/main/docs/parameters.md";
+      const expected = "Parameters";
+      const actual = getArticleNameFromReference(match);
       expect(actual).toEqual(expected);
     });
   });

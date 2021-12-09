@@ -1,9 +1,9 @@
 import {
+  createDisplayName,
   MARKDOWN_IMAGE_REGEX,
   MARKDOWN_REGEX_FULL_MARKDOWN_PATH,
-  MARKDOWN_REGEX_LINK_MARKDOWN_FILE,
-  MARKDOWN_REGEX_NON_LINK_FILE_PATH,
   SUPPORTED_MEDIA_TYPES,
+  VanillaArticle,
 } from "../utils";
 
 export const isSupportedMediaType = (imagePath: string): string | boolean => {
@@ -16,21 +16,18 @@ export const isSupportedMediaType = (imagePath: string): string | boolean => {
   return supportedTypeOfFile;
 };
 
-export const modifyBodyImageLink = (
+export const modifyBodyLink = (
   body: string,
-  assetLocationInOriginalMarkdown: string,
-  newLocation: string
+  matchToBeReplaced: string,
+  replacement: string
 ): string => {
   let bodyAlterations = `${body}`;
-  const assetLocationInOriginalMarkdownSanitized =
-    assetLocationInOriginalMarkdown.replace("/", "\\/");
-  const markdownAssetRegularExpression = new RegExp(
-    assetLocationInOriginalMarkdownSanitized
-  );
+  const matchToBeReplacedSanitized = matchToBeReplaced.replace("/", "\\/");
+  const markdownAssetRegularExpression = new RegExp(matchToBeReplacedSanitized);
 
   bodyAlterations = bodyAlterations.replace(
     markdownAssetRegularExpression,
-    `${newLocation}`
+    `${replacement}`
   );
   return bodyAlterations;
 };
@@ -46,51 +43,6 @@ export const getMarkdownImageSrcs = (markdownAsString: string): string[] => {
     matches.push(array1[0]);
   }
   return matches.map((m) => m.substring(2, m.length - 1));
-};
-
-// for link in markdown like [instructions](configure-integrations.md) or [reference the documentation](../../docs/parameters.md)
-// returns "](../../docs/parameters.md)" and "](configure-integrations.md)"
-export const getMarkdownInternalLinks = (
-  markdownAsString: string
-): string[] => {
-  const markdownAssetRegularExpression = new RegExp(
-    MARKDOWN_REGEX_LINK_MARKDOWN_FILE,
-    "g"
-  );
-  const matches = [];
-  let array1;
-
-  while (
-    (array1 = markdownAssetRegularExpression.exec(markdownAsString)) !== null
-  ) {
-    matches.push(array1[0]);
-  }
-  return matches.map((m) => m.substring(2, m.length - 1));
-};
-
-// targets [10]: ../queries/common-qq-training.md
-// [11]: ../queries/common-qq-endpoint.md
-// [1]: ./schemas/bulk-upload.md
-// [2]: ./jupiterone-api.md#entity-and-relationship-synchronization
-// returns  "/jupiterone-api", "/queries/common-qq-training",
-// "/queries/common-qq-endpoint","/schemas/bulk-upload","/jupiterone-api",
-
-export const getMarkdownInternalReferences = (
-  markdownAsString: string
-): string[] => {
-  const markdownAssetRegularExpression = new RegExp(
-    MARKDOWN_REGEX_NON_LINK_FILE_PATH,
-    "g"
-  );
-  const matches = [];
-  let array1;
-
-  while (
-    (array1 = markdownAssetRegularExpression.exec(markdownAsString)) !== null
-  ) {
-    matches.push(array1[0]);
-  }
-  return matches;
 };
 
 export const fullMarkdownReferencePath = (
@@ -110,6 +62,46 @@ export const fullMarkdownReferencePath = (
   }
   return matches;
 };
-export const removeDocPaths = (markdownAsString: string): string => {
-  return markdownAsString;
+export const getArticleNameFromReference = (match: string): string => {
+  const split = match.split("/");
+  if (match === "") {
+    return "NoFile";
+  }
+
+  const nameOfFile = split[split.length - 1];
+
+  const name = nameOfFile ? nameOfFile : "NoFile";
+
+  return createDisplayName(name.substring(0, name.indexOf(".md")));
+};
+
+export const replaceMarkdownReferencesWithVanillaSlugs = (
+  markdownAsAString: string,
+  allArticles: VanillaArticle[]
+) => {
+  let markdownAsStringTarget: string = `${markdownAsAString}`;
+  const matches = fullMarkdownReferencePath(markdownAsStringTarget);
+
+  if (matches.length) {
+    matches.forEach((m) => {
+      const matchArticleName = getArticleNameFromReference(m);
+      let articlesWithSameNameAsRef: VanillaArticle[] = [];
+      if (matchArticleName && matchArticleName !== "NoFile") {
+        articlesWithSameNameAsRef = allArticles.filter(
+          (a) => a.name === matchArticleName
+        );
+        if (
+          articlesWithSameNameAsRef.length &&
+          articlesWithSameNameAsRef[0].slug
+        ) {
+          markdownAsStringTarget = modifyBodyLink(
+            markdownAsStringTarget,
+            m,
+            articlesWithSameNameAsRef[0].slug
+          );
+        }
+      }
+    });
+  }
+  return markdownAsStringTarget;
 };

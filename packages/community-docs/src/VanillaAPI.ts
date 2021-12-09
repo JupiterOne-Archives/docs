@@ -2,6 +2,7 @@ import FormData from "form-data";
 import fs from "fs";
 import path from "path";
 import HttpClient from "./httpClient";
+import { replaceMarkdownReferencesWithVanillaSlugs } from "./linksAndMediaHandlers";
 import { Logger } from "./Logging";
 import { kCategoriesByPathSize } from "./proceduresToVanillaRequests/utils";
 import {
@@ -335,7 +336,10 @@ export const editArticle = async (
   edits: Partial<VanillaArticle>
 ): Promise<VanillaArticle | undefined> => {
   try {
-    const article = (await client.patch(`/articles/${articleID}`, edits)) as {
+    const article = (await client.patch(`/articles/${articleID}`, {
+      format: "markdown",
+      ...edits,
+    })) as {
       data: VanillaArticle | ErrorType;
     };
 
@@ -345,6 +349,35 @@ export const editArticle = async (
   } catch (e) {
     Logger.error(`editArticle error: ${JSON.stringify(e)}`);
   }
+};
+
+export const updateArticleMarkdownReferences = async (
+  createdArticles: VanillaArticle[],
+  initalArticlesFromVanillaApi: VanillaArticle[],
+  client: HttpClient
+) => {
+  const combinationOfOldAndNew = [
+    ...createdArticles,
+    ...initalArticlesFromVanillaApi,
+  ];
+  const handledArticles = [];
+  for (let a = 0; a < createdArticles.length; a++) {
+    const { articleID } = createdArticles[a];
+    const articleBody = replaceMarkdownReferencesWithVanillaSlugs(
+      `${createdArticles[a].body}`,
+      combinationOfOldAndNew
+    );
+    if (articleBody !== createdArticles[a].body && articleID !== null) {
+      const editResponse = await editArticle(client, articleID, {
+        body: articleBody,
+      });
+      if (editResponse) {
+        handledArticles.push(editResponse);
+      }
+    }
+  }
+  return handledArticles;
+  // edit article format:"markdown",body:newbody
 };
 
 export const postImage = async (client: HttpClient, data: FormData) => {
