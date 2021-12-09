@@ -1,10 +1,10 @@
-import { deleteAllThingsCurrentlyOnVanillaForum } from "./";
+import { updateVanillaWithDirectoryToWatch } from "./";
 import { Logger } from "./Logging";
 
 const getDiffAndReportIssues = async () => {
   try {
     Logger.info("Starting updateCommunityDocs");
-    const completed = await deleteAllThingsCurrentlyOnVanillaForum();
+    const completed = await updateVanillaWithDirectoryToWatch();
 
     Logger.info(`UpdateCommunityDocs completed: ${completed}`);
   } catch (error) {
