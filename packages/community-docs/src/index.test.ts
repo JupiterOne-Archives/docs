@@ -17,6 +17,7 @@ import {
   editArticle,
   getAllArticles,
   getKnowedgeCategories,
+  updateArticleMarkdownReferences,
 } from "./VanillaAPI";
 jest.mock("./httpClient", () => {
   const mGit = {
@@ -87,7 +88,10 @@ describe("Community docs", () => {
     createKnowledgeCategory as jest.MockedFunction<
       typeof createKnowledgeCategory
     >;
-
+  let mockUpdateArticleMarkdownReferences =
+    updateArticleMarkdownReferences as jest.MockedFunction<
+      typeof updateArticleMarkdownReferences
+    >;
   let mockdeleteKnowledgeCategory =
     deleteKnowledgeCategory as jest.MockedFunction<
       typeof deleteKnowledgeCategory
@@ -146,9 +150,18 @@ describe("Community docs", () => {
     mockGetKnowedgeCategories = getKnowedgeCategories as jest.MockedFunction<
       typeof getKnowedgeCategories
     >;
-    mockCreateArticle = createArticle as jest.MockedFunction<
-      typeof createArticle
-    >;
+    mockCreateArticle.mockResolvedValue({
+      name: "totally an article",
+      articleID: 99,
+    } as any);
+    mockDeleteArticle.mockResolvedValue({
+      ...articleMock,
+      status: "deleted",
+    });
+    mockUpdateArticleMarkdownReferences =
+      updateArticleMarkdownReferences as jest.MockedFunction<
+        typeof updateArticleMarkdownReferences
+      >;
     mockdeleteAllFlaggedCategories =
       deleteAllFlaggedCategories as jest.MockedFunction<
         typeof deleteAllFlaggedCategories
@@ -180,23 +193,29 @@ describe("Community docs", () => {
       expect(mockCreateArticle).toHaveBeenCalledTimes(1);
       expect(mockEditArticle).toHaveBeenCalledTimes(0);
     });
-    it("handles the addition of new marskdownFile in existing folder", async () => {
+    it("handles the addition of new markdownFile in existing folder", async () => {
       mockGetDiffFromHead.mockResolvedValue(
         "knowledgeBase/compliance-reporting/adv-example-query-using-metadata.md"
       );
       mockDirectoryExists.mockReturnValue(true);
-
+      const mockGetAllArticleReturn: any[] = [];
       const createkCategoryReturn = { ...mockKCategory };
       mockCreateKnowledgeCategory.mockResolvedValue(createkCategoryReturn);
       mockGetKnowedgeCategories.mockResolvedValue([createkCategoryReturn]);
-      mockgetAllArticles.mockResolvedValue([]);
+
+      mockCreateArticle.mockResolvedValue({
+        name: "totally an article",
+        articleID: 99,
+      } as any);
+      mockgetAllArticles.mockResolvedValue(mockGetAllArticleReturn);
       await updateCommunityDocs();
       expect(mockCreateKnowledgeCategory).toHaveBeenCalledTimes(0);
       expect(mockCreateArticle).toHaveBeenCalledTimes(1);
       expect(mockEditArticle).toHaveBeenCalledTimes(0);
+
+      expect(mockUpdateArticleMarkdownReferences).toHaveBeenCalledTimes(1);
     });
     it("handles the deletion of a folder of existing KnowledgeCategory", async () => {
-      const mockArticleForDelete = { ...articleMock };
       mockGetDiffFromHead.mockResolvedValue(
         "knowledgeBase/compliance-reporting/adv-example-query-using-metadata.md"
       );
@@ -206,13 +225,16 @@ describe("Community docs", () => {
         name: "Compliance Reporting",
         knowledgeCategoryID: 88,
       } as VanillaKnowledgeCategory;
-
+      const mockGetAllArticlesReturn = [articleMock];
       mockGetKnowedgeCategories.mockResolvedValue([getCategoryResult]);
       mockDirectoryExists.mockReturnValue(false);
       mockMarkdownToString.mockResolvedValue(FLAG_FOR_DELETE);
       mockdeleteKnowledgeCategory.mockResolvedValue({} as any);
-      mockgetAllArticles.mockResolvedValue([articleMock]);
-      mockDeleteArticle.mockResolvedValue(mockArticleForDelete);
+      mockgetAllArticles.mockResolvedValue(mockGetAllArticlesReturn);
+      mockDeleteArticle.mockResolvedValue({
+        ...articleMock,
+        status: "deleted",
+      });
 
       await updateCommunityDocs();
       expect(mockDeleteArticle).toHaveBeenCalledTimes(1);
@@ -232,6 +254,7 @@ describe("Community docs", () => {
       expect(mockCreateKnowledgeCategory).toHaveBeenCalledTimes(0);
       expect(mockCreateArticle).toHaveBeenCalledTimes(0);
       expect(mockEditArticle).toHaveBeenCalledTimes(0);
+      expect(mockUpdateArticleMarkdownReferences).toHaveBeenCalledTimes(1);
     });
     it("handles the deletion of article", async () => {
       mockKCategoriesByPathSize.mockReturnValue(

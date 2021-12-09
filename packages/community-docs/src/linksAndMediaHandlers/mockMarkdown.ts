@@ -29,9 +29,11 @@ export const markdownAsStringWithInternalLinks = `
 Depending on the size of the uploaded file, the entities and relationships may not
 show up in the Inventory Table right away.  Hold tight!  JupiterOne is processing your
 data, and it will show up in your Inventory soon.
+[security cyber asset inventory](../asset-inventory-filters.md)
 After you import your data, you can analyze and visualize your complete 
 infrastructure and [security cyber asset inventory](asset-inventory-filters.md) using the J1 Assets app. 
 See [API doc](../jupiterone-api.md#entityandrelationshipsynchronization) for more details.
+Click ![](../assets/icons/gear.png)
 dimension of your digital universe. J1 provides [instructions](configure-integrations.md) on how 
 [10]: ../queries/common-qq-training.md
 [11]: ../queries/common-qq-endpoint.md
@@ -39,4 +41,14 @@ dimension of your digital universe. J1 provides [instructions](configure-integra
 [2]: ./jupiterone-api.md#entity-and-relationship-synchronization
 [1]: ../../docs/data-model/org-grc.md
 Learn more [here] (https://github.com/JupiterOne/docs/blob/main/docs/parameters.md#jupiterone-parameter-service). 
+`;
+export const markdownAsStringWithNOInternalLinks = `
+Depending on the size of the uploaded file, the entities and relationships may not
+show up in the Inventory Table right away.  Hold tight!  JupiterOne is processing your
+data, and it will show up in your Inventory soon.
+[security cyber asset inventory](../asset-inventory-filters.gif)
+After you import your data, you can analyze and visualize your complete 
+infrastructure and  using the J1 Assets app. for more details.
+Click ![](../assets/icons/gear.png)
+dimension of your digital universe. on how 
 `;

@@ -2,7 +2,7 @@ import HttpClient from "../httpClient";
 import {
   getMarkdownImageSrcs,
   isSupportedMediaType,
-  modifyBodyImageLink,
+  modifyBodyLink,
 } from "../linksAndMediaHandlers";
 import { Logger } from "../Logging";
 import { isArticleType, isKnowledgeCategoryType } from "../utils";
@@ -21,6 +21,7 @@ import {
   editArticle,
   getAllArticles,
   getKnowedgeCategories,
+  updateArticleMarkdownReferences,
   uploadImageAndReturnUrl,
 } from "../VanillaAPI";
 import { directoryExists, markdownToString } from "./utils";
@@ -97,7 +98,7 @@ export const uploadImagesAndAddToMarkdown = async (
   for (let i = 0; i < supportedImages.length; i++) {
     if (SHOULD_REALLY_UPLOAD_IMAGES) {
       const newLocation = await uploadImageAndReturnUrl(supportedImages[i]);
-      markdownTarget = modifyBodyImageLink(
+      markdownTarget = modifyBodyLink(
         markdownTarget,
         supportedImages[i],
         newLocation
@@ -151,6 +152,8 @@ export const procedureToArticle = async (
 
       if (createdArticle?.articleID) {
         return createdArticle;
+      } else {
+        return tempProcedureWorkedOn;
       }
     }
   } else {
@@ -382,27 +385,7 @@ export const useProceduresForVanillaRequests = async (
     existingknowledgeCategoryInfo
   );
 
-  // const hasDonePrevFromVanilla: (VanillaArticle | VanillaKnowledgeCategory)[] =
-  //   tempExistingKnowledgeCategoryInfo.filter((e) => {
-  //     return e.name === procedureWorkedOn?.name;
-  //   });
-  // const hasDonePrevFromCompletedProcedures: (
-  //   | VanillaArticle
-  //   | VanillaKnowledgeCategory
-  // )[] = tempCompletedProcedures.filter((e) => {
-  //   return e.name === procedureWorkedOn?.name;
-  // });
-
   if (isKnowledgeCategoryType(procedureWorkedOn)) {
-    // if (
-    //   hasDonePrevFromVanilla.length ||
-    //   hasDonePrevFromCompletedProcedures.length
-    // ) {
-    //   tempExistingKnowledgeCategoryInfo.push(procedureWorkedOn);
-    //   previousknowledgeCategoryID =
-    //     hasDonePrevFromVanilla[0].knowledgeCategoryID ||
-    //     hasDonePrevFromVanilla[0].knowledgeCategoryID;
-    // } else {
     procedureWorkedOn = await procedureToKnowledgeCategory(
       httpClient,
       procedureWorkedOn,
@@ -411,7 +394,6 @@ export const useProceduresForVanillaRequests = async (
     tempExistingKnowledgeCategoryInfo.push(procedureWorkedOn);
     previousknowledgeCategoryID = procedureWorkedOn.knowledgeCategoryID;
     tempProcedures[0].knowledgeCategoryID = previousknowledgeCategoryID;
-    // }
   }
   if (isArticleType(procedureWorkedOn)) {
     procedureWorkedOn = await procedureToArticle(
@@ -476,9 +458,24 @@ export const proceduresToVanillaRequests = async (
       deletableCategories
     );
     Logger.info(
-      `FINISHED WITH PROCEDURES: ${JSON.stringify(finishedProcedures, null, 2)}`
+      `PROCEDURES processed: ${JSON.stringify(finishedProcedures, null, 2)}`
     );
-    return finishedProcedures;
+
+    // articles need to be created so we can reference them.
+    const createdArticles: VanillaArticle[] = proceduresWithArticleInfo
+      .filter(isArticleType)
+      .filter((a) => a.status !== "deleted");
+    //createdArticles in first so match returns created over existing
+
+    const articlesUpdated = await updateArticleMarkdownReferences(
+      createdArticles,
+      articles,
+      httpClient
+    );
+    Logger.info(
+      `Updated Articles: ${JSON.stringify(articlesUpdated, null, 2)}`
+    );
+    return articlesUpdated;
   }
   Logger.info(`FINISHED WITH PROCEDURES: NONE`);
   return [];

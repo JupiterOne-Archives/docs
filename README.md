@@ -1,5 +1,18 @@
 # docs-community
 
+# Dos and Donts
+
+Dont name any two folders or markdown with the same name.
+
+- We currently match an article by its file name (after removing dashes/underscores and capitalizing) against what is being returned for the name of the article.
+
+Continue to reference other markdowns as if they lived in the same directory.
+
+- After merging these links get replaced with their location on vanilla forums.
+
+Example usage:
+` [2]: ./jupiterone-api.md#entity-and-relationship-synchronization [1]: ../../docs/data-model/org-grc.md Learn more [here] (https://github.com/JupiterOne/docs/blob/main/docs/parameters.md#jupiterone-parameter-service). [security cyber asset inventory](../asset-inventory-filters.md)`
+
 # Needs
 
 Token from vanilla to pass in when running locally.

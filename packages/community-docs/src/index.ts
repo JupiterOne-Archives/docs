@@ -5,7 +5,6 @@ import { getDiffFromHead } from "./gitDifference";
 import HttpClient from "./httpClient";
 import { Logger } from "./Logging";
 import { proceduresToVanillaRequests } from "./proceduresToVanillaRequests";
-// import { getAllSubChanges } from "./utils/common";
 import { PATH_OF_DIRECTORY_TO_WATCH } from "./utils/constants";
 import {
   deleteArticle,
