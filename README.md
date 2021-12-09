@@ -59,5 +59,3 @@ Deleting of categories handled last. As procedures information is mapped to actu
 Logging has been added (Logging.ts). This might not be the final solution but will write out error, info and debugging info into the info folders corresponding markdown files. If we change it later we just need to add the new tool to the abstraction layer in logging.ts.
 
 Test mocks may not be accurate on data structure but do check the behavior of their target functions.
-
-change
