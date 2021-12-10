@@ -1,6 +1,6 @@
 // name from the view point of changed files
 
-import { Logger } from "../Logging";
+import { logger } from "../logging";
 import { createDisplayName } from "../utils/common";
 import {
   ProcedureTypeEnum,
@@ -147,16 +147,16 @@ export const handleNestedKnowledgeCategoryChanges = (
 };
 
 export const diffToProcedures = (gitDiffArray: string[]) => {
-  Logger.info(`Diffs marked as changes: ${gitDiffArray}`);
+  logger.info(`Diffs marked as changes: ${gitDiffArray}`);
   const gitDiffWithOutDocs = filterDiffs(gitDiffArray);
-  Logger.info(`Filtered Diffs used to generate procedures: ${gitDiffArray}`);
+  logger.info(`Filtered Diffs used to generate procedures: ${gitDiffArray}`);
   if (gitDiffWithOutDocs && gitDiffWithOutDocs.length) {
     const { completed } = handleNestedKnowledgeCategoryChanges({
       nestedCategoryChanges: [...gitDiffWithOutDocs], // need to create a new array for each
       originalChangesArray: [...gitDiffWithOutDocs], // need to create a new array for each
       parentIndex: 0,
     });
-    Logger.info(`Procedures Generated`);
+    logger.info(`Procedures Generated`);
     return completed;
   }
   return [];

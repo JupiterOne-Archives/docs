@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosRequestHeaders } from "axios";
 import FormData from "form-data";
-import { Logger } from "./Logging";
+import { logger } from "./logging";
 import { KnowledgeCategory, VanillaArticle } from "./utils";
 import { Authorization, DEV_URL, REQUEST_DELAY } from "./utils/constants";
 enum RESTTypes {
@@ -115,7 +115,7 @@ export default class HttpClient {
     method: RESTTypes;
     options?: AxiosRequestConfig;
   }) {
-    Logger.info(
+    logger.info(
       `making debounced request to relativeUrl: ${relativeUrl} \n, method: ${method}\n`
     );
 
@@ -130,7 +130,7 @@ export default class HttpClient {
         })
         .catch((e) => {
           if (e?.response?.status === 403) {
-            Logger.error("Error from Vanilla Auth! Check the TOKEN");
+            logger.error("Error from Vanilla Auth! Check the TOKEN");
             return Promise.reject(e);
           } else {
             return Promise.reject(e);

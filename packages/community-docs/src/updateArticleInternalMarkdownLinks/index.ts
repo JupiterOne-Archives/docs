@@ -1,24 +1,63 @@
-import HttpClient from "../httpClient";
-import { Logger } from "../Logging";
-import { getAllArticles, getKnowedgeCategories } from "../VanillaAPI";
+import {
+  getArticleNameFromReference,
+  modifyBodyLink,
+} from "../linksAndMediaHandlers";
+import {
+  ArticleBreadCrumbs,
+  isArticleType,
+  VanillaArticle,
+  VanillaKnowledgeCategory,
+} from "../utils";
 
-export const updateArticleInternalMarkdownLinks = async () => {
-  const httpClient = new HttpClient();
-  const knowledgeCategories = await getKnowedgeCategories(httpClient);
+export const updateArticleInternalMarkdownLinks = (
+  proceduresActedUpon: (VanillaArticle | VanillaKnowledgeCategory)[],
+  articlesFromVanilla: VanillaArticle[]
+): VanillaArticle[] => {
+  const articlesToUseForSlugs: VanillaArticle[] = articlesFromVanilla || [];
 
-  Logger.info(`Getting Articles for body check`);
-  const articles = await getAllArticles(httpClient, knowledgeCategories);
+  const articleProcedures: VanillaArticle[] = proceduresActedUpon
+    .filter(isArticleType)
+    .filter((a) => a.referencesNeedingUpdatesInMarkdown?.length);
 
-  //createdArticles in first so match returns created over existing
+  const proceduresWithUpdatedBodies: VanillaArticle[] = [];
+  for (let i = 0; i < articleProcedures.length; i++) {
+    const articleUndergoingChanges = articleProcedures[i];
 
-  //   const articlesUpdated = await updateArticleMarkdownReferences(
-  //     createdArticles,
-  //     articles,
-  //     httpClient
-  //   );
+    if (
+      articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown?.length &&
+      articleUndergoingChanges.body !== null
+    ) {
+      const references =
+        articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown || [];
 
-  // articles need to be created so we can reference them.
+      references.forEach((ref) => {
+        const articleName = getArticleNameFromReference(ref);
+        const existingArticleMatches = [...articlesToUseForSlugs].filter(
+          (article) => {
+            return article.name === articleName;
+          }
+        );
+        const articleBreadcrumbs: ArticleBreadCrumbs[] =
+          existingArticleMatches[0]?.breadcrumbs || [];
+        const breadCrumbUrl = articleBreadcrumbs.length
+          ? articleBreadcrumbs[articleBreadcrumbs.length - 1].url
+          : "";
 
-  Logger.info(`Updated Articles: ${JSON.stringify(articles, null, 2)}`);
-  return articles;
+        if (
+          existingArticleMatches.length &&
+          articleUndergoingChanges.body !== null &&
+          breadCrumbUrl
+        ) {
+          articleUndergoingChanges.body = modifyBodyLink(
+            articleUndergoingChanges.body || "",
+            ref,
+            breadCrumbUrl
+          );
+        }
+      });
+    }
+    proceduresWithUpdatedBodies.push(articleUndergoingChanges);
+  }
+
+  return proceduresWithUpdatedBodies;
 };

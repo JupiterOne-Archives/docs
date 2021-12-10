@@ -1,11 +1,12 @@
+import { VanillaArticle } from "../utils";
 export const getAllArticlesReturn = [
   {
     articleID: 536,
-    articleRevisionID: 1512,
+
     knowledgeCategoryID: 304,
     knowledgeBaseID: 1,
     name: "Alert Rule",
-    seoName: null,
+
     seoDescription: null,
     slug: "536-alert-rule",
     sort: 0,
@@ -16,29 +17,16 @@ export const getAllArticlesReturn = [
     dateInserted: "2021-12-09T23:00:17+00:00",
     updateUserID: 12,
     dateUpdated: "2021-12-09T23:00:17+00:00",
-    insertUser: {
-      userID: 12,
-      name: "Carter Hesterman",
-      url: "https://jupiterone.vanillastaging.com/profile/Carter%20Hesterman",
-      photoUrl:
-        "https://w8.vanillicon.com/v2/89e33ddc07b00da9d5c485f42bf08d0a.svg",
-      dateLastActive: "2021-12-10T15:10:19+00:00",
-      banned: 0,
-      punished: 0,
-      private: false,
-      label: "admin",
-    },
-    updateUser: {
-      userID: 0,
-      name: "unknown",
-      url: "https://jupiterone.vanillastaging.com/profile/",
-      photoUrl:
-        "https://w3.vanillicon.com/v2/310b86e0b62b828562fc91c7be5380a9.svg",
-      dateLastActive: "2021-12-10T15:54:40+00:00",
-      banned: 0,
-      punished: 0,
-      private: false,
-    },
+    breadcrumbs: [
+      {
+        name: "JupiterOne Product Documentation",
+        url: "https://jupiterone.vanillastaging.com/kb/docs",
+      },
+      {
+        name: "Alert Rule",
+        url: "https://jupiterone.vanillastaging.com/kb/categories/305-alert-rule",
+      },
+    ],
     status: "published",
     locale: "en",
     featured: false,
@@ -48,11 +36,20 @@ export const getAllArticlesReturn = [
   },
   {
     articleID: 537,
-    articleRevisionID: 1513,
+
     knowledgeCategoryID: 304,
     knowledgeBaseID: 1,
     name: "Api Key Access",
-    seoName: null,
+    breadcrumbs: [
+      {
+        name: "JupiterOne Product Documentation",
+        url: "https://jupiterone.vanillastaging.com/kb/docs",
+      },
+      {
+        name: "API Key Access",
+        url: "https://jupiterone.vanillastaging.com/kb/categories/304-api-key-access",
+      },
+    ],
     seoDescription: null,
     slug: "537-api-key-access",
     sort: 0,
@@ -63,29 +60,7 @@ export const getAllArticlesReturn = [
     dateInserted: "2021-12-09T23:00:24+00:00",
     updateUserID: 12,
     dateUpdated: "2021-12-09T23:00:24+00:00",
-    insertUser: {
-      userID: 12,
-      name: "Carter Hesterman",
-      url: "https://jupiterone.vanillastaging.com/profile/Carter%20Hesterman",
-      photoUrl:
-        "https://w8.vanillicon.com/v2/89e33ddc07b00da9d5c485f42bf08d0a.svg",
-      dateLastActive: "2021-12-10T15:10:19+00:00",
-      banned: 0,
-      punished: 0,
-      private: false,
-      label: "admin",
-    },
-    updateUser: {
-      userID: 0,
-      name: "unknown",
-      url: "https://jupiterone.vanillastaging.com/profile/",
-      photoUrl:
-        "https://w3.vanillicon.com/v2/310b86e0b62b828562fc91c7be5380a9.svg",
-      dateLastActive: "2021-12-10T15:54:40+00:00",
-      banned: 0,
-      punished: 0,
-      private: false,
-    },
+
     status: "published",
     locale: "en",
     featured: false,
@@ -95,11 +70,20 @@ export const getAllArticlesReturn = [
   },
   {
     articleID: 538,
-    articleRevisionID: 1514,
+
     knowledgeCategoryID: 304,
     knowledgeBaseID: 1,
     name: "Bulk Upload",
-    seoName: null,
+    breadcrumbs: [
+      {
+        name: "JupiterOne Product Documentation",
+        url: "https://jupiterone.vanillastaging.com/kb/docs",
+      },
+      {
+        name: "Bulk Upload",
+        url: "https://jupiterone.vanillastaging.com/kb/categories/304-bulk-upload",
+      },
+    ],
     seoDescription: null,
     slug: "538-bulk-upload",
     sort: 0,
@@ -110,29 +94,7 @@ export const getAllArticlesReturn = [
     dateInserted: "2021-12-09T23:00:29+00:00",
     updateUserID: 12,
     dateUpdated: "2021-12-09T23:00:29+00:00",
-    insertUser: {
-      userID: 12,
-      name: "Carter Hesterman",
-      url: "https://jupiterone.vanillastaging.com/profile/Carter%20Hesterman",
-      photoUrl:
-        "https://w8.vanillicon.com/v2/89e33ddc07b00da9d5c485f42bf08d0a.svg",
-      dateLastActive: "2021-12-10T15:10:19+00:00",
-      banned: 0,
-      punished: 0,
-      private: false,
-      label: "admin",
-    },
-    updateUser: {
-      userID: 0,
-      name: "unknown",
-      url: "https://jupiterone.vanillastaging.com/profile/",
-      photoUrl:
-        "https://w3.vanillicon.com/v2/310b86e0b62b828562fc91c7be5380a9.svg",
-      dateLastActive: "2021-12-10T15:54:40+00:00",
-      banned: 0,
-      punished: 0,
-      private: false,
-    },
+
     status: "published",
     locale: "en",
     featured: false,
@@ -142,11 +104,11 @@ export const getAllArticlesReturn = [
   },
   {
     articleID: 539,
-    articleRevisionID: 1515,
+
     knowledgeCategoryID: 304,
     knowledgeBaseID: 1,
     name: "Common Qq Aws Permissions",
-    seoName: null,
+
     seoDescription: null,
     slug: "539-common-qq-aws-permissions",
     sort: 0,
@@ -157,29 +119,7 @@ export const getAllArticlesReturn = [
     dateInserted: "2021-12-09T23:00:34+00:00",
     updateUserID: 12,
     dateUpdated: "2021-12-09T23:00:34+00:00",
-    insertUser: {
-      userID: 12,
-      name: "Carter Hesterman",
-      url: "https://jupiterone.vanillastaging.com/profile/Carter%20Hesterman",
-      photoUrl:
-        "https://w8.vanillicon.com/v2/89e33ddc07b00da9d5c485f42bf08d0a.svg",
-      dateLastActive: "2021-12-10T15:10:19+00:00",
-      banned: 0,
-      punished: 0,
-      private: false,
-      label: "admin",
-    },
-    updateUser: {
-      userID: 0,
-      name: "unknown",
-      url: "https://jupiterone.vanillastaging.com/profile/",
-      photoUrl:
-        "https://w3.vanillicon.com/v2/310b86e0b62b828562fc91c7be5380a9.svg",
-      dateLastActive: "2021-12-10T15:54:40+00:00",
-      banned: 0,
-      punished: 0,
-      private: false,
-    },
+
     status: "published",
     locale: "en",
     featured: false,
@@ -189,11 +129,20 @@ export const getAllArticlesReturn = [
   },
   {
     articleID: 540,
-    articleRevisionID: 1516,
+
     knowledgeCategoryID: 304,
     knowledgeBaseID: 1,
     name: "Configure Sso Integration",
-    seoName: null,
+    breadcrumbs: [
+      {
+        name: "JupiterOne Product Documentation",
+        url: "https://jupiterone.vanillastaging.com/kb/docs",
+      },
+      {
+        name: "Bulk Upload",
+        url: "https://jupiterone.vanillastaging.com/kb/categories/304-configure-sso-integration",
+      },
+    ],
     seoDescription: null,
     slug: "540-configure-sso-integration",
     sort: 0,
@@ -204,29 +153,7 @@ export const getAllArticlesReturn = [
     dateInserted: "2021-12-09T23:00:51+00:00",
     updateUserID: 12,
     dateUpdated: "2021-12-09T23:00:52+00:00",
-    insertUser: {
-      userID: 12,
-      name: "Carter Hesterman",
-      url: "https://jupiterone.vanillastaging.com/profile/Carter%20Hesterman",
-      photoUrl:
-        "https://w8.vanillicon.com/v2/89e33ddc07b00da9d5c485f42bf08d0a.svg",
-      dateLastActive: "2021-12-10T15:10:19+00:00",
-      banned: 0,
-      punished: 0,
-      private: false,
-      label: "admin",
-    },
-    updateUser: {
-      userID: 0,
-      name: "unknown",
-      url: "https://jupiterone.vanillastaging.com/profile/",
-      photoUrl:
-        "https://w3.vanillicon.com/v2/310b86e0b62b828562fc91c7be5380a9.svg",
-      dateLastActive: "2021-12-10T15:54:40+00:00",
-      banned: 0,
-      punished: 0,
-      private: false,
-    },
+
     status: "published",
     locale: "en",
     featured: false,
@@ -236,11 +163,20 @@ export const getAllArticlesReturn = [
   },
   {
     articleID: 541,
-    articleRevisionID: 1517,
+
     knowledgeCategoryID: 304,
     knowledgeBaseID: 1,
     name: "Faqs Aws",
-    seoName: null,
+    breadcrumbs: [
+      {
+        name: "JupiterOne Product Documentation",
+        url: "https://jupiterone.vanillastaging.com/kb/docs",
+      },
+      {
+        name: "Faqs Aws",
+        url: "https://jupiterone.vanillastaging.com/kb/categories/304-faqs-aws",
+      },
+    ],
     seoDescription: null,
     slug: "541-faqs-aws",
     sort: 0,
@@ -251,29 +187,7 @@ export const getAllArticlesReturn = [
     dateInserted: "2021-12-09T23:00:57+00:00",
     updateUserID: 12,
     dateUpdated: "2021-12-09T23:00:57+00:00",
-    insertUser: {
-      userID: 12,
-      name: "Carter Hesterman",
-      url: "https://jupiterone.vanillastaging.com/profile/Carter%20Hesterman",
-      photoUrl:
-        "https://w8.vanillicon.com/v2/89e33ddc07b00da9d5c485f42bf08d0a.svg",
-      dateLastActive: "2021-12-10T15:10:19+00:00",
-      banned: 0,
-      punished: 0,
-      private: false,
-      label: "admin",
-    },
-    updateUser: {
-      userID: 0,
-      name: "unknown",
-      url: "https://jupiterone.vanillastaging.com/profile/",
-      photoUrl:
-        "https://w3.vanillicon.com/v2/310b86e0b62b828562fc91c7be5380a9.svg",
-      dateLastActive: "2021-12-10T15:54:40+00:00",
-      banned: 0,
-      punished: 0,
-      private: false,
-    },
+
     status: "published",
     locale: "en",
     featured: false,
@@ -283,11 +197,20 @@ export const getAllArticlesReturn = [
   },
   {
     articleID: 542,
-    articleRevisionID: 1518,
+
     knowledgeCategoryID: 304,
     knowledgeBaseID: 1,
-    name: "Faqs Integrations",
-    seoName: null,
+    name: "Faq Integrations",
+    breadcrumbs: [
+      {
+        name: "JupiterOne Product Documentation",
+        url: "https://jupiterone.vanillastaging.com/kb/docs",
+      },
+      {
+        name: "FAQ Integrations",
+        url: "https://jupiterone.vanillastaging.com/kb/categories/304-faq-integrations",
+      },
+    ],
     seoDescription: null,
     slug: "542-faqs-integrations",
     sort: 0,
@@ -298,29 +221,7 @@ export const getAllArticlesReturn = [
     dateInserted: "2021-12-09T23:01:02+00:00",
     updateUserID: 12,
     dateUpdated: "2021-12-09T23:01:02+00:00",
-    insertUser: {
-      userID: 12,
-      name: "Carter Hesterman",
-      url: "https://jupiterone.vanillastaging.com/profile/Carter%20Hesterman",
-      photoUrl:
-        "https://w8.vanillicon.com/v2/89e33ddc07b00da9d5c485f42bf08d0a.svg",
-      dateLastActive: "2021-12-10T15:10:19+00:00",
-      banned: 0,
-      punished: 0,
-      private: false,
-      label: "admin",
-    },
-    updateUser: {
-      userID: 0,
-      name: "unknown",
-      url: "https://jupiterone.vanillastaging.com/profile/",
-      photoUrl:
-        "https://w3.vanillicon.com/v2/310b86e0b62b828562fc91c7be5380a9.svg",
-      dateLastActive: "2021-12-10T15:54:40+00:00",
-      banned: 0,
-      punished: 0,
-      private: false,
-    },
+
     status: "published",
     locale: "en",
     featured: false,
@@ -330,11 +231,20 @@ export const getAllArticlesReturn = [
   },
   {
     articleID: 543,
-    articleRevisionID: 1519,
+
     knowledgeCategoryID: 304,
     knowledgeBaseID: 1,
     name: "Integrations Roadmap",
-    seoName: null,
+    breadcrumbs: [
+      {
+        name: "JupiterOne Product Documentation",
+        url: "https://jupiterone.vanillastaging.com/kb/docs",
+      },
+      {
+        name: "FAQ Integrations",
+        url: "https://jupiterone.vanillastaging.com/kb/categories/304-integrations-roadmap",
+      },
+    ],
     seoDescription: null,
     slug: "543-integrations-roadmap",
     sort: 0,
@@ -345,29 +255,7 @@ export const getAllArticlesReturn = [
     dateInserted: "2021-12-09T23:01:07+00:00",
     updateUserID: 12,
     dateUpdated: "2021-12-09T23:01:07+00:00",
-    insertUser: {
-      userID: 12,
-      name: "Carter Hesterman",
-      url: "https://jupiterone.vanillastaging.com/profile/Carter%20Hesterman",
-      photoUrl:
-        "https://w8.vanillicon.com/v2/89e33ddc07b00da9d5c485f42bf08d0a.svg",
-      dateLastActive: "2021-12-10T15:10:19+00:00",
-      banned: 0,
-      punished: 0,
-      private: false,
-      label: "admin",
-    },
-    updateUser: {
-      userID: 0,
-      name: "unknown",
-      url: "https://jupiterone.vanillastaging.com/profile/",
-      photoUrl:
-        "https://w3.vanillicon.com/v2/310b86e0b62b828562fc91c7be5380a9.svg",
-      dateLastActive: "2021-12-10T15:54:40+00:00",
-      banned: 0,
-      punished: 0,
-      private: false,
-    },
+
     status: "published",
     locale: "en",
     featured: false,
@@ -377,11 +265,11 @@ export const getAllArticlesReturn = [
   },
   {
     articleID: 544,
-    articleRevisionID: 1520,
+
     knowledgeCategoryID: 304,
     knowledgeBaseID: 1,
     name: "J1 Aws Threat Monitoring",
-    seoName: null,
+
     seoDescription: null,
     slug: "544-j1-aws-threat-monitoring",
     sort: 0,
@@ -392,29 +280,7 @@ export const getAllArticlesReturn = [
     dateInserted: "2021-12-09T23:01:14+00:00",
     updateUserID: 12,
     dateUpdated: "2021-12-09T23:01:14+00:00",
-    insertUser: {
-      userID: 12,
-      name: "Carter Hesterman",
-      url: "https://jupiterone.vanillastaging.com/profile/Carter%20Hesterman",
-      photoUrl:
-        "https://w8.vanillicon.com/v2/89e33ddc07b00da9d5c485f42bf08d0a.svg",
-      dateLastActive: "2021-12-10T15:10:19+00:00",
-      banned: 0,
-      punished: 0,
-      private: false,
-      label: "admin",
-    },
-    updateUser: {
-      userID: 0,
-      name: "unknown",
-      url: "https://jupiterone.vanillastaging.com/profile/",
-      photoUrl:
-        "https://w3.vanillicon.com/v2/310b86e0b62b828562fc91c7be5380a9.svg",
-      dateLastActive: "2021-12-10T15:54:40+00:00",
-      banned: 0,
-      punished: 0,
-      private: false,
-    },
+
     status: "published",
     locale: "en",
     featured: false,
@@ -424,11 +290,11 @@ export const getAllArticlesReturn = [
   },
   {
     articleID: 545,
-    articleRevisionID: 1521,
+
     knowledgeCategoryID: 304,
     knowledgeBaseID: 1,
     name: "J1 Client And Cli",
-    seoName: null,
+
     seoDescription: null,
     slug: "545-j1-client-and-cli",
     sort: 0,
@@ -439,29 +305,7 @@ export const getAllArticlesReturn = [
     dateInserted: "2021-12-09T23:01:19+00:00",
     updateUserID: 12,
     dateUpdated: "2021-12-09T23:01:19+00:00",
-    insertUser: {
-      userID: 12,
-      name: "Carter Hesterman",
-      url: "https://jupiterone.vanillastaging.com/profile/Carter%20Hesterman",
-      photoUrl:
-        "https://w8.vanillicon.com/v2/89e33ddc07b00da9d5c485f42bf08d0a.svg",
-      dateLastActive: "2021-12-10T15:10:19+00:00",
-      banned: 0,
-      punished: 0,
-      private: false,
-      label: "admin",
-    },
-    updateUser: {
-      userID: 0,
-      name: "unknown",
-      url: "https://jupiterone.vanillastaging.com/profile/",
-      photoUrl:
-        "https://w3.vanillicon.com/v2/310b86e0b62b828562fc91c7be5380a9.svg",
-      dateLastActive: "2021-12-10T15:54:40+00:00",
-      banned: 0,
-      punished: 0,
-      private: false,
-    },
+
     status: "published",
     locale: "en",
     featured: false,
@@ -469,4 +313,4 @@ export const getAllArticlesReturn = [
     foreignID: null,
     procedureType: "Article",
   },
-];
+] as VanillaArticle[];

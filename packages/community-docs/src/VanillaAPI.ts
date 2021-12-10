@@ -2,8 +2,8 @@ import FormData from "form-data";
 import fs from "fs";
 import path from "path";
 import HttpClient from "./httpClient";
-import { replaceMarkdownReferencesWithVanillaSlugs } from "./linksAndMediaHandlers";
-import { Logger } from "./Logging";
+import { getFullMarkdownReferencePathMatches } from "./linksAndMediaHandlers";
+import { logger } from "./logging";
 import { kCategoriesByPathSize } from "./proceduresToVanillaRequests/utils";
 import {
   FLAG_FOR_DELETE,
@@ -64,7 +64,7 @@ export const getArticles = async (
       }));
     }
   } catch (e) {
-    Logger.error(`getArticles error: ${JSON.stringify(e)}`);
+    logger.error(`getArticles error: ${JSON.stringify(e)}`);
   }
 
   return [];
@@ -132,7 +132,7 @@ export const getKnowedgeCategories = async (
       });
     }
   } catch (error) {
-    Logger.error(`getKnowedgeCategories error: ${JSON.stringify(error)}`);
+    logger.error(`getKnowedgeCategories error: ${JSON.stringify(error)}`);
   }
 
   if (areMorePagesTemp) {
@@ -167,7 +167,7 @@ export const createKnowledgeCategory = async (
       };
     }
   } catch (e) {
-    Logger.error(`createKnowledgeCategory error: ${JSON.stringify(e)}`);
+    logger.error(`createKnowledgeCategory error: ${JSON.stringify(e)}`);
   }
 };
 
@@ -191,7 +191,7 @@ export const editKnowledgeCategory = async (
       };
     }
   } catch (e) {
-    Logger.error(`editKnowledgeCategory error: ${JSON.stringify(e)}`);
+    logger.error(`editKnowledgeCategory error: ${JSON.stringify(e)}`);
   }
 };
 
@@ -207,7 +207,7 @@ export const deleteKnowledgeCategory = async (
     );
     tempKnowledgeCategory.description = "been deleted";
   } catch (e) {
-    Logger.error(`deleteKnowledgeCategory error: ${JSON.stringify(e)}`);
+    logger.error(`deleteKnowledgeCategory error: ${JSON.stringify(e)}`);
     return tempKnowledgeCategory;
   }
 
@@ -300,10 +300,24 @@ export const createArticle = async (
     };
 
     if (!isErrorType(article.data)) {
+      if (article.data.body !== null) {
+        const referencesNeedingUpdatesInMarkdown =
+          getFullMarkdownReferencePathMatches(article.data.body);
+        if (
+          referencesNeedingUpdatesInMarkdown &&
+          referencesNeedingUpdatesInMarkdown.length
+        ) {
+          return {
+            ...article.data,
+            referencesNeedingUpdatesInMarkdown,
+            procedureType: ProcedureTypeEnum.Article,
+          };
+        }
+      }
       return { ...article.data, procedureType: ProcedureTypeEnum.Article };
     }
   } catch (e) {
-    Logger.error(`createArticle error: ${JSON.stringify(e)}`);
+    logger.error(`createArticle error: ${JSON.stringify(e)}`);
   }
 };
 
@@ -326,7 +340,7 @@ export const deleteArticle = async (
       return { ...article.data, procedureType: ProcedureTypeEnum.Article };
     }
   } catch (e) {
-    Logger.error(`deleteArticle error: ${JSON.stringify(e)}`);
+    logger.error(`deleteArticle error: ${JSON.stringify(e)}`);
   }
 };
 
@@ -344,41 +358,55 @@ export const editArticle = async (
     };
 
     if (!isErrorType(article.data)) {
+      if (article.data.body !== null) {
+        const referencesNeedingUpdatesInMarkdown =
+          getFullMarkdownReferencePathMatches(article.data.body);
+        if (
+          referencesNeedingUpdatesInMarkdown &&
+          referencesNeedingUpdatesInMarkdown.length
+        ) {
+          return {
+            ...article.data,
+            referencesNeedingUpdatesInMarkdown,
+            procedureType: ProcedureTypeEnum.Article,
+          };
+        }
+      }
       return { ...article.data, procedureType: ProcedureTypeEnum.Article };
     }
   } catch (e) {
-    Logger.error(`editArticle error: ${JSON.stringify(e)}`);
+    logger.error(`editArticle error: ${JSON.stringify(e)}`);
   }
 };
 
-export const updateArticleMarkdownReferences = async (
-  createdArticles: VanillaArticle[],
-  initalArticlesFromVanillaApi: VanillaArticle[],
-  client: HttpClient
-) => {
-  const combinationOfOldAndNew = [
-    ...createdArticles,
-    ...initalArticlesFromVanillaApi,
-  ];
-  const handledArticles = [];
-  for (let a = 0; a < createdArticles.length; a++) {
-    const { articleID } = createdArticles[a];
-    const articleBody = replaceMarkdownReferencesWithVanillaSlugs(
-      `${createdArticles[a].body}`,
-      combinationOfOldAndNew
-    );
-    if (articleBody !== createdArticles[a].body && articleID !== null) {
-      const editResponse = await editArticle(client, articleID, {
-        body: articleBody,
-      });
-      if (editResponse) {
-        handledArticles.push(editResponse);
-      }
-    }
-  }
-  return handledArticles;
-  // edit article format:"markdown",body:newbody
-};
+// export const updateArticleMarkdownReferences = async (
+//   createdArticles: VanillaArticle[],
+//   initalArticlesFromVanillaApi: VanillaArticle[],
+//   client: HttpClient
+// ) => {
+//   const combinationOfOldAndNew = [
+//     ...createdArticles,
+//     ...initalArticlesFromVanillaApi,
+//   ];
+//   const handledArticles = [];
+//   for (let a = 0; a < createdArticles.length; a++) {
+//     const { articleID } = createdArticles[a];
+//     const articleBody = replaceMarkdownReferencesWithVanillaSlugs(
+//       `${createdArticles[a].body}`,
+//       combinationOfOldAndNew
+//     );
+//     if (articleBody !== createdArticles[a].body && articleID !== null) {
+//       const editResponse = await editArticle(client, articleID, {
+//         body: articleBody,
+//       });
+//       if (editResponse) {
+//         handledArticles.push(editResponse);
+//       }
+//     }
+//   }
+//   return handledArticles;
+//   // edit article format:"markdown",body:newbody
+// };
 
 export const postImage = async (client: HttpClient, data: FormData) => {
   try {
@@ -390,7 +418,7 @@ export const postImage = async (client: HttpClient, data: FormData) => {
       return image.data;
     }
   } catch (error) {
-    Logger.error(
+    logger.error(
       `postImageError:\n${JSON.stringify(data)} error: ${JSON.stringify(error)}`
     );
   }
@@ -420,7 +448,7 @@ export const uploadImageAndReturnUrl = async (
       return postImageResponse.url;
     }
   } catch (e) {
-    Logger.error(
+    logger.error(
       `uploadImageAndReturnUrl: file does not exist (${fileLocation})\n error: ${JSON.stringify(
         e
       )}`

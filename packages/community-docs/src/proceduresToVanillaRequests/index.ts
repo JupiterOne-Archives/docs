@@ -4,7 +4,8 @@ import {
   isSupportedMediaType,
   modifyBodyLink,
 } from "../linksAndMediaHandlers";
-import { Logger } from "../Logging";
+import { logger } from "../logging";
+import { updateArticleInternalMarkdownLinks } from "../updateArticleInternalMarkdownLinks";
 import { isArticleType, isKnowledgeCategoryType } from "../utils";
 import { createDisplayName } from "../utils/common";
 import {
@@ -71,7 +72,7 @@ export const addVanillaArticlesToProcedures = (
   procedures: (VanillaArticle | VanillaKnowledgeCategory)[],
   vanillaArticles: VanillaArticle[]
 ) => {
-  Logger.info(`Adding vanilla article information to procedures`);
+  logger.info(`Adding vanilla article information to procedures`);
 
   return procedures.map((p) => {
     if (isArticleType(p)) {
@@ -91,7 +92,7 @@ export const uploadImagesAndAddToMarkdown = async (
   imageSrcArray: string[],
   markdownAsString: string
 ) => {
-  Logger.info(`Uploading and adding images: ${imageSrcArray}`);
+  logger.info(`Uploading and adding images: ${imageSrcArray}`);
   let markdownTarget = markdownAsString;
   const supportedImages = imageSrcArray.filter((m) => isSupportedMediaType(m));
   for (let i = 0; i < supportedImages.length; i++) {
@@ -251,7 +252,7 @@ export const removeDeletedCategories = async (
   httpClient: HttpClient,
   procedures: (VanillaArticle | VanillaKnowledgeCategory)[]
 ) => {
-  Logger.info(
+  logger.info(
     `Removing deleted categories${JSON.stringify(procedures, null, 2)}`
   );
 
@@ -418,17 +419,17 @@ export const proceduresToVanillaRequests = async (
 ) => {
   if (procedures && procedures.length) {
     const httpClient = new HttpClient();
-    Logger.info(`Getting knowledgeCategories`);
+    logger.info(`Getting knowledgeCategories`);
     const existingknowledgeCategoryInfo = await getKnowedgeCategories(
       httpClient
     );
-    Logger.info(`Getting Articles`);
+    logger.info(`Getting Articles`);
     const articles = await getAllArticles(
       httpClient,
       existingknowledgeCategoryInfo
     );
 
-    Logger.info(`Mapping Vanilla responses to procedures`);
+    logger.info(`Mapping Vanilla responses to procedures`);
     const proceduresWithVanillaCategories = procedures.map((p) => {
       if (isKnowledgeCategoryType(p)) {
         return addVanillaCategoryToProcedure(p, existingknowledgeCategoryInfo);
@@ -447,7 +448,7 @@ export const proceduresToVanillaRequests = async (
         httpClient,
         existingknowledgeCategoryInfo
       );
-    Logger.info(
+    logger.info(
       `proceduresNeedingDeleteCategories: ${JSON.stringify(
         proceduresNeedingDeleteCategories,
         null,
@@ -462,11 +463,21 @@ export const proceduresToVanillaRequests = async (
       httpClient,
       deletableCategories
     );
-    Logger.info(
+    logger.info(
       `PROCEDURES processed: ${JSON.stringify(finishedProcedures, null, 2)}`
     );
+    const combinationOfArticlesAndProcedures = [
+      ...finishedProcedures,
+      ...articles,
+    ].filter(isArticleType);
+    const articlesNeedingLinkUpdates = updateArticleInternalMarkdownLinks(
+      finishedProcedures,
+      combinationOfArticlesAndProcedures
+    );
+    console.log(JSON.stringify(articlesNeedingLinkUpdates, null, 2));
+
     return finishedProcedures;
   }
-  Logger.info(`FINISHED WITH PROCEDURES: NONE`);
+  logger.info(`FINISHED WITH PROCEDURES: NONE`);
   return [];
 };
