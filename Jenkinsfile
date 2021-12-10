@@ -23,7 +23,7 @@ pipeline {
         sh 'yarn bundle'
 
         sh 'jupiterone-build'
- withCredentials([
+     withCredentials([
               string(credentialsId: 'VANILLIA_STAGING_ENV_TOKEN', variable: 'TOKEN')
                 ]) {
                   sh '''

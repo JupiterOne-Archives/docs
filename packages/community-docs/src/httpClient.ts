@@ -116,7 +116,7 @@ export default class HttpClient {
     options?: AxiosRequestConfig;
   }) {
     Logger.info(
-      `making debounced request to relativeUrl:${relativeUrl}\n, method: ${method}\n`
+      `making debounced request to relativeUrl: ${relativeUrl} \n, method: ${method}\n`
     );
 
     return this.debounceRequests(
