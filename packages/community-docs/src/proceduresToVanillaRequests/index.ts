@@ -447,7 +447,13 @@ export const proceduresToVanillaRequests = async (
         httpClient,
         existingknowledgeCategoryInfo
       );
-
+    Logger.info(
+      `proceduresNeedingDeleteCategories: ${JSON.stringify(
+        proceduresNeedingDeleteCategories,
+        null,
+        2
+      )}`
+    );
     const deletableCategories = proceduresNeedingDeleteCategories
       .filter(isKnowledgeCategoryType)
       .filter((c) => c.description === FLAG_FOR_DELETE);
