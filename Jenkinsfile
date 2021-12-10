@@ -35,7 +35,11 @@ pipeline {
     }
 
     stage("Deploy") {
-      when { branch "main" }
+      when {
+        beforeAgent true
+        branch 'main' 
+        }
+      
       agent { label 'ecs-builder-node14' }
       steps {
          initBuild()

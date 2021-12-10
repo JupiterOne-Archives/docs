@@ -474,7 +474,10 @@ export const proceduresToVanillaRequests = async (
       finishedProcedures,
       combinationOfArticlesAndProcedures
     );
-    console.log(JSON.stringify(articlesNeedingLinkUpdates, null, 2));
+    console.log(
+      "articlesNeedingLinkUpdates",
+      JSON.stringify(articlesNeedingLinkUpdates, null, 2)
+    );
 
     return finishedProcedures;
   }
