@@ -1,11 +1,11 @@
-import { updateCommunityDocsWithPathOverride } from "./";
+import { updateCommunityDocs } from "./";
 // import {updateArticleInternalMarkdownLinks} from './linksAndMediaHandlers/updateArticleInternalMarkdownLinks'
 import { Logger } from "./Logging";
 
 const updateCommunityDocsByMergeChanges = async () => {
   try {
     Logger.info("Starting updateCommunityDocs");
-    const completed = await updateCommunityDocsWithPathOverride();
+    const completed = await updateCommunityDocs();
 
     Logger.info(
       `UpdateCommunityDocs completed: ${JSON.stringify(completed, null, 2)}`
