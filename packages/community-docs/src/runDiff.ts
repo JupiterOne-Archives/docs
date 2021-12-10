@@ -1,10 +1,11 @@
-import { updateVanillaWithDirectoryToWatch } from "./";
+// import { updateCommunityDocs } from "./";
+import { updateArticleInternalMarkdownLinks } from "./linksAndMediaHandlers/updateArticleInternalMarkdownLinks";
 import { Logger } from "./Logging";
 
 const getDiffAndReportIssues = async () => {
   try {
     Logger.info("Starting updateCommunityDocs");
-    const completed = await updateVanillaWithDirectoryToWatch();
+    const completed = await updateArticleInternalMarkdownLinks();
 
     Logger.info(`UpdateCommunityDocs completed: ${completed}`);
   } catch (error) {

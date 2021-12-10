@@ -21,7 +21,6 @@ import {
   editArticle,
   getAllArticles,
   getKnowedgeCategories,
-  updateArticleMarkdownReferences,
   uploadImageAndReturnUrl,
 } from "../VanillaAPI";
 import { directoryExists, markdownToString } from "./utils";
@@ -460,22 +459,7 @@ export const proceduresToVanillaRequests = async (
     Logger.info(
       `PROCEDURES processed: ${JSON.stringify(finishedProcedures, null, 2)}`
     );
-
-    // articles need to be created so we can reference them.
-    const createdArticles: VanillaArticle[] = proceduresWithArticleInfo
-      .filter(isArticleType)
-      .filter((a) => a.status !== "deleted");
-    //createdArticles in first so match returns created over existing
-
-    const articlesUpdated = await updateArticleMarkdownReferences(
-      createdArticles,
-      articles,
-      httpClient
-    );
-    Logger.info(
-      `Updated Articles: ${JSON.stringify(articlesUpdated, null, 2)}`
-    );
-    return articlesUpdated;
+    return finishedProcedures;
   }
   Logger.info(`FINISHED WITH PROCEDURES: NONE`);
   return [];
