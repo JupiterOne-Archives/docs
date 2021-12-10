@@ -122,9 +122,15 @@ export interface VanillaArticle {
   foreignID?: string | null;
   sort?: number;
   knowledgeBaseID?: number;
+  breadcrumbs?: ArticleBreadCrumbs[];
   // things we have added
   path?: string;
   fileName: null | string;
   requestCompleted?: boolean;
   procedureType: ProcedureTypeEnum;
+  referencesNeedingUpdatesInMarkdown?: string[];
+}
+export interface ArticleBreadCrumbs {
+  name: string;
+  url: string;
 }

@@ -1,7 +1,7 @@
 import { VanillaArticle } from "../utils";
 import {
-  fullMarkdownReferencePath,
   getArticleNameFromReference,
+  getFullMarkdownReferencePathMatches,
   getMarkdownImageSrcs,
   isSupportedMediaType,
   modifyBodyLink,
@@ -15,6 +15,7 @@ import {
   markdownAsStringNOImages,
   markdownAsStringWithInternalLinks,
   markdownAsStringWithNOInternalLinks,
+  x,
 } from "./mockMarkdown";
 describe("linksAndMediaHandlers", () => {
   describe("getMarkdownImageSrcs", () => {
@@ -67,10 +68,10 @@ describe("linksAndMediaHandlers", () => {
     });
   });
 
-  describe("fullMarkdownReferencePath", () => {
+  describe("getFullMarkdownReferencePathMatches", () => {
     it("returns empty array when no links found", () => {
       const expected: string[] = [];
-      const actual = fullMarkdownReferencePath("");
+      const actual = getFullMarkdownReferencePathMatches("");
       expect(actual).toEqual(expected);
     });
     it("returns matches on MARKDOWN_REGEX_FULL_MARKDOWN_PATH", () => {
@@ -86,9 +87,10 @@ describe("linksAndMediaHandlers", () => {
         "../../docs/data-model/org-grc.md",
         "https://github.com/JupiterOne/docs/blob/main/docs/parameters.md",
       ];
-      const actual = fullMarkdownReferencePath(
+      const actual = getFullMarkdownReferencePathMatches(
         markdownAsStringWithInternalLinks
       );
+      console.log("jsjsjsjs", getFullMarkdownReferencePathMatches(x));
       expect(actual).toEqual(expected);
     });
   });

@@ -45,7 +45,7 @@ export const getMarkdownImageSrcs = (markdownAsString: string): string[] => {
   return matches.map((m) => m.substring(2, m.length - 1));
 };
 
-export const fullMarkdownReferencePath = (
+export const getFullMarkdownReferencePathMatches = (
   markdownAsString: string
 ): string[] => {
   const markdownAssetRegularExpression = new RegExp(
@@ -62,6 +62,7 @@ export const fullMarkdownReferencePath = (
   }
   return matches;
 };
+
 export const getArticleNameFromReference = (match: string): string => {
   const split = match.split("/");
   if (match === "") {
@@ -80,7 +81,7 @@ export const replaceMarkdownReferencesWithVanillaSlugs = (
   allArticles: VanillaArticle[]
 ) => {
   let markdownAsStringTarget: string = `${markdownAsAString}`;
-  const matches = fullMarkdownReferencePath(markdownAsStringTarget);
+  const matches = getFullMarkdownReferencePathMatches(markdownAsStringTarget);
 
   if (matches.length) {
     matches.forEach((m) => {

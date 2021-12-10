@@ -1,5 +1,5 @@
 import simpleGit, { SimpleGit } from "simple-git/promise";
-import { Logger } from "../Logging";
+import { logger } from "../logging";
 export const getDiffFromHead: () => Promise<string> = async () => {
   let diff = "";
   try {
@@ -10,7 +10,7 @@ export const getDiffFromHead: () => Promise<string> = async () => {
       diff = resolvedDiff;
     }
   } catch (e) {
-    Logger.error(`failure on simplegit,\n ${JSON.stringify(e)}`);
+    logger.error(`failure on simplegit,\n ${JSON.stringify(e)}`);
     throw new Error("failure on simplegit");
   }
   return diff;
