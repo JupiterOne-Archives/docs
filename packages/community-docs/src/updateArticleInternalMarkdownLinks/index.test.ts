@@ -1,4 +1,3 @@
-// jest.mock('../logging')
 import { getAllArticlesReturn } from "../mocks/articles";
 import { completedProcedures } from "../mocks/procedures";
 import { updateArticleInternalMarkdownLinks } from "./";
