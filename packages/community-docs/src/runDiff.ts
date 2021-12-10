@@ -1,15 +1,17 @@
-// import { updateCommunityDocs } from "./";
-import { updateArticleInternalMarkdownLinks } from "./linksAndMediaHandlers/updateArticleInternalMarkdownLinks";
+import { updateCommunityDocsWithPathOverride } from "./";
+// import {updateArticleInternalMarkdownLinks} from './linksAndMediaHandlers/updateArticleInternalMarkdownLinks'
 import { Logger } from "./Logging";
 
-const getDiffAndReportIssues = async () => {
+const updateCommunityDocsByMergeChanges = async () => {
   try {
     Logger.info("Starting updateCommunityDocs");
-    const completed = await updateArticleInternalMarkdownLinks();
+    const completed = await updateCommunityDocsWithPathOverride();
 
-    Logger.info(`UpdateCommunityDocs completed: ${completed}`);
+    Logger.info(
+      `UpdateCommunityDocs completed: ${JSON.stringify(completed, null, 2)}`
+    );
   } catch (error) {
     Logger.error(`UpdateCommunityDocs Errored: \n ${JSON.stringify(error)}`);
   }
 };
-export default getDiffAndReportIssues();
+export default updateCommunityDocsByMergeChanges();
