@@ -465,10 +465,6 @@ export const proceduresToVanillaRequests = async (
       [...proceduresNeedingDeleteCategories],
       combinationOfArticlesAndProcedures
     );
-    console.log(
-      "articlesNeedingLinkUpdates",
-      JSON.stringify(articlesNeedingLinkUpdates, null, 2)
-    );
 
     const updatesToInternalLinks = await updateArticleMarkdownReferences(
       articlesNeedingLinkUpdates,

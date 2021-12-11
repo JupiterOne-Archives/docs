@@ -15,7 +15,6 @@ import {
   markdownAsStringNOImages,
   markdownAsStringWithInternalLinks,
   markdownAsStringWithNOInternalLinks,
-  x,
 } from "./mockMarkdown";
 describe("linksAndMediaHandlers", () => {
   describe("getMarkdownImageSrcs", () => {
@@ -90,7 +89,7 @@ describe("linksAndMediaHandlers", () => {
       const actual = getFullMarkdownReferencePathMatches(
         markdownAsStringWithInternalLinks
       );
-      console.log("jsjsjsjs", getFullMarkdownReferencePathMatches(x));
+
       expect(actual).toEqual(expected);
     });
   });

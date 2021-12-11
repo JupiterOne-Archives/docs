@@ -52,6 +52,6 @@ export const updateArticleInternalMarkdownLinks = (
     }
     proceduresWithUpdatedBodies.push(articleUndergoingChanges);
   }
-  console.log(proceduresWithUpdatedBodies, "proceduresWithUpdatedBodies");
+
   return proceduresWithUpdatedBodies;
 };
