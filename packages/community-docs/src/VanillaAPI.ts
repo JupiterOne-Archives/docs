@@ -379,34 +379,25 @@ export const editArticle = async (
   }
 };
 
-// export const updateArticleMarkdownReferences = async (
-//   createdArticles: VanillaArticle[],
-//   initalArticlesFromVanillaApi: VanillaArticle[],
-//   client: HttpClient
-// ) => {
-//   const combinationOfOldAndNew = [
-//     ...createdArticles,
-//     ...initalArticlesFromVanillaApi,
-//   ];
-//   const handledArticles = [];
-//   for (let a = 0; a < createdArticles.length; a++) {
-//     const { articleID } = createdArticles[a];
-//     const articleBody = replaceMarkdownReferencesWithVanillaSlugs(
-//       `${createdArticles[a].body}`,
-//       combinationOfOldAndNew
-//     );
-//     if (articleBody !== createdArticles[a].body && articleID !== null) {
-//       const editResponse = await editArticle(client, articleID, {
-//         body: articleBody,
-//       });
-//       if (editResponse) {
-//         handledArticles.push(editResponse);
-//       }
-//     }
-//   }
-//   return handledArticles;
-//   // edit article format:"markdown",body:newbody
-// };
+export const updateArticleMarkdownReferences = async (
+  articlesNeedingLinkUpdates: VanillaArticle[],
+  client: HttpClient
+) => {
+  const handledArticles = [];
+  for (let a = 0; a < articlesNeedingLinkUpdates.length; a++) {
+    const { articleID } = articlesNeedingLinkUpdates[a];
+
+    if (articlesNeedingLinkUpdates[a].body && articleID !== null) {
+      const editResponse = await editArticle(client, articleID, {
+        body: articlesNeedingLinkUpdates[a].body,
+      });
+      if (editResponse) {
+        handledArticles.push(editResponse);
+      }
+    }
+  }
+  return handledArticles;
+};
 
 export const postImage = async (client: HttpClient, data: FormData) => {
   try {
