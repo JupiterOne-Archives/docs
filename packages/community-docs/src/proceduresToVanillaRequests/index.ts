@@ -22,6 +22,7 @@ import {
   editArticle,
   getAllArticles,
   getKnowedgeCategories,
+  updateArticleMarkdownReferences,
   uploadImageAndReturnUrl,
 } from "../VanillaAPI";
 import { directoryExists, markdownToString } from "./utils";
@@ -469,6 +470,17 @@ export const proceduresToVanillaRequests = async (
       JSON.stringify(articlesNeedingLinkUpdates, null, 2)
     );
 
+    const updatesToInternalLinks = await updateArticleMarkdownReferences(
+      articlesNeedingLinkUpdates,
+      httpClient
+    );
+    logger.info(
+      `UpdatesToInternalLinks processed: ${JSON.stringify(
+        updatesToInternalLinks,
+        null,
+        2
+      )}`
+    );
     const deletableCategories = proceduresNeedingDeleteCategories
       .filter(isKnowledgeCategoryType)
       .filter((c) => c.description === FLAG_FOR_DELETE);
