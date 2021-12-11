@@ -31,6 +31,21 @@ export const modifyBodyLink = (
   );
   return bodyAlterations;
 };
+export const modifyBodyLinkForReturnedArticles = (
+  body: string,
+  matchToBeReplaced: string,
+  replacement: string
+): string => {
+  let bodyAlterations = `${body}`;
+  const matchToBeReplacedSanitized = matchToBeReplaced.replace("/", "\\/");
+  const markdownAssetRegularExpression = new RegExp(matchToBeReplacedSanitized);
+
+  bodyAlterations = bodyAlterations.replace(
+    markdownAssetRegularExpression,
+    `href="${replacement}`
+  );
+  return bodyAlterations;
+};
 
 export const getMarkdownImageSrcs = (markdownAsString: string): string[] => {
   const markdownAssetRegularExpression = new RegExp(MARKDOWN_IMAGE_REGEX, "g");

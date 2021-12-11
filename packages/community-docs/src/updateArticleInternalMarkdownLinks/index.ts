@@ -1,6 +1,6 @@
 import {
   getArticleNameFromReference,
-  modifyBodyLink,
+  modifyBodyLinkForReturnedArticles,
 } from "../linksAndMediaHandlers";
 import {
   isArticleType,
@@ -13,12 +13,7 @@ export const updateArticleInternalMarkdownLinks = (
   articlesFromVanilla: VanillaArticle[]
 ): VanillaArticle[] => {
   const articlesToUseForSlugs: VanillaArticle[] = articlesFromVanilla || [];
-  console.log(JSON.stringify(proceduresActedUpon, null, 2), "ACTEDON");
-  console.log(
-    "resSrcStart",
-    JSON.stringify(articlesFromVanilla, null, 2),
-    "resources"
-  );
+
   const articleProcedures: VanillaArticle[] = proceduresActedUpon
     .filter(isArticleType)
     .filter((a) => a.referencesNeedingUpdatesInMarkdown?.length);
@@ -43,15 +38,14 @@ export const updateArticleInternalMarkdownLinks = (
         );
         const articleUrl: string =
           existingArticleMatches[0]?.url || "doesNotExist";
-        console.log("MMMATCH", existingArticleMatches);
 
         if (articleUndergoingChanges.body !== null && articleUrl) {
-          const changes = modifyBodyLink(
+          const changes = modifyBodyLinkForReturnedArticles(
             articleUndergoingChanges.body || "",
             ref,
             articleUrl
           );
-          console.log("CHANGES", changes);
+
           articleUndergoingChanges.body = changes;
         }
       });
