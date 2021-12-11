@@ -3,7 +3,6 @@ import {
   modifyBodyLink,
 } from "../linksAndMediaHandlers";
 import {
-  ArticleBreadCrumbs,
   isArticleType,
   VanillaArticle,
   VanillaKnowledgeCategory,
@@ -42,21 +41,19 @@ export const updateArticleInternalMarkdownLinks = (
             return article.name === articleName;
           }
         );
-        const articleBreadcrumbs: ArticleBreadCrumbs[] =
-          existingArticleMatches[0]?.breadcrumbs || [];
-        const breadCrumbUrl = articleBreadcrumbs.length
-          ? articleBreadcrumbs[articleBreadcrumbs.length - 1].url
-          : "";
+        const articleUrl: string =
+          existingArticleMatches[0]?.url || "doesNotExist";
+        console.log("MMMATCH", existingArticleMatches);
 
         if (
           existingArticleMatches.length &&
           articleUndergoingChanges.body !== null &&
-          breadCrumbUrl
+          articleUrl
         ) {
           articleUndergoingChanges.body = modifyBodyLink(
             articleUndergoingChanges.body || "",
             ref,
-            breadCrumbUrl
+            articleUrl
           );
         }
       });
