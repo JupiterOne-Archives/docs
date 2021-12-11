@@ -455,6 +455,20 @@ export const proceduresToVanillaRequests = async (
         2
       )}`
     );
+    const combinationOfArticlesAndProcedures = [
+      ...proceduresNeedingDeleteCategories,
+      ...articles,
+    ].filter(isArticleType);
+
+    const articlesNeedingLinkUpdates = updateArticleInternalMarkdownLinks(
+      [...proceduresNeedingDeleteCategories],
+      combinationOfArticlesAndProcedures
+    );
+    console.log(
+      "articlesNeedingLinkUpdates",
+      JSON.stringify(articlesNeedingLinkUpdates, null, 2)
+    );
+
     const deletableCategories = proceduresNeedingDeleteCategories
       .filter(isKnowledgeCategoryType)
       .filter((c) => c.description === FLAG_FOR_DELETE);
@@ -465,18 +479,6 @@ export const proceduresToVanillaRequests = async (
     );
     logger.info(
       `PROCEDURES processed: ${JSON.stringify(finishedProcedures, null, 2)}`
-    );
-    const combinationOfArticlesAndProcedures = [
-      ...finishedProcedures,
-      ...articles,
-    ].filter(isArticleType);
-    const articlesNeedingLinkUpdates = updateArticleInternalMarkdownLinks(
-      finishedProcedures,
-      combinationOfArticlesAndProcedures
-    );
-    console.log(
-      "articlesNeedingLinkUpdates",
-      JSON.stringify(articlesNeedingLinkUpdates, null, 2)
     );
 
     return finishedProcedures;
