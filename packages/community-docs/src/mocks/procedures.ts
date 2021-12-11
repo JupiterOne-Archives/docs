@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import { VanillaArticle, VanillaKnowledgeCategory } from "../utils";
 export const references = [
   "../api-key-access.md",
@@ -85,7 +86,8 @@ export const completedProcedures = [
     ../api-key-access.md
     - If you are an **Enterprise** customer and use SAML SSO, see the instructions
     [here](./faq-integrations.md)
-   alert-rule.md,
+
+   <a rel=\"nofollow\" href=\"alert-rule.md\">instructions</a>
    ../integrations-roadmap.md,
    configure-sso-integration.md,
     - If you are an **Enterprise** customer and use SAML SSO, see the instructions

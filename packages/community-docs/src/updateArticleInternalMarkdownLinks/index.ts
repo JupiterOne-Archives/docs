@@ -45,21 +45,19 @@ export const updateArticleInternalMarkdownLinks = (
           existingArticleMatches[0]?.url || "doesNotExist";
         console.log("MMMATCH", existingArticleMatches);
 
-        if (
-          existingArticleMatches.length &&
-          articleUndergoingChanges.body !== null &&
-          articleUrl
-        ) {
-          articleUndergoingChanges.body = modifyBodyLink(
+        if (articleUndergoingChanges.body !== null && articleUrl) {
+          const changes = modifyBodyLink(
             articleUndergoingChanges.body || "",
             ref,
             articleUrl
           );
+          console.log("CHANGES", changes);
+          articleUndergoingChanges.body = changes;
         }
       });
     }
     proceduresWithUpdatedBodies.push(articleUndergoingChanges);
   }
-
+  console.log(proceduresWithUpdatedBodies, "proceduresWithUpdatedBodies");
   return proceduresWithUpdatedBodies;
 };
