@@ -4,7 +4,7 @@ import {
   isSupportedMediaType,
   modifyBodyLink,
 } from "../linksAndMediaHandlers";
-import { logger } from "../logging";
+import { logger } from "../loggingUtil";
 import { updateArticleInternalMarkdownLinks } from "../updateArticleInternalMarkdownLinks";
 import { isArticleType, isKnowledgeCategoryType } from "../utils";
 import { createDisplayName } from "../utils/common";
