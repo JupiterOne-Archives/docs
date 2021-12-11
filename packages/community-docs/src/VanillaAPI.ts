@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import HttpClient from "./httpClient";
 import { getFullMarkdownReferencePathMatches } from "./linksAndMediaHandlers";
-import { logger } from "./logging";
+import { logger } from "./loggingUtil";
 import { kCategoriesByPathSize } from "./proceduresToVanillaRequests/utils";
 import {
   FLAG_FOR_DELETE,

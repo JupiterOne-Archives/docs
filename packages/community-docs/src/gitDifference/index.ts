@@ -1,5 +1,5 @@
 import simpleGit, { SimpleGit } from "simple-git/promise";
-import { logger } from "../logging";
+import { logger } from "../loggingUtil";
 export const getDiffFromHead: () => Promise<string> = async () => {
   let diff = "";
   try {

@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosRequestHeaders } from "axios";
 import FormData from "form-data";
-import { logger } from "./logging";
+import { logger } from "./loggingUtil";
 import { KnowledgeCategory, VanillaArticle } from "./utils";
 import { Authorization, DEV_URL, REQUEST_DELAY } from "./utils/constants";
 enum RESTTypes {

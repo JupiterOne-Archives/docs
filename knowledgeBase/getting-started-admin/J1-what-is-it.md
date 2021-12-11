@@ -7,7 +7,7 @@ ultimate visibility to your environment, infrastructure, and operations.
 
 ## Using J1 Integrations
 
-fail for no reason
+fail for no reason?
 The first step in using J1 is to bring your data into J1. There are numerous
 ready-made integrations that are easy to install and use to achieve
 end-to-end cyber asset visibility, context, and automation across every

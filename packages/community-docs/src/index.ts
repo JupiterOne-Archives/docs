@@ -3,7 +3,7 @@ import path from "path";
 import { diffToProcedures } from "./diffToProcedures";
 import { getDiffFromHead } from "./gitDifference";
 import HttpClient from "./httpClient";
-import { logger } from "./logging";
+import { logger } from "./loggingUtil";
 import { proceduresToVanillaRequests } from "./proceduresToVanillaRequests";
 import { PATH_OF_DIRECTORY_TO_WATCH } from "./utils/constants";
 import {
