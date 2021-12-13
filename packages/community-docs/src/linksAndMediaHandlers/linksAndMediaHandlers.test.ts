@@ -1,13 +1,11 @@
 /* eslint-disable no-useless-escape */
-import { VanillaArticle } from "../utils";
 import {
   getArticleNameFromReference,
   getFullMarkdownReferencePathMatches,
   getMarkdownImageSrcs,
   isSupportedMediaType,
-  modifyBodyLink,
-  modifyBodyLinkForReturnedArticles,
-  replaceMarkdownReferencesWithVanillaSlugs,
+  modifyBodyLinkForImage,
+  modifyBodyLinkForImageForReturnedArticles,
 } from "./";
 import {
   assetDefinition,
@@ -16,16 +14,15 @@ import {
   markdownAsString,
   markdownAsStringNOImages,
   markdownAsStringWithInternalLinks,
-  markdownAsStringWithNOInternalLinks,
 } from "./mockMarkdown";
 describe("linksAndMediaHandlers", () => {
-  describe("modifyBodyLinkForReturnedArticles", () => {
+  describe("modifyBodyLinkForImageForReturnedArticles", () => {
     it("returns a modified string", () => {
       const replacement =
         "https://jupiterone.vanillastaging.com/kb/articles/545-catalog";
       const body = `<li><a rel=\"nofollow\" href=\"../getting-started-admin/catalog.md\">look at this other doc</a></li>`;
       const expected = `<li><a rel=\"nofollow\" href="https://jupiterone.vanillastaging.com/kb/articles/545-catalog">look at this other doc</a></li>`;
-      const actual = modifyBodyLinkForReturnedArticles(
+      const actual = modifyBodyLinkForImageForReturnedArticles(
         body,
         "../getting-started-admin/catalog.md",
         replacement
@@ -45,10 +42,10 @@ describe("linksAndMediaHandlers", () => {
       expect(actual).toEqual(expected);
     });
   });
-  describe("modifyBodyLink", () => {
+  describe("modifyBodyLinkForImage", () => {
     it("returns same string when no regex match", async () => {
       const replacementText = "Hotdog";
-      const actual = modifyBodyLink(
+      const actual = modifyBodyLinkForImage(
         markdownAsString,
         "whatsforlunch",
         replacementText
@@ -59,7 +56,7 @@ describe("linksAndMediaHandlers", () => {
     });
     it("returns altered string with assetLocation replaced with newLocation", async () => {
       const replacementText = "Hotdog";
-      const actual = modifyBodyLink(
+      const actual = modifyBodyLinkForImage(
         markdownAsString,
         criticalAsset,
         replacementText
@@ -91,8 +88,8 @@ describe("linksAndMediaHandlers", () => {
     });
     it("returns matches on MARKDOWN_REGEX_FULL_MARKDOWN_PATH", () => {
       const expected: string[] = [
-        'href="../queries/common-qq-training.md',
-        'href="../queries/common-qq-endpoint.md',
+        "../queries/common-qq-training.md",
+        "../queries/common-qq-endpoint.md",
       ];
       const actual = getFullMarkdownReferencePathMatches(
         markdownAsStringWithInternalLinks
@@ -101,72 +98,73 @@ describe("linksAndMediaHandlers", () => {
       expect(actual).toEqual(expected);
     });
   });
-  describe("replaceMarkdownReferencesWithVanillaSlugs", () => {
-    it("returns the markdownAsAString without changes when there are no matches", () => {
-      const markdownWithNoInternalMarkdownRefs =
-        markdownAsStringWithNOInternalLinks;
-      const expected = markdownWithNoInternalMarkdownRefs;
-      const allArticles: VanillaArticle[] = [
-        {
-          name: "Bulk Upload",
-          url: "https://jupiterone.vanillastaging.com/kb/articles/471-bulk-upload",
-        },
-        {
-          name: "Bulk Upload Not",
-          url: "https://jupiterone.vanillastaging.com/kb/articles/472-bulk-upload-not",
-        },
-      ] as VanillaArticle[];
-      const actual = replaceMarkdownReferencesWithVanillaSlugs(
-        markdownWithNoInternalMarkdownRefs,
-        allArticles
-      );
-      expect(actual).toEqual(expected);
-    });
 
-    it("returns the markdownAsAString without changes when there are no matching articles", () => {
-      const markdownWithInternalMarkdownRefs =
-        markdownAsStringWithInternalLinks;
-      const expected = markdownWithInternalMarkdownRefs;
-      const allArticles: VanillaArticle[] = [
-        {
-          name: "Bulky Upload",
-          slug: "https://jupiterone.vanillastaging.com/kb/articles/471-bulk-upload",
-        },
-        {
-          name: "Bulky Upload Not",
-          slug: "https://jupiterone.vanillastaging.com/kb/articles/472-bulk-upload-not",
-        },
-      ] as VanillaArticle[];
-      const actual = replaceMarkdownReferencesWithVanillaSlugs(
-        markdownWithInternalMarkdownRefs,
-        allArticles
-      );
+  // describe("replaceMarkdownReferencesWithVanillaSlugs", () => {
+  //   it("returns the markdownAsAString without changes when there are no matches", () => {
+  //     const markdownWithNoInternalMarkdownRefs =
+  //       markdownAsStringWithNOInternalLinks;
+  //     const expected = markdownWithNoInternalMarkdownRefs;
+  //     const allArticles: VanillaArticle[] = [
+  //       {
+  //         name: "Bulk Upload",
+  //         url: "https://jupiterone.vanillastaging.com/kb/articles/471-bulk-upload",
+  //       },
+  //       {
+  //         name: "Bulk Upload Not",
+  //         url: "https://jupiterone.vanillastaging.com/kb/articles/472-bulk-upload-not",
+  //       },
+  //     ] as VanillaArticle[];
+  //     const actual = replaceMarkdownReferencesWithVanillaSlugs(
+  //       markdownWithNoInternalMarkdownRefs,
+  //       allArticles
+  //     );
+  //     expect(actual).toEqual(expected);
+  //   });
 
-      expect(actual).toEqual(expected);
-    });
+  //   it("returns the markdownAsAString without changes when there are no matching articles", () => {
+  //     const markdownWithInternalMarkdownRefs =
+  //       markdownAsStringWithInternalLinks;
+  //     const expected = markdownWithInternalMarkdownRefs;
+  //     const allArticles: VanillaArticle[] = [
+  //       {
+  //         name: "Bulky Upload",
+  //         slug: "https://jupiterone.vanillastaging.com/kb/articles/471-bulk-upload",
+  //       },
+  //       {
+  //         name: "Bulky Upload Not",
+  //         slug: "https://jupiterone.vanillastaging.com/kb/articles/472-bulk-upload-not",
+  //       },
+  //     ] as VanillaArticle[];
+  //     const actual = replaceMarkdownReferencesWithVanillaSlugs(
+  //       markdownWithInternalMarkdownRefs,
+  //       allArticles
+  //     );
 
-    it("returns the markdownAsAString with new links", () => {
-      const markdownWithInternalMarkdownRefs =
-        markdownAsStringWithInternalLinks;
-      const matchingArticle = {
-        name: "Common Qq Training",
-        url: "https://jupiterone.vanillastaging.com/kb/articles/471-bulk-upload",
-      };
-      const allArticles: VanillaArticle[] = [
-        matchingArticle,
-        {
-          name: "Common Qq Training Not",
-          url: "https://jupiterone.vanillastaging.com/kb/articles/472-bulk-upload-not",
-        },
-      ] as VanillaArticle[];
-      const actual = replaceMarkdownReferencesWithVanillaSlugs(
-        markdownWithInternalMarkdownRefs,
-        allArticles
-      );
+  //     expect(actual).toEqual(expected);
+  //   });
 
-      expect(actual.indexOf(matchingArticle.url) != -1).toEqual(true);
-    });
-  });
+  //   it("returns the markdownAsAString with new links", () => {
+  //     const markdownWithInternalMarkdownRefs =
+  //       markdownAsStringWithInternalLinks;
+  //     const matchingArticle = {
+  //       name: "Common Qq Training",
+  //       url: "https://jupiterone.vanillastaging.com/kb/articles/471-bulk-upload",
+  //     };
+  //     const allArticles: VanillaArticle[] = [
+  //       matchingArticle,
+  //       {
+  //         name: "Common Qq Training Not",
+  //         url: "https://jupiterone.vanillastaging.com/kb/articles/472-bulk-upload-not",
+  //       },
+  //     ] as VanillaArticle[];
+  //     const actual = replaceMarkdownReferencesWithVanillaSlugs(
+  //       markdownWithInternalMarkdownRefs,
+  //       allArticles
+  //     );
+
+  //     expect(actual.indexOf(matchingArticle.url) != -1).toEqual(true);
+  //   });
+  // });
   describe("getArticleNameFromReference", () => {
     it("returns noFile for empty match", () => {
       const match: string = "";

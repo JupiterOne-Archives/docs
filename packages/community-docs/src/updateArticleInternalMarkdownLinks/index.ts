@@ -1,6 +1,6 @@
 import {
   getArticleNameFromReference,
-  modifyBodyLinkForReturnedArticles,
+  modifyBodyLinkForImageForReturnedArticles,
 } from "../linksAndMediaHandlers";
 import {
   isArticleType,
@@ -30,6 +30,7 @@ export const updateArticleInternalMarkdownLinks = (
         articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown || [];
 
       references.forEach((ref) => {
+        console.log(ref, "Refxxx");
         const articleName = getArticleNameFromReference(ref);
         console.log(articleName, "sksksk");
         const existingArticleMatches = [...articlesToUseForSlugs].filter(
@@ -41,7 +42,7 @@ export const updateArticleInternalMarkdownLinks = (
           existingArticleMatches[0]?.url || "doesNotExist";
 
         if (articleUndergoingChanges.body !== null && articleUrl) {
-          const changes = modifyBodyLinkForReturnedArticles(
+          const changes = modifyBodyLinkForImageForReturnedArticles(
             articleUndergoingChanges.body || "",
             ref,
             articleUrl
