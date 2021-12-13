@@ -12,7 +12,7 @@ Example image:
 
 You can reference other markdown files within a doc. The (internal) links added will be replaced with the link to the vanilla location of referenced doc.
 
-Example internal link:
+Example internal markdown link:
 
 - [look at this other doc](../getting-started-admin/catalog.md)
 
