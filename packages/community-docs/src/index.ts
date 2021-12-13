@@ -74,24 +74,6 @@ export const updateCommunityDocs = async () => {
   }
 };
 
-// export const updateArticleInternalMarkdownLinks = async()=>{
-//   const knowledgeCategories = await getKnowedgeCategories(httpClient);
-
-//   logger.info(`Getting Articles for DELETION`);
-//   const articles = await getAllArticles(httpClient, knowledgeCategories);
-
-//   const createdArticles: VanillaArticle[] = proceduresWithArticleInfo
-//   .filter(isArticleType)
-//   .filter((a) => a.status !== "deleted");
-// //createdArticles in first so match returns created over existing
-
-// const articlesUpdated = await makeRequestsToChangeMarkdownReferences(
-//   createdArticles,
-//   articles,
-//   httpClient
-// );
-// }
-
 // converts all items in the PATH_OF_DIRECTORY_TO_WATCH into Vanilla forum items
 export const updateVanillaWithDirectoryToWatch = async () => {
   const directoryLocation = path.join(
@@ -186,14 +168,6 @@ export const deleteAllThingsCurrentlyOnVanillaForum = async () => {
     }
   }
 };
-
-// const exampleOfPathsOfChanges = [
-//   `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md`,
-//   `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/compliance-reporting/soc2-with-jupiterone.md`,
-//   `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/jupiterone-query-language-copy.md`,
-//   `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/jupiterone-query-language.md`,
-//   `${PATH_OF_DIRECTORY_TO_WATCH}/after-getting-started/rock_and-roll.md`,
-// ];
 
 const exampleOfPathsOfChangesX = [
   `${PATH_OF_DIRECTORY_TO_WATCH}/asset-management/`,
