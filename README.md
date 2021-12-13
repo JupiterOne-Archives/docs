@@ -1,10 +1,42 @@
 # docs-community
 
+# Dos and Donts
+
+Dont name any two folders or markdown with the same name.
+
+- We currently match an article by its file name (after removing dashes/underscores and capitalizing) against what is being returned for the name of the article.
+
+Continue to reference other markdowns as if they lived in the same directory.
+
+- After merging these links get replaced with their location on vanilla forums.
+
+Example usage:
+` [2]: ./jupiterone-api.md#entity-and-relationship-synchronization [1]: ../../docs/data-model/org-grc.md Learn more [here] (https://github.com/JupiterOne/docs/blob/main/docs/parameters.md#jupiterone-parameter-service). [security cyber asset inventory](../asset-inventory-filters.md)`
+
 # Needs
 
 Token from vanilla to pass in when running locally.
 
-## Overview
+## Quick Rundown of How it Works
+
+- Check of changes to the KnowledgeBase folder on merge.
+- Each change is converted to a series of procedures. (Must be synchronous because we cant add dependants without their parents.)
+
+- Example Change: 'knowledgeBase/demo'
+  - Check demo directory for children. Markdown files within 'demo' become dependant on the creation of 'demo'. 'sub-category' becomes dependant on the creation of demo. 'additional.md' is dependant on demo.
+  - This leads to a list of 'procedures' that need to be completed in a certain order. The knowledge categories and articles need to be created one at a time. Items that dont exist locally, but exist on vanilla's platform are flagged for delete.
+  - We compare the stucture we have locally against what articles and knowledge categories we have on the vanilla forum.
+  - Additional data is added to the procedures for existing items. This allows us to delete/edit items.
+- Knowledge Categories are created or flagged for delete if they dont exist locally.
+- Articles are deleted if they exist on Vanilla, but not in the knowledgeBase folder
+- Articles are created after their parents are successfully created on vanillas platform.
+- BEFORE articles are created, We check them for images, upload the image (PNG, gif, jpeg are supported) and replace the markdown references to the ones returned by a successful upload to vanilla. The size limit is approximatly 10mb.
+- Articles are then added to their already-created knowledge category.
+- Articles with internal references are then altered to have the correct link to their now-or-previously-existing-articles.
+- Removal of items flagged for delete
+  - Non-empty knowledge categories cannot be deleted until they are empty
+  - Articles are removed first since they are not dependant
+  - Longest flagged for delete 'change' removed recursively
 
 ### How the scripts functions
 

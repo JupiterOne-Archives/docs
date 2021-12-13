@@ -14,7 +14,7 @@
 //   encoding: "utf-8",
 // });
 
-export const Logger: {
+export const logger: {
   info: (message: string) => void;
   debug: (message: string) => void;
   error: (message: string) => void;

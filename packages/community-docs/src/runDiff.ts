@@ -1,14 +1,17 @@
 import { updateCommunityDocs } from "./";
-import { Logger } from "./Logging";
+// import {updateArticleInternalMarkdownLinks} from './linksAndMediaHandlers/updateArticleInternalMarkdownLinks'
+import { logger } from "./loggingUtil";
 
-const getDiffAndReportIssues = async () => {
+const updateCommunityDocsByMergeChanges = async () => {
   try {
-    Logger.info("Starting updateCommunityDocs");
+    logger.info("Starting updateCommunityDocs");
     const completed = await updateCommunityDocs();
 
-    Logger.info(`UpdateCommunityDocs completed: ${completed}`);
+    logger.info(
+      `UpdateCommunityDocs completed: ${JSON.stringify(completed, null, 2)}`
+    );
   } catch (error) {
-    Logger.error(`UpdateCommunityDocs Errored: \n ${JSON.stringify(error)}`);
+    logger.error(`UpdateCommunityDocs Errored: \n ${JSON.stringify(error)}`);
   }
 };
-export default getDiffAndReportIssues();
+export default updateCommunityDocsByMergeChanges();
