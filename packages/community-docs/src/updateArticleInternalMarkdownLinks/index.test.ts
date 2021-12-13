@@ -28,7 +28,7 @@ describe("updateArtilceInternalMarkdownLinks", () => {
         completedProcedures,
         articles
       );
-      console.log(actual, "Actualwww");
+
       const linksToRemove = actual[0].referencesNeedingUpdatesInMarkdown;
       expect(linksToRemove?.length).toEqual(8);
       expect(actual.length).toEqual(1);

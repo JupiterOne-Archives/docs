@@ -41,6 +41,7 @@ export const modifyBodyLinkForReturnedArticles = (
   // const matchToBeReplacedSanitized = matchToBeReplaced.replace("/", "\\/");
 
   console.log("matchtododld", matchToBeReplaced);
+  console.log(replacement, "RELOACEMENENE");
   const markdownAssetRegularExpression = new RegExp(matchToBeReplaced);
 
   bodyAlterations = bodyAlterations.replace(
