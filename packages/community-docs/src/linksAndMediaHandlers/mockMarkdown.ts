@@ -34,6 +34,8 @@ After you import your data, you can analyze and visualize your complete
 infrastructure and [security cyber asset inventory](asset-inventory-filters.md) using the J1 Assets app. 
 See [API doc](../jupiterone-api.md#entityandrelationshipsynchronization) for more details.
 Click ![](../assets/icons/gear.png)
+<a href="../queries/common-qq-training.md"<a>
+<a href="../queries/common-qq-endpoint.md#chapter"<a>
 dimension of your digital universe. J1 provides [instructions](configure-integrations.md) on how 
 [10]: ../queries/common-qq-training.md
 [11]: ../queries/common-qq-endpoint.md

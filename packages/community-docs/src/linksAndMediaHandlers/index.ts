@@ -1,7 +1,7 @@
 import {
   createDisplayName,
   MARKDOWN_IMAGE_REGEX,
-  MARKDOWN_REGEX_FULL_MARKDOWN_PATH,
+  MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK,
   SUPPORTED_MEDIA_TYPES,
   VanillaArticle,
 } from "../utils";
@@ -31,6 +31,7 @@ export const modifyBodyLink = (
   );
   return bodyAlterations;
 };
+//return.body gives back a html type body string
 export const modifyBodyLinkForReturnedArticles = (
   body: string,
   matchToBeReplaced: string,
@@ -38,11 +39,12 @@ export const modifyBodyLinkForReturnedArticles = (
 ): string => {
   let bodyAlterations = `${body}`;
   const matchToBeReplacedSanitized = matchToBeReplaced.replace("/", "\\/");
+
   const markdownAssetRegularExpression = new RegExp(matchToBeReplacedSanitized);
 
   bodyAlterations = bodyAlterations.replace(
     markdownAssetRegularExpression,
-    `href="${replacement}`
+    `${replacement}`
   );
   return bodyAlterations;
 };
@@ -59,12 +61,12 @@ export const getMarkdownImageSrcs = (markdownAsString: string): string[] => {
   }
   return matches.map((m) => m.substring(2, m.length - 1));
 };
-
+// body is in html format
 export const getFullMarkdownReferencePathMatches = (
   markdownAsString: string
 ): string[] => {
   const markdownAssetRegularExpression = new RegExp(
-    MARKDOWN_REGEX_FULL_MARKDOWN_PATH,
+    MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK,
     "g"
   );
   const matches = [];
@@ -90,7 +92,7 @@ export const getArticleNameFromReference = (match: string): string => {
 
   return createDisplayName(name.substring(0, name.indexOf(".md")));
 };
-
+// not being used
 export const replaceMarkdownReferencesWithVanillaSlugs = (
   markdownAsAString: string,
   allArticles: VanillaArticle[]
@@ -101,6 +103,7 @@ export const replaceMarkdownReferencesWithVanillaSlugs = (
   if (matches.length) {
     matches.forEach((m) => {
       const matchArticleName = getArticleNameFromReference(m);
+
       let articlesWithSameNameAsRef: VanillaArticle[] = [];
       if (matchArticleName && matchArticleName !== "NoFile") {
         articlesWithSameNameAsRef = allArticles.filter(
@@ -108,12 +111,12 @@ export const replaceMarkdownReferencesWithVanillaSlugs = (
         );
         if (
           articlesWithSameNameAsRef.length &&
-          articlesWithSameNameAsRef[0].slug
+          articlesWithSameNameAsRef[0].url
         ) {
           markdownAsStringTarget = modifyBodyLink(
             markdownAsStringTarget,
             m,
-            articlesWithSameNameAsRef[0].slug
+            articlesWithSameNameAsRef[0].url
           );
         }
       }
