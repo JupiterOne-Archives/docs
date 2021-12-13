@@ -8,6 +8,7 @@ export const references = [
   "configure-sso-integration.md",
   "../docs/configure-sso-integration.md",
   "https://github.com/JupiterOne/docs/blob/main/docs/faqs-aws.md",
+  "../getting-started-admin/catalog.md",
 ];
 export const completedProcedures = [
   {
@@ -81,20 +82,7 @@ export const completedProcedures = [
 
     name: "Alert Rule",
 
-    body: `
-    [1]: https://raw.githubusercontent.com/feathericons/feather/master/icons/settings.svg?sanitize=true
-    ../api-key-access.md
-    - If you are an **Enterprise** customer and use SAML SSO, see the instructions
-    [here](./faq-integrations.md)
-
-   <a rel=\"nofollow\" href=\"alert-rule.md\">instructions</a>
-   ../integrations-roadmap.md,
-   configure-sso-integration.md,
-    - If you are an **Enterprise** customer and use SAML SSO, see the instructions
-    click [here](../docs/configure-sso-integration.md)
- 
-   https://github.com/JupiterOne/docs/blob/main/docs/faqs-aws.md
-    `,
+    body: `<li><a rel=\"nofollow\" href=\"../getting-started-admin/catalog.md\">look at this other doc</a></li>`,
     outline: [
       {
         ref: "jupiterone-alert-rule-schema",

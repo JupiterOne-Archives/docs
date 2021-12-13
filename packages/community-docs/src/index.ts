@@ -85,7 +85,7 @@ export const updateCommunityDocs = async () => {
 //   .filter((a) => a.status !== "deleted");
 // //createdArticles in first so match returns created over existing
 
-// const articlesUpdated = await updateArticleMarkdownReferences(
+// const articlesUpdated = await makeRequestsToChangeMarkdownReferences(
 //   createdArticles,
 //   articles,
 //   httpClient

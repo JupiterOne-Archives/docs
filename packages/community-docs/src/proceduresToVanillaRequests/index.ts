@@ -22,7 +22,7 @@ import {
   editArticle,
   getAllArticles,
   getKnowedgeCategories,
-  updateArticleMarkdownReferences,
+  makeRequestsToChangeMarkdownReferences,
   uploadImageAndReturnUrl,
 } from "../VanillaAPI";
 import { directoryExists, markdownToString } from "./utils";
@@ -466,7 +466,7 @@ export const proceduresToVanillaRequests = async (
       combinationOfArticlesAndProcedures
     );
 
-    const updatesToInternalLinks = await updateArticleMarkdownReferences(
+    const updatesToInternalLinks = await makeRequestsToChangeMarkdownReferences(
       articlesNeedingLinkUpdates,
       httpClient
     );

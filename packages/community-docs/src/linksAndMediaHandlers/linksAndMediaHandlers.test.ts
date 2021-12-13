@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import { VanillaArticle } from "../utils";
 import {
   getArticleNameFromReference,
@@ -5,6 +6,7 @@ import {
   getMarkdownImageSrcs,
   isSupportedMediaType,
   modifyBodyLink,
+  modifyBodyLinkForReturnedArticles,
   replaceMarkdownReferencesWithVanillaSlugs,
 } from "./";
 import {
@@ -17,6 +19,20 @@ import {
   markdownAsStringWithNOInternalLinks,
 } from "./mockMarkdown";
 describe("linksAndMediaHandlers", () => {
+  describe("modifyBodyLinkForReturnedArticles", () => {
+    it("returns a modified string", () => {
+      const replacement =
+        "https://jupiterone.vanillastaging.com/kb/articles/545-catalog";
+      const body = `<li><a rel=\"nofollow\" href=\"../getting-started-admin/catalog.md\">look at this other doc</a></li>`;
+      const expected = `<li><a rel=\"nofollow\" href="https://jupiterone.vanillastaging.com/kb/articles/545-catalog">look at this other doc</a></li>`;
+      const actual = modifyBodyLinkForReturnedArticles(
+        body,
+        "../getting-started-admin/catalog.md",
+        replacement
+      );
+      expect(actual).toEqual(expected);
+    });
+  });
   describe("getMarkdownImageSrcs", () => {
     it("returns empty array when no regex matches", async () => {
       const actual = getMarkdownImageSrcs(markdownAsStringNOImages);

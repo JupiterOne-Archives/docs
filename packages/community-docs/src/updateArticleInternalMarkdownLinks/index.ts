@@ -9,12 +9,12 @@ import {
 } from "../utils";
 
 export const updateArticleInternalMarkdownLinks = (
-  proceduresActedUpon: (VanillaArticle | VanillaKnowledgeCategory)[],
+  completedProcedures: (VanillaArticle | VanillaKnowledgeCategory)[],
   articlesFromVanilla: VanillaArticle[]
 ): VanillaArticle[] => {
   const articlesToUseForSlugs: VanillaArticle[] = articlesFromVanilla || [];
 
-  const articleProcedures: VanillaArticle[] = proceduresActedUpon
+  const articleProcedures: VanillaArticle[] = completedProcedures
     .filter(isArticleType)
     .filter((a) => a.referencesNeedingUpdatesInMarkdown?.length);
 
@@ -31,6 +31,7 @@ export const updateArticleInternalMarkdownLinks = (
 
       references.forEach((ref) => {
         const articleName = getArticleNameFromReference(ref);
+        console.log(articleName, "sksksk");
         const existingArticleMatches = [...articlesToUseForSlugs].filter(
           (article) => {
             return article.name === articleName;

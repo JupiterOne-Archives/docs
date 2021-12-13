@@ -61,6 +61,9 @@ export const getArticles = async (
       return articles.data.map((a) => ({
         ...a,
         procedureType: ProcedureTypeEnum.Article,
+        referencesNeedingUpdatesInMarkdown: getFullMarkdownReferencePathMatches(
+          a.body
+        ),
       }));
     }
   } catch (e) {
@@ -379,7 +382,7 @@ export const editArticle = async (
   }
 };
 
-export const updateArticleMarkdownReferences = async (
+export const makeRequestsToChangeMarkdownReferences = async (
   articlesNeedingLinkUpdates: VanillaArticle[],
   client: HttpClient
 ) => {
