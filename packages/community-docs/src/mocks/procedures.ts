@@ -8,7 +8,7 @@ export const references = [
   "configure-sso-integration.md",
   "../docs/configure-sso-integration.md",
   "https://github.com/JupiterOne/docs/blob/main/docs/faqs-aws.md",
-  "../getting-started-admin/catalog.md",
+  'href="../getting-started-admin/catalog.md',
 ];
 export const completedProcedures = [
   {

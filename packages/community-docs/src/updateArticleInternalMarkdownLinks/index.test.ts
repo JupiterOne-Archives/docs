@@ -24,6 +24,7 @@ describe("updateArtilceInternalMarkdownLinks", () => {
   describe("index", () => {
     it("uses passed articles for urls", () => {
       const articles = getAllArticlesReturn;
+
       const actual = updateArticleInternalMarkdownLinks(
         completedProcedures,
         articles
@@ -32,6 +33,7 @@ describe("updateArtilceInternalMarkdownLinks", () => {
       const linksToRemove = actual[0].referencesNeedingUpdatesInMarkdown;
       expect(linksToRemove?.length).toEqual(8);
       expect(actual.length).toEqual(1);
+      console.log(actual, "actualss");
       expect(
         actual[0].body.indexOf("../getting-started-admin/catalog.md")
       ).toEqual(-1);

@@ -2,7 +2,7 @@ import HttpClient from "../httpClient";
 import {
   getMarkdownImageSrcs,
   isSupportedMediaType,
-  modifyBodyLink,
+  modifyBodyLinkForImage,
 } from "../linksAndMediaHandlers";
 import { logger } from "../loggingUtil";
 import { updateArticleInternalMarkdownLinks } from "../updateArticleInternalMarkdownLinks";
@@ -99,7 +99,7 @@ export const uploadImagesAndAddToMarkdown = async (
   for (let i = 0; i < supportedImages.length; i++) {
     if (SHOULD_REALLY_UPLOAD_IMAGES) {
       const newLocation = await uploadImageAndReturnUrl(supportedImages[i]);
-      markdownTarget = modifyBodyLink(
+      markdownTarget = modifyBodyLinkForImage(
         markdownTarget,
         supportedImages[i],
         newLocation

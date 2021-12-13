@@ -3,7 +3,6 @@ import {
   MARKDOWN_IMAGE_REGEX,
   MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK,
   SUPPORTED_MEDIA_TYPES,
-  VanillaArticle,
 } from "../utils";
 
 export const isSupportedMediaType = (imagePath: string): string | boolean => {
@@ -16,7 +15,7 @@ export const isSupportedMediaType = (imagePath: string): string | boolean => {
   return supportedTypeOfFile;
 };
 
-export const modifyBodyLink = (
+export const modifyBodyLinkForImage = (
   body: string,
   matchToBeReplaced: string,
   replacement: string
@@ -32,7 +31,7 @@ export const modifyBodyLink = (
   return bodyAlterations;
 };
 //return.body gives back a html type body string
-export const modifyBodyLinkForReturnedArticles = (
+export const modifyBodyLinkForImageForReturnedArticles = (
   body: string,
   matchToBeReplaced: string,
   replacement: string
@@ -81,7 +80,7 @@ export const getFullMarkdownReferencePathMatches = (
   ) {
     matches.push(array1[0]);
   }
-  return matches;
+  return matches.map((m) => m.substring(m.indexOf('"') + 1));
 };
 
 export const getArticleNameFromReference = (match: string): string => {
@@ -97,34 +96,34 @@ export const getArticleNameFromReference = (match: string): string => {
   return createDisplayName(name.substring(0, name.indexOf(".md")));
 };
 // not being used
-export const replaceMarkdownReferencesWithVanillaSlugs = (
-  markdownAsAString: string,
-  allArticles: VanillaArticle[]
-) => {
-  let markdownAsStringTarget: string = `${markdownAsAString}`;
-  const matches = getFullMarkdownReferencePathMatches(markdownAsStringTarget);
+// export const replaceMarkdownReferencesWithVanillaSlugs = (
+//   markdownAsAString: string,
+//   allArticles: VanillaArticle[]
+// ) => {
+//   let markdownAsStringTarget: string = `${markdownAsAString}`;
+//   const matches = getFullMarkdownReferencePathMatches(markdownAsStringTarget);
 
-  if (matches.length) {
-    matches.forEach((m) => {
-      const matchArticleName = getArticleNameFromReference(m);
+//   if (matches.length) {
+//     matches.forEach((m) => {
+//       const matchArticleName = getArticleNameFromReference(m);
 
-      let articlesWithSameNameAsRef: VanillaArticle[] = [];
-      if (matchArticleName && matchArticleName !== "NoFile") {
-        articlesWithSameNameAsRef = allArticles.filter(
-          (a) => a.name === matchArticleName
-        );
-        if (
-          articlesWithSameNameAsRef.length &&
-          articlesWithSameNameAsRef[0].url
-        ) {
-          markdownAsStringTarget = modifyBodyLink(
-            markdownAsStringTarget,
-            m,
-            articlesWithSameNameAsRef[0].url
-          );
-        }
-      }
-    });
-  }
-  return markdownAsStringTarget;
-};
+//       let articlesWithSameNameAsRef: VanillaArticle[] = [];
+//       if (matchArticleName && matchArticleName !== "NoFile") {
+//         articlesWithSameNameAsRef = allArticles.filter(
+//           (a) => a.name === matchArticleName
+//         );
+//         if (
+//           articlesWithSameNameAsRef.length &&
+//           articlesWithSameNameAsRef[0].url
+//         ) {
+//           markdownAsStringTarget = modifyBodyLinkForImage(
+//             markdownAsStringTarget,
+//             m,
+//             articlesWithSameNameAsRef[0].url
+//           );
+//         }
+//       }
+//     });
+//   }
+//   return markdownAsStringTarget;
+// };

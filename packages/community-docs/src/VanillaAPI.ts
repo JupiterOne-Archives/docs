@@ -393,6 +393,7 @@ export const makeRequestsToChangeMarkdownReferences = async (
     if (articlesNeedingLinkUpdates[a].body && articleID !== null) {
       const editResponse = await editArticle(client, articleID, {
         body: articlesNeedingLinkUpdates[a].body,
+        format: "html",
       });
       if (editResponse) {
         handledArticles.push(editResponse);
