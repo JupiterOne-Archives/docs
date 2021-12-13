@@ -38,11 +38,11 @@ export const modifyBodyLinkForReturnedArticles = (
   replacement: string
 ): string => {
   let bodyAlterations = `${body}`;
-  // const matchToBeReplacedSanitized = matchToBeReplaced.replace("/", "\\/");
+  const matchToBeReplacedSanitized = matchToBeReplaced.replace("/", "\\/");
 
-  console.log("matchtododld", matchToBeReplaced);
+  console.log("matchtododld", matchToBeReplacedSanitized);
   console.log(replacement, "RELOACEMENENE");
-  const markdownAssetRegularExpression = new RegExp(matchToBeReplaced);
+  const markdownAssetRegularExpression = new RegExp(matchToBeReplacedSanitized);
 
   bodyAlterations = bodyAlterations.replace(
     markdownAssetRegularExpression,
