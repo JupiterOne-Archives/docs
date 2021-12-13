@@ -75,16 +75,8 @@ describe("linksAndMediaHandlers", () => {
     });
     it("returns matches on MARKDOWN_REGEX_FULL_MARKDOWN_PATH", () => {
       const expected: string[] = [
-        "../asset-inventory-filters.md",
-        "asset-inventory-filters.md",
-        "../jupiterone-api.md",
-        "configure-integrations.md",
-        "../queries/common-qq-training.md",
-        "../queries/common-qq-endpoint.md",
-        "./schemas/bulk-upload.md",
-        "./jupiterone-api.md",
-        "../../docs/data-model/org-grc.md",
-        "https://github.com/JupiterOne/docs/blob/main/docs/parameters.md",
+        'href="../queries/common-qq-training.md',
+        'href="../queries/common-qq-endpoint.md',
       ];
       const actual = getFullMarkdownReferencePathMatches(
         markdownAsStringWithInternalLinks
@@ -101,11 +93,11 @@ describe("linksAndMediaHandlers", () => {
       const allArticles: VanillaArticle[] = [
         {
           name: "Bulk Upload",
-          slug: "https://jupiterone.vanillastaging.com/kb/articles/471-bulk-upload",
+          url: "https://jupiterone.vanillastaging.com/kb/articles/471-bulk-upload",
         },
         {
           name: "Bulk Upload Not",
-          slug: "https://jupiterone.vanillastaging.com/kb/articles/472-bulk-upload-not",
+          url: "https://jupiterone.vanillastaging.com/kb/articles/472-bulk-upload-not",
         },
       ] as VanillaArticle[];
       const actual = replaceMarkdownReferencesWithVanillaSlugs(
@@ -141,14 +133,14 @@ describe("linksAndMediaHandlers", () => {
       const markdownWithInternalMarkdownRefs =
         markdownAsStringWithInternalLinks;
       const matchingArticle = {
-        name: "Bulk Upload",
-        slug: "https://jupiterone.vanillastaging.com/kb/articles/471-bulk-upload",
+        name: "Common Qq Training",
+        url: "https://jupiterone.vanillastaging.com/kb/articles/471-bulk-upload",
       };
       const allArticles: VanillaArticle[] = [
         matchingArticle,
         {
-          name: "Bulk Upload Not",
-          slug: "https://jupiterone.vanillastaging.com/kb/articles/472-bulk-upload-not",
+          name: "Common Qq Training Not",
+          url: "https://jupiterone.vanillastaging.com/kb/articles/472-bulk-upload-not",
         },
       ] as VanillaArticle[];
       const actual = replaceMarkdownReferencesWithVanillaSlugs(
@@ -156,7 +148,7 @@ describe("linksAndMediaHandlers", () => {
         allArticles
       );
 
-      expect(actual.indexOf(matchingArticle.slug) != -1).toEqual(true);
+      expect(actual.indexOf(matchingArticle.url) != -1).toEqual(true);
     });
   });
   describe("getArticleNameFromReference", () => {
@@ -167,8 +159,8 @@ describe("linksAndMediaHandlers", () => {
       expect(actual).toEqual(expected);
     });
     it("returns the filename", () => {
-      const match: string = "../asset-inventory-filters.md";
-      const expected = "Asset Inventory Filters";
+      const match: string = 'href="../queries/common-qq-training.md';
+      const expected = "Common Qq Training";
       const actual = getArticleNameFromReference(match);
       expect(actual).toEqual(expected);
 
