@@ -17,7 +17,7 @@ import {
   editArticle,
   getAllArticles,
   getKnowedgeCategories,
-  updateArticleMarkdownReferences,
+  makeRequestsToChangeMarkdownReferences,
 } from "./VanillaAPI";
 jest.mock("./httpClient", () => {
   const mGit = {
@@ -66,9 +66,9 @@ describe("Community docs", () => {
     foreignID: null,
     procedureType: "Article",
   } as any;
-  const mockUpdateArticleMarkdownReferences =
-    updateArticleMarkdownReferences as jest.MockedFunction<
-      typeof updateArticleMarkdownReferences
+  const mockmakeRequestsToChangeMarkdownReferences =
+    makeRequestsToChangeMarkdownReferences as jest.MockedFunction<
+      typeof makeRequestsToChangeMarkdownReferences
     >;
   const mockDirectoryExists = directoryExists as jest.MockedFunction<
     typeof directoryExists
@@ -190,7 +190,9 @@ describe("Community docs", () => {
       expect(mockCreateKnowledgeCategory).toHaveBeenCalledTimes(1);
       expect(mockCreateArticle).toHaveBeenCalledTimes(1);
       expect(mockEditArticle).toHaveBeenCalledTimes(0);
-      expect(mockUpdateArticleMarkdownReferences).toHaveBeenCalledTimes(1);
+      expect(mockmakeRequestsToChangeMarkdownReferences).toHaveBeenCalledTimes(
+        1
+      );
     });
     it("handles the addition of new markdownFile in existing folder", async () => {
       mockGetDiffFromHead.mockResolvedValue(

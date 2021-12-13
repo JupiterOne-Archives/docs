@@ -293,14 +293,14 @@ export const getAllArticlesReturn = [
 
     knowledgeCategoryID: 304,
     knowledgeBaseID: 1,
-    name: "J1 Client And Cli",
+    name: "Catalog",
 
     seoDescription: null,
     slug: "545-j1-client-and-cli",
     sort: 0,
     score: 0,
     views: 0,
-    url: "https://jupiterone.vanillastaging.com/kb/articles/545-j1-client-and-cli",
+    url: "https://jupiterone.vanillastaging.com/kb/articles/545-catalog",
     insertUserID: 12,
     dateInserted: "2021-12-09T23:01:19+00:00",
     updateUserID: 12,

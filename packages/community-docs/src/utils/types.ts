@@ -89,7 +89,7 @@ export interface VanillaArticlePatch {
 export interface VanillaArticle {
   articleID: number | null;
   knowledgeCategoryID: number | null;
-  body: string | null;
+  body: string;
   dateInserted?: string;
   dateUpdated?: string;
   excerpt?: string | null;
