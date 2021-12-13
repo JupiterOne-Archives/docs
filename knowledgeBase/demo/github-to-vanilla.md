@@ -2,6 +2,7 @@
 
 ## Adding an image. Just like with previous markdown file.
 
+making sure the success was not a fluke.
 As a markdown file is converted to a vanilla 'article', the asset referenced is uploaded to vanilla (10mb limit each) and the image link in your markdown file will be replaced with vanilla's version of that asset.
 
 Example image:
