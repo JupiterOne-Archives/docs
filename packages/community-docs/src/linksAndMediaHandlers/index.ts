@@ -38,17 +38,12 @@ export const modifyBodyLinkForImageForReturnedArticles = (
 ): string => {
   let bodyAlterations = `${body}`;
   const matchToBeReplacedSanitized = matchToBeReplaced.replace("/", "\\/");
-
-  console.log("matchtododld", matchToBeReplacedSanitized);
-  console.log(replacement, "RELOACEMENENE");
   const markdownAssetRegularExpression = new RegExp(matchToBeReplacedSanitized);
 
   bodyAlterations = bodyAlterations.replace(
     markdownAssetRegularExpression,
     `${replacement}`
   );
-  console.log("prebody", body, "EEENd");
-  console.log("prebodyAlterations", bodyAlterations, "EEENd");
   return bodyAlterations;
 };
 
@@ -95,35 +90,3 @@ export const getArticleNameFromReference = (match: string): string => {
 
   return createDisplayName(name.substring(0, name.indexOf(".md")));
 };
-// not being used
-// export const replaceMarkdownReferencesWithVanillaSlugs = (
-//   markdownAsAString: string,
-//   allArticles: VanillaArticle[]
-// ) => {
-//   let markdownAsStringTarget: string = `${markdownAsAString}`;
-//   const matches = getFullMarkdownReferencePathMatches(markdownAsStringTarget);
-
-//   if (matches.length) {
-//     matches.forEach((m) => {
-//       const matchArticleName = getArticleNameFromReference(m);
-
-//       let articlesWithSameNameAsRef: VanillaArticle[] = [];
-//       if (matchArticleName && matchArticleName !== "NoFile") {
-//         articlesWithSameNameAsRef = allArticles.filter(
-//           (a) => a.name === matchArticleName
-//         );
-//         if (
-//           articlesWithSameNameAsRef.length &&
-//           articlesWithSameNameAsRef[0].url
-//         ) {
-//           markdownAsStringTarget = modifyBodyLinkForImage(
-//             markdownAsStringTarget,
-//             m,
-//             articlesWithSameNameAsRef[0].url
-//           );
-//         }
-//       }
-//     });
-//   }
-//   return markdownAsStringTarget;
-// };

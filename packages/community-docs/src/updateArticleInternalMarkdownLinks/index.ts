@@ -30,9 +30,8 @@ export const updateArticleInternalMarkdownLinks = (
         articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown || [];
 
       references.forEach((ref) => {
-        console.log(ref, "Refxxx");
         const articleName = getArticleNameFromReference(ref);
-        console.log(articleName, "sksksk");
+
         const existingArticleMatches = [...articlesToUseForSlugs].filter(
           (article) => {
             return article.name === articleName;
