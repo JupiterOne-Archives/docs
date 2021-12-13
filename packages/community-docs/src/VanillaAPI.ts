@@ -2,7 +2,8 @@ import FormData from "form-data";
 import fs from "fs";
 import path from "path";
 import HttpClient from "./httpClient";
-import { Logger } from "./Logging";
+import { getFullMarkdownReferencePathMatches } from "./linksAndMediaHandlers";
+import { logger } from "./loggingUtil";
 import { kCategoriesByPathSize } from "./proceduresToVanillaRequests/utils";
 import {
   FLAG_FOR_DELETE,
@@ -60,10 +61,13 @@ export const getArticles = async (
       return articles.data.map((a) => ({
         ...a,
         procedureType: ProcedureTypeEnum.Article,
+        referencesNeedingUpdatesInMarkdown: getFullMarkdownReferencePathMatches(
+          a.body
+        ),
       }));
     }
   } catch (e) {
-    Logger.error(`getArticles error: ${JSON.stringify(e)}`);
+    logger.error(`getArticles error: ${JSON.stringify(e)}`);
   }
 
   return [];
@@ -131,7 +135,7 @@ export const getKnowedgeCategories = async (
       });
     }
   } catch (error) {
-    Logger.error(`getKnowedgeCategories error: ${JSON.stringify(error)}`);
+    logger.error(`getKnowedgeCategories error: ${JSON.stringify(error)}`);
   }
 
   if (areMorePagesTemp) {
@@ -166,7 +170,7 @@ export const createKnowledgeCategory = async (
       };
     }
   } catch (e) {
-    Logger.error(`createKnowledgeCategory error: ${JSON.stringify(e)}`);
+    logger.error(`createKnowledgeCategory error: ${JSON.stringify(e)}`);
   }
 };
 
@@ -190,7 +194,7 @@ export const editKnowledgeCategory = async (
       };
     }
   } catch (e) {
-    Logger.error(`editKnowledgeCategory error: ${JSON.stringify(e)}`);
+    logger.error(`editKnowledgeCategory error: ${JSON.stringify(e)}`);
   }
 };
 
@@ -206,7 +210,7 @@ export const deleteKnowledgeCategory = async (
     );
     tempKnowledgeCategory.description = "been deleted";
   } catch (e) {
-    Logger.error(`deleteKnowledgeCategory error: ${JSON.stringify(e)}`);
+    logger.error(`deleteKnowledgeCategory error: ${JSON.stringify(e)}`);
     return tempKnowledgeCategory;
   }
 
@@ -299,10 +303,24 @@ export const createArticle = async (
     };
 
     if (!isErrorType(article.data)) {
+      if (article.data.body !== null) {
+        const referencesNeedingUpdatesInMarkdown =
+          getFullMarkdownReferencePathMatches(article.data.body);
+        if (
+          referencesNeedingUpdatesInMarkdown &&
+          referencesNeedingUpdatesInMarkdown.length
+        ) {
+          return {
+            ...article.data,
+            referencesNeedingUpdatesInMarkdown,
+            procedureType: ProcedureTypeEnum.Article,
+          };
+        }
+      }
       return { ...article.data, procedureType: ProcedureTypeEnum.Article };
     }
   } catch (e) {
-    Logger.error(`createArticle error: ${JSON.stringify(e)}`);
+    logger.error(`createArticle error: ${JSON.stringify(e)}`);
   }
 };
 
@@ -325,7 +343,7 @@ export const deleteArticle = async (
       return { ...article.data, procedureType: ProcedureTypeEnum.Article };
     }
   } catch (e) {
-    Logger.error(`deleteArticle error: ${JSON.stringify(e)}`);
+    logger.error(`deleteArticle error: ${JSON.stringify(e)}`);
   }
 };
 
@@ -335,16 +353,54 @@ export const editArticle = async (
   edits: Partial<VanillaArticle>
 ): Promise<VanillaArticle | undefined> => {
   try {
-    const article = (await client.patch(`/articles/${articleID}`, edits)) as {
+    const article = (await client.patch(`/articles/${articleID}`, {
+      format: "markdown",
+      ...edits,
+    })) as {
       data: VanillaArticle | ErrorType;
     };
 
     if (!isErrorType(article.data)) {
+      if (article.data.body !== null) {
+        const referencesNeedingUpdatesInMarkdown =
+          getFullMarkdownReferencePathMatches(article.data.body);
+        if (
+          referencesNeedingUpdatesInMarkdown &&
+          referencesNeedingUpdatesInMarkdown.length
+        ) {
+          return {
+            ...article.data,
+            referencesNeedingUpdatesInMarkdown,
+            procedureType: ProcedureTypeEnum.Article,
+          };
+        }
+      }
       return { ...article.data, procedureType: ProcedureTypeEnum.Article };
     }
   } catch (e) {
-    Logger.error(`editArticle error: ${JSON.stringify(e)}`);
+    logger.error(`editArticle error: ${JSON.stringify(e)}`);
   }
+};
+
+export const makeRequestsToChangeMarkdownReferences = async (
+  articlesNeedingLinkUpdates: VanillaArticle[],
+  client: HttpClient
+) => {
+  const handledArticles = [];
+  for (let a = 0; a < articlesNeedingLinkUpdates.length; a++) {
+    const { articleID } = articlesNeedingLinkUpdates[a];
+
+    if (articlesNeedingLinkUpdates[a].body && articleID !== null) {
+      const editResponse = await editArticle(client, articleID, {
+        body: articlesNeedingLinkUpdates[a].body,
+        format: "html",
+      });
+      if (editResponse) {
+        handledArticles.push(editResponse);
+      }
+    }
+  }
+  return handledArticles;
 };
 
 export const postImage = async (client: HttpClient, data: FormData) => {
@@ -357,7 +413,7 @@ export const postImage = async (client: HttpClient, data: FormData) => {
       return image.data;
     }
   } catch (error) {
-    Logger.error(
+    logger.error(
       `postImageError:\n${JSON.stringify(data)} error: ${JSON.stringify(error)}`
     );
   }
@@ -387,7 +443,7 @@ export const uploadImageAndReturnUrl = async (
       return postImageResponse.url;
     }
   } catch (e) {
-    Logger.error(
+    logger.error(
       `uploadImageAndReturnUrl: file does not exist (${fileLocation})\n error: ${JSON.stringify(
         e
       )}`

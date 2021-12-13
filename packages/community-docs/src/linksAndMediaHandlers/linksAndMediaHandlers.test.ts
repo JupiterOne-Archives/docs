@@ -1,7 +1,11 @@
+/* eslint-disable no-useless-escape */
 import {
+  getArticleNameFromReference,
+  getFullMarkdownReferencePathMatches,
   getMarkdownImageSrcs,
   isSupportedMediaType,
-  modifyBodyImageLink,
+  modifyBodyLinkForImage,
+  modifyBodyLinkForImageForReturnedArticles,
 } from "./";
 import {
   assetDefinition,
@@ -9,8 +13,23 @@ import {
   gearImage,
   markdownAsString,
   markdownAsStringNOImages,
+  markdownAsStringWithInternalLinks,
 } from "./mockMarkdown";
 describe("linksAndMediaHandlers", () => {
+  describe("modifyBodyLinkForImageForReturnedArticles", () => {
+    it("returns a modified string", () => {
+      const replacement =
+        "https://jupiterone.vanillastaging.com/kb/articles/545-catalog";
+      const body = `<li><a rel=\"nofollow\" href=\"../getting-started-admin/catalog.md\">look at this other doc</a></li>`;
+      const expected = `<li><a rel=\"nofollow\" href="https://jupiterone.vanillastaging.com/kb/articles/545-catalog">look at this other doc</a></li>`;
+      const actual = modifyBodyLinkForImageForReturnedArticles(
+        body,
+        "../getting-started-admin/catalog.md",
+        replacement
+      );
+      expect(actual).toEqual(expected);
+    });
+  });
   describe("getMarkdownImageSrcs", () => {
     it("returns empty array when no regex matches", async () => {
       const actual = getMarkdownImageSrcs(markdownAsStringNOImages);
@@ -23,10 +42,10 @@ describe("linksAndMediaHandlers", () => {
       expect(actual).toEqual(expected);
     });
   });
-  describe("modifyBodyImageLink", () => {
+  describe("modifyBodyLinkForImage", () => {
     it("returns same string when no regex match", async () => {
       const replacementText = "Hotdog";
-      const actual = modifyBodyImageLink(
+      const actual = modifyBodyLinkForImage(
         markdownAsString,
         "whatsforlunch",
         replacementText
@@ -37,7 +56,7 @@ describe("linksAndMediaHandlers", () => {
     });
     it("returns altered string with assetLocation replaced with newLocation", async () => {
       const replacementText = "Hotdog";
-      const actual = modifyBodyImageLink(
+      const actual = modifyBodyLinkForImage(
         markdownAsString,
         criticalAsset,
         replacementText
@@ -57,6 +76,63 @@ describe("linksAndMediaHandlers", () => {
     it("returns false for media files not supported", () => {
       const expected = false;
       const actual = isSupportedMediaType("../assets/asset-critical.svg");
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  describe("getFullMarkdownReferencePathMatches", () => {
+    it("returns empty array when no links found", () => {
+      const expected: string[] = [];
+      const actual = getFullMarkdownReferencePathMatches("");
+      expect(actual).toEqual(expected);
+    });
+    it("returns matches on MARKDOWN_REGEX_FULL_MARKDOWN_PATH", () => {
+      const expected: string[] = [
+        "../queries/common-qq-training.md",
+        "../queries/common-qq-endpoint.md",
+      ];
+      const actual = getFullMarkdownReferencePathMatches(
+        markdownAsStringWithInternalLinks
+      );
+
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  describe("getArticleNameFromReference", () => {
+    it("returns noFile for empty match", () => {
+      const match: string = "";
+      const expected = "NoFile";
+      const actual = getArticleNameFromReference(match);
+      expect(actual).toEqual(expected);
+    });
+    it("returns the filename", () => {
+      const match: string = 'href="../queries/common-qq-training.md';
+      const expected = "Common Qq Training";
+      const actual = getArticleNameFromReference(match);
+      expect(actual).toEqual(expected);
+
+      const matchTwo: string = "asset-inventory-filters.md";
+      const expectedTwo = "Asset Inventory Filters";
+      const actualTwo = getArticleNameFromReference(matchTwo);
+      expect(actualTwo).toEqual(expectedTwo);
+
+      const matchThree: string = "../queries/common-qq-training.md";
+      const expectedThree = "Common Qq Training";
+      const actualThree = getArticleNameFromReference(matchThree);
+      expect(actualThree).toEqual(expectedThree);
+
+      const matchFour: string =
+        "https://github.com/JupiterOne/docs/blob/main/docs/parameters.md";
+      const expectedFour = "Parameters";
+      const actualFour = getArticleNameFromReference(matchFour);
+      expect(actualFour).toEqual(expectedFour);
+    });
+    it("handles url-type links", () => {
+      const match: string =
+        "https://github.com/JupiterOne/docs/blob/main/docs/parameters.md";
+      const expected = "Parameters";
+      const actual = getArticleNameFromReference(match);
       expect(actual).toEqual(expected);
     });
   });

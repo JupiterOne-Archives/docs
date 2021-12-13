@@ -2,9 +2,10 @@ import HttpClient from "../httpClient";
 import {
   getMarkdownImageSrcs,
   isSupportedMediaType,
-  modifyBodyImageLink,
+  modifyBodyLinkForImage,
 } from "../linksAndMediaHandlers";
-import { Logger } from "../Logging";
+import { logger } from "../loggingUtil";
+import { updateArticleInternalMarkdownLinks } from "../updateArticleInternalMarkdownLinks";
 import { isArticleType, isKnowledgeCategoryType } from "../utils";
 import { createDisplayName } from "../utils/common";
 import {
@@ -21,6 +22,7 @@ import {
   editArticle,
   getAllArticles,
   getKnowedgeCategories,
+  makeRequestsToChangeMarkdownReferences,
   uploadImageAndReturnUrl,
 } from "../VanillaAPI";
 import { directoryExists, markdownToString } from "./utils";
@@ -71,7 +73,7 @@ export const addVanillaArticlesToProcedures = (
   procedures: (VanillaArticle | VanillaKnowledgeCategory)[],
   vanillaArticles: VanillaArticle[]
 ) => {
-  Logger.info(`Adding vanilla article information to procedures`);
+  logger.info(`Adding vanilla article information to procedures`);
 
   return procedures.map((p) => {
     if (isArticleType(p)) {
@@ -91,13 +93,13 @@ export const uploadImagesAndAddToMarkdown = async (
   imageSrcArray: string[],
   markdownAsString: string
 ) => {
-  Logger.info(`Uploading and adding images: ${imageSrcArray}`);
+  logger.info(`Uploading and adding images: ${imageSrcArray}`);
   let markdownTarget = markdownAsString;
   const supportedImages = imageSrcArray.filter((m) => isSupportedMediaType(m));
   for (let i = 0; i < supportedImages.length; i++) {
     if (SHOULD_REALLY_UPLOAD_IMAGES) {
       const newLocation = await uploadImageAndReturnUrl(supportedImages[i]);
-      markdownTarget = modifyBodyImageLink(
+      markdownTarget = modifyBodyLinkForImage(
         markdownTarget,
         supportedImages[i],
         newLocation
@@ -151,6 +153,8 @@ export const procedureToArticle = async (
 
       if (createdArticle?.articleID) {
         return createdArticle;
+      } else {
+        return tempProcedureWorkedOn;
       }
     }
   } else {
@@ -249,7 +253,7 @@ export const removeDeletedCategories = async (
   httpClient: HttpClient,
   procedures: (VanillaArticle | VanillaKnowledgeCategory)[]
 ) => {
-  Logger.info(
+  logger.info(
     `Removing deleted categories${JSON.stringify(procedures, null, 2)}`
   );
 
@@ -382,27 +386,7 @@ export const useProceduresForVanillaRequests = async (
     existingknowledgeCategoryInfo
   );
 
-  // const hasDonePrevFromVanilla: (VanillaArticle | VanillaKnowledgeCategory)[] =
-  //   tempExistingKnowledgeCategoryInfo.filter((e) => {
-  //     return e.name === procedureWorkedOn?.name;
-  //   });
-  // const hasDonePrevFromCompletedProcedures: (
-  //   | VanillaArticle
-  //   | VanillaKnowledgeCategory
-  // )[] = tempCompletedProcedures.filter((e) => {
-  //   return e.name === procedureWorkedOn?.name;
-  // });
-
   if (isKnowledgeCategoryType(procedureWorkedOn)) {
-    // if (
-    //   hasDonePrevFromVanilla.length ||
-    //   hasDonePrevFromCompletedProcedures.length
-    // ) {
-    //   tempExistingKnowledgeCategoryInfo.push(procedureWorkedOn);
-    //   previousknowledgeCategoryID =
-    //     hasDonePrevFromVanilla[0].knowledgeCategoryID ||
-    //     hasDonePrevFromVanilla[0].knowledgeCategoryID;
-    // } else {
     procedureWorkedOn = await procedureToKnowledgeCategory(
       httpClient,
       procedureWorkedOn,
@@ -411,7 +395,6 @@ export const useProceduresForVanillaRequests = async (
     tempExistingKnowledgeCategoryInfo.push(procedureWorkedOn);
     previousknowledgeCategoryID = procedureWorkedOn.knowledgeCategoryID;
     tempProcedures[0].knowledgeCategoryID = previousknowledgeCategoryID;
-    // }
   }
   if (isArticleType(procedureWorkedOn)) {
     procedureWorkedOn = await procedureToArticle(
@@ -437,17 +420,17 @@ export const proceduresToVanillaRequests = async (
 ) => {
   if (procedures && procedures.length) {
     const httpClient = new HttpClient();
-    Logger.info(`Getting knowledgeCategories`);
+    logger.info(`Getting knowledgeCategories`);
     const existingknowledgeCategoryInfo = await getKnowedgeCategories(
       httpClient
     );
-    Logger.info(`Getting Articles`);
+    logger.info(`Getting Articles`);
     const articles = await getAllArticles(
       httpClient,
       existingknowledgeCategoryInfo
     );
 
-    Logger.info(`Mapping Vanilla responses to procedures`);
+    logger.info(`Mapping Vanilla responses to procedures`);
     const proceduresWithVanillaCategories = procedures.map((p) => {
       if (isKnowledgeCategoryType(p)) {
         return addVanillaCategoryToProcedure(p, existingknowledgeCategoryInfo);
@@ -460,14 +443,36 @@ export const proceduresToVanillaRequests = async (
       articles
     );
 
-    const proceduresNeedingDeleteCategories =
-      await useProceduresForVanillaRequests(
-        proceduresWithArticleInfo,
-        httpClient,
-        existingknowledgeCategoryInfo
-      );
+    const processedProcedures = await useProceduresForVanillaRequests(
+      proceduresWithArticleInfo,
+      httpClient,
+      existingknowledgeCategoryInfo
+    );
+    logger.info(
+      `processedProcedures: ${JSON.stringify(processedProcedures, null, 2)}`
+    );
+    const combinationOfArticlesAndProcedures = [
+      ...processedProcedures,
+      ...articles,
+    ].filter(isArticleType);
 
-    const deletableCategories = proceduresNeedingDeleteCategories
+    const articlesNeedingLinkUpdates = updateArticleInternalMarkdownLinks(
+      [...processedProcedures],
+      combinationOfArticlesAndProcedures
+    );
+
+    const updatesToInternalLinks = await makeRequestsToChangeMarkdownReferences(
+      articlesNeedingLinkUpdates,
+      httpClient
+    );
+    logger.info(
+      `UpdatesToInternalLinks processed: ${JSON.stringify(
+        updatesToInternalLinks,
+        null,
+        2
+      )}`
+    );
+    const deletableCategories = processedProcedures
       .filter(isKnowledgeCategoryType)
       .filter((c) => c.description === FLAG_FOR_DELETE);
 
@@ -475,11 +480,12 @@ export const proceduresToVanillaRequests = async (
       httpClient,
       deletableCategories
     );
-    Logger.info(
-      `FINISHED WITH PROCEDURES: ${JSON.stringify(finishedProcedures, null, 2)}`
+    logger.info(
+      `PROCEDURES processed: ${JSON.stringify(finishedProcedures, null, 2)}`
     );
+
     return finishedProcedures;
   }
-  Logger.info(`FINISHED WITH PROCEDURES: NONE`);
+  logger.info(`FINISHED WITH PROCEDURES: NONE`);
   return [];
 };

@@ -3,9 +3,8 @@ import path from "path";
 import { diffToProcedures } from "./diffToProcedures";
 import { getDiffFromHead } from "./gitDifference";
 import HttpClient from "./httpClient";
-import { Logger } from "./Logging";
+import { logger } from "./loggingUtil";
 import { proceduresToVanillaRequests } from "./proceduresToVanillaRequests";
-// import { getAllSubChanges } from "./utils/common";
 import { PATH_OF_DIRECTORY_TO_WATCH } from "./utils/constants";
 import {
   deleteArticle,
@@ -43,7 +42,7 @@ const getDirectories = (src: string, cb: (err: any, res: any) => any) => {
 export const updateCommunityDocs = async () => {
   const diff = await getDiffFromHead();
 
-  Logger.info(`Diffs: ${diff}`);
+  logger.info(`Diffs: ${diff}`);
 
   if (diff && diff.length) {
     const diffChanges = diff.trim().split("\n");
@@ -63,14 +62,14 @@ export const updateCommunityDocs = async () => {
       path.substring(path.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
     const procedures = diffToProcedures(nestedWithRemovedPath);
-    Logger.info(`list of procedures: ${JSON.stringify(procedures, null, " ")}`);
+    logger.info(`list of procedures: ${JSON.stringify(procedures, null, " ")}`);
     if (procedures && procedures.length > 0) {
       const completedProcedures = await proceduresToVanillaRequests(procedures);
 
-      Logger.info(`Completed: ${completedProcedures}`);
+      logger.info(`Completed: ${completedProcedures}`);
       return completedProcedures;
     } else {
-      Logger.info(`Completed - no procedures generated`);
+      logger.info(`Completed - no procedures generated`);
     }
   }
 };
@@ -125,8 +124,8 @@ export const addFullSubFolderManually = async (folderName: string) => {
       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
     const procedures = diffToProcedures(trimmedDirectories);
-    Logger.info(`Path of changes: ${fullArrayOfAllItems}`);
-    Logger.info(`list of procedures: ${procedures}`);
+    logger.info(`Path of changes: ${fullArrayOfAllItems}`);
+    logger.info(`list of procedures: ${procedures}`);
     if (procedures && procedures.length > 0) {
       return await proceduresToVanillaRequests(procedures);
     }
@@ -139,15 +138,15 @@ export const deleteAllThingsCurrentlyOnVanillaForum = async () => {
   const httpClient = new HttpClient();
   const knowledgeCategories = await getKnowedgeCategories(httpClient);
 
-  Logger.info(`Getting Articles for DELETION`);
+  logger.info(`Getting Articles for DELETION`);
   const articles = await getAllArticles(httpClient, knowledgeCategories);
   for (let articleIndex = 0; articleIndex < articles.length; articleIndex++) {
     try {
-      Logger.info(`deleting Article:${articles[articleIndex]?.name}`);
+      logger.info(`deleting Article:${articles[articleIndex]?.name}`);
 
       await deleteArticle(httpClient, articles[articleIndex].articleID);
     } catch (articleDeleteError) {
-      Logger.error(`DELETE ALL ARTICLE ERROR: \n ${articleDeleteError}`);
+      logger.error(`DELETE ALL ARTICLE ERROR: \n ${articleDeleteError}`);
     }
   }
 
@@ -157,7 +156,7 @@ export const deleteAllThingsCurrentlyOnVanillaForum = async () => {
     knowledgeCategoryIndex++
   ) {
     try {
-      Logger.info(
+      logger.info(
         `deleting item:${knowledgeCategories[knowledgeCategoryIndex].name}`
       );
       await deleteKnowledgeCategory(
@@ -165,30 +164,26 @@ export const deleteAllThingsCurrentlyOnVanillaForum = async () => {
         knowledgeCategories[knowledgeCategoryIndex]
       );
     } catch (categoryDeleteError) {
-      Logger.error(`DELETE ALL Categories ERROR: \n ${categoryDeleteError}`);
+      logger.error(`DELETE ALL Categories ERROR: \n ${categoryDeleteError}`);
     }
   }
 };
 
-const exampleOfPathsOfChanges = [
-  `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md`,
-  `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/compliance-reporting/soc2-with-jupiterone.md`,
-  `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/jupiterone-query-language-copy.md`,
-  `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/jupiterone-query-language.md`,
-  `${PATH_OF_DIRECTORY_TO_WATCH}/after-getting-started/rock_and-roll.md`,
+const exampleOfPathsOfChangesX = [
+  `${PATH_OF_DIRECTORY_TO_WATCH}/asset-management/`,
 ];
 
 // Handy for debugging
 export const updateCommunityDocsWithPathOverride = async (
-  relativePath = exampleOfPathsOfChanges
+  relativePath = exampleOfPathsOfChangesX
 ) => {
   if (relativePath && relativePath.length) {
     const trimmedDirectories = relativePath.map((result) =>
       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
     const procedures = diffToProcedures(trimmedDirectories);
-    Logger.info(`Path of changes: ${relativePath}`);
-    Logger.info(`list of procedures: ${procedures}`);
+    logger.info(`Path of changes: ${relativePath}`);
+    logger.info(`list of procedures: ${procedures}`);
     if (procedures && procedures.length > 0) {
       return await proceduresToVanillaRequests(procedures);
     }

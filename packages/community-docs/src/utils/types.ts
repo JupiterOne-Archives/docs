@@ -89,7 +89,7 @@ export interface VanillaArticlePatch {
 export interface VanillaArticle {
   articleID: number | null;
   knowledgeCategoryID: number | null;
-  body: string | null;
+  body: string;
   dateInserted?: string;
   dateUpdated?: string;
   excerpt?: string | null;
@@ -122,9 +122,15 @@ export interface VanillaArticle {
   foreignID?: string | null;
   sort?: number;
   knowledgeBaseID?: number;
+  breadcrumbs?: ArticleBreadCrumbs[];
   // things we have added
   path?: string;
   fileName: null | string;
   requestCompleted?: boolean;
   procedureType: ProcedureTypeEnum;
+  referencesNeedingUpdatesInMarkdown?: string[];
+}
+export interface ArticleBreadCrumbs {
+  name: string;
+  url: string;
 }
