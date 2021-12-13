@@ -443,26 +443,21 @@ export const proceduresToVanillaRequests = async (
       articles
     );
 
-    const proceduresNeedingDeleteCategories =
-      await useProceduresForVanillaRequests(
-        proceduresWithArticleInfo,
-        httpClient,
-        existingknowledgeCategoryInfo
-      );
+    const processedProcedures = await useProceduresForVanillaRequests(
+      proceduresWithArticleInfo,
+      httpClient,
+      existingknowledgeCategoryInfo
+    );
     logger.info(
-      `proceduresNeedingDeleteCategories: ${JSON.stringify(
-        proceduresNeedingDeleteCategories,
-        null,
-        2
-      )}`
+      `processedProcedures: ${JSON.stringify(processedProcedures, null, 2)}`
     );
     const combinationOfArticlesAndProcedures = [
-      ...proceduresNeedingDeleteCategories,
+      ...processedProcedures,
       ...articles,
     ].filter(isArticleType);
 
     const articlesNeedingLinkUpdates = updateArticleInternalMarkdownLinks(
-      [...proceduresNeedingDeleteCategories],
+      [...processedProcedures],
       combinationOfArticlesAndProcedures
     );
 
@@ -477,7 +472,7 @@ export const proceduresToVanillaRequests = async (
         2
       )}`
     );
-    const deletableCategories = proceduresNeedingDeleteCategories
+    const deletableCategories = processedProcedures
       .filter(isKnowledgeCategoryType)
       .filter((c) => c.description === FLAG_FOR_DELETE);
 

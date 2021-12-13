@@ -16,7 +16,8 @@ export const updateArticleInternalMarkdownLinks = (
 
   const articleProcedures: VanillaArticle[] = completedProcedures
     .filter(isArticleType)
-    .filter((a) => a.referencesNeedingUpdatesInMarkdown?.length);
+    .filter((a) => a.referencesNeedingUpdatesInMarkdown?.length)
+    .filter((a) => a.status !== "deleted");
 
   const proceduresWithUpdatedBodies: VanillaArticle[] = [];
   for (let i = 0; i < articleProcedures.length; i++) {
@@ -32,11 +33,11 @@ export const updateArticleInternalMarkdownLinks = (
       references.forEach((ref) => {
         const articleName = getArticleNameFromReference(ref);
 
-        const existingArticleMatches = [...articlesToUseForSlugs].filter(
-          (article) => {
+        const existingArticleMatches = [...articlesToUseForSlugs]
+          .filter((article) => {
             return article.name === articleName;
-          }
-        );
+          })
+          .filter((a) => a.status !== "deleted");
         const articleUrl: string =
           existingArticleMatches[0]?.url || "doesNotExist";
 
