@@ -1,10 +1,10 @@
-import { updateVanillaWithDirectoryToWatch } from "./";
+import { updateCommunityDocs } from "./";
 import { logger } from "./loggingUtil";
 
 const updateCommunityDocsByMergeChanges = async () => {
   try {
     logger.info("Starting updateCommunityDocs");
-    const completed = await updateVanillaWithDirectoryToWatch();
+    const completed = await updateCommunityDocs();
 
     logger.info(
       `UpdateCommunityDocs completed: ${JSON.stringify(completed, null, 2)}`
