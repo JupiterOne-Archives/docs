@@ -13,10 +13,6 @@ Continue to reference other markdowns as if they lived in the same directory.
 Example usage:
 ` [2]: ./jupiterone-api.md#entity-and-relationship-synchronization [1]: ../../docs/data-model/org-grc.md Learn more [here] (https://github.com/JupiterOne/docs/blob/main/docs/parameters.md#jupiterone-parameter-service). [security cyber asset inventory](../asset-inventory-filters.md)`
 
-# Needs
-
-Token from vanilla to pass in when running locally.
-
 ## Quick Rundown of How it Works
 
 - Check of changes to the KnowledgeBase folder on merge.
@@ -50,7 +46,7 @@ Token from vanilla to pass in when running locally.
 
 - After a branch has been merged to `main` differences between the two will be used to create/remove/edit articles and Knowledge categories
 
-- Folders added or changed will create new Knowledge Categories with each child of that directory becoming either `Articles` or additional child (nested) Knowledge Categories.
+- Folders added or changed will create new Knowledge Categories with each child of that directory becoming either `Articles` or additional child (nested) `Knowledge Categories`.
 
 ## Requirements and Gotchas
 
