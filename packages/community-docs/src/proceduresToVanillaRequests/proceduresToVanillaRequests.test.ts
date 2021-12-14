@@ -555,6 +555,7 @@ describe("ProceduresToVanillaRequests", () => {
         [
           vanillaKnowledgeCategory,
           vanillaArticleWithInfo,
+          vanillaArticleWithInfo,
           targetForKnowledgeCategory,
           vanillaArticleWithInfo,
         ],
