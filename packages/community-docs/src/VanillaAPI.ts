@@ -452,3 +452,21 @@ export const uploadImageAndReturnUrl = async (
 
   return imagePath;
 };
+
+export const deleteEmptyCategories = async (client: HttpClient) => {
+  const knowledgeCategories = await getKnowedgeCategories(client);
+  const emptyKnowedgeCategories = knowledgeCategories
+    .filter((k) => k.articleCount === 0)
+    .filter((k) => k.articleCountRecursive === 0)
+    .filter((k) => k.childCategoryCount === 0);
+  for (let k = 0; k < emptyKnowedgeCategories.length; k++) {
+    try {
+      logger.info(
+        `Deleting Empty Category: ${JSON.stringify(emptyKnowedgeCategories[k])}`
+      );
+      await deleteKnowledgeCategory(client, emptyKnowedgeCategories[k]);
+    } catch (error) {
+      logger.error(`deleteEmptyCategoryError: \n ${JSON.stringify(error)}`);
+    }
+  }
+};
