@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-focused-tests */
 import {
   FLAG_FOR_DELETE,
   KNOWN_CATEGORY_BEEN_DELETED,
@@ -18,14 +19,12 @@ import {
   addVanillaArticleInfoToProcedure,
   addVanillaArticlesToProcedures,
   addVanillaCategoryToProcedure,
-  getPreviousKnowledgeID,
   procedureToArticle,
   procedureToKnowledgeCategory,
   removeDeletedCategories,
   useProceduresForVanillaRequests,
 } from "./";
 import {
-  childVanillaKnowledgeCategory,
   expectedDeleteANDCreatesPROCEDURES,
   matchingProcedureKnowledgeCategory,
   matchingVanillaKnowledgeArticle,
@@ -41,21 +40,28 @@ import {
   vanillaKnowledgeArticle,
   vanillaKnowledgeCategory,
 } from "./mocks";
+import * as pToRequests from "./utils";
 import { directoryExists, markdownToString } from "./utils";
+
 jest.mock("../VanillaAPI");
-jest.mock("./utils");
 
 describe("ProceduresToVanillaRequests", () => {
+  let mockDirectoryExists = jest.spyOn(pToRequests, "directoryExists");
+  let mockMarkdownToString = jest.spyOn(pToRequests, "markdownToString");
+  beforeEach(() => {
+    mockDirectoryExists = jest.spyOn(pToRequests, "directoryExists");
+    mockDirectoryExists.mockImplementation(() => true);
+    mockMarkdownToString = jest.spyOn(pToRequests, "markdownToString");
+    mockMarkdownToString.mockImplementation(() => "" as any);
+  });
   let mockCreateKnowledgeCategory =
     createKnowledgeCategory as jest.MockedFunction<
       typeof createKnowledgeCategory
     >;
-  let mockMarkdownToString = markdownToString as jest.MockedFunction<
-    typeof markdownToString
-  >;
-  let mockDirectoryExists = directoryExists as jest.MockedFunction<
-    typeof directoryExists
-  >;
+
+  // let mockDirectoryExists = directoryExists as jest.MockedFunction<
+  //   typeof directoryExists
+  // >;
   let mockEditKnowledgeCategory = editKnowledgeCategory as jest.MockedFunction<
     typeof editKnowledgeCategory
   >;
@@ -423,13 +429,19 @@ describe("ProceduresToVanillaRequests", () => {
     it("Creates", async () => {
       mockDirectoryExists.mockReturnValue(true);
       const procedureKnowledgeCategoryNOKCID = {
-        ...procedureKnowledgeCategorytemp,
+        parentID: null,
+        knowledgeBaseID: 1,
+        name: "Soc2 Reporting",
+        fileName: "soc2-reporting",
+        description: "",
+        knowledgeCategoryID: null,
+        path: "getting-started-admin/soc2-reporting",
+        childrenPath:
+          "getting-started-admin/soc2-reporting/soc2-with-jupiterone-copy.md",
+        procedureType: ProcedureTypeEnum.Category,
       };
       const knowledgeCategoryID = 111;
-      mockCreateKnowledgeCategory.mockResolvedValue({
-        ...procedureKnowledgeCategoryNOKCID,
-        knowledgeCategoryID,
-      });
+
       const expected = {
         childrenPath:
           "getting-started-admin/soc2-reporting/soc2-with-jupiterone-copy.md",
@@ -439,13 +451,29 @@ describe("ProceduresToVanillaRequests", () => {
         knowledgeBaseID: 1,
         knowledgeCategoryID,
         name: "Soc2 Reporting",
-        parentID: null,
+        parentID: 22,
         path: "getting-started-admin/soc2-reporting",
         procedureType: "Category",
         sort: undefined,
         sortChildren: undefined,
         url: undefined,
       };
+      mockCreateKnowledgeCategory.mockResolvedValue({
+        childrenPath:
+          "getting-started-admin/soc2-reporting/soc2-with-jupiterone-copy.md",
+        description: "",
+        fileName: "soc2-reporting",
+        foreignID: undefined,
+        knowledgeBaseID: 1,
+        knowledgeCategoryID,
+        name: "Soc2 Reporting",
+        parentID: 22,
+        path: "getting-started-admin/soc2-reporting",
+        procedureType: ProcedureTypeEnum.Category,
+        sort: undefined,
+        sortChildren: undefined,
+        url: undefined,
+      });
       const mockHttpclient = {} as any;
       const actual = await procedureToKnowledgeCategory(
         mockHttpclient,
@@ -528,163 +556,6 @@ describe("ProceduresToVanillaRequests", () => {
     });
   });
 
-  describe("getPreviousKnowledgeID", () => {
-    it("returns null when there is no previous knowledge category", () => {
-      const expected = null;
-      const actualWithEmptyArray = getPreviousKnowledgeID(
-        [],
-        vanillaKnowledgeCategory,
-        []
-      );
-      const actualWithNoCategories = getPreviousKnowledgeID(
-        [vanillaArticleWithInfo, vanillaArticleWithInfo],
-        childVanillaKnowledgeCategory,
-        []
-      );
-      expect(actualWithEmptyArray).toEqual(expected);
-      expect(actualWithNoCategories).toEqual(expected);
-    });
-    it("returns knowledgeCategoryID of nearest Category", () => {
-      const knowledgeCategoryID = 827;
-      const targetForKnowledgeCategory = {
-        ...vanillaKnowledgeCategory,
-        knowledgeCategoryID,
-      };
-      const expected = knowledgeCategoryID;
-      const actualWithEmptyArray = getPreviousKnowledgeID(
-        [
-          vanillaKnowledgeCategory,
-          vanillaArticleWithInfo,
-          targetForKnowledgeCategory,
-          vanillaArticleWithInfo,
-        ],
-        childVanillaKnowledgeCategory,
-        [targetForKnowledgeCategory, vanillaKnowledgeCategory]
-      );
-
-      expect(actualWithEmptyArray).toEqual(expected);
-    });
-    it("new parent category gets null as knowledgeCategoryID", () => {
-      const anotherParentCategory = {
-        parentID: 1,
-        knowledgeBaseID: 1,
-        name: "Getting Started Admin",
-        fileName: "getting-started-admin",
-        description: "",
-        knowledgeCategoryID: 49,
-        path: "getting-started-admin",
-        childrenPath: "getting-started-admin/jupiterone-query-language-copy.md",
-        procedureType: "Category",
-        sortChildren: null,
-        sort: 0,
-        url: "",
-        foreignID: null,
-      } as VanillaKnowledgeCategory;
-      const tester = {
-        parentID: 1,
-        knowledgeBaseID: 1,
-        name: "After started Admin",
-        fileName: "after-started-admin",
-        description: "",
-        knowledgeCategoryID: null,
-        path: "after-started-admin",
-        childrenPath: "after-started-admin/rock/rolls.md",
-        procedureType: "Category",
-        sortChildren: null,
-        sort: 0,
-        url: "",
-        foreignID: null,
-      } as VanillaKnowledgeCategory;
-      const cousinNotParent = {
-        parentID: 8,
-        knowledgeBaseID: 1,
-        name: "Compliance Reporting",
-        fileName: "compliance-reporting",
-        description: "",
-        knowledgeCategoryID: 23,
-        path: "getting-started-admin/compliance-reporting",
-        childrenPath:
-          "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
-        procedureType: ProcedureTypeEnum.Category,
-      } as VanillaKnowledgeCategory;
-
-      const returnedId = getPreviousKnowledgeID(
-        [anotherParentCategory, cousinNotParent],
-        tester,
-        [anotherParentCategory, cousinNotParent]
-      );
-
-      expect(returnedId).toEqual(null);
-    });
-    it("no matching categories in completed procedures", () => {
-      const testerParent = {
-        parentID: 1,
-        knowledgeBaseID: 1,
-        name: "After Started Admin",
-        fileName: "after-started-admin",
-        description: "",
-        knowledgeCategoryID: 12,
-        path: "after-started-admin",
-        childrenPath: "after-started-admin/rock/rolls.md",
-        procedureType: "Category",
-        sortChildren: null,
-        sort: 0,
-        url: "",
-        foreignID: null,
-      } as VanillaKnowledgeCategory;
-      const otherRootCategory = {
-        parentID: 1,
-        knowledgeBaseID: 1,
-        name: "Getting Started Admin",
-        fileName: "getting-started-admin",
-        description: "",
-        knowledgeCategoryID: 49,
-        path: "getting-started-admin",
-        childrenPath: "getting-started-admin/jupiterone-query-language-copy.md",
-        procedureType: "Category",
-        sortChildren: null,
-        sort: 0,
-        url: "",
-        foreignID: null,
-      } as VanillaKnowledgeCategory;
-      const tester = {
-        parentID: 1,
-        knowledgeBaseID: 1,
-        name: "Rock",
-        fileName: "rock",
-        description: "",
-        knowledgeCategoryID: null,
-        path: "after-started-admin/rock",
-        childrenPath: "after-started-admin/rock/rolls.md",
-        procedureType: "Category",
-        sortChildren: null,
-        sort: 0,
-        url: "",
-        foreignID: null,
-      } as VanillaKnowledgeCategory;
-      const cousinNotParent = {
-        parentID: 8,
-        knowledgeBaseID: 1,
-        name: "Compliance Reporting",
-        fileName: "compliance-reporting",
-        description: "",
-        knowledgeCategoryID: 23,
-        path: "getting-started-admin/compliance-reporting",
-        childrenPath:
-          "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
-        procedureType: ProcedureTypeEnum.Category,
-      } as VanillaKnowledgeCategory;
-
-      const returnedId = getPreviousKnowledgeID(
-        [testerParent, otherRootCategory, cousinNotParent],
-        tester,
-        [cousinNotParent]
-      );
-
-      expect(returnedId).toEqual(12);
-    });
-  });
-
   describe("useProceduresForVanillaRequests", () => {
     beforeEach(() => {
       mockMarkdownToString.mockReset();
@@ -749,44 +620,99 @@ describe("ProceduresToVanillaRequests", () => {
 
       expect(actual).toEqual(SHAPEWEWANT);
     });
-    it("handles addition and removal of an articles", async () => {
+
+    // here
+    it("handles addition, edits and removal of articles", async () => {
       const mockHttpclient = {} as any;
-      mockDirectoryExists.mockReturnValue(true);
-      const editArticle =
-        PROCEDURESWithOneDeleteArticleAndCreates[2] as VanillaArticle;
-      const deleteArticle =
-        PROCEDURESWithOneDeleteArticleAndCreates[1] as VanillaArticle;
+      mockDirectoryExists
+        .mockReturnValueOnce(true)
+        .mockReturnValueOnce(true)
+        .mockReturnValueOnce(true)
+        .mockReturnValueOnce(false)
+        .mockReturnValueOnce(false)
+        .mockReturnValueOnce(false);
+
+      const deleteArticle = {
+        articleID: 11,
+        body: "FILE_DOES_NOT_EXIST",
+        fileName: "jupiterone-query-language-copy.md",
+        format: "markdown",
+        knowledgeCategoryID: 22,
+        locale: "en",
+        status: "deleted",
+        name: "Jupiterone Query Language Copy",
+        path: "getting-started-admin/jupiterone-query-language-copy.md",
+        procedureType: "Article",
+      } as VanillaArticle;
       mockMarkdownToString
         .mockResolvedValueOnce(FLAG_FOR_DELETE)
         .mockResolvedValue("Im markdown. LOOK AT ME.");
-      mockEditArticle.mockResolvedValue(editArticle);
+      mockEditArticle.mockResolvedValue({
+        articleID: 12,
+        body: "some body",
+        fileName: "jupiterone-query-language.md",
+        format: "markdown",
+        knowledgeCategoryID: 22,
+        locale: "en",
+        name: "Jupiterone Query Language",
+        path: "getting-started-admin/jupiterone-query-language.md",
+        procedureType: "Article",
+      } as VanillaArticle);
       mockDeleteArticle.mockResolvedValue(deleteArticle);
       mockCreateArticle
         .mockResolvedValueOnce({
-          ...vanillaArticleWithInfo,
-          knowledgeCategoryID: 33,
           articleID: 21,
+          body: "",
+          fileName: "jupiterone-query-language-copy.md",
+          format: "markdown",
+          knowledgeCategoryID: 22,
+          locale: "en",
           name: "Soc2 With Jupiterone Copy",
-        })
+          path: "getting-started-admin/jupiterone-query-language-copy.md",
+          procedureType: "Article",
+        } as VanillaArticle)
         .mockResolvedValueOnce({
-          ...vanillaArticleWithInfo,
-          knowledgeCategoryID: 33,
           articleID: 22,
-          name: "Soc2 With Jupiterone",
-        });
+          body: "",
+          fileName: "compliance-with-jupiterone.md",
+          format: "markdown",
+          knowledgeCategoryID: 23,
+          locale: "en",
+          name: "Compliance With Jupiterone",
+          path: "getting-started-admin/compliance-reporting/compliance-with-jupiterone.md",
+          procedureType: "Article",
+        } as VanillaArticle);
 
       mockCreateKnowledgeCategory.mockResolvedValueOnce({
-        ...vanillaKnowledgeCategory,
-        parentID: 22,
+        childrenPath: "compliance-reporting",
+        description: "",
+        fileName: "compliance-reporting",
         knowledgeBaseID: 1,
+        knowledgeCategoryID: 23,
         name: "Compliance Reporting",
-        knowledgeCategoryID: 33,
-      });
+        parentID: 22,
+        path: "getting-started-admin/compliance-reporting/compliance-with-jupiterone.md",
+        procedureType: "Category",
+      } as VanillaKnowledgeCategory);
+
+      const existingCategories = [
+        {
+          childrenPath: "getting-started-admin",
+          description: "",
+          fileName: "getting-started-admin",
+          knowledgeBaseID: 1,
+          knowledgeCategoryID: 22,
+          name: "Getting Started Admin",
+          parentID: 1,
+          path: "getting-started-admin/jupiterone-query-language-copy.md",
+          procedureType: "Category",
+        },
+      ] as VanillaKnowledgeCategory[];
 
       const actual = await useProceduresForVanillaRequests(
         PROCEDURESWithOneDeleteArticleAndCreates,
         mockHttpclient,
-        [],
+        existingCategories,
         []
       );
 
