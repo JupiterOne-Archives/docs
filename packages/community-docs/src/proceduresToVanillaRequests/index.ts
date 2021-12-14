@@ -408,7 +408,6 @@ export const useProceduresForVanillaRequests = async (
 
   return await useProceduresForVanillaRequests(
     tempProcedures,
-
     httpHandling,
     tempExistingKnowledgeCategoryInfo,
     tempCompletedProcedures
