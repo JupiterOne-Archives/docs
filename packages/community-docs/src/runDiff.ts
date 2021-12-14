@@ -1,11 +1,10 @@
-import { updateCommunityDocs } from "./";
-// import {updateArticleInternalMarkdownLinks} from './linksAndMediaHandlers/updateArticleInternalMarkdownLinks'
+import { deleteAllThingsCurrentlyOnVanillaForum } from "./";
 import { logger } from "./loggingUtil";
 
 const updateCommunityDocsByMergeChanges = async () => {
   try {
     logger.info("Starting updateCommunityDocs");
-    const completed = await updateCommunityDocs();
+    const completed = await deleteAllThingsCurrentlyOnVanillaForum();
 
     logger.info(
       `UpdateCommunityDocs completed: ${JSON.stringify(completed, null, 2)}`
