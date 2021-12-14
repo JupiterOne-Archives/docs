@@ -1,5 +1,3 @@
-// name from the view point of changed files
-
 import { logger } from "../loggingUtil";
 import { createDisplayName } from "../utils/common";
 import {

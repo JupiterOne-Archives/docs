@@ -1,5 +1,4 @@
 import { updateCommunityDocs } from "./";
-// import {updateArticleInternalMarkdownLinks} from './linksAndMediaHandlers/updateArticleInternalMarkdownLinks'
 import { logger } from "./loggingUtil";
 
 const updateCommunityDocsByMergeChanges = async () => {
