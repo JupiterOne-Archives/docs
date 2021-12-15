@@ -27,7 +27,7 @@ pipeline {
       }
     }
 
-    stage("Deploy") {
+    stage("Deploy to vanilla staging") {
       when {
         beforeAgent true
         branch 'vanilla-staging' 
@@ -56,7 +56,7 @@ pipeline {
             
       }
     }
-        stage("Deploy") {
+    stage("Deploying to vanilla production") {
       when {
         beforeAgent true
         branch 'vanilla-prod' 
@@ -64,19 +64,19 @@ pipeline {
       
       agent { label 'ecs-builder-node14' }
       steps {
-         initBuild()
-            sh 'yarn install --frozen-lockfile'
+        initBuild()
+          sh 'yarn install --frozen-lockfile'
 
-            sh 'yarn lint'
+          sh 'yarn lint'
 
-            sh 'yarn test:unit'
+          sh 'yarn test:unit'
 
-            sh 'yarn bundle'
+          sh 'yarn bundle'
 
-            sh 'jupiterone-build'
+          sh 'jupiterone-build'
 
-            withCredentials([
-              string(credentialsId: 'VANILLIA_PRODUCTION_ENV_TOKEN', variable: 'TOKEN')
+          withCredentials([
+            string(credentialsId: 'VANILLIA_PRODUCTION_ENV_TOKEN', variable: 'TOKEN')
                 ]) {
                   sh '''
                     TOKEN="$TOKEN" targetVanillaEnv=prod yarn start
