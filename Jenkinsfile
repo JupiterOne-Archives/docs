@@ -31,7 +31,7 @@ pipeline {
       when {
         beforeAgent true
         expression {
-          return env.BRANCH_NAME == 'vanilla-prod' || 'vanilla-staging';
+          return env.BRANCH_NAME == 'vanilla-prod' || env.BRANCH_NAME ==  'vanilla-staging';
           }
 
         }
@@ -49,22 +49,24 @@ pipeline {
 
             sh 'jupiterone-build'
             script {
-              if (env.BRANCH_NAME == 'vanilla-staging') {
+              if (env.BRANCH_NAME == 'vanilla-prod') {
                 withCredentials([
-                  string(credentialsId: 'VANILLIA_STAGING_ENV_TOKEN', variable: 'TOKEN')
-                  ]) {
-                   sh '''
-                    TOKEN="$TOKEN" targetVanillaEnv=staging yarn start
-                    '''
-                  }
-              } else {
-                   withCredentials([
                   string(credentialsId: 'VANILLIA_PRODUCTION_ENV_TOKEN', variable: 'TOKEN')
                 ]) {
                   sh '''
                     TOKEN="$TOKEN" targetVanillaEnv=prod yarn start
                   '''
                 }
+
+                
+              } else {
+                   withCredentials([
+                  string(credentialsId: 'VANILLIA_STAGING_ENV_TOKEN', variable: 'TOKEN')
+                  ]) {
+                   sh '''
+                    TOKEN="$TOKEN" targetVanillaEnv=staging yarn start
+                    '''
+                  }
               }
             }
 
