@@ -316,15 +316,12 @@ export const useProceduresForVanillaRequests = async (
   );
 
   if (isKnowledgeCategoryType(procedureWorkedOn)) {
-    console.log("hot dog", procedureWorkedOn);
     procedureWorkedOn = await procedureToKnowledgeCategory(
       httpClient,
       procedureWorkedOn,
       previousknowledgeCategoryID
     );
     tempExistingKnowledgeCategoryInfo.push(procedureWorkedOn);
-    // previousknowledgeCategoryID = procedureWorkedOn.knowledgeCategoryID;
-    // tempProcedures[0].knowledgeCategoryID = previousknowledgeCategoryID;
   }
   if (isArticleType(procedureWorkedOn)) {
     procedureWorkedOn = await procedureToArticle(

@@ -1,5 +1,9 @@
 # docs-community
 
+## MERGE to `vanilla-staging` will make changes to `https://jupiterone.vanillastaging.com/kb`
+
+## MERGE to `vanilla-prod` will make changes to `https://jupiterone.vanillacommunities.com/kb`
+
 - Add docs and folders to the `knowledgeBase` folder.
 - Assets go into the `knowledgeBase/assets` folder.
 - When a merge to docs-community's `knowledgeBase` (non-assets folder) occurs, a series of processes occur to update vanilla staging.
