@@ -1,5 +1,17 @@
 # docs-community
 
+- Add docs and folders to the 'knowledgeBase' folder.
+- Assets go into the 'knowledgeBase/assets' folder.
+- When a merge to docs-community's knowledgeBase (non-assets folder) occurs, a series of processes occur to update vanilla staging.
+- You can reference other docs and assets just like you would normally. If you can see it in a preview while working locally, and it is in the knowledgeBase folder, it will work once you merge.
+- Assets get uploaded to vanilla on usage. When you add a new image to the assets folder it is only uploaded when it is referenced in a markdown file within the knowledgeBase folder.
+- Assets should NOT be larger than 10mb (That is already huge).
+- Supported assets are ".png", ".jpg", ".jpeg" and ".gif"
+- Supported article files are ".md"
+- Categories and Articles all need different names. If you have a KnowledgeBase/getting-started-admin/catalog.md and a KnowledgeBase/compliance-reporting/catalog.md ONLY ONE 'catalog.md' will be created! Same thing for directory names.
+- After merging, you will need to wait at least 5 mins (depending on changes) for the script to run. After that, you will need to refresh vanilla forums to see the changes (navigation within is not the same).
+- If you dont see an image, but you know it exists and is in the correct folder, try adding different size and making a change to the markdown file (so it will re-add it).
+
 # Dos and Donts
 
 Dont name any two folders or markdown with the same name.
