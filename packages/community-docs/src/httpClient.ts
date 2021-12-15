@@ -2,7 +2,12 @@ import axios, { AxiosRequestConfig, AxiosRequestHeaders } from "axios";
 import FormData from "form-data";
 import { logger } from "./loggingUtil";
 import { KnowledgeCategory, VanillaArticle } from "./utils";
-import { Authorization, DEV_URL, REQUEST_DELAY } from "./utils/constants";
+import {
+  Authorization,
+  DEV_URL,
+  PROD_URL,
+  REQUEST_DELAY,
+} from "./utils/constants";
 enum RESTTypes {
   POST = "post",
   PUT = "put",
@@ -15,7 +20,7 @@ export default class HttpClient {
   baseUrl = "";
   headers: AxiosRequestHeaders = {};
   constructor(baseUrl = DEV_URL) {
-    this.baseUrl = baseUrl;
+    this.baseUrl = process.env.targetVanillaEnv === "prod" ? PROD_URL : DEV_URL;
   }
 
   buildUrl(relativeUrl: string) {
