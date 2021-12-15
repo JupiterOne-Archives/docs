@@ -95,9 +95,7 @@ export const getPreviousKnowledgeID = (
     existingknowledgeCategoryInfo && existingknowledgeCategoryInfo.length
       ? [...existingknowledgeCategoryInfo]
       : [];
-  console.log(completedProcedures, "completedp");
-  console.log(procedureBeingWorkedOn, "procedureBeingWorkedOnww");
-  console.log(existingknowledgeCategoryInfo, "existingknowledgeCategoryInfoss");
+
   const pathSplit = procedureBeingWorkedOn?.path?.split("/");
 
   if (pathSplit && procedureBeingWorkedOn?.fileName) {
