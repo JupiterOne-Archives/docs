@@ -27,7 +27,7 @@ pipeline {
       }
     }
 
-    stage("Deploy to vanilla staging") {
+    stage("Deploying to vanilla staging") {
       when {
         beforeAgent true
         branch 'vanilla-staging' 
