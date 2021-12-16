@@ -27,13 +27,10 @@ pipeline {
       }
     }
 
-    stage("Deploy") {
+    stage("Deploying to vanilla staging") {
       when {
         beforeAgent true
-        expression {
-          return env.BRANCH_NAME == 'vanilla-prod' || env.BRANCH_NAME ==  'vanilla-staging';
-          }
-
+        branch 'vanilla-staging' 
         }
       
       agent { label 'ecs-builder-node14' }
@@ -48,30 +45,45 @@ pipeline {
             sh 'yarn bundle'
 
             sh 'jupiterone-build'
-            script {
-              if (env.BRANCH_NAME == 'vanilla-prod') {
-                withCredentials([
-                  string(credentialsId: 'VANILLIA_PRODUCTION_ENV_TOKEN', variable: 'TOKEN')
+
+            withCredentials([
+              string(credentialsId: 'VANILLIA_STAGING_ENV_TOKEN', variable: 'TOKEN')
+                ]) {
+                  sh '''
+                    TOKEN="$TOKEN" targetVanillaEnv=staging yarn start
+                  '''
+                }
+            
+      }
+    }
+    stage("Deploying to vanilla production") {
+      when {
+        beforeAgent true
+        branch 'vanilla-prod' 
+        }
+      
+      agent { label 'ecs-builder-node14' }
+      steps {
+        initBuild()
+          sh 'yarn install --frozen-lockfile'
+
+          sh 'yarn lint'
+
+          sh 'yarn test:unit'
+
+          sh 'yarn bundle'
+
+          sh 'jupiterone-build'
+
+          withCredentials([
+            string(credentialsId: 'VANILLIA_PRODUCTION_ENV_TOKEN', variable: 'TOKEN')
                 ]) {
                   sh '''
                     TOKEN="$TOKEN" targetVanillaEnv=prod yarn start
                   '''
                 }
-
-                
-              } else {
-                   withCredentials([
-                  string(credentialsId: 'VANILLIA_STAGING_ENV_TOKEN', variable: 'TOKEN')
-                  ]) {
-                   sh '''
-                    TOKEN="$TOKEN" targetVanillaEnv=staging yarn start
-                    '''
-                  }
-              }
-            }
-
+            
       }
     }
-
   }
 }
