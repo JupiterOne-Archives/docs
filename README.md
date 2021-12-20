@@ -2,7 +2,7 @@
 
 ## MERGE to `vanilla-staging` will make changes to `https://jupiterone.vanillastaging.com/kb`
 
-## MERGE to `vanilla-prod` will make changes to `https://jupiterone.vanillacommunities.com/kb`
+## MERGE to `main` will make changes to `https://jupiterone.vanillacommunities.com/kb`
 
 - Add docs and folders to the `knowledgeBase` folder.
 - Assets go into the `knowledgeBase/assets` folder.
