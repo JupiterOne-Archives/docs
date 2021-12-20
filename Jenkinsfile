@@ -59,7 +59,7 @@ pipeline {
     stage("Deploying to vanilla production") {
       when {
         beforeAgent true
-        branch 'vanilla-prod' 
+        branch 'main' 
         }
       
       agent { label 'ecs-builder-node14' }
