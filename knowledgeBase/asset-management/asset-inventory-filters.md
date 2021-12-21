@@ -1,6 +1,7 @@
 # How to Use Filters in the Asset Inventory App
 
-To see all the digital assets (entities) you have, in JupiterOne, go to **Apps > Assets**. 
+test
+To see all the digital assets (entities) you have, in JupiterOne, go to **Apps > Assets**.
 
 There are several ways to filter the large list of entities displayed in the Assets app:
 
@@ -15,10 +16,10 @@ Click **Critical Assets** in the top banner to go directly to the most important
 ![](../assets/asset-critical.png)
 
 Critical assets is a class of asset for which you can create queries and alerts to quickly access
-the most crucial data. By default, JupiterOne determines which criteria defines an asset as 
+the most crucial data. By default, JupiterOne determines which criteria defines an asset as
 the most important and, therefore, the most at risk but an administrator can edit this definition.
 
-Click ![](../assets/icons/gear.png)to edit the critical asset definition default values. You can use classes, properties, and values 
+Click ![](../assets/icons/gear.png)to edit the critical asset definition default values. You can use classes, properties, and values
 to define what is critical.
 ![](../assets/asset-definition.png)
 
@@ -36,8 +37,6 @@ label when you move over it.
 The class of an entity is an abstract label that defines what the entity is
 within the concept of security operations. For more details, see the JupiterOne
 Data Model documentation.
-
-
 
 After you select one or more classes, you can further filter the entities/assets by
 **Type**:
