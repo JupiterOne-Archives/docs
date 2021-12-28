@@ -16,7 +16,10 @@ export const isArticleType = (
 
 export const createDisplayName = (name: string) => {
   return name
-    .split(/-|_/g)
+    .split(/_/g)
+    .map((item) => `${item[0]}${item.substring(1)}`)
+    .join(" ")
+    .split(/-/g)
     .map((item) => `${item[0].toUpperCase()}${item.substring(1)}`)
     .join(" ");
 };
