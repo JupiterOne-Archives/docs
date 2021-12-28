@@ -25,6 +25,20 @@
 - After merging, you will need to wait at least 5 mins (depending on changes) for the script to run. After that, you will need to refresh vanilla forums to see the changes (navigation within is not the same).
 - If you dont see an image, but you know it exists and is in the correct directory, try adding different size and making a change to the markdown file (so it will re-add it).
 
+# Pipeline helpers
+
+Article and Knowledge categories names are generated from the file name. The only expection are `index.md` files. These get their name from their parent directory.
+
+- Example `KnowledgeBase/compliance-reporting/index.md` would create an article called "Compliance Reporting" inside a KnowledgeCategory named "Compliance Reporting"
+
+## DO NOT USE SPACES IN FILE OR DIRECTORY NAMES
+
+INSTEAD the '-' character in a file's name will capitilize the next word and be replaced with a space.
+If you do NOT want the next word capitalized, using the '\_' character will just be replaced with a space.
+
+- Example
+  - `the-name_is-big` will create a name of "`The Name is Big`"
+
 # Dos and Donts
 
 Dont name any two directories or markdown with the same name.
