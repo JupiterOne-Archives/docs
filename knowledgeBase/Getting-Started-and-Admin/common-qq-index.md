@@ -1,4 +1,4 @@
-# Common Questions and Corresponding J1QL Queries
+# Common Questions and Queries
 
 Here are some commonly asked questions and their corresponding J1QL queries.
 You can easily modify the properties and tags used in each query to customize
