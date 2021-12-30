@@ -1,33 +1,45 @@
 import { logger } from "../loggingUtil";
-import { createDisplayName } from "../utils/common";
 import {
+  checkBodyForTitleToUseForArticle,
+  createDisplayName,
+  markdownToString,
   ProcedureTypeEnum,
+  TITLE_FROM_MARKDOWN_REGEX,
   VanillaArticle,
   VanillaKnowledgeCategory,
-} from "../utils/types";
+} from "../utils";
 import { filterDiffs } from "./utils";
 
-export const createArticleChange = (
+export const createArticleChange = async (
   articleChanges: string, // diff string of a file
   path: string
-): VanillaArticle => {
+): Promise<VanillaArticle> => {
   let displayName = "";
   // we dont want articles to be called 'index'
-  if (articleChanges.startsWith("index")) {
-    const pathSplit = path.split("/");
-    const replacementName = pathSplit[pathSplit.length - 2];
-    displayName = createDisplayName(replacementName);
-  } else {
-    const splitOnExtention = articleChanges.split(".")[0];
-    displayName = createDisplayName(splitOnExtention);
-  }
+  const articleBody = await markdownToString(path);
 
+  const titleFromBody = checkBodyForTitleToUseForArticle(
+    articleBody,
+    TITLE_FROM_MARKDOWN_REGEX
+  );
+  if (!titleFromBody) {
+    if (articleChanges.startsWith("index")) {
+      const pathSplit = path.split("/");
+      const replacementName = pathSplit[pathSplit.length - 2];
+      displayName = createDisplayName(replacementName);
+    } else {
+      const splitOnExtention = articleChanges.split(".")[0];
+      displayName = createDisplayName(splitOnExtention);
+    }
+  } else {
+    displayName = titleFromBody;
+  }
   const kb: VanillaArticle = {
     knowledgeCategoryID: null, //will need to create it and get it- for sub folders
     articleID: null,
     fileName: articleChanges,
     name: displayName,
-    body: "",
+    body: articleBody ? articleBody : "",
     path: path,
     format: "markdown",
     locale: "en",
@@ -49,9 +61,9 @@ export interface HandleNestedKnowledgeCategoryChangesProps {
   parentIndex: number;
 }
 // recursively create Knowledge categories per directory change. One parent KnowledgeCategory per directory.
-export const handleNestedKnowledgeCategoryChanges = (
+export const handleNestedKnowledgeCategoryChanges = async (
   input: HandleNestedKnowledgeCategoryChangesProps
-): HandleNestedKnowledgeCategoryChangesReturn => {
+): Promise<HandleNestedKnowledgeCategoryChangesReturn> => {
   if (input.nestedCategoryChanges.length === 0) {
     return {
       completed: input.completed || [],
@@ -89,7 +101,7 @@ export const handleNestedKnowledgeCategoryChanges = (
   ) {
     tempHandled.push(identifierForDirectoryOrFile);
     if (identifierForDirectoryOrFile.endsWith(".md")) {
-      const markDownFileToKnowledgeArticle = createArticleChange(
+      const markDownFileToKnowledgeArticle = await createArticleChange(
         target,
         input.originalChangesArray[tempParentIndex]
       );
@@ -130,7 +142,7 @@ export const handleNestedKnowledgeCategoryChanges = (
     tempParentIndex += 1;
   }
   if (tempNestedCategoryChanges.length) {
-    handleNestedKnowledgeCategoryChanges({
+    await handleNestedKnowledgeCategoryChanges({
       nestedCategoryChanges: tempNestedCategoryChanges,
       completed: tempCompleted,
       knowledgeCategoriesAlreadyHandled: tempHandled,
@@ -144,12 +156,11 @@ export const handleNestedKnowledgeCategoryChanges = (
   };
 };
 
-export const diffToProcedures = (gitDiffArray: string[]) => {
-  logger.info(`Diffs marked as changes: ${gitDiffArray}`);
+export const diffToProcedures = async (gitDiffArray: string[]) => {
   const gitDiffWithOutDocs = filterDiffs(gitDiffArray);
   logger.info(`Filtered Diffs used to generate procedures: ${gitDiffArray}`);
   if (gitDiffWithOutDocs && gitDiffWithOutDocs.length) {
-    const { completed } = handleNestedKnowledgeCategoryChanges({
+    const { completed } = await handleNestedKnowledgeCategoryChanges({
       nestedCategoryChanges: [...gitDiffWithOutDocs], // need to create a new array for each
       originalChangesArray: [...gitDiffWithOutDocs], // need to create a new array for each
       parentIndex: 0,

@@ -1,4 +1,12 @@
-import { VanillaArticle, VanillaKnowledgeCategory } from "./types";
+import { default as fs } from "fs";
+import path from "path";
+import {
+  FLAG_FOR_DELETE,
+  PATH_OF_DIRECTORY_TO_WATCH,
+  SUPPORTED_FILE_TYPE_EXTENTIONS,
+  VanillaArticle,
+  VanillaKnowledgeCategory,
+} from "./";
 
 export const isKnowledgeCategoryType = (
   procedure: VanillaArticle | VanillaKnowledgeCategory
@@ -22,4 +30,62 @@ export const createDisplayName = (name: string) => {
     .split(/-/g)
     .map((item) => `${item[0].toUpperCase()}${item.substring(1)}`)
     .join(" ");
+};
+
+export const markdownToString = async (filePath?: string): Promise<string> => {
+  // we also want to use this to see if the file got deleted! the git diff wont differenitate
+  const fileLocation = path.join(
+    __dirname,
+    `../../../../${PATH_OF_DIRECTORY_TO_WATCH}`,
+    `/${filePath}`
+  );
+
+  let supportedTypeOfFile = false;
+  SUPPORTED_FILE_TYPE_EXTENTIONS.forEach((extention) => {
+    if (fileLocation.endsWith(extention)) {
+      supportedTypeOfFile = true;
+    }
+  });
+  if (!supportedTypeOfFile) {
+    return FLAG_FOR_DELETE;
+  }
+  try {
+    const blockingReadOfFile = await fs.promises.readFile(fileLocation);
+    if (blockingReadOfFile) {
+      return blockingReadOfFile.toString();
+    }
+  } catch (error) {
+    return FLAG_FOR_DELETE;
+  }
+
+  return FLAG_FOR_DELETE;
+};
+
+export const getMarkdownAsStringFromPath = async (
+  filePath?: string
+): Promise<string | undefined> => {
+  // we also want to use this to see if the file got deleted! the git diff wont differenitate
+  const fileLocation = path.join(__dirname, `./${filePath}`);
+
+  try {
+    const blockingReadOfFile = await fs.promises.readFile(fileLocation);
+    if (blockingReadOfFile) {
+      return blockingReadOfFile.toString();
+    }
+  } catch (error) {
+    return undefined;
+  }
+};
+export const checkBodyForTitleToUseForArticle = (
+  markdownAsString: string,
+  targetRegex: RegExp
+) => {
+  const markdownTitleRegularExpression = new RegExp(targetRegex);
+  const matches = markdownAsString.match(markdownTitleRegularExpression);
+
+  if (matches && matches[0]) {
+    return matches[0].substring(2);
+  }
+
+  return false;
 };
