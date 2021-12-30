@@ -61,7 +61,7 @@ export const updateCommunityDocs = async () => {
     const nestedWithRemovedPath = nestedMergedWithOriginal.map((path) =>
       path.substring(path.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
-    const procedures = diffToProcedures(nestedWithRemovedPath);
+    const procedures = await diffToProcedures(nestedWithRemovedPath);
     logger.info(`list of procedures: ${JSON.stringify(procedures, null, " ")}`);
     if (procedures && procedures.length > 0) {
       const completedProcedures = await proceduresToVanillaRequests(procedures);
@@ -95,7 +95,7 @@ export const updateVanillaWithDirectoryToWatch = async () => {
     const trimmedDirectories = fullArrayOfAllItems.map((result) =>
       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
-    const procedures = diffToProcedures(trimmedDirectories);
+    const procedures = await diffToProcedures(trimmedDirectories);
     if (procedures && procedures.length > 0) {
       return await proceduresToVanillaRequests(procedures);
     }
@@ -123,7 +123,7 @@ export const addFullSubFolderManually = async (folderName: string) => {
     const trimmedDirectories = fullArrayOfAllItems.map((result) =>
       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
-    const procedures = diffToProcedures(trimmedDirectories);
+    const procedures = await diffToProcedures(trimmedDirectories);
     logger.info(`Path of changes: ${fullArrayOfAllItems}`);
     logger.info(`list of procedures: ${procedures}`);
     if (procedures && procedures.length > 0) {
@@ -173,7 +173,7 @@ const exampleOfPathsOfChangesX = [
   `${PATH_OF_DIRECTORY_TO_WATCH}/asset-management/`,
 ];
 
-// Handy for debugging
+// Handy for debugging - runs as if everything is new
 export const updateCommunityDocsWithPathOverride = async (
   relativePath = exampleOfPathsOfChangesX
 ) => {
@@ -181,7 +181,7 @@ export const updateCommunityDocsWithPathOverride = async (
     const trimmedDirectories = relativePath.map((result) =>
       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
-    const procedures = diffToProcedures(trimmedDirectories);
+    const procedures = await diffToProcedures(trimmedDirectories);
     logger.info(`Path of changes: ${relativePath}`);
     logger.info(`list of procedures: ${procedures}`);
     if (procedures && procedures.length > 0) {

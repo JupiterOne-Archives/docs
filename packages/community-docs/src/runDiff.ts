@@ -1,10 +1,13 @@
-import { updateVanillaWithDirectoryToWatch } from "./";
+import {
+  deleteAllThingsCurrentlyOnVanillaForum,
+  updateCommunityDocsWithPathOverride,
+} from "./";
 import { logger } from "./loggingUtil";
 
 const updateCommunityDocsByMergeChanges = async () => {
   try {
-    logger.info("Starting updateCommunityDocs");
-    const completed = await updateVanillaWithDirectoryToWatch();
+    await deleteAllThingsCurrentlyOnVanillaForum();
+    const completed = await updateCommunityDocsWithPathOverride();
 
     logger.info(
       `UpdateCommunityDocs completed: ${JSON.stringify(completed, null, 2)}`

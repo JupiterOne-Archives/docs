@@ -97,7 +97,10 @@ instructive to see that rules take this basic form:
     "_class": "IS"
   },
   "relationshipDirection": "REVERSE",
-  "targetFilterKeys": [["_class", "email"], ["_class", "username"]],
+  "targetFilterKeys": [
+    ["_class", "email"],
+    ["_class", "username"]
+  ],
   "propertyMappings": [
     {
       "sourceProperty": "email",
@@ -143,31 +146,31 @@ that are applied only to entities managed by that integration.
 
 The summaries have a title taking the form `SOURCE RELATIONSHIP TARGET`.
 
-* `SOURCE` is always the entity that triggers the mapping configuration. The
+- `SOURCE` is always the entity that triggers the mapping configuration. The
   label is the `_class` or `_type` that will be matched. Other match properties
   are listed in the summary body.
-* `RELATIONSHIP` is relative to `SOURCE`, and the label of comes from the
-  `_class`. 
-  * Forward: `-CLASS->`
-  * Reverse: `<-CLASS-`
-* `TARGET` is determined by a search, or one will be created when not found
+- `RELATIONSHIP` is relative to `SOURCE`, and the label of comes from the
+  `_class`.
+  - Forward: `-CLASS->`
+  - Reverse: `<-CLASS-`
+- `TARGET` is determined by a search, or one will be created when not found
   (unless `skipTargetCreation: true`). The label is the `_class` or `_type` that
   will be matched. Other match properties are listed in the summary body.
-  
+
 It is important to remember:
 
-* Mapping rules are triggered when a `SOURCE` entity matches. Rules are NOT
+- Mapping rules are triggered when a `SOURCE` entity matches. Rules are NOT
   automatically reversed so that relationships are updated when a `TARGET` is
   created/updated.
-* Any change to the `SOURCE` entity triggers the mapping rule to be
+- Any change to the `SOURCE` entity triggers the mapping rule to be
   evaluated/re-evaluated.
-* The **Source Filters** must match an entity or the rule will not trigger. It
+- The **Source Filters** must match an entity or the rule will not trigger. It
   may be necessary to _add properties to entities_ at the data source so that
   when they are ingested they will match the rule.
-* A rule produces relationships to all `TARGET` entities matching the **Target
+- A rule produces relationships to all `TARGET` entities matching the **Target
   filters**. It may be necessary to _add properties to entities_ at the data
   source so that when they are ingested they will match the rule.
-* **Transferred Properties** are listed only when the mapper will create a
+- **Transferred Properties** are listed only when the mapper will create a
   target entity if none are found (`skipTargetCreation: false`).
 
 ### Mappings Rules
