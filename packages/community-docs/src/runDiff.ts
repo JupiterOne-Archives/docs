@@ -1,13 +1,13 @@
 import {
   deleteAllThingsCurrentlyOnVanillaForum,
-  updateCommunityDocsWithPathOverride,
+  updateVanillaWithDirectoryToWatch,
 } from "./";
 import { logger } from "./loggingUtil";
 
 const updateCommunityDocsByMergeChanges = async () => {
   try {
     await deleteAllThingsCurrentlyOnVanillaForum();
-    const completed = await updateCommunityDocsWithPathOverride();
+    const completed = await updateVanillaWithDirectoryToWatch();
 
     logger.info(
       `UpdateCommunityDocs completed: ${JSON.stringify(completed, null, 2)}`
