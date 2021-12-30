@@ -1,9 +1,13 @@
-import { updateVanillaWithDirectoryToWatch } from "./";
+import {
+  deleteAllThingsCurrentlyOnVanillaForum,
+  updateVanillaWithDirectoryToWatch,
+} from "./";
 import { logger } from "./loggingUtil";
 
 const updateCommunityDocsByMergeChanges = async () => {
   try {
     logger.info("Starting updateCommunityDocs");
+    await deleteAllThingsCurrentlyOnVanillaForum();
     const completed = await updateVanillaWithDirectoryToWatch();
 
     logger.info(

@@ -5,7 +5,7 @@ import { getDiffFromHead } from "./gitDifference";
 import HttpClient from "./httpClient";
 import { logger } from "./loggingUtil";
 import { proceduresToVanillaRequests } from "./proceduresToVanillaRequests";
-import { PATH_OF_DIRECTORY_TO_WATCH } from "./utils/constants";
+import { PATH_OF_DIRECTORY_TO_WATCH } from "./utils";
 import {
   deleteArticle,
   deleteKnowledgeCategory,
@@ -91,6 +91,16 @@ export const updateVanillaWithDirectoryToWatch = async () => {
   });
   const fullArrayOfAllItems: string[] = await directoryPromise;
 
+  // const allMarkdown = fullArrayOfAllItems.filter(
+  //   (x: string) => x.indexOf(".md") !== -1
+  // );
+  // console.log(
+  //   "fullArrayOfAllItems-start",
+  //   allMarkdown,
+  //   "fullArrayOfAllItems-end"
+  // );
+  // await makeHellaChanges(allMarkdown)
+  // return;
   if (fullArrayOfAllItems) {
     const trimmedDirectories = fullArrayOfAllItems.map((result) =>
       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
