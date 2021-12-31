@@ -1,3 +1,4 @@
+import {} from "../utils/common";
 import { PATH_OF_DIRECTORY_TO_WATCH } from "../utils/constants";
 import { ProcedureTypeEnum, VanillaArticle } from "../utils/types";
 import {
@@ -28,14 +29,17 @@ describe("diffToProceedures", () => {
   });
 
   describe("createArticleChange", () => {
-    it("handles index files", () => {
-      const actual = createArticleChange("index.md", "k-category/index.md");
+    it("handles index files", async () => {
+      const actual = await createArticleChange(
+        "index.md",
+        "k-category/index.md"
+      );
       const expected: VanillaArticle = {
         knowledgeCategoryID: null, //will need to create it and get it- for sub folders
         articleID: null,
         fileName: "index.md",
         name: "K Category",
-        body: "",
+        body: "FILE_DOES_NOT_EXIST",
         path: "k-category/index.md",
         format: "markdown",
         locale: "en",
@@ -43,8 +47,8 @@ describe("diffToProceedures", () => {
       };
       expect(actual).toEqual(expected);
     });
-    it("handles named files", () => {
-      const actual = createArticleChange(
+    it("handles named files", async () => {
+      const actual = await createArticleChange(
         "article-title.md",
         "k-category/article-title.md"
       );
@@ -53,7 +57,7 @@ describe("diffToProceedures", () => {
         articleID: null,
         fileName: "article-title.md",
         name: "Article Title",
-        body: "",
+        body: "FILE_DOES_NOT_EXIST",
         path: "k-category/article-title.md",
         format: "markdown",
         locale: "en",
@@ -64,18 +68,18 @@ describe("diffToProceedures", () => {
   });
 
   describe("handleNestedKnowledgeCategoryChanges", () => {
-    it("returns expected sequence of procedures", () => {
+    it("returns expected sequence of procedures", async () => {
       const expected = expectHandleNestedKnowledgeCategoryChanges;
       const diffs = [...exampleDiffs, "rock-and-roll/rocks.md"];
-      const { completed } = handleNestedKnowledgeCategoryChanges({
+      const { completed } = await handleNestedKnowledgeCategoryChanges({
         nestedCategoryChanges: [...diffs], // need to create a new array for each
         originalChangesArray: [...diffs], // need to create a new array for each
         parentIndex: 0,
       });
       expect(expected).toEqual(completed);
     });
-    it("returns upon input nestedCategoryChanges length == 0", () => {
-      const { completed } = handleNestedKnowledgeCategoryChanges({
+    it("returns upon input nestedCategoryChanges length == 0", async () => {
+      const { completed } = await handleNestedKnowledgeCategoryChanges({
         nestedCategoryChanges: [], // need to create a new array for each
         originalChangesArray: [], // need to create a new array for each
         parentIndex: 0,
@@ -85,7 +89,7 @@ describe("diffToProceedures", () => {
   });
 
   describe("diffToProcedures", () => {
-    it("takes in a list of diffs and returns procedures", () => {
+    it("takes in a list of diffs and returns procedures", async () => {
       exampleDiffs = [
         `${PATH_OF_DIRECTORY_TO_WATCH}/`,
         `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md`,
@@ -95,7 +99,7 @@ describe("diffToProceedures", () => {
         `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/jupiterone-query-language-copy.md`,
         `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/jupiterone-query-language.md`,
       ];
-      const actual = diffToProcedures(exampleDiffs);
+      const actual = await diffToProcedures(exampleDiffs);
       const expected = expectedSortedChanges;
 
       expect(actual).toEqual(expected);
