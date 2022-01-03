@@ -3,7 +3,6 @@ import { logger } from "./loggingUtil";
 
 const updateCommunityDocsByMergeChanges = async () => {
   try {
-    logger.info("Starting updateCommunityDocs");
     const completed = await updateCommunityDocs();
 
     logger.info(

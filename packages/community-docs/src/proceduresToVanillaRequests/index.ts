@@ -25,11 +25,7 @@ import {
   makeRequestsToChangeMarkdownReferences,
   uploadImageAndReturnUrl,
 } from "../VanillaAPI";
-import {
-  directoryExists,
-  getPreviousKnowledgeID,
-  markdownToString,
-} from "./utils";
+import { directoryExists, getPreviousKnowledgeID } from "./utils";
 export const addVanillaCategoryToProcedure = (
   procedure: VanillaKnowledgeCategory,
   vanillaReturn: VanillaKnowledgeCategory[]
@@ -133,8 +129,12 @@ export const procedureToArticle = async (
   previousknowledgeCategoryID: null | number
 ): Promise<VanillaArticle> => {
   const tempProcedureWorkedOn = { ...procedureWorkedOn };
-  const bodyOfArticle = await markdownToString(tempProcedureWorkedOn?.path);
-  tempProcedureWorkedOn.body = await addImagesToArticleMarkdown(bodyOfArticle);
+
+  if (tempProcedureWorkedOn.body) {
+    tempProcedureWorkedOn.body = await addImagesToArticleMarkdown(
+      tempProcedureWorkedOn.body
+    );
+  }
 
   if (tempProcedureWorkedOn.articleID === null) {
     if (!previousknowledgeCategoryID) {
@@ -413,6 +413,5 @@ export const proceduresToVanillaRequests = async (
     return finishedProcedures;
   }
 
-  logger.info(`FINISHED WITH PROCEDURES: NONE`);
   return [];
 };
