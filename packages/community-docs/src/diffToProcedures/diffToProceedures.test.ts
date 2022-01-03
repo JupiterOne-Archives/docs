@@ -1,4 +1,3 @@
-import {} from "../utils/common";
 import { PATH_OF_DIRECTORY_TO_WATCH } from "../utils/constants";
 import { ProcedureTypeEnum, VanillaArticle } from "../utils/types";
 import {

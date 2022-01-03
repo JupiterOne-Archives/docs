@@ -6,6 +6,7 @@ import {
 export const filterDiffs = (gitDiffArray: string[]) => {
   const filteredArray = gitDiffArray
     .filter((diff) => diff.startsWith(PATH_OF_DIRECTORY_TO_WATCH))
+    .filter((diff) => diff.toLowerCase().indexOf("release-notes") === -1)
     .filter((diff) => {
       let diffIsOfCorrectType = false;
       SUPPORTED_FILE_TYPE_EXTENTIONS.forEach((ext) => {
