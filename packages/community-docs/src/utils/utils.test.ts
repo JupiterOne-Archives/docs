@@ -2,6 +2,7 @@ import {
   checkBodyForTitleToUseForArticle,
   createDisplayName,
   getMarkdownAsStringFromPath,
+  removeTitleFromArticleBody,
 } from "./common";
 import { TITLE_FROM_MARKDOWN_REGEX } from "./constants";
 describe("checkBodyForTitleToUseForArticle", () => {
@@ -26,6 +27,23 @@ describe("checkBodyForTitleToUseForArticle", () => {
       TITLE_FROM_MARKDOWN_REGEX
     );
     const expected = false;
+    expect(actual).toEqual(expected);
+  });
+});
+
+describe("removeTitleFromArticleBody", () => {
+  it("returns string to be used as article body without part used for article title", async () => {
+    const markdown = await getMarkdownAsStringFromPath(
+      "./mockMarkdownForTitleRemoval.md"
+    );
+    const markdownTarget = markdown !== undefined ? markdown : "";
+
+    const actual = removeTitleFromArticleBody(
+      markdownTarget,
+      TITLE_FROM_MARKDOWN_REGEX
+    );
+    const expected =
+      "To see all the digital assets (entities) you have, in JupiterOne.";
     expect(actual).toEqual(expected);
   });
 });
