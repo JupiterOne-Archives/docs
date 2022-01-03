@@ -113,6 +113,8 @@ https://github.com/JupiterOne/sdk/blob/main/docs/integrations/development.md
 
 ## Data Model
 
+N/A
+
 ### Entities
 
 The following entities are created:
