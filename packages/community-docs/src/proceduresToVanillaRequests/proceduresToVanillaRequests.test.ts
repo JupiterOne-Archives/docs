@@ -363,17 +363,22 @@ describe("ProceduresToVanillaRequests", () => {
         mockDeleteArticle.mockReset();
       });
       it("deletes existing article when body contains delete flag", async () => {
-        const mockReturnForDelete = { name: "vanilla return" } as any;
-        mockDeleteArticle.mockResolvedValue(mockReturnForDelete);
-        mockMarkdownToString.mockResolvedValue(FLAG_FOR_DELETE);
         const articleID = 234;
         const previousknowledgeCategoryID = 8;
-        const mockHttpclient = {} as any;
         const procedureWithArticle = {
           ...procedureArticletemp,
+          body: FLAG_FOR_DELETE,
           articleID,
           knowledgeCategoryID: previousknowledgeCategoryID,
         };
+        const mockReturnForDelete = {
+          ...procedureWithArticle,
+        } as any;
+        mockDeleteArticle.mockResolvedValue(mockReturnForDelete);
+        mockMarkdownToString.mockResolvedValue(FLAG_FOR_DELETE);
+
+        const mockHttpclient = {} as any;
+
         const actual = await procedureToArticle(
           mockHttpclient,
           procedureWithArticle,
