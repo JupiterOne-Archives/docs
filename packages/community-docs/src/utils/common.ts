@@ -76,6 +76,7 @@ export const getMarkdownAsStringFromPath = async (
     return undefined;
   }
 };
+
 export const checkBodyForTitleToUseForArticle = (
   markdownAsString: string,
   targetRegex: RegExp
@@ -88,4 +89,19 @@ export const checkBodyForTitleToUseForArticle = (
   }
 
   return false;
+};
+
+export const removeTitleFromArticleBody = (
+  markdownAsString: string,
+  targetRegex: RegExp
+) => {
+  let bodyAlterations = `${markdownAsString}`;
+  const markdownTitleRegularExpression = new RegExp(targetRegex);
+  const matches = markdownAsString.match(markdownTitleRegularExpression);
+
+  if (matches && matches[0]) {
+    bodyAlterations = bodyAlterations.replace(matches[0], "");
+  }
+
+  return bodyAlterations.trim();
 };
