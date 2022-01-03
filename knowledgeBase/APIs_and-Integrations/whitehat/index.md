@@ -89,6 +89,6 @@ The following relationships are created/mapped:
 
 #### Extra-Instance / Mapped
 
-| From                           | Type        | To                                                                                                                                                                                                 |
-| ------------------------------ | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `CodeRepo/Project/Application` | **HAS/HAD** | `whitehat_finding` <br> Note: This is mapped automatically only when the name of the Whitehat Application the finding belongs to matches the name of a CodeRepo/Project/Application in JupiterOne. |
+| From                           | Type        | To                                                                                                                                                                                            |
+| ------------------------------ | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CodeRepo/Project/Application` | **HAS/HAD** | `whitehat_finding` Note: This is mapped automatically only when the name of the Whitehat Application the finding belongs to matches the name of a CodeRepo/Project/Application in JupiterOne. |

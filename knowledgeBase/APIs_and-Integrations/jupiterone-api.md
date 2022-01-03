@@ -47,48 +47,40 @@ Optionally, additional parameters can be provided:
 
 - `variables`: A `JSON` map of values to be used as parameters for the query
 - `cursor`: A token that can be exchanged to fetch the next page of
-information.
+  information.
 - `includeDeleted`: When set to `true`, recently deleted information will
-be included in the results.
+  be included in the results.
 - `deferredResponse`: This option allows for a deferred response to be
-returned. When a deferred response is returned, a `url` pointing
-the state of the query is provided. API consumers should poll the status of
-the deferred query by requesting the given `url` until the `status` property of the
-returned JSON document has a value of `COMPLETED` (see example below).
-Upon completion of the query, the `url` will provide a link to the query results.
-The results contain the same `type`, `data`, and `cursor` fields that the non-deferred
-GraphQL response would contain.
-Allowed values are `DISABLED` and `FORCE`.
+  returned. When a deferred response is returned, a `url` pointing
+  the state of the query is provided. API consumers should poll the status of
+  the deferred query by requesting the given `url` until the `status` property of the
+  returned JSON document has a value of `COMPLETED` (see example below).
+  Upon completion of the query, the `url` will provide a link to the query results.
+  The results contain the same `type`, `data`, and `cursor` fields that the non-deferred
+  GraphQL response would contain.
+  Allowed values are `DISABLED` and `FORCE`.
 
 !!! note
-    When paging through data, it is _highly_ recommended that cursors
-    are leveraged instead of adding `limit` and `skip` clauses to queries.
+When paging through data, it is _highly_ recommended that cursors
+are leveraged instead of adding `limit` and `skip` clauses to queries.
 
 !!! note
-    Be sure to include `cursor` in the GraphQL response if you need to
-    paginate through the results. The returned `cursor` will be `null`
-    if there are no more pages available.
+Be sure to include `cursor` in the GraphQL response if you need to
+paginate through the results. The returned `cursor` will be `null`
+if there are no more pages available.
 
 !!! note
-    Queries that may take longer than 30 seconds should use the `FORCE` option
-    for `deferredResponse` to avoid request timeouts. You should only use the
-    `DISABLED` option when testing a simple query. It is _highly_ recommended
-    that all automated processes use the the `FORCE` option when issuing
-    J1QL queries.
+Queries that may take longer than 30 seconds should use the `FORCE` option
+for `deferredResponse` to avoid request timeouts. You should only use the
+`DISABLED` option when testing a simple query. It is _highly_ recommended
+that all automated processes use the the `FORCE` option when issuing
+J1QL queries.
 
 **Example GraphQL query:**
 
 ```graphql
-query J1QL(
-  $query: String!,
-  $variables: JSON,
-  $cursor: String
-) {
-  queryV1(
-    query: $query,
-    variables: $variables,
-    cursor: $cursor
-  ) {
+query J1QL($query: String!, $variables: JSON, $cursor: String) {
+  queryV1(query: $query, variables: $variables, cursor: $cursor) {
     type
     data
     cursor
@@ -113,9 +105,7 @@ query J1QL(
 ```json
 {
   "type": "table",
-  "data": [
-    { "Person.name": "Mochi" }
-  ],
+  "data": [{ "Person.name": "Mochi" }],
   "cursor": "eyJjYWNoZUtleSI6IjFlNDg3MT..."
 }
 ```
@@ -124,15 +114,15 @@ query J1QL(
 
 ```graphql
 query J1QL(
-  $query: String!,
-  $variables: JSON,
+  $query: String!
+  $variables: JSON
   $cursor: String
   $deferredResponse: DeferredResponseOption
 ) {
   queryV1(
-    query: $query,
-    variables: $variables,
-    deferredResponse: $deferredResponse,
+    query: $query
+    variables: $variables
+    deferredResponse: $deferredResponse
     cursor: $cursor
   ) {
     type
@@ -183,12 +173,12 @@ query J1QL(
 ### Fetching Graph Data
 
 You can use this query to fetch graph data. The returned data includes the
-details of all vertices found on the graph, as well as the relationship edges 
+details of all vertices found on the graph, as well as the relationship edges
 that connect the vertices.
 
 !!! note
-    Currently, a canned query for IAM Role data is run. You do not need to provide
-    any input variables.
+Currently, a canned query for IAM Role data is run. You do not need to provide
+any input variables.
 
 ```graphql
 query testQuery {
@@ -251,9 +241,9 @@ query requires one of two parameters:
 The example below contains all of the currently available filters.
 
 !!! note
-    Only one of the variables (`id` or `filters`) is required. Specifying both
-    is allowed but unnecessary unless you want to assert that a vertex with
-    the specified `id` exists *and* has specific entity properties.
+Only one of the variables (`id` or `filters`) is required. Specifying both
+is allowed but unnecessary unless you want to assert that a vertex with
+the specified `id` exists _and_ has specific entity properties.
 
 ```graphql
 query VertexQuery($id: String!, $filters: VertexFilters) {
@@ -339,7 +329,7 @@ Variables:
 ```
 
 !!! note
-    The depth that is supplied must be a value between 1 and 5 (inclusive)
+The depth that is supplied must be a value between 1 and 5 (inclusive)
 
 ### Retrieving an Edge by ID
 
@@ -354,10 +344,10 @@ parameters:
 The example below contains all of the currently available filters.
 
 !!! note
-    Only one of the variables (`id`, `label`, or `filters`) is required.
-    Specifying `label` and `filters` with `id` is allowed but somewhat redundant
-    unless you want to assert that a vertex with the specified `id` exists *and* has
-    the specific label and properties.
+Only one of the variables (`id`, `label`, or `filters`) is required.
+Specifying `label` and `filters` with `id` is allowed but somewhat redundant
+unless you want to assert that a vertex with the specified `id` exists _and_ has
+the specific label and properties.
 
 ```graphql
 query VertexQuery($id: String!) {
@@ -416,7 +406,7 @@ filter will be included in the count. By default, the query uses `AND`, which
 only includes entities that have _all_ of the specified classes in the count.
 
 !!! note
-    This resolver uses the `JSON` scalar as the return type.
+This resolver uses the `JSON` scalar as the return type.
 
 ```graphql
 query testQuery($filters: VertexFilters, $filterType: FilterType) {
@@ -425,7 +415,7 @@ query testQuery($filters: VertexFilters, $filterType: FilterType) {
 ```
 
 !!! note
-    Use field aliases to request the counts of multiple different entities.
+Use field aliases to request the counts of multiple different entities.
 
 ```graphql
 query testQuery {
@@ -448,7 +438,7 @@ Example result:
 This query returns the entity counts for all types and classes.
 
 !!! note
-    This resolver uses the `JSON` scalar as the return type.
+This resolver uses the `JSON` scalar as the return type.
 
 ```graphql
 query testQuery {
@@ -485,7 +475,7 @@ filter will be included in the count. By default, the query uses `AND`, which
 only includes entities that have _all_ of the specified classes in the count.
 
 !!! note
-    This resolver uses the `JSON` scalar as the return type.
+This resolver uses the `JSON` scalar as the return type.
 
 ```graphql
 query testQuery ($classes: [String], filterType: FilterType) {
@@ -637,11 +627,11 @@ Variables:
 This mutation updates an already existing entity (does not create an entity).
 You cannot change the `entityKey`, `entityClass`, or `entityType`.
 This mutation requires one parameter (with two optional parameters):
+
 - `entityId`: A string specific to the entity that finds the entity.
 - Optional Parameters:
   - `timestamp`:
   - `properties`: A `JSON` list of properties to be changed.
-
 
 ```graphql
 mutation UpdateEntity (
@@ -687,6 +677,7 @@ Variables:
 
 This mutation deletes an existing entity.
 This mutation requires one parameter (with one optional parameter):
+
 - `entityId`: A string specific to the entity that finds the entity.
 - Optional Parameters:
   - `timestamp`:
@@ -1241,7 +1232,6 @@ POST /persister/synchronization/jobs/f445397d-8491-4a12-806a-04792839abe3/relati
 "<a relationship type>","<a relationship class>","<a relationship key>","my_relationship_name","<an entity key>","<an entity key>"
 ```
 
-
 **Sample response:**
 
 ```json
@@ -1263,7 +1253,6 @@ POST /persister/synchronization/jobs/f445397d-8491-4a12-806a-04792839abe3/relati
   }
 }
 ```
-
 
 ### CSV Upload Data Types
 
@@ -1331,6 +1320,7 @@ POST /persister/synchronization/jobs/f445397d-8491-4a12-806a-04792839abe3/upload
 ```
 
 **Sample response:**
+
 ```json
 {
   "uploadUrl": "{a very long signed S3 URL}",
@@ -1432,8 +1422,8 @@ POST /persister/synchronization/jobs
 
 ```json
 {
-    "source": "api",
-    "syncMode": "CREATE_OR_UPDATE"
+  "source": "api",
+  "syncMode": "CREATE_OR_UPDATE"
 }
 ```
 
@@ -1491,8 +1481,8 @@ POST /persister/synchronization/jobs
 
 ```json
 {
-    "source": "api",
-    "syncMode": "CREATE_OR_UPDATE"
+  "source": "api",
+  "syncMode": "CREATE_OR_UPDATE"
 }
 ```
 
@@ -1722,12 +1712,10 @@ This operation was formerly named `createQuestionRuleInstance`. That name is
 now deprecated, and you should update all usages.
 
 ```graphql
-mutation CreateInlineQuestionRuleInstance (
+mutation CreateInlineQuestionRuleInstance(
   $instance: CreateInlineQuestionRuleInstanceInput!
 ) {
-  createInlineQuestionRuleInstance (
-    instance: $instance
-  ) {
+  createInlineQuestionRuleInstance(instance: $instance) {
     id
     name
     description
@@ -1757,9 +1745,7 @@ variables:
     "description": "Data stores in production tagged critical and unencrypted",
     "version": "v1",
     "pollingInterval": "ONE_DAY",
-    "outputs": [
-      "alertLevel"
-    ],
+    "outputs": ["alertLevel"],
     "operations": [
       {
         "when": {
@@ -1767,7 +1753,7 @@ variables:
           "version": 1,
           "condition": [
             "AND",
-            [ "queries.unencryptedCriticalData.total", "!=", 0 ]
+            ["queries.unencryptedCriticalData.total", "!=", 0]
           ]
         },
         "actions": [
@@ -1811,12 +1797,10 @@ This operation was formerly named `updateQuestionRuleInstance`. That name is
 now deprecated, and you should update all usages.
 
 ```graphql
-mutation UpdateInlineQuestionRuleInstance (
+mutation UpdateInlineQuestionRuleInstance(
   $instance: UpdateInlineQuestionRuleInstanceInput!
 ) {
-  updateInlineQuestionRuleInstance (
-    instance: $instance
-  ) {
+  updateInlineQuestionRuleInstance(instance: $instance) {
     id
     name
     description
@@ -1847,9 +1831,7 @@ variables:
     "description": "Data stores in production tagged critical and unencrypted",
     "version": "v1",
     "pollingInterval": "ONE_DAY",
-    "outputs": [
-      "alertLevel"
-    ],
+    "outputs": ["alertLevel"],
     "operations": [
       {
         "when": {
@@ -1857,7 +1839,7 @@ variables:
           "version": 1,
           "condition": [
             "AND",
-            [ "queries.unencryptedCriticalData.total", "!=", 0 ]
+            ["queries.unencryptedCriticalData.total", "!=", 0]
           ]
         },
         "actions": [
@@ -1891,12 +1873,10 @@ associated with the rule instance. You can modify all settings of a rule instanc
 ### Create an alert rule by referencing a saved question
 
 ```graphql
-mutation CreateReferencedQuestionRuleInstance (
+mutation CreateReferencedQuestionRuleInstance(
   $instance: CreateReferencedQuestionRuleInstanceInput!
 ) {
-  createReferencedQuestionRuleInstance (
-    instance: $instance
-  ) {
+  createReferencedQuestionRuleInstance(instance: $instance) {
     id
     name
     description
@@ -1922,9 +1902,7 @@ variables:
     "description": "Data stores in production tagged critical and unencrypted",
     "version": "v1",
     "pollingInterval": "ONE_DAY",
-    "outputs": [
-      "alertLevel"
-    ],
+    "outputs": ["alertLevel"],
     "operations": [
       {
         "when": {
@@ -1932,7 +1910,7 @@ variables:
           "version": 1,
           "condition": [
             "AND",
-            [ "queries.unencryptedCriticalData.total", "!=", 0 ]
+            ["queries.unencryptedCriticalData.total", "!=", 0]
           ]
         },
         "actions": [
@@ -1953,19 +1931,17 @@ variables:
 }
 ```
 
-Note that you must specify either `questionName` or `questionId` in the `instance` for creation. 
+Note that you must specify either `questionName` or `questionId` in the `instance` for creation.
 If you specify both, they must refer to the same question. After the rule is saved,
 subsequent requests will return both `questionId` and `questionName`.
 
 ### Update an alert rule with a referenced question
 
 ```graphql
-mutation UpdateReferencedQuestionRuleInstance (
+mutation UpdateReferencedQuestionRuleInstance(
   $instance: UpdateReferencedQuestionRuleInstanceInput!
 ) {
-  updateReferencedQuestionRuleInstance (
-    instance: $instance
-  ) {
+  updateReferencedQuestionRuleInstance(instance: $instance) {
     id
     name
     description
@@ -1992,9 +1968,7 @@ variables:
     "description": "Data stores in production tagged critical and unencrypted",
     "version": "v1",
     "pollingInterval": "ONE_DAY",
-    "outputs": [
-      "alertLevel"
-    ],
+    "outputs": ["alertLevel"],
     "operations": [
       {
         "when": {
@@ -2002,7 +1976,7 @@ variables:
           "version": 1,
           "condition": [
             "AND",
-            [ "queries.unencryptedCriticalData.total", "!=", 0 ]
+            ["queries.unencryptedCriticalData.total", "!=", 0]
           ]
         },
         "actions": [
@@ -2024,9 +1998,9 @@ variables:
 ```
 
 Note that the only difference in `update` is the `"id"` property
-associated with the rule instance. You can modify any of the settings of 
+associated with the rule instance. You can modify any of the settings of
 a rule instance. Updates are not required to specify `questionId` or `questionName`,
-but you can specify either for `update`, and if you specify both they must refer to 
+but you can specify either for `update`, and if you specify both they must refer to
 the same saved question.
 
 ### Delete an alert rule
@@ -2035,10 +2009,8 @@ You can use this operation to delete any rule instance, regardless of whether it
 an inline question or a referenced question.
 
 ```graphql
-mutation DeleteRuleInstance ($id: ID!) {
-  deleteRuleInstance (
-    id: $id
-  ) {
+mutation DeleteRuleInstance($id: ID!) {
+  deleteRuleInstance(id: $id) {
     id
   }
 }
@@ -2059,10 +2031,8 @@ Alerts app UI instead of deleting one.
 ### Trigger an alert rule on demand
 
 ```graphql
-mutation EvaluateRuleInstance ($id: ID!) {
-  evaluateRuleInstance (
-    id: $id
-  ) {
+mutation EvaluateRuleInstance($id: ID!) {
+  evaluateRuleInstance(id: $id) {
     outputs {
       name
       value
@@ -2086,30 +2056,30 @@ variables:
 ### Create a Question
 
 ```graphql
-  mutation CreateQuestion($question: CreateQuestionInput!) {
-    createQuestion(question: $question) {
-      id
-      title
-      description
-      queries {
-        name
-        query
-        version
-        resultsAre
-      }
-      variables {
-        name
-        required
-        default
-      }
-      compliance {
-        standard
-        requirements
-      }
-      accountId
-      integrationDefinitionId
+mutation CreateQuestion($question: CreateQuestionInput!) {
+  createQuestion(question: $question) {
+    id
+    title
+    description
+    queries {
+      name
+      query
+      version
+      resultsAre
     }
+    variables {
+      name
+      required
+      default
+    }
+    compliance {
+      standard
+      requirements
+    }
+    accountId
+    integrationDefinitionId
   }
+}
 ```
 
 variables:
@@ -2142,40 +2112,37 @@ variables:
 }
 ```
 
-!!! note
-    - `name` field is optional
-    - `name` is recommended to be a single word without special characters
-    - `resultsAre` with values `GOOD`, `BAD`, and `UNKNOWN` are used to
-      determine gaps/issues and to perform continuous compliance assessment.
-      `INFORMATIVE` is the default value.
+!!! note - `name` field is optional - `name` is recommended to be a single word without special characters - `resultsAre` with values `GOOD`, `BAD`, and `UNKNOWN` are used to
+determine gaps/issues and to perform continuous compliance assessment.
+`INFORMATIVE` is the default value.
 
 ### Update a question
 
 ```graphql
-  mutation UpdateQuestion($id: ID!, $update: QuestionUpdate!) {
-    updateQuestion(id: $id, update: $update) {
-      id
-      title
-      description
-      queries {
-        name
-        query
-        version
-        resultsAre
-      }
-      variables {
-        name
-        required
-        default
-      }
-      compliance {
-        standard
-        requirements
-      }
-      accountId
-      integrationDefinitionId
+mutation UpdateQuestion($id: ID!, $update: QuestionUpdate!) {
+  updateQuestion(id: $id, update: $update) {
+    id
+    title
+    description
+    queries {
+      name
+      query
+      version
+      resultsAre
     }
+    variables {
+      name
+      required
+      default
+    }
+    compliance {
+      standard
+      requirements
+    }
+    accountId
+    integrationDefinitionId
   }
+}
 ```
 
 variables:
@@ -2288,19 +2255,17 @@ This is an example of a GraphQL mutation that updates the hour and day of the we
 
 ```graphql
 mutation integrationInstance(
-  $id: String!,
+  $id: String!
   $pollingIntervalCronExpression: IntegrationPollingIntervalCronExpressionInput
 ) {
   updateIntegrationInstance(
-    id: $id,
-    update: {
-      pollingIntervalCronExpression: $pollingIntervalCronExpression
-    }
+    id: $id
+    update: { pollingIntervalCronExpression: $pollingIntervalCronExpression }
   ) {
     id
     name
     pollingInterval
-    pollingIntervalCronExpression { 
+    pollingIntervalCronExpression {
       hour
       dayOfWeek
     }
@@ -2322,33 +2287,29 @@ Variables for the mutation:
 
 Variables:
 
-`id`: the `id` of the configuration for which you want to update the hour and/or day of week. 
-This ID is visible in each integration configuration in your account. To find the ID in your 
-JupiterOne account, go to **Settings > Integration > {integration name} > {configuration name}** > 
+`id`: the `id` of the configuration for which you want to update the hour and/or day of week.
+This ID is visible in each integration configuration in your account. To find the ID in your
+JupiterOne account, go to **Settings > Integration > {integration name} > {configuration name}** >
 value in the ID field.
 
-`hour`: an integer between 0 and 23 that represents the hour of the day in UTC when you 
+`hour`: an integer between 0 and 23 that represents the hour of the day in UTC when you
 want the integration to run.
 
-`dayofWeek`: an integer between 0 and 6 that represents the day of the week Sunday through Saturday 
+`dayofWeek`: an integer between 0 and 6 that represents the day of the week Sunday through Saturday
 on which you want the integration to run.
 
 #### Example Query
 
-This is an example of a GraphQL query that returns the current values in the `hour` and `dayOfWeek` 
+This is an example of a GraphQL query that returns the current values in the `hour` and `dayOfWeek`
 parameters for a specific integration configuration:
 
 ```graphql
-query integrationInstance(
-  $id: String!,
-) {
-  integrationInstance(
-    id: $id,
-  ) {
+query integrationInstance($id: String!) {
+  integrationInstance(id: $id) {
     id
     name
     pollingInterval
-    pollingIntervalCronExpression { 
+    pollingIntervalCronExpression {
       hour
       dayOfWeek
     }
@@ -2366,9 +2327,9 @@ Variable for the query:
 
 Variables:
 
-`id`: the `id` of the configuration for which you want to update the hour and/or day of week. 
-This ID is visible in each integration configuration in your account. To find the ID in your 
-JupiterOne account go to **Settings > Integration > {integration name} > {configuration name} >** 
+`id`: the `id` of the configuration for which you want to update the hour and/or day of week.
+This ID is visible in each integration configuration in your account. To find the ID in your
+JupiterOne account go to **Settings > Integration > {integration name} > {configuration name} >**
 value in the ID field.
 
 ### Finding an Integration Definition Based on a Type
@@ -2376,8 +2337,8 @@ value in the ID field.
 This query returns an Integration Definition. This query requires an Integration Type.
 
 ```graphql
-query testQuery ($integrationType: String!) {
-  findIntegrationDefinition (integrationType: $integrationType) {
+query testQuery($integrationType: String!) {
+  findIntegrationDefinition(integrationType: $integrationType) {
     id
     name
     type
@@ -2529,7 +2490,7 @@ Body:
 **Creating entities and a relationship between them**
 
 !!! note
-    The following mutations utilize a J1Client.
+The following mutations utilize a J1Client.
 
 ```graphql
 const CREATE_ENTITY = gql`
@@ -2611,14 +2572,15 @@ const relationship = await j1Client.mutate({
 ## IAM Operations (beta)
 
 !!! note
-    The IAM API is in beta and only works for accounts configured with SSO.
-    Please email support@jupiterone.com to enable access to these APIs
-    because we will need to verify your company's domain name.
+The IAM API is in beta and only works for accounts configured with SSO.
+Please email support@jupiterone.com to enable access to these APIs
+because we will need to verify your company's domain name.
 
 !!! note
-    `accessAdmin` permission is required for all IAM operations.
-    
+`accessAdmin` permission is required for all IAM operations.
+
 **Endpoint:**
+
 ```text
 POST https://api.us.jupiterone.io/iam/graphql
 ```
@@ -2631,18 +2593,19 @@ Accept: application/json
 JupiterOne-Account: {Account_ID}
 Authorization: Bearer {API_Key}
 ```
-<br/>
 
 ### Get IAM groups
+
 **Query: iamGroups**
 
-Retrieves all account `groups` within the query limit. 
+Retrieves all account `groups` within the query limit.
+
 - `limit`: (required) max number of records to return
 - `cursor`: (optional) continuation token
 
 ```graphql
 query Query($limit: Int!, $cursor: String) {
-  iamGroups(limit: $limit,cursor: $cursor) {
+  iamGroups(limit: $limit, cursor: $cursor) {
     items {
       id
       name
@@ -2655,17 +2618,21 @@ query Query($limit: Int!, $cursor: String) {
   }
 }
 ```
+
 **API Samples**
 
 Sample (S1): `iamGroups`
 
 (S1): Request
+
 ```json
 {
   "limit": 5
 }
 ```
+
 (S1): Response
+
 ```json
 {
   "data": {
@@ -2690,52 +2657,59 @@ Sample (S1): `iamGroups`
   }
 }
 ```
+
 ### Get Users of IAM group
+
 **Query: iamGroupUsers**
 
-Retrieves all group members of the specified `group` (by `id`) within the query limit. 
+Retrieves all group members of the specified `group` (by `id`) within the query limit.
+
 - `groupId`: (required) unique group identifier
 - `limit`: (required) max number of records to return
 - `cursor`: (optional) continuation token
-> Note: The item.`id` property in the response is the JupiterOne `uid`. 
+  > Note: The item.`id` property in the response is the JupiterOne `uid`.
 
 ```graphql
-query Query($groupId: String!, $limit: Int!, $cursor: String){
+query Query($groupId: String!, $limit: Int!, $cursor: String) {
   iamGroupUsers(groupId: $groupId, limit: $limit, cursor: $cursor) {
-      items {
-        id
-        email
-      }
-      pageInfo {
-        endCursor
-        hasNextPage
-      }
+    items {
+      id
+      email
     }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
 }
 ```
+
 **API Samples**
 
 Sample (S1): `iamGroupUsers`
 
 (S1): Request
+
 ```json
 {
   "groupId": "22c2d370-89ef-4280-970b-d520ca1837be",
   "limit": 5
 }
 ```
+
 (S1): Response
+
 ```json
 {
   "data": {
     "iamGroupUsers": {
       "items": [
         {
-          "id":"222xxx222_abc",
+          "id": "222xxx222_abc",
           "email": "abc@mycompany.com"
         },
         {
-          "id":"222xxx222_def@mycompany.com",
+          "id": "222xxx222_def@mycompany.com",
           "email": "def@mycompany.com"
         }
       ],
@@ -2748,37 +2722,38 @@ Sample (S1): `iamGroupUsers`
 }
 ```
 
-<br>
-
 ### Add IAM User to Group
+
 **Mutation: addIamUserToGroupByEmail**
 
-Adds a `user` to a `group` using the specified email and group ID. 
+Adds a `user` to a `group` using the specified email and group ID.
+
 - `groupId`: (required)
 - `userEmail`: (required)
 
 ```graphql
 mutation Mutation($groupId: String!, $userEmail: String!) {
-  addIamUserToGroupByEmail(
-    groupId: $groupId, 
-    userEmail: $userEmail
-  ) {
+  addIamUserToGroupByEmail(groupId: $groupId, userEmail: $userEmail) {
     success
   }
 }
 ```
+
 **API Samples**
 
 Sample (S1): `addIamUserToGroupByEmail`
 
 (S1): Request
+
 ```json
 {
   "groupId": "22c2d370-89ef-4280-970b-d520ca1837be",
   "userEmail": "abc@mycompany.com"
 }
 ```
+
 (S1): Response
+
 ```json
 {
   "data": {
@@ -2790,34 +2765,37 @@ Sample (S1): `addIamUserToGroupByEmail`
 ```
 
 ### Remove IAM user from group
+
 **Mutation: removeIamUserFromGroupByEmail**
 
-Removes a `user` from a `group` using the specified email and group ID. 
+Removes a `user` from a `group` using the specified email and group ID.
+
 - `groupId`: (required)
 - `userEmail`: (required)
 
 ```graphql
 mutation Mutation($groupId: String!, $userEmail: String!) {
-  removeIamUserFromGroupByEmail(
-    groupId: $groupId,
-    userEmail: $userEmail
-  ) {
+  removeIamUserFromGroupByEmail(groupId: $groupId, userEmail: $userEmail) {
     success
   }
 }
 ```
+
 **API Samples**
 
 Sample (S1): `removeIamUserFromGroupByEmail`
 
 (S1): Request
+
 ```json
 {
   "groupId": "22c2d370-89ef-4280-970b-d520ca1837be",
   "userEmail": "xyz@mycompany.com"
 }
 ```
+
 (S1): Response
+
 ```json
 {
   "data": {
@@ -2827,10 +2805,13 @@ Sample (S1): `removeIamUserFromGroupByEmail`
   }
 }
 ```
+
 ### Create IAM Group
+
 **Mutation: `createIamGroup`**
 
-Creates a new `group` with a specified `name` and optionally: `description`, `queryPolicy`, and/or `abacPermissions`. 
+Creates a new `group` with a specified `name` and optionally: `description`, `queryPolicy`, and/or `abacPermissions`.
+
 - `name`: (required) must be unique to all other groups.
 - `description`: (optional)
 - `abacPermissions`: (optional)
@@ -2855,95 +2836,106 @@ mutation Mutation(
   }
 }
 ```
+
 **API Type Definitions**
 
 **queryPolicy**
 
-Description: Group Query Policies define query access for members of a particular group. Setting this property via the IAM API will **overwrite** any existing queryPolicy for the given group. If updating this property, *always* define the full `queryPolicy` to enforce.     
+Description: Group Query Policies define query access for members of a particular group. Setting this property via the IAM API will **overwrite** any existing queryPolicy for the given group. If updating this property, _always_ define the full `queryPolicy` to enforce.
 
-Type: list of `JSON` objects with primitive values or an array or primitive values.   
+Type: list of `JSON` objects with primitive values or an array or primitive values.
+
 ```typescript
 type queryPolicy = [JSON!];
-type JSON = { 
-  [key: string]: string | number | boolean || (string | number | boolean)[]; 
+type JSON = {
+  [key: string]: string | number | boolean || (string | number | boolean)[];
 }
 ```
 
 **abacPermissions**
 
-Description: ABAC permissions define application access for members of a perticular group. Setting this property via the IAM API will **overwrite** any existing permissions for the given group. If updating this property, *always* define the full list of `permissions` that should be granted.   
+Description: ABAC permissions define application access for members of a perticular group. Setting this property via the IAM API will **overwrite** any existing permissions for the given group. If updating this property, _always_ define the full list of `permissions` that should be granted.
 
-Type: list of valid `permission` strings (see table below).    
+Type: list of valid `permission` strings (see table below).
+
 ```typescript
 type abacPermissions = [permission!]
 type permission = string // must be a valid permission string
 ```
+
 **Permission Strings: READ-ONLY**
 
 | DISPLAY NAME (J1 APP)    | ACCESS |                 PERMISSION |
 | :----------------------- | :----: | -------------------------: |
-| *All Apps And Resources* |  READ  |           `fullReadAccess` |
-| *Shared: Questions*      |  READ  |            `readQuestions` |
-| *GraphData*              |  READ  |                `readGraph` |
-| *Landing*                |  READ  |            `accessLanding` |
-| *Assets*                 |  READ  |             `accessAssets` |
-| *Policies*               |  READ  |           `accessPolicies` |
-| *Compliance*             |  READ  |         `accessCompliance` |
-| *Alerts*                 |  READ  |              `accessRules` |
-| *GraphViewer*            |  READ  |             `accessGalaxy` |
-| *Insights*               |  READ  |           `accessInsights` |
-| *Integrations*           |  READ  |       `accessIntegrations` |
-| *Endpoint Compliance*    |  READ  | `accessEndpointCompliance` |
+| _All Apps And Resources_ |  READ  |           `fullReadAccess` |
+| _Shared: Questions_      |  READ  |            `readQuestions` |
+| _GraphData_              |  READ  |                `readGraph` |
+| _Landing_                |  READ  |            `accessLanding` |
+| _Assets_                 |  READ  |             `accessAssets` |
+| _Policies_               |  READ  |           `accessPolicies` |
+| _Compliance_             |  READ  |         `accessCompliance` |
+| _Alerts_                 |  READ  |              `accessRules` |
+| _GraphViewer_            |  READ  |             `accessGalaxy` |
+| _Insights_               |  READ  |           `accessInsights` |
+| _Integrations_           |  READ  |       `accessIntegrations` |
+| _Endpoint Compliance_    |  READ  | `accessEndpointCompliance` |
 
 **Permission Strings: ADMIN**
 
 | DISPLAY NAME (J1 APP)    | ACCESS |                PERMISSION |
 | :----------------------- | :----: | ------------------------: |
-| *All Apps And Resources* | ADMIN  |             `accessAdmin` |
-| *Shared: Questions*      | ADMIN  |          `writeQuestions` |
-| *GraphData*              | ADMIN  |              `writeGraph` |
-| *Landing*                | ADMIN  |            `adminLanding` |
-| *Assets*                 | ADMIN  |             `adminAssets` |
-| *Policies*               | ADMIN  |           `adminPolicies` |
-| *Compliance*             | ADMIN  |         `adminCompliance` |
-| *Alerts*                 | ADMIN  |              `adminRules` |
-| *GraphViewer*            | ADMIN  |             `adminGalaxy` |
-| *Insights*               | ADMIN  |           `adminInsights` |
-| *Integrations*           | ADMIN  |       `adminIntegrations` |
-| *Endpoint Compliance*    | ADMIN  | `adminEndpointCompliance` |
-| *ENABLE API KEY ACCESS*  |   *    |              `apiKeyUser` |
+| _All Apps And Resources_ | ADMIN  |             `accessAdmin` |
+| _Shared: Questions_      | ADMIN  |          `writeQuestions` |
+| _GraphData_              | ADMIN  |              `writeGraph` |
+| _Landing_                | ADMIN  |            `adminLanding` |
+| _Assets_                 | ADMIN  |             `adminAssets` |
+| _Policies_               | ADMIN  |           `adminPolicies` |
+| _Compliance_             | ADMIN  |         `adminCompliance` |
+| _Alerts_                 | ADMIN  |              `adminRules` |
+| _GraphViewer_            | ADMIN  |             `adminGalaxy` |
+| _Insights_               | ADMIN  |           `adminInsights` |
+| _Integrations_           | ADMIN  |       `adminIntegrations` |
+| _Endpoint Compliance_    | ADMIN  | `adminEndpointCompliance` |
+| _ENABLE API KEY ACCESS_  |   \*   |              `apiKeyUser` |
 
 **API Samples**
 
 Sample (S1): `createIamGroup`
 
 (S1): Request
+
 ```json
 {
-  "name": "Users",
+  "name": "Users"
 }
 ```
+
 (S1): Response
+
 ```json
 {
   "data": {
     "createIamGroup": {
       "id": "90909-11ef-4280-970b-4444ca1837be",
-      "name": "Users",
+      "name": "Users"
     }
   }
 }
 ```
+
 Sample (S2): `createIamGroup`
 
 (S2): Request
+
 ```json
 {
   "name": "UsersX",
   "description": "A group for X users"
 }
 ```
+
 (S2): Response
+
 ```json
 {
   "data": {
@@ -2955,22 +2947,26 @@ Sample (S2): `createIamGroup`
   }
 }
 ```
+
 Sample (S3): `createIamGroup`
 
 (S3): Request
+
 ```json
 {
   "name": "Support",
   "description": "A group for support users",
-  "queryPolicy": [ 
+  "queryPolicy": [
     {
       "_type": ["aws_ecr_image", "bitbucket_pullrequest"]
     }
-  ] 
+  ]
 }
 ```
+
 (S3): Response
-```json 
+
+```json
 {
   "data": {
     "createIamGroup": {
@@ -2981,13 +2977,15 @@ Sample (S3): `createIamGroup`
   }
 }
 ```
+
 Sample (S4): `createIamGroup`
 
 (S4): Request
+
 ```json
 {
   "name": "Admins",
-  "queryPolicy": [ 
+  "queryPolicy": [
     {
       "_type": "aws_ecs_task_definition",
       "_class": "Account"
@@ -2995,32 +2993,35 @@ Sample (S4): `createIamGroup`
     {
       "_type": "aws_ecr_image"
     }
-  ] 
+  ]
 }
 ```
+
 (S4): Response
+
 ```json
 {
   "data": {
     "createIamGroup": {
       "id": "87787-6787-678678-778-6786786",
-      "name": "Admins",
+      "name": "Admins"
     }
   }
 }
-
 ```
 
 ### Update IAM Group
+
 **Mutation: `updateIamGroup`**
 
-Updates a `group`'s properties: `name`, `description`, `queryPolicy`, and/or `abacPermissions`. 
+Updates a `group`'s properties: `name`, `description`, `queryPolicy`, and/or `abacPermissions`.
+
 - `id`: (required) must tie to an existing group.
 - `name`: (optional) must be unique to all other groups.
 - `description`: (optional)
 - `abacPermissions`: (optional)
 - `queryPolicy`: (optional)
-  
+
 ```graphql
 mutation Mutation(
   $id: String!
@@ -3042,76 +3043,83 @@ mutation Mutation(
   }
 }
 ```
+
 **API Type Definitions**
 
 **queryPolicy**
 
-Description: Group Query Policies define query access for members of a particular group. Setting this property via the IAM API will **overwrite** any existing queryPolicy for the given group. If updating this property, *always* define the full `queryPolicy` to enforce.     
+Description: Group Query Policies define query access for members of a particular group. Setting this property via the IAM API will **overwrite** any existing queryPolicy for the given group. If updating this property, _always_ define the full `queryPolicy` to enforce.
 
-Type: list of `JSON` objects with primitive values or an array or primitive values.   
+Type: list of `JSON` objects with primitive values or an array or primitive values.
+
 ```typescript
 type queryPolicy = [JSON!];
-type JSON = { 
-  [key: string]: string | number | boolean || (string | number | boolean)[]; 
+type JSON = {
+  [key: string]: string | number | boolean || (string | number | boolean)[];
 }
 ```
 
 **abacPermissions**
 
-Description: ABAC permissions define application access for members of a perticular group. Setting this property via the IAM API will **overwrite** any existing permissions for the given group. If updating this property, *always* define the full list of `permissions` that should be granted.   
+Description: ABAC permissions define application access for members of a perticular group. Setting this property via the IAM API will **overwrite** any existing permissions for the given group. If updating this property, _always_ define the full list of `permissions` that should be granted.
 
-Type: list of valid `permission` strings (see table below).    
+Type: list of valid `permission` strings (see table below).
+
 ```typescript
 type abacPermissions = [permission!];
 type permission = string; // must be a valid permission string
 ```
+
 **Permission Strings: READ-ONLY**
 
 | DISPLAY NAME (J1 APP)    | ACCESS |                 PERMISSION |
 | :----------------------- | :----: | -------------------------: |
-| *All Apps And Resources* |  READ  |           `fullReadAccess` |
-| *Shared: Questions*      |  READ  |            `readQuestions` |
-| *GraphData*              |  READ  |                `readGraph` |
-| *Landing*                |  READ  |            `accessLanding` |
-| *Assets*                 |  READ  |             `accessAssets` |
-| *Policies*               |  READ  |           `accessPolicies` |
-| *Compliance*             |  READ  |         `accessCompliance` |
-| *Alerts*                 |  READ  |              `accessRules` |
-| *GraphViewer*            |  READ  |             `accessGalaxy` |
-| *Insights*               |  READ  |           `accessInsights` |
-| *Integrations*           |  READ  |       `accessIntegrations` |
-| *Endpoint Compliance*    |  READ  | `accessEndpointCompliance` |
+| _All Apps And Resources_ |  READ  |           `fullReadAccess` |
+| _Shared: Questions_      |  READ  |            `readQuestions` |
+| _GraphData_              |  READ  |                `readGraph` |
+| _Landing_                |  READ  |            `accessLanding` |
+| _Assets_                 |  READ  |             `accessAssets` |
+| _Policies_               |  READ  |           `accessPolicies` |
+| _Compliance_             |  READ  |         `accessCompliance` |
+| _Alerts_                 |  READ  |              `accessRules` |
+| _GraphViewer_            |  READ  |             `accessGalaxy` |
+| _Insights_               |  READ  |           `accessInsights` |
+| _Integrations_           |  READ  |       `accessIntegrations` |
+| _Endpoint Compliance_    |  READ  | `accessEndpointCompliance` |
 
 **Permission Strings: ADMIN**
 
 | DISPLAY NAME (J1 APP)    | ACCESS |                PERMISSION |
 | :----------------------- | :----: | ------------------------: |
-| *All Apps And Resources* | ADMIN  |             `accessAdmin` |
-| *Shared: Questions*      | ADMIN  |          `writeQuestions` |
-| *GraphData*              | ADMIN  |              `writeGraph` |
-| *Landing*                | ADMIN  |            `adminLanding` |
-| *Assets*                 | ADMIN  |             `adminAssets` |
-| *Policies*               | ADMIN  |           `adminPolicies` |
-| *Compliance*             | ADMIN  |         `adminCompliance` |
-| *Alerts*                 | ADMIN  |              `adminRules` |
-| *GraphViewer*            | ADMIN  |             `adminGalaxy` |
-| *Insights*               | ADMIN  |           `adminInsights` |
-| *Integrations*           | ADMIN  |       `adminIntegrations` |
-| *Endpoint Compliance*    | ADMIN  | `adminEndpointCompliance` |
-| *ENABLED API KEY ACCESS* |   *    |              `apiKeyUser` |
+| _All Apps And Resources_ | ADMIN  |             `accessAdmin` |
+| _Shared: Questions_      | ADMIN  |          `writeQuestions` |
+| _GraphData_              | ADMIN  |              `writeGraph` |
+| _Landing_                | ADMIN  |            `adminLanding` |
+| _Assets_                 | ADMIN  |             `adminAssets` |
+| _Policies_               | ADMIN  |           `adminPolicies` |
+| _Compliance_             | ADMIN  |         `adminCompliance` |
+| _Alerts_                 | ADMIN  |              `adminRules` |
+| _GraphViewer_            | ADMIN  |             `adminGalaxy` |
+| _Insights_               | ADMIN  |           `adminInsights` |
+| _Integrations_           | ADMIN  |       `adminIntegrations` |
+| _Endpoint Compliance_    | ADMIN  | `adminEndpointCompliance` |
+| _ENABLED API KEY ACCESS_ |   \*   |              `apiKeyUser` |
 
 **API Samples**
 
 Sample (S1): `updateIamGroup`
 
 (S1): Request
+
 ```json
 {
   "id": "90909-11ef-4280-970b-4444ca1837be",
-  "name": "Users",
+  "name": "Users"
 }
 ```
+
 (S1): Response
+
 ```json
 {
   "data": {
@@ -3123,9 +3131,11 @@ Sample (S1): `updateIamGroup`
   }
 }
 ```
+
 Sample (S2): `updateIamGroup`
 
 (S2): Request
+
 ```json
 {
   "id": "90909-11ef-4280-970b-4444ca",
@@ -3133,7 +3143,9 @@ Sample (S2): `updateIamGroup`
   "description": "A group for X users"
 }
 ```
+
 (S2): Response
+
 ```json
 {
   "data": {
@@ -3145,26 +3157,26 @@ Sample (S2): `updateIamGroup`
   }
 }
 ```
+
 Sample (S3): `updateIamGroup`
 
 (S3): Request
+
 ```json
 {
   "id": "90909-11ef-4280-970b-4444ca",
-  "abacPermissions": [
-    "accessPolicies", 
-    "writeQuestions",
-    "accessGalaxy"
-  ],
-  "queryPolicy": [ 
+  "abacPermissions": ["accessPolicies", "writeQuestions", "accessGalaxy"],
+  "queryPolicy": [
     {
       "_type": "aws_ecs_task_definition"
     }
-  ] 
+  ]
 }
 ```
+
 (S3): Response
-```json 
+
+```json
 {
   "data": {
     "updateIamGroup": {
@@ -3175,14 +3187,16 @@ Sample (S3): `updateIamGroup`
   }
 }
 ```
+
 Sample (S4): `updateIamGroup`
 
 (S4): Request
+
 ```json
 {
   "id": "90909-11ef-4280-970b-4444ca",
   "description": "allow account class",
-  "queryPolicy": [ 
+  "queryPolicy": [
     {
       "_type": "aws_ecs_task_definition",
       "_class": "Account"
@@ -3190,17 +3204,19 @@ Sample (S4): `updateIamGroup`
     {
       "_integrationType": ["whitehat"]
     }
-  ] 
+  ]
 }
 ```
+
 (S4): Response
+
 ```json
 {
   "data": {
     "updateIamGroup": {
       "id": "90909-11ef-4280-970b-4444ca",
       "name": "UsersX",
-      "description": "allow account class",
+      "description": "allow account class"
     }
   }
 }

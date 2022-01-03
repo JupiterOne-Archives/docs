@@ -9,7 +9,7 @@
 
 ## How it Works
 
-- JupiterOne periodically fetches Veracode scans, CWEs, vulnerabilities, 
+- JupiterOne periodically fetches Veracode scans, CWEs, vulnerabilities,
   and findings to update the graph.
 - Write JupiterOne queries to review and monitor updates to the graph.
 - Configure alerts to reduce the noise of findings.
@@ -32,15 +32,17 @@ instructions for obtaining these credentials](https://help.veracode.com/r/c_vera
 1. From the configuration **Gear Icon**, select **Integrations**.
 2. Scroll to the **Veracode** integration tile and click it.
 3. Click the **Add Configuration** button and configure the following settings:
+
 - Enter the **Account Name** by which you'd like to identify this Veracode
-   account in JupiterOne. Ingested entities will have this value stored in
-   `tag.AccountName` when **Tag with Account Name** is checked.
+  account in JupiterOne. Ingested entities will have this value stored in
+  `tag.AccountName` when **Tag with Account Name** is checked.
 - Enter a **Description** that will further assist your team when identifying
-   the integration instance.
+  the integration instance.
 - Select a **Polling Interval** that you feel is sufficient for your monitoring
-   needs. You may leave this as `DISABLED` and manually execute the integration.
+  needs. You may leave this as `DISABLED` and manually execute the integration.
 - Enter the **API ID** used to authenticate with Veracode.
 - Enter the **API Secret** used to authenticate with Veracode.
+
 4. Click **Create Configuration** once all values are provided.
 
 ## How to Uninstall
@@ -80,6 +82,6 @@ The following relationships are created/mapped:
 
 #### Extra-Instance / Mapped
 
-| From                           | Type        | To                                                                                                                                                                                                 |
-| ------------------------------ | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `CodeRepo/Project/Application` | **HAS/HAD** | `veracode_finding` <br> Note: This is mapped automatically only when the name of the Veracode Application the finding belongs to matches the name of a CodeRepo/Project/Application in JupiterOne. |
+| From                           | Type        | To                                                                                                                                                                                            |
+| ------------------------------ | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CodeRepo/Project/Application` | **HAS/HAD** | `veracode_finding` Note: This is mapped automatically only when the name of the Veracode Application the finding belongs to matches the name of a CodeRepo/Project/Application in JupiterOne. |
