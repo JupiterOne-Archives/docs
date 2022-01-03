@@ -36,7 +36,6 @@ describe("removeTitleFromArticleBody", () => {
     const markdown = await getMarkdownAsStringFromPath(
       "./mockMarkdownForTitleRemoval.md"
     );
-    console.log("MAr start", markdown, "MAr end");
     const markdownTarget = markdown !== undefined ? markdown : "";
 
     const actual = removeTitleFromArticleBody(
