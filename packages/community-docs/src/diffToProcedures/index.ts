@@ -4,6 +4,7 @@ import {
   createDisplayName,
   markdownToString,
   ProcedureTypeEnum,
+  removeTitleFromArticleBody,
   TITLE_FROM_MARKDOWN_REGEX,
   VanillaArticle,
   VanillaKnowledgeCategory,
@@ -16,12 +17,13 @@ export const createArticleChange = async (
 ): Promise<VanillaArticle> => {
   let displayName = "";
   // we dont want articles to be called 'index'
-  const articleBody = await markdownToString(path);
+  let articleBody = await markdownToString(path);
 
   const titleFromBody = checkBodyForTitleToUseForArticle(
     articleBody,
     TITLE_FROM_MARKDOWN_REGEX
   );
+
   if (!titleFromBody) {
     if (articleChanges.startsWith("index")) {
       const pathSplit = path.split("/");
@@ -33,6 +35,10 @@ export const createArticleChange = async (
     }
   } else {
     displayName = titleFromBody;
+    articleBody = removeTitleFromArticleBody(
+      articleBody,
+      TITLE_FROM_MARKDOWN_REGEX
+    );
   }
   const kb: VanillaArticle = {
     knowledgeCategoryID: null, //will need to create it and get it- for sub folders
