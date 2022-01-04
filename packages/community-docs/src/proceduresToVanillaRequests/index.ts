@@ -226,15 +226,11 @@ export const procedureToKnowledgeCategory = async (
   } else {
     if (directoryExistsResult) {
       let isReleaseNotes = false;
-      if (procedureWorkedOn.path) {
-        console.log(procedureWorkedOn.path.toLowerCase(), "djdjdjdj");
-      }
 
       if (
         procedureWorkedOn.path &&
         procedureWorkedOn.path.toLowerCase().indexOf("release-notes") !== -1
       ) {
-        console.log("RELEASE KNOWTTT");
         isReleaseNotes = true;
       }
       let reqData: any = {
@@ -249,7 +245,7 @@ export const procedureToKnowledgeCategory = async (
           knowledgeBaseID: isReleaseNotes ? 2 : 1,
         };
       }
-      console.log(reqData, "dATAAA");
+
       const createdKnowledgeCategory = await createKnowledgeCategory(
         httpClient,
         reqData
@@ -363,6 +359,7 @@ export const proceduresToVanillaRequests = async (
     const existingknowledgeCategoryInfo = await getKnowedgeCategories(
       httpClient
     );
+    console.log(existingknowledgeCategoryInfo, "exeeekeke");
     logger.info(`Getting Articles`);
     const articles = await getAllArticles(
       httpClient,

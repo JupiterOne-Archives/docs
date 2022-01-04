@@ -173,7 +173,7 @@ export const deleteAllThingsCurrentlyOnVanillaForum = async () => {
 };
 
 const exampleOfPathsOfChangesX = [
-  `${PATH_OF_DIRECTORY_TO_WATCH}/asset-management/`,
+  `${PATH_OF_DIRECTORY_TO_WATCH}/Release-Notes/`,
 ];
 
 // Handy for debugging - runs as if everything is new

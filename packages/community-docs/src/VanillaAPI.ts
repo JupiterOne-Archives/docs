@@ -164,6 +164,7 @@ export const createKnowledgeCategory = async (
   try {
     const category = (await client.post("/knowledge-categories", {
       ...bodyOfRequest,
+      parentID: bodyOfRequest.parentID === -1 ? 1 : bodyOfRequest.parentID,
       knowledgeBaseID: isReleaseNotes ? 2 : 1,
     })) as {
       data: VanillaKnowledgeCategory | ErrorType;
