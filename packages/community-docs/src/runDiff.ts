@@ -1,9 +1,9 @@
-import { updateCommunityDocs } from "./";
+import { refreshVanillaArticles } from "./";
 import { logger } from "./loggingUtil";
 
 const updateCommunityDocsByMergeChanges = async () => {
   try {
-    const completed = await updateCommunityDocs();
+    const completed = await refreshVanillaArticles();
 
     logger.info(
       `UpdateCommunityDocs completed: ${JSON.stringify(completed, null, 2)}`

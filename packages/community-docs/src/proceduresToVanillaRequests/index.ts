@@ -225,18 +225,31 @@ export const procedureToKnowledgeCategory = async (
     }
   } else {
     if (directoryExistsResult) {
+      let isReleaseNotes = false;
+      if (procedureWorkedOn.path) {
+        console.log(procedureWorkedOn.path.toLowerCase(), "djdjdjdj");
+      }
+
+      if (
+        procedureWorkedOn.path &&
+        procedureWorkedOn.path.toLowerCase().indexOf("release-notes") !== -1
+      ) {
+        console.log("RELEASE KNOWTTT");
+        isReleaseNotes = true;
+      }
       let reqData: any = {
         name: tempProcedureWorkedOn.name,
         parentID: 1,
+        knowledgeBaseID: isReleaseNotes ? 2 : 1,
       };
       if (previousknowledgeCategoryID !== null) {
         reqData = {
           name: tempProcedureWorkedOn.name,
           parentID: previousknowledgeCategoryID,
-          knowledgeBaseID: 1,
+          knowledgeBaseID: isReleaseNotes ? 2 : 1,
         };
       }
-
+      console.log(reqData, "dATAAA");
       const createdKnowledgeCategory = await createKnowledgeCategory(
         httpClient,
         reqData
