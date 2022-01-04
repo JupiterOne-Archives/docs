@@ -6,7 +6,7 @@ const updateCommunityDocsByMergeChanges = async () => {
     const completed = await addFullSubFolderManually("release-notes");
 
     logger.info(
-      `UpdateCommunityDocs completed: ${JSON.stringify(completed, null, 2)}`
+      `UpdateCommunityDocs cssompleted: ${JSON.stringify(completed, null, 2)}`
     );
   } catch (error) {
     logger.error(`UpdateCommunityDocs Errored: \n ${JSON.stringify(error)}`);
