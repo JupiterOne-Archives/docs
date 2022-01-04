@@ -1,9 +1,9 @@
-import { addFullSubFolderManually } from "./";
+import { updateCommunityDocs } from "./";
 import { logger } from "./loggingUtil";
 
 const updateCommunityDocsByMergeChanges = async () => {
   try {
-    const completed = await addFullSubFolderManually("release-notes");
+    const completed = await updateCommunityDocs();
 
     logger.info(
       `UpdateCommunityDocs cssompleted: ${JSON.stringify(completed, null, 2)}`
