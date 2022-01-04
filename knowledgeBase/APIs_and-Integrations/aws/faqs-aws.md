@@ -8,7 +8,7 @@ can find details on the required permissions by going to **Integrations Configur
 
 Or they can be found on the [jupiterone-aws-integration][] project on Github.
 
-## How can I add/configure all the sub-accounts in my AWS Organization?
+## How can I add or configure all the sub-accounts in my AWS Organization?
 
 First configure your AWS Organization master account to JupiterOne per the instructions 
 in the JupiterOne application or those found at the [jupiterone-aws-integration][] project on Github. 
