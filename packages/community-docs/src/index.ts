@@ -102,36 +102,39 @@ export const updateVanillaWithDirectoryToWatch = async () => {
   }
 };
 
-export const addFullSubFolderManually = async (folderName: string) => {
-  const directoryLocation = path.join(
-    __dirname,
-    `../../../${PATH_OF_DIRECTORY_TO_WATCH}/`,
-    folderName
-  );
+// export const addFullSubFolderManually = async (folderName: string) => {
+//   const directoryLocation = path.join(
+//     __dirname,
+//     `../../../${PATH_OF_DIRECTORY_TO_WATCH}/`,
+//     folderName
+//   );
 
-  const directoryPromise = new Promise<string[]>((resolve, reject) => {
-    return getDirectories(directoryLocation, (err, matches) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(matches as string[]);
-      }
-    });
-  });
-  const fullArrayOfAllItems: string[] = await directoryPromise;
-  if (fullArrayOfAllItems) {
-    const trimmedDirectories = fullArrayOfAllItems.map((result) =>
-      result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
-    );
-    const procedures = await diffToProcedures(trimmedDirectories);
-    logger.info(`Path of changes: ${fullArrayOfAllItems}`);
-    logger.info(`list of procedures: ${procedures}`);
-    if (procedures && procedures.length > 0) {
-      return await proceduresToVanillaRequests(procedures);
-    }
-  }
+//   const directoryPromise = new Promise<string[]>((resolve, reject) => {
+//     return getDirectories(directoryLocation, (err, matches) => {
+//       if (err) {
+//         reject(err);
+//       } else {
+//         resolve(matches as string[]);
+//       }
+//     });
+//   });
+//   const fullArrayOfAllItems: string[] = await directoryPromise;
+//   if (fullArrayOfAllItems) {
+//     const trimmedDirectories = fullArrayOfAllItems.map((result) =>
+//       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
+//     );
+//     const procedures = await diffToProcedures(trimmedDirectories);
+//     logger.info(`Path of changes: ${fullArrayOfAllItems}`);
+//     logger.info(`list of procedures: ${procedures}`);
+//     if (procedures && procedures.length > 0) {
+//       return await proceduresToVanillaRequests(procedures);
+//     }
+//   }
+// };
+export const refreshVanillaArticles = async () => {
+  await deleteAllThingsCurrentlyOnVanillaForum();
+  await updateVanillaWithDirectoryToWatch();
 };
-
 // Useful for when you need a clean slate.
 // Removes Articles and Categories from Vanilla rather than having to click through their UI
 export const deleteAllThingsCurrentlyOnVanillaForum = async () => {

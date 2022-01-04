@@ -155,10 +155,16 @@ export const createKnowledgeCategory = async (
   client: HttpClient,
   bodyOfRequest: Partial<VanillaKnowledgeCategory>
 ): Promise<VanillaKnowledgeCategory | undefined> => {
+  const { path } = bodyOfRequest;
+  let isReleaseNotes = false;
+  if (path && path.toLowerCase().indexOf("release-notes") !== -1) {
+    isReleaseNotes = true;
+  }
+
   try {
     const category = (await client.post("/knowledge-categories", {
       ...bodyOfRequest,
-      knowledgeBaseID: 1,
+      knowledgeBaseID: isReleaseNotes ? 2 : 1,
     })) as {
       data: VanillaKnowledgeCategory | ErrorType;
     };
