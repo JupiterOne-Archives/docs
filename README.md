@@ -4,7 +4,7 @@
 
 ### MERGE to `main` will make changes to `https://jupiterone.vanillacommunities.com/kb`
 
-### TEMPORARY! knowledgeBase/Release-Notes will be ignored by the pipeline
+### knowledgeBase/Release-Notes Is its own KNOWLEDGEBASE - anything within this directory will create corresponding items in the knowledgeBase 'Release Notes' which is seperate from the docs
 
 ## How to make changes to vanilla forums via the knowledgeBase directory
 
