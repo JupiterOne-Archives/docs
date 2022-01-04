@@ -131,7 +131,10 @@ export const addFullSubFolderManually = async (folderName: string) => {
     }
   }
 };
-
+export const refreshVanillaArticles = async () => {
+  await deleteAllThingsCurrentlyOnVanillaForum();
+  await updateVanillaWithDirectoryToWatch();
+};
 // Useful for when you need a clean slate.
 // Removes Articles and Categories from Vanilla rather than having to click through their UI
 export const deleteAllThingsCurrentlyOnVanillaForum = async () => {
@@ -169,25 +172,28 @@ export const deleteAllThingsCurrentlyOnVanillaForum = async () => {
   }
 };
 
-const exampleOfPathsOfChangesX = [
-  `${PATH_OF_DIRECTORY_TO_WATCH}/asset-management/`,
-];
+// const exampleOfPathsOfChangesX = [
+//   `${PATH_OF_DIRECTORY_TO_WATCH}/Release-Notes/`,
+// ];
 
-// Handy for debugging - runs as if everything is new
-export const updateCommunityDocsWithPathOverride = async (
-  relativePath = exampleOfPathsOfChangesX
-) => {
-  if (relativePath && relativePath.length) {
-    const trimmedDirectories = relativePath.map((result) =>
-      result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
-    );
-    const procedures = await diffToProcedures(trimmedDirectories);
-    logger.info(`Path of changes: ${relativePath}`);
-    logger.info(`list of procedures: ${procedures}`);
-    if (procedures && procedures.length > 0) {
-      return await proceduresToVanillaRequests(procedures);
-    }
-  }
-};
+// // Handy for debugging - runs as if everything is new
+// export const updateCommunityDocsWithPathOverride = async (
+//   relativePath = exampleOfPathsOfChangesX
+// ) => {
+//   console.log(relativePath, "ddd");
+//   if (relativePath && relativePath.length) {
+//     const paths = await getAllSubChanges(relativePath[0]);
+//     console.log(paths, "paths");
+//     const trimmedDirectories = paths.map((result) =>
+//       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
+//     );
+//     const procedures = await diffToProcedures(trimmedDirectories);
+//     logger.info(`Path of changes: ${relativePath}`);
+//     logger.info(`list of procedures: ${procedures}`);
+//     if (procedures && procedures.length > 0) {
+//       return await proceduresToVanillaRequests(procedures);
+//     }
+//   }
+// };
 
 export default updateCommunityDocs;

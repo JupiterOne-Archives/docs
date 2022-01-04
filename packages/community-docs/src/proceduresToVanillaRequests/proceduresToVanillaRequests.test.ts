@@ -30,6 +30,7 @@ import {
   matchingVanillaKnowledgeArticle,
   procedureArticle,
   procedureKnowledgeCategory,
+  procedureKnowledgeCategoryReleaseNotes,
   PROCEDURES,
   PROCEDURESKCategoriesDELETED,
   proceduresMock,
@@ -59,9 +60,6 @@ describe("ProceduresToVanillaRequests", () => {
       typeof createKnowledgeCategory
     >;
 
-  // let mockDirectoryExists = directoryExists as jest.MockedFunction<
-  //   typeof directoryExists
-  // >;
   let mockEditKnowledgeCategory = editKnowledgeCategory as jest.MockedFunction<
     typeof editKnowledgeCategory
   >;
@@ -143,7 +141,6 @@ describe("ProceduresToVanillaRequests", () => {
         knowledgeCategoryID: 23,
         name: "Compliance Reporting",
         parentID: 8,
-
         procedureType: "Category",
         sort: undefined,
         path: "getting-started-admin/compliance-reporting",
@@ -431,6 +428,48 @@ describe("ProceduresToVanillaRequests", () => {
     beforeEach(() => {
       mockCreateKnowledgeCategory.mockReset();
     });
+    it("Creates- Adds the knowledgeBase of Release-Notes for release-notes path", async () => {
+      const knowledgeCategoryID = 111;
+      mockCreateKnowledgeCategory.mockResolvedValue({
+        ...procedureKnowledgeCategoryReleaseNotes,
+        parentID: 22,
+        knowledgeCategoryID,
+        sort: undefined,
+        sortChildren: undefined,
+        url: undefined,
+      });
+
+      const expected = {
+        childrenPath: "release-notes/2020-20-99.md",
+        description: "",
+        fileName: "2020-20-99",
+        knowledgeBaseID: 2,
+        knowledgeCategoryID: 111,
+        name: "2020-20-99",
+        parentID: 22,
+        path: "release-notes/2020-20-99.md",
+        procedureType: "Category",
+        sort: undefined,
+        sortChildren: undefined,
+        url: undefined,
+      };
+      const mockHttpclient = {} as any;
+      const actual = await procedureToKnowledgeCategory(
+        mockHttpclient,
+        procedureKnowledgeCategoryReleaseNotes,
+        22
+      );
+      expect(mockCreateKnowledgeCategory).toHaveBeenCalledWith(
+        {},
+        {
+          knowledgeBaseID: 2,
+          name: "2020-20-99",
+          parentID: 22,
+        }
+      );
+
+      expect(actual).toEqual(expected);
+    });
     it("Creates", async () => {
       mockDirectoryExists.mockReturnValue(true);
       const procedureKnowledgeCategoryNOKCID = {
@@ -487,11 +526,7 @@ describe("ProceduresToVanillaRequests", () => {
       );
       expect(mockCreateKnowledgeCategory).toHaveBeenLastCalledWith(
         mockHttpclient,
-        {
-          name: "Soc2 Reporting",
-          parentID: 22,
-          knowledgeBaseID: 1,
-        }
+        { knowledgeBaseID: 1, name: "Soc2 Reporting", parentID: 22 }
       );
       expect(actual).toEqual(expected);
     });
