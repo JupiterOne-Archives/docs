@@ -77,6 +77,17 @@ export const procedureKnowledgeCategory = {
     "getting-started-admin/soc2-reporting/soc2-with-jupiterone-copy.md",
   procedureType: ProcedureTypeEnum.Category,
 };
+export const procedureKnowledgeCategoryReleaseNotes = {
+  parentID: null,
+  knowledgeBaseID: 2,
+  name: "2020-20-99",
+  fileName: "2020-20-99",
+  description: "",
+  knowledgeCategoryID: null,
+  path: "release-notes/2020-20-99.md",
+  childrenPath: "release-notes/2020-20-99.md",
+  procedureType: ProcedureTypeEnum.Category,
+};
 export const matchingProcedureKnowledgeCategory = {
   parentID: null,
   knowledgeBaseID: 1,

@@ -225,15 +225,24 @@ export const procedureToKnowledgeCategory = async (
     }
   } else {
     if (directoryExistsResult) {
+      let isReleaseNotes = false;
+
+      if (
+        procedureWorkedOn.path &&
+        procedureWorkedOn.path.toLowerCase().indexOf("release-notes") !== -1
+      ) {
+        isReleaseNotes = true;
+      }
       let reqData: any = {
         name: tempProcedureWorkedOn.name,
         parentID: 1,
+        knowledgeBaseID: isReleaseNotes ? 2 : 1,
       };
       if (previousknowledgeCategoryID !== null) {
         reqData = {
           name: tempProcedureWorkedOn.name,
           parentID: previousknowledgeCategoryID,
-          knowledgeBaseID: 1,
+          knowledgeBaseID: isReleaseNotes ? 2 : 1,
         };
       }
 
@@ -350,6 +359,7 @@ export const proceduresToVanillaRequests = async (
     const existingknowledgeCategoryInfo = await getKnowedgeCategories(
       httpClient
     );
+    console.log(existingknowledgeCategoryInfo, "exeeekeke");
     logger.info(`Getting Articles`);
     const articles = await getAllArticles(
       httpClient,
