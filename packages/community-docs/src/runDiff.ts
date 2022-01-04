@@ -1,9 +1,9 @@
-import { updateCommunityDocsWithPathOverride } from "./";
+import { addFullSubFolderManually } from "./";
 import { logger } from "./loggingUtil";
 
 const updateCommunityDocsByMergeChanges = async () => {
   try {
-    const completed = await updateCommunityDocsWithPathOverride();
+    const completed = await addFullSubFolderManually("release-notes");
 
     logger.info(
       `UpdateCommunityDocs completed: ${JSON.stringify(completed, null, 2)}`

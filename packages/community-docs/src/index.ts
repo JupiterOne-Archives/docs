@@ -102,35 +102,35 @@ export const updateVanillaWithDirectoryToWatch = async () => {
   }
 };
 
-// export const addFullSubFolderManually = async (folderName: string) => {
-//   const directoryLocation = path.join(
-//     __dirname,
-//     `../../../${PATH_OF_DIRECTORY_TO_WATCH}/`,
-//     folderName
-//   );
+export const addFullSubFolderManually = async (folderName: string) => {
+  const directoryLocation = path.join(
+    __dirname,
+    `../../../${PATH_OF_DIRECTORY_TO_WATCH}/`,
+    folderName
+  );
 
-//   const directoryPromise = new Promise<string[]>((resolve, reject) => {
-//     return getDirectories(directoryLocation, (err, matches) => {
-//       if (err) {
-//         reject(err);
-//       } else {
-//         resolve(matches as string[]);
-//       }
-//     });
-//   });
-//   const fullArrayOfAllItems: string[] = await directoryPromise;
-//   if (fullArrayOfAllItems) {
-//     const trimmedDirectories = fullArrayOfAllItems.map((result) =>
-//       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
-//     );
-//     const procedures = await diffToProcedures(trimmedDirectories);
-//     logger.info(`Path of changes: ${fullArrayOfAllItems}`);
-//     logger.info(`list of procedures: ${procedures}`);
-//     if (procedures && procedures.length > 0) {
-//       return await proceduresToVanillaRequests(procedures);
-//     }
-//   }
-// };
+  const directoryPromise = new Promise<string[]>((resolve, reject) => {
+    return getDirectories(directoryLocation, (err, matches) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(matches as string[]);
+      }
+    });
+  });
+  const fullArrayOfAllItems: string[] = await directoryPromise;
+  if (fullArrayOfAllItems) {
+    const trimmedDirectories = fullArrayOfAllItems.map((result) =>
+      result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
+    );
+    const procedures = await diffToProcedures(trimmedDirectories);
+    logger.info(`Path of changes: ${fullArrayOfAllItems}`);
+    logger.info(`list of procedures: ${procedures}`);
+    if (procedures && procedures.length > 0) {
+      return await proceduresToVanillaRequests(procedures);
+    }
+  }
+};
 export const refreshVanillaArticles = async () => {
   await deleteAllThingsCurrentlyOnVanillaForum();
   await updateVanillaWithDirectoryToWatch();
@@ -172,25 +172,28 @@ export const deleteAllThingsCurrentlyOnVanillaForum = async () => {
   }
 };
 
-const exampleOfPathsOfChangesX = [
-  `${PATH_OF_DIRECTORY_TO_WATCH}/Release-Notes/`,
-];
+// const exampleOfPathsOfChangesX = [
+//   `${PATH_OF_DIRECTORY_TO_WATCH}/Release-Notes/`,
+// ];
 
-// Handy for debugging - runs as if everything is new
-export const updateCommunityDocsWithPathOverride = async (
-  relativePath = exampleOfPathsOfChangesX
-) => {
-  if (relativePath && relativePath.length) {
-    const trimmedDirectories = relativePath.map((result) =>
-      result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
-    );
-    const procedures = await diffToProcedures(trimmedDirectories);
-    logger.info(`Path of changes: ${relativePath}`);
-    logger.info(`list of procedures: ${procedures}`);
-    if (procedures && procedures.length > 0) {
-      return await proceduresToVanillaRequests(procedures);
-    }
-  }
-};
+// // Handy for debugging - runs as if everything is new
+// export const updateCommunityDocsWithPathOverride = async (
+//   relativePath = exampleOfPathsOfChangesX
+// ) => {
+//   console.log(relativePath, "ddd");
+//   if (relativePath && relativePath.length) {
+//     const paths = await getAllSubChanges(relativePath[0]);
+//     console.log(paths, "paths");
+//     const trimmedDirectories = paths.map((result) =>
+//       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
+//     );
+//     const procedures = await diffToProcedures(trimmedDirectories);
+//     logger.info(`Path of changes: ${relativePath}`);
+//     logger.info(`list of procedures: ${procedures}`);
+//     if (procedures && procedures.length > 0) {
+//       return await proceduresToVanillaRequests(procedures);
+//     }
+//   }
+// };
 
 export default updateCommunityDocs;
