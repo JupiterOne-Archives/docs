@@ -177,7 +177,11 @@ export const createKnowledgeCategory = async (
       };
     }
   } catch (e) {
-    logger.error(`createKnowledgeCategory error: ${JSON.stringify(e)}`);
+    logger.error(
+      `${bodyOfRequest.name} createKnowledgeCategory error: ${JSON.stringify(
+        e
+      )}`
+    );
   }
 };
 
@@ -201,7 +205,11 @@ export const editKnowledgeCategory = async (
       };
     }
   } catch (e) {
-    logger.error(`editKnowledgeCategory error: ${JSON.stringify(e)}`);
+    logger.error(
+      `editKnowledgeCategory error: ${JSON.stringify(
+        e
+      )}\n KnowledgeCategoryName: ${bodyOfRequest.name}`
+    );
   }
 };
 
@@ -217,7 +225,11 @@ export const deleteKnowledgeCategory = async (
     );
     tempKnowledgeCategory.description = "been deleted";
   } catch (e) {
-    logger.error(`deleteKnowledgeCategory error: ${JSON.stringify(e)}`);
+    logger.error(
+      `deleteKnowledgeCategory error: ${JSON.stringify(
+        e
+      )}\n KnowledgeCategoryName: ${knowledgeCategory.name}`
+    );
     return tempKnowledgeCategory;
   }
 
@@ -327,7 +339,11 @@ export const createArticle = async (
       return { ...article.data, procedureType: ProcedureTypeEnum.Article };
     }
   } catch (e) {
-    logger.error(`createArticle error: ${JSON.stringify(e)}`);
+    logger.error(
+      `createArticle error: ${JSON.stringify(e)} \n ArticleName: ${
+        bodyOfRequest.name
+      }`
+    );
   }
 };
 
@@ -350,7 +366,9 @@ export const deleteArticle = async (
       return { ...article.data, procedureType: ProcedureTypeEnum.Article };
     }
   } catch (e) {
-    logger.error(`deleteArticle error: ${JSON.stringify(e)}`);
+    logger.error(
+      `deleteArticle error: ${JSON.stringify(e)} \n ArticleID: ${articleID}`
+    );
   }
 };
 
@@ -385,7 +403,9 @@ export const editArticle = async (
       return { ...article.data, procedureType: ProcedureTypeEnum.Article };
     }
   } catch (e) {
-    logger.error(`editArticle error: ${JSON.stringify(e)}`);
+    logger.error(
+      `editArticle error: ${JSON.stringify(e)} \n ArticleName: ${articleID}`
+    );
   }
 };
 
@@ -421,7 +441,9 @@ export const postImage = async (client: HttpClient, data: FormData) => {
     }
   } catch (error) {
     logger.error(
-      `postImageError:\n${JSON.stringify(data)} error: ${JSON.stringify(error)}`
+      `postImageError:\n${JSON.stringify(data)} error: ${JSON.stringify(
+        error
+      )} \n mediaData: ${data}`
     );
   }
 };
@@ -451,7 +473,7 @@ export const uploadImageAndReturnUrl = async (
     }
   } catch (e) {
     logger.error(
-      `uploadImageAndReturnUrl: file does not exist (${fileLocation})\n error: ${JSON.stringify(
+      `uploadImageAndReturnUrl: file does not exist (${fileLocation})\n fileLocation:${fileLocation}\n error: ${JSON.stringify(
         e
       )}`
     );
@@ -473,7 +495,11 @@ export const deleteEmptyCategories = async (client: HttpClient) => {
       );
       await deleteKnowledgeCategory(client, emptyKnowedgeCategories[k]);
     } catch (error) {
-      logger.error(`deleteEmptyCategoryError: \n ${JSON.stringify(error)}`);
+      logger.error(
+        `deleteEmptyCategoryError: \n ${JSON.stringify(
+          error
+        )} \n KnowedgeCategoryName:${emptyKnowedgeCategories[k].name}`
+      );
     }
   }
 };
@@ -490,7 +516,7 @@ export const removeSoloChildedCategories = async (client: HttpClient) => {
       knowledgeCategoriesWithOneArticleChild[i].knowledgeCategoryID
     );
     const { parentID } = knowledgeCategoriesWithOneArticleChild[i];
-    console.log("CHANGE TO ARRRTICLE", article.articleID, "TOOO:", parentID);
+
     if (article && article.articleID) {
       await editArticle(client, article.articleID, {
         knowledgeCategoryID: parentID,
