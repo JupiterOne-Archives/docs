@@ -96,6 +96,7 @@ export const updateVanillaWithDirectoryToWatch = async () => {
       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
     const procedures = await diffToProcedures(trimmedDirectories);
+
     if (procedures && procedures.length > 0) {
       return await proceduresToVanillaRequests(procedures);
     }
@@ -131,7 +132,9 @@ export const addFullSubFolderManually = async (folderName: string) => {
     }
   }
 };
-export const refreshVanillaArticles = async () => {
+
+// remove and rerun pipeline on all items
+export const refreshVanillaItems = async () => {
   await deleteAllThingsCurrentlyOnVanillaForum();
   await updateVanillaWithDirectoryToWatch();
 };
