@@ -477,3 +477,24 @@ export const deleteEmptyCategories = async (client: HttpClient) => {
     }
   }
 };
+
+export const removeSoloChildedCategories = async (client: HttpClient) => {
+  const knowledgeCategories = await getKnowedgeCategories(client);
+  const knowledgeCategoriesWithOneArticleChild = knowledgeCategories
+    .filter((k) => k.articleCount === 1)
+    .filter((k) => k.articleCountRecursive === 1)
+    .filter((k) => k.childCategoryCount === 0);
+  for (let i = 0; i < knowledgeCategoriesWithOneArticleChild.length; i++) {
+    const [article] = await getArticles(
+      client,
+      knowledgeCategoriesWithOneArticleChild[i].knowledgeCategoryID
+    );
+    const { parentID } = knowledgeCategoriesWithOneArticleChild[i];
+    console.log("CHANGE TO ARRRTICLE", article.articleID, "TOOO:", parentID);
+    if (article && article.articleID) {
+      await editArticle(client, article.articleID, {
+        knowledgeCategoryID: parentID,
+      });
+    }
+  }
+};
