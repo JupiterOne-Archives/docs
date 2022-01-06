@@ -62,7 +62,9 @@ export const updateCommunityDocs = async () => {
       path.substring(path.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
     const procedures = await diffToProcedures(nestedWithRemovedPath);
-    logger.info(`list of procedures: ${JSON.stringify(procedures, null, " ")}`);
+    logger.info(
+      `Procedures Count: ${JSON.stringify(procedures?.length, null, " ")}`
+    );
     if (procedures && procedures.length > 0) {
       const completedProcedures = await proceduresToVanillaRequests(procedures);
 
