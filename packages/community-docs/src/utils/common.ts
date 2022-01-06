@@ -50,7 +50,9 @@ export const markdownToString = async (filePath?: string): Promise<string> => {
     return FLAG_FOR_DELETE;
   }
   try {
-    const blockingReadOfFile = await fs.promises.readFile(fileLocation);
+    const blockingReadOfFile = await fs.promises.readFile(fileLocation, {
+      encoding: "utf8",
+    });
     if (blockingReadOfFile) {
       return blockingReadOfFile.toString();
     }
@@ -68,7 +70,9 @@ export const getMarkdownAsStringFromPath = async (
   const fileLocation = path.join(__dirname, `./${filePath}`);
 
   try {
-    const blockingReadOfFile = await fs.promises.readFile(fileLocation);
+    const blockingReadOfFile = await fs.promises.readFile(fileLocation, {
+      encoding: "utf8",
+    });
     if (blockingReadOfFile) {
       return blockingReadOfFile.toString();
     }
@@ -104,4 +108,13 @@ export const removeTitleFromArticleBody = (
   }
 
   return bodyAlterations.trim();
+};
+export const sanitizeMarkdownNewLines = (markdownAsString: string) => {
+  if (markdownAsString) {
+    return markdownAsString
+      .split(/\n\n/g)
+      .map((line) => line.replace(/\n/g, " "))
+      .join("\n\n");
+  }
+  return markdownAsString;
 };
