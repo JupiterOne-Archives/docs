@@ -8,10 +8,10 @@ import {
   VanillaKnowledgeCategory,
 } from "../utils";
 
-export const updateArticleInternalMarkdownLinks = (
+export const updateArticleInternalMarkdownLinks = async (
   completedProcedures: (VanillaArticle | VanillaKnowledgeCategory)[],
   articlesFromVanilla: VanillaArticle[]
-): VanillaArticle[] => {
+): Promise<VanillaArticle[]> => {
   const articlesToUseForSlugs: VanillaArticle[] = articlesFromVanilla || [];
 
   const articleProcedures: VanillaArticle[] = completedProcedures
@@ -29,28 +29,29 @@ export const updateArticleInternalMarkdownLinks = (
     ) {
       const references =
         articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown || [];
+      for (let r = 0; r < references.length; r++) {
+        const articleName = await getArticleNameFromReference(references[r]);
+        console.log(articleName, "articleNamearticleNamearticleName");
+        if (articleName) {
+          const existingArticleMatches = [...articlesToUseForSlugs]
+            .filter((article) => {
+              return article.name === articleName;
+            })
+            .filter((a) => a.status !== "deleted");
+          const articleUrl: string =
+            existingArticleMatches[0]?.url || "doesNotExist";
 
-      references.forEach((ref) => {
-        const articleName = getArticleNameFromReference(ref);
+          if (articleUndergoingChanges.body !== null && articleUrl) {
+            const changes = modifyBodyLinkForImageForReturnedArticles(
+              articleUndergoingChanges.body || "",
+              references[r],
+              articleUrl
+            );
 
-        const existingArticleMatches = [...articlesToUseForSlugs]
-          .filter((article) => {
-            return article.name === articleName;
-          })
-          .filter((a) => a.status !== "deleted");
-        const articleUrl: string =
-          existingArticleMatches[0]?.url || "doesNotExist";
-
-        if (articleUndergoingChanges.body !== null && articleUrl) {
-          const changes = modifyBodyLinkForImageForReturnedArticles(
-            articleUndergoingChanges.body || "",
-            ref,
-            articleUrl
-          );
-
-          articleUndergoingChanges.body = changes;
+            articleUndergoingChanges.body = changes;
+          }
         }
-      });
+      }
     }
     proceduresWithUpdatedBodies.push(articleUndergoingChanges);
   }

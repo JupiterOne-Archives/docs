@@ -393,7 +393,7 @@ export const proceduresToVanillaRequests = async (
       ...articles,
     ].filter(isArticleType);
 
-    const articlesNeedingLinkUpdates = updateArticleInternalMarkdownLinks(
+    const articlesNeedingLinkUpdates = await updateArticleInternalMarkdownLinks(
       [...processedProcedures],
       combinationOfArticlesAndProcedures
     );
