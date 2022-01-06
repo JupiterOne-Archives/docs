@@ -1,26 +1,26 @@
-# Integration with JupiterOne
+## VMWare AirWatch Integration with JupiterOne
 
-## VMWare AirWatch + JupiterOne Integration Benefits
+## AirWatch Integration Benefits
 
 - Visualize VMWare AirWatch admins, users, groups, and devices in the 
-JupiterOne graph.
+  JupiterOne graph.
 - Map VMWare AirWatch users to employees in your JupiterOne account.
 - Monitor changes to VMWare AirWatch admins, users, groups, and devices 
-using JupiterOne alerts.
+  using JupiterOne alerts.
 
 ## How it Works
 
 - JupiterOne periodically fetches users and devices from VMWare AirWatch 
-to update the graph.
+  to update the graph.
 - Write JupiterOne queries to review and monitor updates to the graph, 
-or leverage existing queries.
+  or leverage existing queries.
 - Configure alerts to take action when the JupiterOne graph changes, 
-or leverage existing alerts.
+  or leverage existing alerts.
 
 ## Requirements
 
 - JupiterOne requires a VMWare AirWatch hostname, admin username and password,
-and rest API key to interact with the API.
+  and rest API key to interact with the API.
 - You must have permission in JupiterOne to install new integrations.
 
 ## Support
@@ -64,7 +64,7 @@ API.
 - Enter the **Admin Username** used to authenticate with VMWare Airwatch.
 - Enter the **Admin Password** associated with the username.
 - Enter the **Rest API Key** (or Tenant Code) used to authenticate with 
-VMWare Airwatch.
+  VMWare Airwatch.
 4. Click **Create Configuration** once all values are provided.
 
 ## How to Uninstall
