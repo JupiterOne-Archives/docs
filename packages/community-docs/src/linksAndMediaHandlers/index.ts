@@ -1,8 +1,10 @@
 import {
-  createDisplayName,
+  checkBodyForTitleToUseForArticle,
+  markdownToString,
   MARKDOWN_IMAGE_REGEX,
   MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK,
   SUPPORTED_MEDIA_TYPES,
+  TITLE_FROM_MARKDOWN_REGEX,
 } from "../utils";
 
 export const isSupportedMediaType = (imagePath: string): string | boolean => {
@@ -78,15 +80,14 @@ export const getFullMarkdownReferencePathMatches = (
   return matches.map((m) => m.substring(m.indexOf('"') + 1));
 };
 
-export const getArticleNameFromReference = (match: string): string => {
-  const split = match.split("/");
-  if (match === "") {
-    return "NoFile";
-  }
+export const getArticleNameFromReference = async (
+  path: string
+): Promise<string | false> => {
+  const articleBody = await markdownToString(path);
 
-  const nameOfFile = split[split.length - 1];
-
-  const name = nameOfFile ? nameOfFile : "NoFile";
-
-  return createDisplayName(name.substring(0, name.indexOf(".md")));
+  const titleFromBody = checkBodyForTitleToUseForArticle(
+    articleBody,
+    TITLE_FROM_MARKDOWN_REGEX
+  );
+  return titleFromBody;
 };
