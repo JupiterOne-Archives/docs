@@ -83,8 +83,10 @@ export const getFullMarkdownReferencePathMatches = (
 export const getArticleNameFromReference = async (
   path: string
 ): Promise<string | false> => {
-  const articleBody = await markdownToString(path);
-
+  const regexTwoDots = new RegExp(/\.\.\//, "g");
+  const regexOneDot = new RegExp(/\.\//, "g");
+  const cleanedPath = path.replace(regexTwoDots, "").replace(regexOneDot, "");
+  const articleBody = await markdownToString(cleanedPath);
   const titleFromBody = checkBodyForTitleToUseForArticle(
     articleBody,
     TITLE_FROM_MARKDOWN_REGEX

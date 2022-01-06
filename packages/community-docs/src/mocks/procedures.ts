@@ -82,7 +82,7 @@ export const completedProcedures = [
 
     name: "Alert Rule",
 
-    body: `<li><a rel=\"nofollow\" href=\"../getting-started-admin/catalog.md\">look at this other doc</a></li>`,
+    body: `he JupiterOne [API client or CLI](../APIs_and-Integrations/j1-client-and-cli.md)`,
     outline: [
       {
         ref: "jupiterone-alert-rule-schema",
