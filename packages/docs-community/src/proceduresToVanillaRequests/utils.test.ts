@@ -159,11 +159,12 @@ describe("utils", () => {
         parentID: 1,
         knowledgeBaseID: 1,
         name: "Getting Started Admin",
-        fileName: "getting-started-admin",
+        fileName: "getting-started_and-admin",
         description: "",
         knowledgeCategoryID: 49,
-        path: "getting-started-admin",
-        childrenPath: "getting-started-admin/jupiterone-query-language-copy.md",
+        path: "getting-started_and-admin",
+        childrenPath:
+          "getting-started_and-admin/jupiterone-query-language-copy.md",
         procedureType: "Category",
         sortChildren: null,
         sort: 0,
@@ -192,9 +193,9 @@ describe("utils", () => {
         fileName: "compliance-reporting",
         description: "",
         knowledgeCategoryID: 23,
-        path: "getting-started-admin/compliance-reporting",
+        path: "getting-started_and-admin/compliance-reporting",
         childrenPath:
-          "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
+          "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
         procedureType: ProcedureTypeEnum.Category,
       } as VanillaKnowledgeCategory;
 
@@ -226,11 +227,12 @@ describe("utils", () => {
         parentID: 1,
         knowledgeBaseID: 1,
         name: "Getting Started Admin",
-        fileName: "getting-started-admin",
+        fileName: "getting-started_and-admin",
         description: "",
         knowledgeCategoryID: 49,
-        path: "getting-started-admin",
-        childrenPath: "getting-started-admin/jupiterone-query-language-copy.md",
+        path: "getting-started_and-admin",
+        childrenPath:
+          "getting-started_and-admin/jupiterone-query-language-copy.md",
         procedureType: "Category",
         sortChildren: null,
         sort: 0,
@@ -259,9 +261,9 @@ describe("utils", () => {
         fileName: "compliance-reporting",
         description: "",
         knowledgeCategoryID: 23,
-        path: "getting-started-admin/compliance-reporting",
+        path: "getting-started_and-admin/compliance-reporting",
         childrenPath:
-          "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
+          "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
         procedureType: ProcedureTypeEnum.Category,
       } as VanillaKnowledgeCategory;
 

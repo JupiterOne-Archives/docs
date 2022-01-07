@@ -20,7 +20,7 @@ See this github repository for example compliance standards in JSON format:
 
 ## JSON Structure
 
-See the schema documented [here](../APIs_and-Integrations/policies-compliance.md).
+See the schema documented [here](../APIs_and-integrations/policies-compliance.md).
 
 ## CSV Import
 

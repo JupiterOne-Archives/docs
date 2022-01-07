@@ -1,12 +1,15 @@
 # docs-community
 
-### MERGE to `vanilla-staging` will make changes to `https://jupiterone.vanillastaging.com/kb`
+### Please note
 
-### MERGE to `main` will make changes to `https://jupiterone.vanillacommunities.com/kb`
-
-### knowledgeBase/Release-Notes Is its own KNOWLEDGEBASE - anything within this directory will create corresponding items in the knowledgeBase 'Release Notes' which is seperate from the docs
+- MERGE to `vanilla-staging` will make changes to `https://jupiterone.vanillastaging.com/`
+- MERGE to `main` will make changes to `https://jupiterone.vanillacommunities.com/`
+- knowledgeBase/Release-Notes Is its own KNOWLEDGEBASE - anything other than `/assets` within this directory will create corresponding items in the knowledgeBase 'Release Notes' which is seperate from the docs
 
 ## How to make changes to vanilla forums via the knowledgeBase directory
+
+A Quick rundown
+![info-on-breakdown](./imagesForReadme/info-on-article-kc.png)
 
 - Add docs(markdown files) and directories to the `knowledgeBase` directory.
 - '-' or '\_' in a file or drectory's name become a space in the article or knowledgeCategory and the next letter is capitalized.
@@ -21,23 +24,22 @@
 - Assets should NOT be larger than 10mb (That is already huge).
 - Supported assets are `png`, `jpg`, `jpeg` and `gif`
 - Supported article files are `.md`
-- Categories and Articles all need different names. If you have a `KnowledgeBase/getting-started-admin/catalog.md` and a `KnowledgeBase/compliance-reporting/catalog.md` ONLY ONE `Catalog` article will be created! Same thing for directory names.
+- Categories and Articles all need different names. If you have a `KnowledgeBase/getting-started_and-admin/catalog.md` and a `KnowledgeBase/compliance-reporting/catalog.md` ONLY ONE `Catalog` article will be created! Same thing for directory names.
 - After merging, you will need to wait at least 5 mins (depending on changes) for the script to run. After that, you will need to refresh vanilla forums to see the changes (navigation within is not the same).
 - If you dont see an image, but you know it exists and is in the correct directory, try adding different size and making a change to the markdown file (so it will re-add it).
 
 # Pipeline helpers
 
-Article and Knowledge categories names are generated from the file name. The only expection are `index.md` files. These get their name from their parent directory.
+DO NOT USE SPACES IN FILE OR DIRECTORY NAMES
 
+Articles get their name from the first line of the readme (and starts with a '# '). Fallback name is the same as how Knowledge Category names are created.
+Knowledge categories names are generated from the file name. The '-' character in a file's name will capitilize the next word and be replaced with a space.
+If you do NOT want the next word capitalized, using the '\_' character will just be replaced with a space.Article and
+
+- `the-name_is-big` will create a name of "`The Name is Big`"
 - Example `KnowledgeBase/compliance-reporting/index.md` would create an article called "Compliance Reporting" inside a KnowledgeCategory named "Compliance Reporting"
 
-## DO NOT USE SPACES IN FILE OR DIRECTORY NAMES
-
-INSTEAD the '-' character in a file's name will capitilize the next word and be replaced with a space.
-If you do NOT want the next word capitalized, using the '\_' character will just be replaced with a space.
-
-- Example
-  - `the-name_is-big` will create a name of "`The Name is Big`"
+The markdown files used initially had some formatting issues with the way new line characters(`\n`) were used. Now when an article is created, single (`\n`)
 
 # Dos and Donts
 
@@ -89,7 +91,7 @@ Example usage:
 
 - When naming new (or renaming) files and directories `-` and `_` are replaced with a space and each first letter in each word is capitaled to become that Knowledge Category's or Article's name.
 
-- References to images in markdown are limited to the same directory as the docs directory.
+- References to images in markdown are limited to the knowledgeBase/assets directory.
 
 - Images larger than 10 mb are supported but tend to fail during upload. You can make a change to the markdown file that references the image to try again.
 
@@ -109,3 +111,15 @@ Deleting of categories handled last. As procedures information is mapped to actu
 Empty knowledge Categories are deleted.
 
 Logging has been added (Logging.ts). This might not be the final solution but will write out error, info and debugging info into the info directories corresponding markdown files. If we change it later we just need to add the new tool to the abstraction layer in logging.ts.
+
+## Past Docs flow for reference
+
+![old-docs](./imagesForReadme/old-docs-flow.png)
+
+## Docs-community flow
+
+Some questions and comments were posted [here](https://jptrone.slack.com/archives/C01D4KKL7DL/p1640806911129000) in slack.
+
+- A trigger that pulls in integrations docs on a schedule and creates a pr to staging for review is wanted. I tested the script from the docs repo, it needs some improvements but does collect the collection of docs. Simple-git could be used to create a pr via yarn script
+
+![docs-community](./imagesForReadme/docs-community-flow.png)

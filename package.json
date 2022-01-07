@@ -14,9 +14,9 @@
     "lint": "eslint --ext .ts,.js .",
     "test": "./bin/run-tests.local.sh",
     "test:unit": "./bin/run-tests.unit.sh",
-    "bundle": "cd packages/community-docs; yarn compile",
+    "bundle": "cd packages/docs-community; yarn compile",
     "deploy": "yarn bundle && yarn jupiterone-manual-deploy -t jupiterone-dev",
-    "start": "cd packages/community-docs; yarn publishDiffs $TOKEN $targetVanillaEnv"
+    "start": "cd packages/docs-community; yarn publishDiffs $TOKEN $targetVanillaEnv"
   },
   "dependencies": {
     "@types/node": "^16.11.7",
