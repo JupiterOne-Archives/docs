@@ -360,7 +360,7 @@ export const proceduresToVanillaRequests = async (
     const existingknowledgeCategoryInfo = await getKnowedgeCategories(
       httpClient
     );
-    console.log(existingknowledgeCategoryInfo, "exeeekeke");
+
     logger.info(`Getting Articles`);
     const articles = await getAllArticles(
       httpClient,
@@ -393,7 +393,7 @@ export const proceduresToVanillaRequests = async (
       ...articles,
     ].filter(isArticleType);
 
-    const articlesNeedingLinkUpdates = updateArticleInternalMarkdownLinks(
+    const articlesNeedingLinkUpdates = await updateArticleInternalMarkdownLinks(
       [...processedProcedures],
       combinationOfArticlesAndProcedures
     );

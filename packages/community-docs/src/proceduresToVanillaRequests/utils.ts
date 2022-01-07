@@ -31,7 +31,9 @@ export const markdownToString = async (filePath?: string): Promise<string> => {
     return FLAG_FOR_DELETE;
   }
   try {
-    const blockingReadOfFile = await fs.promises.readFile(fileLocation);
+    const blockingReadOfFile = await fs.promises.readFile(fileLocation, {
+      encoding: "utf8",
+    });
     if (blockingReadOfFile) {
       return blockingReadOfFile.toString();
     }
