@@ -1,6 +1,5 @@
 /* eslint-disable no-useless-escape */
 import {
-  getArticleNameFromReference,
   getFullMarkdownReferencePathMatches,
   getMarkdownImageSrcs,
   isSupportedMediaType,
@@ -95,44 +94,6 @@ describe("linksAndMediaHandlers", () => {
         markdownAsStringWithInternalLinks
       );
 
-      expect(actual).toEqual(expected);
-    });
-  });
-
-  describe("getArticleNameFromReference", () => {
-    it("returns noFile for empty match", () => {
-      const match: string = "";
-      const expected = "NoFile";
-      const actual = getArticleNameFromReference(match);
-      expect(actual).toEqual(expected);
-    });
-    it("returns the filename", () => {
-      const match: string = 'href="../queries/common-qq-training.md';
-      const expected = "Common Qq Training";
-      const actual = getArticleNameFromReference(match);
-      expect(actual).toEqual(expected);
-
-      const matchTwo: string = "asset-inventory-filters.md";
-      const expectedTwo = "Asset Inventory Filters";
-      const actualTwo = getArticleNameFromReference(matchTwo);
-      expect(actualTwo).toEqual(expectedTwo);
-
-      const matchThree: string = "../queries/common-qq-training.md";
-      const expectedThree = "Common Qq Training";
-      const actualThree = getArticleNameFromReference(matchThree);
-      expect(actualThree).toEqual(expectedThree);
-
-      const matchFour: string =
-        "https://github.com/JupiterOne/docs/blob/main/docs/parameters.md";
-      const expectedFour = "Parameters";
-      const actualFour = getArticleNameFromReference(matchFour);
-      expect(actualFour).toEqual(expectedFour);
-    });
-    it("handles url-type links", () => {
-      const match: string =
-        "https://github.com/JupiterOne/docs/blob/main/docs/parameters.md";
-      const expected = "Parameters";
-      const actual = getArticleNameFromReference(match);
       expect(actual).toEqual(expected);
     });
   });
