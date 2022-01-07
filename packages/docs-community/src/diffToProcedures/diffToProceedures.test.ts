@@ -13,17 +13,17 @@ import { filterDiffs } from "./utils";
 
 describe("diffToProceedures", () => {
   let exampleDiffs = [
-    "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
-    "getting-started-admin/compliance-reporting/soc2-with-jupiterone.md",
-    "getting-started-admin/jupiterone-query-language-copy.md",
-    "getting-started-admin/jupiterone-query-language.md",
+    "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
+    "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone.md",
+    "getting-started_and-admin/jupiterone-query-language-copy.md",
+    "getting-started_and-admin/jupiterone-query-language.md",
   ];
   beforeEach(() => {
     exampleDiffs = [
-      "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
-      "getting-started-admin/compliance-reporting/soc2-with-jupiterone.md",
-      "getting-started-admin/jupiterone-query-language-copy.md",
-      "getting-started-admin/jupiterone-query-language.md",
+      "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
+      "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone.md",
+      "getting-started_and-admin/jupiterone-query-language-copy.md",
+      "getting-started_and-admin/jupiterone-query-language.md",
     ];
   });
 
@@ -91,12 +91,12 @@ describe("diffToProceedures", () => {
     it("takes in a list of diffs and returns procedures", async () => {
       exampleDiffs = [
         `${PATH_OF_DIRECTORY_TO_WATCH}/`,
-        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md`,
+        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md`,
         "",
-        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/compliance-reporting/soc2-with-jupiterone.md`,
-        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/compliance-reporting/soc2-with-jupiterone.png`,
-        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/jupiterone-query-language-copy.md`,
-        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/jupiterone-query-language.md`,
+        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started_and-admin/compliance-reporting/soc2-with-jupiterone.md`,
+        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started_and-admin/compliance-reporting/soc2-with-jupiterone.png`,
+        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started_and-admin/jupiterone-query-language-copy.md`,
+        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started_and-admin/jupiterone-query-language.md`,
       ];
       const actual = await diffToProcedures(exampleDiffs);
       const expected = expectedSortedChanges;
@@ -107,16 +107,16 @@ describe("diffToProceedures", () => {
   describe("filterDiffs", () => {
     it("removes PATH_OF_DIRECTORY_TO_WATCH", () => {
       const expected = [
-        "getting-started-admin/jupiterone-query-language-copy.md",
-        "getting-started-admin/jupiterone-query-language.md",
-        "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
-        "getting-started-admin/compliance-reporting/soc2-with-jupiterone.md",
+        "getting-started_and-admin/jupiterone-query-language-copy.md",
+        "getting-started_and-admin/jupiterone-query-language.md",
+        "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
+        "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone.md",
       ];
       const startingArray = [
-        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md`,
-        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/compliance-reporting/soc2-with-jupiterone.md`,
-        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/jupiterone-query-language-copy.md`,
-        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started-admin/jupiterone-query-language.md`,
+        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md`,
+        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started_and-admin/compliance-reporting/soc2-with-jupiterone.md`,
+        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started_and-admin/jupiterone-query-language-copy.md`,
+        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started_and-admin/jupiterone-query-language.md`,
       ];
       const actual = filterDiffs(startingArray);
       expect(actual).toEqual(expected);

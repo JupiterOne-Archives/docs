@@ -1,4 +1,4 @@
-import updateCommunityDocs from "../packages/community-docs/src/index";
+import updateCommunityDocs from "../packages/docs-community/src/index";
 
 /* istanbul ignore file
  *

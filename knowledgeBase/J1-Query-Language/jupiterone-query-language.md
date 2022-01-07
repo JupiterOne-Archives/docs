@@ -18,7 +18,7 @@ boundaries obvious to query authors.
 - Support for sorting via `ORDER BY` clause (currently only applies to the starting entities of traversal)
 - Support for pagination via `SKIP` and `LIMIT` clauses (currently only applies to the starting entities of traversal)
 - Multi-step graph traversals through relationships via `THAT` clause
-- Specifying relationship direction can be done with double arrows,`<<` and `>>` 
+- Specifying relationship direction can be done with double arrows,`<<` and `>>`
 - Aliasing of selectors via `AS` keyword
 - Pre-traversal filtering using property values via `WITH` clause
 - Post-traversal filtering using property values or union comparison via `WHERE` clause
@@ -85,44 +85,42 @@ boundaries obvious to query authors.
 
 - You can filter multiple property values like this (similar to `IN` in SQL):
 
->  ```j1ql
->  FIND user_endpoint WITH platform = ('darwin' OR 'linux')
+> ```j1ql
+> FIND user_endpoint WITH platform = ('darwin' OR 'linux')
 >
->  Find Host WITH tag.Environment = ('A' or 'B' or 'C')
+> Find Host WITH tag.Environment = ('A' or 'B' or 'C')
 >
->  Find DataStore WITH classification != ('critical' or 'restricted')
->  ```
+> Find DataStore WITH classification != ('critical' or 'restricted')
+> ```
 
 - Property filters are evaluated according the following **order of operations**:
 
 > Parenthesis first, comparisons (`=`, `>=`, `<=`, `!=`) after, `AND` and then
 > `OR`.
 
-
 Filtering multiple property values is often called "shorthand" filtering, because it allows you to filter a single property by multiple values.
 
 Below is a table to help illustrate how "shorthand" filters are evaluated:
 
-`_type`               | `_type = "fruit"` | `_type = "nut-filled"` | `_type = ("fruit" AND "nut-filled")` | `_type = ("fruit" OR "nut-filled")`
---------------------- | :---------------: | :--------------------: | :----------------------------------: | :---------------------------------:
-"fruit"               | true              | false                  | false                                | true
-"nut-filled"          | false             | true                   | false                                | true
-"fruit", "nut-filled" | true              | true                   | true                                 | true
-"non-fruit"           | false             | false                  | false                                | false
-"non-fruit", "plain"  | false             | false                  | false                                | false
-undefined             | false             | false                  | false                                | false
+| `_type`               | `_type = "fruit"` | `_type = "nut-filled"` | `_type = ("fruit" AND "nut-filled")` | `_type = ("fruit" OR "nut-filled")` |
+| --------------------- | :---------------: | :--------------------: | :----------------------------------: | :---------------------------------: |
+| "fruit"               |       true        |         false          |                false                 |                true                 |
+| "nut-filled"          |       false       |          true          |                false                 |                true                 |
+| "fruit", "nut-filled" |       true        |          true          |                 true                 |                true                 |
+| "non-fruit"           |       false       |         false          |                false                 |                false                |
+| "non-fruit", "plain"  |       false       |         false          |                false                 |                false                |
+| undefined             |       false       |         false          |                false                 |                false                |
 
 When using a _negated_ "shorthand" filter, such as with the `!=` comparison, you can expect J1QL to evaluate values in the following manner:
 
-`_type`               | `_type != "fruit"` | `type != "nut-filled"` | `_type != ("fruit" AND "nut-filled")` | `_type != ("fruit" OR "nut-filled")`
---------------------- | :----------------: | :--------------------: | :-----------------------------------: | :---------------------------------:
-"fruit"               | false              | true                   | true                                  | false
-"nut-filled"          | true               | false                  | true                                  | false
-"fruit", "nut-filled" | false              | false                  | false                                 | false
-"non-fruit"           | true               | true                   | true                                  | true
-"non-fruit", "plain"  | true               | true                   | true                                  | true
-undefined             | true               | true                   | true                                  | true 
-
+| `_type`               | `_type != "fruit"` | `type != "nut-filled"` | `_type != ("fruit" AND "nut-filled")` | `_type != ("fruit" OR "nut-filled")` |
+| --------------------- | :----------------: | :--------------------: | :-----------------------------------: | :----------------------------------: |
+| "fruit"               |       false        |          true          |                 true                  |                false                 |
+| "nut-filled"          |        true        |         false          |                 true                  |                false                 |
+| "fruit", "nut-filled" |       false        |         false          |                 false                 |                false                 |
+| "non-fruit"           |        true        |          true          |                 true                  |                 true                 |
+| "non-fruit", "plain"  |        true        |          true          |                 true                  |                 true                 |
+| undefined             |        true        |          true          |                 true                  |                 true                 |
 
 #### THAT
 
@@ -163,19 +161,21 @@ undefined             | true               | true                   | true      
 #### Bidirectional verbs by default
 
 **Relationship verbs** are bidirectional by default
+
 > Both queries yield the same results:
 >
 > `FIND User THAT HAS Device`
-> 
+>
 > `FIND Device THAT HAS User`
 
 #### Relationship direction operators
 
 **Relationship direction** can be specified with double arrows ( `<<` or `>>`) _after_ the verb
+
 > Finds Entities with a `HAS` relationship from User to Device:
-> 
+>
 > `FIND User THAT HAS >> Device`
-> 
+>
 > `Find Device THAT HAS << User`
 
 > Finds Entities with a `HAS` relationship from Device to User:
@@ -238,9 +238,9 @@ undefined             | true               | true                   | true      
 > RETURN u.*, p.*
 > ```
 >
->Using a wildcard to return all properties also returns all metadata
+> Using a wildcard to return all properties also returns all metadata
 > properties associated with the selected entities. This feature is
- useful when you want to perform an analysis that involves metadata.
+> useful when you want to perform an analysis that involves metadata.
 
 #### TO
 
@@ -331,7 +331,7 @@ Property filters are evaluated according the following **order of operations**:
 
 ## String Comparisons
 
-J1QL supports the use of the following operators for comparisons of 
+J1QL supports the use of the following operators for comparisons of
 strings stored either as a single string or multi-value field. In addition to `=` and `!=`:
 
 - `~=` : contains
@@ -358,9 +358,9 @@ Find Person with email='a@b.com'
 The above query returns all assets of the `Person` class that have a `Person.email'
 of 'a@b.com' or ['a@b.com', 'x@y.com'].
 
- ```j1jl
+```j1jl
 Find Person with email~='.com'
- ```
+```
 
 The above query checks if a substring matches for either a single string or a multi-value field.
 
@@ -369,8 +369,6 @@ Find Host with tag.AccountName~='demo'
 ```
 
 The above query returns entities of the `Host` class with any of the following examples of `tag.AccountName`: `xyz_demo`, `demo_xyz`, `abc_demo_xyz`.
-
-
 
 !!! warning
 These string evaluations are case-sensitive. So `'Demo'` and `'demo'`
@@ -528,9 +526,9 @@ clause of your function, will future development planned for use in the `WHERE` 
 A few examples:
 
 ```j1ql
-FIND 
-  aws_s3_bucket as s3 
-RETURN 
+FIND
+  aws_s3_bucket as s3
+RETURN
   CONCAT(s3.bucketSizeBytes, ' bytes') as size
 ```
 
@@ -910,8 +908,7 @@ hours:
 Find CodeRepo with _beginOn > date.now-24hr and _version=1
 ```
 
-For more details on metadata properties, see the  JupiterOne [data model documentation](./jupiterone-data-model.md).
-
+For more details on metadata properties, see the JupiterOne [data model documentation](./jupiterone-data-model.md).
 
 ## Advanced Notes and Use Cases
 

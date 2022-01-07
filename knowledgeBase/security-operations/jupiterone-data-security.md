@@ -7,14 +7,14 @@ is protected on our platform.
 
 ### Encryption
 
-Data is fully encrypted both at rest and in transit.  This includes all of your
+Data is fully encrypted both at rest and in transit. This includes all of your
 account and user data, as well as operational data imported/ingested into the
 JupiterOne platform.
 
 **Data in Transit** is encrypted via TLSv1.2 or later, using SHA-256 with
 2048-bit RSA Encryption or equivalent strength cypher.
 
-*Production Domains:* `*.apps.us.jupiterone.io` is the associated production
+_Production Domains:_ `*.apps.us.jupiterone.io` is the associated production
 URL that the SSL/TLS certificate has been issued to.
 
 **Data at Rest** is hosted in our production AWS environments, using the managed
@@ -91,7 +91,7 @@ section.
 ### Infrastructure and Operational Access
 
 JupiterOne infrastructure is built on a **Zero Trust** security model, where
-access to production is *highly restricted*.
+access to production is _highly restricted_.
 
 The production environment is virtually "air-gapped" such that there is no SSH,
 "bastion host", or VPN connectivity into the production systems to prevent
@@ -109,8 +109,8 @@ infrastructure-as-code operational model and automated change management process
 allows us to deploy security patches within minutes of identification and
 remediation of an issue.
 
-You can review the JupiterOne [data model](../jupiterone-data-model.md) and [policies and procedures](https://psp.jptr.one/) for 
-more details on the JupiterOne operational, infrastructure, and software 
+You can review the JupiterOne [data model](../jupiterone-data-model.md) and [policies and procedures](https://psp.jptr.one/) for
+more details on the JupiterOne operational, infrastructure, and software
 development security.
 
 ## Application Access
@@ -119,7 +119,7 @@ Access to the JupiterOne application and your accounts/data on the platform is
 enabled over HTTPS, through either the JupiterOne web apps or the public APIs.
 
 !!! note
-    `*.us.jupiterone.io` is the current production domain.
+`*.us.jupiterone.io` is the current production domain.
 
 ### User Logins
 
@@ -169,9 +169,9 @@ perform) given the attributes.
 Access policies defined in JupiterOne are associated with a **User Group** and
 **Users** are invited/added as members to one or more groups.
 
-- A *Read-Only* access policy is predefined and associated with the default
+- A _Read-Only_ access policy is predefined and associated with the default
   **Users** group.
-- A *Full-Access* policy is also predefined and associated with the default
+- A _Full-Access_ policy is also predefined and associated with the default
   **Administrators** group.
 - The ability to customize and add granular access control policies is to be
   released in 1Q2019.
@@ -197,7 +197,7 @@ along with request to act on behalf of that user.
 A JupiterOne Support User can be added to any account to assist with a
 proof-of-concept evaluation, help with initial onboarding, or facilitate support
 and training on using the platform. Any users that have access to your
-JupiterOne account will show up in Settings under *Users and Access*.
+JupiterOne account will show up in Settings under _Users and Access_.
 
 - The Security Engineer/Architect designated to your account (support user) will
   appear as `firstname.lastname@jupiterone.com`.
