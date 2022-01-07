@@ -8,7 +8,7 @@ export const references = [
   "configure-sso-integration.md",
   "../docs/configure-sso-integration.md",
   "https://github.com/JupiterOne/docs/blob/main/docs/faqs-aws.md",
-  'href="../getting-started-admin/catalog.md',
+  'href="../getting-started_and-admin/catalog.md',
 ];
 export const completedProcedures = [
   {
@@ -82,7 +82,7 @@ export const completedProcedures = [
 
     name: "Alert Rule",
 
-    body: `he JupiterOne [API client or CLI](../APIs_and-Integrations/j1-client-and-cli.md)`,
+    body: `he JupiterOne [API client or CLI](../APIs_and-integrations/j1-client-and-cli.md)`,
     outline: [
       {
         ref: "jupiterone-alert-rule-schema",

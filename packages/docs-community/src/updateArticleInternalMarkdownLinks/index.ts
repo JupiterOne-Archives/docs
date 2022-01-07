@@ -9,12 +9,12 @@ import {
 } from "../utils";
 
 export const updateArticleInternalMarkdownLinks = async (
-  completedProcedures: (VanillaArticle | VanillaKnowledgeCategory)[],
+  processedProcedures: (VanillaArticle | VanillaKnowledgeCategory)[],
   articlesFromVanilla: VanillaArticle[]
 ): Promise<VanillaArticle[]> => {
   const articlesToUseForSlugs: VanillaArticle[] = articlesFromVanilla || [];
 
-  const articleProcedures: VanillaArticle[] = completedProcedures
+  const articleProcedures: VanillaArticle[] = processedProcedures
     .filter(isArticleType)
     .filter((a) => a.referencesNeedingUpdatesInMarkdown?.length)
     .filter((a) => a.status !== "deleted");
