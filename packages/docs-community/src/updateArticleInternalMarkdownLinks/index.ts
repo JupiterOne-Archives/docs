@@ -31,7 +31,7 @@ export const updateArticleInternalMarkdownLinks = async (
         articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown || [];
       for (let r = 0; r < references.length; r++) {
         const articleName = await getArticleNameFromReference(references[r]);
-        console.log(articleName, "AARTY");
+
         if (articleName) {
           const existingArticleMatches = [...articlesToUseForSlugs]
             .filter((article) => {
@@ -40,7 +40,7 @@ export const updateArticleInternalMarkdownLinks = async (
             .filter((a) => a.status !== "deleted");
           const articleUrl: string =
             existingArticleMatches[0]?.url || "doesNotExist";
-          console.log(articleUrl, "ERRE");
+
           if (articleUndergoingChanges.body !== null && articleUrl) {
             const changes = modifyBodyLinkForImageForReturnedArticles(
               articleUndergoingChanges.body || "",
