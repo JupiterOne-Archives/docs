@@ -133,7 +133,7 @@ describe("ProceduresToVanillaRequests", () => {
     it("returns procedure with info from vanilla api mapped to it", () => {
       const expected = {
         childrenPath:
-          "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
+          "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
         description: "",
         fileName: "compliance-reporting",
         foreignID: undefined,
@@ -143,7 +143,7 @@ describe("ProceduresToVanillaRequests", () => {
         parentID: 8,
         procedureType: "Category",
         sort: undefined,
-        path: "getting-started-admin/compliance-reporting",
+        path: "getting-started_and-admin/compliance-reporting",
         sortChildren: undefined,
         url: undefined,
       };
@@ -174,7 +174,7 @@ describe("ProceduresToVanillaRequests", () => {
         knowledgeCategoryID: 22,
         locale: "en",
         name: "Soc2 With Jupiterone Copy",
-        path: "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
+        path: "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
         procedureType: "Article",
       };
       const actual = addVanillaArticleInfoToProcedure(procedureArticletemp, [
@@ -188,14 +188,14 @@ describe("ProceduresToVanillaRequests", () => {
     it("return proceduresWithVanillaCategoryInfo", () => {
       const expected = [
         {
-          childrenPath: "getting-started-admin",
+          childrenPath: "getting-started_and-admin",
           description: "",
-          fileName: "getting-started-admin",
+          fileName: "getting-started_and-admin",
           knowledgeBaseID: 1,
           knowledgeCategoryID: null,
           name: "Getting Started Admin",
           parentID: null,
-          path: "getting-started-admin/jupiterone-query-language-copy.md",
+          path: "getting-started_and-admin/jupiterone-query-language-copy.md",
           procedureType: "Category",
         },
         {
@@ -206,7 +206,7 @@ describe("ProceduresToVanillaRequests", () => {
           knowledgeCategoryID: null,
           locale: "en",
           name: "Jupiterone Query Language Copy",
-          path: "getting-started-admin/jupiterone-query-language-copy.md",
+          path: "getting-started_and-admin/jupiterone-query-language-copy.md",
           procedureType: "Article",
         },
         {
@@ -217,7 +217,7 @@ describe("ProceduresToVanillaRequests", () => {
           knowledgeCategoryID: null,
           locale: "en",
           name: "Jupiterone Query Language",
-          path: "getting-started-admin/jupiterone-query-language.md",
+          path: "getting-started_and-admin/jupiterone-query-language.md",
           procedureType: "Article",
         },
         {
@@ -228,7 +228,7 @@ describe("ProceduresToVanillaRequests", () => {
           knowledgeCategoryID: null,
           name: "Compliance Reporting",
           parentID: null,
-          path: "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
+          path: "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
           procedureType: "Category",
         },
         {
@@ -239,7 +239,7 @@ describe("ProceduresToVanillaRequests", () => {
           knowledgeCategoryID: 22,
           locale: "en",
           name: "Soc2 With Jupiterone Copy",
-          path: "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
+          path: "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
           procedureType: "Article",
         },
         {
@@ -250,7 +250,7 @@ describe("ProceduresToVanillaRequests", () => {
           knowledgeCategoryID: null,
           locale: "en",
           name: "Soc2 With Jupiterone",
-          path: "getting-started-admin/compliance-reporting/soc2-with-jupiterone.md",
+          path: "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone.md",
           procedureType: "Article",
         },
       ];
@@ -281,7 +281,7 @@ describe("ProceduresToVanillaRequests", () => {
           knowledgeCategoryID: null,
           locale: "en",
           name: "Soc2 With Jupiterone Copy",
-          path: "getting-started-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
+          path: "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
           procedureType: "Article",
         });
         expect(mockCreateArticle).toHaveBeenCalledTimes(0);
@@ -479,16 +479,16 @@ describe("ProceduresToVanillaRequests", () => {
         fileName: "soc2-reporting",
         description: "",
         knowledgeCategoryID: null,
-        path: "getting-started-admin/soc2-reporting",
+        path: "getting-started_and-admin/soc2-reporting",
         childrenPath:
-          "getting-started-admin/soc2-reporting/soc2-with-jupiterone-copy.md",
+          "getting-started_and-admin/soc2-reporting/soc2-with-jupiterone-copy.md",
         procedureType: ProcedureTypeEnum.Category,
       };
       const knowledgeCategoryID = 111;
 
       const expected = {
         childrenPath:
-          "getting-started-admin/soc2-reporting/soc2-with-jupiterone-copy.md",
+          "getting-started_and-admin/soc2-reporting/soc2-with-jupiterone-copy.md",
         description: "",
         fileName: "soc2-reporting",
         foreignID: undefined,
@@ -496,7 +496,7 @@ describe("ProceduresToVanillaRequests", () => {
         knowledgeCategoryID,
         name: "Soc2 Reporting",
         parentID: 22,
-        path: "getting-started-admin/soc2-reporting",
+        path: "getting-started_and-admin/soc2-reporting",
         procedureType: "Category",
         sort: undefined,
         sortChildren: undefined,
@@ -504,7 +504,7 @@ describe("ProceduresToVanillaRequests", () => {
       };
       mockCreateKnowledgeCategory.mockResolvedValue({
         childrenPath:
-          "getting-started-admin/soc2-reporting/soc2-with-jupiterone-copy.md",
+          "getting-started_and-admin/soc2-reporting/soc2-with-jupiterone-copy.md",
         description: "",
         fileName: "soc2-reporting",
         foreignID: undefined,
@@ -512,7 +512,7 @@ describe("ProceduresToVanillaRequests", () => {
         knowledgeCategoryID,
         name: "Soc2 Reporting",
         parentID: 22,
-        path: "getting-started-admin/soc2-reporting",
+        path: "getting-started_and-admin/soc2-reporting",
         procedureType: ProcedureTypeEnum.Category,
         sort: undefined,
         sortChildren: undefined,
@@ -565,7 +565,7 @@ describe("ProceduresToVanillaRequests", () => {
         const procedureKnowledgeCategoryNOKCID = {
           ...procedureKnowledgeCategorytemp,
           knowledgeCategoryID,
-          path: "getting-started-admin/soc2-repzzzorting/soc2-with-jupiterone-copy.md",
+          path: "getting-started_and-admin/soc2-repzzzorting/soc2-with-jupiterone-copy.md",
         };
         const mockHttpclient = {} as any;
         const actual = await procedureToKnowledgeCategory(
@@ -582,7 +582,7 @@ describe("ProceduresToVanillaRequests", () => {
         const procedureKnowledgeCategoryNOKCID = {
           ...procedureKnowledgeCategorytemp,
           knowledgeCategoryID,
-          path: "getting-started-admin/soc2-repzzzorting/soc2-with-jupiterone-copy.md",
+          path: "getting-started_and-admin/soc2-repzzzorting/soc2-with-jupiterone-copy.md",
         };
         const mockHttpclient = {} as any;
         const actual = await procedureToKnowledgeCategory(
@@ -681,7 +681,7 @@ describe("ProceduresToVanillaRequests", () => {
         locale: "en",
         status: "deleted",
         name: "Jupiterone Query Language Copy",
-        path: "getting-started-admin/jupiterone-query-language-copy.md",
+        path: "getting-started_and-admin/jupiterone-query-language-copy.md",
         procedureType: "Article",
       } as VanillaArticle;
       mockMarkdownToString
@@ -695,7 +695,7 @@ describe("ProceduresToVanillaRequests", () => {
         knowledgeCategoryID: 22,
         locale: "en",
         name: "Jupiterone Query Language",
-        path: "getting-started-admin/jupiterone-query-language.md",
+        path: "getting-started_and-admin/jupiterone-query-language.md",
         procedureType: "Article",
       } as VanillaArticle);
       mockDeleteArticle.mockResolvedValue(deleteArticle);
@@ -708,7 +708,7 @@ describe("ProceduresToVanillaRequests", () => {
           knowledgeCategoryID: 22,
           locale: "en",
           name: "Soc2 With Jupiterone Copy",
-          path: "getting-started-admin/jupiterone-query-language-copy.md",
+          path: "getting-started_and-admin/jupiterone-query-language-copy.md",
           procedureType: "Article",
         } as VanillaArticle)
         .mockResolvedValueOnce({
@@ -719,7 +719,7 @@ describe("ProceduresToVanillaRequests", () => {
           knowledgeCategoryID: 23,
           locale: "en",
           name: "Compliance With Jupiterone",
-          path: "getting-started-admin/compliance-reporting/compliance-with-jupiterone.md",
+          path: "getting-started_and-admin/compliance-reporting/compliance-with-jupiterone.md",
           procedureType: "Article",
         } as VanillaArticle);
 
@@ -731,20 +731,20 @@ describe("ProceduresToVanillaRequests", () => {
         knowledgeCategoryID: 23,
         name: "Compliance Reporting",
         parentID: 22,
-        path: "getting-started-admin/compliance-reporting/compliance-with-jupiterone.md",
+        path: "getting-started_and-admin/compliance-reporting/compliance-with-jupiterone.md",
         procedureType: "Category",
       } as VanillaKnowledgeCategory);
 
       const existingCategories = [
         {
-          childrenPath: "getting-started-admin",
+          childrenPath: "getting-started_and-admin",
           description: "",
-          fileName: "getting-started-admin",
+          fileName: "getting-started_and-admin",
           knowledgeBaseID: 1,
           knowledgeCategoryID: 22,
           name: "Getting Started Admin",
           parentID: 1,
-          path: "getting-started-admin/jupiterone-query-language-copy.md",
+          path: "getting-started_and-admin/jupiterone-query-language-copy.md",
           procedureType: "Category",
         },
       ] as VanillaKnowledgeCategory[];

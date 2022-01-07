@@ -9,12 +9,12 @@ import {
 } from "../utils";
 
 export const updateArticleInternalMarkdownLinks = async (
-  completedProcedures: (VanillaArticle | VanillaKnowledgeCategory)[],
+  processedProcedures: (VanillaArticle | VanillaKnowledgeCategory)[],
   articlesFromVanilla: VanillaArticle[]
 ): Promise<VanillaArticle[]> => {
   const articlesToUseForSlugs: VanillaArticle[] = articlesFromVanilla || [];
 
-  const articleProcedures: VanillaArticle[] = completedProcedures
+  const articleProcedures: VanillaArticle[] = processedProcedures
     .filter(isArticleType)
     .filter((a) => a.referencesNeedingUpdatesInMarkdown?.length)
     .filter((a) => a.status !== "deleted");
@@ -31,7 +31,7 @@ export const updateArticleInternalMarkdownLinks = async (
         articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown || [];
       for (let r = 0; r < references.length; r++) {
         const articleName = await getArticleNameFromReference(references[r]);
-
+        console.log(articleName, "AARTY");
         if (articleName) {
           const existingArticleMatches = [...articlesToUseForSlugs]
             .filter((article) => {
@@ -40,7 +40,7 @@ export const updateArticleInternalMarkdownLinks = async (
             .filter((a) => a.status !== "deleted");
           const articleUrl: string =
             existingArticleMatches[0]?.url || "doesNotExist";
-
+          console.log(articleUrl, "ERRE");
           if (articleUndergoingChanges.body !== null && articleUrl) {
             const changes = modifyBodyLinkForImageForReturnedArticles(
               articleUndergoingChanges.body || "",

@@ -37,7 +37,7 @@
 //         articleCount: 1,
 //         articleCountRecursive: 1,
 //         childCategoryCount: 0,
-//         url: 'https://jupiterone.vanillastaging.com/kb/categories/2-getting-started-and-admin',
+//         url: 'https://jupiterone.vanillastaging.com/kb/categories/2-getting-started_and-admin',
 //         foreignID: null,
 //       },
 //       {
@@ -113,7 +113,7 @@
 //         articleCount: 1,
 //         articleCountRecursive: 1,
 //         childCategoryCount: 0,
-//         url: 'https://jupiterone.vanillastaging.com/kb/categories/7-compliance-and-reporting',
+//         url: 'https://jupiterone.vanillastaging.com/kb/categories/7-compliance_and-reporting',
 //         foreignID: null,
 //       },
 //       {
