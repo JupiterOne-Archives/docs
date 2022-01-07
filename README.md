@@ -21,7 +21,7 @@
 - Assets should NOT be larger than 10mb (That is already huge).
 - Supported assets are `png`, `jpg`, `jpeg` and `gif`
 - Supported article files are `.md`
-- Categories and Articles all need different names. If you have a `KnowledgeBase/getting-started-admin/catalog.md` and a `KnowledgeBase/compliance-reporting/catalog.md` ONLY ONE `Catalog` article will be created! Same thing for directory names.
+- Categories and Articles all need different names. If you have a `KnowledgeBase/getting-started_and-admin/catalog.md` and a `KnowledgeBase/compliance-reporting/catalog.md` ONLY ONE `Catalog` article will be created! Same thing for directory names.
 - After merging, you will need to wait at least 5 mins (depending on changes) for the script to run. After that, you will need to refresh vanilla forums to see the changes (navigation within is not the same).
 - If you dont see an image, but you know it exists and is in the correct directory, try adding different size and making a change to the markdown file (so it will re-add it).
 
