@@ -6,6 +6,70 @@
 - MERGE to `main` will make changes to `https://jupiterone.vanillacommunities.com/`
 - knowledgeBase/Release-Notes Is its own KNOWLEDGEBASE - anything other than `/assets` within this directory will create corresponding items in the knowledgeBase 'Release Notes' which is seperate from the docs
 
+### To 'Refresh' vanilla staging and/or production
+
+Create a branch from vanilla-staging. I like to use 'refresh-some-date'.
+
+Change runDiff.ts to
+
+```ts
+import { refreshVanillaItems } from "./";
+import { logger } from "./loggingUtil";
+
+const updateCommunityDocsByMergeChanges = async () => {
+  try {
+    const completed = await refreshVanillaItems();
+
+    logger.info(
+      `UpdateCommunityDocs cssompleted: ${JSON.stringify(completed, null, 2)}`
+    );
+  } catch (error) {
+    logger.error(`UpdateCommunityDocs Errored: \n ${JSON.stringify(error)}`);
+  }
+};
+export default updateCommunityDocsByMergeChanges();
+```
+
+Then change the jenkins file to run on pr rather than merge to 'vanilla-staging' and 'main'. Replace the build and scan step with this.
+
+```
+  stage('Build and scan') {
+      agent { label 'ecs-builder-node14' }
+      steps {
+        initBuild()
+        securityScan()
+        sh 'yarn install --frozen-lockfile'
+
+        sh 'yarn lint'
+
+        sh 'yarn test:unit'
+
+        sh 'yarn bundle'
+
+        sh 'jupiterone-build'
+            withCredentials([
+              string(credentialsId: 'VANILLA_STAGING_ENV_TOKEN', variable: 'TOKEN')
+                ]) {
+                  sh '''
+                    TOKEN="$TOKEN" targetVanillaEnv=staging yarn start
+                  '''
+                }
+                        withCredentials([
+            string(credentialsId: 'VANILLA_PROD_ENV_TOKEN', variable: 'TOKEN')
+                ]) {
+                  sh '''
+                    TOKEN="$TOKEN" targetVanillaEnv=prod yarn start
+                  '''
+                }
+
+      }
+    }
+```
+
+Create a pull request with the branch. You will have to watch jenkins to see when it is finished. This can take anywhere from 30 mins to an hour.
+
+After jenkins completes running both staging/prod. Delete your branch and close the pr (WITHOUT MERGING). If you merge... Then ANY PR will trigger a refresh rather than just watching changes.
+
 ## How to make changes to vanilla forums via the knowledgeBase directory
 
 A Quick rundown
