@@ -109,6 +109,7 @@ export const removeTitleFromArticleBody = (
 
   return bodyAlterations.trim();
 };
+// Was used for APP-62223, but we instead need to have correct markdown rather than altering it. was causing issue with code blocks and tables
 export const sanitizeMarkdownNewLines = (markdownAsString: string) => {
   if (markdownAsString) {
     return markdownAsString
