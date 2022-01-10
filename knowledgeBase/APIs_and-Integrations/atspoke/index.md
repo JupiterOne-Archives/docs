@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# atSpoke Integration with JupiterOne
 
 ## atSpoke + JupiterOne Integration Benefits
 

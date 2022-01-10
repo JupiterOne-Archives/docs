@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Trend Micro Integration with JupiterOne
 
 ## Trend Micro + JupiterOne Integration Benefits
 

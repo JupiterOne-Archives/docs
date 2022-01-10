@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Qualys Integration with JupiterOne
 
 ## Qualys + JupiterOne Integration Benefits
 

@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Cloudflare Integration with JupiterOne
 
 ## Cloudflare + JupiterOne Integration Benefits
 

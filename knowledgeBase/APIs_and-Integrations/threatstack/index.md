@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Threat Stack Integration with JupiterOne
 
 ## Threat Stack + JupiterOne Integration Benefits
 
@@ -85,9 +85,9 @@ The following entity resources are ingested when the integration runs:
 
 The following relationships are created/mapped:
 
-| Relationships                                     |
-| ------------------------------------------------- |
+| Relationships                            |
+| ---------------------------------------- |
 | `threatstack_account` **HAS** `threatstack_agent` |
-| `threatstack_agent` **PROTECTS** `aws_instance`   |
-| `threatstack_agent` **PROTECTS** `server`         |
-| `threatstack_agent` **IDENTIFIED** `cve`          |
+| `threatstack_agent` **PROTECTS** `aws_instance` |
+| `threatstack_agent` **PROTECTS** `server` |
+| `threatstack_agent` **IDENTIFIED** `cve` |

@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# GitLab Integration with JupiterOne
 
 ## GitLab + JupiterOne Integration Benefits
 
@@ -14,7 +14,7 @@
 ## How it Works
 
 - JupiterOne periodically fetches GitLab users, code repositories, and
- pull requests in those repositories to update the graph.
+   pull requests in those repositories to update the graph.
 - Write JupiterOne queries to review and monitor updates to the graph.
 - Configure alerts to take action when the JupiterOne graph changes.
 
