@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Duo Integration with JupiterOne
 
 ## Duo + JupiterOne Integration Benefits
 

@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Cobalt Integration with JupiterOne
 
 ## Cobalt + JupiterOne Integration Benefits
 

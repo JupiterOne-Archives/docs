@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Heroku Integration with JupiterOne
 
 ## Heroku + JupiterOne Integration Benefits
 

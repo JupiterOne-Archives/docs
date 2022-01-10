@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Slack Integration with JupiterOne
 
 ## Slack + JupiterOne Integration Benefits
 

@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# PagerDuty Integration with JupiterOne
 
 ## PagerDuty + JupiterOne Integration Benefits
 

@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Bitbucket Integration with JupiterOne
 
 ## Bitbucket + JupiterOne Integration Benefits
 

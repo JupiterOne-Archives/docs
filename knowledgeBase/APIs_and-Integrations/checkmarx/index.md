@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Checkmarx Integration with JupiterOne
 
 ## Checkmarx + JupiterOne Integration Benefits
 
@@ -35,7 +35,7 @@ The integration connects directly to Checkmarx SAST API.
 
 1. Capture the **Hostname** of the Checkmarx instance. 
 2. Create a new service account user or leverage an existing user that has
-read access to your Checkmarx account.
+  read access to your Checkmarx account.
 
 ### In JupiterOne
 

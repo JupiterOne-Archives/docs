@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# GoDaddy Integration with JupiterOne
 
 ## GoDaddy + JupiterOne Integration Benefits
 

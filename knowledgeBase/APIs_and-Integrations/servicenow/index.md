@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# ServiceNow Integration with JupiterOne
 
 ## Setup
 

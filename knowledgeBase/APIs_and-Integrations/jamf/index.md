@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Jamf Integration with JupiterOne
 
 ## Jamf + JupiterOne Integration Benefits
 

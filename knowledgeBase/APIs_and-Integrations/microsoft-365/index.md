@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Microsoft 365 Integration with JupiterOne
 
 JupiterOne provides a managed integration for Microsoft 365. The integration
 connects directly to Microsoft Graph APIs to obtain metadata about the target
@@ -80,33 +80,33 @@ If you need help with this integration, please contact
 
 10. Review requested permissions (which are described below) and grant consent.
 
-      ![Review requested permissions](../../../assets/m365PickAnAccount.png)
+     ![Review requested permissions](../../../assets/m365PickAnAccount.png)
 
 ## Permissions
 
 1.  `DeviceManagementApps.Read.All`
     1. Read Microsoft Intune apps
-    1. Needed for creating `Application` entities
-1.  `DeviceManagementConfiguration.Read.All`
+    2. Needed for creating `Application` entities
+2.  `DeviceManagementConfiguration.Read.All`
     1. Read Microsoft Intune device configuration and policies
-    1. Needed for creating `Configuration` and `ControlPolicy` entities
-1.  `DeviceManagementManagedDevices.Read.All`
+    2. Needed for creating `Configuration` and `ControlPolicy` entities
+3.  `DeviceManagementManagedDevices.Read.All`
     1. Read Microsoft Intune devices
-    1. Needed for creating `Device` and `HostAgent` entities
-1.  `Organization.Read.All`
+    2. Needed for creating `Device` and `HostAgent` entities
+4.  `Organization.Read.All`
     1. Read organization information
-    1. Needed for creating the `Account` entity
-1.  `APIConnectors.Read.All`
+    2. Needed for creating the `Account` entity
+5.  `APIConnectors.Read.All`
     1. Read API connectors for authentication flows
-    1. Needed for enriching the `Account` entity with Intune subscription
+    2. Needed for enriching the `Account` entity with Intune subscription
        infomation
-1.  `DeviceManagementServiceConfig.Read.All`
+6.  `DeviceManagementServiceConfig.Read.All`
     1. Read Microsoft Intune configuration
-    1. Also needed for enriching the `Account` entity with Intune subscription
+    2. Also needed for enriching the `Account` entity with Intune subscription
        infomation
-1.  `Directory.Read.All`
+7.  `Directory.Read.All`
     1. Read directory data
-    1. Needed for creating `User`, `Group`, and `GroupUser` entities
+    2. Needed for creating `User`, `Group`, and `GroupUser` entities
 
 # How to Uninstall
 
@@ -121,11 +121,11 @@ If you need help with this integration, please contact
 Authorize access to JupiterOne:
 
 1. Log in to JupiterOne as a user with permission to set up an integration
-1. Add a Microsoft 365 integration instance
-1. Once you have finished configuring your new instance, you will be directed to
+2. Add a Microsoft 365 integration instance
+3. Once you have finished configuring your new instance, you will be directed to
    Microsoft's identity platform, where you must login in as an administrator in
    the organization you intend to integrate
-1. Review requested permissions and grant consent
+4. Review requested permissions and grant consent
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
 <!--

@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Tenable.io Integration with JupiterOne
 
 ## Tenable.io + JupiterOne Integration Benefits
 

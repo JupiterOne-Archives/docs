@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Google Workspace Integration with JupiterOne
 
 ## Google Workspace + JupiterOne Integration Benefits
 

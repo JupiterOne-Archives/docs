@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Cisco AMP Integration with JupiterOne
 
 ## Cisco AMP + JupiterOne Integration Benefits
 
