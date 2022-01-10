@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Rapid7 Integration with JupiterOne
 
 ## Rapid7 + JupiterOne Integration Benefits
 

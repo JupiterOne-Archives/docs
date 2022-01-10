@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Okta Integration with JupiterOne
 
 ## Okta + JupiterOne Integration Benefits
 

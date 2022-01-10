@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Snyk Integration with JupiterOne
 
 ## Snyk + JupiterOne Integration Benefits
 

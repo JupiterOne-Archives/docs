@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# OneLogin Integration with JupiterOne
 
 ## OneLogin + JupiterOne Integration Benefits
 

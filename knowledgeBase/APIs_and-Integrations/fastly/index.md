@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Fastly Integration with JupiterOne
 
 ## Fastly + JupiterOne Integration Benefits
 

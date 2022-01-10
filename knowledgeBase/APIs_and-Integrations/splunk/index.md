@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Splunk Integration with JupiterOne
 
 ## Splunk + JupiterOne Integration Benefits
 
@@ -78,14 +78,14 @@ or
 
 ![splunk-j1-inputs-fields](../../../assets/splunk-j1-inputs-fields.png)
 
-| Field Name | Field Description                  |
-| ------------------ | -----------------------------------|
-| Name*               | Unique name for the data input.     |
-| Interval*           | Time interval of input in seconds. How often JupiterOne collects the data.  |
-| Index*              | Index where data is stored.    |
-| JupiterOne Account* | Account that was configured in the **Configuration** tab. |
+| Field Name                 | Field Description                        |
+| -------------------------- | ---------------------------------------- |
+| Name*                      | Unique name for the data input.          |
+| Interval*                  | Time interval of input in seconds. How often JupiterOne collects the data. |
+| Index*                     | Index where data is stored.              |
+| JupiterOne Account*        | Account that was configured in the **Configuration** tab. |
 | Pull Alert Related Objects | If enabled, pulls data for entities in Alert. |
-| Start DateTime | Date in UTC when you want to start collecting data. Default is 30 days in the past. |
+| Start DateTime             | Date in UTC when you want to start collecting data. Default is 30 days in the past. |
 
 `*` denotes required field
 

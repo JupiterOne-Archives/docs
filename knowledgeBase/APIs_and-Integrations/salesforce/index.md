@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Salesforce Integration with JupiterOne
 
 ## Salesforce + JupiterOne Integration Benefits
 

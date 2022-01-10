@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# JFrog Artifactory Integration with JupiterOne
 
 ## JFrog Artifactory + JupiterOne Integration Benefits
 
@@ -13,15 +13,15 @@
 ## How it Works
 
 - JupiterOne periodically fetches Artifactory users and data across your 
-CI/CD pipeline to update the graph.
+  CI/CD pipeline to update the graph.
 - Write JupiterOne queries to review and monitor updates to the graph.
 - Configure alerts to take action when the JupiterOne graph changes.
 
 ## Requirements
 
 - JupiterOne requires the namespace of your Artifactory account. Also required
-are a client access token, client pipeline access token, and the client 
-administrator name that granted the access tokens.
+  are a client access token, client pipeline access token, and the client 
+  administrator name that granted the access tokens.
 - You must have permission in JupiterOne to install new integrations.
 
 ## Support
@@ -54,7 +54,7 @@ guide.
 - Enter the **Client Access Token** configured in your Artifactory account.
 - Enter the **Client Pipeline Access Token** configured in your Artifactory account.
 - Enter the **Client Administrator Name**, or username of the administrator that
-granted the Artifactory access tokens.
+  granted the Artifactory access tokens.
 4. Click **Create Configuration** once all values are provided.
 
 ## How to Uninstall
