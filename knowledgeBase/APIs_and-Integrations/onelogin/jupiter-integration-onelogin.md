@@ -1,27 +1,27 @@
-# Integration with JupiterOne
+# OneLogin Integration with JupiterOne
 
 ## OneLogin + JupiterOne Integration Benefits
 
 - Visualize OneLogin users, groups, roles, devices, applications, 
-and services in the JupiterOne graph.
+  and services in the JupiterOne graph.
 - Map OneLogin users to employees in your JupiterOne account.
 - Monitor changes to OneLogin users and access management data using 
-JupiterOne alerts.
+  JupiterOne alerts.
 - Create an employee entity that is used to map users across your 
-organization to an employee 
-via a matching email property.
+  organization to an employee 
+  via a matching email property.
 
 ## How it Works
 
 - JupiterOne periodically fetches OneLogin users, groups, and access 
-management data to update the graph.
+  management data to update the graph.
 - Write JupiterOne queries to review and monitor updates to the graph.
 - Configure alerts to take action when the JupiterOne graph changes.
 
 ## Requirements
 
 - JupiterOne requires the API client id and API client secret used to 
-authenticate with OneLogin.
+  authenticate with OneLogin.
 - You must have permission in JupiterOne to install new integrations.
 
 ## Support
@@ -66,16 +66,16 @@ Instructions on creating an API token within your OneLogin account can be found
 
 The following entity resources are ingested when the integration runs:
 
-| OneLogin Entity Resource | \_type : \_class of the Entity                  |
-| ------------------------ | ----------------------------------------------- |
-| Account                  | `onelogin_account` : `Account`                  |
-| Group                    | `onelogin_group` : `UserGroup`                  |
-| OneLogin Role            | `onelogin_role` : `AccessRole`                  |
-| User                     | `onelogin_user` : `User`                        |
-| App                      | `onelogin_application` : `Application`          |
+| OneLogin Entity Resource | \_type : \_class of the Entity           |
+| ------------------------ | ---------------------------------------- |
+| Account                  | `onelogin_account` : `Account`           |
+| Group                    | `onelogin_group` : `UserGroup`           |
+| OneLogin Role            | `onelogin_role` : `AccessRole`           |
+| User                     | `onelogin_user` : `User`                 |
+| App                      | `onelogin_application` : `Application`   |
 | Personal App             | `onelogin_personal_application` : `Application` |
-| Personal Device          | `mfa_device` : `[Key, AccessKey]`               |
-| Service (SSO & MFA)      | `onelogin_service` : `['Service', 'Control']`   |
+| Personal Device          | `mfa_device` : `[Key, AccessKey]`        |
+| Service (SSO & MFA)      | `onelogin_service` : `['Service', 'Control']` |
 
 ### Relationships
 

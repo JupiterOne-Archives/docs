@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Bugcrowd Integration with JupiterOne
 
 ## Bugcrowd + JupiterOne Integration Benefits
 

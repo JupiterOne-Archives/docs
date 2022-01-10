@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Tenable Cloud Integration with JupiterOne
 
 ## Tenable Cloud + JupiterOne Integration Benefits
 

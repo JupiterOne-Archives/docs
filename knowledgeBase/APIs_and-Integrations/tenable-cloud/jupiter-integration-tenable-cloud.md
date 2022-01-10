@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Tenable Cloud Integration with JupiterOne
 
 ## Tenable Cloud + JupiterOne Integration Benefits
 
@@ -12,7 +12,7 @@
 ## How it Works
 
 - JupiterOne periodically fetches Tenable Cloud users, scans, findings, and 
-vulnerabilities to update the graph.
+  vulnerabilities to update the graph.
 - Write JupiterOne queries to review and monitor updates to the graph.
 - Configure alerts to reduce the noise of findings.
 - Configure alerts to take action when the JupiterOne graph changes.
@@ -20,7 +20,7 @@ vulnerabilities to update the graph.
 ## Requirements
 
 - JupiterOne requires an access key and secret key used to authenticate with 
-Tenable Cloud. 
+  Tenable Cloud. 
 - You must have permission in JupiterOne to install new integrations.
 
 ## Support
@@ -65,17 +65,17 @@ on how to configure an API access key and secret.
 
 The following entity resources are ingested when the integration runs:
 
-| Tenable Entity Resource    | \_type : \_class of the Entity                   |
-| -------------------------- | ------------------------------------------------ |
-| Account                    | `tenable_account` : `Account`                    |
-| User                       | `tenable_user` : `User`                          |
-| Scan                       | `tenable_scan` : \[`Assessment`,`Service`\]      |
-| Scan Vulnerability         | `tenable_scan_finding` : `Finding`               |
-| Vulnerability              | `tenable_vulnerability` : `Vulnerability`        |
-| Container                  | `tenable_container` : `Image`                    |
-| Container Finding          | `tenable_container_finding` : `Finding`          |
-| Container Report           | `tenable_container_report` : `Assessment`        |
-| Container Malware          | `tenable_container_malware` : `Finding`          |
+| Tenable Entity Resource    | \_type : \_class of the Entity           |
+| -------------------------- | ---------------------------------------- |
+| Account                    | `tenable_account` : `Account`            |
+| User                       | `tenable_user` : `User`                  |
+| Scan                       | `tenable_scan` : \[`Assessment`,`Service`\] |
+| Scan Vulnerability         | `tenable_scan_finding` : `Finding`       |
+| Vulnerability              | `tenable_vulnerability` : `Vulnerability` |
+| Container                  | `tenable_container` : `Image`            |
+| Container Finding          | `tenable_container_finding` : `Finding`  |
+| Container Report           | `tenable_container_report` : `Assessment` |
+| Container Malware          | `tenable_container_malware` : `Finding`  |
 | Container Unwanted Program | `tenable_container_unwanted_program` : `Finding` |
 
 Tenable "assets" are not ingested. `Findings` include some asset details,

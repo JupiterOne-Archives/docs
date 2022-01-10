@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# JumpCloud Integration with JupiterOne
 
 ## JumpCloud + JupiterOne Integration Benefits
 
