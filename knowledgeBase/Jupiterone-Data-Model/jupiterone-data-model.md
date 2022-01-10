@@ -25,7 +25,7 @@ technical operations.
 
 The **type** property represents the specific type that entity is as defined by
 the source. For example, an AWS resource may be of type `aws_instance` or
-`aws_s3_bucket` or `aws_iam_user`.  
+`aws_s3_bucket` or `aws_iam_user`.
 
 #### Class
 
@@ -40,6 +40,7 @@ Most Entities will have the following common properties:
 
 <!--THE FOLLOW SECTION IS AUTO-GENERATED. DO NOT EDIT.-->
 <!--BEGIN Common Entity Properties table-->
+
 ??? reference "Common Entity Properties Table"
 
     Property           | Type      | Description
@@ -95,6 +96,7 @@ Here is a list of reference entities defined by the JupiterOne Data Model, each 
 
 <!--THE FOLLOW SECTION IS AUTO-GENERATED. DO NOT EDIT.-->
 <!--BEGIN Defined Entities table-->
+
 ??? reference "Defined Entities Table"
 
     Entity             | Description
@@ -194,11 +196,11 @@ Here is a list of reference entities defined by the JupiterOne Data Model, each 
 
 There are three special entities defined. These are singleton entities.
 
-Entity             | Description
-------             | -----------
-`Everyone`         | The global `UserGroup` that represents "everyone" publicly.
-`Internet`         | The Internet -- i.e. a `Network` entity with CIDR `"0.0.0.0/0"`.
-`Root`             | The entity that represents the top level organization.
+| Entity     | Description                                                      |
+| ---------- | ---------------------------------------------------------------- |
+| `Everyone` | The global `UserGroup` that represents "everyone" publicly.      |
+| `Internet` | The Internet -- i.e. a `Network` entity with CIDR `"0.0.0.0/0"`. |
+| `Root`     | The entity that represents the top level organization.           |
 
 ## Relationships
 
@@ -361,5 +363,4 @@ defined by the data model.
 ![data-model](../assets/data-model.png)
 
 [schema-repo]: https://github.com/JupiterOne/data-model
-
 [person-team]: ./person-team-relationship.md
