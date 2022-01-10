@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Snipe-IT Integration with JupiterOne
 
 ## Snipe-IT + JupiterOne Integration Benefits
 
@@ -17,7 +17,7 @@
 ## Requirements
 
 - JupiterOne requires the hostname of your Snipe-IT account as well as an 
-API Token configured for read access.
+  API Token configured for read access.
 - You must have permission in JupiterOne to install new integrations.
 
 ## Support
@@ -46,7 +46,7 @@ on how to generate an API token.
    needs. You may leave this as `DISABLED` and manually execute the integration.
 - Enter the **Hostname** of your Snipe-IT account.
 - Enter the **API Token** generated in your Snipe-IT account, configured for
-read access.
+  read access.
 4. Click **Create Configuration** once all values are provided.
 
 ## How to Uninstall

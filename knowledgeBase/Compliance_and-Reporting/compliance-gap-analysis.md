@@ -11,7 +11,7 @@ either in the app UI or via the API.
 
 Here is a screenshot of the app UI configuration:
 
-![edit-question](../../assets/query-question-edit-name-results.png)
+![edit-question](../assets/query-question-edit-name-results.png)
 
 At the API level, this is set with the `resultsAre` property. For example:
 
@@ -43,13 +43,12 @@ At the API level, this is set with the `resultsAre` property. For example:
 
 ## Gap Analysis
 
-Queries with `resultsAre` property in a question that is mapped to a compliance
-requirement trigger automated gap analysis, as follow:
+Queries with `resultsAre` property in a question that is mapped to a compliance requirement trigger automated gap analysis, as follows:
 
 - `GOOD`:
 
   Results from a "good" query indicates **expected configuration is present**.
-  
+
   For example, a list of critical data stores that are encrypted.
 
   ```j1ql
@@ -82,8 +81,7 @@ _A question can have one or all of the above named queries._
 
 ## Gap Analysis Status
 
-The gap analysis status of each requirement of control may be one of the
-following:
+The gap analysis status of each requirement of control may be one of the following:
 
 - `FULFILLED`:
 
@@ -91,27 +89,20 @@ following:
 
 - `WARNING`:
 
-  "Attention - potential remediation needed" because a potential gap has been
-  detected, with a mix of properly configured resources and misconfigurations
-  (i.e. _partially fulfilled_).
+  "Attention - potential remediation needed" because a potential gap has been detected, with a mix of properly configured resources and misconfigurations (i.e. _partially fulfilled_).
 
 - `GAP`:
 
-  "Gap detected" with no properly configured resources identified, indicating a
-  _full control gap_.
+  "Gap detected" with no properly configured resources identified, indicating a full control gap.
 
 - `UNKNOWN` or `INDETERMINATE`:
 
-  "Manual review needed" because the platform was unable to auto-determine the
-  status with the queries provided.
+  "Manual review needed" because the platform was unable to auto-determine the status with the queries provided.
 
-  > This status appears also when the requirement or control has no mapped query
-    question _and_ no external evidence provided.
+  > This status appears also when the requirement or control has no mapped query question _and_ no external evidence provided.
 
-The status is determined by the presence and output of the named queries in the
-mapped question(s), as seen in the following matrix:
+The status is determined by the presence and output of the named queries in the mapped question(s), as seen in the following matrix:
 
-![compliance-gap-analysis](../../assets/compliance-query-gap-analysis-status.png)
+![compliance-gap-analysis](../assets/compliance-query-gap-analysis-status.png)
 
-> Note: A single query in a question without the `resultsAre` property set is
-  implicitly interpreted as a `GOOD` query.
+> Note: A single query in a question without the `resultsAre` property set is implicitly interpreted as a `GOOD` query.

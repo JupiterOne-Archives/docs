@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Wazuh Integration with JupiterOne
 
 ## Wazuh + JupiterOne Integration Benefits
 
@@ -18,7 +18,7 @@
 ## Requirements
 
 - JupiterOne requires the Wazuh manager API base URL. JupiterOne also requires 
-the username and password to authenticate with the API.
+  the username and password to authenticate with the API.
 - You must have permission in JupiterOne to install new integrations.
 
 ## Support

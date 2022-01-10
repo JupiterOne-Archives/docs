@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Azure DevOps Integration with JupiterOne
 
 ## Azure DevOps + JupiterOne Integration Benefits
 

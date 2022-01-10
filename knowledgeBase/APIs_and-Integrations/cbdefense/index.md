@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Carbon Black Cloud Integration with JupiterOne
 
 ## Carbon Black Cloud + JupiterOne Integration Benefits
 
@@ -42,7 +42,7 @@ Console to allow access to the Devices and Alerts APIs.
 1. **Settings > API Access > Access Levels: Add Access Level**: Name "JupiterOne
    Read Only" (or match your naming patterns), permissions `device: READ`,
    `org.alerts: READ`, `org.retention: READ`,
-1. **Settings > API Access > API Keys: Add API Key**: Name "JupiterOne" (or
+2. **Settings > API Access > API Keys: Add API Key**: Name "JupiterOne" (or
    match your naming patterns), Access Level Type "Custom", "JupiterOne Read
    Only". Capture the _API Secret Key_ and _API ID_.
 

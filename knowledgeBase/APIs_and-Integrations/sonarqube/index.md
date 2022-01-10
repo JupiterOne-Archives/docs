@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Sonarqube Integration with JupiterOne
 
 ## Sonarqube + JupiterOne Integration Benefits
 

@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# DigiCert Integration with JupiterOne
 
 ## DigiCert + JupiterOne Integration Benefits
 

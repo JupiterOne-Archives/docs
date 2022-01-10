@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Cisco Meraki Integration with JupiterOne
 
 ## Cisco Meraki + JupiterOne Integration Benefits
 

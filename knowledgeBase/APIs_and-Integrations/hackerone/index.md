@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# HackerOne Integration with JupiterOne
 
 ## HackerOne + JupiterOne Integration Benefits
 

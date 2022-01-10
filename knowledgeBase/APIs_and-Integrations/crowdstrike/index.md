@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# CrowdStrike Integration with JupiterOne
 
 ## CrowdStrike + JupiterOne Integration Benefits
 

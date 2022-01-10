@@ -1,13 +1,10 @@
 # Common Questions and Corresponding J1QL Queries
 
-Here are some commonly asked questions and their corresponding J1QL queries.
-You can easily modify the properties and tags used in each query to customize
-it for your own specific scenario.
+Here are some commonly asked questions and their corresponding J1QL queries. You can easily modify the properties and tags used in each query to customize it for your own specific scenario.
 
-Many of these are packaged in the Query Library directly accessible in the
-**Landing** app in JupiterOne.
+Many of these are packaged in the Query Library directly accessible in the **Landing** app in JupiterOne.
 
-Here is [a catalog of the packaged questions][catalog].
+Here is [a catalog of the packaged questions](./catalog.md).
 
 ## Question/Query Categories
 

@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Wazuh Integration with JupiterOne
 
 ## Wazuh + JupiterOne Integration Benefits
 
