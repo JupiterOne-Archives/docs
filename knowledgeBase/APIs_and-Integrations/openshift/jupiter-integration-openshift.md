@@ -1,4 +1,4 @@
-# Openshift
+# Openshift Integration with JupiterOne
 
 ## Overview
 

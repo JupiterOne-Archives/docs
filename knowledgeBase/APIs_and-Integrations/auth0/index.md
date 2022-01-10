@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Auth0 Integration with JupiterOne
 
 ## Auth0 + JupiterOne Integration Benefits
 

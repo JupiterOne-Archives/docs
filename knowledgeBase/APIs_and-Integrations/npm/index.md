@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# NPM Integration with JupiterOne
 
 ## NPM + JupiterOne Integration Benefits
 

@@ -1,21 +1,21 @@
-# Integration with JupiterOne
+# Dectecify Integration with JupiterOne
 
 ## Detectify + JupiterOne Integration Benefits
 
 - Visualize Detectify services, domains, subdomains, scan profiles, scan 
-reports, and findings in the JupiterOne graph.
+  reports, and findings in the JupiterOne graph.
 - Monitor Detectify findings within the alerts app.
 - Monitor changes to Detectify vulnerability scan resources using JupiterOne 
-alerts.
+  alerts.
 
 ## How it Works
 
 - JupiterOne periodically fetches vulnerability scan resources from Detectify to 
-update the graph.
+  update the graph.
 - Write JupiterOne queries to review and monitor updates to the graph, or 
-leverage existing queries.
+  leverage existing queries.
 - Configure alerts to take action when the JupiterOne graph changes, or leverage 
-existing alerts.
+  existing alerts.
 
 ## Requirements
 
@@ -76,7 +76,7 @@ Assessment - IDENTIFIED -> Finding
 - Select a **Polling Interval** that you feel is sufficient for your monitoring
    needs. You may leave this as `DISABLED` and manually execute the integration.
 - Enter the **API Key** generated from your Detectify account, configured for 
-read access.
+  read access.
 4. Click **Create Configuration** once all values are provided.
 
 ## How to Uninstall

@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# WhiteHat Security Integration with JupiterOne
 
 ## WhiteHat Security + JupiterOne Integration Benefits
 
@@ -66,13 +66,13 @@ password and copy the displayed API Key.
 
 The following entity resources are ingested when the integration runs:
 
-| Whitehat Entity Resource | \_type : \_class of the Entity             |
-| ------------------------ | ------------------------------------------ |
-| Account                  | `whitehat_account` : `Account`             |
-| Scan Type                | `whitehat_scan` : `Service`                |
-| CVE                      | `cve` : `Vulnerability`                    |
+| Whitehat Entity Resource | \_type : \_class of the Entity           |
+| ------------------------ | ---------------------------------------- |
+| Account                  | `whitehat_account` : `Account`           |
+| Scan Type                | `whitehat_scan` : `Service`              |
+| CVE                      | `cve` : `Vulnerability`                  |
 | Vulnerability            | `whitehat_vulnerability` : `Vulnerability` |
-| Finding                  | `whitehat_finding` : `Finding`             |
+| Finding                  | `whitehat_finding` : `Finding`           |
 
 ### Relationships
 
@@ -89,6 +89,6 @@ The following relationships are created/mapped:
 
 #### Extra-Instance / Mapped
 
-| From                           | Type        | To                                                                                                                                                                                            |
-| ------------------------------ | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| From                           | Type        | To                                       |
+| ------------------------------ | ----------- | ---------------------------------------- |
 | `CodeRepo/Project/Application` | **HAS/HAD** | `whitehat_finding` Note: This is mapped automatically only when the name of the Whitehat Application the finding belongs to matches the name of a CodeRepo/Project/Application in JupiterOne. |

@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# NowSecure Integration with JupiterOne
 
 ## NowSecure + JupiterOne Integration Benefits
 

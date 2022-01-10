@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Feroot Integration with JupiterOne
 
 ## Feroot + JupiterOne Integration Benefits
 

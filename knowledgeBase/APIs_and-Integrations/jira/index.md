@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Jira Integration with JupiterOne
 
 ## Jira + JupiterOne Integration Benefits
 
@@ -44,8 +44,8 @@ Integrations][1] documentation.
 **Option 1 - Create a New User**
 
 1. Create a new service account for JupiterOne use or use an existing account.
-1. Login to Jira and navigate to _User Management_.
-1. Send an invite to the service account.
+2. Login to Jira and navigate to _User Management_.
+3. Send an invite to the service account.
 
 **Option 2 - Leverage an Existing User**
 
