@@ -1,13 +1,12 @@
 # Understanding JupiterOne
 
-JupiterOne (J1) is a cloud-native security platform that connects across your siloed security tools, 
-empowering unobstructed visibility into security risks across your entire cyber asset universe. 
+JupiterOne (J1) is a cloud-native security platform that connects across your siloed security tools,  empowering unobstructed visibility into security risks across your entire cyber asset universe. 
 This extensible platform connects the dots between complex relationships and data, providing 
 ultimate visibility to your environment, infrastructure, and operations.
 
 ## Using J1 Integrations
 
-The first step in using J1 is to bring your data into J1. There are numerous ready-made integrations that are easy to install and use to achieve end-to-end cyber asset visibility, context, and automation across every  dimension of your digital universe. J1 provides [instructions](../configure-integrations.md) on how  to import the data to J1 and understand the data model and mapping.
+The first step in using J1 is to bring your data into J1. There are numerous ready-made integrations that are easy to install and use to achieve end-to-end cyber asset visibility, context, and automation across every  dimension of your digital universe. J1 provides [instructions](./configure-integrations.md) on how  to import the data to J1 and understand the data model and mapping.
 
 ## J1 Apps
 
@@ -17,7 +16,7 @@ JupiterOne has separate apps that assist you in all the major components of secu
 
 ### Assets
 
-After you import your data, you can analyze and visualize your complete infrastructure and [security cyber asset inventory](../asset-inventory-filters.md) using the J1 Assets app. In addition, the Assets app helps you can understand the types and classes of cyber assets you have, and the relationships between them. 
+After you import your data, you can analyze and visualize your complete infrastructure and [security cyber asset inventory](../Asset-Management/asset-inventory-filters.md) using the J1 Assets app. In addition, the Assets app helps you can understand the types and classes of cyber assets you have, and the relationships between them. 
 
 ### Policies
 
@@ -25,11 +24,11 @@ The JupiterOne Policies app enables you to articulate your organization policies
 
 Each policy and procedure document is written in its own individual Markdown file, and you can configure each policy file to link to other files. The templates are open-source that you can edit directly online using the Policies app.
 
-To help you get started, JupiterOne provides 120+ [policy and procedure templates](../manage-policies/policies-app.md) to help your organization build your security program and operations. These templates derive from JupiterOne company internal policies and procedures, and have been through several rounds of compliance assessments.
+To help you get started, JupiterOne provides 120+ [policy and procedure templates](../Compliance_and-Reporting/policies-app.md) to help your organization build your security program and operations. These templates derive from JupiterOne company internal policies and procedures, and have been through several rounds of compliance assessments.
 
 ### Alerts
 
-JupiterOne enables you to [configure alert rules](../manage-alerts.md) in the Alerts app, using any JupiterOne Query Language query for continuous auditing and threat monitoring. You must have at least one active alert rule to trigger any alert. The easiest way to add some rules to an alert is to import rule packs that JupiterOne provides. You can also create custom rules.  
+JupiterOne enables you to [configure alert rules](../Security-Operations/manage-alerts.md) in the Alerts app, using any JupiterOne Query Language query for continuous auditing and threat monitoring. You must have at least one active alert rule to trigger any alert. The easiest way to add some rules to an alert is to import rule packs that JupiterOne provides. You can also create custom rules.  
 
 ### Compliance
 
@@ -43,11 +42,11 @@ JupiterOne provides a flexible platform for you to manage any compliance standar
 
 ### Graph Viewer
 
-JupiterOne is built on a [data-driven graph](../quickstart-graph.md) platform. JupiterOne Query Language (J1QL) is designed to traverse this graph and return a sub-graph or data from the entities and edges (such as relationships) of a sub-graph. You can view and interact with the sub-graph from any J1QL query result.
+JupiterOne is built on a [data-driven graph](./quickstart-graph.md) platform. JupiterOne Query Language (J1QL) is designed to traverse this graph and return a sub-graph or data from the entities and edges (such as relationships) of a sub-graph. You can view and interact with the sub-graph from any J1QL query result.
 
 ### Insights
 
-The [JupiterOne Insights app](../insights-dashboards.md) enables you to build reporting dashboards using J1QL queries.
+The [JupiterOne Insights app](../Compliance_and-Reporting/insights-dashboards.md) enables you to build reporting dashboards using J1QL queries.
 
 You can configure each dashboard as either a team board that is shared with other account users or a personal board for the individual user. The layout of each board is individually saved per user, including the layout for team boards, so that each user can configure layouts according to their own preferences without impacting others. Administrators can save a team board layout as the default for other users.
 
@@ -65,9 +64,7 @@ In addition to using the J1 query library, from any J1 page or app, you can ente
 
 ## JupiterOne Query Language
 
-The [JupiterOne Query Language](../docs/jupiterone-query-language.md) (J1QL) is a query language for finding the entities and relationships within your digital environment. J1QL blends together the capabilities of asking questions, performing full text search, and querying the complex entity-relationship graph.
+The [JupiterOne Query Language](../J1-Query-Language/jupiterone-query-language.md) (J1QL) is a query language for finding the entities and relationships within your digital environment. J1QL blends together the capabilities of asking questions, performing full text search, and querying the complex entity-relationship graph.
 
-J1QL is complex but a [tutorial](../tutorial-j1ql.md) is available to help you learn. In addition, JupiterOne offers [J1VQB](j1-vqb), a visual query building app, a code-free tool for creating queries.
-
-### 
+J1QL is complex but a [tutorial](../tutorial-j1ql.md) is available to help you learn. In addition, JupiterOne offers [J1VQB](../J1-Query-Language/j1-vqb.md), a visual query building app, a code-free tool for creating queries.
 
