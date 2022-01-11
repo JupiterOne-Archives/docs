@@ -1,9 +1,8 @@
-# Query using internal metadata
+# Query Using Internal Metadata
 
-JupiterOne assigns metadata to resources and sometimes it is helpful to leverage
-them in queries. Here are some examples.
+JupiterOne assigns metadata to resources and sometimes it is helpful to leverage them in queries. Here are some examples.
 
-> See [this doc][1] for a complete list and description of each metadata property.
+> See [this doc](../Jupiterone-Data-Model/metadata.md) for a complete list and description of each metadata property.
 
 **Identify network access to/from external resources using `_source` filter:**
 
@@ -27,4 +26,3 @@ Find * as entity
 Return entity._integrationType, entity._integrationName, count(entity)
 ```
 
-[1]: ../docs/metadata.md
