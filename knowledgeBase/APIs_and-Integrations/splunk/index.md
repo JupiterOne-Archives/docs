@@ -10,7 +10,7 @@
 
 - Splunk periodically imports alert details from JupiterOne.
 - Write your own Splunk searches to find data about JupiterOne alerts.
-- View JupiterOne alerts on a dashboard in Splunk with breakdowns by severity, over time, active and dismissed. 
+- View JupiterOne alerts on a dashboard in Splunk with breakdowns by severity, over time, active and dismissed.
 
 ## Requirements
 
@@ -20,7 +20,7 @@
 
 ## Support
 
-If you need help with this integration, contact [JupiterOne Support](https://support.jupiterone.io).
+If you need help with this integration, contact [JupiterOne Support](https://community.askj1.com).
 
 ## Integration Instructions
 
@@ -78,13 +78,13 @@ or
 
 ![splunk-j1-inputs-fields](../../../assets/splunk-j1-inputs-fields.png)
 
-| Field Name                 | Field Description                        |
-| -------------------------- | ---------------------------------------- |
-| Name*                      | Unique name for the data input.          |
-| Interval*                  | Time interval of input in seconds. How often JupiterOne collects the data. |
-| Index*                     | Index where data is stored.              |
-| JupiterOne Account*        | Account that was configured in the **Configuration** tab. |
-| Pull Alert Related Objects | If enabled, pulls data for entities in Alert. |
+| Field Name                 | Field Description                                                                   |
+| -------------------------- | ----------------------------------------------------------------------------------- |
+| Name\*                     | Unique name for the data input.                                                     |
+| Interval\*                 | Time interval of input in seconds. How often JupiterOne collects the data.          |
+| Index\*                    | Index where data is stored.                                                         |
+| JupiterOne Account\*       | Account that was configured in the **Configuration** tab.                           |
+| Pull Alert Related Objects | If enabled, pulls data for entities in Alert.                                       |
 | Start DateTime             | Date in UTC when you want to start collecting data. Default is 30 days in the past. |
 
 `*` denotes required field

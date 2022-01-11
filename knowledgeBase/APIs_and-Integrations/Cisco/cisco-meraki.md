@@ -24,7 +24,7 @@
 ## Support
 
 If you need help with this integration, please contact
-[JupiterOne Support](https://support.jupiterone.io).
+[JupiterOne Support](https://community.askj1.com).
 
 ## Integration Walkthrough
 
@@ -57,8 +57,7 @@ Meraki documentation provides detailed [instructions to enable API access][1].
 4. Click the **trash can** icon.
 5. Click the **Remove** button to delete the integration.
 
-[1]:
-  https://documentation.meraki.com/zGeneral_Administration/Other_Topics/The_Cisco_Meraki_Dashboard_API
+[1]: https://documentation.meraki.com/zGeneral_Administration/Other_Topics/The_Cisco_Meraki_Dashboard_API
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
 <!--

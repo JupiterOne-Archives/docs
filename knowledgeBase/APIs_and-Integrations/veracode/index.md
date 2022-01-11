@@ -20,7 +20,7 @@
 ## Support
 
 If you need help with this integration, please contact
-[JupiterOne Support](https://support.jupiterone.io).
+[JupiterOne Support](https://community.askj1.com).
 
 ## Integration Walkthrough
 
@@ -62,13 +62,13 @@ instructions for obtaining these credentials][1].
 
 The following entity resources are ingested when the integration runs:
 
-| Veracode Entity Resource | \_type : \_class of the Entity           |
-| ------------------------ | ---------------------------------------- |
-| Account                  | `veracode_account` : `Account`           |
-| Scan Type                | `veracode_scan` : `Service`              |
-| CWE                      | `cwe` : `Weakness`                       |
+| Veracode Entity Resource | \_type : \_class of the Entity             |
+| ------------------------ | ------------------------------------------ |
+| Account                  | `veracode_account` : `Account`             |
+| Scan Type                | `veracode_scan` : `Service`                |
+| CWE                      | `cwe` : `Weakness`                         |
 | Vulnerability            | `veracode_vulnerability` : `Vulnerability` |
-| Finding                  | `veracode_finding` : `Finding`           |
+| Finding                  | `veracode_finding` : `Finding`             |
 
 ### Relationships
 
@@ -85,9 +85,8 @@ The following relationships are created/mapped:
 
 #### Extra-Instance / Mapped
 
-| From                           | Type        | To                                       |
-| ------------------------------ | ----------- | ---------------------------------------- |
+| From                           | Type        | To                                                                                                                                                                                                 |
+| ------------------------------ | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `CodeRepo/Project/Application` | **HAS/HAD** | `veracode_finding` <br> Note: This is mapped automatically only when the name of the Veracode Application the finding belongs to matches the name of a CodeRepo/Project/Application in JupiterOne. |
 
-[1]:
-  https://help.veracode.com/reader/lsoDk5r2cv~YrwLQSI7lfw/6UdIc6di0T5_Lo6qTHTpNA
+[1]: https://help.veracode.com/reader/lsoDk5r2cv~YrwLQSI7lfw/6UdIc6di0T5_Lo6qTHTpNA
