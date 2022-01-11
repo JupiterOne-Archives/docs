@@ -2,19 +2,19 @@
 
 ## Detectify + JupiterOne Integration Benefits
 
-- Visualize Detectify services, domains, subdomains, scan profiles, scan 
+- Visualize Detectify services, domains, subdomains, scan profiles, scan
   reports, and findings in the JupiterOne graph.
 - Monitor Detectify findings within the alerts app.
-- Monitor changes to Detectify vulnerability scan resources using JupiterOne 
+- Monitor changes to Detectify vulnerability scan resources using JupiterOne
   alerts.
 
 ## How it Works
 
-- JupiterOne periodically fetches vulnerability scan resources from Detectify to 
+- JupiterOne periodically fetches vulnerability scan resources from Detectify to
   update the graph.
-- Write JupiterOne queries to review and monitor updates to the graph, or 
+- Write JupiterOne queries to review and monitor updates to the graph, or
   leverage existing queries.
-- Configure alerts to take action when the JupiterOne graph changes, or leverage 
+- Configure alerts to take action when the JupiterOne graph changes, or leverage
   existing alerts.
 
 ## Requirements
@@ -25,7 +25,7 @@
 ## Support
 
 If you need help with this integration, please contact
-[JupiterOne Support](https://support.jupiterone.io).
+[JupiterOne Support](https://community.askj1.com).
 
 ## Integration Walkthrough
 
@@ -68,15 +68,17 @@ Assessment - IDENTIFIED -> Finding
 1. From the configuration **Gear Icon**, select **Integrations**.
 2. Scroll to the **Detectify** integration tile and click it.
 3. Click the **Add Configuration** button and configure the following settings:
+
 - Enter the **Account Name** by which you'd like to identify this Detectify
-   account in JupiterOne. Ingested entities will have this value stored in
-   `tag.AccountName` when **Tag with Account Name** is checked.
+  account in JupiterOne. Ingested entities will have this value stored in
+  `tag.AccountName` when **Tag with Account Name** is checked.
 - Enter a **Description** that will further assist your team when identifying
-   the integration instance.
+  the integration instance.
 - Select a **Polling Interval** that you feel is sufficient for your monitoring
-   needs. You may leave this as `DISABLED` and manually execute the integration.
-- Enter the **API Key** generated from your Detectify account, configured for 
+  needs. You may leave this as `DISABLED` and manually execute the integration.
+- Enter the **API Key** generated from your Detectify account, configured for
   read access.
+
 4. Click **Create Configuration** once all values are provided.
 
 ## How to Uninstall

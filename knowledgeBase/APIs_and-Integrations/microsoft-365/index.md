@@ -30,7 +30,7 @@ organization and analyze resource relationships.
 ## Support
 
 If you need help with this integration, please contact
-[JupiterOne Support](https://support.jupiterone.io).
+[JupiterOne Support](https://community.askj1.com).
 
 ## Integration Walkthrough
 
@@ -68,7 +68,7 @@ If you need help with this integration, please contact
    as a global administrator of the organizational Active Directory tenant you
    intend to integrate with.
 
-      ![directed to Microsoft's identity platform](../../../assets/m365PickAnAccount.png)
+   ![directed to Microsoft's identity platform](../../../assets/m365PickAnAccount.png)
 
    NOTE: You must select an account belonging to an organizational tenant. When
    you are already logged into an account, the badge icons indicate the nature
@@ -76,11 +76,11 @@ If you need help with this integration, please contact
 
    Selecting a personal account produces the following error message.
 
-      ![select a business account](../../../assets/m365PersonalAccountError.png)
+   ![select a business account](../../../assets/m365PersonalAccountError.png)
 
 10. Review requested permissions (which are described below) and grant consent.
 
-     ![Review requested permissions](../../../assets/m365PickAnAccount.png)
+    ![Review requested permissions](../../../assets/m365PickAnAccount.png)
 
 ## Permissions
 

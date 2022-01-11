@@ -24,7 +24,7 @@
 ## Support
 
 If you need help with this integration, please contact
-[JupiterOne Support](https://support.jupiterone.io).
+[JupiterOne Support](https://community.askj1.com).
 
 ## Integration Walkthrough
 
@@ -85,8 +85,7 @@ parameters to the integration instance configuration:
 4. Click the **trash can** icon.
 5. Click the **Remove** button to delete the integration.
 
-[1]:
-  https://developer.carbonblack.com/reference/carbon-black-cloud/authentication/
+[1]: https://developer.carbonblack.com/reference/carbon-black-cloud/authentication/
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
 <!--
