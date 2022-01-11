@@ -24,7 +24,7 @@
 ## Support
 
 If you need help with this integration, please contact
-[JupiterOne Support](https://support.jupiterone.io).
+[JupiterOne Support](https://community.askj1.com).
 
 ## Integration Walkthrough
 
@@ -85,9 +85,9 @@ The following entity resources are ingested when the integration runs:
 
 The following relationships are created/mapped:
 
-| Relationships                            |
-| ---------------------------------------- |
+| Relationships                                     |
+| ------------------------------------------------- |
 | `threatstack_account` **HAS** `threatstack_agent` |
-| `threatstack_agent` **PROTECTS** `aws_instance` |
-| `threatstack_agent` **PROTECTS** `server` |
-| `threatstack_agent` **IDENTIFIED** `cve` |
+| `threatstack_agent` **PROTECTS** `aws_instance`   |
+| `threatstack_agent` **PROTECTS** `server`         |
+| `threatstack_agent` **IDENTIFIED** `cve`          |

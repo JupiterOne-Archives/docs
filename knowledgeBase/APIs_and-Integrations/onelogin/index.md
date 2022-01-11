@@ -27,7 +27,7 @@
 ## Support
 
 If you need help with this integration, please contact
-[JupiterOne Support](https://support.jupiterone.io).
+[JupiterOne Support](https://community.askj1.com).
 
 ## Integration Walkthrough
 
@@ -94,8 +94,7 @@ mapped to the user by a Rule in the OneLogin AWS application. Currently, the
 integration supports mapping by Rule conditions based on OneLogin Roles, Group,
 or MemberOf properties.
 
-[1]:
-  https://developers.onelogin.com/api-docs/1/getting-started/working-with-api-credentials
+[1]: https://developers.onelogin.com/api-docs/1/getting-started/working-with-api-credentials
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
 <!--
