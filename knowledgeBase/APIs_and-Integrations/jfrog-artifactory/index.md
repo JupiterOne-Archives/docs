@@ -12,7 +12,7 @@
 
 ## How it Works
 
-- JupiterOne periodically fetches Artifactory users and data across your 
+- JupiterOne periodically fetches Artifactory users and data across your
   CI/CD pipeline to update the graph.
 - Write JupiterOne queries to review and monitor updates to the graph.
 - Configure alerts to take action when the JupiterOne graph changes.
@@ -20,21 +20,21 @@
 ## Requirements
 
 - JupiterOne requires the namespace of your Artifactory account. Also required
-  are a client access token, client pipeline access token, and the client 
+  are a client access token, client pipeline access token, and the client
   administrator name that granted the access tokens.
 - You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
 If you need help with this integration, please contact
-[JupiterOne Support](https://support.jupiterone.io).
+[JupiterOne Support](https://community.askj1.com).
 
 ## Integration Walkthrough
 
 ### In JFrog Artifactory
 
-Configure API access tokens in Artifactory by following the instructions 
-in the 
+Configure API access tokens in Artifactory by following the instructions
+in the
 [Access Tokens](https://www.jfrog.com/confluence/display/JFROG/Access+Tokens#AccessTokens-CreateToken)
 guide.
 
@@ -43,18 +43,20 @@ guide.
 1. From the configuration **Gear Icon**, select **Integrations**.
 2. Scroll to the **Artifactory** integration tile and click it.
 3. Click the **Add Configuration** button and configure the following settings:
+
 - Enter the **Account Name** by which you'd like to identify this Artifactory
-   account in JupiterOne. Ingested entities will have this value stored in
-   `tag.AccountName` when **Tag with Account Name** is checked.
+  account in JupiterOne. Ingested entities will have this value stored in
+  `tag.AccountName` when **Tag with Account Name** is checked.
 - Enter a **Description** that will further assist your team when identifying
-   the integration instance.
+  the integration instance.
 - Select a **Polling Interval** that you feel is sufficient for your monitoring
-   needs. You may leave this as `DISABLED` and manually execute the integration.
+  needs. You may leave this as `DISABLED` and manually execute the integration.
 - Enter the **Client Namespace** of your Artifactory account.
 - Enter the **Client Access Token** configured in your Artifactory account.
 - Enter the **Client Pipeline Access Token** configured in your Artifactory account.
 - Enter the **Client Administrator Name**, or username of the administrator that
   granted the Artifactory access tokens.
+
 4. Click **Create Configuration** once all values are provided.
 
 ## How to Uninstall
