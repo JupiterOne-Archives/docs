@@ -13,7 +13,7 @@ Here is [a catalog of the packaged questions](./catalog.md).
 - [Running applications and processes](../Security-Operations/common-qq-apps-processes.md)
 - [Secrets and key management](../Security-Operations/common-qq-key-mgmt.md)
 - [Network connections & zones](../Security-Operations/common-qq-network.md)
-- [Data Security](../../common-qq-data.md)
+- [Example Data Security J1QL Queries](../J1-Query-Language/common-qq-data.md)
 - [Changes and attribution](../Security-Operations/common-qq-changes.md)
 - [Risks and vulnerability management](../Security-Operations/common-qq-risks.md)
 - [Identity, People and Privileged access](./common-qq-idp.md)
