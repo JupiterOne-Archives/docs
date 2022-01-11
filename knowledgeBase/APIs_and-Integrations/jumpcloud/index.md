@@ -24,7 +24,7 @@
 ## Support
 
 If you need help with this integration, please contact
-[JupiterOne Support](https://support.jupiterone.io).
+[JupiterOne Support](https://community.askj1.com).
 
 ## Integration Walkthrough
 
@@ -106,5 +106,4 @@ END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 -->
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
 
-[1]:
-  https://docs.jumpcloud.com/2.0/authentication-and-authorization/authentication-and-authorization-overview
+[1]: https://docs.jumpcloud.com/2.0/authentication-and-authorization/authentication-and-authorization-overview

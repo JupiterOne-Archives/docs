@@ -11,7 +11,7 @@
 
 ## How it Works
 
-- JupiterOne periodically fetches Tenable Cloud users, scans, findings, and 
+- JupiterOne periodically fetches Tenable Cloud users, scans, findings, and
   vulnerabilities to update the graph.
 - Write JupiterOne queries to review and monitor updates to the graph.
 - Configure alerts to reduce the noise of findings.
@@ -19,14 +19,14 @@
 
 ## Requirements
 
-- JupiterOne requires an access key and secret key used to authenticate with 
-  Tenable Cloud. 
+- JupiterOne requires an access key and secret key used to authenticate with
+  Tenable Cloud.
 - You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
 If you need help with this integration, please contact
-[JupiterOne Support](https://support.jupiterone.io).
+[JupiterOne Support](https://community.askj1.com).
 
 ## Integration Walkthrough
 
@@ -40,15 +40,17 @@ on how to configure an API access key and secret.
 1. From the configuration **Gear Icon**, select **Integrations**.
 2. Scroll to the **Tenable Cloud** integration tile and click it.
 3. Click the **Add Configuration** button and configure the following settings:
+
 - Enter the **Account Name** by which you'd like to identify this Tenable Cloud
-   account in JupiterOne. Ingested entities will have this value stored in
-   `tag.AccountName` when **Tag with Account Name** is checked.
+  account in JupiterOne. Ingested entities will have this value stored in
+  `tag.AccountName` when **Tag with Account Name** is checked.
 - Enter a **Description** that will further assist your team when identifying
-   the integration instance.
+  the integration instance.
 - Select a **Polling Interval** that you feel is sufficient for your monitoring
-   needs. You may leave this as `DISABLED` and manually execute the integration.
+  needs. You may leave this as `DISABLED` and manually execute the integration.
 - Enter the **Access Key** used to authenticate with Tenable Cloud.
 - Enter the **Secret Key** associated with the access key.
+
 4. Click **Create Configuration** once all values are provided.
 
 ## How to Uninstall
@@ -65,17 +67,17 @@ on how to configure an API access key and secret.
 
 The following entity resources are ingested when the integration runs:
 
-| Tenable Entity Resource    | \_type : \_class of the Entity           |
-| -------------------------- | ---------------------------------------- |
-| Account                    | `tenable_account` : `Account`            |
-| User                       | `tenable_user` : `User`                  |
-| Scan                       | `tenable_scan` : \[`Assessment`,`Service`\] |
-| Scan Vulnerability         | `tenable_scan_finding` : `Finding`       |
-| Vulnerability              | `tenable_vulnerability` : `Vulnerability` |
-| Container                  | `tenable_container` : `Image`            |
-| Container Finding          | `tenable_container_finding` : `Finding`  |
-| Container Report           | `tenable_container_report` : `Assessment` |
-| Container Malware          | `tenable_container_malware` : `Finding`  |
+| Tenable Entity Resource    | \_type : \_class of the Entity                   |
+| -------------------------- | ------------------------------------------------ |
+| Account                    | `tenable_account` : `Account`                    |
+| User                       | `tenable_user` : `User`                          |
+| Scan                       | `tenable_scan` : \[`Assessment`,`Service`\]      |
+| Scan Vulnerability         | `tenable_scan_finding` : `Finding`               |
+| Vulnerability              | `tenable_vulnerability` : `Vulnerability`        |
+| Container                  | `tenable_container` : `Image`                    |
+| Container Finding          | `tenable_container_finding` : `Finding`          |
+| Container Report           | `tenable_container_report` : `Assessment`        |
+| Container Malware          | `tenable_container_malware` : `Finding`          |
 | Container Unwanted Program | `tenable_container_unwanted_program` : `Finding` |
 
 Tenable "assets" are not ingested. `Findings` include some asset details,
