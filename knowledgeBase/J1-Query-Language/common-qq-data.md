@@ -1,4 +1,4 @@
-# Data Security
+# Example Data Security J1QL Queries
 
 ## Show all resources without a data classification tag {}?
 
