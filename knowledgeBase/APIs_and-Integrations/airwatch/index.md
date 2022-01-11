@@ -2,19 +2,19 @@
 
 ## AirWatch Integration Benefits
 
-- Visualize VMWare AirWatch admins, users, groups, and devices in the 
+- Visualize VMWare AirWatch admins, users, groups, and devices in the
   JupiterOne graph.
 - Map VMWare AirWatch users to employees in your JupiterOne account.
-- Monitor changes to VMWare AirWatch admins, users, groups, and devices 
+- Monitor changes to VMWare AirWatch admins, users, groups, and devices
   using JupiterOne alerts.
 
 ## How it Works
 
-- JupiterOne periodically fetches users and devices from VMWare AirWatch 
+- JupiterOne periodically fetches users and devices from VMWare AirWatch
   to update the graph.
-- Write JupiterOne queries to review and monitor updates to the graph, 
+- Write JupiterOne queries to review and monitor updates to the graph,
   or leverage existing queries.
-- Configure alerts to take action when the JupiterOne graph changes, 
+- Configure alerts to take action when the JupiterOne graph changes,
   or leverage existing alerts.
 
 ## Requirements
@@ -26,7 +26,7 @@
 ## Support
 
 If you need help with this integration, please contact
-[JupiterOne Support](https://support.jupiterone.io).
+[JupiterOne Support](https://community.askj1.com).
 
 ## Integration Walkthrough
 
@@ -53,18 +53,20 @@ API.
 1. From the configuration **Gear Icon**, select **Integrations**.
 2. Scroll to the **VMWare AirWatch** integration tile and click it.
 3. Click the **Add Configuration** button and configure the following settings:
+
 - Enter the **Account Name** by which you'd like to identify this VMWare AirWatch
-   account in JupiterOne. Ingested entities will have this value stored in
-   `tag.AccountName` when **Tag with Account Name** is checked.
+  account in JupiterOne. Ingested entities will have this value stored in
+  `tag.AccountName` when **Tag with Account Name** is checked.
 - Enter a **Description** that will further assist your team when identifying
-   the integration instance.
+  the integration instance.
 - Select a **Polling Interval** that you feel is sufficient for your monitoring
-   needs. You may leave this as `DISABLED` and manually execute the integration.
+  needs. You may leave this as `DISABLED` and manually execute the integration.
 - Enter the **Hostname** of your VMWare AirWatch account.
 - Enter the **Admin Username** used to authenticate with VMWare Airwatch.
 - Enter the **Admin Password** associated with the username.
-- Enter the **Rest API Key** (or Tenant Code) used to authenticate with 
+- Enter the **Rest API Key** (or Tenant Code) used to authenticate with
   VMWare Airwatch.
+
 4. Click **Create Configuration** once all values are provided.
 
 ## How to Uninstall
