@@ -1,6 +1,7 @@
 # Using JupiterOne for Active Vulnerability and Threat Monitoring in AWS
 
 Active threats within an organization's AWS environments typically arise from these two main sources:
+Bryan
 
 1. System and application vulnerabilities on EC2 instances.
 2. Malicious network activities, API activities and resource operations.
@@ -23,7 +24,7 @@ Expanding a finding will give you a visual graph showing the resources the selec
 
 ![alerts-findings](../../assets/alerts-findings-graph.png)
 
-> Note that JupiterOne also integrates with several other security scanners, including **Tenable**, **Veracode**, and **WhiteHat**. All security findings are aggregated in the above centralized dashboard for easy management, filtering and reporting. You can also import **manual pen test findings**. See [this doc](../../Security-Operations/secops-artifacts-in-j1.md) 
+> Note that JupiterOne also integrates with several other security scanners, including **Tenable**, **Veracode**, and **WhiteHat**. All security findings are aggregated in the above centralized dashboard for easy management, filtering and reporting. You can also import **manual pen test findings**. See [this doc](../../Security-Operations/secops-artifacts-in-j1.md)
 > for more details.
 
 ## Correlation and Alerting
