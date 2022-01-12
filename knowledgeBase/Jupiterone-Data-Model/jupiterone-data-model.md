@@ -1,38 +1,26 @@
 # JupiterOne Data Model
 
-The **JupiterOne Data Model** is a reference model used to describe digital
-resources and the complex interconnections among all the resources in a
-technology organization as an **entity-relationship graph**.
+The **JupiterOne Data Model** is a reference model used to describe digital resources and the complex interconnections among all the resources in a technology organization as an **entity-relationship graph**.
 
-The data model is defined by a set of Entities and their Relationships. It
-represents a reference model, not a strict or rigid structure.
+The data model is defined by a set of Entities and their Relationships. It represents a reference model, not a strict or rigid structure.
 
 ## Entity
 
-An Entity is a node/vertex in the graph that represents a resource within your
-digital infrastructure.
+An Entity is a node/vertex in the graph that represents a resource within your digital infrastructure.
 
-See full data model schema in this [GitHub repo][schema-repo].
+See the full data model schema in this [GitHub repo](https://github.com/JupiterOne/data-model).
 
 ### Class and Type of an Entity
 
-Each Entity has a specific **type** that defines what that entity is, and is
-assigned one or more higher level **class** that represents a more abstract
-categorization or labeling of the entity in the perspective of security and
-technical operations.
+Each Entity has a specific **type** that defines what that entity is, and is assigned one or more higher level **class** that represents a more abstract categorization or labeling of the entity in the perspective of security and technical operations.
 
 #### Type
 
-The **type** property represents the specific type that entity is as defined by
-the source. For example, an AWS resource may be of type `aws_instance` or
-`aws_s3_bucket` or `aws_iam_user`.
+The **type** property represents the specific type that entity is as defined by the source. For example, an AWS resource may be of type `aws_instance` or `aws_s3_bucket` or `aws_iam_user`.
 
 #### Class
 
-The **class** of an entity is considered an abstract, super-type that defines
-what that entity is within the general framework of IT and security operations.
-In the above example, an `aws_instance` entity has a class of `Host`, while
-an `aws_s3_bucket` is a `DataStore`, and an `aws_iam_user` a `User`.
+The **class** of an entity is considered an abstract, super-type that defines what that entity is within the general framework of IT and security operations. In the above example, an `aws_instance` entity has a class of `Host`, while an `aws_s3_bucket` is a `DataStore`, and an `aws_iam_user` a `User`.
 
 ### Common Entity Properties
 
@@ -79,16 +67,11 @@ Most Entities will have the following common properties:
 
 ### Class Specific Entity Properties
 
-Each specific class of Entity also has its own defined properties. For example,
-a `Person` entity will have properties including `firstName` and `lastName`,
-while a `Device` entity may have properties such as `hardwareVendor`,
-`hardwareModel`, and `hardwareSerial`.
+Each specific class of Entity also has its own defined properties. For example, a `Person` entity will have properties including `firstName` and `lastName`, while a `Device` entity may have properties such as `hardwareVendor`, `hardwareModel`, and `hardwareSerial`.
 
 ### Custom Properties
 
-Entities can also have custom properties that are specific to the type of that
-entity, defined by the source system where the resource belongs to, or defined
-by the individual or team managing the resource.
+Entities can also have custom properties that are specific to the type of that entity, defined by the source system where the resource belongs to, or defined by the individual or team managing the resource.
 
 ### Defined Entities
 
@@ -196,29 +179,22 @@ Here is a list of reference entities defined by the JupiterOne Data Model, each 
 
 There are three special entities defined. These are singleton entities.
 
-| Entity     | Description                                                      |
-| ---------- | ---------------------------------------------------------------- |
-| `Everyone` | The global `UserGroup` that represents "everyone" publicly.      |
+| Entity     | Description                              |
+| ---------- | ---------------------------------------- |
+| `Everyone` | The global `UserGroup` that represents "everyone" publicly. |
 | `Internet` | The Internet -- i.e. a `Network` entity with CIDR `"0.0.0.0/0"`. |
-| `Root`     | The entity that represents the top level organization.           |
+| `Root`     | The entity that represents the top level organization. |
 
 ## Relationships
 
-A **Relationship** is the edge between two Entity nodes in the graph. The
-`_class` of the relationship should be, in most cases, a generic descriptive
-verb, such as `HAS` or `IMPLEMENTS`.
+A relationship is the edge between two entity nodes in the graph. The `_class` of the relationship should be, in most cases, a generic descriptive verb, such as `HAS` or `IMPLEMENTS`.
 
 Relationships can also carry their own properties.
 
-For example, `CodeRepo -- DEPLOYED TO -> Host` may have `version` as a property
-on the `DEPLOYED` relationship. This represents the mapping between a code
-repo to multiple deployment targets, while one deployment may be of a different
-version of the code than another. Storing the version as a relationship
-property allows us to avoid duplicate instances of the code repo entity to be
-created to represent different versions.
+For example, `CodeRepo -- DEPLOYED TO -> Host` may have `version` as a property on the `DEPLOYED` relationship. This represents the mapping between a code repo to multiple deployment targets, while one deployment may be of a different version of the code than another. Storing the version as a relationship
+property allows us to avoid duplicate instances of the code repo entity to be created to represent different versions.
 
-Relationships have the same metadata properties as entities, which are managed
-by the integration providers.
+Relationships have the same metadata properties as entities, which are managed by the integration providers.
 
 ### Example defined Relationships between abstract Entity Classes
 
@@ -362,5 +338,3 @@ defined by the data model.
 
 ![data-model](../assets/data-model.png)
 
-[schema-repo]: https://github.com/JupiterOne/data-model
-[person-team]: ./person-team-relationship.md
