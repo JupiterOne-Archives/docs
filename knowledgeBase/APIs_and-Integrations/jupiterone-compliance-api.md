@@ -2,8 +2,7 @@
 
 The following article contains a list of compliance actions from the JupiterOne UI that a user can perform via the graphql API endpoint.
 
-See [JupiterOne Platform API](https://support.jupiterone.io/hc/en-us/articles/360022722094-JupiterOne-Platform-API) 
-for an introduction to the JupiterOne API.
+See the [JupiterOne Platform API](./jupiterone-api.md) for an introduction to the JupiterOne API.
 
 **Base URL**: `https://api.us.jupiterone.io`
 
@@ -11,9 +10,7 @@ for an introduction to the JupiterOne API.
 
 **Endpoint for compliance operations**: `/graphql`
 
-**Rate Limits**: Rate limiting is enforced based on your account tier. A `429`
-HTTP response code indicates the limit has been reached. The API does not
-currently return any rate limit headers.
+**Rate Limits**: Rate limiting is enforced based on your account tier. A `429` HTTP response code indicates the limit has been reached. The API does not currently return any rate limit headers.
 
 Whenever you make a `POST` request to the `/graphql` endpoint, the associated J1QL query string is a required parameter.
 
@@ -61,13 +58,11 @@ query ListStandards($size: Int, $cursor: String) {
 
 ## Get Framework
 
-Retrieves a specified framework by id. Includes details such as controls and
-assignments.
+Retrieves a specified framework by id. Includes details such as controls and assignments.
 
 **Variables**
 
-- `id`: The unique identifier of the framework, returned by the 
-`ListStandards` query.
+- `id`: The unique identifier of the framework, returned by the `ListStandards` query.
 
 **Query**
 
@@ -208,16 +203,12 @@ To be added.
 
 ## Update Framework
 
-This query is used to update an existing framework with one provided as a JSON
-schema. Visit the 
-[security-policy-templates project](https://github.com/JupiterOne/security-policy-templates/tree/master/templates/standards) 
-for templated JSON frameworks or use an existing framework you have retrieved
-and edited via the API.
+This query is used to update an existing framework with one provided as a JSON schema. Visit the 
+[security-policy-templates project](https://github.com/JupiterOne/security-policy-templates/tree/master/templates/standards) for templated JSON frameworks or use an existing framework you have retrieved and edited via the API.
 
 **Variables**
 
-- `id`: The unique identifier of the framework, returned by the 
-`List frameworks` query.
+- `id`: The unique identifier of the framework, returned by the `List frameworks` query.
 - `update`: The JSON schema for the framework.
 
 **Query**
@@ -355,19 +346,12 @@ mutation UpdateStandard($id: ID!, $update: ComplianceStandardUpdateInput!) {
 
 ## Update Review Configurations
 
-The following queries are used to update the review configuration of a
-framework, section, domain, or requirement/control. Each query requires the id
-of the framework you are updating as well as an input variable object which
-includes a list of owner emails, the review frequency, and the origin of action
-links (the domain of your JupiterOne account).
+The following queries are used to update the review configuration of a framework, section, domain, or requirement/control. Each query requires the ID of the framework you are updating as well as an input variable object, which includes a list of owner emails, the review frequency, and the origin of action links (the domain of your JupiterOne account).
 
 **Variables**
 
-- `complianceStandardId`: The unique identifier for the framework, returned by
-  the `List frameworks` query.
-- `input`: The input variable is used to capture additional values, including:
-  the origin of the action link, the owner(s) of the review configuration, and
-  the review frequency. See an example below.
+- `complianceStandardId`: The unique identifier for the framework, returned by the `List frameworks` query.
+- `input`: The input variable is used to capture additional values, including: the origin of the action link, the owner(s) of the review configuration, and the review frequency. See an example below.
 
 ```json
 "input": {
@@ -419,8 +403,7 @@ mutation ConfigureRecurringComplianceReviewsForDomain($complianceStandardId: ID!
 
 **Additional Variables**
 
-- `ref`: The reference number of the
-  requirement/control.
+- `ref`: The reference number of the requirement/control.
 
 **Query**
 
@@ -436,16 +419,13 @@ To be added.
 
 ## Get Requirement/Control Evidence - Queries 
 
-This query is used to retrieve a list of all queries (and their properties) that
-have been attached to a control/requirement as evidence.
+This query is used to retrieve a list of all queries (and their properties) that have been attached to a control/requirement as evidence.
 
 **Variables**
 
 - `complianceStandard`: The name of the compliance standard.
-- `complianceStandardRecordId`: The unique identifier of the
-  requirement/control.
-- `complianceStandardRequirement`: The reference number of the
-  requirement/control.
+- `complianceStandardRecordId`: The unique identifier of the requirement/control.
+- `complianceStandardRequirement`: The reference number of the requirement/control.
 
 ```graphql
 query solo_ListQuestions($complianceStandard: String!, $complianceStandardRecordId: String!, $complianceStandardRequirement: String!) {
@@ -472,14 +452,11 @@ query solo_ListQuestions($complianceStandard: String!, $complianceStandardRecord
 
 ## Get Control/Requirement Evidence - Links
 
-This query is used to retrieve a list of all links that have been attached to a
-control/requirement as evidence.
+This query is used to retrieve a list of all links that have been attached to a control/requirement as evidence.
 
 **Variables**
 
-- `requirementId`: The complianceStandardId of the framework and ref of the
-  specific control/requirement in the following format -
-  `complianceStandardId:00000000-0000-0000-0000-000000000000:ref:1.1`.
+- `requirementId`: The complianceStandardId of the framework and ref of the specific control/requirement in the following format - `complianceStandardId:00000000-0000-0000-0000-000000000000:ref:1.1`.
 
 ```graphql
 query GetRequirementEvidenceLinks($requirementId: String!) {
@@ -499,14 +476,11 @@ query GetRequirementEvidenceLinks($requirementId: String!) {
 
 ## Get Control/Requirement Evidence - Uploads
 
-This query is used to retrieve a list of all uploads that have been attached to
-a control/requirement as evidence.
+This query is used to retrieve a list of all uploads that have been attached to a control/requirement as evidence.
 
 **Variables**
 
-- `requirementId`: The complianceStandardId of the framework and ref of the
-  specific control/requirement in the following format -
-  `complianceStandardId:00000000-0000-0000-0000-000000000000:ref:1.1`.
+- `requirementId`: The complianceStandardId of the framework and ref of the specific control/requirement in the following format - `complianceStandardId:00000000-0000-0000-0000-000000000000:ref:1.1`.
 
 ```graphql
 query GetRequirementEvidenceUploads($requirementId: String!) {
@@ -531,13 +505,11 @@ query GetRequirementEvidenceUploads($requirementId: String!) {
 
 ## Get Control/Requirement Evidence - Notes
 
-This query is used to retrieve a list of all notes that have been attached to a
-control/requirement as evidence.
+This query is used to retrieve a list of all notes that have been attached to a control/requirement as evidence.
 
 **Variables**
 
-- `requirementId`: The complianceStandardId of the framework and ref of the
-  specific control/requirement in the following format -
+- `requirementId`: The complianceStandardId of the framework and ref of the specific control/requirement in the following format -
   `complianceStandardId:00000000-0000-0000-0000-000000000000:ref:1.1`.
 
 ```graphql
