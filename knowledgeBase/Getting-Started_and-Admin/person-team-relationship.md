@@ -2,7 +2,7 @@
 
 This guide walks through the process of creating `Team` entities and mapping team members to the `Person` entities (that are already integrated via SSO/IdP providers) to each team.
 
-This can be accomplished by uploading a JSON/YAML document containing the `Team` entities either via the JupiterOne app UI or the platform API.Bryan
+This can be accomplished by uploading a JSON/YAML document containing the `Team` entities either via the JupiterOne app UI or the platform API.
 
 ## UI
 
