@@ -20,8 +20,7 @@ An API key icon appears in the My Profile view for each user in the group that h
 
 ## Create Account-Level API Keys
 
-You can manage user-level keys in the Account Management page. You must have 
-administrator permissions  to make changes to account-level API keys.
+You can manage user-level keys in the Account Management page. You must have administrator permissions  to make changes to account-level API keys.
 
 To generate a new API key or manage existing API keys:
 
@@ -30,16 +29,13 @@ To generate a new API key or manage existing API keys:
 3. In the left panel, click the key icon.
    ![api_key_acct-mgmt](../assets/api_key_acct-mgmt.png) 
 4. In the User API Keys page, click **Add** ![api-keys-plus](../assets/icons/api-keys-plus.png).
-5. In the API Keys modal, enter the name of the key and the number of days 
-   before it expires, and click **Create**.
+5. In the API Keys modal, enter the name of the key and the number of days before it expires, and click **Create**.
 
-To revoke an API key, in the User API Keys page, go to the key you want to 
-revoke and click the trash icon ![trash](../assets/icons/trash.png).
+To revoke an API key, in the User API Keys page, go to the key you want to revoke and click the trash icon ![trash](../assets/icons/trash.png).
 
 ## Create Integration API Keys
 
-You must have administrator permissions to be able to create keys and the 
-selected integration must have at least one configuration.
+You must have administrator permissions to be able to create keys and the selected integration must have at least one configuration.
 
 To create API keys that you can use with your J1 integration:
 
@@ -95,7 +91,7 @@ mutation CreateToken($token: TokenInput!) {
 The `policy` variable is a JSON object formatted as follows:
 
     {
-    
+
       "permissions": [
     {
       "effect": "ALLOW",
@@ -104,7 +100,7 @@ The `policy` variable is a JSON object formatted as follows:
     }
       ]
     }
-    
+
 The effect parameter is ether `ALLOW` or `DENY` and is case-sensitive. Currently, J1 only supports fully-qualified actions and resources or the wildcard `*`.
 
 Supported actions include:
