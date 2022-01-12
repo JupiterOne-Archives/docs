@@ -95,15 +95,13 @@ Find aws_instance with tag.Environment='staging'
 
 ## I am using a powerful policy like AdministratorAccess in AWS, why can't I query on the resources it allows?
 
-The relationships in J1 are built between the entities as described in the environments. For example, 
-the `AdministratorAccess` IAM policy in AWS has an `allow *:*` rule, therefore, a relationship is built directly from that `aws_iam_policy` entity to the `aws_account` entity.
+The relationships in J1 are built between the entities as described in the environments. For example, the `AdministratorAccess` IAM policy in AWS has an `allow *:*` rule, therefore, a relationship is built directly from that `aws_iam_policy` entity to the `aws_account` entity.
 
 Similarly, if the policy states `allow s3:*`, the `ALLOWS` relationship in JupiterOne is built between the `aws_iam_policy` entity to the `aws_s3` service entity. This approach allows for simpler graph without  thousands of connections from one entity to all other sub-entities that reside within an account or service.
 
 These conditions need to be taken into account at the query level.
 
-For example, to find IAM policies that allow access to S3 buckets, we should also check those that 
-allow access to all resources in the S3 service and those that allow access to all services in the AWS account.
+For example, to find IAM policies that allow access to S3 buckets, we should also check those that allow access to all resources in the S3 service and those that allow access to all services in the AWS account.
 
 This is done simply as follows:
 
@@ -111,8 +109,6 @@ This is done simply as follows:
 Find AccessPolicy 
   that ALLOWS (aws_account|aws_s3|aws_s3_bucket) ...
 ```
-
-[jupiterone-aws-integration]: https://github.com/jupiterone/jupiterone-aws-integration
 
 ## How do I check the status of S3 server access logging vs bucket object logging?
 
@@ -132,7 +128,7 @@ that logs to *
 return TREE
 ```
 
-!!! note
+**Note:**
     Object level logging is done via CloudTrail
 
 To check for if a bucket does not have any logging enabled:
@@ -141,7 +137,7 @@ To check for if a bucket does not have any logging enabled:
 Find aws_s3_bucket with loggingEnabled != true
 ```
 
-!!! note
+**Note:**
     Either server access logging or object level logging will result 
     in `loggingEnabled = true`
 
@@ -152,7 +148,7 @@ find aws_s3_bucket that publishes to aws_s3_bucket
 return tree
 ```
 
-!!! note
+**Note:**
     There are additional properties captured on the edge in each case, 
     which can be used for additional filtering (see screenshots). 
     For example:
