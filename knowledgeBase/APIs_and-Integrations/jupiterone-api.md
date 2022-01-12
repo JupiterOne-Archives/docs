@@ -8,9 +8,7 @@ The JupiterOne platform exposes a number of public GraphQL endpoints.
 
 **Endpoint for alert and rules operations**: `/rules/graphql`
 
-**Rate Limits**: Rate limiting is enforced based on your account tier. A `429`
-HTTP response code indicates the limit has been reached. The API does not
-currently return any rate limit headers.
+**Rate Limits**: Rate limiting is enforced based on your account tier. A `429` HTTP response code indicates the limit has been reached. The API does not currently return any rate limit headers.
 
 **Authentication**: The JupiterOne APIs use a Bearer Token to authenticate. Include the API key in the header as a Bearer Token. You also need to include `JupiterOne-Account` as a header parameter. You can find the `Jupiterone-Account` value in your account by running the following J1QL query:
 
@@ -28,9 +26,9 @@ curl --location --request POST 'https://api.us.jupiterone.io/graphql' \
 --data-raw '{"query":...}
 ```
 
-An experimental [node.js client and CLI][1] is available on Github.
+An experimental [node.js client and CLI](https://github.com/JupiterOne/jupiterone-client-nodejs) is available on Github.
 
-[1]: https://github.com/JupiterOne/jupiterone-client-nodejs
+
 
 ## Entity and Relationship Queries
 
@@ -38,43 +36,25 @@ An experimental [node.js client and CLI][1] is available on Github.
 
 ### Querying the graph with J1QL
 
-This query will allow you to run J1QL queries for fetching data.
-The GraphQL resolver requires that one parameter is provided:
+This query will allow you to run J1QL queries for fetching data. The GraphQL resolver requires that one parameter is provided:
 
 - `query`: A J1QL query string that describes what data to return
 
 Optionally, additional parameters can be provided:
 
 - `variables`: A `JSON` map of values to be used as parameters for the query
-- `cursor`: A token that can be exchanged to fetch the next page of
-  information.
-- `includeDeleted`: When set to `true`, recently deleted information will
-  be included in the results.
-- `deferredResponse`: This option allows for a deferred response to be
-  returned. When a deferred response is returned, a `url` pointing
-  the state of the query is provided. API consumers should poll the status of
-  the deferred query by requesting the given `url` until the `status` property of the
-  returned JSON document has a value of `COMPLETED` (see example below).
-  Upon completion of the query, the `url` will provide a link to the query results.
-  The results contain the same `type`, `data`, and `cursor` fields that the non-deferred
-  GraphQL response would contain.
-  Allowed values are `DISABLED` and `FORCE`.
+- `cursor`: A token that can be exchanged to fetch the next page of information.
+- `includeDeleted`: When set to `true`, recently deleted information will be included in the results.
+- `deferredResponse`: This option allows for a deferred response to be returned. When a deferred response is returned, a `url` pointing the state of the query is provided. API consumers should poll the status of the deferred query by requesting the given `url` until the `status` property of the returned JSON document has a value of `COMPLETED` (see example below). Upon completion of the query, the `url` will provide a link to the query results. The results contain the same `type`, `data`, and `cursor` fields that the non-deferred GraphQL response would contain. Allowed values are `DISABLED` and `FORCE`.
 
-!!! note
-When paging through data, it is _highly_ recommended that cursors
-are leveraged instead of adding `limit` and `skip` clauses to queries.
+**Note:**
+When paging through data, it is _highly_ recommended that cursors are leveraged instead of adding `limit` and `skip` clauses to queries.
 
-!!! note
-Be sure to include `cursor` in the GraphQL response if you need to
-paginate through the results. The returned `cursor` will be `null`
-if there are no more pages available.
+**Note:**
+Be sure to include `cursor` in the GraphQL response if you need to paginate through the results. The returned `cursor` will be `null` if there are no more pages available.
 
-!!! note
-Queries that may take longer than 30 seconds should use the `FORCE` option
-for `deferredResponse` to avoid request timeouts. You should only use the
-`DISABLED` option when testing a simple query. It is _highly_ recommended
-that all automated processes use the the `FORCE` option when issuing
-J1QL queries.
+**Note:**
+Queries that may take longer than 30 seconds should use the `FORCE` option for `deferredResponse` to avoid request timeouts. You should only use the `DISABLED` option when testing a simple query. It is _highly_ recommended that all automated processes use the the `FORCE` option when issuing J1QL queries.
 
 **Example GraphQL query:**
 
@@ -172,13 +152,10 @@ query J1QL(
 
 ### Fetching Graph Data
 
-You can use this query to fetch graph data. The returned data includes the
-details of all vertices found on the graph, as well as the relationship edges
-that connect the vertices.
+You can use this query to fetch graph data. The returned data includes the details of all vertices found on the graph, as well as the relationship edges that connect the vertices.
 
-!!! note
-Currently, a canned query for IAM Role data is run. You do not need to provide
-any input variables.
+**Note:**
+Currently, a canned query for IAM Role data is run. You do not need to provide any input variables.
 
 ```graphql
 query testQuery {
@@ -232,18 +209,15 @@ query testQuery {
 
 ### Retrieving a Single Vertex by ID
 
-This query fetches a vertex and its properties by its ID. The
-query requires one of two parameters:
+This query fetches a vertex and its properties by its ID. The query requires one of two parameters:
 
 - `id`: The ID as a string
 - `filters`: A set of filters that define the desired vertex.
 
 The example below contains all of the currently available filters.
 
-!!! note
-Only one of the variables (`id` or `filters`) is required. Specifying both
-is allowed but unnecessary unless you want to assert that a vertex with
-the specified `id` exists _and_ has specific entity properties.
+**Note:**
+Only one of the variables (`id` or `filters`) is required. Specifying both is allowed but unnecessary unless you want to assert that a vertex with the specified `id` exists _and_ has specific entity properties.
 
 ```graphql
 query VertexQuery($id: String!, $filters: VertexFilters) {
@@ -285,14 +259,10 @@ Variables:
 
 ### Fetching Neighbors of a Vertex
 
-The `Vertex` type allows you to retrieve vertex and edge neighbors up to a
-certain depth using the `neighbors` field. The return type of the `neighbors`
-resolver is the same as that of a graph query. This query requires two
-parameters:
+The `Vertex` type allows you to retrieve vertex and edge neighbors up to a certain depth using the `neighbors` field. The return type of the `neighbors` resolver is the same as that of a graph query. This query requires two parameters:
 
 - `id`: The ID of the vertex as a string
-- `depth`: An integer specifying how many "levels" deep the query will go to
-  look for neighbors.
+- `depth`: An integer specifying how many "levels" deep the query will go to look for neighbors.
 
 ```graphql
 query VertexQuery($id: String!, $depth: Int) {
@@ -328,14 +298,12 @@ Variables:
 }
 ```
 
-!!! note
-The depth that is supplied must be a value between 1 and 5 (inclusive)
+**Note:**
+The depth that is supplied must be a value between 1 and 5 (inclusive).
 
 ### Retrieving an Edge by ID
 
-This query allows you to fetch an edge, its properties, and the relationship it
-describes by its ID or label and filters. The query requires one or two of three
-parameters:
+This query allows you to fetch an edge, its properties, and the relationship it describes by its ID or label and filters. The query requires one or two of three parameters:
 
 - `id`: The ID as a string.
 - `label`: The label displayed on the edge.
@@ -343,11 +311,8 @@ parameters:
 
 The example below contains all of the currently available filters.
 
-!!! note
-Only one of the variables (`id`, `label`, or `filters`) is required.
-Specifying `label` and `filters` with `id` is allowed but somewhat redundant
-unless you want to assert that a vertex with the specified `id` exists _and_ has
-the specific label and properties.
+**Note:**
+Only one of the variables (`id`, `label`, or `filters`) is required. Specifying `label` and `filters` with `id` is allowed but somewhat redundant unless you want to assert that a vertex with the specified `id` exists _and_ has the specific label and properties.
 
 ```graphql
 query VertexQuery($id: String!) {
@@ -392,20 +357,15 @@ Variables:
 
 ### Fetching the Count of Entities Via a \_type and/or \_class
 
-This query allows you to fetch the count of entities. The `_id`, `_key`,
-`_type`, or `_class` fields can be supplied as filters. This query only counts
-the latest versions of entities matching the filter criteria. This query
-requires two parameters:
+This query allows you to fetch the count of entities. The `_id`, `_key`, `_type`, or `_class` fields can be supplied as filters. This query only counts the latest versions of entities matching the filter criteria. This query requires two parameters:
 
 - `filters`: A set of vertex filters that describe the entities that are to be
   returned.
 - `filterType`: A `FilterType` (`AND` or `OR`).
 
-If `OR` is specified as the filter type, any entity that has any class in the
-filter will be included in the count. By default, the query uses `AND`, which
-only includes entities that have _all_ of the specified classes in the count.
+If `OR` is specified as the filter type, any entity that has any class in the filter will be included in the count. By default, the query uses `AND`, which only includes entities that have _all_ of the specified classes in the count.
 
-!!! note
+**Note:**
 This resolver uses the `JSON` scalar as the return type.
 
 ```graphql
@@ -414,7 +374,7 @@ query testQuery($filters: VertexFilters, $filterType: FilterType) {
 }
 ```
 
-!!! note
+**Note:**
 Use field aliases to request the counts of multiple different entities.
 
 ```graphql
@@ -437,7 +397,7 @@ Example result:
 
 This query returns the entity counts for all types and classes.
 
-!!! note
+**Note:**
 This resolver uses the `JSON` scalar as the return type.
 
 ```graphql
@@ -464,17 +424,14 @@ Example result:
 
 ### Fetching the Count of All Types With a Set of Classes
 
-This query returns all types that have the specified classes. The query requires
-two parameters:
+This query returns all types that have the specified classes. The query requires two parameters:
 
 - `classes`: An array of strings detailing which classes should be returned.
 - `filterType`: A `FilterType` (`AND` or `OR`).
 
-If `OR` is specified as the filter type, any entity that has any class in the
-filter will be included in the count. By default, the query uses `AND`, which
-only includes entities that have _all_ of the specified classes in the count.
+If `OR` is specified as the filter type, any entity that has any class in the filter will be included in the count. By default, the query uses `AND`, which only includes entities that have _all_ of the specified classes in the count.
 
-!!! note
+**Note:**
 This resolver uses the `JSON` scalar as the return type.
 
 ```graphql
@@ -495,18 +452,13 @@ Example result:
 
 ### Listing Vertices Via a \_type and/or \_class
 
-For fetching entities with specified filters. The `_id`, `_key`, `_type` and
-`_class` fields can be supplied as filters. This query only returns the latest
-versions of entities matching the filter criteria. This query accepts three
-parameters:
+For fetching entities with specified filters. The `_id`, `_key`, `_type` and `_class` fields can be supplied as filters. This query only returns the latest versions of entities matching the filter criteria. This query accepts three parameters:
 
 - `filters`: A set of vertex filters that describe the entities to return (required).
 - `after`: A string to begin searching after (required).
 - `filterType`: A `FilterType` (`AND` or `OR`).
 
-If `OR` is specified as the filter type, any entity that has any class in the
-filter will be included in the count. By default, the query uses `AND`, which
-only includes entities that have _all_ of the specified classes in the count.
+If `OR` is specified as the filter type, any entity that has any class in the filter will be included in the count. By default, the query uses `AND`, which only includes entities that have _all_ of the specified classes in the count.
 
 ```graphql
 query testQuery($filters: VertexFilters, $filterType: FilterType, $after: String) {
@@ -566,8 +518,7 @@ Example result
 
 ### Create Entity
 
-This mutation creates a JupiterOne entity with the given specifications. This
-mutation requires three parameters (with two optional parameters):
+This mutation creates a JupiterOne entity with the given specifications. This mutation requires three parameters (with two optional parameters):
 
 - `entityKey`: A string that gives the key value for the entity so that this entity can be referenced later.
 - `entityType`: A string that gives the type of the entity being created.
@@ -624,9 +575,7 @@ Variables:
 
 ### Updating Entity
 
-This mutation updates an already existing entity (does not create an entity).
-You cannot change the `entityKey`, `entityClass`, or `entityType`.
-This mutation requires one parameter (with two optional parameters):
+This mutation updates an already existing entity (does not create an entity). You cannot change the `entityKey`, `entityClass`, or `entityType`. This mutation requires one parameter (with two optional parameters):
 
 - `entityId`: A string specific to the entity that finds the entity.
 - Optional Parameters:
@@ -675,8 +624,7 @@ Variables:
 
 ### Deleting Entity
 
-This mutation deletes an existing entity.
-This mutation requires one parameter (with one optional parameter):
+This mutation deletes an existing entity. This mutation requires one parameter (with one optional parameter):
 
 - `entityId`: A string specific to the entity that finds the entity.
 - Optional Parameters:
@@ -860,25 +808,16 @@ Variables:
 
 ## Entity and Relationship Synchronization (Bulk Upload)
 
-An integration job is responsible for sending all of the latest entities and
-relationships to the persister and the persister will compare the _new state_ to
-the _old state_ and automatically apply the changes to the graph.
+An integration job is responsible for sending all of the latest entities and relationships to the persister and the persister will compare the _new state_ to the _old state_ and automatically apply the changes to the graph.
 
-The persister exposes a public REST API that will be used when developing,
-testing, and running integrations outside the JupiterOne cloud infrastructure.
+The persister exposes a public REST API that will be used when developing, testing, and running integrations outside the JupiterOne cloud infrastructure.
 
-The synchronization API also supports synchronizing a _grouping_ of entities and
-relationships from an API source by using a _scope_ property. That is, a group
-of entities and relationships can be logically grouped together by an arbitrary
-scope value and uploaded to the persister via the synchronization API and the
-create, update, and delete operations will be automatically determined within
-the given scope. The scope value is stored on the entities and relationships in
-the `_scope` property.
+The synchronization API also supports synchronizing a _grouping_ of entities and relationships from an API source by using a _scope_ property. That is, a group of entities and relationships can be logically grouped together by an arbitrary scope value and uploaded to the persister via the synchronization API and the
+create, update, and delete operations will be automatically determined within the given scope. The scope value is stored on the entities and relationships in the `_scope` property.
 
 ### Integration Job Bookkeeping
 
-While an integration job is running, the persister will need to keep track of
-data as the job progresses.
+While an integration job is running, the persister will need to keep track of data as the job progresses.
 
 This information will be tracked:
 
@@ -890,21 +829,14 @@ This information will be tracked:
 
 ### Phases of Synchronization
 
-1. **Data Collection:** An integration job or other tools runs and collects all
-   data and stores it temporarily on filesystem.
+1. **Data Collection:** An integration job or other tools runs and collects all data and stores it temporarily on filesystem.
 
-1. **Data Upload:** All data that represents "new state" is uploaded to the
-   persister and associated with an integration job identifier. The "new state"
-   will consist of entities, relationships, and raw data.
+2. **Data Upload:** All data that represents "new state" is uploaded to the persister and associated with an integration job identifier. The "new state" will consist of entities, relationships, and raw data.
 
-1. **Finalization:** After an integration has uploaded all data to the persister,
-   "finalization" is triggered. During the "finalization" phase, the persister
-   compares the "new state" with the "old state" and determines changes. The
-   persister immediately performs any changes that are detected during the
+3. **Finalization:** After an integration has uploaded all data to the persister, "finalization" is triggered. During the "finalization" phase, the persister compares the "new state" with the "old state" and determines changes. The persister immediately performs any changes that are detected during the
    run of the finalization task (they are not queued on a Kinesis stream).
 
-   Entities are finalized first and relationships are finalized afterward (because
-   relationships might reference new entities).
+   Entities are finalized first and relationships are finalized afterward (because relationships might reference new entities).
 
 ## Synchronization API Usage
 
@@ -912,9 +844,7 @@ This information will be tracked:
 
 ignoreDuplicates:
 
-Instructs the system to not throw an error if there are graph objects with
-duplicate keys. This will allow the latest graph object to be created if there
-are duplicate keys already in use.
+Instructs the system to not throw an error if there are graph objects with duplicate keys. This will allow the latest graph object to be created if there are duplicate keys already in use.
 
 ### Request Body Properties
 
@@ -925,25 +855,18 @@ are duplicate keys already in use.
 
 `scope`:
 
-- The Scope value can be set to any string. The same value needs to be used in the
-  future for updating entities/relationships/properties within that scope.
+- The Scope value can be set to any string. The same value needs to be used in the future for updating entities/relationships/properties within that scope.
 - Scope is required when the `syncMode` is `DIFF`.
 - Scope can only be used when the `source` is `api`.
 
 `syncMode`:
 
-- `DIFF` is the default value when a syncMode is not specified. This mode will
-  update/replace all of the entities/relationships within a specified scope. The
-  full dataset should be provided, otherwise entities and relationships may be
-  unintentionally deleted.
-- `CREATE_OR_UPDATE` should be used when you are editing an existing scope of
-  data. Use this mode when you want to add, update, or delete a subset of
-  entities/relationships.
+- `DIFF` is the default value when a syncMode is not specified. This mode will update/replace all of the entities/relationships within a specified scope. The full dataset should be provided, otherwise entities and relationships may be unintentionally deleted.
+- `CREATE_OR_UPDATE` should be used when you are editing an existing scope of data. Use this mode when you want to add, update, or delete a subset of entities/relationships.
 
 `integrationInstanceId`:
 
-- Required when referencing a custom integration (the `scope` is equal to
-  `integration-external`).
+- Required when referencing a custom integration (the `scope` is equal to `integration-external`).
 
 ### Start a synchronization job
 
@@ -2287,21 +2210,16 @@ Variables for the mutation:
 
 Variables:
 
-`id`: the `id` of the configuration for which you want to update the hour and/or day of week.
-This ID is visible in each integration configuration in your account. To find the ID in your
-JupiterOne account, go to **Settings > Integration > {integration name} > {configuration name}** >
-value in the ID field.
+`id`: the `id` of the configuration for which you want to update the hour and/or day of week. This ID is visible in each integration configuration in your account. To find the ID in your JupiterOne account, go to **Settings > Integration > {integration name} > {configuration name}** > value in the ID field.
 
-`hour`: an integer between 0 and 23 that represents the hour of the day in UTC when you
-want the integration to run.
+`hour`: an integer between 0 and 23 that represents the hour of the day in UTC when you want the integration to run.
 
 `dayofWeek`: an integer between 0 and 6 that represents the day of the week Sunday through Saturday
 on which you want the integration to run.
 
 #### Example Query
 
-This is an example of a GraphQL query that returns the current values in the `hour` and `dayOfWeek`
-parameters for a specific integration configuration:
+This is an example of a GraphQL query that returns the current values in the `hour` and `dayOfWeek` parameters for a specific integration configuration:
 
 ```graphql
 query integrationInstance($id: String!) {
@@ -2327,10 +2245,7 @@ Variable for the query:
 
 Variables:
 
-`id`: the `id` of the configuration for which you want to update the hour and/or day of week.
-This ID is visible in each integration configuration in your account. To find the ID in your
-JupiterOne account go to **Settings > Integration > {integration name} > {configuration name} >**
-value in the ID field.
+`id`: the `id` of the configuration for which you want to update the hour and/or day of week. This ID is visible in each integration configuration in your account. To find the ID in your JupiterOne account go to **Settings > Integration > {integration name} > {configuration name} >** value in the ID field.
 
 ### Finding an Integration Definition Based on a Type
 
@@ -2392,20 +2307,13 @@ query testQuery {
 
 ## Trigger an Integration Job via API
 
-The following values are required in order to trigger an integration job via API:
+The following values are required in order to trigger an integration job via API: `API_KEY` - An API Key must be configured before leveraging the JupiterOne API. Review [Enable API Key Access](./api-key-access.md) for a guide in creating a JupiterOne API Key.
 
-`API_KEY` - An API Key must be configured before leveraging the JupiterOne API. Review
-[Enable API Key Access](https://support.jupiterone.io/hc/en-us/articles/360025847594-Enable-API-Key-Access)
-for a guide in creating a JupiterOne API Key.
-
-`ACCOUNT_ID` - This value is the unique ID of your JupiterOne Account, found in
-Settings under Account Management.
+`ACCOUNT_ID` - This value is the unique ID of your JupiterOne Account, found in Settings under Account Management.
 
 ![API Account ID](../assets/api-account-id.png)
 
-`INTEGRATION_INSTANCE_ID` - This value is the ID of the specific integration instance
-that will be triggered, found in Settings under Integrations and then selecting
-the specific integration that has been configured (Integrations - Configurations - Settings).
+`INTEGRATION_INSTANCE_ID` - This value is the ID of the specific integration instance that will be triggered, found in Settings under Integrations and then selecting the specific integration that has been configured (Integrations - Configurations - Settings).
 
 ![API Integration Instance ID](../assets/api-integration-instance-id.png)
 
@@ -2489,7 +2397,7 @@ Body:
 
 **Creating entities and a relationship between them**
 
-!!! note
+**Note:**
 The following mutations utilize a J1Client.
 
 ```graphql
@@ -2571,12 +2479,10 @@ const relationship = await j1Client.mutate({
 
 ## IAM Operations (beta)
 
-!!! note
-The IAM API is in beta and only works for accounts configured with SSO.
-Please email support@jupiterone.com to enable access to these APIs
-because we will need to verify your company's domain name.
+**Note:**
+The IAM API is in beta and only works for accounts configured with SSO. Email support@jupiterone.com to enable access to these APIs because we will need to verify your company's domain name.
 
-!!! note
+**Note:**
 `accessAdmin` permission is required for all IAM operations.
 
 **Endpoint:**

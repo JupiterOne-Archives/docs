@@ -2,7 +2,7 @@
 
 The following article contains a list of compliance actions from the JupiterOne UI that a user can perform via the graphql API endpoint.
 
-See [JupiterOne Platform API](./jupiterone-api.md) for an introduction to the JupiterOne API.
+See the [JupiterOne Platform API](./jupiterone-api.md) for an introduction to the JupiterOne API.
 
 **Base URL**: `https://api.us.jupiterone.io`
 
@@ -403,8 +403,7 @@ mutation ConfigureRecurringComplianceReviewsForDomain($complianceStandardId: ID!
 
 **Additional Variables**
 
-- `ref`: The reference number of the
-  requirement/control.
+- `ref`: The reference number of the requirement/control.
 
 **Query**
 
@@ -457,8 +456,7 @@ This query is used to retrieve a list of all links that have been attached to a 
 
 **Variables**
 
-- `requirementId`: The complianceStandardId of the framework and ref of the specific control/requirement in the following format -
-  `complianceStandardId:00000000-0000-0000-0000-000000000000:ref:1.1`.
+- `requirementId`: The complianceStandardId of the framework and ref of the specific control/requirement in the following format - `complianceStandardId:00000000-0000-0000-0000-000000000000:ref:1.1`.
 
 ```graphql
 query GetRequirementEvidenceLinks($requirementId: String!) {
