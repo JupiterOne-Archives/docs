@@ -28,7 +28,7 @@
 ## Support
 
 If you need help with this integration, please contact
-[JupiterOne Support](https://support.jupiterone.io).
+[JupiterOne Support](https://community.askj1.com).
 
 ## Integration Walkthrough
 
@@ -132,15 +132,11 @@ The following relationships are created/mapped:
 | `jira_user`    | **CREATED**  | `jira_issue`   |
 | `jira_user`    | **REPORTED** | `jira_issue`   |
 
-[1]:
-  https://developer.atlassian.com/cloud/jira/platform/security-for-other-integrations/
+[1]: https://developer.atlassian.com/cloud/jira/platform/security-for-other-integrations/
 [2]: https://confluence.atlassian.com/cloud/api-tokens-938839638.html
-[3]:
-  https://support.atlassian.com/jira-core-cloud/docs/how-do-jira-permissions-work/
-[4]:
-  https://confluence.atlassian.com/jirakb/jira-cloud-how-to-create-a-read-only-user-779160729.html
-[5]:
-  https://confluence.atlassian.com/adminjiraserver/managing-global-permissions-938847142.html
+[3]: https://support.atlassian.com/jira-core-cloud/docs/how-do-jira-permissions-work/
+[4]: https://confluence.atlassian.com/jirakb/jira-cloud-how-to-create-a-read-only-user-779160729.html
+[5]: https://confluence.atlassian.com/adminjiraserver/managing-global-permissions-938847142.html
 
 ## Pro Tips
 
