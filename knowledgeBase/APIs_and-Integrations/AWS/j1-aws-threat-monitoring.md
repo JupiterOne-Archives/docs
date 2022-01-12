@@ -1,7 +1,6 @@
 # Using JupiterOne for Active Vulnerability and Threat Monitoring in AWS
 
 Active threats within an organization's AWS environments typically arise from these two main sources:
-Bryan
 
 1. System and application vulnerabilities on EC2 instances.
 2. Malicious network activities, API activities and resource operations.
