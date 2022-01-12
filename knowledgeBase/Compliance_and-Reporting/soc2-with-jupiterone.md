@@ -2,14 +2,9 @@
 
 ## 1. Configure integrations
 
-Ensure all relevant managed integrations are properly configured to be working;
-for SOC 2, you’ll need to make a determination as to which integrations are
-necessary based on your in-scope environment, e.g., the relevant system
-components, infrastructure, tooling, etc. that are necessary to provide your
-service or product to your customers. 
+Ensure all relevant managed integrations are properly configured to be working. For SOC 2, you’ll need to make a determination as to which integrations are necessary based on your in-scope environment, e.g., the relevant system components, infrastructure, tooling, etc. that are necessary to provide your service or product to your customers. 
 
-Once configured, integrations will automatically start collecting data about
-your environment at a recurring cadence.
+Once configured, integrations will automatically start collecting data about your environment at a recurring cadence.
 
 ![integrations](../assets/integrations.png)
 
@@ -17,25 +12,20 @@ your environment at a recurring cadence.
 
 Additional support documentation:
 
-[Configure integrations](https://support.jupiterone.io/hc/en-us/articles/360022884813-1-9-Configure-Integrations)
+[Configure integrations](../Getting-Started_and-Admin/configure-integrations.md)
 
 ## 2. Policies + procedures
 
-Review all of the templated, out-of-the-box policies + procedures, ensuring they
-accurately represent your organization’s principles/processes, tailoring and/or
-adding your own documentation where relevant. 
+Review all of the templated, out-of-the-box policies + procedures, ensuring they accurately represent your organization’s principles/processes, tailoring and/or adding your own documentation where relevant. 
 
-Out of the box, the policies app comes with templated policies + procedures that
-can be edited/modified. Additionally, you can add your own policies + procedures
+Out of the box, the policies app comes with templated policies + procedures that can be edited/modified. Additionally, you can add your own policies + procedures
 + remove/delete documents that aren’t relevant to your organization.
 
 ![policies](../assets/policies-1.png)
 
-Reviewing + tailoring instructions are provided for the default, templated
-policies + procedures in the UI.
+Reviewing + tailoring instructions are provided for the default, templated policies + procedures in the UI.
 
-If not completed during JupiterOne account setup, the policy builder should be
-populated to prefill the templated policies + procedures.
+If not completed during JupiterOne account setup, the policy builder should be populated to prefill the templated policies + procedures.
 
 ![policy-builder](../assets/policy-builder.png)
 
@@ -83,7 +73,7 @@ of JupiterOne query language (J1QL) managed queries.
 
 1. For each control, review default mapped evidence, if applicable.
     1. If the evidence is satisfactory (as you'd expect for output), move on to the next control.
-    1. If the evidence isn’t satisfactory, i.e., incorrect or incomplete:
+    2. If the evidence isn’t satisfactory, i.e., incorrect or incomplete:
         1.  Review the mapped queries + tailor the queries so the returned output is as expected.
 
 ![edit-query](../assets/editing-queries.gif)
@@ -115,8 +105,8 @@ Additional support documentation:
 
 ### Adding additional evidence
 1. Link additional evidence, i.e., hyperlink
-1. Upload additional evidence, e.g., spreadsheets, compressed files, etc.
-1. Add notes/attestations
+2. Upload additional evidence, e.g., spreadsheets, compressed files, etc.
+3. Add notes/attestations
 
 ![alternative-evidence](../assets/alternative-evidence.gif)
 
