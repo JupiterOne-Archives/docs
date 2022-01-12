@@ -4,7 +4,7 @@ This guide walks through the process of creating `Team` entities and mapping tea
 
 This can be accomplished by uploading a JSON/YAML document containing the `Team` entities either via the JupiterOne app UI or the platform API.
 
-## UI 
+## UI
 
 Under the Assets section of the application, click the + button in the upper-right corner.
 
@@ -14,39 +14,37 @@ Click the tile "Bulk upload from a JSON or YAML file".
 
 ![bulk-upload](../assets/bulk-upload.png)
 
- Use the following JSON as an example:
+Use the following JSON as an example:
 
 ```json
 {
- "entities": [
-   {
-     "_key": "my_team:1",
-     "_type": "my_team",
-     "_class": "Team",
-     "displayName": "Team One",
-     "name": "Marketing Team",
-     "description": "One person team",
-     "email": "james@jupiterone.com",
-     "members": [
-       "james@jupiterone.com"
-     ]
-   },
-   {
-     "_key": "my_team:2",
-     "_type": "my_team",
-     "_class": "Team",
-     "displayName": "Team Two",
-     "name": "Solutions Team",
-     "description": "Customer facing team",
-     "email": "solutions@jupiterone.com",
-     "lead": "cindy@jupiterone.com",
-     "members": [
-       "cindy@jupiterone.com",
-       "james@jupiterone.com",
-       "mark@jupiterone.com"
-     ]
-   }
- ]
+  "entities": [
+    {
+      "_key": "my_team:1",
+      "_type": "my_team",
+      "_class": "Team",
+      "displayName": "Team One",
+      "name": "Marketing Team",
+      "description": "One person team",
+      "email": "james@jupiterone.com",
+      "members": ["james@jupiterone.com"]
+    },
+    {
+      "_key": "my_team:2",
+      "_type": "my_team",
+      "_class": "Team",
+      "displayName": "Team Two",
+      "name": "Solutions Team",
+      "description": "Customer facing team",
+      "email": "solutions@jupiterone.com",
+      "lead": "cindy@jupiterone.com",
+      "members": [
+        "cindy@jupiterone.com",
+        "james@jupiterone.com",
+        "mark@jupiterone.com"
+      ]
+    }
+  ]
 }
 ```
 

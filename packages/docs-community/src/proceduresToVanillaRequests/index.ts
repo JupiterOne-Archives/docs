@@ -27,6 +27,7 @@ import {
   uploadImageAndReturnUrl,
 } from "../VanillaAPI";
 import { directoryExists, getPreviousKnowledgeID } from "./utils";
+
 export const addVanillaCategoryToProcedure = (
   procedure: VanillaKnowledgeCategory,
   vanillaReturn: VanillaKnowledgeCategory[]
@@ -35,13 +36,14 @@ export const addVanillaCategoryToProcedure = (
   let procedureTarget: VanillaKnowledgeCategory = procedure;
 
   const match = tempVanillaReturn.filter(
-    (v) => v.name === procedureTarget.name
+    (v) => v.name.toLowerCase() === procedureTarget.name.toLowerCase()
   );
 
   if (match.length) {
     procedureTarget = {
       ...procedureTarget,
       ...match[0],
+      name: procedureTarget.name,
     };
   }
 
@@ -54,12 +56,14 @@ export const addVanillaArticleInfoToProcedure = (
 ): VanillaArticle => {
   let procedureTarget = procedure;
 
-  const match = vanillaArticles.filter((v) => v.name === procedureTarget.name);
+  const match = vanillaArticles.filter(
+    (v) => v.name?.toLowerCase() === procedureTarget.name?.toLowerCase()
+  );
 
   if (match.length) {
     procedureTarget = {
       ...procedure,
-
+      name: procedure.name,
       knowledgeCategoryID: match[0].knowledgeCategoryID,
       articleID: match[0].articleID,
       locale: "en",
