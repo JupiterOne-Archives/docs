@@ -1,4 +1,3 @@
-
 # AWS Access Permissions and Trusts
 
 > Tip: If you have over 10,000 AWS resources in multiple AWS accounts, some query execution may take a long time or occasionally time out. Try limiting the query by adding `and tag.AccountName='account-name'` as part of the `WITH` entity property filter. Or use `LIMIT 100` at the end of the query for a smaller sample set of the results.
