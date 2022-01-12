@@ -1,4 +1,4 @@
-# Hardware/software Inventory and Configuration
+# Hardware and Software Inventory and Configuration
 
 ### What Workloads are in my environment?
 

@@ -1,4 +1,4 @@
-# Invite Users to Your J1 Account/Organization
+# Invite Users to Your J1 Account or Organization
 
 Adding others to your J1 account/organization is done using a simple invitation process. To send an invite:
 
@@ -15,6 +15,6 @@ Adding others to your J1 account/organization is done using a simple invitation 
 **Note:**
 
     - You must be a member of the Administrators group to be able to invite other users.
-    
+
     - If you are an Enterprise customer and use SAML SSO, see the instructions [here](./configure-sso-integration.md).
 
