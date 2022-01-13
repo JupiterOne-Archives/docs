@@ -8,7 +8,9 @@ To see all the digital assets (entities) you have, in JupiterOne, go to **Apps >
 
 ## Quick Filtering the Critical Assets
 
-Click **Critical Assets** in the top banner to go directly to the most important of your entities.![](../assets/asset-critical.png)
+Click **Critical Assets** in the top banner to go directly to the most important of your entities.
+
+![](../assets/asset-critical.png)
 
 Critical assets is a class of asset for which you can create queries and alerts to quickly access the most crucial data. By default, JupiterOne determines which criteria defines an asset as the most important and, therefore, the most at risk but an administrator can edit this definition.
 
