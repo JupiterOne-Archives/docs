@@ -1,15 +1,11 @@
 # Export Compliance Artifacts
 
-The ![download][download-icon] "Download" button in JupiterOne Compliance app
-provides two options to export compliance artifacts:
+The ![download](https://raw.githubusercontent.com/feathericons/feather/master/icons/download.svg?sanitize=true) "Download" button in JupiterOne Compliance app provides two options to export compliance artifacts:
 
 - **Summary**
 - **All Evidence**
 
-> Compliance artifact export is an asynchronous background job. The download
-> icon will turn green when the artifact finishes building in the background.
-> You may leave the app while the artifact is being generated. You will receive
-> an email notification when the download is available.
+> Compliance artifact export is an asynchronous background job. The download icon will turn green when the artifact finishes building in the background. You may leave the app while the artifact is being generated. You will receive an email notification when the download is available.
 
 ## Compliance Summary
 
@@ -25,8 +21,7 @@ The **Summary** artifact is a zip package containing these two files:
 
 ## All Evidence
 
-The **All Evidence** artifact is a zip package containing the summary and the
-evidence output, in the following folder structure:
+The **All Evidence** artifact is a zip package containing the summary and the evidence output, in the following folder structure:
 
 ```text
 <standard_name>_evidence.zip
@@ -52,4 +47,3 @@ evidence output, in the following folder structure:
 
 > Note: the output of each query is limited to a sample of up to 250 results.
 
-[download-icon]: https://raw.githubusercontent.com/feathericons/feather/master/icons/download.svg?sanitize=true
