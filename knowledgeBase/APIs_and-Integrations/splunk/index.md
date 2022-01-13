@@ -33,18 +33,18 @@ If you need help with this integration, contact [JupiterOne Support](https://com
 
 1. On the Splunk home dashboard, use the **Find More Apps** link to find and install the JupiterOne add-on and JupiterOne app.
 
-![splunk-find-more-apps](../../../assets/splunk-find-more-apps.png)
+![splunk-find-more-apps](../../assets/splunk-find-more-apps.png)
 
 or
 
 1. Download the [add-on](https://splunkbase.splunk.com/app/6138) or [App](https://splunkbase.splunk.com/app/6139) package from the Splunkbase marketplace.
 2. In Splunk, navigate to **Apps > Manage Apps** by clickingthe gear icon in the upper-left corner.
 
-![splunk-apps-manage-apps](../../../assets/splunk-apps-manage-apps.png)
+![splunk-apps-manage-apps](../../assets/splunk-apps-manage-apps.png)
 
 3. In the top-right corner, select **Install app from file**.
 
-![splunk-install-app-from-file](../../../assets/splunk-install-app-from-file.png)
+![splunk-install-app-from-file](../../assets/splunk-install-app-from-file.png)
 
 4. Select **Choose File** and select the add-on or app package you downloaded.
 5. Select **Upload** and follow the instructions.
@@ -53,30 +53,30 @@ or
 
 1. In Splunk, navigate to **JupiterOne Add-on for Splunk**.
 
-![splunk-menu-add-on](../../../assets/splunk-menu-add-on.png)
+![splunk-menu-add-on](../../assets/splunk-menu-add-on.png)
 
 1. Click **Configuration**.
 
-![splunk-j1-account-config](../../../assets/splunk-j1-account-config.png)
+![splunk-j1-account-config](../../assets/splunk-j1-account-config.png)
 
 2. Click **Add** to create a new JupiterOne account configuration.
 
-![splunk-configure-j1-account](../../../assets/splunk-configure-j1-account.png)
+![splunk-configure-j1-account](../../assets/splunk-configure-j1-account.png)
 
 3. In the Add JupiterOne Account screen, enter an **Account Name**, the **Account Id**, and the **API Key**. Click **Add** when finished.
 
-![splunk-add-j1-account](../../../assets/splunk-add-j1-account.png)
+![splunk-add-j1-account](../../assets/splunk-add-j1-account.png)
 
 4. If needed, configure a proxy on the Proxy tab.
 5. If required, change the log level on the Logging tab. The default is INFO.
 6. Navigate to the **Inputs** tab.
 
-![splunk-j1-inputs](../../../assets/splunk-j1-inputs.png)
+![splunk-j1-inputs](../../assets/splunk-j1-inputs.png)
 
 7. Click **Create New Input**.
 8. Enter the details and click **Add**.
 
-![splunk-j1-inputs-fields](../../../assets/splunk-j1-inputs-fields.png)
+![splunk-j1-inputs-fields](../../assets/splunk-j1-inputs-fields.png)
 
 | Field Name                 | Field Description                                                                   |
 | -------------------------- | ----------------------------------------------------------------------------------- |
