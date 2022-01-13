@@ -85,7 +85,7 @@ describe("linksAndMediaHandlers", () => {
       const actual = getFullMarkdownReferencePathMatches("");
       expect(actual).toEqual(expected);
     });
-    it("returns matches on MARKDOWN_REGEX_FULL_MARKDOWN_PATH", () => {
+    it("returns matches", () => {
       const expected: string[] = [
         "../queries/common-qq-training.md",
         "../queries/common-qq-endpoint.md",

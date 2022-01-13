@@ -22,7 +22,7 @@
 
 - JupiterOne requires a Bitbucket OAuth Consumer in the target Workspace. You
   need permission to create an OAuth Consumer.
-- You must have permission in JupiterOne to install new integrations.
+- You must have permission in JupiterOne to install new integrations. 
 
 ## Support
 
