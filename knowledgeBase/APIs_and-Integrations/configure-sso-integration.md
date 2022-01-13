@@ -20,7 +20,7 @@ You must be a member of the Administrators group to perform configurations.
 
 1. Log in to your JupiterOne account.
 
-2. Go to the **Single Sign On** setup from the Configurations menu ![settings-icon] (../assets/icons/gear.png).
+2. Go to the **Single Sign On** setup from the Configurations menu ![](../assets/icons/gear.png).
 
    ![sso-menu](../assets/j1-sso-menu.png)
 
@@ -48,7 +48,7 @@ You must be a member of the Administrators group to perform configurations.
 
    In Okta, you can find this link on the **Sign On** tab of the application, under View Setup Instructions.
 
-   ![okta-idp-metadata](../assets/okta-idp-metadata.png "Okta IDP metadata")
+   ![okta-idp-metadata](../assets/okta-idp-metadata.png)
 
 7. Go back to the JupiterOne Auth Client Settings screen, and paste the identity provider metadata link in the SAML Metadata Document URL field.
 
@@ -85,8 +85,7 @@ To configure SSO for Okta, you must have administrator access. In addition, ensu
 
   ![okta-saml-select](../assets/okta-saml-select.png)
 
-3. Enter a name in the **App Name** field. The name JupiterOne is used in the example below. 
-   Click **Next**.
+3. Enter a name in the **App Name** field. The name JupiterOne is used in the example below, and click **Next**.
 
   ![okta-sso-general-settings](../assets/okta-sso-general-settings.png)
 
@@ -105,8 +104,7 @@ To configure SSO for Okta, you must have administrator access. In addition, ensu
     - `given_name` > `user.firstName`
     - `name` > `user.displayName`
     - `group_names` > `appuser.jupiterone_groups` where `jupiterone_groups` is optional naming. 
-      - You must configure the group attribute in the Profile Editor in the **Directory** menu, 
-        and then assign it after completing the configuration.
+      - You must configure the group attribute in the Profile Editor in the **Directory** menu, and then assign it after completing the configuration.
 
     ![okta-saml-mapping](../assets/okta-saml-mapping.png)
 
@@ -128,8 +126,8 @@ To configure SSO for Okta, you must have administrator access. In addition, ensu
 
 10. Click the floppy disk icon to save your configuration. A green confirmation message displays in the lower-left corner of the screen.
 
-   ![okta-sso-save](../assets/okta-sso-save.png)
-   ![okta-sso-success](../assets/okta-sso-success.png)
+  ![okta-sso-save](../assets/okta-sso-save.png)
+  ![okta-sso-success](../assets/okta-sso-success.png)
 
 ### Okta Group Attribute Configuration
 
@@ -154,7 +152,7 @@ An example of group assignment in Azure AD:
 
 ![azure-ad-app-group-assignment](../assets/sso-azure-auto-assign-groups.png)
 
-By adding the user.assignedroles -> group_names mapping to Azure AD, the app roles assigned to the user are mapped to the groups in JupiterOne that have the same name as the group/role. Read
+By adding the user.assignedroles -> group_names mapping to Azure AD, the app roles assigned to the user are mapped to the groups in JupiterOne that have the same name as the group/role. Read 
 <https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-add-app-roles-in-azure-ad-apps>
 for more information on adding app roles and assigning them to users and groups.
 
@@ -178,16 +176,16 @@ Add an entry to appRoles that is similar to:
 ```
 
 Assigning an app role to a user in Azure AD:
+
 ![User assigned Azure AD App role](../assets/sso-azure-app-user-and-groups.png)
 
 ## Google Workspace Configuration
 
-Before beginning a configuration through Google Workspace, ensure you have access to the SSO URL 
-and your Audience URI. Go to the Google Admin Console:
+Before beginning a configuration through Google Workspace, ensure you have access to the SSO URL and your audience URI. Go to the Google Admin Console:
 
 ![j1-sso-config-initial](../assets/sso-google-prestep.png)
 
-The IdP configuration page on the Google Admin Console is at: <https://admin.google.com/ac/apps/unified?hl=en>
+The IdP configuration page on the Google Admin Console is at: <https://admin.google.com/ac/apps/unified?hl=en>.
 
 1. From the **Add App** dropdown menu, select **Add custom SAML app**.
 
@@ -207,7 +205,7 @@ The IdP configuration page on the Google Admin Console is at: <https://admin.goo
 
   ![sso-google-service-povider](../assets/sso-google-service-povider.png)
 
-5. When mapping directory attributes, ensure you use the following names in the App attributes fields. group_names is optional.
+6. When mapping directory attributes, ensure you use the following names in the App attributes fields. group_names is optional.
 
     - *Primary email* > `email`
 

@@ -25,7 +25,7 @@ You can manage user-level keys in the Account Management page. You must have adm
 To generate a new API key or manage existing API keys:
 
 1. Log in to the account you want to manage.
-2. Go to **Settings** ![gear](../assets/icons/gear.png) **>** **Account Management**.
+2. Go to **Settings** ![gear](../assets/icons/gear.png)  **>** **Account Management**.
 3. In the left panel, click the key icon.
    ![api_key_acct-mgmt](../assets/api_key_acct-mgmt.png) 
 4. In the User API Keys page, click **Add** ![api-keys-plus](../assets/icons/api-keys-plus.png).
