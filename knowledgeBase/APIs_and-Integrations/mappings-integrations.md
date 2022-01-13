@@ -15,11 +15,11 @@
 ### `bitbucket_workspace <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Atlassian"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Atlassian"`
 >   * `displayName = "Atlassian"`
 >   * `_type = "atlassian"`
@@ -29,7 +29,7 @@
 ### `bitbucket_user -IS-> Person`
 
 > **Target Filters**
->
+> 
 >   * `bitbucketNickname = source.nickname`
 
 
@@ -45,11 +45,11 @@
 ### `jira_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Jira"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Jira"`
 >   * `displayName = "Jira"`
 >   * `_type = "jira"`
@@ -63,11 +63,11 @@
 ### `whitehat_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "WhiteHat"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "WhiteHat"`
 >   * `displayName = "WhiteHat"`
 >   * `_type = "whitehat"`
@@ -75,11 +75,11 @@
 ### `whitehat_scan <-PROVIDES- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "WhiteHat"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "WhiteHat"`
 >   * `displayName = "WhiteHat"`
 >   * `_type = "whitehat"`
@@ -93,11 +93,11 @@
 ### `cisco_amp_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Cisco"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Cisco"`
 >   * `displayName = "Cisco"`
 >   * `_type = "cisco"`
@@ -111,11 +111,11 @@
 ### `github_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "GitHub"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "GitHub"`
 >   * `displayName = "GitHub"`
 >   * `_type = "github"`
@@ -125,7 +125,7 @@
 ### `github_user -IS-> Person`
 
 > **Target Filters**
->
+> 
 >   * `githubUsername = source.username`
 
 
@@ -135,11 +135,11 @@
 ### `threatstack_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Threat Stack"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Threat Stack"`
 >   * `displayName = "Threat Stack"`
 >   * `_type = "threatstack"`
@@ -149,13 +149,13 @@
 ### `threatstack_agent -PROTECTS-> Host`
 
 > **Target Filters**
->
+> 
 >   * `instanceId = source.instanceId`
 
 ### `threatstack_agent -PROTECTS-> Host`
 
 > **Target Filters**
->
+> 
 >   * `hostname = source.hostname`
 
 
@@ -167,11 +167,11 @@
 ### `nowsecure_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "NowSecure"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "NowSecure"`
 >   * `displayName = "NowSecure"`
 >   * `_type = "nowsecure"`
@@ -189,11 +189,11 @@
 ### `pagerduty_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "PagerDuty"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "PagerDuty"`
 >   * `displayName = "PagerDuty"`
 >   * `_type = "pagerduty"`
@@ -217,11 +217,11 @@
 ### `digicert_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "DigiCert"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "DigiCert"`
 >   * `displayName = "DigiCert"`
 >   * `_type = "digicert"`
@@ -241,11 +241,11 @@
 ### `crowdstrike_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "CrowdStrike"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "CrowdStrike"`
 >   * `displayName = "CrowdStrike"`
 >   * `_type = "crowdstrike"`
@@ -259,11 +259,11 @@
 ### `snyk_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Snyk"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Snyk"`
 >   * `displayName = "Snyk"`
 >   * `_type = "snyk"`
@@ -279,11 +279,11 @@
 ### `bugcrowd_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "BugCrowd"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "BugCrowd"`
 >   * `displayName = "BugCrowd"`
 >   * `_type = "bugcrowd"`
@@ -297,11 +297,11 @@
 ### `detectify_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Detectify"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Detectify"`
 >   * `displayName = "Detectify"`
 >   * `_type = "detectify"`
@@ -313,11 +313,11 @@
 ### `duo_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Duo"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Duo"`
 >   * `displayName = "Duo"`
 >   * `_type = "duo"`
@@ -331,11 +331,11 @@
 ### `aws_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Amazon Web Services"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Amazon Web Services"`
 >   * `displayName = "AWS"`
 >   * `_type = "aws"`
@@ -355,11 +355,11 @@
 ### `Vendor -PROVIDES-> Control`
 
 > **Target Filters**
->
+> 
 >   * `_key = "aws::control:data-center-security"`
 
 > **Transferred Properties**
->
+> 
 >   * `_type = "aws_control"`
 >   * `_key = "aws::control:data-center-security"`
 >   * `name = "AWS Data Center Security Controls"`
@@ -372,11 +372,11 @@
 ### `aws_cloudfront_distribution -CONNECTS-> internet`
 
 > **Target Filters**
->
+> 
 >   * `_key = "global:internet"`
 
 > **Transferred Properties**
->
+> 
 >   * `_type = "internet"`
 >   * `_key = "global:internet"`
 
@@ -385,7 +385,7 @@
 ### `aws_iam_user -IS-> Person`
 
 > **Target Filters**
->
+> 
 >   * `email = [source.username,source.tag.Email]`
 
 ### `aws_transfer_server -CONNECTS-> Internet`
@@ -393,67 +393,67 @@
 ### `aws_instance -USES-> aws_iam_role`
 
 > **Target Filters**
->
+> 
 >   * `instanceProfileId = source.iamInstanceProfileId`
 
 ### `aws_ecs_container_instance <-RUNS- aws_instance`
 
 > **Target Filters**
->
+> 
 >   * `instanceId = source.ec2InstanceId`
 
 ### `aws_ecs_task <-TRIGGERS- aws_ecs_service`
 
 > **Target Filters**
->
+> 
 >   * `deployments = source.startedBy`
 
 ### `aws_ecs_task_definition -USES-> aws_ecr_image`
 
 > **Target Filters**
->
+> 
 >   * `fullName = source.containerImages`
 
 ### `aws_guardduty_finding <-HAS- aws_account`
 
 > **Target Filters**
->
+> 
 >   * `id = source.accountId`
 
 ### `aws_guardduty_finding <-HAS- aws_iam_role`
 
 > **Target Filters**
->
+> 
 >   * `id = source.roleId`
 
 ### `aws_guardduty_finding <-HAS- aws_iam_user`
 
 > **Target Filters**
->
+> 
 >   * `id = source.userId`
 
 ### `aws_guardduty_finding <-HAS- aws_iam_access_key`
 
 > **Target Filters**
->
+> 
 >   * `id = source.accessKeyId`
 
 ### `aws_guardduty_finding <-HAS- Person`
 
 > **Target Filters**
->
+> 
 >   * `userId = source.userName`
 
 ### `aws_ecr_image <-USES- (Host|Function|Container)`
 
 > **Target Filters**
->
+> 
 >   * `containerImages = source.fullName`
 
 ### `aws_efs_file_system <-USES- (Host|Function|Container)`
 
 > **Target Filters**
->
+> 
 >   * `efsArns = source.arn`
 
 
@@ -469,11 +469,11 @@
 ### `sentinelone_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "SentinelOne"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "SentinelOne"`
 >   * `displayName = "SentinelOne"`
 >   * `_type = "sentinelone"`
@@ -483,11 +483,11 @@
 ### `sentinelone_agent -PROTECTS-> user_endpoint`
 
 > **Target Filters**
->
+> 
 >   * `deviceId = source.uuid`
 
 > **Transferred Properties**
->
+> 
 >   * `deviceId = source.uuid`
 >   * `_type = "user_endpoint"`
 >   * `users = source.lastLoggedInUserName`
@@ -505,11 +505,11 @@
 ### `microsoft_365_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Microsoft"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Microsoft"`
 >   * `displayName = "Microsoft"`
 >   * `_type = "microsoft_365"`
@@ -519,15 +519,15 @@
 ### `azure_user -IS-> Person`
 
 > **Source Filters**
->
+> 
 >   * `email = !null`
 
 > **Target Filters**
->
+> 
 >   * `email = toLowerCase(source.email)`
 
 > **Transferred Properties**
->
+> 
 >   * `email = toLowerCase(source.email)`
 >   * `displayName = source.name`
 >   * `name = source.name`
@@ -544,11 +544,11 @@
 ### `heroku_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Heroku"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Heroku"`
 >   * `displayName = "Heroku"`
 >   * `_type = "heroku"`
@@ -562,11 +562,11 @@
 ### `knowbe4_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "KnowBe4"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "KnowBe4"`
 >   * `displayName = "KnowBe4"`
 >   * `_type = "knowbe4"`
@@ -580,11 +580,11 @@
 ### `carbonblack_psc_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Carbon Black"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Carbon Black"`
 >   * `displayName = "Carbon Black"`
 >   * `_type = "carbonblack"`
@@ -598,11 +598,11 @@
 ### `onelogin_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "OneLogin"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "OneLogin"`
 >   * `displayName = "OneLogin"`
 >   * `_type = "onelogin"`
@@ -616,11 +616,11 @@
 ### `airwatch_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "VMware"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "VMware"`
 >   * `displayName = "VMware"`
 >   * `_type = "vmware"`
@@ -634,11 +634,11 @@
 ### `jamf_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Jamf"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Jamf"`
 >   * `displayName = "Jamf"`
 >   * `_type = "jamf"`
@@ -652,11 +652,11 @@
 ### `veracode_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Veracode"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Veracode"`
 >   * `displayName = "Veracode"`
 >   * `_type = "veracode"`
@@ -664,11 +664,11 @@
 ### `veracode_scan <-PROVIDES- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Veracode"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Veracode"`
 >   * `displayName = "Veracode"`
 >   * `_type = "veracode"`
@@ -688,11 +688,11 @@
 ### `hackerone_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "HackerOne"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "HackerOne"`
 >   * `displayName = "HackerOne"`
 >   * `_type = "hackerone"`
@@ -706,11 +706,11 @@
 ### `okta_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Okta"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Okta"`
 >   * `displayName = "Okta"`
 >   * `_type = "okta"`
@@ -720,16 +720,16 @@
 ### `okta_user -IS-> Person`
 
 > **Source Filters**
->
+> 
 >   * `employeeType = !(bot|generic|service|shared|system)`
 >   * `userType = !(bot|generic|service|shared|system)`
 
 > **Target Filters**
->
+> 
 >   * `email = toLowerCase(source.login)`
 
 > **Transferred Properties**
->
+> 
 >   * `email = toLowerCase(source.login)`
 >   * `displayName = "{source.firstName} {source.lastName}"`
 >   * `name = "{source.firstName} {source.lastName}"`
@@ -752,27 +752,27 @@
 ### `okta_application -CONNECTS-> azure_account`
 
 > **Source Filters**
->
+> 
 >   * `appAccountType = office365_account`
 >   * `isSAMLApp = true`
 
 > **Target Filters**
->
+> 
 >   * `verifiedDomains = source.appDomain`
 
 ### `okta_application -CONNECTS-> source.appAccountType`
 
 > **Source Filters**
->
+> 
 >   * `isMultiInstanceApp = true`
 >   * `isSAMLApp = true`
 
 > **Target Filters**
->
+> 
 >   * `accountId = source.appAccountId`
 
 > **Transferred Properties**
->
+> 
 >   * `vendor = source.appVendorName`
 >   * `accountId = source.appAccountId`
 >   * `primaryDomain = [source.appAccountId,source.appDomain]`
@@ -783,16 +783,16 @@
 ### `okta_application -CONNECTS-> source.appAccountType`
 
 > **Source Filters**
->
+> 
 >   * `isMultiInstanceApp = true`
 >   * `isSAMLApp = true`
 
 > **Target Filters**
->
+> 
 >   * `primaryDomain = [source.appAccountId,source.appDomain]`
 
 > **Transferred Properties**
->
+> 
 >   * `vendor = source.appVendorName`
 >   * `accountId = source.appAccountId`
 >   * `primaryDomain = [source.appAccountId,source.appDomain]`
@@ -803,12 +803,12 @@
 ### `okta_application -CONNECTS-> Account`
 
 > **Source Filters**
->
+> 
 >   * `isMultiInstanceApp = false`
 >   * `isSAMLApp = true`
 
 > **Transferred Properties**
->
+> 
 >   * `vendor = source.appVendorName`
 >   * `name = source.appAccountType`
 >   * `displayName = source.appAccountType`
@@ -824,11 +824,11 @@
 ### `cloudflare_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Cloudflare"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Cloudflare"`
 >   * `displayName = "Cloudflare"`
 >   * `_type = "cloudflare"`
@@ -842,11 +842,11 @@
 ### `wazuh_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Wazuh"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Wazuh"`
 >   * `displayName = "Wazuh"`
 >   * `_type = "wazuh"`
@@ -860,11 +860,11 @@
 ### `jumpcloud_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "JumpCloud"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "JumpCloud"`
 >   * `displayName = "JumpCloud"`
 >   * `_type = "jumpcloud"`
@@ -874,16 +874,16 @@
 ### `jumpcloud_user -IS-> Person`
 
 > **Source Filters**
->
+> 
 >   * `employeeType = !(bot|generic|service|shared|system)`
 >   * `sambaServiceUser = !true`
 
 > **Target Filters**
->
+> 
 >   * `email = toLowerCase(source.email)`
 
 > **Transferred Properties**
->
+> 
 >   * `email = toLowerCase(source.email)`
 >   * `displayName = source.displayName`
 >   * `name = "{source.firstName} {source.lastName}"`
@@ -906,11 +906,11 @@
 ### `snipeit_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Snipe-IT"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Snipe-IT"`
 >   * `displayName = "Snipe-IT"`
 >   * `_type = "snipeit"`
@@ -926,11 +926,11 @@
 ### `tenable_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Tenable Cloud"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Tenable Cloud"`
 >   * `displayName = "Tenable Cloud"`
 >   * `_type = "tenable_cloud"`
@@ -944,11 +944,11 @@
 ### `azure_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Microsoft"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Microsoft"`
 >   * `displayName = "Microsoft"`
 >   * `_type = "azure"`
@@ -958,15 +958,15 @@
 ### `azure_user -IS-> Person`
 
 > **Source Filters**
->
+> 
 >   * `email = !null`
 
 > **Target Filters**
->
+> 
 >   * `email = toLowerCase(source.email)`
 
 > **Transferred Properties**
->
+> 
 >   * `email = toLowerCase(source.email)`
 >   * `displayName = source.name`
 >   * `name = source.name`
@@ -989,11 +989,11 @@
 ### `qualys_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Qualys"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Qualys"`
 >   * `displayName = "Qualys"`
 >   * `_type = "qualys"`
@@ -1003,30 +1003,30 @@
 ### `Finding <-HAS- aws_instance`
 
 > **Source Filters**
->
+> 
 >   * `ec2InstanceArn = !null`
 
 > **Target Filters**
->
+> 
 >   * `_key = source.ec2InstanceArn`
 
 > **Transferred Properties**
->
+> 
 >   * `_key = source.ec2InstanceArn`
 >   * `_type = "aws_instance"`
 
 ### `Finding <-HAS- Host`
 
 > **Source Filters**
->
+> 
 >   * `ec2InstanceArn = null`
 
 > **Target Filters**
->
+> 
 >   * `fqdn = source.fqdn`
 
 > **Transferred Properties**
->
+> 
 >   * `fqdn = source.fqdn`
 
 
@@ -1040,11 +1040,11 @@
 ### `trend_micro_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Trend Micro"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Trend Micro"`
 >   * `displayName = "Trend Micro"`
 >   * `_type = "trend_micro"`
@@ -1062,11 +1062,11 @@
 ### `google_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Google"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Google"`
 >   * `displayName = "Google"`
 >   * `_type = "google"`
@@ -1076,17 +1076,17 @@
 ### `google_user -IS-> Person`
 
 > **Source Filters**
->
+> 
 >   * `employeeType = !(bot|generic|service|shared|system)`
 >   * `userType = !(bot|generic|service|shared|system)`
 >   * `role = !(bot|generic|service|shared|system)`
 
 > **Target Filters**
->
+> 
 >   * `email = toLowerCase(source.email)`
 
 > **Transferred Properties**
->
+> 
 >   * `email = toLowerCase(source.email)`
 >   * `aliases = toLowerCase(source.aliases)`
 >   * `displayName = "{source.firstName} {source.lastName}"`
@@ -1111,11 +1111,11 @@
 ### `snowflake_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Snowflake"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Snowflake"`
 >   * `displayName = "Snowflake"`
 >   * `_type = "snowflake"`
@@ -1129,11 +1129,11 @@
 ### `cisco_maraki_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "Cisco Meraki"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "Cisco Meraki"`
 >   * `displayName = "Cisco Meraki"`
 >   * `_type = "cisco_maraki"`
@@ -1147,11 +1147,11 @@
 ### `npm_account <-HOSTS- Vendor`
 
 > **Target Filters**
->
+> 
 >   * `name = "npm"`
 
 > **Transferred Properties**
->
+> 
 >   * `name = "npm"`
 >   * `displayName = "npm"`
 >   * `_type = "npm"`
