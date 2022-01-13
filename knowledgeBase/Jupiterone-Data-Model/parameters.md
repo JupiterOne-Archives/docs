@@ -1,7 +1,6 @@
 # JupiterOne Parameter Service
 
-Previously, some use cases of JupiterOne required referencing a _literal_ value that is better suited to reference as a _variable_ or a **parameter**.  
-Some common values that are better stored and retrieved at runtime instead of saved literally include:
+Previously, some use cases of JupiterOne required referencing a _literal_ value that is better suited to reference as a _variable_ or a **parameter**.  Some common values that are better stored and retrieved at runtime instead of saved literally include:
 
 - Long or unwieldy values (such as a long URL)
 - Sensitive values (such as a private key or API token)
@@ -9,11 +8,9 @@ Some common values that are better stored and retrieved at runtime instead of sa
 
 A better alternative exists in the form of parameters that can be stored and referenced in rules and queries with a special syntax.
 
-<hr>
-
 ## Example
 
-In the use case of a very long URL, which may not be easily human-readable and may be referenced in many rules, queries, or questions, use:
+In the use case of a very long URL, which may not be easily human-readable and may be referenced in any rules, queries, or questions, use:
 
 ### Example: Parameters in J1QL
 
@@ -29,33 +26,24 @@ FIND Application WITH loginUrl = ${ param.longURL }
   }
 ```
 
-The service hydrates the value of `longUrl` or `secretApiKey` and evaluates it against the
-remote contents instead of the parameter expression. You can leverage this same pattern for
-different types of parameter types and comparisons, explained below. As shown above, the
-syntax between rules and queries differs slightly, but is consistent with variables (in the
-case of queries) and expressions (in the case of rules).
-
-<hr>
+The service hydrates the value of `longUrl` or `secretApiKey` and evaluates it against the remote contents instead of the parameter expression. You can leverage this same pattern for different types of parameter types and comparisons, explained below. As shown above, the syntax between rules and queries differs slightly, but is consistent with variables (in the case of queries) and expressions (in the case of rules).
 
 ## Usage: Schema
 
-Currently, the storage of parameters is only accessible from public-facing GraphQL endpoints.
-In the future, a user interface will be available to account users but, currently, only the API exists.
+Currently, the storage of parameters is only accessible from public-facing GraphQL endpoints. In the future, a user interface will be available to account users but, currently, only the API exists.
 
 A parameter is an object stored in the parameter-service which uses the following schema:
 
-| Property                        | Type                                                        | Description                                    |
-| ------------------------------- | ----------------------------------------------------------- | ---------------------------------------------- |
-| `name`                          | `string`                                                    | The parameter **key** or "name"                |
+| Property                        | Type                                     | Description                              |
+| ------------------------------- | ---------------------------------------- | ---------------------------------------- |
+| `name`                          | `string`                                 | The parameter **key** or "name"          |
 | `value`                         | `string` \| `number` \| `boolean` \| `list`[\*](#listtypes) | The parameter **value** to be stored/retrieved |
-| `secret`[\*](#secretparameters) | `boolean`                                                   | **Flag** to treat value as sensitive data      |
-| `lastUpdatedOn`                 | `date`                                                      | **Date** which indicates last update           |
+| `secret`[\*](#secretparameters) | `boolean`                                | **Flag** to treat value as sensitive data |
+| `lastUpdatedOn`                 | `date`                                   | **Date** which indicates last update     |
 
 #### List Types
 
 Lists are considered to be arrays of `string`, `number`, or `boolean` types
-
-<hr>
 
 ## Usage: API Operations and Queries
 
@@ -64,9 +52,9 @@ Lists are considered to be arrays of `string`, `number`, or `boolean` types
 | [parameter](#queryparameter)         | Individual `QUERY` for one parameter |
 | [parameterList](#queryparameterlist) | Bulk `QUERY` for parameters          |
 
-| Mutations:                                  |                                          |
-| ------------------------------------------- | ---------------------------------------- |
-| [setParameter](#mutationsetparameter)       | Create/update a remote parameter         |
+| Mutations:                               |                                          |
+| ---------------------------------------- | ---------------------------------------- |
+| [setParameter](#mutationsetparameter)    | Create/update a remote parameter         |
 | [deleteParameter](#mutationdeleteparameter) | Remove a parameter from the remote store |
 
 ## GraphQL API
@@ -122,11 +110,11 @@ query Query($limit: Int, $cursor: String) {
 
 ### Mutation: `setParameter`
 
-| _Argument_ | _Type_                                                      | _Required?_ | _Default_ |
-| ---------- | ----------------------------------------------------------- | ----------- | --------- |
-| name       | `string`                                                    | Yes         | n/a       |
+| _Argument_ | _Type_                                   | _Required?_ | _Default_ |
+| ---------- | ---------------------------------------- | ----------- | --------- |
+| name       | `string`                                 | Yes         | n/a       |
 | value      | `string` \| `number` \| `boolean` \| `list`[\*](#listtypes) | Yes         | n/a       |
-| secret     | `boolean`                                                   | No          | `false`   |
+| secret     | `boolean`                                | No          | `false`   |
 
 ### **_Returns_**
 
@@ -169,9 +157,9 @@ mutation Mutation($name: String!) {
 
 ## Parameter References
 
-You can reference parameters in [rules' configurations](./schemas/alert-rule.md) or any [query expression](./jupiterone-query-language.md), although the syntax is [slightly different](#example) between the two. `param` is a special keyword that, when invoked, fetches values from the parameter-storing service.
+You can reference parameters in [rules' configurations](./schemas/alert-rule.md) or any [query expression](./jupiterone-query-language.md), although the syntax is  [slightly different](#example) between the two. `param` is a special keyword that, when invoked, fetches values from the parameter-storing service.
 
-!!! warning
+**Warning!**
 In the case of both rules and queries, referencing a nonexistent parameter causes an error and abandon execution.
 
 ## Auditing & Security
@@ -180,8 +168,7 @@ All changes (including creation and deletion) of parameters is captured by an au
 
 ## Secret Parameters
 
-Any parameters set with `secret` to be `true` have write-only values and are not readable from the API. Only evaluations of the query can access
-these parameter values. This usage enables the storage of sensitive parameters such as API keys that JupiterOne users should not be able to see. All read access to these secret parameters contains redacted values, but metadata is able to be read.
+Any parameters set with `secret` to be `true` have write-only values and are not readable from the API. Only evaluations of the query can access these parameter values. This usage enables the storage of sensitive parameters such as API keys that JupiterOne users should not be able to see. All read access to these secret parameters contains redacted values, but metadata is able to be read.
 
-!!! note
+**Note:**
 By design, you cannot update a parameter that has had `secret` set to true to `secret: false` without also changing the value in the same request.
