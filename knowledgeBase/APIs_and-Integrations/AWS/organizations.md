@@ -12,7 +12,7 @@ Instructions*.
 ![aws-organizations-terraform-setup](../../assets/aws-organizations-terraform-setup.png)
 
 For more detailed instructions, see [How can I add/configure all the sub-accounts in my AWS Organization?](./faqs-aws.md) 
-in the AWS Specific Questions article. After all sub-accounts are configured correctly in AWS, if you check the option *Configure Organization Accounts*, data for each sub-account will be pulled into your JupiterOne account.
+in the AWS Specific Questions article. After all sub-accounts are configured correctly in AWS, if you check the option *Configure Organization Accounts*, data for each sub-account will be pulled into your JupiterOne account. 
 
 To exclude an AWS account, you can assign the tag `j1-integration:SKIP` to that specific account within AWS Organizations. See the question [How can I skip certain sub-accounts when auto-configuring my AWS Organization?](./faqs-aws.md) 
 
