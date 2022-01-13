@@ -1,9 +1,6 @@
-# JupiterOne Query Language (J1QL)
+# Introduction to JupiterOne Query Language (J1QL)
 
-The JupiterOne Query Language (J1QL) is a query language for querying data
-stored by JupiterOne. The execution of a J1QL query seamlessly queries a full
-text search, entity-relationship graph, and any other future data stores, as
-needed. By design, the query language does not intend to make these data store
+The JupiterOne Query Language (J1QL) is a query language for querying data stored by JupiterOne. The execution of a J1QL query seamlessly queries a full text search, entity-relationship graph, and any other future data stores, as needed. By design, the query language does not intend to make these data store
 boundaries obvious to query authors.
 
 ## Language Features
@@ -34,17 +31,17 @@ boundaries obvious to query authors.
 > The value is case sensitive in order to automatically determine if the query
 > needs to search for entities by the `class` or the `type`, without requiring
 > authors to specifically call it out.
->
+> 
 > Entity `class` is stored in `TitleCase` while `type` is stored in
 > `snake_case`.
->
+> 
 > A wildcard `*` can be used to find _any entity_.
->
+> 
 > For example:
->
+> 
 > - `FIND User` is equivalent to `FIND * with _class='User'`
 > - `FIND aws_iam_user` is equivalent to `FIND * with _type='aws_iam_user'`
->
+> 
 > Note that using the wildcard at the beginning of the query without any
 > pre-traversal filtering -- that is, `FIND * THAT ...` without `WITH` (see
 > below) -- may result in long query execution time.
@@ -54,13 +51,13 @@ boundaries obvious to query authors.
 `WITH` is followed by **property name and values** to filter entities.
 
 > Supported operators include:
->
+> 
 > - `=` or `!=` for **String** value, **Boolean**, **Number**, or **Date**
 >   comparison.
 > - `>` or `<` for **Number** or **Date** comparison.
->
+> 
 > Note:
->
+> 
 > - The property names and values are _case sensitive_.
 > - **String** values must be wrapped in either single or double quotes -
 >   `"value"` or `'value'`.
@@ -76,10 +73,10 @@ boundaries obvious to query authors.
 `AND`, `OR` for multiple property comparisons are supported.
 
 > For example:
->
+> 
 > ```j1ql
 > FIND DataStore WITH encrypted = false AND (tag.Production = true and classification = 'critical')
->
+> 
 > FIND user_endpoint WITH platform = 'darwin' OR platform = 'linux'
 > ```
 
@@ -87,9 +84,9 @@ boundaries obvious to query authors.
 
 > ```j1ql
 > FIND user_endpoint WITH platform = ('darwin' OR 'linux')
->
+> 
 > Find Host WITH tag.Environment = ('A' or 'B' or 'C')
->
+> 
 > Find DataStore WITH classification != ('critical' or 'restricted')
 > ```
 
@@ -130,32 +127,32 @@ When using a _negated_ "shorthand" filter, such as with the `!=` comparison, you
 > between two connected entity nodes in the graph. This relationship verb/class
 > value is stored in `ALLCAPS`, however, it is _case insensitive_ in the query,
 > as the query language will automatically convert it.
->
+> 
 > The predefined keyword `RELATES TO` can be used to find _any_ relationship
 > between two nodes. For example:
->
+> 
 > `FIND Service THAT RELATES TO Account`
 
 `( | )` can be used to select entities or relationships of different class/type.
 
 > For example, `FIND (Host|Device) WITH ipAddress='10.50.2.17'` is equivalent to
 > and much simpler than the following:
->
+> 
 > ```j1ql
 > FIND * WITH
 >   (_class='Host' OR _class='Device') AND ipAddress='10.50.2.17'
 > ```
->
+> 
 > It is fine to mix entity class and type values together. For example:
->
+> 
 > `FIND (Database|aws_s3_bucket)`
->
+> 
 > It can be used on Relationship verbs as well. For example:
->
+> 
 > `FIND HostAgent THAT (MONITORS|PROTECTS) Host`
->
+> 
 > Or both Entity and Relationships together. For example:
->
+> 
 > `FIND * THAT (ALLOWS|PERMITS) (Internet|Everyone)`
 
 #### Bidirectional verbs by default
@@ -163,9 +160,9 @@ When using a _negated_ "shorthand" filter, such as with the `!=` comparison, you
 **Relationship verbs** are bidirectional by default
 
 > Both queries yield the same results:
->
+> 
 > `FIND User THAT HAS Device`
->
+> 
 > `FIND Device THAT HAS User`
 
 #### Relationship direction operators
@@ -173,15 +170,15 @@ When using a _negated_ "shorthand" filter, such as with the `!=` comparison, you
 **Relationship direction** can be specified with double arrows ( `<<` or `>>`) _after_ the verb
 
 > Finds Entities with a `HAS` relationship from User to Device:
->
+> 
 > `FIND User THAT HAS >> Device`
->
+> 
 > `Find Device THAT HAS << User`
 
 > Finds Entities with a `HAS` relationship from Device to User:
->
+> 
 > `FIND User THAT HAS << Device`
->
+> 
 > `Find Device THAT HAS >> User`
 
 #### AS
@@ -190,12 +187,12 @@ When using a _negated_ "shorthand" filter, such as with the `!=` comparison, you
 
 > Defines an aliased selector to use in the `WHERE` or `RETURN` portion of a
 > query. For example:
->
+> 
 > - **Without** selectors: `FIND Firewall THAT ALLOWS *`
 > - **With** selectors: `FIND Firewall AS fw THAT ALLOWS * AS n`
->
+> 
 > Selectors can also be defined on a relationship:
->
+> 
 > - `FIND Firewall AS fw THAT ALLOWS AS rule * AS n`
 
 #### WHERE
@@ -203,7 +200,7 @@ When using a _negated_ "shorthand" filter, such as with the `!=` comparison, you
 `WHERE` is used for post-traversal filtering (requires selector)
 
 > From the example above:
->
+> 
 > ```j1ql
 > FIND Firewall as fw that ALLOWS as rule * as n
 >   WHERE rule.ingress=true AND
@@ -218,26 +215,26 @@ When using a _negated_ "shorthand" filter, such as with the `!=` comparison, you
 > traversal is returned. For example, `Find User that IS Person` returns all
 > matching `User` entities and their properties, but not the related `Person`
 > entities.
->
+> 
 > To return properties from both the `User` and `Person` entities, define a
 > selector for each and use them in the `RETURN` clause:
->
+> 
 > ```j1ql
 > FIND User as u that IS Person as p
 >   RETURN u.username, p.firstName, p.lastName, p.email
 > ```
->
+> 
 > If a property name contains special characters (e.g. `-` or `:`), you can
 > wrap the property name in `[]`.
 > For example: `RETURN p.[special-name]='something'`
->
+> 
 > Wildcard can be used to return all properties. For example:
->
+> 
 > ```j1ql
 > FIND User as u that IS Person as p
 > RETURN u.*, p.*
 > ```
->
+> 
 > Using a wildcard to return all properties also returns all metadata
 > properties associated with the selected entities. This feature is
 > useful when you want to perform an analysis that involves metadata.
@@ -250,16 +247,16 @@ is considered a 'filler' word that is ignored by the interpreter.
 > The keyword `TO` is supported in J1QL so that the query can be read as a
 > natural language question. Although `TO` can be used in a query, if omitted,
 > the returned result will be the same.
->
+> 
 > The following are some example relationship verbs where `TO` could be used:
->
+> 
 > - `DEPLOYED TO`
 > - `CONTRIBUTES TO`
 > - `CONNECTS TO`
 > - `ASSIGNED TO`
->
+> 
 > The following queries return the same result:
->
+> 
 > ```j1ql
 > FIND User THAT CONTRIBUTES TO CodeRepo
 > FIND User THAT CONTRIBUTES CodeRepo
@@ -269,11 +266,7 @@ is considered a 'filler' word that is ignored by the interpreter.
 
 ## Filtering Behavior
 
-JupiterOne aligns its query language with De Morgan's Law. This standard
-mathematical theory is two sets of rules or laws developed from Boolean expressions
-for AND, OR, and NOT gates, using two input variables, A and B. These two rules or
-theorems allow the input variables to be negated and converted from one form of
-a Boolean function into an opposite form. J1QL uses this law in filtering the results of queries.
+JupiterOne aligns its query language with De Morgan's Law. This standard mathematical theory is two sets of rules or laws developed from Boolean expressions for AND, OR, and NOT gates, using two input variables, A and B. These two rules or theorems allow the input variables to be negated and converted from one form of a Boolean function into an opposite form. J1QL uses this law in filtering the results of queries.
 
 When you use a `!=` followed by a set of arguments offset by parentheses, such as
 `!= (A or B or C)`, it is equivalent to the expression `!= A and != B and != C`.
@@ -318,21 +311,19 @@ You can filter multiple property values like this (similar to `IN` in SQL):
 
 > ```j1ql
 > FIND user_endpoint WITH platform = ('darwin' OR 'linux')
->
+> 
 > Find Host WITH tag.Environment = ('A' or 'B' or 'C')
->
+> 
 > Find DataStore WITH classification != ('critical' and 'restricted')
 > ```
 
 Property filters are evaluated according the following **order of operations**:
 
-> Parenthesis first, comparisons (`=`, `>=`, `<=`, `!=`) after, `AND` and then
-> `OR`.
+> Parenthesis first, comparisons (`=`, `>=`, `<=`, `!=`) after, `AND` and then `OR`.
 
 ## String Comparisons
 
-J1QL supports the use of the following operators for comparisons of
-strings stored either as a single string or multi-value field. In addition to `=` and `!=`:
+J1QL supports the use of the following operators for comparisons of strings stored either as a single string or multi-value field. In addition to `=` and `!=`:
 
 - `~=` : contains
 - `^=` : starts with
@@ -355,8 +346,8 @@ The above query returns all entities of the `Person` class that have a `firstNam
 Find Person with email='a@b.com'
 ```
 
-The above query returns all assets of the `Person` class that have a `Person.email'
-of 'a@b.com' or ['a@b.com', 'x@y.com'].
+The above query returns all assets of the `Person` class that have a `Person.email' of 'a@b.com' or 
+['a@b.com', 'x@y.com'].
 
 ```j1jl
 Find Person with email~='.com'
@@ -370,29 +361,21 @@ Find Host with tag.AccountName~='demo'
 
 The above query returns entities of the `Host` class with any of the following examples of `tag.AccountName`: `xyz_demo`, `demo_xyz`, `abc_demo_xyz`.
 
-!!! warning
-These string evaluations are case-sensitive. So `'Demo'` and `'demo'`
-yields distinct sets of results.
+**Note:** These string evaluations are case-sensitive. So `'Demo'` and `'demo'`yield distinct sets of results.
 
 ## Parameters
 
-The query language supports [parameters](./parameters.md) for referencing values
-stored on the server side. Parameter expressions are allowed in places
-that could otherwise include a literal value.
+The query language supports [parameters](./parameters.md) for referencing values stored on the server side. Parameter expressions are allowed in places that could otherwise include a literal value.
 
 ```j1ql
 FIND Application WITH loginUrl = ${ param.loginUrl }
 ```
 
-Currently, there is no support for referencing parameters that contain arrays,
-even though the rules and alerts do allow this functionality.
-Future iterations of the J1QL may contain array-traversing operators that immediately work with parameters.
+Currently, there is no support for referencing parameters that contain arrays, even though the rules and alerts do allow this functionality. Future iterations of the J1QL may contain array-traversing operators that immediately work with parameters.
 
 ## Date Comparisons
 
-The query language supports both relative and static data comparisons on any
-timestamp property. The timestamp property used for date comparison must
-be stored as an epoch number in milliseconds.
+The query language supports both relative and static data comparisons on any timestamp property. The timestamp property used for date comparison must be stored as an epoch number in milliseconds.
 
 ### Relative Date Comparison
 
@@ -439,27 +422,20 @@ The static date must be specified in ISO ISO 8601 format:
 
 `LIMIT` is followed by a number to indicate how many results to return.
 
-In the example below, the query sorts users by their username, and returns the
-11th-15th users from the sorted list.
+In the example below, the query sorts users by their username, and returns the 11th-15th users from the sorted list.
 
 ```j1ql
 FIND Person WITH manager = undefined as u
   ORDER BY u.username SKIP 10 LIMIT 5
 ```
 
-!!! note
-Query returns up to 250 results by default if `LIMIT` is not set.
+**Note:** Query returns up to 250 results by default if `LIMIT` is not set.
 
 ## Aggregation Functions: `COUNT`, `MIN`, `MAX`, `AVG` and `SUM`
 
-It is useful to be able to perform calculations on data that have been returned
-from the graph. Being able to perform queries to retrieve a count, min, max or
-perform other calculations can be quite valuable and gives users more ways to
-understand their data.
+It is useful to be able to perform calculations on data that have been returned from the graph. Being able to perform queries to retrieve a count, min, max or perform other calculations can be quite valuable and gives users more ways to understand their data.
 
-The ability to perform aggregations are exposed as **Aggregating Functions**.
-These are functions that can be applied to a given set of data that was
-requested via the `RETURN` clause.
+The ability to perform aggregations are exposed as **Aggregating Functions**. These are functions that can be applied to a given set of data that was requested via the `RETURN` clause.
 
 The following aggregating functions are supported:
 
@@ -497,24 +473,18 @@ See more details and examples [below](#How-aggregations-are-applied).
 _Future development:_
 
 > There are plans to support the following aggregations:
->
-> - `count(*)` - for determining the count of all other entities related to a
->   given entity.
+> 
+> - `count(*)` - for determining the count of all other entities related to a given entity.
 
 ## Scalar Functions: `CONCAT`
 
-The ability to format and/or to perform calculations on row level columns can be
-accomplished through **Scalar Functions**.
+The ability to format and/or to perform calculations on row level columns can be accomplished through **Scalar Functions**.
 
 ### `CONCAT`
 
-The scalar function `CONCAT()` empowers users to concatenate or join one or more
-values into a single string. Currently, `CONCAT` can be used in the `RETURN` to
-clause of your function, will future development planned for use in the `WHERE` clause.
+The scalar function `CONCAT()` empowers users to concatenate or join one or more values into a single string. Currently, `CONCAT` can be used in the `RETURN` to clause of your function, will future development planned for use in the `WHERE` clause.
 
-> Note: If this function receives a number or boolean value, the `concat`
-> intuitively converts these values to strings. Additionally, if `concat`
-> processes an empty selector field, it evaluates that field as an empty string.
+> Note: If this function receives a number or boolean value, the `concat` intuitively converts these values to strings. Additionally, if `concat` processes an empty selector field, it evaluates that field as an empty string.
 
 `CONCAT` supports the following parameters, separated by comma:
 
@@ -534,9 +504,7 @@ RETURN
 
 ## De-duplicate results with `UNIQUE` and `RETURN`
 
-Sometimes a query may generate duplicate results. This occurs if there are
-multiple paths of traversals (i.e. relationships) between the vertices (i.e.
-entities) referenced in a particular query.
+Sometimes a query may generate duplicate results. This occurs if there are multiple paths of traversals (i.e. relationships) between the vertices (i.e. entities) referenced in a particular query.
 
 Take the example below:
 
@@ -547,14 +515,9 @@ Find aws_eni with publicIpAddress != undefined as nic
 where nic.securityGroupIds = sg.groupId
 ```
 
-This query attempts to find network interfaces that are associated with a
-security group that allows public facing AWS EC2 instances. In this case, there
-could be multiple security group rules allowing access to/from the Internet,
-which may result in duplicate data in the query result because each individual
-traversal is a successful match to the query.
+This query attempts to find network interfaces that are associated with a security group that allows public facing AWS EC2 instances. In this case, there could be multiple security group rules allowing access to/from the Internet, which may result in duplicate data in the query result because each individual traversal is a successful match to the query.
 
-You can use a combination of `UNIQUE` and `RETURN` keywords to filter out the
-duplicates. The query above can be modified as:
+You can use a combination of `UNIQUE` and `RETURN` keywords to filter out the duplicates. The query above can be modified as:
 
 ```j1ql
 Find UNIQUE aws_eni with publicIpAddress != undefined as nic
@@ -581,8 +544,7 @@ J1QL supports basic math operations on the return values.
 
   > parenthesis -> multiplication or division -> addition or subtraction
 
-- The operation only works against number values. It does not work against
-  strings or strings that represent numbers:
+- The operation only works against number values. It does not work against strings or strings that represent numbers:
 
   > `'1'` does not work, it has to be `1`
 
@@ -606,17 +568,10 @@ Return
 
 ## Optional traversals (Beta)
 
-!!! note
-Optional traversals is a beta feature and the syntax for describing optional
-traversals may change in the future to help improve clarity.
-Any changes made to the language will be backwards compatible.
+**Note:** Optional traversals is a beta feature and the syntax for describing optional traversals may change in the future to help improve clarity. Any changes made to the language will be backwards compatible.
 
-In situations where it is useful to optionally find related entities
-and include them in the results, J1QL allows for portions of a query to be
-wrapped with a `(` and `)?` to mark that section of the query as an optional
-traversal. This allows for related entities from a graph
-traversal to be combined and for additional constraints to be applied
-to the set of entities.
+In situations where it is useful to optionally find related entities and include them in the results, J1QL allows for portions of a query to be wrapped with a `(` and `)?` to mark that section of the query as an optional
+traversal. This allows for related entities from a graph traversal to be combined and for additional constraints to be applied to the set of entities.
 
 Example query:
 
@@ -624,23 +579,15 @@ Example query:
 Find User (that IS Person)?
 ```
 
-In the above example, we search for `User` entities
-and optionally traverse an `IS` relationship to a `Person` entity.
-If the relationship exists, the related `Person` entities are
-added to the list of results.
+In the above example, we search for `User` entities and optionally traverse an `IS` relationship to a `Person` entity. If the relationship exists, the related `Person` entities are added to the list of results.
 
-**Relationships can still be chained within an optional traversal.** The query
-below will return a list of `Device` entities owned by a `Person` that is a `User`
-and `User` entities that do not have the indirect relationship to the `Device`.
+**Relationships can still be chained within an optional traversal.** The query below will return a list of `Device` entities owned by a `Person` that is a `User` and `User` entities that do not have the indirect relationship to the `Device`.
 
 ```j1ql
 Find User (that IS Person that OWNS Device)?
 ```
 
-**Relationships that come after an optional traversal are processed on the
-combined results.** This query searches for Users or UserGroups that directly
-assigned an AccessPolicy granting admin permissions to certain resources,
-or via an AccessRole assigned to the User/UserGroup.
+**Relationships that come after an optional traversal are processed on the combined results.** This query searches for Users or UserGroups that directly assigned an AccessPolicy granting admin permissions to certain resources, or via an AccessRole assigned to the User/UserGroup.
 
 ```j1ql
 Find (User | UserGroup)
@@ -651,14 +598,9 @@ where permission.admin=true
 return TREE
 ```
 
-**Optional traversals can also be chained.** The combined results from
-each previous optional traversal will be used in the next optional
-traversal.
+**Optional traversals can also be chained.** The combined results from each previous optional traversal will be used in the next optional traversal.
 
-The below query will find `User` entities, `Person` entities
-that have an `IS` relationship to the `User` and `Device` entites
-that are owned by `Person` and `User` entities from the previous
-optional traversal.
+The below query will find `User` entities, `Person` entities that have an `IS` relationship to the `User` and `Device` entities that are owned by `Person` and `User` entities from the previous optional traversal.
 
 ```j1ql
 Find User
@@ -667,8 +609,7 @@ Find User
 Return User, Person, Device
 ```
 
-**The optional traversals can also be aliased.** This allows the union set of
-entities to be used when returning results and when applying constraints.
+**The optional traversals can also be aliased.** This allows the union set of entities to be used when returning results and when applying constraints.
 
 ```j1ql
 Find User
@@ -678,9 +619,7 @@ Where userOrPerson.email = 'test@jupiterone.com'
 Return userOrPerson, Device
 ```
 
-Traversals performed within the `(` and `)?` function as normal
-graph traversals, so `WITH` filters can still be applied
-to assist with narrowing results.
+Traversals performed within the `(` and `)?` function as normal graph traversals, so `WITH` filters can still be applied to assist with narrowing results.
 
 ```j1ql
 Find User with name = 'test'
@@ -691,19 +630,16 @@ return userOrPerson, Device
 
 ## Smart classes (beta)
 
-Smart classes are a mechanism for applying a set of entity filters with a
-shorthand syntax. There are two categories of smart classes:
+Smart classes are a mechanism for applying a set of entity filters with a shorthand syntax. There are two categories of smart classes:
 
 1. JupiterOne application classes
-   Currently, the only supported instance is `#CriticalAsset`, which maps to
-   the configured definition of critical assets in the Assets app.
+   Currently, the only supported instance is `#CriticalAsset`, which maps to the configured definition of critical assets in the Assets app.
 
    ```j1ql
    FIND #CriticalAsset that has Finding
    ```
 
-   The default definition of a critical asset is an entity with one of the
-   following classes:
+   The default definition of a critical asset is an entity with one of the following classes:
 
    - Application
    - CodeRepo
@@ -717,30 +653,25 @@ shorthand syntax. There are two categories of smart classes:
    - tag.Production = 'true'
    - classification = 'critical'
 
-   Adminitrators define critical assets in the Assets app by
-   clicking the gear icon in the Assets title bar.
+   Administrators define critical assets in the Assets app by clicking the gear icon in the Assets title bar.
 
 2. Tag-derived values
-   These values match entities where the tags of an entity contain the provided smart
-   class (case-sensitive).
+   These values match entities where the tags of an entity contain the provided smart class (case-sensitive).
 
    ```j1ql
    FIND #Production Application
    ```
 
-   Tags are populated via integrations, and can also be added directly to an entity
-   via J1 as enriched data. Note that, for key-value pair tags, the tag value must
-   be `true` to match the smart class.
+   Tags are populated via integrations, and can also be added directly to an entity via J1 as enriched data. Note that, for key-value pair tags, the tag value must be `true` to match the smart class.
 
-Assuming you have defined a critical asset as per the above default, here are some
-example smart class queries and their equivalencies.
+Assuming you have defined a critical asset as per the above default, here are some example smart class queries and their equivalencies.
 
-| Smart class Query                             | Equivalent Expanded Query                                                                                                                                                                                        |
-| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `FIND #CriticalAsset`                         | `FIND * WITH ((_class = ('Application' or 'CodeRepo' or 'DataStore' or 'Function' or 'Host' or 'Logs') and (tag.Production = true and classification = 'critical')) or tags = 'CriticalAsset'`)                  |
-| `FIND #CriticalAsset THAT HAS Finding`        | `FIND * WITH ((_class = ('Application' or 'CodeRepo' or 'DataStore' or 'Function' or 'Host' or 'Logs') and (tag.Production = true and classification = 'critical')) or tags = 'CriticalAsset') THAT HAS Finding` |
+| Smart class Query                        | Equivalent Expanded Query                |
+| ---------------------------------------- | ---------------------------------------- |
+| `FIND #CriticalAsset`                    | `FIND * WITH ((_class = ('Application' or 'CodeRepo' or 'DataStore' or 'Function' or 'Host' or 'Logs') and (tag.Production = true and classification = 'critical')) or tags = 'CriticalAsset'`) |
+| `FIND #CriticalAsset THAT HAS Finding`   | `FIND * WITH ((_class = ('Application' or 'CodeRepo' or 'DataStore' or 'Function' or 'Host' or 'Logs') and (tag.Production = true and classification = 'critical')) or tags = 'CriticalAsset') THAT HAS Finding` |
 | `FIND Finding THAT RELATES TO #CriticalAsset` | `FIND Finding THAT HAS * WITH ((_class = ('Application' or 'CodeRepo' or 'DataStore' or 'Function' or 'Host' or 'Logs') and (tag.Production = true and classification = 'critical')) or tags = 'CriticalAsset')` |
-| `FIND #Production Application`                | `FIND Application WITH tags = 'Production'`                                                                                                                                                                      |
+| `FIND #Production Application`           | `FIND Application WITH tags = 'Production'` |
 
 Returned entities reflect their underlying classes, not the queried smart class.
 
@@ -748,10 +679,7 @@ Returned entities reflect their underlying classes, not the queried smart class.
 
 More example queries are shown below.
 
-These examples, and same with all packaged queries provided in the JupiterOne
-web apps, are constructed in a way to de-emphasize the query keywords (they are
-_case insensitive_) but rather to highlight the relationships -- the operational
-context and significance of each query.
+These examples, and same with all packaged queries provided in the JupiterOne web apps, are constructed in a way to de-emphasize the query keywords (they are _case insensitive_) but rather to highlight the relationships -- the operational context and significance of each query.
 
 ### Simple Examples
 
@@ -815,9 +743,7 @@ Find "127.0.0.1" with _class='Host'
 
 ### Negating relationships
 
-It's useful to know if entities do not have a relationship with another entity.
-To achieve this, relationships can be negated by prefixing a relationship with
-an exclamation point: `!`.
+It's useful to know if entities do not have a relationship with another entity. To achieve this, relationships can be negated by prefixing a relationship with an exclamation point: `!`.
 
 ```j1ql
 Find User that !IS Person
@@ -829,38 +755,32 @@ Find User that !IS Person
 Find User that !RELATES TO Person
 ```
 
-This finds EBS volumes that are not in use. The query finds relationships
-regardless of the edge direction, therefore the `!USES` in the below query
-translates more directly as **"is not used by"**.
+This finds EBS volumes that are not in use. The query finds relationships regardless of the edge direction, therefore the `!USES` in the below query translates more directly as **"is not used by"**.
 
 ```j1ql
 Find aws_ebs_volume that !USES aws_instance
 ```
 
-It is important to note that the above query returns `aws_ebs_volume` entities.
-If the query were constructed the other way around --
+It is important to note that the above query returns `aws_ebs_volume` entities. If the query were constructed the other way around --
 
 ```j1ql
 Find aws_instance that !USES aws_ebs_volume
 ```
 
--- it would return a list of `aws_instances`, if it does not have an EBS
-volume attached.
+-- it would return a list of `aws_instances`, if it does not have an EBS volume attached.
 
 ### More complex queries
 
 Find critical data stored outside of production environments.
 
-This assumes you have the appropriate tags (Classification and Production) on
-your entities.
+This assumes you have the appropriate tags (Classification and Production) on your entities.
 
 ```j1ql
 Find DataStore with tag.Classification='critical'
   that HAS * with tag.Production='false'
 ```
 
-Find all users and their devices without the required endpoint protection agent
-installed:
+Find all users and their devices without the required endpoint protection agent installed:
 
 ```j1ql
 Find Person that has Device that !protects HostAgent
@@ -890,19 +810,15 @@ Find User as U
     AWS.name as awsAccount
 ```
 
-### Using metadata
+### Using Metadata
 
-Filtering on metadata can often be useful in performing security analysis. The
-example below is used to find network or host entities that did _not_ get
-ingested by an integration instance. In other words, these are entities that are
-likely "external" or "foreign" to the environment.
+Filtering on metadata can often be useful in performing security analysis. The example below is used to find network or host entities that did _not_ get ingested by an integration instance. In other words, these are entities that are likely "external" or "foreign" to the environment.
 
 ```j1ql
 Find (Network|Host) with _IntegrationInstanceId = undefined
 ```
 
-The following example finds all brand new code repos created within the last 48
-hours:
+The following example finds all brand new code repos created within the last 48 hours:
 
 ```j1ql
 Find CodeRepo with _beginOn > date.now-24hr and _version=1
@@ -920,14 +836,11 @@ There are three different ways for aggregations to be applied
 - on a portion of the customer's subgraph relative to a set of entities (groupings)
 - on data for a single entity
 
-The way aggregations happen are determined by what is requested via
-the query language's `return` clause.
+The way aggregations happen are determined by what is requested via the query language's `return` clause.
 
 #### Aggregations relative to a subgraph
 
-If all selectors are aggregations, then all aggregations will be
-scoped to the entire traversal that the user has requested and not
-tied to individual entities.
+If all selectors are aggregations, then all aggregations will be scoped to the entire traversal that the user has requested and not tied to individual entities.
 
 Ex. `return count(acct), count(user)`:
 
@@ -938,9 +851,7 @@ return count(acct), count(user)
 
 #### Aggregations relative to a grouping by entity attribute
 
-If selectors are provided that do not use an aggregation function,
-they will be used as a _grouping key_.
-This key will be used to apply the aggregations relative to the data chosen.
+If selectors are provided that do not use an aggregation function, they will be used as a _grouping key_. This key will be used to apply the aggregations relative to the data chosen.
 
 Ex. `return acct._type, count(user)`:
 
@@ -951,8 +862,7 @@ return acct._type, count(user)
 
 #### Aggregations relative to a grouping by multiple attributes
 
-If multiple attributes of a selector are included the return function, the last
-one before the aggregation will be used as the _grouping key_.
+If multiple attributes of a selector are included the return function, the last one before the aggregation will be used as the _grouping key_.
 
 Ex. `return acct._type, acct.displayName, count(user)`:
 
@@ -988,14 +898,11 @@ the result will be:
 }
 ```
 
-In this case, the `team.name` acts as the key that groups aggregations together.
-So `count(user)` finds the count of users relative to each team.
+In this case, the `team.name` acts as the key that groups aggregations together. So `count(user)` finds the count of users relative to each team.
 
 ##### Multiple grouping keys
 
-When there are return selectors that are
-not aggregating functions, the aggregating functions will be performed
-relative to the identifier that it is closer to in the traversal.
+When there are return selectors that are not aggregating functions, the aggregating functions will be performed relative to the identifier that it is closer to in the traversal.
 
 Example:
 
@@ -1010,9 +917,7 @@ return
   project.name, team.name, count(user)
 ```
 
-The `count(user)` aggregation will be performed relative to
-the team, because the `team` traversal is closer to the `user` traversal
-in the query.
+The `count(user)` aggregation will be performed relative to the team, because the `team` traversal is closer to the `user` traversal in the query.
 
 Example result:
 
@@ -1052,9 +957,7 @@ Example result:
 
 _Future development:_
 
-If a selector is specified and an aggregating function is applied to
-that selector's source identifier in some way,
-aggregations will happen locally to the element.
+If a selector is specified and an aggregating function is applied to that selector's source identifier in some way, aggregations will happen locally to the element.
 
 Example:
 
@@ -1096,3 +999,4 @@ Example result:
   ]
 }
 ```
+
