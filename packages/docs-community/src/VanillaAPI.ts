@@ -453,10 +453,9 @@ export const uploadImageAndReturnUrl = async (
 ): Promise<string> => {
   const httpClient = new HttpClient();
   const form = new FormData();
-  const mediaLocation = imagePath.substring(3);
+  const mediaLocation = imagePath.replace(/((\.\.\/){1,})/g,'')
   const mediaLocationChopped = imagePath.split("/");
   const imageName = mediaLocationChopped[mediaLocationChopped.length - 1];
-
   const fileLocation = path.join(
     __dirname,
     `../../../${PATH_OF_DIRECTORY_TO_WATCH}/`,

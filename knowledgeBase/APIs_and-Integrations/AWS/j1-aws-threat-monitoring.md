@@ -17,7 +17,7 @@ JupiterOne integrates with both AWS Inspector and GuardDuty out-of-the-box to pr
 
 You can see all **open findings** in the **Alerts** app.
 
-![alerts-findings](../../assets/alerts-findings-grid.png)
+![alerts-findings](../../assets/alerts-findings-grid.png) 
 
 Expanding a finding will give you a visual graph showing the resources the selected finding is related to. You can interact with the graph and drill down to see additional relationships and context to perform further analysis.
 
@@ -39,7 +39,7 @@ Here is an example graph returned by the above query:
 
 ![guardduty-inspector-finding-correlation](../../assets/graph-guardduty-inspector-finding-correlation.png)
 
-You can correlate Inspector and GuardDuty findings with other security scanner findings as well, if you have those integrations configured.
+You can correlate Inspector and GuardDuty findings with other security scanner findings as well, if you have those integrations configured. 
 
 You can also set up alerts and receive notification on certain findings. For example, the following query can be used to set up an alert rule for high risk findings that impact production resources:
 
