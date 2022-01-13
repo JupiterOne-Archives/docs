@@ -1,13 +1,10 @@
 # Compliance Gap Analysis
 
-JupiterOne compliance platform is capable of performing automated gap analysis
-based on the query or queries saved in mapped questions. Here is how it works.
+JupiterOne compliance platform is capable of performing automated gap analysis based on the query or queries saved in mapped questions.
 
 ## Query Results Indicator
 
-Each query in a saved question has a property to indiciate whether the results
-from the query are good, bad, unknown, or informative. This can be configured
-either in the app UI or via the API.
+Each query in a saved question has a property to indicate whether the results from the query are good, bad, unknown, or informative. This can be configured either in the app UI or via the API.
 
 Here is a screenshot of the app UI configuration:
 
@@ -77,7 +74,7 @@ Queries with `resultsAre` property in a question that is mapped to a compliance 
 
 > `INFORMATIVE` queries are not used in compliance gap analysis.
 
-_A question can have one or all of the above named queries._
+A question can have one or all of the above named queries.
 
 ## Gap Analysis Status
 
