@@ -5,14 +5,10 @@ standard/framework or a security questionnaire in either JSON or CSV format.
 
 In the Compliance app:
 
-- click ![+][plus-icon] **Add standard or questionnaire**
+- click ![+](https://raw.githubusercontent.com/feathericons/feather/master/icons/plus-circle.svg?sanitize=true) **Add standard or questionnaire**
 - copy/paste the JSON/CSV content into the modal view
 
-[plus-icon]: https://raw.githubusercontent.com/feathericons/feather/master/icons/plus-circle.svg?sanitize=true
-
-See this github repository for example compliance standards in JSON format:
-
-<https://github.com/JupiterOne/security-policy-templates/tree/master/templates/standards>
+See [this GitHub repository](https://github.com/JupiterOne/security-policy-templates/tree/master/templates/standards) for example compliance standards in JSON format.
 
 > Note: You must have obtained the necessary license and permission to use the
 > framework for your organization. **Licensing is not provided by JupiterOne**,
@@ -20,12 +16,11 @@ See this github repository for example compliance standards in JSON format:
 
 ## JSON Structure
 
-See the schema documented [here](../APIs_and-integrations/policies-compliance.md).
+See the schema documented [here](./policies-compliance.md).
 
 ## CSV Import
 
-A compliance standard specification can be imported from a CSV, as long as the
-CSV header contains the following as column headers:
+A compliance standard specification can be imported from a CSV, as long as the CSV header contains the following as column headers:
 
 - `ID`
 - `Requirement` or `Control`
