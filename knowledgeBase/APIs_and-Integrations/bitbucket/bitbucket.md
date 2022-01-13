@@ -22,7 +22,7 @@
 
 - JupiterOne requires a Bitbucket OAuth Consumer in the target Workspace. You
   need permission to create an OAuth Consumer.
-- You must have permission in JupiterOne to install new integrations.
+- You must have permission in JupiterOne to install new integrations. 
 
 ## Support
 
@@ -43,10 +43,10 @@ If you need help with this integration, please contact
 
 4. Click the Add consumer button.
 
-![BitBucket OAuth Example Config][1]
+![BitBucket OAuth Example Config](../../assets/integration-bitbucket-oauth-consumer-settings.png)
 
-_Pull requests read permission is needed to ingest PRs. The PR entities serve as
-code review records for security and compliance._
+Pull requests read permission is needed to ingest PRs. The PR entities serve as
+code review records for security and compliance.
 
 5. Click Save.
 
@@ -105,5 +105,3 @@ The following relationships are created/mapped:
 | `bitbucket_user`      | **OPENED**            | `bitbucket_pull_request` |
 | `bitbucket_user`      | **REVIEWED**          | `bitbucket_pull_request` |
 | `bitbucket_user`      | **APPROVED**          | `bitbucket_pull_request` |
-
-[1]: ../../assets/integration-bitbucket-oauth-consumer-settings.png
