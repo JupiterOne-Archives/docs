@@ -45,7 +45,8 @@ return
 
 <!--THE FOLLOW SECTION IS AUTO-GENERATED. DO NOT EDIT.-->
 <!--BEGIN Entity Billing Reference table-->
-??? reference "Billable Entities Table"
+
+<details><summary>Billable Entities Table</summary>
 
     Entity             | Description             | Billable
     ------             | -----------             | --------
@@ -140,7 +141,7 @@ return
     \[System Mapped Entities\]   | Entities with `_source='system-mapper'`   | No 
     \[System Internal Entities\] | Entities with `_source='system-internal'` | No 
     \[Custom Created Entities\]  | Entities created with a custom-defined _class or _type | Yes 
-
+</details>
 <!--END Entity Billing Reference table-->
 
 ## What are the limitations of the Community Edition of JupiterOne? 
