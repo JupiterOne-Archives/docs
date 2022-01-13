@@ -20,7 +20,7 @@ You must be a member of the Administrators group to perform configurations.
 
 1. Log in to your JupiterOne account.
 
-2. Go to the **Single Sign On** setup from the Configurations menu ![](../assets/icons/gear.png).
+2. Go to the **Single Sign On** setup from the Configurations menu ![](../assets/icons/gear.png). 
 
    ![sso-menu](../assets/j1-sso-menu.png)
 
