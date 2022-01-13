@@ -31,17 +31,17 @@ boundaries obvious to query authors.
 > The value is case sensitive in order to automatically determine if the query
 > needs to search for entities by the `class` or the `type`, without requiring
 > authors to specifically call it out.
-> 
+>
 > Entity `class` is stored in `TitleCase` while `type` is stored in
 > `snake_case`.
-> 
+>
 > A wildcard `*` can be used to find _any entity_.
-> 
+>
 > For example:
-> 
+>
 > - `FIND User` is equivalent to `FIND * with _class='User'`
 > - `FIND aws_iam_user` is equivalent to `FIND * with _type='aws_iam_user'`
-> 
+>
 > Note that using the wildcard at the beginning of the query without any
 > pre-traversal filtering -- that is, `FIND * THAT ...` without `WITH` (see
 > below) -- may result in long query execution time.
@@ -51,13 +51,13 @@ boundaries obvious to query authors.
 `WITH` is followed by **property name and values** to filter entities.
 
 > Supported operators include:
-> 
+>
 > - `=` or `!=` for **String** value, **Boolean**, **Number**, or **Date**
 >   comparison.
 > - `>` or `<` for **Number** or **Date** comparison.
-> 
+>
 > Note:
-> 
+>
 > - The property names and values are _case sensitive_.
 > - **String** values must be wrapped in either single or double quotes -
 >   `"value"` or `'value'`.
@@ -73,10 +73,10 @@ boundaries obvious to query authors.
 `AND`, `OR` for multiple property comparisons are supported.
 
 > For example:
-> 
+>
 > ```j1ql
 > FIND DataStore WITH encrypted = false AND (tag.Production = true and classification = 'critical')
-> 
+>
 > FIND user_endpoint WITH platform = 'darwin' OR platform = 'linux'
 > ```
 
@@ -84,9 +84,9 @@ boundaries obvious to query authors.
 
 > ```j1ql
 > FIND user_endpoint WITH platform = ('darwin' OR 'linux')
-> 
+>
 > Find Host WITH tag.Environment = ('A' or 'B' or 'C')
-> 
+>
 > Find DataStore WITH classification != ('critical' or 'restricted')
 > ```
 
@@ -127,32 +127,32 @@ When using a _negated_ "shorthand" filter, such as with the `!=` comparison, you
 > between two connected entity nodes in the graph. This relationship verb/class
 > value is stored in `ALLCAPS`, however, it is _case insensitive_ in the query,
 > as the query language will automatically convert it.
-> 
+>
 > The predefined keyword `RELATES TO` can be used to find _any_ relationship
 > between two nodes. For example:
-> 
+>
 > `FIND Service THAT RELATES TO Account`
 
 `( | )` can be used to select entities or relationships of different class/type.
 
 > For example, `FIND (Host|Device) WITH ipAddress='10.50.2.17'` is equivalent to
 > and much simpler than the following:
-> 
+>
 > ```j1ql
 > FIND * WITH
 >   (_class='Host' OR _class='Device') AND ipAddress='10.50.2.17'
 > ```
-> 
+>
 > It is fine to mix entity class and type values together. For example:
-> 
+>
 > `FIND (Database|aws_s3_bucket)`
-> 
+>
 > It can be used on Relationship verbs as well. For example:
-> 
+>
 > `FIND HostAgent THAT (MONITORS|PROTECTS) Host`
-> 
+>
 > Or both Entity and Relationships together. For example:
-> 
+>
 > `FIND * THAT (ALLOWS|PERMITS) (Internet|Everyone)`
 
 #### Bidirectional verbs by default
@@ -160,9 +160,9 @@ When using a _negated_ "shorthand" filter, such as with the `!=` comparison, you
 **Relationship verbs** are bidirectional by default
 
 > Both queries yield the same results:
-> 
+>
 > `FIND User THAT HAS Device`
-> 
+>
 > `FIND Device THAT HAS User`
 
 #### Relationship direction operators
@@ -170,15 +170,15 @@ When using a _negated_ "shorthand" filter, such as with the `!=` comparison, you
 **Relationship direction** can be specified with double arrows ( `<<` or `>>`) _after_ the verb
 
 > Finds Entities with a `HAS` relationship from User to Device:
-> 
+>
 > `FIND User THAT HAS >> Device`
-> 
+>
 > `Find Device THAT HAS << User`
 
 > Finds Entities with a `HAS` relationship from Device to User:
-> 
+>
 > `FIND User THAT HAS << Device`
-> 
+>
 > `Find Device THAT HAS >> User`
 
 #### AS
@@ -187,12 +187,12 @@ When using a _negated_ "shorthand" filter, such as with the `!=` comparison, you
 
 > Defines an aliased selector to use in the `WHERE` or `RETURN` portion of a
 > query. For example:
-> 
+>
 > - **Without** selectors: `FIND Firewall THAT ALLOWS *`
 > - **With** selectors: `FIND Firewall AS fw THAT ALLOWS * AS n`
-> 
+>
 > Selectors can also be defined on a relationship:
-> 
+>
 > - `FIND Firewall AS fw THAT ALLOWS AS rule * AS n`
 
 #### WHERE
@@ -200,7 +200,7 @@ When using a _negated_ "shorthand" filter, such as with the `!=` comparison, you
 `WHERE` is used for post-traversal filtering (requires selector)
 
 > From the example above:
-> 
+>
 > ```j1ql
 > FIND Firewall as fw that ALLOWS as rule * as n
 >   WHERE rule.ingress=true AND
@@ -215,26 +215,26 @@ When using a _negated_ "shorthand" filter, such as with the `!=` comparison, you
 > traversal is returned. For example, `Find User that IS Person` returns all
 > matching `User` entities and their properties, but not the related `Person`
 > entities.
-> 
+>
 > To return properties from both the `User` and `Person` entities, define a
 > selector for each and use them in the `RETURN` clause:
-> 
+>
 > ```j1ql
 > FIND User as u that IS Person as p
 >   RETURN u.username, p.firstName, p.lastName, p.email
 > ```
-> 
+>
 > If a property name contains special characters (e.g. `-` or `:`), you can
 > wrap the property name in `[]`.
 > For example: `RETURN p.[special-name]='something'`
-> 
+>
 > Wildcard can be used to return all properties. For example:
-> 
+>
 > ```j1ql
 > FIND User as u that IS Person as p
 > RETURN u.*, p.*
 > ```
-> 
+>
 > Using a wildcard to return all properties also returns all metadata
 > properties associated with the selected entities. This feature is
 > useful when you want to perform an analysis that involves metadata.
@@ -247,16 +247,16 @@ is considered a 'filler' word that is ignored by the interpreter.
 > The keyword `TO` is supported in J1QL so that the query can be read as a
 > natural language question. Although `TO` can be used in a query, if omitted,
 > the returned result will be the same.
-> 
+>
 > The following are some example relationship verbs where `TO` could be used:
-> 
+>
 > - `DEPLOYED TO`
 > - `CONTRIBUTES TO`
 > - `CONNECTS TO`
 > - `ASSIGNED TO`
-> 
+>
 > The following queries return the same result:
-> 
+>
 > ```j1ql
 > FIND User THAT CONTRIBUTES TO CodeRepo
 > FIND User THAT CONTRIBUTES CodeRepo
@@ -311,9 +311,9 @@ You can filter multiple property values like this (similar to `IN` in SQL):
 
 > ```j1ql
 > FIND user_endpoint WITH platform = ('darwin' OR 'linux')
-> 
+>
 > Find Host WITH tag.Environment = ('A' or 'B' or 'C')
-> 
+>
 > Find DataStore WITH classification != ('critical' and 'restricted')
 > ```
 
@@ -473,7 +473,7 @@ See more details and examples [below](#How-aggregations-are-applied).
 _Future development:_
 
 > There are plans to support the following aggregations:
-> 
+>
 > - `count(*)` - for determining the count of all other entities related to a given entity.
 
 ## Scalar Functions: `CONCAT`

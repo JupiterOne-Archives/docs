@@ -2,58 +2,43 @@
 
 ## GitHub + JupiterOne Integration Benefits
 
-- Visualize GitHub users, teams, code repositories, pull requests, issues,
-  installed GitHub applications, organizational secrets, repo secrets, repo
-  environments, and environmental secrets in the JupiterOne graph.
+- Visualize GitHub users, teams, code repositories, pull requests, issues, installed GitHub applications, organizational secrets, repo secrets, repo environments, and environmental secrets in the JupiterOne graph.
 - Map GitHub users to employees in your JupiterOne account.
 - Map GitHub users to development/security trainings.
-- Monitor Github software development activities within repositories including
-  changes, reviews and approvals.
-- Monitor changes to GitHub user teams, users, code repositories, and pull
-  requests using JupiterOne alerts.
+- Monitor Github software development activities within repositories including changes, reviews and approvals.
+- Monitor changes to GitHub user teams, users, code repositories, and pull requests using JupiterOne alerts.
 - Monitor installations of GitHub Apps using JupiterOne alerts.
 - Monitor and audit outside collaborators on code repositories.
 
 ## How it Works
 
-- JupiterOne periodically fetches installed GitHub apps, GitHub users, teams,
-  code repositories, issues, and recently created/changed pull requests in those
-  repositories to update the graph.
+- JupiterOne periodically fetches installed GitHub apps, GitHub users, teams, code repositories, issues, and recently created/changed pull requests in those repositories to update the graph.
 - Write JupiterOne queries to review and monitor updates to the graph.
 - Configure alerts to take action when the JupiterOne graph changes.
 
-!!! note The integration limits ingestion of pull requests during each execution
-to 500 of those most recently created/modified since the last execution. This is
-an accumulative process so that PRs which have been ingested but are not
-changing remain in the graph.
+**Note:** The integration limits ingestion of pull requests during each execution to 500 of those most recently created/modified since the last execution. This is an accumulative process so that PRs which have been ingested but are not changing remain in the graph.
 
 ## Requirements
 
-- JupiterOne requires the JupiterOne GitHub app with read-only permissions be
-  installed in your Github Organization account.
+- JupiterOne requires the JupiterOne GitHub app with read-only permissions be installed in your Github Organization account.
 - You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
-If you need help with this integration, please contact
-[JupiterOne Support](https://community.askj1.com).
+If you need help with this integration, contact [JupiterOne Support](https://community.askj1.com).
 
-## Integration Walkthrough
+## Integration Guidelines
 
-Upon creating a new GitHub integration configuration in JupiterOne, the user is
-re-directed to GitHub to install the JupiterOne GitHub app.
+Upon creating a new GitHub integration configuration in JupiterOne, the user is re-directed to GitHub to install the JupiterOne GitHub app.
 
-The integration is using GitHub Apps authentication, which requests permissions
-from the Organization installing the app. The app requests the following Read
-Only permissions:
+The integration is using GitHub Apps authentication, which requests permissions from the Organization installing the app. The app requests the following Read Only permissions:
 
 - Organization Metadata, Administration, Members, and Secrets
 - Repository Metadata, Secrets, Environments, and Issues
 
-All of these permissions are Read Only.
+All of these permissions are read-only.
 
-Note that the Secrets API does not reveal the values of Secrets - only their
-names and creation dates.
+The Secrets API does not reveal the values of Secrets , only their names and creation dates.
 
 Github References:
 
@@ -65,8 +50,7 @@ Github References:
 
 ### In GitHub
 
-Install the JupiterOne app in GitHub after creating the GitHub configuration in
-JupiterOne.
+Install the JupiterOne app in GitHub after creating the GitHub configuration in JupiterOne.
 
 ### In JupiterOne
 
@@ -74,13 +58,9 @@ JupiterOne.
 2. Scroll to the **GitHub** integration tile and click it.
 3. Click the **Add Configuration** button and configure the following settings:
 
-- Enter the **Account Name** by which you'd like to identify this GitHub account
-  in JupiterOne. Ingested entities will have this value stored in
-  `tag.AccountName` when **Tag with Account Name** is checked.
-- Enter a **Description** that will further assist your team when identifying
-  the integration instance.
-- Select a **Polling Interval** that you feel is sufficient for your monitoring
-  needs. You may leave this as `DISABLED` and manually execute the integration.
+- Enter the **Account Name** by which you'd like to identify this GitHub account in JupiterOne. Ingested entities will have this value stored in `tag.AccountName` when **Tag with Account Name** is checked.
+- Enter a **Description** that will further assist your team when identifying the integration instance.
+- Select a **Polling Interval** that you feel is sufficient for your monitoring needs. You may leave this as `DISABLED` and manually execute the integration.
 
 4. Click **Create Configuration** once all values are provided.
 

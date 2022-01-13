@@ -28,7 +28,7 @@ To skip certain sub-accounts when auto-configuring JupiterOne AWS integrations f
 
 ## How can I bypass a Service Control Policy blocking the JupiterOne Integration?
 
-See the [AWS Service control policies documentation](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html) for the latest information.
+See the [AWS Service control policies documentation](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html) for the latest information. 
 
 Errors may occur after configuring one or many AWS integrations if there is a Service Control Policy (SCP) blocking specified services or regions. Any AWS Services that cannot be ingested by JupiterOne can be found within the logs of the *Integration Jobs* (Integrations > Configurations > Settings > Jobs).
 
