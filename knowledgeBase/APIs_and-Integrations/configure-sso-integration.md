@@ -10,7 +10,7 @@ Single sign-on is supported using a custom authentication client configured with
 
 - **JIT (Just In Time) Provisioning**
 
-  Users are created and updated instantly using the SAML attributes sent as part of the SAML response coming from the Identity Provider (IdP). The user is created during the initial login to JupiterOne and updated during subsequent logins.
+  Users are created and updated instantly using the SAML attributes sent as part of the SAML response coming from the Identity Provider (IdP). The user is created during the initial login to JupiterOne and updated during subsequent logins. 
 
 _IdP-initiated SSO is currently unsupported due to a limitation of Amazon Cognito._
 

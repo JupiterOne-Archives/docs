@@ -2,8 +2,7 @@
 
 ## Duo + JupiterOne Integration Benefits
 
-- Visualize Duo users, groups, devices, applications, and access keys in the
-  JupiterOne graph.
+- Visualize Duo users, groups, devices, applications, and access keys in the JupiterOne graph.
 - Map Duo users to employees in your JupiterOne account.
 - Monitor changes to Duo users, groups, and access management data using
   JupiterOne alerts.

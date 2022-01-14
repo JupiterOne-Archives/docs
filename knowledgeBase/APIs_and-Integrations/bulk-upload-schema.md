@@ -21,7 +21,7 @@
 > }
 > ```
 >
-> See the [API documentation](./jupiterone-api.md#entityandrelationshipsynchronization) for more details.
+> See the [API documentation](./jupiterone-api.md#entityandrelationshipsynchronization) for more details. 
 
 To successfully upload entity and relationship data, follow the schema outlined below:
 

@@ -3,8 +3,7 @@
 ## Threat Stack + JupiterOne Integration Benefits
 
 - Visualize Threat Stack agents in the JupiterOne graph.
-- Map Threat Stack agents to aws instances or servers they protect in your
-  JupiterOne account.
+- Map Threat Stack agents to aws instances or servers they protect in your JupiterOne account.
 - Map Threat Stack agents to cves they identify in your JupiterOne
 - Monitor changes to Threat Stack agents using JupiterOne alerts.
 
@@ -85,9 +84,9 @@ The following entity resources are ingested when the integration runs:
 
 The following relationships are created/mapped:
 
-| Relationships                                     |
-| ------------------------------------------------- |
+| Relationships                            |
+| ---------------------------------------- |
 | `threatstack_account` **HAS** `threatstack_agent` |
-| `threatstack_agent` **PROTECTS** `aws_instance`   |
-| `threatstack_agent` **PROTECTS** `server`         |
-| `threatstack_agent` **IDENTIFIED** `cve`          |
+| `threatstack_agent` **PROTECTS** `aws_instance` |
+| `threatstack_agent` **PROTECTS** `server` |
+| `threatstack_agent` **IDENTIFIED** `cve` |

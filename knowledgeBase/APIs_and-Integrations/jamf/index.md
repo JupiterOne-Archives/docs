@@ -2,8 +2,7 @@
 
 ## Jamf + JupiterOne Integration Benefits
 
-- Visualize Jamf admins, users, groups, devices, and configuration profiles in
-  the JupiterOne graph.
+- Visualize Jamf admins, users, groups, devices, and configuration profiles in the JupiterOne graph.
 - Map Jamf users to employees in your JupiterOne account.
 - Monitor changes to Jamf admins, users, and groups using JupiterOne alerts.
 - Monitor changes to Jamf devices and configuration profiles using JupiterOne

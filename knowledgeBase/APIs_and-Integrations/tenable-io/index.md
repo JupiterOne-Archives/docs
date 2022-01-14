@@ -2,8 +2,7 @@
 
 ## Tenable.io + JupiterOne Integration Benefits
 
-- Visualize Tenable.io users, scans, findings, reports, vulnerabilities, and
-  container findings in the JupiterOne graph.
+- Visualize Tenable.io users, scans, findings, reports, vulnerabilities, and container findings in the JupiterOne graph.
 - Map Tenable.io users to employees in your JupiterOne account.
 - Monitor Tenable vulnerabilities and findings within the alerts app.
 - Monitor changes to Tenable.io users, scans, findings, reports,

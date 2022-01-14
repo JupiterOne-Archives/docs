@@ -8,7 +8,7 @@ This is easily done via the API or CLI. Each entity object can be represented in
 
 ## Where do these `Person` entities come from? Why are they not tagged with an integration?
 
-The Person entities are “mapped” from `User` entities. They are considered "shared" entities that multiple integrations can map to and contribute properties to. For example, a `Person` can be created by a Google integration (from a `google_user`). Or from a Github User, AWS IAM User, etc.
+The Person entities are “mapped” from `User` entities. They are considered "shared" entities that multiple integrations can map to and contribute properties to. For example, a `Person` can be created by a Google integration (from a `google_user`). Or from a Github User, AWS IAM User, etc. 
 
 The `Person` entities represent actual individuals in the organizations, whereas the `User` entities are the logical user accounts within each digital environment/account (i.e. from an integration).
 

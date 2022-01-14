@@ -2,8 +2,7 @@
 
 ## Cisco AMP + JupiterOne Integration Benefits
 
-- Visualize Cisco AMP endpoint agents and the devices they protect in the
-  JupiterOne graph.
+- Visualize Cisco AMP endpoint agents and the devices they protect in the JupiterOne graph.
 - Map Cisco AMP endpoint agents to devices and devices to the employee who is
   the owner.
 - Monitor changes to Cisco AMP endpoints using JupiterOne alerts.
