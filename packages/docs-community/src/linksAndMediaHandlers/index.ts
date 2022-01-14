@@ -59,7 +59,7 @@ export const getMarkdownImageSrcs = (markdownAsString: string): string[] => {
   ) {
     matches.push(array1[0]);
   }
-  console.log(matches,'mdmdmmdmdmdmdmddmdm')
+
   return matches.map((m) => m.substring(2, m.length - 1));
 };
 // body is in html format
