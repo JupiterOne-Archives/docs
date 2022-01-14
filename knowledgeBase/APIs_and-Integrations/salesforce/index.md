@@ -2,8 +2,7 @@
 
 ## Salesforce + JupiterOne Integration Benefits
 
-- Visualize Salesforce users, roles, groups, policies, and permissions in the
-  JupiterOne graph.
+- Visualize Salesforce users, roles, groups, policies, and permissions in the JupiterOne graph.
 - Map Salesforce users to employees in your JupiterOne account.
 - Monitor changes to Salesforce users using JupiterOne alerts.
 

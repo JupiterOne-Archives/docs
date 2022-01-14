@@ -14,14 +14,12 @@
 
 ## Requirements
 
-- JupiterOne requires the username and password of a Qualys user that has
-  permission to access to the API. JupiterOne also requires the url of the API.
+- JupiterOne requires the username and password of a Qualys user that has permission to access to the API. JupiterOne also requires the url of the API.
 - You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
-If you need help with this integration, please contact
-[JupiterOne Support](https://community.askj1.com).
+If you need help with this integration, please contact [JupiterOne Support](https://community.askj1.com).
 
 ## Integration Walkthrough
 

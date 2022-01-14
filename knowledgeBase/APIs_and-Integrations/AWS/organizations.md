@@ -6,8 +6,8 @@ The JupiterOne Application supports the ability to ingest multiple AWS Accounts 
 
 ## Organizations Setup
 
-Before selecting the checkbox, you will want to make sure that each AWS account in the organization is configured with the same JupiterOne IAM role, policies, and external trust ID. If you are using Terraform in your AWS environment, there are setup instructions within the JupiterOne app under the AWS *Setup
-Instructions*. 
+Before selecting the checkbox, you will want to make sure that each AWS account in the organization is configured with the same JupiterOne IAM role, policies, and external trust ID. If you are using Terraform in your AWS environment, there are setup instructions within the JupiterOne app under the AWS Setup
+Instructions. 
 
 ![aws-organizations-terraform-setup](../../assets/aws-organizations-terraform-setup.png)
 

@@ -8,10 +8,8 @@
 
 ## How it Works
 
-- JupiterOne periodically fetches projects, teams, and users from Azure DevOps
-  to update the graph.
-- Write JupiterOne queries to review and monitor updates to the graph, or
-  leverage existing queries.
+- JupiterOne periodically fetches projects, teams, and users from Azure DevOps to update the graph.
+- Write JupiterOne queries to review and monitor updates to the graph, or leverage existing queries.
 - Configure alerts to take action when JupiterOne graph changes, or leverage
   existing alerts.
 

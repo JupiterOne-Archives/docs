@@ -2,8 +2,7 @@
 
 ## OneLogin + JupiterOne Integration Benefits
 
-- Visualize OneLogin users, groups, roles, devices, applications, and services
-  in the JupiterOne graph.
+- Visualize OneLogin users, groups, roles, devices, applications, and services in the JupiterOne graph.
 - Map OneLogin users to employees in your JupiterOne account.
 - Map OneLogin users to their AWS IAM Roles where applicable.
 - Monitor changes to OneLogin users and access management data using JupiterOne

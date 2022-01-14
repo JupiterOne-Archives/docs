@@ -2,8 +2,7 @@
 
 ## Setup
 
-The JupiterOne ServiceNow integration is configured using your target ServiceNow
-implementation's `hostname`, such as `my-company.service-now.com`.
+The JupiterOne ServiceNow integration is configured using your target ServiceNow implementation's `hostname`, such as `my-company.service-now.com`.
 
 The integration authenticates using Basic auth with `username` and `password`
 for a read-only account. Whenever possible, we recommend creating a new user in

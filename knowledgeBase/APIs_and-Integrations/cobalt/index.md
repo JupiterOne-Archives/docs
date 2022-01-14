@@ -2,8 +2,7 @@
 
 ## Cobalt + JupiterOne Integration Benefits
 
-- Visualize Cobalt pentests, findings, and the assets tested in the JupiterOne
-  graph.
+- Visualize Cobalt penetration tests, findings, and the assets tested in the JupiterOne graph.
 - Monitor changes to Cobalt pentests and findings using JupiterOne alerts.
 - Correlate pentests with other logged security events.
 

@@ -2,8 +2,7 @@
 
 ## Rapid7 + JupiterOne Integration Benefits
 
-- Visualize Rapid7 users, devices, scanners, findings, and vulnerabilities
-  across sites in the JupiterOne graph.
+- Visualize Rapid7 users, devices, scanners, findings, and vulnerabilities across sites in the JupiterOne graph.
 - Map Rapid7 users to employees in your JupiterOne account.
 - Monitor Rapid7 findings and vulnerabilities within the alerts app.
 - Monitor changes to Rapid7 users, devices, scanners and sites using JupiterOne
