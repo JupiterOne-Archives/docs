@@ -14,7 +14,7 @@ Additional support documentation:
 
 [Configure integrations](../Getting-Started_and-Admin/configure-integrations.md)
 
-## 2. Policies + procedures
+## 2. Policies and Procedures
 
 Review all of the templated, out-of-the-box policies + procedures, ensuring they accurately represent your organization’s principles/processes, tailoring and/or adding your own documentation where relevant. 
 
@@ -35,7 +35,7 @@ Additional support documentation:
 
 [Managing policies + procedures](./policies-app.md)
 [Using the policy builder CLI](./policy-builder-cli.md)
-[Policies + procedures structure](../Compliance_and-Reporting/policies-app.md)
+[Policies + procedures structure](./policies-app.md)
 [Compliance policies mapping](./compliance-mapping-policies.md)
 
 ## 3. Import compliance framework
