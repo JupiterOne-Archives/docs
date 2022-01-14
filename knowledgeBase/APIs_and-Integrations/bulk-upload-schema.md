@@ -1,26 +1,26 @@
 # JupiterOne Bulk Upload Schema
 
 > IMPORTANT: Bulk upload triggers a data synchronization process that automatically **updates** or **deletes** entities/relationships as needed. Previously existing entities/relationships within the same `scope` that no longer exist in the latest upload will be marked for deletion. 
->
+
 > Therefore, the upload file should always include the **complete** set of entities or relationships within the defined `scope` to avoid unintended data deletion.
->
+
 > In the UI, users are prompted to select/enter a `scope` when uploading a file.
->
+> 
 > Via the API, `scope` is provided when starting a synchronization job.
->
+
 > **For example:**
->
+
 > ```text
 > POST /persister/synchronization/jobs
 > ```
->
+
 > ```json
 > {
 >   "source": "api",
 >   "scope": "my-sync-job"
 > }
 > ```
->
+
 > See the [API documentation](./jupiterone-api.md#entityandrelationshipsynchronization) for more details. 
 
 To successfully upload entity and relationship data, follow the schema outlined below:

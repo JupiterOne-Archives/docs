@@ -2,7 +2,7 @@
 
 This guide contains tips and tricks that assist in creating J1QL queries in your account. If you haven't already, check out our [J1QL Tutorial](./tutorial-j1ql.md) as well as our [J1QL Language Specs](./jupiterone-query-language.md) articles for helpful context.
 
-Before creating your own query, we recommend starting with our wide-array of [pre-packaged questions](https://ask.us.jupiterone.io/filter?tagFilter=all).), tweaking them as needed, then creating your own from scratch.
+Before creating your own query, we recommend starting with our wide-array of [pre-packaged questions](https://ask.us.jupiterone.io/), tweaking them as needed, then creating your own from scratch.
 
 ## When to Use WITH vs WHERE
 
