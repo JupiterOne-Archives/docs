@@ -75,7 +75,7 @@ Additional support documentation:
 
 [J1QL query tutorial](../J1-Query-Language/tutorial-j1ql.md)
 [Search quickstart](../Getting-Started_and-Admin/quickstart-search.md)
-[J1QL language specs](../J1-Query-Language/jupiterone-query-language.md) 
+[J1QL language specs](../J1-Query-Language/jupiterOne-query-language_(J1QL).md) 
 
 ### Add additional queries
 1. Adding a new query
@@ -84,7 +84,7 @@ Additional support documentation:
 
 [J1QL query tutorial](../J1-Query-Language/tutorial-j1ql.md)
 [Search quickstart](../Getting-Started_and-Admin/quickstart-search.md)
-[J1QL language specs](../J1-Query-Language/jupiterone-query-language.md)
+[J1QL language specs](../J1-Query-Language/jupiterOne-query-language_(J1QL).md)
 
 2. Mapping a prewritten, templated query (over 400 are in our library)
 
