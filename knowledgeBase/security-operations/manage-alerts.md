@@ -52,8 +52,8 @@ The custom rule you have added is evaluated daily, hourly, or with streaming eva
 
 J1 provides the ability to trigger the following workflows from alerts:
 
-- Slack: You must configure the Slack integration for JupiterOne by [following these instructions](../APIs_and-Integrations/slack/index.md). Ensure that you specify the channel in the format `#channel`.
-- JIRA: You must configure the JIRA integration for JupiterOne by [following these instructions](../APIs_and-Integrations/jira/index.md)
+- Slack: You must configure the Slack integration for JupiterOne by [following these instructions](../APIs_and-Integrations/slack/slack.md). Ensure that you specify the channel in the format `#channel`.
+- JIRA: You must configure the JIRA integration for JupiterOne by [following these instructions](../APIs_and-Integrations/jira/jira.md)
 - SNS: The AWS account you want to send to must be configured as an AWS Integration, and the J1 IAM role for the AWS account you want to publish to must have the `SNS:Publish` permission.
 - SQS: The AWS account you want to send to must be configured as an AWS Integration, and the J1 IAM role for the AWS account you want to publish to must have the `SQS:SendMessage` permission.
 
