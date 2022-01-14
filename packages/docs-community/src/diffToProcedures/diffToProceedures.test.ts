@@ -10,6 +10,7 @@ import {
   expectHandleNestedKnowledgeCategoryChanges,
 } from "./mocks";
 import { filterDiffs } from "./utils";
+jest.mock("../VanillaAPI");
 
 describe("diffToProceedures", () => {
   let exampleDiffs = [
