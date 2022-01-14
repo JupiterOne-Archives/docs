@@ -2,8 +2,7 @@
 
 ## HackerOne + JupiterOne Integration Benefits
 
-- Visualize HackerOne bounty programs and submitted findings in the JupiterOne
-  graph.
+- Visualize HackerOne bounty programs and submitted findings in the JupiterOne graph.
 - Monitor HackerOne findings within the alerts app.
 - Monitor changes to HackerOne bounty programs using JupiterOne alerts.
 

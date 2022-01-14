@@ -78,13 +78,13 @@ or
 
 ![splunk-j1-inputs-fields](../../assets/splunk-j1-inputs-fields.png)
 
-| Field Name                 | Field Description                                                                   |
-| -------------------------- | ----------------------------------------------------------------------------------- |
-| Name\*                     | Unique name for the data input.                                                     |
-| Interval\*                 | Time interval of input in seconds. How often JupiterOne collects the data.          |
-| Index\*                    | Index where data is stored.                                                         |
-| JupiterOne Account\*       | Account that was configured in the **Configuration** tab.                           |
-| Pull Alert Related Objects | If enabled, pulls data for entities in Alert.                                       |
+| Field Name                 | Field Description                        |
+| -------------------------- | ---------------------------------------- |
+| Name\*                     | Unique name for the data input.          |
+| Interval\*                 | Time interval of input in seconds. How often JupiterOne collects the data. |
+| Index\*                    | Index where data is stored.              |
+| JupiterOne Account\*       | Account that was configured in the **Configuration** tab. |
+| Pull Alert Related Objects | If enabled, pulls data for entities in Alert. |
 | Start DateTime             | Date in UTC when you want to start collecting data. Default is 30 days in the past. |
 
 `*` denotes required field
@@ -93,4 +93,4 @@ or
 
 AFter you have configured the add-on and it is running, the app starts working. There is no configuration needed.
 
-More details are available on the Splunkbase marketplace for the [add-on](https://splunkbase.splunk.com/app/6138) and the [App](https://splunkbase.splunk.com/app/6139)
+More details are available on the Splunkbase marketplace for the [add-on](https://splunkbase.splunk.com/app/6138) and the [App](https://splunkbase.splunk.com/app/6139).

@@ -1,14 +1,12 @@
 # JupiterOne Alert Rule Schema
 
-A rule uses the results of one or more queries to execute one or more actions.
-The basic alert workflows are described here: [JupiterOne Alert Rule configuration documentation](https://support.jupiterone.io/hc/en-us/articles/360022720474-6-9-Alerts-and-Alert-Rules). 
-You can also directly edit the JSON that defines a rule for more advanced workflow execution.
+A rule uses the results of one or more queries to execute one or more actions. The basic alert workflows are described here: [JupiterOne Alert Rule configuration documentation](https://support.jupiterone.io/hc/en-us/articles/360022720474-6-9-Alerts-and-Alert-Rules). You can also directly edit the JSON that defines a rule for more advanced workflow execution.
 
 ## Configuring a Rule
 
 1. Navigate to the JupiterOne alert rule configuration page (https://apps.us.jupiterone.io/alerts/edit)
-1. Click **Create Rule**
-1. Click **Show Advanced** to open the advanced rule editor.
+2. Click **Create Rule**
+3. Click **Show Advanced** to open the advanced rule editor.
 
 JSON Example:
 
@@ -48,17 +46,17 @@ JSON Example:
 
 ## Rule Properties
 
-| Property           | Type              | Description                                                  |
-| ------------------ | ----------------- | ------------------------------------------------------------ |
-| `id`               | `string`          | Auto-generated, globally unique ID of each rule.             |
+| Property           | Type              | Description                              |
+| ------------------ | ----------------- | ---------------------------------------- |
+| `id`               | `string`          | Auto-generated, globally unique ID of each rule. |
 | `version`          | `number`          | Current version of the rule. Incremented each time the rule is updated. |
-| `name`             | `string`          | Name of the rule, which is unique to each account.           |
-| `description?`     | `string`          | A description of the rule.                                   |
-| `specVersion`      | `number`          | Rule evaluation version in the case of breaking changes.     |
+| `name`             | `string`          | Name of the rule, which is unique to each account. |
+| `description?`     | `string`          | A description of the rule.               |
+| `specVersion`      | `number`          | Rule evaluation version in the case of breaking changes. |
 | `pollingInterval?` | `PollingInterval` | Frequency of automated rule evaluation. Options are `DISABLED`, `THIRTY_MINUTES`, `ONE_HOUR`, `FOUR_HOURS`, `EIGHT_HOURS`, `TWELVE_HOURS`, `ONE_DAY`, `ONE_WEEK`. Defaults to `ONE_DAY`. |
 | `question`         | `Question`        | Contains properties related to queries used in the rule evaluation. |
 | `operations`       | `RuleOperation[]` | Actions that are executed when a corresponding condition is met. |
-| `templates?`       | `object`          | Optional key/value pairs of template name to template.       |
+| `templates?`       | `object`          | Optional key/value pairs of template name to template. |
 | `outputs`          | `string[]`        | Names of properties that can be used throughout the rule evaluation process and will be included in each record of a rule evaluation (for example, `queries.query0.total`). |
 
 ### Type: PollingInterval
@@ -78,18 +76,18 @@ DISABLED
 A `RuleOperation` is a single `condition` and series of `action`s that are 
 executed when the `condition` is met.
 
-| Property  | Type                                               | Description                                                  |
-| --------- | -------------------------------------------------- | ------------------------------------------------------------ |
+| Property  | Type                                     | Description                              |
+| --------- | ---------------------------------------- | ---------------------------------------- |
 | `when?`   | `RuleOperationCondition\|RuleOperationCondition[]` | Type of conditional used to determine whether the associated actions should be executed. |
-| `actions` | `RuleOperationAction[]`                            | Actions that should be executed when the `when` conditions have been met. |
+| `actions` | `RuleOperationAction[]`                  | Actions that should be executed when the `when` conditions have been met. |
 
 ### Type: Question
 
 A Question contains a collection of named queries that should be executed 
 during the rule evaluation process and whose responses can be used in any `RuleOperation`.
 
-| Property  | Type              | Description                                                  |
-| --------- | ----------------- | ------------------------------------------------------------ |
+| Property  | Type              | Description                              |
+| --------- | ----------------- | ---------------------------------------- |
 | `queries` | `QuestionQuery[]` | The collection of queries that are used during the rule evaluation. |
 
 ### Type: QuestionQuery
@@ -97,10 +95,10 @@ during the rule evaluation process and whose responses can be used in any `RuleO
 A named query that should be executed during the rule evaluation process and 
 whose responses can be used in any `RuleOperation`.
 
-| Property  | Type     | Description                                                  |
-| --------- | -------- | ------------------------------------------------------------ |
+| Property  | Type     | Description                              |
+| --------- | -------- | ---------------------------------------- |
 | `name?`   | `string` | Optional name to assign the query that will be used when referencing query data in `RuleOperation`s. If not provided, the query name is automatically assigned based on the index in the `queries` array (for example, `query0`, `query1`). |
-| `query`   | `string` | JupiterOne query to execute.                                 |
+| `query`   | `string` | JupiterOne query to execute.             |
 | `version` | `string` | JupiterOne query language execution version (for example, `v1`). |
 
 ### Type: RuleOperationCondition
@@ -110,9 +108,9 @@ The type of `RuleOperationCondition` is determined using the `type` property.
 
 #### Type: FilterRuleOperationCondition
 
-| Property    | Type     | Description                                                  |
-| ----------- | -------- | ------------------------------------------------------------ |
-| `type`      | `string` | Rule operation condition type: `FILTER`.                     |
+| Property    | Type     | Description                              |
+| ----------- | -------- | ---------------------------------------- |
+| `type`      | `string` | Rule operation condition type: `FILTER`. |
 | `condition` | `string` | Template condition (for example, `{{queries.query0.total > 0}}`). |
 
 ### Type: RuleOperationAction
@@ -126,9 +124,9 @@ The type of `RuleOperationAction` is determined using the `type` property.
 
 > Includes a property that can be used in rule evaluation input.
 
-| Property         | Type                    | Description                                  |
-| ---------------- | ----------------------- | -------------------------------------------- |
-| `type`           | `string`                | Rule operation action type: `SET_PROPERTY.`  |
+| Property         | Type                    | Description                              |
+| ---------------- | ----------------------- | ---------------------------------------- |
+| `type`           | `string`                | Rule operation action type: `SET_PROPERTY.` |
 | `targetProperty` | `string`                | Property to include in the evaluation input. |
 | `targetValue`    | `number|string|boolean` | Property to include in the evaluation input. |
 
@@ -148,8 +146,8 @@ Example:
 
 > Creates a JupiterOne alert that is visible on the alerts app.
 
-| Property | Type     | Description                                |
-| -------- | -------- | ------------------------------------------ |
+| Property | Type     | Description                              |
+| -------- | -------- | ---------------------------------------- |
 | `type`   | `string` | Rule operation action type: `CREATE_ALERT` |
 
 Example:
@@ -167,10 +165,10 @@ Example:
 > Sends an email to a list of recipients with details related to alerts that are
 >  created during the rule evaluation.
 
-| Property     | Type       | Description                                        |
-| ------------ | ---------- | -------------------------------------------------- |
-| `type`       | `string`   | Rule operation action type: `SEND_EMAIL`.          |
-| `recipients` | `string[]` | Email addresses of the recipients of this alert.   |
+| Property     | Type       | Description                              |
+| ------------ | ---------- | ---------------------------------------- |
+| `type`       | `string`   | Rule operation action type: `SEND_EMAIL`. |
+| `recipients` | `string[]` | Email addresses of the recipients of this alert. |
 | `body?`      | `string`   | Optional additional body information of the email. |
 
 Example:
@@ -188,14 +186,14 @@ Example:
 
 > Creates a Jira ticket using a specific JupiterOne Jira integration configuration.
 
-| Property                | Type     | Description                                                  |
-| ----------------------- | -------- | ------------------------------------------------------------ |
-| `type`                  | `string` | Rule operation action type: `CREATE_JIRA_TICKET.`            |
+| Property                | Type     | Description                              |
+| ----------------------- | -------- | ---------------------------------------- |
+| `type`                  | `string` | Rule operation action type: `CREATE_JIRA_TICKET.` |
 | `integrationInstanceId` | `string` | The `id` of the JupiterOne Jira integration that should be used to create the ticket. |
 | `entityClass`           | `string` | The `class` of the new ticket entity that should be created in JupiterOne. (for example,`Vulnerability`) |
-| `project`               | `string` | The unique Jira project ID that the ticket is created in.    |
-| `summary`               | `string` | Summary of the Jira ticket. Used as the ticket title.        |
-| `issueType`             | `string` | The Jira issue type (for example, `Task`).                   |
+| `project`               | `string` | The unique Jira project ID that the ticket is created in. |
+| `summary`               | `string` | Summary of the Jira ticket. Used as the ticket title. |
+| `issueType`             | `string` | The Jira issue type (for example, `Task`). |
 | `additionalFields?`     | `object` | Optional additional fields that are passed directly to the Jira API. |
 
 Example:
@@ -234,10 +232,10 @@ Example:
 
 > Sends a Slack message to a given Slack webhook URL.
 
-| Property                | Type     | Description                                                  |
-| ----------------------- | -------- | ------------------------------------------------------------ |
+| Property                | Type     | Description                              |
+| ----------------------- | -------- | ---------------------------------------- |
 | `integrationInstanceId` | `string` | The `id` of the JupiterOne Jira integration used to create the ticket. |
-| `type`                  | `string` | Rule operation action type: `SEND_SLACK_MESSAGE`.            |
+| `type`                  | `string` | Rule operation action type: `SEND_SLACK_MESSAGE`. |
 | `channels`              | `string` | A string or list of strings beginning with a `#` to denote Slack channels to send to. |
 | `webhookUrl`            | `string` | Webhook URL for the account/channel that this message should be delivered to. |
 | `severity`              | `string` | Optional severity of this alert that determined the color of the message shown in Slack. |
@@ -313,13 +311,13 @@ the JupiterOne Slack bot must be a member of that private channel.
 
 > Sends an HTTP request to a given endpoint.
 
-| Property   | Type     | Description                                                                                                 |
-| ---------- | -------- | ----------------------------------------------------------------------------------------------------------- |
-| `type`     | `string` | Rule operation action type: `WEBHOOK`                                                                       |
-| `endpoint` | `string` | Webhook endpoint to send the request to.                                                                    |
+| Property   | Type     | Description                              |
+| ---------- | -------- | ---------------------------------------- |
+| `type`     | `string` | Rule operation action type: `WEBHOOK`    |
+| `endpoint` | `string` | Webhook endpoint to send the request to. |
 | `method`   | `string` | HTTP method to use when making the request Allowed values: `POST`, `PUT`, `GET`, `HEAD`, `PATCH`, `DELETE`. |
-| `body?`    | `object` | Body data to include in the request. Can only be used with `POST`, `PUT`, and `PATCH`.                      |
-| `headers?` | `object` | HTTP headers to include in the request.                                                                     |
+| `body?`    | `object` | Body data to include in the request. Can only be used with `POST`, `PUT`, and `PATCH`. |
+| `headers?` | `object` | HTTP headers to include in the request.  |
 
 Example:
 
@@ -342,11 +340,11 @@ Example:
 
 > Publishes a message to the specified SNS topic.
 
-| Property                | Type     | Description                                                  |
-| ----------------------- | -------- | ------------------------------------------------------------ |
-| `type`                  | `string` | Rule operation action type: `PUBLISH_SNS_MESSAGE`.           |
+| Property                | Type     | Description                              |
+| ----------------------- | -------- | ---------------------------------------- |
+| `type`                  | `string` | Rule operation action type: `PUBLISH_SNS_MESSAGE`. |
 | `integrationInstanceId` | `string` | The ID of the AWS integration instance to use. The integration role must have `sns:Publish` permission. |
-| `topicArn`              | `string` | The ARN of the SNS topic to publish the message to.          |
+| `topicArn`              | `string` | The ARN of the SNS topic to publish the message to. |
 | `data`                  | `object` | User-provided data to include in the message. See [Operation Templating](#operationtemplating) for details on using variable data. |
 
 Example:
@@ -383,11 +381,11 @@ Example:
 
 > Publishes a message to the specified SQS queue.
 
-| Property                | Type     | Description                                                  |
-| ----------------------- | -------- | ------------------------------------------------------------ |
-| `type`                  | `string` | Rule operation action type: `SEND_SQS_MESSAGE`.              |
+| Property                | Type     | Description                              |
+| ----------------------- | -------- | ---------------------------------------- |
+| `type`                  | `string` | Rule operation action type: `SEND_SQS_MESSAGE`. |
 | `integrationInstanceId` | `string` | The ID of the AWS integration instance to use. The integration role must have `sqs:SendMessage` permission. |
-| `queueUrl`              | `string` | The URL of the SQS queue to publish the message to.          |
+| `queueUrl`              | `string` | The URL of the SQS queue to publish the message to. |
 | `data`                  | `object` | User-provided data to include in the message. See [Operation Templating](#operationtemplating) for details on using variable data. |
 
 Example:
@@ -530,17 +528,17 @@ My name is {{param.myFirstName}} and I am {{age}}
 
 ### Binary Operators
 
-| Operation        |    Symbol    |
-| ---------------- | :----------: |
-| Add, Concat      |     `+`      |
-| Subtract         |     `-`      |
-| Multiply         |     `*`      |
-| Divide           |     `/`      |
-| Divide and floor |     `//`     |
-| Modulus          |     `%`      |
-| Power of         |     `^`      |
-| Logical AND      |     `&&`     |
-| Logical OR       |     `||`     |
+| Operation        | Symbol |
+| ---------------- | :----: |
+| Add, Concat      |  `+`   |
+| Subtract         |  `-`   |
+| Multiply         |  `*`   |
+| Divide           |  `/`   |
+| Divide and floor |  `//`  |
+| Modulus          |  `%`   |
+| Power of         |  `^`   |
+| Logical AND      |  `&&`  |
+| Logical OR       |  `||`  |
 
 ### Comparisons
 
@@ -568,7 +566,7 @@ My name is {{param.myFirstName}} and I am {{age}}
 | -------- | :--------------------------------: |
 | Booleans |          `true`, `false`           |
 | Strings  | `"Hello \"user\""`, `'Hey there!'` |
-| Numerics |      `6`, `-7.2`, `5`, `-3.14159`  |
+| Numerics |    `6`, `-7.2`, `5`, `-3.14159`    |
 | Objects  |        `{hello: "world!"}`         |
 | Arrays   |       `['hello', 'world!']`        |
 
@@ -593,10 +591,10 @@ be a string whose value matches a template in rule `templates` object.
 
 The `mapTemplate` transform exposes additional input variable to the template:
 
-| Property    | Type     | Description                                  |
-| ----------- | -------- | -------------------------------------------- |
-| `item`      | `any`    | The individual item of this iteration.       |
-| `itemCount` | `number` | The total count of items in the array.       |
+| Property    | Type     | Description                              |
+| ----------- | -------- | ---------------------------------------- |
+| `item`      | `any`    | The individual item of this iteration.   |
+| `itemCount` | `number` | The total count of items in the array.   |
 | `itemIndex` | `number` | The index of the current `item` in the array |
 
 !!! note 

@@ -2,9 +2,7 @@
 
 ## Overview
 
-JupiterOne provides a managed integration with Openshift. The integration
-connects directly to Openshift APIs to obtain cluster metadata and analyze
-resource relationships.
+JupiterOne provides a managed integration with Openshift. The integration connects directly to Openshift APIs to obtain cluster metadata and analyze resource relationships.
 
 ## Integration Instance Configuration
 

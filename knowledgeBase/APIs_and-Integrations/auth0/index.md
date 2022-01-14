@@ -8,12 +8,9 @@
 
 ## How it Works
 
-- JupiterOne periodically fetches clients and users from Auth0 to update the
-  graph.
-- Write JupiterOne queries to review and monitor updates to the graph, or
-  leverage existing queries.
-- Configure alerts to take action when JupiterOne graph changes, or leverage
-  existing alerts.
+- JupiterOne periodically fetches clients and users from Auth0 to update the graph.
+- Write JupiterOne queries to review and monitor updates to the graph, or leverage existing queries.
+- Configure alerts to take action when JupiterOne graph changes, or leverage existing alerts.
 
 ## Requirements
 

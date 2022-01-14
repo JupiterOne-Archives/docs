@@ -2,8 +2,7 @@
 
 ## Feroot + JupiterOne Integration Benefits
 
-- Visualize Feroot users, groups, project folders, projects, alerts, and domains
-  in the JupiterOne graph.
+- Visualize Feroot users, groups, project folders, projects, alerts, and domains in the JupiterOne graph.
 - Map Feroot users to employees in your JupiterOne account.
 - Monitor changes to Feroot users and groups using JupiterOne alerts.
 - Monitor changes to Feroot project folders and projects using JupiterOne

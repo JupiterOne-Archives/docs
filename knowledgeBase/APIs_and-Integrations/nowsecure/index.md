@@ -2,8 +2,7 @@
 
 ## NowSecure + JupiterOne Integration Benefits
 
-- Visualize NowSecure users, services, applications, and findings in the
-  JupiterOne graph.
+- Visualize NowSecure users, services, applications, and findings in the JupiterOne graph.
 - Map NowSecure users to employees in your JupiterOne account.
 - Monitor changes to NowSecure users, services, and applications using
   JupiterOne alerts.

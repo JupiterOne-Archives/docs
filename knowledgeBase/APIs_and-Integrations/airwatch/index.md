@@ -2,11 +2,9 @@
 
 ## AirWatch Integration Benefits
 
-- Visualize VMWare AirWatch admins, users, groups, and devices in the
-  JupiterOne graph.
+- Visualize VMWare AirWatch admins, users, groups, and devices in the JupiterOne graph.
 - Map VMWare AirWatch users to employees in your JupiterOne account.
-- Monitor changes to VMWare AirWatch admins, users, groups, and devices
-  using JupiterOne alerts.
+- Monitor changes to VMWare AirWatch admins, users, groups, and devices using JupiterOne alerts.
 
 ## How it Works
 

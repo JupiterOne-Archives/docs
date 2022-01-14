@@ -8,10 +8,8 @@
 ## How it Works
 
 - JupiterOne periodically fetches domains from Whois to update the graph.
-- Write JupiterOne queries to review and monitor updates to the graph,
-  or leverage existing queries.
-- Configure alerts to take action when the JupiterOne graph changes,
-  or leverage existing alerts.
+- Write JupiterOne queries to review and monitor updates to the graph, or leverage existing queries.
+- Configure alerts to take action when the JupiterOne graph changes, or leverage existing alerts.
 
 ## Requirements
 
