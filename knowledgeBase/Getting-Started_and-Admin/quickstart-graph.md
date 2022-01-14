@@ -4,7 +4,7 @@ J1 is built on a data-driven graph platform. For the story that inspired J1 to b
 
 JupiterOne Query Language (J1QL) is designed to traverse this graph and return a subgraph, or data from the nodes (assets) and edges (relationships) of a subgraph. You can view and interact with the subgraph from any J1QL query result.
 
-This documentation focuses on interacting with the graph component. For more details on J1QL, read the [J1QL tutorial](../Jupiterone-Data-Model/tutorial-j1ql.md) and [technical doc](../docs/jupiterOne-query-language_(J1QL).md).
+This documentation focuses on interacting with the graph component. For more details on J1QL, read the [J1QL tutorial](../Jupiterone-Data-Model/tutorial-j1ql.md) and [technical doc](../security-operations/jupiterOne-query-language.md).
 
 This is an example result graph from a query in the Search for Anything app:
 

@@ -212,12 +212,12 @@ describe("ProceduresToVanillaRequests", () => {
         {
           articleID: null,
           body: "",
-          fileName: "jupiterOne-query-language_(J1QL).md",
+          fileName: "jupiterOne-query-language.md",
           format: "markdown",
           knowledgeCategoryID: null,
           locale: "en",
           name: "Jupiterone Query Language",
-          path: "getting-started_and-admin/jupiterOne-query-language_(J1QL).md",
+          path: "getting-started_and-admin/jupiterOne-query-language.md",
           procedureType: "Article",
         },
         {
@@ -690,12 +690,12 @@ describe("ProceduresToVanillaRequests", () => {
       mockEditArticle.mockResolvedValue({
         articleID: 12,
         body: "some body",
-        fileName: "jupiterOne-query-language_(J1QL).md",
+        fileName: "jupiterOne-query-language.md",
         format: "markdown",
         knowledgeCategoryID: 22,
         locale: "en",
         name: "Jupiterone Query Language",
-        path: "getting-started_and-admin/jupiterOne-query-language_(J1QL).md",
+        path: "getting-started_and-admin/jupiterOne-query-language.md",
         procedureType: "Article",
       } as VanillaArticle);
       mockDeleteArticle.mockResolvedValue(deleteArticle);
