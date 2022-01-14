@@ -64,7 +64,7 @@ In addition to using the J1 query library, from any J1 page or app, you can ente
 
 ## JupiterOne Query Language
 
-The [JupiterOne Query Language](../J1-Query-Language/jupiterOne-query-language_(J1QL).md) (J1QL) is a query language for finding the entities and relationships within your digital environment. J1QL blends together the capabilities of asking questions, performing full text search, and querying the complex entity-relationship graph.
+The [JupiterOne Query Language](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md) (J1QL) is a query language for finding the entities and relationships within your digital environment. J1QL blends together the capabilities of asking questions, performing full text search, and querying the complex entity-relationship graph.
 
-J1QL is complex but a [tutorial](../tutorial-j1ql.md) is available to help you learn. In addition, JupiterOne offers [J1VQB](../J1-Query-Language/j1-vqb.md), a visual query building app, a code-free tool for creating queries.
+J1QL is complex but a [tutorial](../tutorial-j1ql.md) is available to help you learn. In addition, JupiterOne offers [J1VQB](../jupiterOne-query-language_(J1QL)/j1-vqb.md), a visual query building app, a code-free tool for creating queries.
 

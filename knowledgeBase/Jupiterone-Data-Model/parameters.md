@@ -157,7 +157,7 @@ mutation Mutation($name: String!) {
 
 ## Parameter References
 
-You can reference parameters in [rules' configurations](./schemas/alert-rule.md) or any [query expression](./jupiterOne-query-language_(J1QL).md), although the syntax is  [slightly different](#example) between the two. `param` is a special keyword that, when invoked, fetches values from the parameter-storing service.
+You can reference parameters in [rules' configurations](./schemas/alert-rule.md) or any [query expression](./jupiterOne-query-language.md), although the syntax is  [slightly different](#example) between the two. `param` is a special keyword that, when invoked, fetches values from the parameter-storing service.
 
 **Warning!**
 In the case of both rules and queries, referencing a nonexistent parameter causes an error and abandon execution.

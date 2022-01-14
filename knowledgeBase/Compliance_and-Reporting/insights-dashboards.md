@@ -69,9 +69,9 @@ For more information about custom Insights dashboards, [watch this video](https:
 
 ### Additional support documentation/resources for writing queries:
 
-[J1QL query tutorial](../J1-Query-Language/tutorial-j1ql.md)
+[J1QL query tutorial](../jupiterOne-query-language_(J1QL)/tutorial-j1ql.md)
 [Search quickstart](../Getting-Started_and-Admin/quickstart-search.md)
-[J1QL language specs](../J1-Query-Language/jupiterOne-query-language_(J1QL).md)
+[J1QL language specs](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md)
 [All questions + queries](https://ask.us.jupiterone.io/filter?tagFilter=all)
 
 ## General Insights Dashboard Functionality 

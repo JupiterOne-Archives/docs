@@ -23,7 +23,7 @@ Add asset classes and properties that your organization comprises a critical ass
 
 ## Quick Filtering by Class and/or Type
 
-Click **CLASS** to display all the possible asset classes. The class of an asset is an abstract label that defines what the asset is within the concept of security operations. For more details, see the [JupiterOne Data Model documentation](../docs/jupiterone-data-model.md).
+Click **CLASS** to display all the possible asset classes. The class of an asset is an abstract label that defines what the asset is within the concept of security operations. For more details, see the [JupiterOne Data Model documentation](../jupiterone-data-model/jupiterone-data-model.md).
 
 ![](../assets/asset-quick-filter-type.png)
 

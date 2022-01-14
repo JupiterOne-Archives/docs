@@ -73,18 +73,18 @@ By default, for the standard controls within the SOC 2 framework in JupiterOne, 
 
 Additional support documentation: 
 
-[J1QL query tutorial](../J1-Query-Language/tutorial-j1ql.md)
+[J1QL query tutorial](../jupiterOne-query-language_(J1QL)/tutorial-j1ql.md)
 [Search quickstart](../Getting-Started_and-Admin/quickstart-search.md)
-[J1QL language specs](../J1-Query-Language/jupiterOne-query-language_(J1QL).md) 
+[J1QL language specs](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md) 
 
 ### Add additional queries
 1. Adding a new query
 
 Additional support documentation: 
 
-[J1QL query tutorial](../J1-Query-Language/tutorial-j1ql.md)
+[J1QL query tutorial](../jupiterOne-query-language_(J1QL)/tutorial-j1ql.md)
 [Search quickstart](../Getting-Started_and-Admin/quickstart-search.md)
-[J1QL language specs](../J1-Query-Language/jupiterOne-query-language_(J1QL).md)
+[J1QL language specs](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md)
 
 2. Mapping a prewritten, templated query (over 400 are in our library)
 
