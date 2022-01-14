@@ -2,8 +2,7 @@
 
 ## Okta + JupiterOne Integration Benefits
 
-- Visualize Okta users, groups, devices, applications, and services in the
-  JupiterOne graph.
+- Visualize Okta users, groups, devices, applications, and services in the JupiterOne graph.
 - Map Okta users to employees in your JupiterOne account.
 - See Okta rules which are automatically adding users to groups. Write queries
   to determine which users were added via rules.

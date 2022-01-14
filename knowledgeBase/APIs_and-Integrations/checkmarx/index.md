@@ -2,8 +2,7 @@
 
 ## Checkmarx + JupiterOne Integration Benefits
 
-- Visualize Checkmarx scan assessments and findings on projects in the
-  JupiterOne graph.
+- Visualize Checkmarx scan assessments and findings on projects in the JupiterOne graph.
 - Visualize Checkmarx teams in the JupiterOne graph.
 - Map a Checkmarx team to connected users in JupiterOne.
 - Monitor Checkmarx findings within the alerts app.

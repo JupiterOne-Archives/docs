@@ -10,8 +10,7 @@
 
 ## How it Works
 
-- JupiterOne periodically fetches users and files from BambooHR to update the
-  graph.
+- JupiterOne periodically fetches users and files from BambooHR to update the graph.
 - Additional details stored in BambooHR users is used to map your organization
   management structure.
 - Write JupiterOne queries to review and monitor updates to the graph.

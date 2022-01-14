@@ -2993,7 +2993,7 @@ type permission = string; // must be a valid permission string
 | _Integrations_           |  READ  |       `accessIntegrations` |
 | _Endpoint Compliance_    |  READ  | `accessEndpointCompliance` |
 
-**Permission Strings: ADMIN**
+**Permission Strings: ADMIN** 
 
 | DISPLAY NAME (J1 APP)    | ACCESS |                PERMISSION |
 | :----------------------- | :----: | ------------------------: |

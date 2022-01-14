@@ -6,8 +6,7 @@
 - Map Slack users to employees in your JupiterOne account.
 - Map Slack users to the channels they have access to.
 - Monitor changes to Slack teams, channels, and users using JupiterOne alerts.
-- Create issues within Slack channels or directly to Slack users from JupiterOne
-  alerts.
+- Create issues within Slack channels or directly to Slack users from JupiterOne alerts.
 
 ## How it Works
 

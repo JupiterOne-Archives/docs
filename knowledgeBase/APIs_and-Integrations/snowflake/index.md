@@ -4,8 +4,7 @@
 
 - Visualize Snowflake cloud resources in the JupiterOne graph.
 - Map Snowflake users to employees in your JupiterOne account.
-- Monitor visibility and governance of your Snowflake cloud environment by
-  leveraging hundreds of out of the box queries.
+- Monitor visibility and governance of your Snowflake cloud environment by leveraging hundreds of out of the box queries.
 - Monitor changes to Snowflake cloud resources using JupiterOne alerts.
 
 ## How it Works

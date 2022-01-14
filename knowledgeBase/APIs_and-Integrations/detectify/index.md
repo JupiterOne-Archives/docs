@@ -2,8 +2,7 @@
 
 ## Detectify + JupiterOne Integration Benefits
 
-- Visualize Detectify services, domains, subdomains, scan profiles, scan
-  reports, and findings in the JupiterOne graph.
+- Visualize Detectify services, domains, subdomains, scan profiles, scan reports, and findings in the JupiterOne graph.
 - Monitor Detectify findings within the alerts app.
 - Monitor changes to Detectify vulnerability scan resources using JupiterOne
   alerts.

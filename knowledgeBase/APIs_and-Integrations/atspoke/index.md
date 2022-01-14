@@ -10,48 +10,38 @@
 
 ## How it Works
 
-- JupiterOne periodically fetches users, teams, and webhooks from atSpoke to
-  update the graph. Optionally, requests and request types are also fetched.
+- JupiterOne periodically fetches users, teams, and webhooks from atSpoke to update the graph. Optionally, requests and request types are also fetched.
 - Write JupiterOne queries to review and monitor updates to the graph.
 - Configure alerts to take action when JupiterOne graph changes.
 
 ## Requirements
 
-- You need a Business or Enterprise level atSpoke account in order to create an
-  API key for JupiterOne to access the system.
+- You need a Business or Enterprise level atSpoke account in order to create an API key for JupiterOne to access the system.
 - You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
-If you need help with this integration, please contact
-[JupiterOne Support](https://community.askj1.com).
+If you need help with this integration, please contact [JupiterOne Support](https://community.askj1.com).
 
 ## Integration Walkthrough
 
 ### In atSpoke
 
-1. Log into atSpoke on a Business-level or Enterprise-level account (Teams-level
-   accounts do not provide API functionality).
+1. Log into atSpoke on a Business-level or Enterprise-level account (Teams-level accounts do not provide API functionality).
 2. Go to My Profile.
 3. Select the API tab.
-4. Generate a token at the bottom of the page. Note that you can only have one
-   token for the whole atSpoke account, and it allows access to all things.
+4. Generate a token at the bottom of the page. Note that you can only have one token for the whole atSpoke account, and it allows access to all things.
 
 ### In JupiterOne
 
 1. From the configuration **Gear Icon**, select **Integrations**.
 2. Scroll to the **atSpoke** integration tile and click it.
 3. Click the **Add Configuration** button.
-4. Enter the **Account Name** by which you'd like to identify this atSpoke
-   account in JupiterOne. Ingested entities will have this value stored in
-   `tag.AccountName` when **Tag with Account Name** is checked.
-5. Enter a **Description** that will further assist your team when identifying
-   the integration instance.
-6. Select a **Polling Interval** that you feel is sufficient for your monitoring
-   needs. You may leave this as `DISABLED` and manually execute the integration.
+4. Enter the **Account Name** by which you'd like to identify this atSpoke account in JupiterOne. Ingested entities will have this value stored in `tag.AccountName` when **Tag with Account Name** is checked.
+5. Enter a **Description** that will further assist your team when identifying the integration instance.
+6. Select a **Polling Interval** that you feel is sufficient for your monitoring needs. You may leave this as `DISABLED` and manually execute the integration.
 7. Enter the **atSpoke API Key** generated on the atSpoke site.
-8. Enter the number of **num atSpoke requests** according to your preference.
-   See below for details on this feature.
+8. Enter the number of **num atSpoke requests** according to your preference. See below for details on this feature.
 9. Click **Create Configuration** once all values are provided.
 
 ### atSpoke Request Tracking

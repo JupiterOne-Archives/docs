@@ -2,8 +2,7 @@
 
 ## Wazuh + JupiterOne Integration Benefits
 
-- Visualize Wazuh endpoint agents and the devices they protect in the JupiterOne
-  graph.
+- Visualize Wazuh endpoint agents and the devices they protect in the JupiterOne graph.
 - Map endpoint agents to devices and devices to the employee who has or owns the
   device.
 - Monitor changes to Wazuh endpoint agents and devices using JupiterOne alerts.
