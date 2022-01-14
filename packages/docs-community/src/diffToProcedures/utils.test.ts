@@ -6,16 +6,16 @@ describe("Utils", () => {
       const exampleDiffs = [
         `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md`,
         `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started_and-admin/compliance-reporting/soc2-with-jupiterone.md`,
-        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started_and-admin/jupiterone-query-language-copy.md`,
-        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started_and-admin/jupiterone-query-language.md`,
+        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started_and-admin/jupiterOne-query-language_(J1QL)-copy.md`,
+        `${PATH_OF_DIRECTORY_TO_WATCH}/getting-started_and-admin/jupiterOne-query-language_(J1QL).md`,
         `procedures/Release/files.md`,
       ];
 
       const actual = filterDiffs(exampleDiffs);
 
       const expected: string[] = [
-        "getting-started_and-admin/jupiterone-query-language-copy.md",
-        "getting-started_and-admin/jupiterone-query-language.md",
+        "getting-started_and-admin/jupiterOne-query-language_(J1QL)-copy.md",
+        "getting-started_and-admin/jupiterOne-query-language_(J1QL).md",
         "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
         "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone.md",
       ];
