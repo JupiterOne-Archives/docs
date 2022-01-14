@@ -6,12 +6,12 @@ This is most commonly caused by incorrect or insufficient permissions. Check the
 IAM policy assigned to the IAM role used by JupiterOne in your AWS account. You
 can find details on the required permissions by going to **Integrations Configuration** > **Add AWS Configuration** > and clicking on the **Setup Instructions** button.
 
-Or they can be found on the [jupiterone-aws-integration](https://github.com/jupiterone/jupiterone-aws-integration) project on Github.
+Or they can be found on the [jupiterone-aws-integration](https://github.com/JupiterOne/jupiterone-aws-cloudformation) project on Github.
 
 ## How can I add or configure all the sub-accounts in my AWS Organization?
 
 First configure your AWS Organization master account to JupiterOne per the instructions 
-in the JupiterOne application or those found at the [jupiterone-aws-integration](https://github.com/jupiterone/jupiterone-aws-integration) project on Github. 
+in the JupiterOne application or those found at the [jupiterone-aws-integration](https://github.com/JupiterOne/jupiterone-aws-cloudformation) project on Github. 
 During this process you will create an IAM Role for JupiterOne with specific policies attached and a 
 specific external trust ID. Please note the IAM Role name, policies, and external trust ID used. 
 Do not select the option "Auto-configure additional integrations..." yet.

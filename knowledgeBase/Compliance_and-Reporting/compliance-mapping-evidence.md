@@ -16,10 +16,7 @@ Each "question" can have one or more queries. The queries can be named to trigge
 
 ## External Evidence
 
-In some cases, compliance evidence cannot be provided via data available in JupiterOne. There are two ways to provide this evidence for a given control: as an external link to a document hosted outside of JupiterOne (such as on SharePoint or Google Docs), or using a direct uploaded (such as a screenshot or 
-PDF).  
-
-Both external evidence types require a name and have an optional description.
+In some cases, compliance evidence cannot be provided via data available in JupiterOne. There are two ways to provide this evidence for a given control: as an external link to a document hosted outside of JupiterOne (such as on SharePoint or Google Docs), or using a direct uploaded (such as a screenshot or PDF). Both external evidence types require a name and have an optional description.
 
 [Watch this video](https://try.jupiterone.com/blog/video-evidence-collection-with-the-compliance-app) to see examples of queries you can use to collect and map evidence to controls.
 
