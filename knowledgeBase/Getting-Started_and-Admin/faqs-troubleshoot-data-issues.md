@@ -26,7 +26,7 @@ Depending on the polling frequency of your data, your most recent changes may no
 
 ### 2. I’m not sure if my query is written correctly or not
 
-For a general query guide, refer to our [J1QL Query Tutorial](../J1-Query-Language\tutorial-j1ql.md).
+For a general query guide, refer to our [J1QL Query Tutorial](../jupiterOne-query-language_(J1QL)\tutorial-j1ql.md).
 
 For queries written against any JupiterOne managed integrations, visit our [Integrations](../Getting-Started_and-Admin/configure-integrations.md) 
 guides to understand which entities and properties are ingested along with the relationships that are configured. 

@@ -27,6 +27,6 @@ Find * as entity
 Return entity._integrationType, entity._integrationName, count(entity)
 ```
 
-[1]: ../docs/metadata.md
+[1]: ../JupiterOne-Data-Model/metadata.md
 
 [../JupiterOne-Data-Model/metadata.md]: 
