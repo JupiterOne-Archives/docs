@@ -5,8 +5,7 @@ Similar to the concept of "micro-services", the JupiterOne policies and procedur
 - All policies, procedures and reference documents are written in **Markdown**.
 - All configuration files are in **JSON** format, including mapping between policies and procedures, and between procedures and compliance standards.
 
-Policies and procedures are part of JupiterOne's Governance, Risk, and
-Compliance (GRC) [graph data model](./org-grc.md).
+Policies and procedures are part of JupiterOne's Governance, Risk, and Compliance (GRC) [graph data model](./org-grc.md).
 
 ## Structure
 
@@ -20,17 +19,13 @@ Compliance (GRC) [graph data model](./org-grc.md).
 
     `revision`
 
-    Overview of the policy. A paragraph or two to describe the intent and
-    principals of the policy.
+    Overview of the policy. A paragraph or two to describe the intent and principals of the policy.
 
     ## Policy Statements
 
     This section contains the high level requirements specific to the policy.
 
-    Policy statements are aligned to the organization's operating model and
-    applicable compliance requirements. These statements describe the "what"
-    but not the "how". They are meant to be stable over longer periods of time 
-    without needing frequent updates.
+    Policy statements are aligned to the organization's operating model and applicable compliance requirements. These statements describe the "what" but not the "how". They are meant to be stable over longer periods of time without needing frequent updates.
     ```
 
 `templates/procedures`

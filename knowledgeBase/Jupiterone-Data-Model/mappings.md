@@ -8,9 +8,9 @@ Entity relationship mappings provide the context necessary to support this autom
 
 Mapping rules are maintained by the JupiterOne engineering team; they cannot be modified by customers today. However, it is still important to understand how the mapping rules work because:
 
-1. Entities and relationships that mappings produce will exist in your data, though you will not be billed for these
-2. Knowing about mappings allows you to leverage the entities and relationships they produce in J1 queries
-3. Some mappings require customers to add properties to entities so that relationships can be inferred
+1. Entities and relationships that mappings produce will exist in your data, though you will not be billed for these.
+2. Knowing about mappings allows you to leverage the entities and relationships they produce in J1 queries.
+3. Some mappings require customers to add properties to entities so that relationships can be inferred.
 
 As entities are created and updated, the system will check to see if the entity matches a mapping rule. This entity is considered the source of the relationship to build. The target of the relationship is determined by performing a search according to the mapping's target filter parameters. When more than one entity matches the target filter, a relationship is established between the source and each target entity. No relationship is created when a target is not found. A single target entity will be created when no existing entities match, unless `skipTargetCreation: true`.
 

@@ -29,7 +29,7 @@ Most Entities will have the following common properties:
 <!--THE FOLLOW SECTION IS AUTO-GENERATED. DO NOT EDIT.-->
 <!--BEGIN Common Entity Properties table-->
 
-??? reference "Common Entity Properties Table"
+<details><summary>Common Entity Properties</summary>
 
     Property           | Type      | Description
     ---------          | --------  | ------------
@@ -62,7 +62,7 @@ Most Entities will have the following common properties:
     `owner`            | `string` | The owner of this entity. This could reference the name of the owner, or as reference ID/key to another entity in the graph as the owner.
     `tags`             | `array` | An array of unnamed tags
     `notes`            | `array` | User provided notes about this entity
-
+</details>
 <!--END Common Entity Properties table-->
 
 ### Class Specific Entity Properties
@@ -80,7 +80,7 @@ Here is a list of reference entities defined by the JupiterOne Data Model, each 
 <!--THE FOLLOW SECTION IS AUTO-GENERATED. DO NOT EDIT.-->
 <!--BEGIN Defined Entities table-->
 
-??? reference "Defined Entities Table"
+<details><summary>Defined Entities Table</summary>
 
     Entity             | Description
     ------             | -----------
@@ -172,7 +172,7 @@ Here is a list of reference entities defined by the JupiterOne Data Model, each 
     `Vulnerability`    | A security vulnerability (application or system or infrastructure). A single vulnerability may relate to multiple findings and impact multiple resources. The `IMPACTS` relationship between the Vulnerability and the resource entity that was impacted serves as the record of the finding. The `IMPACTS` relationship carries properties such as 'identifiedOn', 'remediatedOn', 'remediationDueOn', 'issueLink', etc.
     `Weakness`         | A security weakness.
     `Workload`         | A virtual compute instance, it could be an aws-ec2-instance, a docker-container, an aws-lambda-function, an application-process, or a vmware-instance. The exact workload type is described in the _type property of the Entity.
-
+</details>
 <!--END Defined Entities table-->
 
 #### Special Entities
