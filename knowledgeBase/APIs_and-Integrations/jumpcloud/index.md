@@ -5,8 +5,7 @@
 - Visualize JumpCloud users, groups, and applications in the JupiterOne graph.
 - Map JumpCloud users to employees in your JupiterOne account.
 - Monitor changes to JumpCloud users and groups using JupiterOne alerts.
-- Create an employee entity that is used to map users across your organization
-  to an employee via a matching email property.
+- Create an employee entity that is used to map users across your organization to an employee via a matching email property.
 
 ## How it Works
 

@@ -1,4 +1,4 @@
-# AWS related FAQs
+# AWS FAQs
 
 ## Some of my AWS resources seem to be missing from the Asset Inventory / Graph. What is going on?
 

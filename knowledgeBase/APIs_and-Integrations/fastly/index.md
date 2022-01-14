@@ -2,8 +2,7 @@
 
 ## Fastly + JupiterOne Integration Benefits
 
-- Visualize Fastly users, API tokens, services, and service backends in the
-  JupiterOne graph.
+- Visualize Fastly users, API tokens, services, and service backends in the JupiterOne graph.
 - Map Fastly users to employees in your JupiterOne account.
 - Monitor changes to Fastly users and API tokens using JupiterOne alerts.
 - Monitor changes to Fastly services and service backends using JupiterOne

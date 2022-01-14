@@ -2,8 +2,7 @@
 
 ## SentinelOne + JupiterOne Integration Benefits
 
-- Visualize SentinelOne endpoint agents and the devices they protect in the
-  JupiterOne graph.
+- Visualize SentinelOne endpoint agents and the devices they protect in the JupiterOne graph.
 - Map SentinelOne endpoint agents to devices and devices to the employee who is
   the owner.
 - Monitor changes to SentinelOne endpoint agents and devices using JupiterOne

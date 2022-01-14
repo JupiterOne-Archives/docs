@@ -4,18 +4,12 @@
 
 - Visualize AWS cloud resources across several services in the JupiterOne graph.
 - Map AWS users to employees in your JupiterOne account.
-- Monitor visibility and governance of your AWS cloud environment by leveraging
-  hundreds of out of the box queries.
-- Monitor compliance against the AWS CIS Framework and other security benchmarks
-  using the JupiterOne compliance app.
-- Monitor AWS vulnerabilities and findings from multiple services within the
-  alerts app.
-- Monitor changes to your AWS cloud resources using multiple JupiterOne alert
-  rule packs specific to AWS.
-- Monitor several out of the box dashboards of your security across AWS
-  services.
-- Create automated workflows in JupiterOne alerts using SNS & SQS to remediate
-  configuration gaps in AWS.
+- Monitor visibility and governance of your AWS cloud environment by leveraging hundreds of out of the box queries.
+- Monitor compliance against the AWS CIS Framework and other security benchmarks using the JupiterOne compliance app.
+- Monitor AWS vulnerabilities and findings from multiple services within the alerts app.
+- Monitor changes to your AWS cloud resources using multiple JupiterOne alert rule packs specific to AWS.
+- Monitor several out of the box dashboards of your security across AWS services.
+- Create automated workflows in JupiterOne alerts using SNS & SQS to remediate configuration gaps in AWS.
 
 ## How it Works
 
@@ -53,7 +47,7 @@ The integration instance configuration requires the customer's `roleArn` to assu
 
 1. Detailed setup instructions and a pre-built CloudFormation Stack are provided
    in the application and maintained in the public [JupiterOne AWS CloudFormation](https://github.com/jupiterone/jupiterone-aws-integration) project on Github.
-2.  Follow the steps under **In JupiterOne** to capture the auto-generated **External ID** specific to the integration instance.
+2. Follow the steps under **In JupiterOne** to capture the auto-generated **External ID** specific to the integration instance.
 
 ### In JupiterOne
 

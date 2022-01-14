@@ -2,8 +2,7 @@
 
 ## KnowBe4 + JupiterOne Integration Benefits
 
-- Visualize KnowBe4 user groups, users, training campaigns, and modules in the
-  JupiterOne graph.
+- Visualize KnowBe4 user groups, users, training campaigns, and modules in the JupiterOne graph.
 - Map KnowBe4 users and their associated trainings to the JupiterOne employee.
 - Monitor changes to user groups, users, training campaigns, and modules using
   JupiterOne alerts.

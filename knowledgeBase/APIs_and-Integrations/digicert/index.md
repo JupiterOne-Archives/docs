@@ -20,8 +20,7 @@
 
 ## Support
 
-If you need help with this integration, please contact
-[JupiterOne Support](https://community.askj1.com).
+If you need help with this integration, please contact [JupiterOne Support](https://community.askj1.com).
 
 ## Integration Walkthrough
 

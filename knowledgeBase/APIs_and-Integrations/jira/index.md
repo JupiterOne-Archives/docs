@@ -4,8 +4,7 @@
 
 - Visualize Jira projects, users, and issues in the JupiterOne graph.
 - Map Jira users to employees in your JupiterOne account.
-- Monitor Jira issues configured as vulnerabilities or findings within the
-  alerts app.
+- Monitor Jira issues configured as vulnerabilities or findings within the alerts app.
 - Monitor changes to Jira users, projects, and issues using JupiterOne alerts.
 - Create Jira issues from JupiterOne alerts and monitor progress against those
   issues in JupiterOne.

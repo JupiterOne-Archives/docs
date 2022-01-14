@@ -2,8 +2,7 @@
 
 ## Heroku + JupiterOne Integration Benefits
 
-- Visualize Heroku teams, users, applications, and services in the JupiterOne
-  graph.
+- Visualize Heroku teams, users, applications, and services in the JupiterOne graph.
 - Map Heroku users to employees in your JupiterOne account.
 - Monitor changes to your teams, users, applications, and services using
   JupiterOne alerts.
