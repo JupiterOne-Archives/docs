@@ -2,8 +2,7 @@
 
 ## GitLab + JupiterOne Integration Benefits
 
-- Visualize GitLab users, groups, code repositories, and merge requests in the
-  JupiterOne graph.
+- Visualize GitLab users, groups, code repositories, and merge requests in the JupiterOne graph.
 - Map GitLab users to employees in your JupiterOne account.
 - Map GitLab users to development/security trainings.
 - Monitor GitLab software development activities within repositories including

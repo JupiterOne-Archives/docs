@@ -61,7 +61,7 @@ type RequirementOrControl: {
 }
 ```
 
-A **security questionnaire** specification follows the exact same JSON structure as above, with the addition of a top level property `"type": "questionnaire"`.
+A **security questionnaire** specification follows the exact same JSON structure as above, with the addition of a top level property `"type": "questionnaire"`. 
 
 Each requirement or control item in a security questionnaire may have an optional `"response": "yes" | "no"` property to indicate the answer. You can set this response directly in the JSON or via the Compliance web app. Additional details and notes can be provided via the web app.
 

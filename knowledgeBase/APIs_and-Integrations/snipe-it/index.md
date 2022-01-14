@@ -2,8 +2,7 @@
 
 ## Snipe-IT + JupiterOne Integration Benefits
 
-- Visualize Snipe-IT account locations, hardware, and hardware owners in the
-  JupiterOne graph.
+- Visualize Snipe-IT account locations, hardware, and hardware owners in the JupiterOne graph.
 - Map Snipe-IT users to the hardware they have or own.
 - Monitor changes to locations, hardware, and hardware owners using using
   JupiterOne alerts.

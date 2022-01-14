@@ -2,8 +2,7 @@
 
 ## Tenable Cloud + JupiterOne Integration Benefits
 
-- Visualize Tenable Cloud users, scans, findings, reports, vulnerabilities, and
-  container findings in the JupiterOne graph.
+- Visualize Tenable Cloud users, scans, findings, reports, vulnerabilities, and container findings in the JupiterOne graph.
 - Map Tenable Cloud users to employees in your JupiterOne account.
 - Monitor Tenable vulnerabilities and findings within the alerts app.
 - Monitor changes to Tenable Cloud users, scans, findings, reports,

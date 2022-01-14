@@ -2,8 +2,7 @@
 
 ## Carbon Black Cloud + JupiterOne Integration Benefits
 
-- Visualize Carbon Black endpoint agents and findings on corresponding devices
-  in the JupiterOne graph.
+- Visualize Carbon Black endpoint agents and findings on corresponding devices in the JupiterOne graph.
 - Map Carbon Black endpoint agents to devices and devices to the employee who is
   the owner.
 - Monitor Carbon Black findings within the alerts app.

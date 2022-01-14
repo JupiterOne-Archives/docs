@@ -2,8 +2,7 @@
 
 ## JFrog Artifactory + JupiterOne Integration Benefits
 
-- Visualize Artifactory repository groups, code repositories, code modules,
-  builds, keys, permissions, code modules, user groups, and users in the
+- Visualize Artifactory repository groups, code repositories, code modules, builds, keys, permissions, code modules, user groups, and users in the
   JupiterOne graph.
 - Monitor Artifactory CI/CD activities across containers and repositories.
 - Monitor Artifactory changes to repository groups, code repositories, code

@@ -2,8 +2,7 @@
 
 ## CrowdStrike + JupiterOne Integration Benefits
 
-- Visualize your CrowdStrike endpoint agents and the devices they protect in the
-  JupiterOne graph.
+- Visualize your CrowdStrike endpoint agents and the devices they protect in the JupiterOne graph.
 - Map endpoint agents to devices and devices to the employee who is the owner.
 - Monitor changes to CrowdStrike endpoints using JupiterOne alerts.
 
