@@ -75,11 +75,3 @@ Find Function as f
   return f.tag.AccountName, f.displayName, f.updatedOn, f.lastModified
   order by f.tag.AccountName
 ```
-
-## What are the running services on a system/host/device?
-
-_To be added._
-
-## What are the running processes on a system/host/device?
-
-_To be added._
