@@ -195,29 +195,29 @@ describe("ProceduresToVanillaRequests", () => {
           knowledgeCategoryID: null,
           name: "Getting Started Admin",
           parentID: null,
-          path: "getting-started_and-admin/jupiterone-query-language-copy.md",
+          path: "getting-started_and-admin/jupiterOne-query-language_(J1QL)-copy.md",
           procedureType: "Category",
         },
         {
           articleID: null,
           body: "",
-          fileName: "jupiterone-query-language-copy.md",
+          fileName: "jupiterOne-query-language_(J1QL)-copy.md",
           format: "markdown",
           knowledgeCategoryID: null,
           locale: "en",
           name: "Jupiterone Query Language Copy",
-          path: "getting-started_and-admin/jupiterone-query-language-copy.md",
+          path: "getting-started_and-admin/jupiterOne-query-language_(J1QL)-copy.md",
           procedureType: "Article",
         },
         {
           articleID: null,
           body: "",
-          fileName: "jupiterone-query-language.md",
+          fileName: "jupiterOne-query-language.md",
           format: "markdown",
           knowledgeCategoryID: null,
           locale: "en",
           name: "Jupiterone Query Language",
-          path: "getting-started_and-admin/jupiterone-query-language.md",
+          path: "getting-started_and-admin/jupiterOne-query-language.md",
           procedureType: "Article",
         },
         {
@@ -675,13 +675,13 @@ describe("ProceduresToVanillaRequests", () => {
       const deleteArticle = {
         articleID: 11,
         body: "FILE_DOES_NOT_EXIST",
-        fileName: "jupiterone-query-language-copy.md",
+        fileName: "jupiterOne-query-language_(J1QL)-copy.md",
         format: "markdown",
         knowledgeCategoryID: 22,
         locale: "en",
         status: "deleted",
         name: "Jupiterone Query Language Copy",
-        path: "getting-started_and-admin/jupiterone-query-language-copy.md",
+        path: "getting-started_and-admin/jupiterOne-query-language_(J1QL)-copy.md",
         procedureType: "Article",
       } as VanillaArticle;
       mockMarkdownToString
@@ -690,12 +690,12 @@ describe("ProceduresToVanillaRequests", () => {
       mockEditArticle.mockResolvedValue({
         articleID: 12,
         body: "some body",
-        fileName: "jupiterone-query-language.md",
+        fileName: "jupiterOne-query-language.md",
         format: "markdown",
         knowledgeCategoryID: 22,
         locale: "en",
         name: "Jupiterone Query Language",
-        path: "getting-started_and-admin/jupiterone-query-language.md",
+        path: "getting-started_and-admin/jupiterOne-query-language.md",
         procedureType: "Article",
       } as VanillaArticle);
       mockDeleteArticle.mockResolvedValue(deleteArticle);
@@ -703,12 +703,12 @@ describe("ProceduresToVanillaRequests", () => {
         .mockResolvedValueOnce({
           articleID: 21,
           body: "",
-          fileName: "jupiterone-query-language-copy.md",
+          fileName: "jupiterOne-query-language_(J1QL)-copy.md",
           format: "markdown",
           knowledgeCategoryID: 22,
           locale: "en",
           name: "Soc2 With Jupiterone Copy",
-          path: "getting-started_and-admin/jupiterone-query-language-copy.md",
+          path: "getting-started_and-admin/jupiterOne-query-language_(J1QL)-copy.md",
           procedureType: "Article",
         } as VanillaArticle)
         .mockResolvedValueOnce({
@@ -744,7 +744,7 @@ describe("ProceduresToVanillaRequests", () => {
           knowledgeCategoryID: 22,
           name: "Getting Started Admin",
           parentID: 1,
-          path: "getting-started_and-admin/jupiterone-query-language-copy.md",
+          path: "getting-started_and-admin/jupiterOne-query-language_(J1QL)-copy.md",
           procedureType: "Category",
         },
       ] as VanillaKnowledgeCategory[];
