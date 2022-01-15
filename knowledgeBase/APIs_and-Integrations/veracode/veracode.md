@@ -3,31 +3,26 @@
 ## Veracode + JupiterOne Integration Benefits
 
 - Visualize Veracode scans, cwes, vulnerabilities, and findings in the JupiterOne graph.
-- Map Veracode findings to a code repo, project, or application in your
-  JupiterOne account.
+- Map Veracode findings to a code repo, project, or application in your JupiterOne account.
 - Monitor Veracode cwes, findings, and vulnerabilities within the alerts app.
 - Monitor changes to Veracode scans using JupiterOne alerts.
 
 ## How it Works
 
-- JupiterOne periodically fetches Veracode scans, cwes, vulerabilities, and
-  findings to update the graph.
+- JupiterOne periodically fetches Veracode scans,CWEs, vulnerabilities, and findings to update the graph.
 - Write JupiterOne queries to review and monitor updates to the graph.
 - Configure alerts to reduce the noise of findings.
 - Configure alerts to take action when the JupiterOne graph changes.
 
 ## Support
 
-If you need help with this integration, please contact
-[JupiterOne Support](https://community.askj1.com).
+If you need help with this integration, please contact [JupiterOne Support](https://community.askj1.com).
 
 ## Integration Walkthrough
 
 ### In Veracode
 
-The integration instance configuration requires the customer's API ID and secret
-to authenticate requests to the Veracode REST APIs. Veracode provides [detailed
-instructions for obtaining these credentials][1].
+The integration instance configuration requires the customer's API ID and secret to authenticate requests to the Veracode REST APIs. Veracode provides [detailed instructions for obtaining these credentials](https://docs.veracode.com/r/c_api_credentials3).
 
 ### In JupiterOne
 

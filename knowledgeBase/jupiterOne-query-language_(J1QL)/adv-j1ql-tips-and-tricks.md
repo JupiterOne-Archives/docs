@@ -1,8 +1,8 @@
 # J1QL Tips and Tricks
 
-This guide contains tips and tricks that assist in creating J1QL queries in your account. If you haven't already, check out our [J1QL Tutorial](./tutorial-j1ql.md) as well as our [J1QL Language Specs](./jupiterone-query-language.md) articles for helpful context.
+This guide contains tips and tricks that assist in creating J1QL queries in your account. If you haven't already, check out our [J1QL Tutorial](./tutorial-j1ql.md) as well as our [J1QL Language Specs](./jupiterOne-query-language.md) articles for helpful context.
 
-Before creating your own query, we recommend starting with our wide-array of [pre-packaged questions](https://ask.us.jupiterone.io/filter?tagFilter=all).), tweaking them as needed, then creating your own from scratch.
+Before creating your own query, we recommend starting with our wide-array of [pre-packaged questions](https://ask.us.jupiterone.io/), tweaking them as needed, then creating your own from scratch.
 
 ## When to Use WITH vs WHERE
 
@@ -176,7 +176,7 @@ From here we see several additional nodes. We can select a path that we are inte
 
 In the following example we traversed from a User to a UserGroup to an AccessRole to an Account. Written out more specifically using types we have an okta_user to an okta_user_group to an aws_iam_role to an aws_account.
 
-Our final query could be something similar to the following example, adding in filters, sorting, pagination, etc. as needed. See [J1QL Language Specs](./jupiterone-query-language.md) to understand the query language features.
+Our final query could be something similar to the following example, adding in filters, sorting, pagination, etc. as needed. See [J1QL Language Specs](./jupiterOne-query-language.md) to understand the query language features.
 
 ```j1ql
 Find User 

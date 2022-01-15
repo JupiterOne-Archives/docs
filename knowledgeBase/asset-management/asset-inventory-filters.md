@@ -10,6 +10,8 @@ To see all the digital assets (entities) you have, in JupiterOne, go to **Apps >
 
 Click **Critical Assets** in the top banner to go directly to the most important of your entities.
 
+
+
 ![](../assets/asset-critical.png)
 
 Critical assets is a class of asset for which you can create queries and alerts to quickly access the most crucial data. By default, JupiterOne determines which criteria defines an asset as the most important and, therefore, the most at risk but an administrator can edit this definition.
@@ -21,7 +23,7 @@ Add asset classes and properties that your organization comprises a critical ass
 
 ## Quick Filtering by Class and/or Type
 
-Click **CLASS** to display all the possible asset classes. The class of an asset is an abstract label that defines what the asset is within the concept of security operations. For more details, see the [JupiterOne Data Model documentation](../docs/jupiterone-data-model.md).
+Click **CLASS** to display all the possible asset classes. The class of an asset is an abstract label that defines what the asset is within the concept of security operations. For more details, see the [JupiterOne Data Model documentation](../jupiterone-data-model/jupiterone-data-model.md).
 
 ![](../assets/asset-quick-filter-type.png)
 
