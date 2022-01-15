@@ -164,7 +164,7 @@ describe("utils", () => {
         knowledgeCategoryID: 49,
         path: "getting-started_and-admin",
         childrenPath:
-          "getting-started_and-admin/jupiterone-query-language-copy.md",
+          "getting-started_and-admin/jupiterOne-query-language_(J1QL)-copy.md",
         procedureType: "Category",
         sortChildren: null,
         sort: 0,
@@ -232,7 +232,7 @@ describe("utils", () => {
         knowledgeCategoryID: 49,
         path: "getting-started_and-admin",
         childrenPath:
-          "getting-started_and-admin/jupiterone-query-language-copy.md",
+          "getting-started_and-admin/jupiterOne-query-language_(J1QL)-copy.md",
         procedureType: "Category",
         sortChildren: null,
         sort: 0,

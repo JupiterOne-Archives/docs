@@ -6,8 +6,7 @@ This version of the tool has improved support for the latest versions of MacOS, 
 
 ## Endpoint applications policy
 
-By using this version of Stethoscope, you will be able to specify endpoint policies that enforce the presence or absence of certain applications, or application versions. For example, using the following policy fragment, you can check to ensure that a recent version of Carbon Black is installed on MacOS and
-Windows devices.
+By using this version of Stethoscope, you will be able to specify endpoint policies that enforce the presence or absence of certain applications, or application versions. For example, using the following policy fragment, you can check to ensure that a recent version of Carbon Black is installed on MacOS and Windows devices.
 
 ```json
  "applications": [
