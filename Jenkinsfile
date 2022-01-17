@@ -1,5 +1,5 @@
 #!groovy
-
+library(identifier: 'jupiter-docs-community-library@snapshot', retriever: legacySCM(scm))
 pipeline {
  agent none
 
