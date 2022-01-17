@@ -65,7 +65,15 @@ pipeline {
                       def userId = getUserSlackId("${CHANGE_AUTHOR_DISPLAY_NAME}")
                       def buildUrl = "${RUN_DISPLAY_URL}"
                       def prUrl = "${CHANGE_URL}"
-                      slackSend(channel: "#build-status-docs-community", color: "good", message: "<@$userId> Pineline has completed \nBUILD: $buildUrl \nPR: $prUrl")
+                      slackSend(channel: "#build-status-docs-community", color: "good", message: "<@$userId> Pineline has completed for STAGING \nBUILD: $buildUrl \nPR: $prUrl")
+                    }
+                }
+                  failure {
+                  script {
+                      def userId = getUserSlackId("${CHANGE_AUTHOR_DISPLAY_NAME}")
+                      def buildUrl = "${RUN_DISPLAY_URL}"
+                      def prUrl = "${CHANGE_URL}"
+                      slackSend(channel: "#build-status-docs-community", color: "danger", message: "<@$userId> Pineline has failed for STAGING \nBUILD: $buildUrl \nPR: $prUrl")
                     }
                 }
             }
@@ -98,6 +106,24 @@ pipeline {
                     TOKEN="$TOKEN" targetVanillaEnv=prod yarn start
                   '''
                 }
+          post {
+            success {
+              script {
+                  def userId = getUserSlackId("${CHANGE_AUTHOR_DISPLAY_NAME}")
+                  def buildUrl = "${RUN_DISPLAY_URL}"
+                  def prUrl = "${CHANGE_URL}"
+                  slackSend(channel: "#build-status-docs-community", color: "good", message: "<@$userId> Pineline has completed for PROD \nBUILD: $buildUrl \nPR: $prUrl")
+                }
+            }
+              failure {
+              script {
+                  def userId = getUserSlackId("${CHANGE_AUTHOR_DISPLAY_NAME}")
+                  def buildUrl = "${RUN_DISPLAY_URL}"
+                  def prUrl = "${CHANGE_URL}"
+                  slackSend(channel: "#build-status-docs-community", color: "danger", message: "<@$userId> Pineline has failed for PROD \nBUILD: $buildUrl \nPR: $prUrl")
+                }
+            }
+            }
             
       }
     }
