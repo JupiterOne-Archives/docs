@@ -37,7 +37,7 @@ J1 enables you to [create alerts](manage-alerts.md) for continuous auditing and 
 
 ### Reviewing Compliance Standards
 
-JupiterOne provides a flexible platform for you to import and [manage any compliance standard or framework](../Compliance_and-Reporting/compliance-overview.md) as a set of controls or requirements. You can import a compliance standard/framework or a security questionnaire, map security procedures to a compliance requirement or control, and many
+JupiterOne provides a flexible platform for you to import and [manage any compliance standard or framework](../compliance_and-reporting/compliance-overview.md) as a set of controls or requirements. You can import a compliance standard/framework or a security questionnaire, map security procedures to a compliance requirement or control, and many
 other compliance tasks.
 
 ### 

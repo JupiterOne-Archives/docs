@@ -26,7 +26,7 @@ JupiterOne ingests data from external sources and connected environments primari
 
 JupiterOne then uses this data model to inventory for and provide insight into your digital infrastructure across all of your connected environments.
 
-More information on the JupiterOne data model is available [here](../JupiterOne-Data-Model/jupiterone-data-model.md).
+More information on the JupiterOne data model is available [here](../jupiterOne-data-model/jupiterone-data-model.md).
 
 For more details on data ingested for each managed integration, see their corresponding documentation in the **Integrations** section.
 
@@ -61,7 +61,7 @@ The production environment is virtually "air-gapped" such that there is no SSH, 
 Our production environment incorporates multiple layers of security monitoring, using JupiterOne itself as well as third party security solutions. Additionally, our software development includes rigorous code analysis and continuous testing practices to ensure we proactively identify any security vulnerability. Our
 infrastructure-as-code operational model and automated change management process allows us to deploy security patches within minutes of identification and remediation of an issue.
 
-You can review the JupiterOne [data model](../JupiterOne-Data-Model/jupiterone-data-model.md) and [policies and procedures](https://psp.jptr.one/) for more details on the JupiterOne operational, infrastructure, and software development security.
+You can review the JupiterOne [data model](../jupiterOne-data-model/jupiterone-data-model.md) and [policies and procedures](https://psp.jptr.one/) for more details on the JupiterOne operational, infrastructure, and software development security.
 
 ## Application Access
 
