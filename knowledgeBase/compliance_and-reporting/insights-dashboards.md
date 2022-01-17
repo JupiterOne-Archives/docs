@@ -70,7 +70,7 @@ For more information about custom Insights dashboards, [watch this video](https:
 ### Additional support documentation/resources for writing queries:
 
 [J1QL query tutorial](../jupiterOne-query-language_(J1QL)/tutorial-j1ql.md)
-[Search quickstart](../Getting-Started_and-Admin/quickstart-search.md)
+[Search quickstart](../getting-started_and-admin/quickstart-search.md)
 [J1QL language specs](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md)
 [All questions + queries](https://ask.us.jupiterone.io/filter?tagFilter=all)
 

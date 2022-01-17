@@ -28,248 +28,210 @@ boundaries obvious to query authors.
 
 `FIND` is followed by an **Entity** `class` or `type` value.
 
-> The value is case sensitive in order to automatically determine if the query
-> needs to search for entities by the `class` or the `type`, without requiring
-> authors to specifically call it out.
-> &nbsp;
-> Entity `class` is stored in `TitleCase` while `type` is stored in
-> `snake_case`.
-> &nbsp;
-> A wildcard `*` can be used to find _any entity_.
-> &nbsp;
-> For example:
-> &nbsp;
-> - `FIND User` is equivalent to `FIND * with _class='User'`
-> - `FIND aws_iam_user` is equivalent to `FIND * with _type='aws_iam_user'`
->   &nbsp;
->   Note that using the wildcard at the beginning of the query without any
->   pre-traversal filtering -- that is, `FIND * THAT ...` without `WITH` (see
->   below) -- may result in long query execution time.
+The value is case sensitive in order to automatically determine if the query needs to search for entities by the `class` or the `type`, without requiring authors to specifically call it out.
+
+Entity `class` is stored in `TitleCase` while `type` is stored in `snake_case`.  A wildcard `*` can be used to find _any entity_.  For example:
+
+- `FIND User` is equivalent to `FIND * with _class='User'`
+- `FIND aws_iam_user` is equivalent to `FIND * with _type='aws_iam_user'`
+
+Note that using the wildcard at the beginning of the query without any pre-traversal filtering -- that is, `FIND * THAT ...` without `WITH` (see below) -- may result in long query execution time.
 
 #### WITH
 
 `WITH` is followed by **property name and values** to filter entities.
 
-> Supported operators include:
->
-> - `=` or `!=` for **String** value, **Boolean**, **Number**, or **Date**
->   comparison.
-> - `>` or `<` for **Number** or **Date** comparison.
->
-> Note:
->
-> - The property names and values are _case sensitive_.
-> - **String** values must be wrapped in either single or double quotes -
->   `"value"` or `'value'`.
-> - **Boolean**, **Number**, and **Date** values must _not_ be wrapped in quotes.
-> - The `undefined` keyword can be used to filter on the absence of a property.
->   For example: `FIND DataStore with encrypted=undefined`
-> - If a property name contains special characters (e.g. `-` or `:`), you can
->   wrap the property name in `[]`.
->   For example: `[tag.special-name]='something'`
+Supported operators include:
+
+- `=` or `!=` for **String** value, **Boolean**, **Number**, or **Date** comparison.
+- `>` or `<` for **Number** or **Date** comparison.
+
+Note:
+- The property names and values are _case sensitive_.
+- **String** values must be wrapped in either single or double quotes - `"value"` or `'value'`.
+- **Boolean**, **Number**, and **Date** values must _not_ be wrapped in quotes.
+- The `undefined` keyword can be used to filter on the absence of a property. 
+  For example: `FIND DataStore with encrypted=undefined`
+- If a property name contains special characters (e.g. `-` or `:`), you can wrap the property name in `[]`.  For example: `[tag.special-name]='something'`
 
 #### AND/OR
 
 `AND`, `OR` for multiple property comparisons are supported.
 
-> For example:
-> &nbsp;
-> ```j1ql
-> FIND DataStore WITH encrypted = false AND (tag.Production = true and classification = 'critical')
-> &nbsp;
-> FIND user_endpoint WITH platform = 'darwin' OR platform = 'linux'
-> ```
+For example:
+
+```j1ql
+FIND DataStore WITH encrypted = false AND (tag.Production = true and classification = 'critical')
+
+FIND user_endpoint WITH platform = 'darwin' OR platform = 'linux'
+```
 
 - You can filter multiple property values like this (similar to `IN` in SQL):
 
-> ```j1ql
-> FIND user_endpoint WITH platform = ('darwin' OR 'linux')
-> &nbsp;
-> Find Host WITH tag.Environment = ('A' or 'B' or 'C')
-> &nbsp;
-> Find DataStore WITH classification != ('critical' or 'restricted')
-> ```
+```j1ql
+FIND user_endpoint WITH platform = ('darwin' OR 'linux')
+
+Find Host WITH tag.Environment = ('A' or 'B' or 'C')
+
+Find DataStore WITH classification != ('critical' or 'restricted')
+```
 
 - Property filters are evaluated according the following **order of operations**:
 
-> Parenthesis first, comparisons (`=`, `>=`, `<=`, `!=`) after, `AND` and then
-> `OR`.
+Parenthesis first, comparisons (`=`, `>=`, `<=`, `!=`) after, `AND` and then `OR`.
 
 Filtering multiple property values is often called "shorthand" filtering, because it allows you to filter a single property by multiple values.
 
 Below is a table to help illustrate how "shorthand" filters are evaluated:
 
-| _type                 | _type = "fruit" | _type = "nut-filled" | _type = ("fruit" AND "nut-filled") | _type = ("fruit" OR "nut-filled") |
-| --------------------- | :-------------: | :------------------: | :--------------------------------: | :-------------------------------: |
-| "fruit"               |      true       |        false         |               false                |               true                |
-| "nut-filled"          |      false      |         true         |               false                |               true                |
-| "fruit", "nut-filled" |      true       |         true         |                true                |               true                |
-| "non-fruit"           |      false      |        false         |               false                |               false               |
-| "non-fruit", "plain"  |      false      |        false         |               false                |               false               |
-| undefined             |      false      |        false         |               false                |               false               |
+| `_type`               | `_type = "fruit"` | `_type = "nut-filled"` | `_type = ("fruit" AND "nut-filled")` | `_type = ("fruit" OR "nut-filled")` |
+| --------------------- | :---------------: | :--------------------: | :----------------------------------: | :---------------------------------: |
+| "fruit"               |       true        |         false          |                false                 |                true                 |
+| "nut-filled"          |       false       |          true          |                false                 |                true                 |
+| "fruit", "nut-filled" |       true        |          true          |                 true                 |                true                 |
+| "non-fruit"           |       false       |         false          |                false                 |                false                |
+| "non-fruit", "plain"  |       false       |         false          |                false                 |                false                |
+| undefined             |       false       |         false          |                false                 |                false                |
 
 When using a _negated_ "shorthand" filter, such as with the `!=` comparison, you can expect J1QL to evaluate values in the following manner:
 
-| _type                 | _type != "fruit" | type != "nut-filled" | _type != ("fruit" AND "nut-filled") | _type != ("fruit" OR "nut-filled") |
-| --------------------- | :--------------: | :------------------: | :---------------------------------: | :--------------------------------: |
-| "fruit"               |      false       |         true         |                true                 |               false                |
-| "nut-filled"          |       true       |        false         |                true                 |               false                |
-| "fruit", "nut-filled" |      false       |        false         |                false                |               false                |
-| "non-fruit"           |       true       |         true         |                true                 |                true                |
-| "non-fruit", "plain"  |       true       |         true         |                true                 |                true                |
-| undefined             |       true       |         true         |                true                 |                true                |
+| `_type`               | `_type != "fruit"` | `type != "nut-filled"` | `_type != ("fruit" AND "nut-filled")` | `_type != ("fruit" OR "nut-filled")` |
+| --------------------- | :----------------: | :--------------------: | :-----------------------------------: | :----------------------------------: |
+| "fruit"               |       false        |          true          |                 true                  |                false                 |
+| "nut-filled"          |        true        |         false          |                 true                  |                false                 |
+| "fruit", "nut-filled" |       false        |         false          |                 false                 |                false                 |
+| "non-fruit"           |        true        |          true          |                 true                  |                 true                 |
+| "non-fruit", "plain"  |        true        |          true          |                 true                  |                 true                 |
+| undefined             |        true        |          true          |                 true                  |                 true                 |
 
 #### THAT
 
 `THAT` is followed by a **Relationship verb**.
 
-> The verb is the `class` value of a **Relationship** -- that is, the edge
-> between two connected entity nodes in the graph. This relationship verb/class
-> value is stored in `ALLCAPS`, however, it is _case insensitive_ in the query,
-> as the query language will automatically convert it.
-> &nbsp;
-> The predefined keyword `RELATES TO` can be used to find _any_ relationship
-> between two nodes. For example:
-> &nbsp;
-> `FIND Service THAT RELATES TO Account`
+The verb is the `class` value of a **Relationship** -- that is, the edge between two connected entity nodes in the graph. This relationship verb/class value is stored in `ALLCAPS`, however, it is _case insensitive_ in the query, as the query language will automatically convert it. The predefined keyword `RELATES TO` can be used to find _any_ relationship between two nodes. For example:
+
+`FIND Service THAT RELATES TO Account`
 
 `( | )` can be used to select entities or relationships of different class/type.
 
-> For example, `FIND (Host|Device) WITH ipAddress='10.50.2.17'` is equivalent to
-> and much simpler than the following:
-> &nbsp;
-> ```j1ql
-> FIND * WITH
->   (_class='Host' OR _class='Device') AND ipAddress='10.50.2.17'
-> ```
-> &nbsp;
-> It is fine to mix entity class and type values together. For example:
-> &nbsp;
-> `FIND (Database|aws_s3_bucket)`
-> &nbsp;
-> It can be used on Relationship verbs as well. For example:
-> &nbsp;
-> `FIND HostAgent THAT (MONITORS|PROTECTS) Host`
-> &nbsp;
-> Or both Entity and Relationships together. For example:
-> &nbsp;
-> `FIND * THAT (ALLOWS|PERMITS) (Internet|Everyone)`
+For example, `FIND (Host|Device) WITH ipAddress='10.50.2.17'` is equivalent to and much simpler than the following:
+
+```j1ql
+FIND * WITH(_class='Host' OR _class='Device') AND ipAddress='10.50.2.17'
+```
+
+It is fine to mix entity class and type values together. For example:
+
+`FIND (Database|aws_s3_bucket)`
+
+It can be used on Relationship verbs as well. For example:
+
+`FIND HostAgent THAT (MONITORS|PROTECTS) Host`
+
+Or both Entity and Relationships together. For example:
+
+`FIND * THAT (ALLOWS|PERMITS) (Internet|Everyone)`
 
 #### Bidirectional verbs by default
 
 **Relationship verbs** are bidirectional by default
 
-> Both queries yield the same results:
-> &nbsp;
-> `FIND User THAT HAS Device`
-> &nbsp;
-> `FIND Device THAT HAS User`
+Both queries yield the same results:
+
+`FIND User THAT HAS Device`
+
+`FIND Device THAT HAS User`
 
 #### Relationship direction operators
 
 **Relationship direction** can be specified with double arrows ( `<<` or `>>`) _after_ the verb
 
-> Finds Entities with a `HAS` relationship from User to Device:
-> &nbsp;
-> `FIND User THAT HAS >> Device`
-> &nbsp;
-> `Find Device THAT HAS << User`
+Finds Entities with a `HAS` relationship from User to Device:
 
-> Finds Entities with a `HAS` relationship from Device to User:
-> &nbsp;
-> `FIND User THAT HAS << Device`
-> &nbsp;
-> `Find Device THAT HAS >> User`
+`FIND User THAT HAS >> Device`
+
+`Find Device THAT HAS << User`
+
+Finds Entities with a `HAS` relationship from Device to User:
+
+`FIND User THAT HAS << Device`
+
+`Find Device THAT HAS >> User`
 
 #### AS
 
 `AS` defines an aliased selector.
 
-> Defines an aliased selector to use in the `WHERE` or `RETURN` portion of a
-> query. For example:
-> &nbsp;
-> - **Without** selectors: `FIND Firewall THAT ALLOWS *`
-> - **With** selectors: `FIND Firewall AS fw THAT ALLOWS * AS n`
->   &nbsp;
->   Selectors can also be defined on a relationship:
->   &nbsp;
-> - `FIND Firewall AS fw THAT ALLOWS AS rule * AS n`
+Defines an aliased selector to use in the `WHERE` or `RETURN` portion of a query. For example:
+
+- **Without** selectors: `FIND Firewall THAT ALLOWS *`
+- **With** selectors: `FIND Firewall AS fw THAT ALLOWS * AS n`
+
+Selectors can also be defined on a relationship:
+
+- `FIND Firewall AS fw THAT ALLOWS AS rule * AS n`
 
 #### WHERE
 
 `WHERE` is used for post-traversal filtering (requires selector)
 
-> From the example above:
-> &nbsp;
-> ```j1ql
-> FIND Firewall as fw that ALLOWS as rule * as n
->   WHERE rule.ingress=true AND
->     (rule.fromPort=22 or rule.toPort=22)
-> ```
+From the example above:
+
+```j1ql
+FIND Firewall as fw that ALLOWS as rule * as n
+WHERE rule.ingress=true AND (rule.fromPort=22 or rule.toPort=22)
+```
 
 #### RETURN
 
 `RETURN` is used to return specific entities, relationships, or properties
 
-> By default, the entities and their properties found from the start of the
-> traversal is returned. For example, `Find User that IS Person` returns all
-> matching `User` entities and their properties, but not the related `Person`
-> entities.
-> &nbsp;
-> To return properties from both the `User` and `Person` entities, define a
-> selector for each and use them in the `RETURN` clause:
-> &nbsp;
-> ```j1ql
-> FIND User as u that IS Person as p
->   RETURN u.username, p.firstName, p.lastName, p.email
-> ```
-> &nbsp;
-> If a property name contains special characters (e.g. `-` or `:`), you can
-> wrap the property name in `[]`.
-> For example: `RETURN p.[special-name]='something'`
-> &nbsp;
-> Wildcard can be used to return all properties. For example:
-> &nbsp;&nbsp;
-> ```j1ql
-> FIND User as u that IS Person as p
-> RETURN u.*, p.*
-> ```
-> &nbsp;
-> Using a wildcard to return all properties also returns all metadata
-> properties associated with the selected entities. This feature is
-> useful when you want to perform an analysis that involves metadata.
+By default, the entities and their properties found from the start of the traversal is returned. For example, `Find User that IS Person` returns all matching `User` entities and their properties, but not the related `Person` entities.
+
+To return properties from both the `User` and `Person` entities, define a selector for each and use them in the `RETURN` clause:
+
+```j1ql
+FIND User as u that IS Person as p
+RETURN u.username, p.firstName, p.lastName, p.email
+```
+
+If a property name contains special characters (e.g. `-` or `:`), you can wrap the property name in `[]`.
+
+For example: `RETURN p.[special-name]='something'`
+
+Wildcard can be used to return all properties. For example:
+```j1ql
+FIND User as u that IS Person as p
+RETURN u.*, p.*
+```
+Using a wildcard to return all properties also returns all metadata properties associated with the selected entities. This feature is useful when you want to perform an analysis that involves metadata.
 
 #### TO
 
-`TO` is used after a relationship verb, and with the exception of `RELATES TO`,
-is considered a 'filler' word that is ignored by the interpreter.
+`TO` is used after a relationship verb, and with the exception of `RELATES TO`,is considered a 'filler' word that is ignored by the interpreter.
 
-> The keyword `TO` is supported in J1QL so that the query can be read as a
-> natural language question. Although `TO` can be used in a query, if omitted,
-> the returned result will be the same.
-> &nbsp;
-> The following are some example relationship verbs where `TO` could be used:
-> &nbsp;
-> - `DEPLOYED TO`
-> - `CONTRIBUTES TO`
-> - `CONNECTS TO`
-> - `ASSIGNED TO`
->   &nbsp;
->   The following queries return the same result:
->   &nbsp;
-> ```j1ql
-> FIND User THAT CONTRIBUTES TO CodeRepo
-> FIND User THAT CONTRIBUTES CodeRepo
-> ```
+The keyword `TO` is supported in J1QL so that the query can be read as a natural language question. Although `TO` can be used in a query, if omitted, the returned result will be the same.
 
-**REMINDER** J1QL keywords are not case-sensitive.
+The following are some example relationship verbs where `TO` could be used:
+
+- `DEPLOYED TO`
+- `CONTRIBUTES TO`
+- `CONNECTS TO`
+- `ASSIGNED TO`
+
+The following queries return the same result:
+```j1ql
+FIND User THAT CONTRIBUTES TO CodeRepo
+FIND User THAT CONTRIBUTES CodeRepo
+```
+
+**REMINDER**  J1QL keywords are not case-sensitive.
 
 ## Filtering Behavior
 
 JupiterOne aligns its query language with De Morgan's Law. This standard mathematical theory is two sets of rules or laws developed from Boolean expressions for AND, OR, and NOT gates, using two input variables, A and B. These two rules or theorems allow the input variables to be negated and converted from one form of a Boolean function into an opposite form. J1QL uses this law in filtering the results of queries.
 
-When you use a `!=` followed by a set of arguments offset by parentheses, such as
-`!= (A or B or C)`, it is equivalent to the expression `!= A and != B and != C`.
+When you use a `!=` followed by a set of arguments offset by parentheses, such as `!= (A or B or C)`, it is equivalent to the expression `!= A and != B and != C`.
 
 **Example:**
 
@@ -279,7 +241,7 @@ This query is the equivalent of:
 
 `FIND jira_user WITH accountType != 'atlassian' AND accountType != 'app' AND accountType != 'customer'`
 
-J1QL interprets the query to return all `jira_user` entities, excluding those that have an `accountType` value of 'atlassian' or 'app' or 'customer'.
+J1QL interprets the query to return all `jira_user` entities, excluding those that have an `accountType` value of 'atlassian' or 'app' or customer'.
 
 The following table shows the resulting truth values of a complex statement that are all possible for a simple statement.
 
@@ -309,17 +271,17 @@ The following table shows the resulting truth values of a complex statement that
 
 You can filter multiple property values like this (similar to `IN` in SQL):
 
-> ```j1ql
-> FIND user_endpoint WITH platform = ('darwin' OR 'linux')
-> &nbsp;
-> Find Host WITH tag.Environment = ('A' or 'B' or 'C')
-> &nbsp;
-> Find DataStore WITH classification != ('critical' and 'restricted')
-> ```
+```j1ql
+FIND user_endpoint WITH platform = ('darwin' OR 'linux')
+
+Find Host WITH tag.Environment = ('A' or 'B' or 'C')
+
+Find DataStore WITH classification != ('critical' and 'restricted')
+```
 
 Property filters are evaluated according the following **order of operations**:
 
-> Parenthesis first, comparisons (`=`, `>=`, `<=`, `!=`) after, `AND` and then `OR`.
+Parenthesis first, comparisons (`=`, `>=`, `<=`, `!=`) after, `AND` and then `OR`.
 
 ## String Comparisons
 
@@ -346,8 +308,7 @@ The above query returns all entities of the `Person` class that have a `firstNam
 Find Person with email='a@b.com'
 ```
 
-The above query returns all assets of the `Person` class that have a `Person.email' of 'a@b.com' or 
-['a@b.com', 'x@y.com'].
+The above query returns all assets of the `Person` class that have a `Person.email' of 'a@b.com' or ['a@b.com', 'x@y.com'].
 
 ```j1jl
 Find Person with email~='.com'
@@ -370,7 +331,6 @@ The query language supports [parameters](./parameters.md) for referencing values
 ```j1ql
 FIND Application WITH loginUrl = ${ param.loginUrl }
 ```
-
 Currently, there is no support for referencing parameters that contain arrays, even though the rules and alerts do allow this functionality. Future iterations of the J1QL may contain array-traversing operators that immediately work with parameters.
 
 ## Date Comparisons
@@ -403,7 +363,6 @@ For example:
 ```j1ql
 Find DataStore with createdOn > date(2019-10-30)
 ```
-
 The static date must be specified in ISO ISO 8601 format:
 
 - `date(YYYY)`
@@ -417,9 +376,7 @@ The static date must be specified in ISO ISO 8601 format:
 ## Sorting and Pagination via `ORDER BY`, `SKIP`, and `LIMIT`
 
 `ORDER BY` is followed by a `selector.field` to indicate what to sort.
-
 `SKIP` is followed by a number to indicate how many results to skip.
-
 `LIMIT` is followed by a number to indicate how many results to return.
 
 In the example below, the query sorts users by their username, and returns the 11th-15th users from the sorted list.
@@ -472,9 +429,9 @@ See more details and examples [below](#How-aggregations-are-applied).
 
 _Future development:_
 
-> There are plans to support the following aggregations:
->
-> - `count(*)` - for determining the count of all other entities related to a given entity.
+There are plans to support the following aggregations:
+
+- `count(*)` - for determining the count of all other entities related to a given entity.
 
 ## Scalar Functions: `CONCAT`
 
@@ -484,7 +441,7 @@ The ability to format and/or to perform calculations on row level columns can be
 
 The scalar function `CONCAT()` empowers users to concatenate or join one or more values into a single string. Currently, `CONCAT` can be used in the `RETURN` to clause of your function, will future development planned for use in the `WHERE` clause.
 
-> Note: If this function receives a number or boolean value, the `concat` intuitively converts these values to strings. Additionally, if `concat` processes an empty selector field, it evaluates that field as an empty string.
+Note: If this function receives a number or boolean value, the `concat` intuitively converts these values to strings. Additionally, if `concat` processes an empty selector field, it evaluates that field as an empty string.
 
 `CONCAT` supports the following parameters, separated by comma:
 
@@ -507,14 +464,12 @@ RETURN
 Sometimes a query may generate duplicate results. This occurs if there are multiple paths of traversals (i.e. relationships) between the vertices (i.e. entities) referenced in a particular query.
 
 Take the example below:
-
 ```j1ql
 Find aws_eni with publicIpAddress != undefined as nic
   that relates to aws_instance
   that relates to aws_security_group as sg that allows Internet
 where nic.securityGroupIds = sg.groupId
 ```
-
 This query attempts to find network interfaces that are associated with a security group that allows public facing AWS EC2 instances. In this case, there could be multiple security group rules allowing access to/from the Internet, which may result in duplicate data in the query result because each individual traversal is a successful match to the query.
 
 You can use a combination of `UNIQUE` and `RETURN` keywords to filter out the duplicates. The query above can be modified as:
@@ -531,7 +486,6 @@ RETURN
   nic.vpcId, nic.securityGroupIds, nic.securityGroupNames,
   nic.tag.AccountName, nic.webLink
 ```
-
 _Limitation: `UNIQUE` keyword **must** be used together with `RETURN`._
 
 ## Math Operations
@@ -542,11 +496,11 @@ J1QL supports basic math operations on the return values.
 
 - It will evaluate with normal order of operations:
 
-  > parenthesis -> multiplication or division -> addition or subtraction
+parenthesis -> multiplication or division -> addition or subtraction
 
 - The operation only works against number values. It does not work against strings or strings that represent numbers:
 
-  > `'1'` does not work, it has to be `1`
+`'1'` does not work, it has to be `1`
 
 Example query:
 
@@ -633,7 +587,7 @@ return userOrPerson, Device
 Smart classes are a mechanism for applying a set of entity filters with a shorthand syntax. There are two categories of smart classes:
 
 1. JupiterOne application classes
-   Currently, the only supported instance is `#CriticalAsset`, which maps to the configured definition of critical assets in the Assets app.
+   Currently, the only supported instance is `#CriticalAsset`, which maps  to the configured definition of critical assets in the Assets app.
 
    ```j1ql
    FIND #CriticalAsset that has Finding
@@ -653,7 +607,7 @@ Smart classes are a mechanism for applying a set of entity filters with a shorth
    - tag.Production = 'true'
    - classification = 'critical'
 
-   Administrators define critical assets in the Assets app by clicking the gear icon in the Assets title bar.
+Administrators define critical assets in the Assets app by clicking the gear icon in the Assets title bar.
 
 2. Tag-derived values
    These values match entities where the tags of an entity contain the provided smart class (case-sensitive).

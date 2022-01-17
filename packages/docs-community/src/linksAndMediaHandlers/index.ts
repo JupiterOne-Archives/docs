@@ -24,7 +24,7 @@ export const modifyBodyLinkForImage = (
 ): string => {
   let bodyAlterations = `${body}`;
   const matchToBeReplacedSanitized = matchToBeReplaced.replace("/", "\\/");
-  const markdownAssetRegularExpression = new RegExp(matchToBeReplacedSanitized);
+  const markdownAssetRegularExpression = new RegExp(matchToBeReplacedSanitized, "gi");
 
   bodyAlterations = bodyAlterations.replace(
     markdownAssetRegularExpression,
@@ -40,7 +40,7 @@ export const modifyBodyLinkForImageForReturnedArticles = (
 ): string => {
   let bodyAlterations = `${body}`;
   const matchToBeReplacedSanitized = matchToBeReplaced.replace("/", "\\/");
-  const markdownAssetRegularExpression = new RegExp(matchToBeReplacedSanitized);
+  const markdownAssetRegularExpression = new RegExp(matchToBeReplacedSanitized, "gi");
 
   bodyAlterations = bodyAlterations.replace(
     markdownAssetRegularExpression,
@@ -50,7 +50,7 @@ export const modifyBodyLinkForImageForReturnedArticles = (
 };
 
 export const getMarkdownImageSrcs = (markdownAsString: string): string[] => {
-  const markdownAssetRegularExpression = new RegExp(MARKDOWN_IMAGE_REGEX, "g");
+  const markdownAssetRegularExpression = new RegExp(MARKDOWN_IMAGE_REGEX, "gi");
   const matches = [];
   let array1;
 
@@ -68,7 +68,7 @@ export const getFullMarkdownReferencePathMatches = (
 ): string[] => {
   const markdownAssetRegularExpression = new RegExp(
     MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK,
-    "g"
+    "gi"
   );
   const matches = [];
   let array1;

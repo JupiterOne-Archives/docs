@@ -9,7 +9,7 @@ JupiterOne provides a centralized repository and dashboard to enable you to mana
 - Tenable.io scanning findings
 - HackerOne report findings
 - CVEs and other vulnerability findings
-- Manual penetration testing findings imported via [the J1 API](../Security-Operations/secops-artifacts-in-j1.md).
+- Manual penetration testing findings imported via [the J1 API](../security-operations/secops-artifacts-in-j1.md).
 
 J1 is adding more vulnerability scanner integrations on a regular basis.
 

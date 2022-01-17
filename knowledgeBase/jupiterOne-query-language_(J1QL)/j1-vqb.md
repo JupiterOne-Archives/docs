@@ -53,6 +53,7 @@ The VQB workspace consists of a:
    1. Each relationship has an identifier. 
    2. Click the relationship identifier to see its details in the right information pane.
    3. Relationship classes default to all available verbs. J1QL shows all the verbs that you can apply to that relationship. You can toggle between relationship classes to determine how you want the query to search.
+       ​
        **Note**: The verb RELATES TO covers any and all relationship verbs. However, It is highly recommended to use specific relationship verbs for faster query performance.
 
 
@@ -68,8 +69,7 @@ For example, in the following example, the text asset Security is the root asset
 
 ![](../assets/vqb-wildcard.png)
 
-**Note:** When connecting relationships between assets or asset groups, you must start with the root asset
-(![root](../assets/icons/root.png)) and drag it to the related asset (such as e4), and then connect the other assets as required.
+**Note:** When connecting relationships between assets or asset groups, you must start with the root asset (![root](../assets/icons/root.png)) and drag it to the related asset (such as e4), and then connect the other assets as required.
 
 ### Filtering
 
