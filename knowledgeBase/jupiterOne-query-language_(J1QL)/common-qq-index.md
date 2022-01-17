@@ -11,7 +11,7 @@ Here is [a catalog of the packaged questions](..Getting-Started_and-Admin/catalo
 - [AWS Permissions and Trusts](../APIs_and-Integrations/AWS/common-qq-aws-permissions.md)
 - [Hardware/software inventory and configuration](./common-qq-inventory-config.md)
 - [Running applications and processes](./common-qq-apps-processes.md)
-- [Secrets and key management](../security-operations/common-qq-key-mgmt.md)
+- [Secrets and key management](./common-qq-key-mgmt.md)
 - [Network connections & zones](./common-qq-network.md)
 - [Example Data Security J1QL Queries](./common-qq-data.md)
 - [Changes and attribution](./common-qq-changes.md)
