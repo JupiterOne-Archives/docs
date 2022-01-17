@@ -26,6 +26,24 @@ pipeline {
 
 
       }
+        post {
+          success {
+            script {
+                def userId = getUserSlackId("${CHANGE_AUTHOR_DISPLAY_NAME}")
+                def buildUrl = "${RUN_DISPLAY_URL}"
+                def prUrl = "${CHANGE_URL}"
+                slackSend(channel: "#build-status-docs-community", color: "good", message: "<@$userId> PR READY FOR REVIEW\nBUILD: $buildUrl \nPR: $prUrl")
+              }
+          }
+            failure {
+            script {
+                def userId = getUserSlackId("${CHANGE_AUTHOR_DISPLAY_NAME}")
+                def buildUrl = "${RUN_DISPLAY_URL}"
+                def prUrl = "${CHANGE_URL}"
+                slackSend(channel: "#build-status-docs-community", color: "danger", message: "<@$userId> PR FAILED STATUS CHECK \nBUILD: $buildUrl \nPR: $prUrl")
+              }
+          }
+      }
     }
 
     stage("Deploying to vanilla staging") {
@@ -50,7 +68,7 @@ pipeline {
               def userId = getUserSlackId("${CHANGE_AUTHOR_DISPLAY_NAME}")
               def buildUrl = "${RUN_DISPLAY_URL}"
               def prUrl = "${CHANGE_URL}"
-              slackSend(channel: "#build-status-docs-community", color: "good", message: "<@$userId> Pineline has Started \nBUILD: $buildUrl \nPR: $prUrl")
+              slackSend(channel: "#build-status-docs-community", color: "good", message: "<@$userId> Pineline has Started for STAGING \nBUILD: $buildUrl \nPR: $prUrl")
             }
             withCredentials([
               string(credentialsId: 'VANILLA_STAGING_ENV_TOKEN', variable: 'TOKEN')
@@ -98,7 +116,12 @@ pipeline {
           sh 'yarn bundle'
 
           sh 'jupiterone-build'
-
+         script {
+              def userId = getUserSlackId("${CHANGE_AUTHOR_DISPLAY_NAME}")
+              def buildUrl = "${RUN_DISPLAY_URL}"
+              def prUrl = "${CHANGE_URL}"
+              slackSend(channel: "#build-status-docs-community", color: "good", message: "<@$userId> Pineline has Started for PROD \nBUILD: $buildUrl \nPR: $prUrl")
+            }
           withCredentials([
             string(credentialsId: 'VANILLA_PROD_ENV_TOKEN', variable: 'TOKEN')
                 ]) {
