@@ -1,6 +1,6 @@
 # Compliance Mapping - Policies
 
-JupiterOne platform follows this data structure to make connections between written policies and compliance standards:
+JupiterOne platform follows this data structure to make connections between written policies and compliance standards: 
 
 ```text
           |-- IMPLEMENTS -> security_policy
