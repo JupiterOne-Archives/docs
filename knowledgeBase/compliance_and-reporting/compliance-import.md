@@ -1,6 +1,7 @@
 # Import Compliance Standard or Security Questionnaire
 
-The JupiterOne compliance platform allows users to import a compliance standard/framework or a security questionnaire in either JSON or CSV format.
+The JupiterOne compliance platform allows users to import a compliance
+standard/framework or a security questionnaire in either JSON or CSV format.
 
 In the Compliance app:
 
@@ -13,7 +14,7 @@ See [this GitHub repository](https://github.com/JupiterOne/security-policy-templ
 
 ## JSON Structure
 
-See the schema documented [here](../APIs_and-integrations/policies-compliance-schema.md).
+See the schema documented [here](../APIs_and-Integrations/policies-compliance-schema.md).
 
 ## CSV Import
 
