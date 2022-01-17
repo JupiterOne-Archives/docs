@@ -46,7 +46,12 @@ pipeline {
             sh 'yarn bundle'
 
             sh 'jupiterone-build'
-
+            script {
+              def userId = getUserSlackId("${CHANGE_AUTHOR_DISPLAY_NAME}")
+              def buildUrl = "${RUN_DISPLAY_URL}"
+              def prUrl = "${CHANGE_URL}"
+              slackSend(channel: "#build-status-docs-community", color: "good", message: "<@$userId> Pineline has Started \nBUILD: $buildUrl \nPR: $prUrl")
+            }
             withCredentials([
               string(credentialsId: 'VANILLA_STAGING_ENV_TOKEN', variable: 'TOKEN')
                 ]) {
@@ -54,6 +59,16 @@ pipeline {
                     TOKEN="$TOKEN" targetVanillaEnv=staging yarn start
                   '''
                 }
+            post {
+                success {
+                  script {
+                      def userId = getUserSlackId("${CHANGE_AUTHOR_DISPLAY_NAME}")
+                      def buildUrl = "${RUN_DISPLAY_URL}"
+                      def prUrl = "${CHANGE_URL}"
+                      slackSend(channel: "#build-status-docs-community", color: "good", message: "<@$userId> Pineline has completed \nBUILD: $buildUrl \nPR: $prUrl")
+                    }
+                }
+            }
             
       }
     }
