@@ -16,7 +16,7 @@ JupiterOne has separate apps that assist you in all the major components of secu
 
 ### Assets
 
-After you import your data, you can analyze and visualize your complete infrastructure and [security cyber asset inventory](../Asset-Management/asset-inventory-filters.md) using the J1 Assets app. In addition, the Assets app helps you can understand the types and classes of cyber assets you have, and the relationships between them. 
+After you import your data, you can analyze and visualize your complete infrastructure and [security cyber asset inventory](../asset-management/asset-inventory-filters.md) using the J1 Assets app. In addition, the Assets app helps you can understand the types and classes of cyber assets you have, and the relationships between them. 
 
 ### Policies
 
@@ -24,21 +24,21 @@ The JupiterOne Policies app enables you to articulate your organization policies
 
 Each policy and procedure document is written in its own individual Markdown file, and you can configure each policy file to link to other files. The templates are open-source that you can edit directly online using the Policies app.
 
-To help you get started, JupiterOne provides 120+ [policy and procedure templates](../Compliance_and-Reporting/policies-app.md) to help your organization build your security program and operations. These templates derive from JupiterOne company internal policies and procedures, and have been through several rounds of compliance assessments.
+To help you get started, JupiterOne provides 120+ [policy and procedure templates](../compliance_and-reporting/policies-app.md) to help your organization build your security program and operations. These templates derive from JupiterOne company internal policies and procedures, and have been through several rounds of compliance assessments.
 
 ### Alerts
 
-JupiterOne enables you to [configure alert rules](../Security-Operations/manage-alerts.md) in the Alerts app, using any JupiterOne Query Language query for continuous auditing and threat monitoring. You must have at least one active alert rule to trigger any alert. The easiest way to add some rules to an alert is to import rule packs that JupiterOne provides. You can also create custom rules.  
+JupiterOne enables you to [configure alert rules](../security-operations/manage-alerts.md) in the Alerts app, using any JupiterOne Query Language query for continuous auditing and threat monitoring. You must have at least one active alert rule to trigger any alert. The easiest way to add some rules to an alert is to import rule packs that JupiterOne provides. You can also create custom rules.  
 
 ### Compliance
 
 JupiterOne provides a flexible platform for you to manage any compliance standard or framework as a set of controls or requirements. The platform enables you to:
 
-- [Import a compliance standard or security questionnaire](../Compliance_and-Reporting/compliance-import.md)
-- [Map policy procedures to each control or requirement](../Compliance_and-Reporting/compliance-mapping-policies.md)
-- [Map data-driven compliance evidence by query questions](../Compliance_and-Reporting/compliance-mapping-evidence.md)
-- [Perform automated gap analysis based on query results](../Compliance_and-Reporting/compliance-gap-analysis.md)
-- [Export compliance artifacts (summary or full evidence package)](../Compliance_and-Reporting/compliance-export.md)
+- [Import a compliance standard or security questionnaire](../compliance_and-reporting/compliance-import.md)
+- [Map policy procedures to each control or requirement](../compliance_and-reporting/compliance-mapping-policies.md)
+- [Map data-driven compliance evidence by query questions](../compliance_and-reporting/compliance-mapping-evidence.md)
+- [Perform automated gap analysis based on query results](../compliance_and-reporting/compliance-gap-analysis.md)
+- [Export compliance artifacts (summary or full evidence package)](../compliance_and-reporting/compliance-export.md)
 
 ### Graph Viewer
 
@@ -46,7 +46,7 @@ JupiterOne is built on a [data-driven graph](./quickstart-graph.md) platform. Ju
 
 ### Insights
 
-The [JupiterOne Insights app](../Compliance_and-Reporting/insights-dashboards.md) enables you to build reporting dashboards using J1QL queries.
+The [JupiterOne Insights app](../compliance_and-reporting/insights-dashboards.md) enables you to build reporting dashboards using J1QL queries.
 
 You can configure each dashboard as either a team board that is shared with other account users or a personal board for the individual user. The layout of each board is individually saved per user, including the layout for team boards, so that each user can configure layouts according to their own preferences without impacting others. Administrators can save a team board layout as the default for other users.
 
