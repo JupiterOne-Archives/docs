@@ -22,18 +22,6 @@ Find * with _beginOn > date.now - 24 hours
   and (tag.Environment = '{tagValue}' or tag.Project = '{tagValue}')
 ```
 
-## What changes were made by person with access type {}?
-
-_This will be captured when we start processing cloudtrail events._
-
-## What changes were made by automated tools?
-
-_This will be captured when we start processing cloudtrail events._
-
-## What changes were made with interactive sessions?
-
-_This will be captured when we start processing cloudtrail events._
-
 ## Which developer(s) most likely introduced vulnerabilities in recent code changes?
 
 _Requires integrations with Github or Bitbucket, and code scanning solutions like Veracode or WhiteHat._
