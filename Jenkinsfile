@@ -1,5 +1,6 @@
 #!groovy
-library(identifier: 'jupiter-docs-community-library@snapshot', retriever: legacySCM(scm))
+
+
 pipeline {
  agent none
 
@@ -24,7 +25,7 @@ pipeline {
 
         sh 'jupiterone-build'
 
-
+ slackSend(channel: "#build-status-docs-community", color: "good", message: "testing PR READY FOR REVIEW\nBUILD: $buildUrl \nPR: $prUrl")
       }
         post {
           success {
