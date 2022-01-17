@@ -8,7 +8,7 @@ Here is [a catalog of the packaged questions](..Getting-Started_and-Admin/catalo
 
 ## Question/Query Categories
 
-- [AWS Permissions and Trusts](../APIs_and-Integrations/AWS/common-qq-aws-permissions.md)
+- [AWS Permissions and Trusts](../APIs_and-integrations/AWS/common-qq-aws-permissions.md)
 - [Hardware/software inventory and configuration](./common-qq-inventory-config.md)
 - [Running applications and processes](./common-qq-apps-processes.md)
 - [Secrets and key management](./common-qq-key-mgmt.md)
