@@ -50,7 +50,7 @@ Use the following JSON as an example:
 
 ## API
 
-This process can also be accomplished via the JupiterOne API using the JSON example above. See the document [Bulk Upload](../Asset-Management/bulk-upload.md) for more info.
+This process can also be accomplished via the JupiterOne API using the JSON example above. See the document [Bulk Upload](../asset-management/bulk-upload.md) for more info.
 
 ### Some key things to note:
 
