@@ -22,7 +22,7 @@ If you need help with this integration, please contact [JupiterOne Support](http
 
 ### In Veracode
 
-The integration instance configuration requires the customer's API ID and secret to authenticate requests to the Veracode REST APIs. Veracode provides [detailed instructions for obtaining these credentials](https://docs.veracode.com/r/c_api_credentials3).
+The integration instance configuration requires the customer's API ID and secret to authenticate requests to the Veracode REST APIs. Veracode provides [detailed instructions for obtaining these credentials](https://docs.veracode.com/r/t_create_api_creds).
 
 ### In JupiterOne
 
