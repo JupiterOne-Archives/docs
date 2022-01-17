@@ -761,5 +761,5 @@ parameter lists similarly to examples above. For example,
 }
 ```
 
-For more info on JupiterOne parameters, [reference the documentation](../jupiterone-data-model/parameters.md).
+For more info on JupiterOne parameters, [reference the documentation](../jupiterOne-data-model/parameters.md).
 
