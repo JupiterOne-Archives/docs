@@ -1,5 +1,6 @@
 #!groovy
 
+
 pipeline {
  agent none
 
@@ -26,6 +27,7 @@ pipeline {
 
 
       }
+
     }
 
     stage("Deploying to vanilla staging") {
@@ -54,6 +56,7 @@ pipeline {
                     TOKEN="$TOKEN" targetVanillaEnv=staging yarn start
                   '''
                 }
+
             
       }
     }
@@ -83,6 +86,7 @@ pipeline {
                     TOKEN="$TOKEN" targetVanillaEnv=prod yarn start
                   '''
                 }
+         
             
       }
     }

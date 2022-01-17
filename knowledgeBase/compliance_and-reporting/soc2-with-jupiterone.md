@@ -12,7 +12,7 @@ Once configured, integrations will automatically start collecting data about you
 
 Additional support documentation:
 
-[Configure integrations](../Getting-Started_and-Admin/configure-integrations.md)
+[Configure integrations](../getting-started_and-admin/configure-integrations.md)
 
 ## 2. Policies and Procedures
 
@@ -34,7 +34,7 @@ If not completed during JupiterOne account setup, the policy builder should be p
 Additional support documentation:
 
 [Managing policies + procedures](./policies-app.md)
-[Using the policy builder CLI](../Compliance_and-Reporting/policy-builder-cli.md)
+[Using the policy builder CLI](../compliance_and-reporting/policy-builder-cli.md)
 [Policies + procedures structure](./policies-app.md)
 [Compliance policies mapping](./compliance-mapping-policies.md)
 
@@ -74,7 +74,7 @@ By default, for the standard controls within the SOC 2 framework in JupiterOne, 
 Additional support documentation: 
 
 [J1QL query tutorial](../jupiterOne-query-language_(J1QL)/tutorial-j1ql.md)
-[Search quickstart](../Getting-Started_and-Admin/quickstart-search.md)
+[Search quickstart](../getting-started_and-admin/quickstart-search.md)
 [J1QL language specs](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md) 
 
 ### Add additional queries
@@ -83,7 +83,7 @@ Additional support documentation:
 Additional support documentation: 
 
 [J1QL query tutorial](../jupiterOne-query-language_(J1QL)/tutorial-j1ql.md)
-[Search quickstart](../Getting-Started_and-Admin/quickstart-search.md)
+[Search quickstart](../getting-started_and-admin/quickstart-search.md)
 [J1QL language specs](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md)
 
 2. Mapping a prewritten, templated query (over 400 are in our library)
@@ -92,7 +92,7 @@ Additional support documentation:
 
 Additional support documentation:
 
-[Common questions + queries](../Getting-Started_and-Admin/common-qq-index.md)
+[Common questions + queries](../getting-started_and-admin/common-qq-index.md)
 
 [All questions + queries](https://ask.us.jupiterone.io/filter?tagFilter=all)
 
@@ -131,7 +131,7 @@ You can invite internal team members or external users, e.g., auditors, into you
 
 Additional support documentation:
 
-[Invite your team members](../Getting-Started_and-Admin/quickstart-invite-users.md)
+[Invite your team members](../getting-started_and-admin/quickstart-invite-users.md)
 
 ![access](../assets/access.gif)
 

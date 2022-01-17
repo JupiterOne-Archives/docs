@@ -28,12 +28,12 @@ Depending on the polling frequency of your data, your most recent changes may no
 
 For a general query guide, refer to our [J1QL Query Tutorial](../jupiterOne-query-language_(J1QL)\tutorial-j1ql.md).
 
-For queries written against any JupiterOne managed integrations, visit our [Integrations](../Getting-Started_and-Admin/configure-integrations.md) 
+For queries written against any JupiterOne managed integrations, visit our [Integrations](../getting-started_and-admin/configure-integrations.md) 
 guides to understand which entities and properties are ingested along with the relationships that are configured. 
 
-For queries written against custom integrations, ensure your integration has been configured properly referring to the [Node.js Client and CLI](../APIs_and-Integrations/j1-client-and-cli.md) guide.
+For queries written against custom integrations, ensure your integration has been configured properly referring to the [Node.js Client and CLI](../APIs_and-integrations/j1-client-and-cli.md) guide.
 
-For queries written against all integration types, refer to the [JupiterOne Graph Data Model](../Jupiterone-Data-Model/jupiterone-data-model.md) 
+For queries written against all integration types, refer to the [JupiterOne Graph Data Model](../jupiterOne-data-model/jupiterone-data-model.md) 
 to understand the class and relationship model.
 
 ### 3. I deleted some entities that are still being returned  
