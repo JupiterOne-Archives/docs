@@ -1,7 +1,6 @@
 # Query using internal metadata
 
-JupiterOne assigns metadata to resources and sometimes it is helpful to leverage
-them in queries. Here are some examples.
+JupiterOne assigns metadata to resources and sometimes it is helpful to leverage them in queries. Here are some examples.
 
 > See [this doc](../jupiterone-data-model/metadata.md) for a complete list and description of each metadata property.
 
@@ -26,7 +25,3 @@ Find Host with _createdOn > date.now - 48 hours
 Find * as entity
 Return entity._integrationType, entity._integrationName, count(entity)
 ```
-
-[1]: ../docs/metadata.md
-
-[../JupiterOne-Data-Model/metadata.md]: 
