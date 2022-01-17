@@ -12,7 +12,7 @@ import {
   gearImage,
   markdownAsString,
   markdownAsStringNOImages,
-  markdownAsStringWithInternalLinks,
+  markdownAsStringWithInternalLinks,markdownAsStringWithInternalLinksCase
 } from "./mockMarkdown";
 describe("linksAndMediaHandlers", () => {
   describe("modifyBodyLinkForImageForReturnedArticles", () => {
@@ -94,6 +94,17 @@ describe("linksAndMediaHandlers", () => {
         markdownAsStringWithInternalLinks
       );
 
+      expect(actual).toEqual(expected);
+    });
+    it("returns matches and ignores case", () => {
+      const expected: string[] = [
+        "../Queries/common-qq-training.md",
+        "../queries/common-qq-endpoint.md",
+      ];
+      const actual = getFullMarkdownReferencePathMatches(
+        markdownAsStringWithInternalLinksCase
+      );
+console.log(actual,'actuallll');
       expect(actual).toEqual(expected);
     });
   });
