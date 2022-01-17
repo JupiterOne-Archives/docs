@@ -2,7 +2,7 @@
 
 JupiterOne assigns metadata to resources and sometimes it is helpful to leverage them in queries. Here are some examples.
 
-> See [this doc](../jupiterone-data-model/metadata.md) for a complete list and description of each metadata property.
+> See [this doc](../jupiterOne-data-model/metadata.md) for a complete list and description of each metadata property.
 
 **Identify network access to/from external resources using `_source` filter:**
 

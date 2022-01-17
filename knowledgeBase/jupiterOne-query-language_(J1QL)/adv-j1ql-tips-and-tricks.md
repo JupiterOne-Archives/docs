@@ -114,9 +114,9 @@ Variable placeholder syntax cannot be used directly in the search bar. There are
 
 Leveraging the graph in JupiterOne to gain context on your cyber security environment is one useful way construct a J1QL query. You can start from a basic query or use an existing one to customize a more meaningful query. Check out the [J1QL Tutorial](./tutorial-j1ql.md) for an overview of nodes and relationships as they relate to J1QL.
 
-Check out the [Data Model - Overview](../JupiterOne-Data-Model/jupiterone-data-model.md) document for a comprehensive list of JupiterOne entities, their properties, and the relationships between entities. The graph is a tool that can be used when these details are unknown.
+Check out the [Data Model - Overview](../jupiterOne-data-model/jupiterone-data-model.md) document for a comprehensive list of JupiterOne entities, their properties, and the relationships between entities. The graph is a tool that can be used when these details are unknown.
 
-When traversing the graph from a starting node, you will be able to see and expand every related node. For a comprehensive list of all entities and relationships for a specific integration, see the corresponding [Integration Guide](../APIs_and-Integrations/faqs-integrations.md).
+When traversing the graph from a starting node, you will be able to see and expand every related node. For a comprehensive list of all entities and relationships for a specific integration, see the corresponding [Integration Guide](../APIs_and-integrations/faqs-integrations.md).
 
 **TIP** When you are in doubt about which verb to use to traverse an edge, use the catch-all verb `RELATES TO`, which graphs out related entities and the relationships between them. However, you should not use `RELATES TO` in your final/saved query because the query will run slow having to check all nodes as possible children instead of just those connected by a specific edge verb. See the following example.
 
