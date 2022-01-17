@@ -4,7 +4,7 @@ JupiterOne provides a flexible platform for users to import and manage any compl
 
 - [Import a compliance standard or security questionnaire](./compliance-import.md)
 
-- [Map policy procedures to each control or requirement](,/compliance-mapping-policies.md)
+- [Map policy procedures to each control or requirement](./compliance-mapping-policies.md)
 
 - [Map data-driven compliance evidence by query questions](./compliance-mapping-evidence.md)
 
