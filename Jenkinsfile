@@ -13,6 +13,10 @@ pipeline {
     stage('Build and scan') {
       agent { label 'ecs-builder-node14' }
       steps {
+                 script {
+
+                slackSend(channel: "#build-status-docs-community", color: "good", message: " PR READY FOR REVIEW\nBUILD: $buildUrl \nPR: $prUrl")
+              }
         initBuild()
         securityScan()
         sh 'yarn install --frozen-lockfile'
@@ -25,7 +29,7 @@ pipeline {
 
         sh 'jupiterone-build'
 
- slackSend(channel: "#build-status-docs-community", color: "good", message: "testing PR READY FOR REVIEW\nBUILD: $buildUrl \nPR: $prUrl")
+
       }
         post {
           success {
