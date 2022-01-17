@@ -8,17 +8,16 @@ Here is [a catalog of the packaged questions](./catalog.md).
 
 ## Question/Query Categories
 
-- [AWS Permissions and Trusts](../APIs_and-Integrations/aws/common-qq-aws-permissions.md)
-- [Hardware/software inventory and configuration](./common-qq-inventory-config.md)
-- [Running applications and processes](../Security-Operations/common-qq-apps-processes.md)
-- [Secrets and key management](../Security-Operations/common-qq-key-mgmt.md)
-- [Network connections & zones](../Security-Operations/common-qq-network.md)
-- [Example Data Security J1QL Queries](../J1-Query-Language/common-qq-data.md)
-- [Changes and attribution](../Security-Operations/common-qq-changes.md)
-- [Risks and vulnerability management](../Security-Operations/common-qq-risks.md)
-- [Identity, People and Privileged access](../Getting-Started_and-Admin/common-qq-idp.md)
-- [Development](../Security-Operations/common-qq-dev.md)
-- [User training and awareness](../Getting-Started_and-Admin/common-qq-training.md)
-- [Endpoint security](../Security-Operations/common-qq-endpoint.md)
-
+- [AWS Permissions and Trusts](../APIs_and-Integrations/AWS/common-qq-aws-permissions.md)
+- [Hardware/software inventory and configuration](../compliance_and-reporting/common-qq-inventory-config.md)
+- [Running applications and processes](../security-operations/common-qq-apps-processes.md)
+- [Secrets and key management](../security-operations/common-qq-key-mgmt.md)
+- [Network connections & zones](../security-operations/common-qq-network.md)
+- [Example Data Security J1QL Queries](../jupiterOne-query-language_(J1QL)/common-qq-data.md)
+- [Changes and attribution](../security-operations/common-qq-changes.md)
+- [Risks and vulnerability management](../security-operations/common-qq-risks.md)
+- [Identity, People and Privileged access](./common-qq-idp.md)
+- [Development](../security-operations/common-qq-dev.md)
+- [User training and awareness](./common-qq-training.md)
+- [Endpoint security](../security-operations/common-qq-endpoint.md)
 

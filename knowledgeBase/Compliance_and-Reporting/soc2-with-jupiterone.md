@@ -14,7 +14,7 @@ Additional support documentation:
 
 [Configure integrations](../Getting-Started_and-Admin/configure-integrations.md)
 
-## 2. Policies + procedures
+## 2. Policies and Procedures
 
 Review all of the templated, out-of-the-box policies + procedures, ensuring they accurately represent your organization’s principles/processes, tailoring and/or adding your own documentation where relevant. 
 
@@ -34,8 +34,8 @@ If not completed during JupiterOne account setup, the policy builder should be p
 Additional support documentation:
 
 [Managing policies + procedures](./policies-app.md)
-[Using the policy builder CLI](./policy-builder-cli.md)
-[Policies + procedures structure](../Compliance_and-Reporting/policies-app.md)
+[Using the policy builder CLI](../Compliance_and-Reporting/policy-builder-cli.md)
+[Policies + procedures structure](./policies-app.md)
 [Compliance policies mapping](./compliance-mapping-policies.md)
 
 ## 3. Import compliance framework
@@ -73,18 +73,18 @@ By default, for the standard controls within the SOC 2 framework in JupiterOne, 
 
 Additional support documentation: 
 
-[J1QL query tutorial](../J1-Query-Language/tutorial-j1ql.md)
+[J1QL query tutorial](../jupiterOne-query-language_(J1QL)/tutorial-j1ql.md)
 [Search quickstart](../Getting-Started_and-Admin/quickstart-search.md)
-[J1QL language specs](../J1-Query-Language/jupiterone-query-language.md) 
+[J1QL language specs](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md) 
 
 ### Add additional queries
 1. Adding a new query
 
 Additional support documentation: 
 
-[J1QL query tutorial](../J1-Query-Language/tutorial-j1ql.md)
+[J1QL query tutorial](../jupiterOne-query-language_(J1QL)/tutorial-j1ql.md)
 [Search quickstart](../Getting-Started_and-Admin/quickstart-search.md)
-[J1QL language specs](../J1-Query-Language/jupiterone-query-language.md)
+[J1QL language specs](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md)
 
 2. Mapping a prewritten, templated query (over 400 are in our library)
 
