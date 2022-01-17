@@ -104,7 +104,7 @@ describe("linksAndMediaHandlers", () => {
       const actual = getFullMarkdownReferencePathMatches(
         markdownAsStringWithInternalLinksCase
       );
-console.log(actual,'actuallll');
+
       expect(actual).toEqual(expected);
     });
   });
