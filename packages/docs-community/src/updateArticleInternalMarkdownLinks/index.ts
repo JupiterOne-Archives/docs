@@ -30,7 +30,10 @@ export const updateArticleInternalMarkdownLinks = async (
       const references =
         articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown || [];
       for (let r = 0; r < references.length; r++) {
-        const articleName = await getArticleNameFromReference(references[r],articleUndergoingChanges.path);
+        const articleName = await getArticleNameFromReference(
+          references[r],
+          articleUndergoingChanges.path
+        );
 
         if (articleName) {
           const existingArticleMatches = [...articlesToUseForSlugs]
@@ -38,6 +41,7 @@ export const updateArticleInternalMarkdownLinks = async (
               return article.name === articleName;
             })
             .filter((a) => a.status !== "deleted");
+
           const articleUrl: string =
             existingArticleMatches[0]?.url || "doesNotExist";
 

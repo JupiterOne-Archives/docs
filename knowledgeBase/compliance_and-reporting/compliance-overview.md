@@ -1,6 +1,6 @@
 # Compliance Management in JupiterOne
 
-JupiterOne provides a flexible platform for users to import and manage any compliance standard / framework as a set of controls or requirements. The platform provides the following capabilities: 
+JupiterOne provides a flexible platform for users to import and manage any compliance standard / framework as a set of controls or requirements. The platform provides the following capabilities:
 
 - [Import a compliance standard or security questionnaire](./compliance-import.md)
 

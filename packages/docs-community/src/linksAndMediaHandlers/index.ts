@@ -1,8 +1,9 @@
+/* eslint-disable no-useless-escape */
 import {
   checkBodyForTitleToUseForArticle,
   markdownToString,
   MARKDOWN_IMAGE_REGEX,
-  MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK,
+  MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK_V2,
   SUPPORTED_MEDIA_TYPES,
   TITLE_FROM_MARKDOWN_REGEX,
 } from "../utils";
@@ -42,7 +43,11 @@ export const modifyBodyLinkForImageForReturnedArticles = (
   replacement: string
 ): string => {
   let bodyAlterations = `${body}`;
-  const matchToBeReplacedSanitized = matchToBeReplaced.replace("/", "\\/");
+  const slashRegex = new RegExp("/", "gi");
+  const matchToBeReplacedSanitized = matchToBeReplaced
+    .replace(slashRegex, "\\/")
+    .replace("(", "\\(")
+    .replace(")", "\\)");
   const markdownAssetRegularExpression = new RegExp(
     matchToBeReplacedSanitized,
     "gi"
@@ -73,10 +78,14 @@ export const getMarkdownImageSrcs = (markdownAsString: string): string[] => {
 export const getFullMarkdownReferencePathMatches = (
   markdownAsString: string
 ): string[] => {
+  if (!markdownAsString) {
+    return [];
+  }
   const markdownAssetRegularExpression = new RegExp(
-    MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK,
+    MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK_V2,
     "gi"
   );
+
   const matches = [];
   let array1;
 
@@ -85,7 +94,14 @@ export const getFullMarkdownReferencePathMatches = (
   ) {
     matches.push(array1[0]);
   }
-  return matches.map((m) => m.substring(m.indexOf('"') + 1));
+  return matches.map((m) => {
+    let matchEdit = m.substring(m.indexOf('"') + 1);
+    if (matchEdit.indexOf('"') !== -1) {
+      matchEdit = matchEdit.substring(0, matchEdit.length - 1);
+    }
+
+    return matchEdit;
+  });
 };
 
 export const getArticleNameFromReference = async (
@@ -94,20 +110,18 @@ export const getArticleNameFromReference = async (
 ): Promise<string | false> => {
   const regexTwoDots = new RegExp(/\.\.\//, "g");
   const regexOneDot = new RegExp(/\.\//, "g");
-  let cleanedPath = pathOfReference.replace(regexTwoDots, "")
-
+  let cleanedPath = pathOfReference.replace(regexTwoDots, "");
   if (cleanedPath.indexOf("./") !== -1 && currentArticlePath) {
     cleanedPath = cleanedPath.replace(regexOneDot, "");
     const directoryForSingleSlash = currentArticlePath.split("/");
-    const pathForMissing:string[] = []
-    directoryForSingleSlash.forEach(p=>{
-      if(p.indexOf('.md')==-1){
-        pathForMissing.push(p)
+    const pathForMissing: string[] = [];
+    directoryForSingleSlash.forEach((p) => {
+      if (p.indexOf(".md") == -1) {
+        pathForMissing.push(p);
       }
-    })
-const newPath = pathForMissing.join('/')
+    });
+    const newPath = pathForMissing.join("/");
     cleanedPath = `/${newPath}/${cleanedPath}`;
-
   }
 
   const articleBody = await markdownToString(cleanedPath);
