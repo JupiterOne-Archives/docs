@@ -1,6 +1,6 @@
 # AWS Organizations
 
-The JupiterOne Application supports the ability to ingest multiple AWS Accounts that are managed by AWS Organizations by configuring a single Integration on the AWS master account of the Organization. 
+The JupiterOne Application supports the ability to ingest multiple AWS Accounts that are managed by AWS Organizations by configuring a single Integration on the AWS master account of the Organization.
 
 ![aws-organizations-configure-checkbox](../../assets/aws-organizations-configure-checkbox.png)
 
