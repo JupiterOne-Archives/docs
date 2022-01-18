@@ -122,7 +122,7 @@ export interface VanillaArticle {
   foreignID?: string | null;
   sort?: number;
   knowledgeBaseID?: number;
-  breadcrumbs?: ArticleBreadCrumbs[];
+  breadcrumbs?: any[];
   // things we have added
   path?: string;
   fileName: null | string;

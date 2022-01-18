@@ -331,6 +331,7 @@ export const createArticle = async (
         ) {
           return {
             ...article.data,
+            path:bodyOfRequest.path,
             referencesNeedingUpdatesInMarkdown,
             procedureType: ProcedureTypeEnum.Article,
           };
@@ -397,6 +398,7 @@ export const editArticle = async (
             ...article.data,
             referencesNeedingUpdatesInMarkdown,
             procedureType: ProcedureTypeEnum.Article,
+            path:edits.path
           };
         }
       }

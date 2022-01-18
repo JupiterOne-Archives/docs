@@ -27,7 +27,7 @@ This will create the following contents in your current directory:
 - `./partials`
 - `./docs`
 
-For details of these files and their usage, see [JupiterOne Policies Structure](./policies-structure.md).
+For details of these files and their usage, see [JupiterOne Policies Structure](./policies-structure.md). 
 
 ## Editing and Rebuilding
 
