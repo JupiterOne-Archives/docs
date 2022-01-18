@@ -47,7 +47,7 @@ Supported operators include:
 - `>` or `<` for **Number** or **Date** comparison.
 
 Note:
-- The property names and values are _case sensitive_.
+- The property names and values are _case sensitive_. 
 - **String** values must be wrapped in either single or double quotes - `"value"` or `'value'`.
 - **Boolean**, **Number**, and **Date** values must _not_ be wrapped in quotes.
 - The `undefined` keyword can be used to filter on the absence of a property. 
