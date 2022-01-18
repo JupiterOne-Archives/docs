@@ -94,14 +94,16 @@ export const getFullMarkdownReferencePathMatches = (
   ) {
     matches.push(array1[0]);
   }
-  return matches.map((m) => {
+  const editedMatches= matches.map((m) => {
     let matchEdit = m.substring(m.indexOf('"') + 1);
     if (matchEdit.indexOf('"') !== -1) {
       matchEdit = matchEdit.substring(0, matchEdit.length - 1);
     }
-
+   
     return matchEdit;
   });
+
+  return editedMatches.filter((m:string)=>m[0]==='.')
 };
 
 export const getArticleNameFromReference = async (
