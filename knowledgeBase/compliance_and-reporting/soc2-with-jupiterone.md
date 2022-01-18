@@ -23,7 +23,7 @@ Out of the box, the policies app comes with templated policies + procedures that
 
 ![policies](../assets/policies-1.png)
 
-Reviewing + tailoring instructions are provided for the default, templated policies + procedures in the UI.
+Reviewing + tailoring instructions are provided for the default, templated policies + procedures in the UI. 
 
 If not completed during JupiterOne account setup, the policy builder should be populated to prefill the templated policies + procedures.
 
