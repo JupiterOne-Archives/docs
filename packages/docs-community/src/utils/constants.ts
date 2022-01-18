@@ -18,4 +18,4 @@ export const SHOULD_REALLY_UPLOAD_IMAGES = true;
 
 export const MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK = /(href=([^(\s)([^)]+.md))/;
 export const TITLE_FROM_MARKDOWN_REGEX = /(?=^#{1}).*/;
-export const MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK_V2 =/(href=([^(\s)([^)]+.md))|(href=(.+.md\\))/
+export const MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK_V2 =/(href=([^(\s)([^)]+.md))|(href=(.+.md\\))|(href="([^"]+.))/
