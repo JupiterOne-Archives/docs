@@ -2,7 +2,7 @@
 
 You can quickly search and get insight across your entire digital environment integrated with JupiterOne, from the Search for Anything landing page. There are three modes of search:
 
-- **Ask questions** - you can enter any keywords to search across all packaged and saved questions.
+- **Ask questions** - you can enter any keywords to search across all packaged and saved questions. 
 - **Full-text search** - an easy way to search across all assets based on their property values.
 - **JupiterOne query language (J1QL)** is best for detailed querying of assets and relationships. 
 
