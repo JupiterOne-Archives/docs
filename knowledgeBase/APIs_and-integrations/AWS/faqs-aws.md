@@ -2,19 +2,13 @@
 
 ## Some of my AWS resources seem to be missing from the Asset Inventory / Graph. What is going on?
 
-This is most commonly caused by incorrect or insufficient permissions. Check the
-IAM policy assigned to the IAM role used by JupiterOne in your AWS account. You
-can find details on the required permissions by going to **Integrations Configuration** > **Add AWS Configuration** > and clicking on the **Setup Instructions** button.
+This is most commonly caused by incorrect or insufficient permissions. Check the IAM policy assigned to the IAM role used by JupiterOne in your AWS account. You can find details on the required permissions by going to **Integrations Configuration** > **Add AWS Configuration** > and clicking on the **Setup Instructions** button.
 
 Or they can be found on the [jupiterone-aws-integration](https://github.com/JupiterOne/jupiterone-aws-cloudformation) project on Github.
 
 ## How can I add or configure all the sub-accounts in my AWS Organization?
 
-First configure your AWS Organization master account to JupiterOne per the instructions 
-in the JupiterOne application or those found at the [jupiterone-aws-integration](https://github.com/JupiterOne/jupiterone-aws-cloudformation) project on Github. 
-During this process you will create an IAM Role for JupiterOne with specific policies attached and a 
-specific external trust ID. Please note the IAM Role name, policies, and external trust ID used. 
-Do not select the option "Auto-configure additional integrations..." yet.
+First configure your AWS Organization master account to JupiterOne per the instructions in the JupiterOne application or those found at the [jupiterone-aws-integration](https://github.com/JupiterOne/jupiterone-aws-cloudformation) project on Github.  During this process you will create an IAM Role for JupiterOne with specific policies attached and a  specific external trust ID. Please note the IAM Role name, policies, and external trust ID used. Do not select the option "Auto-configure additional integrations..." yet.
 
 Now use your favorite infrastructure-as-code method to systematically generate an identical JupiterOne IAM Role in each of your sub-accounts. Be sure to name the IAM Role identically, attach the same policies, and use the same external trust ID as was used with the master account configuration.
 
@@ -34,11 +28,9 @@ Errors may occur after configuring one or many AWS integrations if there is a Se
 
 ![Integration Jobs](../../assets/faq-integration-jobs.png)
 
-For each SCP that is blocking JupiterOne ingestion, add the following condition
-element to your SCP JSON: 
+For each SCP that is blocking JupiterOne ingestion, add the following condition element to your SCP JSON: 
 
-**Note**:  Make sure the ARN below matches the IAM Role ARN you used to configure
-your JupiterOne AWS integration.
+**Note**:  Make sure the ARN below matches the IAM Role ARN you used to configure your JupiterOne AWS integration.
 
 ```json
 "Condition": {
@@ -72,8 +64,7 @@ Relationships in the JupiterOne graph represent the actual configurations betwee
 
 In this case, if a security group has a rule allowing traffic to or from the Internet, there will be a relationship edge between that security group connecting it to/from the Internet. The EC2 instance itself will _not_ have a relationship edge to/from the Internet.
 
-To determine whether an EC2 instance is publicly accessible, the instance itself needs to be in a public subnet in addition to having a security group rule allowing traffic. This is determined by a query that
-checks for both of these conditions:
+To determine whether an EC2 instance is publicly accessible, the instance itself needs to be in a public subnet in addition to having a security group rule allowing traffic. This is determined by a query that checks for both of these conditions:
 
 ```j1ql
 Find aws_subnet with public=true
@@ -138,19 +129,17 @@ Find aws_s3_bucket with loggingEnabled != true
 ```
 
 **Note:**
-    Either server access logging or object level logging will result 
-    in `loggingEnabled = true`
+    Either server access logging or object level logging will result in `loggingEnabled = true`
 
 **Bonus:** to check for S3 buckets that publish **inventory reports**:
 
 ```j1ql
-find aws_s3_bucket that publishes to aws_s3_bucket
-return tree
+find aws_s3_bucket that publishes to aws_s3_bucket return tree
 ```
 
 **Note:**
-    There are additional properties captured on the edge in each case, 
-    which can be used for additional filtering (see screenshots). 
+    There are additional properties captured on the edge in each case, which can be used for additional filtering (see screenshots). 
+    
     For example:
     
     ​```j1ql
