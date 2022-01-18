@@ -1,12 +1,10 @@
 # Understanding JupiterOne
 
-JupiterOne (J1) is a cloud-native security platform that connects across your siloed security tools,  empowering unobstructed visibility into security risks across your entire cyber asset universe. 
-This extensible platform connects the dots between complex relationships and data, providing 
-ultimate visibility to your environment, infrastructure, and operations.
+JupiterOne (J1) is a cloud-native security platform that connects across your siloed security tools, empowering unobstructed visibility into security risks across your entire cyber asset universe. This extensible platform connects the dots between complex relationships and data, providing ultimate visibility to your environment, infrastructure, and operations.
 
 ## Using J1 Integrations
 
-The first step in using J1 is to bring your data into J1. There are numerous ready-made integrations that are easy to install and use to achieve end-to-end cyber asset visibility, context, and automation across every  dimension of your digital universe. J1 provides [instructions](./configure-integrations.md) on how  to import the data to J1 and understand the data model and mapping.
+The first step in using J1 is to bring your data into J1. There are numerous ready-made integrations that are easy to install and use to achieve end-to-end cyber asset visibility, context, and automation across every dimension of your digital universe. J1 provides [instructions](./configure-integrations.md) on how  to import the data to J1 and understand the data model and mapping.
 
 ## J1 Apps
 
@@ -66,5 +64,5 @@ In addition to using the J1 query library, from any J1 page or app, you can ente
 
 The [JupiterOne Query Language](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md) (J1QL) is a query language for finding the entities and relationships within your digital environment. J1QL blends together the capabilities of asking questions, performing full text search, and querying the complex entity-relationship graph.
 
-J1QL is complex but a [tutorial](../tutorial-j1ql.md) is available to help you learn. In addition, JupiterOne offers [J1VQB](../jupiterOne-query-language_(J1QL)/j1-vqb.md), a visual query building app, a code-free tool for creating queries.
+J1QL is complex but a [tutorial](../jupiterOne-query-language_(J1QL)/tutorial-j1ql.md) is available to help you learn. In addition, JupiterOne offers [J1VQB](../jupiterOne-query-language_(J1QL)/j1-vqb.md), a visual query building app, a code-free tool for creating queries.
 
