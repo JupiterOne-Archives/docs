@@ -93,11 +93,21 @@ export const getArticleNameFromReference = async (
   currentArticlePath: string | undefined
 ): Promise<string | false> => {
   const regexTwoDots = new RegExp(/\.\.\//, "g");
-  let cleanedPath = pathOfReference.replace(regexTwoDots, "");
+  const regexOneDot = new RegExp(/\.\//, "g");
+  let cleanedPath = pathOfReference.replace(regexTwoDots, "")
 
   if (cleanedPath.indexOf("./") !== -1 && currentArticlePath) {
+    cleanedPath = cleanedPath.replace(regexOneDot, "");
     const directoryForSingleSlash = currentArticlePath.split("/");
-    cleanedPath = `/${directoryForSingleSlash[directoryForSingleSlash.length - 2]}/${cleanedPath}`;
+    const pathForMissing:string[] = []
+    directoryForSingleSlash.forEach(p=>{
+      if(p.indexOf('.md')==-1){
+        pathForMissing.push(p)
+      }
+    })
+const newPath = pathForMissing.join('/')
+    cleanedPath = `/${newPath}/${cleanedPath}`;
+
   }
 
   const articleBody = await markdownToString(cleanedPath);
