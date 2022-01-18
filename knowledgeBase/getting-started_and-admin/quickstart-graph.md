@@ -6,7 +6,7 @@ JupiterOne Query Language (J1QL) is designed to traverse this graph and return a
 
 This documentation focuses on interacting with the graph component. For more details on J1QL, read the [J1QL tutorial](../jupiterOne-query-language_(J1QL)/tutorial-j1ql.md) and [technical doc](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md).
 
-This is an example result graph from a query in the Search for Anything app:
+This is an example result graph from a query in the Search for Anything app: 
 
 ![](../assets/j1ql-tutorial-root-accounts-graph.png)
 
