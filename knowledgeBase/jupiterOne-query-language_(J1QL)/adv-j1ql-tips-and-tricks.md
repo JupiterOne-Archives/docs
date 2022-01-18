@@ -136,7 +136,7 @@ Find User that RELATES TO *
 
 ![j1ql-custom-query-result](../assets/j1ql-custom-query-result.png)
 
-A new browser tab will be opened and will run a query that returns a graph showing everything related to or mapped to the entity via a relationship.
+A new browser tab will be opened and will run a query that returns a graph showing everything related to or mapped to the entity via a relationship. 
 
 4. Click on the queried entity and you will see the relationship verbs for each
    mapped entity.
@@ -176,7 +176,7 @@ From here we see several additional nodes. We can select a path that we are inte
 
 In the following example we traversed from a User to a UserGroup to an AccessRole to an Account. Written out more specifically using types we have an okta_user to an okta_user_group to an aws_iam_role to an aws_account.
 
-Our final query could be something similar to the following example, adding in filters, sorting, pagination, etc. as needed. See [J1QL Language Specs](./jupiterOne-query-language.md) to understand the query language features.
+Our final query could be something similar to the following example, adding in filters, sorting, pagination, etc. as needed. See [J1QL Language Specs](./jupiterOne-query-language.md) to understand the query language features. 
 
 ```j1ql
 Find User 
