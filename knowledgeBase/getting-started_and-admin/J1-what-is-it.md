@@ -1,8 +1,7 @@
 # Understanding JupiterOne
 
 JupiterOne (J1) is a cloud-native security platform that connects across your siloed security tools,  empowering unobstructed visibility into security risks across your entire cyber asset universe. 
-This extensible platform connects the dots between complex relationships and data, providing 
-ultimate visibility to your environment, infrastructure, and operations.
+This extensible platform connects the dots between complex relationships and data, providing ultimate visibility to your environment, infrastructure, and operations.
 
 ## Using J1 Integrations
 
