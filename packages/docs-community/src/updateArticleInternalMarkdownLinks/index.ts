@@ -41,6 +41,7 @@ console.log(references[r],'references[r]references[r]')
               return article.name === articleName;
             })
             .filter((a) => a.status !== "deleted");
+            console.log(existingArticleMatches,'existingArticleMatchesexistingArticleMatches')
           const articleUrl: string =
             existingArticleMatches[0]?.url || "doesNotExist";
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import {
   checkBodyForTitleToUseForArticle,
   markdownToString,
@@ -42,7 +43,11 @@ export const modifyBodyLinkForImageForReturnedArticles = (
   replacement: string
 ): string => {
   let bodyAlterations = `${body}`;
-  const matchToBeReplacedSanitized = matchToBeReplaced.replace("/", "\\/");
+  const slashRegex = new RegExp("/", 'gi')
+
+  const matchToBeReplacedSanitized = matchToBeReplaced.replace(slashRegex, "\\/").replace('(','\\(').replace(')','\\)')
+  
+  console.log(matchToBeReplacedSanitized,'matchToBeReplacedSanitizedmatchToBeReplacedSanitizedmatchToBeReplacedSanitized')
   const markdownAssetRegularExpression = new RegExp(
     matchToBeReplacedSanitized,
     "gi"
@@ -52,7 +57,7 @@ export const modifyBodyLinkForImageForReturnedArticles = (
     markdownAssetRegularExpression,
     `${replacement}`
   );
-
+console.log('STARTBODYALTER',bodyAlterations, 'END BODY ALTERS')
   return bodyAlterations;
 };
 
@@ -89,7 +94,14 @@ console.log('DJDJDJDJDJDJDoooong',markdownAsString,'sjsjjsjsjsjEND')
   ) {
     matches.push(array1[0]);
   }
-  return matches.map((m) => m.substring(m.indexOf('"') + 1));
+  return matches.map((m) => {
+    let matchEdit = m.substring(m.indexOf('"') + 1)
+    if(matchEdit.indexOf('"')!==-1){
+      matchEdit= matchEdit.substring(0,matchEdit.length-1)
+    }
+    console.log(matchEdit,'MATCH EDITTT')
+    return matchEdit
+  });
 };
 
 export const getArticleNameFromReference = async (
@@ -112,9 +124,9 @@ console.log(currentArticlePath,'cucucucuccuuc')
     })
 const newPath = pathForMissing.join('/')
     cleanedPath = `/${newPath}/${cleanedPath}`;
-
+console.log(cleanedPath,'ooooooooosjsjsj')
   }
-
+console.log(cleanedPath,'cleanedPathcleanedPathcleanedPathcleanedPath')
   const articleBody = await markdownToString(cleanedPath);
 
   const titleFromBody = checkBodyForTitleToUseForArticle(
