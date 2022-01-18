@@ -10,11 +10,12 @@ export const Authorization: string = authToken;
 export const REQUEST_DELAY: number = 5000;
 export const SUPPORTED_MEDIA_TYPES = ["png", "jpg", "jpeg", "gif"];
 export const MARKDOWN_IMAGE_REGEX = /\]\(((..\/){1,}assets.*?)\)/;
-export const MARKDOWN_LINK_REGEX = /\]\((.*.md*)\)/;
+// export const MARKDOWN_LINK_REGEX = /\]\((.*.md*)\)/;
 export const KNOWN_CATEGORY_BEEN_DELETED = "KNOWN_CATEGORY_BEEN_DELETED";
 export const SHOULD_REALLY_UPLOAD_IMAGES = true;
-export const MARKDOWN_REGEX_BETWEEN_LINK = /\]\(([^)]+)\)/;
-export const MARKDOWN_REGEX_LINK_MARKDOWN_FILE = /\]\((.*).md\)/;
+// export const MARKDOWN_REGEX_BETWEEN_LINK = /\]\(([^)]+)\)/;
+// export const MARKDOWN_REGEX_LINK_MARKDOWN_FILE = /\]\((.*).md\)/;
 
 export const MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK = /(href=([^(\s)([^)]+.md))/;
 export const TITLE_FROM_MARKDOWN_REGEX = /(?=^#{1}).*/;
+export const MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK_V2 =/(href=([^(\s)([^)]+.md))|(href=(.+.md\\))/

@@ -2,7 +2,7 @@ import {
   checkBodyForTitleToUseForArticle,
   markdownToString,
   MARKDOWN_IMAGE_REGEX,
-  MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK,
+  MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK_V2,
   SUPPORTED_MEDIA_TYPES,
   TITLE_FROM_MARKDOWN_REGEX,
 } from "../utils";
@@ -73,10 +73,14 @@ export const getMarkdownImageSrcs = (markdownAsString: string): string[] => {
 export const getFullMarkdownReferencePathMatches = (
   markdownAsString: string
 ): string[] => {
+  if(!markdownAsString){
+    return []
+  }
   const markdownAssetRegularExpression = new RegExp(
-    MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK,
+    MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK_V2,
     "gi"
   );
+console.log('DJDJDJDJDJDJDoooong',markdownAsString,'sjsjjsjsjsjEND')
   const matches = [];
   let array1;
 
@@ -95,7 +99,8 @@ export const getArticleNameFromReference = async (
   const regexTwoDots = new RegExp(/\.\.\//, "g");
   const regexOneDot = new RegExp(/\.\//, "g");
   let cleanedPath = pathOfReference.replace(regexTwoDots, "")
-
+console.log(pathOfReference,'pdpdpdppd')
+console.log(currentArticlePath,'cucucucuccuuc')
   if (cleanedPath.indexOf("./") !== -1 && currentArticlePath) {
     cleanedPath = cleanedPath.replace(regexOneDot, "");
     const directoryForSingleSlash = currentArticlePath.split("/");
