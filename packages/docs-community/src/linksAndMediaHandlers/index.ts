@@ -43,11 +43,11 @@ export const modifyBodyLinkForImageForReturnedArticles = (
   replacement: string
 ): string => {
   let bodyAlterations = `${body}`;
-  const slashRegex = new RegExp("/", 'gi')
-
-  const matchToBeReplacedSanitized = matchToBeReplaced.replace(slashRegex, "\\/").replace('(','\\(').replace(')','\\)')
-  
-  console.log(matchToBeReplacedSanitized,'matchToBeReplacedSanitizedmatchToBeReplacedSanitizedmatchToBeReplacedSanitized')
+  const slashRegex = new RegExp("/", "gi");
+  const matchToBeReplacedSanitized = matchToBeReplaced
+    .replace(slashRegex, "\\/")
+    .replace("(", "\\(")
+    .replace(")", "\\)");
   const markdownAssetRegularExpression = new RegExp(
     matchToBeReplacedSanitized,
     "gi"
@@ -57,7 +57,7 @@ export const modifyBodyLinkForImageForReturnedArticles = (
     markdownAssetRegularExpression,
     `${replacement}`
   );
-console.log('STARTBODYALTER',bodyAlterations, 'END BODY ALTERS')
+
   return bodyAlterations;
 };
 
@@ -78,14 +78,14 @@ export const getMarkdownImageSrcs = (markdownAsString: string): string[] => {
 export const getFullMarkdownReferencePathMatches = (
   markdownAsString: string
 ): string[] => {
-  if(!markdownAsString){
-    return []
+  if (!markdownAsString) {
+    return [];
   }
   const markdownAssetRegularExpression = new RegExp(
     MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK_V2,
     "gi"
   );
-console.log('DJDJDJDJDJDJDoooong',markdownAsString,'sjsjjsjsjsjEND')
+
   const matches = [];
   let array1;
 
@@ -95,12 +95,12 @@ console.log('DJDJDJDJDJDJDoooong',markdownAsString,'sjsjjsjsjsjEND')
     matches.push(array1[0]);
   }
   return matches.map((m) => {
-    let matchEdit = m.substring(m.indexOf('"') + 1)
-    if(matchEdit.indexOf('"')!==-1){
-      matchEdit= matchEdit.substring(0,matchEdit.length-1)
+    let matchEdit = m.substring(m.indexOf('"') + 1);
+    if (matchEdit.indexOf('"') !== -1) {
+      matchEdit = matchEdit.substring(0, matchEdit.length - 1);
     }
-    console.log(matchEdit,'MATCH EDITTT')
-    return matchEdit
+
+    return matchEdit;
   });
 };
 
@@ -110,23 +110,20 @@ export const getArticleNameFromReference = async (
 ): Promise<string | false> => {
   const regexTwoDots = new RegExp(/\.\.\//, "g");
   const regexOneDot = new RegExp(/\.\//, "g");
-  let cleanedPath = pathOfReference.replace(regexTwoDots, "")
-console.log(pathOfReference,'pdpdpdppd')
-console.log(currentArticlePath,'cucucucuccuuc')
+  let cleanedPath = pathOfReference.replace(regexTwoDots, "");
   if (cleanedPath.indexOf("./") !== -1 && currentArticlePath) {
     cleanedPath = cleanedPath.replace(regexOneDot, "");
     const directoryForSingleSlash = currentArticlePath.split("/");
-    const pathForMissing:string[] = []
-    directoryForSingleSlash.forEach(p=>{
-      if(p.indexOf('.md')==-1){
-        pathForMissing.push(p)
+    const pathForMissing: string[] = [];
+    directoryForSingleSlash.forEach((p) => {
+      if (p.indexOf(".md") == -1) {
+        pathForMissing.push(p);
       }
-    })
-const newPath = pathForMissing.join('/')
+    });
+    const newPath = pathForMissing.join("/");
     cleanedPath = `/${newPath}/${cleanedPath}`;
-console.log(cleanedPath,'ooooooooosjsjsj')
   }
-console.log(cleanedPath,'cleanedPathcleanedPathcleanedPathcleanedPath')
+
   const articleBody = await markdownToString(cleanedPath);
 
   const titleFromBody = checkBodyForTitleToUseForArticle(
