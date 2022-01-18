@@ -41,11 +41,12 @@ export const modifyBodyLinkForImageForReturnedArticles = (
   let bodyAlterations = `${body}`;
   const matchToBeReplacedSanitized = matchToBeReplaced.replace("/", "\\/");
   const markdownAssetRegularExpression = new RegExp(matchToBeReplacedSanitized, "gi");
-
+console.log(matchToBeReplacedSanitized,'bjbjbjbjbjbjbj')
   bodyAlterations = bodyAlterations.replace(
     markdownAssetRegularExpression,
     `${replacement}`
   );
+  console.log('boddyyystart',bodyAlterations, 'booodyyalteredn')
   return bodyAlterations;
 };
 
