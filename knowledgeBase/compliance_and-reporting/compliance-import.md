@@ -1,7 +1,6 @@
 # Import Compliance Standard or Security Questionnaire
 
-The JupiterOne compliance platform allows users to import a compliance
-standard/framework or a security questionnaire in either JSON or CSV format.
+The JupiterOne compliance platform allows users to import a compliance standard/framework or a security questionnaire in either JSON or CSV format.
 
 In the Compliance app:
 
@@ -10,7 +9,7 @@ In the Compliance app:
 
 See [this GitHub repository](https://github.com/JupiterOne/security-policy-templates/tree/master/templates/standards) for example compliance standards in JSON format.
 
-> Note: You must have obtained the necessary license and permission to use the framework for your organization. **Licensing is not provided by JupiterOne**, except for CIS Controls and Benchmarks.
+> Note: You must have obtained the necessary license and permission to use the framework for your  organization. **Licensing is not provided by JupiterOne**, except for CIS Controls and Benchmarks.
 
 ## JSON Structure
 
