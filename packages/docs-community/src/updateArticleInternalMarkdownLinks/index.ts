@@ -27,11 +27,14 @@ export const updateArticleInternalMarkdownLinks = async (
       articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown?.length &&
       articleUndergoingChanges.body !== null
     ) {
+      console.log(articleUndergoingChanges,'articleUndergoingChangesarticleUndergoingChanges')
+      
       const references =
         articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown || [];
       for (let r = 0; r < references.length; r++) {
         const articleName = await getArticleNameFromReference(references[r],articleUndergoingChanges.path);
-
+console.log(articleName,'TESTTTTT');
+console.log(references[r],'references[r]references[r]')
         if (articleName) {
           const existingArticleMatches = [...articlesToUseForSlugs]
             .filter((article) => {
