@@ -64,6 +64,7 @@ export const addVanillaArticleInfoToProcedure = (
     procedureTarget = {
       ...procedure,
       name: procedure.name,
+      path:procedure.path,
       knowledgeCategoryID: match[0].knowledgeCategoryID,
       articleID: match[0].articleID,
       locale: "en",
@@ -151,6 +152,7 @@ export const procedureToArticle = async (
     if (tempProcedureWorkedOn.body != FLAG_FOR_DELETE) {
       const articleRequest: Partial<VanillaArticle> = {
         body: tempProcedureWorkedOn.body,
+        path: tempProcedureWorkedOn.path,
         format: "markdown",
         knowledgeCategoryID: previousknowledgeCategoryID,
         locale: "en",
@@ -178,6 +180,7 @@ export const procedureToArticle = async (
         locale: "en",
         name: tempProcedureWorkedOn.name,
         sort: 0,
+        path: tempProcedureWorkedOn.path,
       };
 
       const editedArticle = await editArticle(
@@ -338,6 +341,7 @@ export const useProceduresForVanillaRequests = async (
     tempExistingKnowledgeCategoryInfo.push(procedureWorkedOn);
   }
   if (isArticleType(procedureWorkedOn)) {
+
     procedureWorkedOn = await procedureToArticle(
       httpClient,
       procedureWorkedOn,

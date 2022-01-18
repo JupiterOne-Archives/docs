@@ -313,6 +313,7 @@ describe("ProceduresToVanillaRequests", () => {
           locale: "en",
           name: "Soc2 With Jupiterone Copy",
           sort: 0,
+          path: "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md"
         });
       });
     });
@@ -351,6 +352,7 @@ describe("ProceduresToVanillaRequests", () => {
             locale: "en",
             name: "Soc2 With Jupiterone Copy",
             sort: 0,
+            path: "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md"
           }
         );
       });
