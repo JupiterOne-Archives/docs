@@ -30,7 +30,7 @@ export const updateArticleInternalMarkdownLinks = async (
       const references =
         articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown || [];
       for (let r = 0; r < references.length; r++) {
-        const articleName = await getArticleNameFromReference(references[r]);
+        const articleName = await getArticleNameFromReference(references[r],articleUndergoingChanges.path);
 
         if (articleName) {
           const existingArticleMatches = [...articlesToUseForSlugs]
