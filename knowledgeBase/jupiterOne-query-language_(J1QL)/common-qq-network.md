@@ -81,7 +81,7 @@ Network layer gateways including AWS internet gateways, network load balancers, 
 Find Gateway with category='network'
 ```
 
-Application layer gateways including API gateways, application load balancers,etc.:
+Application layer gateways including API gateways, application load balancers, etc.:
 
 ```j1ql
 Find Gateway with category='application'
