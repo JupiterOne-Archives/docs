@@ -34,7 +34,7 @@ If not completed during JupiterOne account setup, the policy builder should be p
 Additional support documentation:
 
 [Managing policies + procedures](./policies-app.md)
-[Using the policy builder CLI](../compliance_and-reporting/policy-builder-cli.md)
+[Using the policy builder CLI](./policy-builder-cli.md)
 [Policies + procedures structure](./policies-app.md)
 [Compliance policies mapping](./compliance-mapping-policies.md)
 
