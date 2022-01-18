@@ -73,7 +73,7 @@ Enter this query:
 Find AccessKey with usage='ssh'
 ```
 
-> This query finds a set of `aws_access_key` assets used for SSH access into your EC2 instances, assuming you have some of those and they are configured to allow SSH access.
+This query finds a set of `aws_access_key` assets used for SSH access into your EC2 instances, assuming you have some of those and they are configured to allow SSH access.
 
 You can also query by the asset type instead of its class. The following query returns the same result unless you also have SSH keys you have added from other non-AWS integrations or from the UI or API.
 
@@ -102,11 +102,7 @@ Find Host as h
     k.displayName
 ```
 
-> This query finds the `Host` asset that `USES` each `AccessKey` and returns a set of specific properties. You can add or remove the returned properties, if necessary.
->
-> The keyword `that` is what tells the query to traverse the graph to find connections/relationships between assets, followed by a _verb_ that represents the relationship class.
->
-> Also,  you can switch to the **Graph** view to get a more visual result, and continue to drill down interactively.
+This query finds the `Host` asset that `USES` each `AccessKey` and returns a set of specific properties. You can add or remove the returned properties, if necessary. The keyword `that` is what tells the query to traverse the graph to find connections/relationships between assets, followed by a _verb_ that represents the relationship class. Also,  you can switch to the **Graph** view to get a more visual result, and continue to drill down interactively.
 
 Again, you can query using the more specific asset types. For example:
 
@@ -120,7 +116,7 @@ Or mix and match them:
 Find Host that uses aws_key_pair
 ```
 
-> The relationship keyword/verb is *not* case-sensitive.
+The relationship keyword/verb is *not* case-sensitive.
 
 ### EBS Volume Examples
 
@@ -130,7 +126,7 @@ First, to see if there are any unencrypted EBS volumes, use this query:
 Find aws_ebs_volume with encrypted != true
 ```
 
-> In the above query the `with` keyword binds to the asset noun immediately to its left, and allows you to filter results on the property values of that entity.
+In the above query the `with` keyword binds to the asset noun immediately to its left, and allows you to filter results on the property values of that entity.
 
 If the above query finds some unencrypted EBS volumes, you can see what is using them by entering:
 
@@ -138,7 +134,7 @@ If the above query finds some unencrypted EBS volumes, you can see what is using
 Find Host that uses aws_ebs_volume with encrypted != true
 ```
 
-> You can view the `aws_ebs_volume` assets and their relationships in the **Graph** mode, and further inspect the properties on each asset node or relationship edge. You can also expand to see more connected assets and relationships.
+You can view the `aws_ebs_volume` assets and their relationships in the **Graph** mode, and further inspect the properties on each asset node or relationship edge. You can also expand to see more connected assets and relationships.
 
 To see which volumes are active and in production, enter:
 
@@ -162,9 +158,9 @@ To remove any unused EBS volumes, enter:
 Find aws_ebs_volume that !uses Host
 ```
 
-> The above query may seem backwards. The query works the same way regardless of the direction of the relationship. Because the query, by default, returns all properties from the initial set of assets, it is sometimes easier to reverse the query direction so that you can more easily get the data you are searching.
->
-> Technically, `Find Host that !uses aws_ebs_volume as v return v.*` may seem more correct, but it is a more lengthy query to enter.
+The above query may seem backwards. The query works the same way regardless of the direction of the relationship. Because the query, by default, returns all properties from the initial set of assets, it is sometimes easier to reverse the query direction so that you can more easily get the data you are searching.
+
+Technically, `Find Host that !uses aws_ebs_volume as v return v.*` may seem more correct, but it is a more lengthy query to enter.
 
 ### Unencrypted Data
 
@@ -223,7 +219,7 @@ Find (Gateway|Firewall) with category='network'
   return tree
 ```
 
-> Remember that you can toggle the result back to **Table** view.
+Remember that you can toggle the result back to **Table** view.
 
 To find networks and subnets:
 
@@ -237,11 +233,11 @@ Or resources in a VPC:
 Find Network that has (Host|Cluster|Database) return tree
 ```
 
-> This is a basic result. Your environment may look more complex:
->
-> ![](../assets/j1ql-tutorial-network-has-resources.png)
->
-> The properties side panel for the selected `aws_subnet` has a `webLink` that enables you to quickly get to the source directly in the AWS web console.
+This is a basic result. Your environment may look more complex:
+
+![](../assets/j1ql-tutorial-network-has-resources.png)
+
+The properties side panel for the selected `aws_subnet` has a `webLink` that enables you to quickly get to the source directly in the AWS web console.
 
 In AWS, you may have set up CloudFront distributions to distribute traffic to your API gateways or static websites hosted in S3, such as this example:
 
@@ -249,14 +245,13 @@ In AWS, you may have set up CloudFront distributions to distribute traffic to yo
 Find aws_cloudfront_distribution that relates to * return tree
 ```
 
-> The following is a J1 account with multiple AWS integration configurations and several `aws_cloudfront_distribution` assets and relationships.
->
-> ![](../assets/j1ql-tutorial-cloudfront.png)
->
-> This graph shows you the origins connected to the distributions: both S3 buckets (for static website/contents) and API gateways. Additionally, the graph shows you the ACM certificate they use
-> and the WAF ACL, if any, configured to protect them.
->
-> You can select any asset node in the graph to inspect its detailed properties, or find a web link to get to the source in the AWS web console.
+The following is a J1 account with multiple AWS integration configurations and several `aws_cloudfront_distribution` assets and relationships.
+
+![](../assets/j1ql-tutorial-cloudfront.png)
+
+This graph shows you the origins connected to the distributions: both S3 buckets (for static website/contents) and API gateways. Additionally, the graph shows you the ACM certificate they use and the WAF ACL, if any, configured to protect them.
+
+You can select any asset node in the graph to inspect its detailed properties, or find a web link to get to the source in the AWS web console.
 
 If you use AWS Transfer for SFTP, you can find the transfer servers, users, which IAM roles are assigned to them, and to which S3 buckets the users have access.
 
@@ -269,9 +264,9 @@ Find aws_account
   return tree
 ```
 
-> You get a visual similar to this:
->
-> ![](../assets/j1ql-aws-transfer-servers-users.png)
+You get a visual similar to this:
+
+![](../assets/j1ql-aws-transfer-servers-users.png)
 
 ### Serverless Functions
 
@@ -298,9 +293,9 @@ To see if there are Lambda functions with access to resources in a VPC:
 Find aws_lambda_function that has aws_vpc return tree
 ```
 
-> The above query gives you a visual graph of the Lambda functions and the VPC they are configured to run inside.
->
-> It is a best practice to **not** run Lambda functions without access to a VPC unless they need direct access to resources within one, such as EC2 instances, RDS databases, or ElasticSearch/ElastiCache.
+The above query gives you a visual graph of the Lambda functions and the VPC they are configured to run inside.
+
+It is a best practice to **not** run Lambda functions without access to a VPC unless they need direct access to resources within one, such as EC2 instances, RDS databases, or ElasticSearch/ElastiCache.
 
 To see if inbound SSH is allowed directly from an external host or network:
 
@@ -319,9 +314,9 @@ Find Firewall as fw
     src.CIDR
 ```
 
-> The above query uses `where` to filter the property values of the relationship. You can use both `with` and `where` to filter property values of assets. See the [full J1QL documentation][../j1ql-doc.md] for more details.
->
-> Also, you can toggle to the **Graph** view to see the above results more visually and interactively.
+The above query uses `where` to filter the property values of the relationship. You can use both `with` and `where` to filter property values of assets. See the [full J1QL documentation][../j1ql-doc.md] for more details.
+
+Also, you can toggle to the **Graph** view to see the above results more visually and interactively.
 
 To see which production resources are directly connected/exposed to the internet/everyone:
 
@@ -344,7 +339,7 @@ To learn about security group protection:
 Find aws_security_group that PROTECTS aws_instance return tree
 ```
 
-> **TIP**: Select a relationship edge in the graph to see the security group rule details, such as the properties on the relationship edge.
+**TIP**: Select a relationship edge in the graph to see the security group rule details, such as the properties on the relationship edge.
 
 ## Part 3: User and Access Analysis
 
@@ -360,11 +355,11 @@ To find out if there are system accounts that do not belong to an individual emp
 Find User that !is Person
 ```
 
-> `User` entities in J1 are automatically mapped to a corresponding `Person` (`_type: 'employee'`) asset when there is at least one Identity Provider (IdP) integration configuration such as Okta or OneLogin.
->
-> **TIP**:  Set the `userType` property of the user profile in your IdP account to `'system' or 'generic' or 'bot'` to prevent J1 from creating a `Person` entity for that user.
->
-> **TIP:** Setting the `username` of your `aws_iam_user` or other non-IdP users to be the email address of a person / employee enables J1 to automatically map that user to its corresponding person. Alternatively, you can add an `email` tag to your `aws_iam_user` for the mapping to work.
+`User` entities in J1 are automatically mapped to a corresponding `Person` (`_type: 'employee'`) asset when there is at least one Identity Provider (IdP) integration configuration such as Okta or OneLogin.
+
+**TIP**:  Set the `userType` property of the user profile in your IdP account to `'system' or 'generic' or 'bot'` to prevent J1 from creating a `Person` entity for that user.
+
+**TIP:** Setting the `username` of your `aws_iam_user` or other non-IdP users to be the email address of a person / employee enables J1 to automatically map that user to its corresponding person. Alternatively, you can add an `email` tag to your `aws_iam_user` for the mapping to work.
 
 To see which active user accounts do not have multi-factor authentication enabled:
 
@@ -373,9 +368,7 @@ Find User with active = true and mfaEnabled != true
   that !(ASSIGNED|USES|HAS) mfa_device
 ```
 
-> Depending on the specific IdP integration, a `User` asset may have a relationship mapping to an `mfa_device` instead of the `mfaEnabled` flag directly as a property.
->
-> Therefore, the above query finds all `User` assets with the `active` flag but not the `mfaEnabled` flag set to true on its properties and, additionally, checks for the existence of an relationship between that `User` and any `mfa_device` assigned or in use.
+Depending on the specific IdP integration, a `User` asset may have a relationship mapping to an `mfa_device` instead of the `mfaEnabled` flag directly as a property. Therefore, the above query finds all `User` assets with the `active` flag but not the `mfaEnabled` flag set to true on its properties and, additionally, checks for the existence of an relationship between that `User` and any `mfa_device` assigned or in use.
 
 To find out if there are users accessing my AWS application without using MFA:
 
@@ -384,9 +377,9 @@ Find User with active = true and mfaEnabled != true
   that ASSIGNED Application with displayName = 'Amazon Web Services'
 ```
 
-> Replace the string value of the `displayName` to check for another application.
->
-> You can also use `shortName = 'aws'`, which checks for all AWS application instances, if you have more than one AWS SAML app configured with your IdP.
+Replace the string value of the `displayName` to check for another application.
+
+You can also use `shortName = 'aws'`, which checks for all AWS application instances, if you have more than one AWS SAML app configured with your IdP.
 
 **Find all contractors and external users in the environment.**
 
@@ -394,14 +387,14 @@ Find User with active = true and mfaEnabled != true
 Find User that IS Person that !EMPLOYS Root
 ```
 
-> The above query finds user accounts belong to any individual not directly employed by your organization (`Root` entity).
+The above query finds user accounts belong to any individual not directly employed by your organization (`Root` entity).
 
 ```j1ql
 Find User as u that IS Person as p
   where u.userType='contractor' or p.employeeType='contractor'
 ```
 
-> The above query finds contractor users.
+The above query finds contractor users.
 
 ### Cloud users and access
 
@@ -470,9 +463,9 @@ Find aws_account
   return tree
 ```
 
-> In the above query, `_source='system-mapper'` is an indicator that the trusted asset is not one ingested by an integration configuration. Instead, it is mapped and created by J1 during the analysis of Assume Role policies of the IAM roles in your accounts. Therefore, these entities are most likely external.
->
-> For example, you can see the JupiterOne integration IAM role with a `TRUSTS` relationship to the JupiterOne AWS account.
+In the above query, `_source='system-mapper'` is an indicator that the trusted asset is not one ingested by an integration configuration. Instead, it is mapped and created by J1 during the analysis of Assume Role policies of the IAM roles in your accounts. Therefore, these entities are most likely external.
+
+For example, you can see the JupiterOne integration IAM role with a `TRUSTS` relationship to the JupiterOne AWS account.
 
 ## Part 5 - Endpoint Compliance
 
