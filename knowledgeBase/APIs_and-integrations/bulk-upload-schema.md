@@ -5,7 +5,7 @@
 > Therefore, the upload file should always include the **complete** set of entities or relationships within the defined `scope` to avoid unintended data deletion.
 
 > In the UI, users are prompted to select/enter a `scope` when uploading a file.
-> 
+>
 > Via the API, `scope` is provided when starting a synchronization job.
 
 > **For example:**
@@ -21,7 +21,7 @@
 > }
 > ```
 
-> See the [API documentation](./jupiterone-api.md#entityandrelationshipsynchronization) for more details. 
+> See the [API documentation](./jupiterone-api.md) for more details. 
 
 To successfully upload entity and relationship data, follow the schema outlined below:
 
@@ -85,4 +85,4 @@ To successfully upload entity and relationship data, follow the schema outlined 
 | `_fromEntityKey` | `string` | The unique key for the entity on the "from" side of this relationship. |
 | `_toEntityKey`   | `string` | The unique key for the entity on the "to" side of this relationship. |
 
-> Properties with `_` prefix are reserved as JupiterOne system internal metadata properties. Other than `_key`, `_type`, `_class`, `_fromEntityKey`, and `_toEntityKey` as listed above, any other property beginning with `_` will be ignored when processing the upload.
+> Properties with `_` prefix are reserved as JupiterOne system internal metadata properties. Other than `_key`, `_type`, `_class`, `_fromEntityKey`, and `_toEntityKey` as listed above, any other property beginning with `_` will be ignored when processing the upload. 

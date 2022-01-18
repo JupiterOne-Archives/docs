@@ -49,7 +49,7 @@ export const markdownToString = async (filePath?: string): Promise<string> => {
   if (!supportedTypeOfFile) {
     return FLAG_FOR_DELETE;
   }
-  
+
   try {
     const blockingReadOfFile = await fs.promises.readFile(fileLocation, {
       encoding: "utf8",
@@ -86,7 +86,7 @@ export const checkBodyForTitleToUseForArticle = (
   markdownAsString: string,
   targetRegex: RegExp
 ) => {
-  const markdownTitleRegularExpression = new RegExp(targetRegex,'gi');
+  const markdownTitleRegularExpression = new RegExp(targetRegex, "gi");
   const matches = markdownAsString.match(markdownTitleRegularExpression);
 
   if (matches && matches[0]) {

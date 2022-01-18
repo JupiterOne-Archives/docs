@@ -2,7 +2,7 @@
 
 
 
-JupiterOne Visual Query Builder (VQB) provides a no-code, drag-and-drop, visual interface for building JupiterOne queries without needing to learn JupiterOne Query Language (J1QL) syntax.
+JupiterOne Visual Query Builder (VQB) provides a no-code, drag-and-drop, visual interface for building JupiterOne queries without needing to learn JupiterOne Query Language (J1QL) syntax. 
 
 ### Permissions
 

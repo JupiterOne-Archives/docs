@@ -2,9 +2,9 @@
 
 You can quickly search and get insight across your entire digital environment integrated with JupiterOne, from the Search for Anything landing page. There are three modes of search:
 
-- **Ask questions** - you can enter any keywords to search across all packaged and saved questions.
+- **Ask questions** - you can enter any keywords to search across all packaged and saved questions. 
 - **Full-text search** - an easy way to search across all assets based on their property values.
-- **JupiterOne query language (J1QL)** is best for detailed querying of assets and relationships.
+- **JupiterOne query language (J1QL)** is best for detailed querying of assets and relationships. 
 
 You can toggle results in four different display modes: **Table**, **Graph**, **Raw JSON**, or **Pretty JSON**.
 
@@ -86,13 +86,13 @@ RETURN
   n._type, n.displayName, n.tag.AccountName
 ```
 
-The query language is case-insensitive except for the following:
+The query language is case-insensitive except for the following: 
 
 - `TitleCase` asset keywords after `Find` and the `{relationship verb}`  search for entities of that class. (for example, `CodeRepo`).
 - `lowercase` asset keywords after `Find` and the `{relationship verb}`  search for assets of that type. An asset type with more than one word is generally in `snake_case` (for example, `github_repo`).
-- Asset property names and values, and alias names defined as part of the query, are case-sensitive.
+- Asset property names and values, and alias names defined as part of the query, are case-sensitive. 
 
-Read the [J1QL query tutorial](../jupiterOne-query-language_(J1QL)/tutorial-j1ql.md) and the [complete J1QL documentation](../jupiterOne-data-model/jupiterOne-query-language.md) for more advanced examples.
+Read the [J1QL query tutorial](../jupiterOne-query-language_(J1QL)/tutorial-j1ql.md) and the [complete J1QL documentation](../jupiterOne-query-language_(J1QL)/jupiterone-query-language.md) for more advanced examples.
 
 ## Combining Full-Text Search with J1QL
 

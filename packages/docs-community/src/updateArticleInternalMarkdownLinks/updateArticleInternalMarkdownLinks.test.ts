@@ -17,13 +17,11 @@ describe("updateArticleInternalMarkdownLinks", () => {
     getArticleNameFromReferenceSpy.mockResolvedValue(
       "Article Name from Markdown"
     );
-
   });
   it("returns Vanilla Articles with body adjusted when Article exists", async () => {
-    const expectedBodyContent = "ChangesHappened";
     const procedure: VanillaArticle = {
       articleID: 537,
-      body:`<a rel=\"nofollow\" href=\"../alink/toLocal/markdownfile.md">Github</a>.</p>`, // "i have a link to [xyx](localMarkdown)",
+      body: `<a rel=\"nofollow\" href=\"../alink/toLocal/markdownfile.md">Github</a>.</p>`, // "i have a link to [xyx](localMarkdown)",
       format: "markdown",
       fileName: "",
       knowledgeCategoryID: 304,
