@@ -14,7 +14,7 @@ JupiterOne provides a flexible platform for users to import and manage any compl
 
 ## Compliance Status and Maturity
 
-JupiterOne compliance app provides measurements and status indicators at three different maturity levels for each compliance standard and its requirements/controls:
+JupiterOne compliance app provides measurements and status indicators at three different maturity levels for each compliance standard and its requirements/controls: 
 
 1. Has documented policies and procedures
 2. Has implementation evidence (either via data-driven queries or external evidence)
