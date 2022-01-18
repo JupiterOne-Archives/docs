@@ -1,4 +1,4 @@
-# Entity/Relationship Metadata
+# Entity and Relationship Metadata
 
 The following metadata is assigned by JupiterOne internally to entities and relationships. All internal metadata has `_` prefix to the property name.
 
