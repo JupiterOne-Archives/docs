@@ -12,7 +12,7 @@ security_procedure
 
 See [this article](../jupiterOne-data-model/org-grc.md) for the full GRC graph data model.
 
-> Mapping is created only between security procedures to a compliance requirement/control. Policies are indirectly mapped via procedures. This is because policies are very high-level descriptions (such as principal statements) and principals cannot directly implement a compliance requirement/control. Only details on what you do and how you do it (the procedures) can implement a requirement/control.
+> Mapping is created only between security procedures to a compliance requirement/control. Policies are indirectly mapped via procedures. This is because policies are very high-level descriptions (such as principal statements) and principals cannot directly implement a compliance requirement/control. Only details on what you do and how you do it (the procedures) can implement a requirement/control. 
 >
 > ![compliance-mapped-policy-procedure](../assets/compliance-mapped-policy-procedure.png)
 
