@@ -111,7 +111,7 @@ It is important to remember:
 - Any change to the `SOURCE` entity triggers the mapping rule to be evaluated/re-evaluated.
 - The **Source Filters** must match an entity or the rule will not trigger. It may be necessary to _add properties to entities_ at the data source so that when they are ingested they will match the rule.
 - A rule produces relationships to all `TARGET` entities matching the **Target filters**. It may be necessary to _add properties to entities_ at the data source so that when they are ingested they will match the rule.
-- **Transferred Properties** are listed only when the mapper will create a target entity if none are found (`skipTargetCreation: false`).
+- **Transferred Properties** are listed only when the mapper will create a target entity if none are found (`skipTargetCreation: false`). 
 
 ### Mappings Rules
 
