@@ -778,7 +778,7 @@ The following example finds all brand new code repos created within the last 48 
 Find CodeRepo with _beginOn > date.now-24hr and _version=1
 ```
 
-For more details on metadata properties, see the JupiterOne [data model documentation](./jupiterone-data-model.md).
+For more details on metadata properties, see the JupiterOne [data model documentation](../jupiterOne-data-model/jupiterone-data-model.md).
 
 ## Advanced Notes and Use Cases
 
