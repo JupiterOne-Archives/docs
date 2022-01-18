@@ -24,7 +24,10 @@ export const modifyBodyLinkForImage = (
 ): string => {
   let bodyAlterations = `${body}`;
   const matchToBeReplacedSanitized = matchToBeReplaced.replace("/", "\\/");
-  const markdownAssetRegularExpression = new RegExp(matchToBeReplacedSanitized);
+  const markdownAssetRegularExpression = new RegExp(
+    matchToBeReplacedSanitized,
+    "gi"
+  );
 
   bodyAlterations = bodyAlterations.replace(
     markdownAssetRegularExpression,
@@ -40,17 +43,21 @@ export const modifyBodyLinkForImageForReturnedArticles = (
 ): string => {
   let bodyAlterations = `${body}`;
   const matchToBeReplacedSanitized = matchToBeReplaced.replace("/", "\\/");
-  const markdownAssetRegularExpression = new RegExp(matchToBeReplacedSanitized);
+  const markdownAssetRegularExpression = new RegExp(
+    matchToBeReplacedSanitized,
+    "gi"
+  );
 
   bodyAlterations = bodyAlterations.replace(
     markdownAssetRegularExpression,
     `${replacement}`
   );
+
   return bodyAlterations;
 };
 
 export const getMarkdownImageSrcs = (markdownAsString: string): string[] => {
-  const markdownAssetRegularExpression = new RegExp(MARKDOWN_IMAGE_REGEX, "g");
+  const markdownAssetRegularExpression = new RegExp(MARKDOWN_IMAGE_REGEX, "gi");
   const matches = [];
   let array1;
 
@@ -68,7 +75,7 @@ export const getFullMarkdownReferencePathMatches = (
 ): string[] => {
   const markdownAssetRegularExpression = new RegExp(
     MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK,
-    "g"
+    "gi"
   );
   const matches = [];
   let array1;
@@ -82,12 +89,19 @@ export const getFullMarkdownReferencePathMatches = (
 };
 
 export const getArticleNameFromReference = async (
-  path: string
+  pathOfReference: string,
+  currentArticlePath: string | undefined
 ): Promise<string | false> => {
   const regexTwoDots = new RegExp(/\.\.\//, "g");
-  const regexOneDot = new RegExp(/\.\//, "g");
-  const cleanedPath = path.replace(regexTwoDots, "").replace(regexOneDot, "");
+  let cleanedPath = pathOfReference.replace(regexTwoDots, "");
+
+  if (cleanedPath.indexOf("./") !== -1 && currentArticlePath) {
+    const directoryForSingleSlash = currentArticlePath.split("/");
+    cleanedPath = `/${directoryForSingleSlash[directoryForSingleSlash.length - 2]}/${cleanedPath}`;
+  }
+
   const articleBody = await markdownToString(cleanedPath);
+
   const titleFromBody = checkBodyForTitleToUseForArticle(
     articleBody,
     TITLE_FROM_MARKDOWN_REGEX

@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import * as mockLinksAndMediaHandlers from "../linksAndMediaHandlers";
 import {
   ProcedureTypeEnum,
@@ -12,23 +13,17 @@ describe("updateArticleInternalMarkdownLinks", () => {
     "getArticleNameFromReference"
   );
 
-  const modifyBodyLinkForImageForReturnedArticlesSpy = jest.spyOn(
-    mockLinksAndMediaHandlers,
-    "modifyBodyLinkForImageForReturnedArticles"
-  );
   beforeAll(() => {
     getArticleNameFromReferenceSpy.mockResolvedValue(
       "Article Name from Markdown"
     );
-    modifyBodyLinkForImageForReturnedArticlesSpy.mockReturnValue(
-      "ChangesHappened"
-    );
+
   });
-  it("returns Vanilla Articles with markdown adjusted when Article exists", async () => {
+  it("returns Vanilla Articles with body adjusted when Article exists", async () => {
     const expectedBodyContent = "ChangesHappened";
     const procedure: VanillaArticle = {
       articleID: 537,
-      body: "i have a link to [xyx](localMarkdown)",
+      body:`<a rel=\"nofollow\" href=\"../alink/toLocal/markdownfile.md">Github</a>.</p>`, // "i have a link to [xyx](localMarkdown)",
       format: "markdown",
       fileName: "",
       knowledgeCategoryID: 304,
@@ -77,7 +72,8 @@ describe("updateArticleInternalMarkdownLinks", () => {
     );
 
     const [updatedProcedure] = actual;
-    expect(updatedProcedure.body).toEqual(expectedBodyContent);
+
+    expect(updatedProcedure.body).toContain(vanillaArticle.url);
   });
 
   it("returns Vanilla Articles with markdown returned when Article does NOT exist", async () => {
