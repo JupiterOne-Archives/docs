@@ -27,21 +27,21 @@ export const updateArticleInternalMarkdownLinks = async (
       articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown?.length &&
       articleUndergoingChanges.body !== null
     ) {
-      console.log(articleUndergoingChanges,'articleUndergoingChangesarticleUndergoingChanges')
-      
       const references =
         articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown || [];
       for (let r = 0; r < references.length; r++) {
-        const articleName = await getArticleNameFromReference(references[r],articleUndergoingChanges.path);
-console.log(articleName,'TESTTTTT');
-console.log(references[r],'references[r]references[r]')
+        const articleName = await getArticleNameFromReference(
+          references[r],
+          articleUndergoingChanges.path
+        );
+
         if (articleName) {
           const existingArticleMatches = [...articlesToUseForSlugs]
             .filter((article) => {
               return article.name === articleName;
             })
             .filter((a) => a.status !== "deleted");
-            console.log(existingArticleMatches,'existingArticleMatchesexistingArticleMatches')
+
           const articleUrl: string =
             existingArticleMatches[0]?.url || "doesNotExist";
 
