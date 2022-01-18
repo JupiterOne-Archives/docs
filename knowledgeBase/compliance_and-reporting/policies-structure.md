@@ -5,7 +5,7 @@ Similar to the concept of "micro-services", the JupiterOne policies and procedur
 - All policies, procedures and reference documents are written in **Markdown**.
 - All configuration files are in **JSON** format, including mapping between policies and procedures, and between procedures and compliance standards.
 
-Policies and procedures are part of JupiterOne's Governance, Risk, and Compliance (GRC) [graph data model](./org-grc.md).
+Policies and procedures are part of JupiterOne's Governance, Risk, and Compliance (GRC) [graph data model](../jupiterOne-data-model/org-grc.md).
 
 ## Structure
 
