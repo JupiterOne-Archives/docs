@@ -95,7 +95,7 @@ export const getArticleNameFromReference = async (
   const regexTwoDots = new RegExp(/\.\.\//, "g");
   const regexOneDot = new RegExp(/\.\//, "g");
   let cleanedPath = pathOfReference.replace(regexTwoDots, "")
-  console.log('cleaaned pathcleanedPath',cleanedPath)
+
   if (cleanedPath.indexOf("./") !== -1 && currentArticlePath) {
     cleanedPath = cleanedPath.replace(regexOneDot, "");
     const directoryForSingleSlash = currentArticlePath.split("/");
@@ -107,7 +107,7 @@ export const getArticleNameFromReference = async (
     })
 const newPath = pathForMissing.join('/')
     cleanedPath = `/${newPath}/${cleanedPath}`;
-    console.log(cleanedPath,'newwsss path')
+
   }
 
   const articleBody = await markdownToString(cleanedPath);
