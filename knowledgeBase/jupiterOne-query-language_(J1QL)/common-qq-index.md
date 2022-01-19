@@ -4,7 +4,7 @@ Here are some commonly asked questions and their corresponding J1QL queries. You
 
 Many of these are packaged in the Query Library directly accessible in the landing page in JupiterOne.
 
-Here is [a catalog of the packaged questions](../Getting-Started_and-Admin/catalog.md).
+Here is [a catalog of the packaged questions](../getting-started_and-admin/catalog.md).
 
 ## Question/Query Categories
 
