@@ -5,6 +5,7 @@ export interface KnowledgeBase {
   description: string;
   sortArticles: "manual" | "name" | "dateInserted" | "dateInsertedDesc";
 }
+// response from vanilla
 export interface KnowledgeCategory {
   knowledgeBaseID: null | number; // 1 is the docs
   knowledgeCategoryID: null | number;
