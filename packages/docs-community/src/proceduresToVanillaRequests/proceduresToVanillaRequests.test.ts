@@ -313,7 +313,7 @@ describe("ProceduresToVanillaRequests", () => {
           locale: "en",
           name: "Soc2 With Jupiterone Copy",
           sort: 0,
-          path: "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md"
+          path: "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
         });
       });
     });
@@ -352,7 +352,7 @@ describe("ProceduresToVanillaRequests", () => {
             locale: "en",
             name: "Soc2 With Jupiterone Copy",
             sort: 0,
-            path: "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md"
+            path: "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
           }
         );
       });
@@ -459,7 +459,8 @@ describe("ProceduresToVanillaRequests", () => {
       const actual = await procedureToKnowledgeCategory(
         mockHttpclient,
         procedureKnowledgeCategoryReleaseNotes,
-        22
+        22,
+        false
       );
       expect(mockCreateKnowledgeCategory).toHaveBeenCalledWith(
         {},
@@ -524,7 +525,8 @@ describe("ProceduresToVanillaRequests", () => {
       const actual = await procedureToKnowledgeCategory(
         mockHttpclient,
         procedureKnowledgeCategoryNOKCID,
-        22
+        22,
+        false
       );
       expect(mockCreateKnowledgeCategory).toHaveBeenLastCalledWith(
         mockHttpclient,
@@ -537,7 +539,7 @@ describe("ProceduresToVanillaRequests", () => {
         mockEditKnowledgeCategory.mockReset();
         mockDirectoryExists.mockReturnValue(true);
       });
-      it("returns procedure when file exists and has knowledgeCategoryID", async () => {
+      it("returns procedure when file exists, knowledgeCategoryID and has not moved", async () => {
         const knowledgeCategoryID = 111;
         mockDirectoryExists.mockReturnValue(true);
         const procedureKnowledgeCategoryWITHKCID = {
@@ -554,9 +556,33 @@ describe("ProceduresToVanillaRequests", () => {
         const actual = await procedureToKnowledgeCategory(
           mockHttpclient,
           procedureKnowledgeCategoryWITHKCID,
-          22
+          22,
+          false
         );
 
+        expect(actual).toEqual(expected);
+      });
+      it("edits and returns procedure when file exists and has knowledgeCategoryID and HAS moved", async () => {
+        const knowledgeCategoryID = 111;
+        mockDirectoryExists.mockReturnValue(true);
+        const procedureKnowledgeCategoryWITHKCID = {
+          ...procedureKnowledgeCategorytemp,
+          knowledgeCategoryID,
+        };
+
+        mockEditKnowledgeCategory.mockResolvedValue({
+          ...procedureKnowledgeCategoryWITHKCID,
+          knowledgeCategoryID,
+        });
+        const expected = procedureKnowledgeCategoryWITHKCID;
+        const mockHttpclient = {} as any;
+        const actual = await procedureToKnowledgeCategory(
+          mockHttpclient,
+          procedureKnowledgeCategoryWITHKCID,
+          22,
+          true
+        );
+        expect(mockEditKnowledgeCategory).toHaveBeenCalled();
         expect(actual).toEqual(expected);
       });
     });
@@ -573,7 +599,8 @@ describe("ProceduresToVanillaRequests", () => {
         const actual = await procedureToKnowledgeCategory(
           mockHttpclient,
           procedureKnowledgeCategoryNOKCID,
-          22
+          22,
+          false
         );
 
         expect(actual.description).toEqual(FLAG_FOR_DELETE);
@@ -590,7 +617,8 @@ describe("ProceduresToVanillaRequests", () => {
         const actual = await procedureToKnowledgeCategory(
           mockHttpclient,
           procedureKnowledgeCategoryNOKCID,
-          22
+          22,
+          false
         );
 
         expect(actual.description).toEqual(KNOWN_CATEGORY_BEEN_DELETED);
