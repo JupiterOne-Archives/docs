@@ -1,6 +1,6 @@
 # Bulk Upload
 
-JupiterOne supports the bulk upload of entity and relationship data via a JSON file. This is done in the Assets app.
+JupiterOne supports the bulk upload of entity and relationship data via a JSON file. This is done in the Assets app. 
 
 ## Data Format
 

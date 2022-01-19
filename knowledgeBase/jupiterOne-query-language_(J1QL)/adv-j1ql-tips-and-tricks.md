@@ -138,8 +138,7 @@ Find User that RELATES TO *
 
 A new browser tab will be opened and will run a query that returns a graph showing everything related to or mapped to the entity via a relationship. 
 
-4. Click on the queried entity and you will see the relationship verbs for each
-   mapped entity.
+4. Click the queried entity and you will see the relationship verbs for each mapped entity.
 
 ![j1ql-custom-query-graph-relationships](../assets/j1ql-custom-query-graph-relationships.png)
 
