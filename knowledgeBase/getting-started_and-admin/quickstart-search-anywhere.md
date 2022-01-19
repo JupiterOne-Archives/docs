@@ -15,8 +15,7 @@ When you first log in to your account, you can:
 
 ### Enabling the J1 Playground
 
-As part of your onboarding resources, J1 provides a [sandbox account and demo data](quickstart-sample-data.md) to give you the opportunity to get familiar with J1 before you start working with your organization data. Click the Resources
-icon ![resourcesicon](../assets/icons/resources.png) and select **Onboarding**. In the top-right of the screen, click the sample data icon ![sampledata](../assets/icons/sample-data.png) and follow the instructions on the screen.
+As part of your onboarding resources, J1 provides a [sandbox account and demo data](quickstart-sample-data.md) to give you the opportunity to get familiar with J1 before you start working with your organization data. Click the Resources icon ![resourcesicon](../assets/icons/resources.png) and select **Onboarding**. In the top-right of the screen, click the sample data icon ![sampledata](../assets/icons/sample-data.png) and follow the instructions on the screen.
 
 ### Asking Questions
 
@@ -36,8 +35,7 @@ J1 enables you to [create alerts](manage-alerts.md) for continuous auditing and 
 
 ### Reviewing Compliance Standards
 
-JupiterOne provides a flexible platform for you to import and [manage any compliance standard or framework](../compliance_and-reporting/compliance-overview.md) as a set of controls or requirements. You can import a compliance standard/framework or a security questionnaire, map security procedures to a compliance requirement or control, and many
-other compliance tasks.
+JupiterOne provides a flexible platform for you to import and [manage any compliance standard or framework](../compliance_and-reporting/compliance-overview.md) as a set of controls or requirements. You can import a compliance standard/framework or a security questionnaire, map security procedures to a compliance requirement or control, and many other compliance tasks.
 
 ### 
 
