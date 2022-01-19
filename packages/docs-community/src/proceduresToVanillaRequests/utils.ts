@@ -29,6 +29,11 @@ export const hasKnowledgeCategoryBeenMoved = ({
   const [matchingKnowledgeCategory] = knowledgeCategoriesArray.filter(
     (k) => k.knowledgeCategoryID === parentID
   );
+  console.log(procedure, "PROCEDURE CHECKsss");
+  console.log(
+    matchingKnowledgeCategory,
+    "matchingKnowledgeCategorymatchingKnowledgeCategory"
+  );
   if (matchingKnowledgeCategory && childrenPath && fileName) {
     const { name: matchingCategoryName } = matchingKnowledgeCategory;
     const splitPath = childrenPath.split("/");
