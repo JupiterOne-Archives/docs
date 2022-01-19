@@ -249,7 +249,33 @@ export const procedureToKnowledgeCategory = async (
               ...editedCategory,
             };
             return tempProcedureWorkedOn;
+          } else {
+            let isReleaseNotes = false;
+            console.log("creatingnew!!!!!!");
+            if (
+              procedureWorkedOn.path &&
+              procedureWorkedOn.path.toLowerCase().indexOf("release-notes") !==
+                -1
+            ) {
+              isReleaseNotes = true;
+            }
+            const newReqData = {
+              name: tempProcedureWorkedOn.name,
+              parentID: previousknowledgeCategoryID,
+              knowledgeBaseID: isReleaseNotes ? 2 : 1,
+            };
+
+            const createdKnowledgeCategory = await createKnowledgeCategory(
+              httpClient,
+              newReqData
+            );
+
+            if (createdKnowledgeCategory) {
+              tempProcedureWorkedOn = createdKnowledgeCategory;
+              return tempProcedureWorkedOn;
+            }
           }
+          return tempProcedureWorkedOn;
         } catch (e) {
           logger.error(`EDIT ERROR - ${tempProcedureWorkedOn.path}\n ${e}`);
         }
