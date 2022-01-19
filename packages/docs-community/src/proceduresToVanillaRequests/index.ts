@@ -233,18 +233,25 @@ export const procedureToKnowledgeCategory = async (
         console.log("STTTARRRRT", tempProcedureWorkedOn, "HHHHHEERRRE");
         const requestForEdit = {
           parentID: previousknowledgeCategoryID,
+          name: tempProcedureWorkedOn.name,
+          knowledgeBaseID: tempProcedureWorkedOn.knowledgeBaseID,
         };
-        const editedCategory = await editKnowledgeCategory(
-          httpClient,
-          tempProcedureWorkedOn.knowledgeCategoryID,
-          requestForEdit
-        );
-        if (editedCategory) {
-          tempProcedureWorkedOn = {
-            ...tempProcedureWorkedOn,
-            ...editedCategory,
-          };
-          return tempProcedureWorkedOn;
+        try {
+          const editedCategory = await editKnowledgeCategory(
+            httpClient,
+            tempProcedureWorkedOn.knowledgeCategoryID,
+            requestForEdit
+          );
+          console.log("EDIT RETURN");
+          if (editedCategory) {
+            tempProcedureWorkedOn = {
+              ...tempProcedureWorkedOn,
+              ...editedCategory,
+            };
+            return tempProcedureWorkedOn;
+          }
+        } catch (e) {
+          logger.error(`EDIT ERROR - ${tempProcedureWorkedOn.path}\n ${e}`);
         }
       }
 
