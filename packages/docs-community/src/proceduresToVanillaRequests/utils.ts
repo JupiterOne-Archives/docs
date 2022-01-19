@@ -13,6 +13,18 @@ import {
   SUPPORTED_FILE_TYPE_EXTENTIONS,
 } from "../utils/constants";
 
+export type hasKnowledgeCategoryBeenMovedProps = {
+  knowledgeCategories: VanillaKnowledgeCategory[];
+  procedure: VanillaKnowledgeCategory;
+};
+
+export const hasKnowledgeCategoryBeenMoved = ({
+  knowledgeCategories,
+  procedure,
+}: hasKnowledgeCategoryBeenMovedProps): boolean => {
+  return true;
+};
+
 export const markdownToString = async (filePath?: string): Promise<string> => {
   // we also want to use this to see if the file got deleted! the git diff wont differenitate
   const fileLocation = path.join(
