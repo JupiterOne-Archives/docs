@@ -1,6 +1,6 @@
 # J1QL Tips and Tricks
 
-This guide contains tips and tricks that assist in creating J1QL queries in your account. If you haven't already, check out our [J1QL Tutorial](./tutorial-j1ql.md) as well as our [J1QL Language Specs](./jupiterOne-query-language.md) articles for helpful context.
+This guide contains tips and tricks that assist in creating J1QL queries in your account. If you haven't already, check out our [J1QL Tutorial](./tutorial-j1ql.md) as well as our [J1QL Language Specs](./jupiterOne-query-language.md) articles for helpful context. 
 
 Before creating your own query, we recommend starting with our wide-array of [pre-packaged questions](https://ask.us.jupiterone.io/), tweaking them as needed, then creating your own from scratch.
 
