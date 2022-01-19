@@ -242,7 +242,7 @@ export const procedureToKnowledgeCategory = async (
             tempProcedureWorkedOn.knowledgeCategoryID,
             requestForEdit
           );
-          console.log("EDIT RETURN");
+          console.log("EDIT RETURN", editedCategory);
           if (editedCategory) {
             tempProcedureWorkedOn = {
               ...tempProcedureWorkedOn,
