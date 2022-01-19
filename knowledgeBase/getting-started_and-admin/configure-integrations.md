@@ -8,6 +8,8 @@ Each integration may have a slightly different mechanism for authentication and 
 
 This video shows an example of how to configure an AWS integration.
 
+![](../assets/j1-aws-config-720p.gif)
+
 For details on other integrations, see the respective documentation under **Managed Integrations**.
 
 ## Other Data
