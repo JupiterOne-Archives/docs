@@ -50,6 +50,7 @@ export const addVanillaCategoryToProcedure = (
   return procedureTarget;
 };
 
+// singular
 export const addVanillaArticleInfoToProcedure = (
   procedure: VanillaArticle,
   vanillaArticles: VanillaArticle[]
@@ -64,7 +65,7 @@ export const addVanillaArticleInfoToProcedure = (
     procedureTarget = {
       ...procedure,
       name: procedure.name,
-      path:procedure.path,
+      path: procedure.path,
       knowledgeCategoryID: match[0].knowledgeCategoryID,
       articleID: match[0].articleID,
       locale: "en",
@@ -222,6 +223,8 @@ export const procedureToKnowledgeCategory = async (
   const directoryExistsResult = directoryExists(tempProcedureWorkedOn?.path);
   if (tempProcedureWorkedOn.knowledgeCategoryID !== null) {
     if (directoryExistsResult) {
+      // Edits
+      console.log("STTTARRRRT", tempProcedureWorkedOn, "HHHHHEERRRE");
       return tempProcedureWorkedOn;
     } else {
       // kCategories get handled for delete later
@@ -341,7 +344,6 @@ export const useProceduresForVanillaRequests = async (
     tempExistingKnowledgeCategoryInfo.push(procedureWorkedOn);
   }
   if (isArticleType(procedureWorkedOn)) {
-
     procedureWorkedOn = await procedureToArticle(
       httpClient,
       procedureWorkedOn,
