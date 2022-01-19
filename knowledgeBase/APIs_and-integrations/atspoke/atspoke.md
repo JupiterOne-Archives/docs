@@ -6,7 +6,7 @@
 - Map atSpoke users to employees in your JupiterOne account.
 - Maintain awareness of systems atSpoke is interacting with through webhooks.
 - Monitor changes to atSpoke users using JupiterOne alerts.
-- Correlate atSpoke request types and volume with other security events.
+- Correlate atSpoke request types and volume with other security events.s
 
 ## How it Works
 
