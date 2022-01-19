@@ -1,4 +1,4 @@
-# Add and Query enriched or modified properties 
+# Add Enriched or Modified Properties 
 
 JupiterOne allows users to *enrich* or add properties to a resource. JupiterOne also allows you to modify the existing properties of a resource. 
 
