@@ -20,13 +20,18 @@ import {
   deleteArticle,
   deleteEmptyCategories,
   editArticle,
+  editKnowledgeCategory,
   getAllArticles,
   getKnowedgeCategories,
   makeRequestsToChangeMarkdownReferences,
   removeSoloChildedCategories,
   uploadImageAndReturnUrl,
 } from "../VanillaAPI";
-import { directoryExists, getPreviousKnowledgeID } from "./utils";
+import {
+  directoryExists,
+  getPreviousKnowledgeID,
+  hasKnowledgeCategoryBeenMoved,
+} from "./utils";
 
 export const addVanillaCategoryToProcedure = (
   procedure: VanillaKnowledgeCategory,
@@ -216,15 +221,33 @@ export const procedureToArticle = async (
 export const procedureToKnowledgeCategory = async (
   httpClient: HttpClient,
   procedureWorkedOn: VanillaKnowledgeCategory,
-  previousknowledgeCategoryID: null | number
+  previousknowledgeCategoryID: null | number,
+  hasChangedParent: boolean
 ): Promise<VanillaKnowledgeCategory> => {
   let tempProcedureWorkedOn = { ...procedureWorkedOn };
 
   const directoryExistsResult = directoryExists(tempProcedureWorkedOn?.path);
   if (tempProcedureWorkedOn.knowledgeCategoryID !== null) {
     if (directoryExistsResult) {
-      // Edits
-      console.log("STTTARRRRT", tempProcedureWorkedOn, "HHHHHEERRRE");
+      if (hasChangedParent && previousknowledgeCategoryID) {
+        console.log("STTTARRRRT", tempProcedureWorkedOn, "HHHHHEERRRE");
+        const requestForEdit = {
+          parentID: previousknowledgeCategoryID,
+        };
+        const editedCategory = await editKnowledgeCategory(
+          httpClient,
+          tempProcedureWorkedOn.knowledgeCategoryID,
+          requestForEdit
+        );
+        if (editedCategory) {
+          tempProcedureWorkedOn = {
+            ...tempProcedureWorkedOn,
+            ...editedCategory,
+          };
+          return tempProcedureWorkedOn;
+        }
+      }
+
       return tempProcedureWorkedOn;
     } else {
       // kCategories get handled for delete later
@@ -336,10 +359,16 @@ export const useProceduresForVanillaRequests = async (
   );
 
   if (isKnowledgeCategoryType(procedureWorkedOn)) {
+    const hasChangedParent = hasKnowledgeCategoryBeenMoved({
+      proceduresWithVanillaInfo: existingknowledgeCategoryInfo,
+      procedure: procedureWorkedOn,
+    });
+
     procedureWorkedOn = await procedureToKnowledgeCategory(
       httpClient,
       procedureWorkedOn,
-      previousknowledgeCategoryID
+      previousknowledgeCategoryID,
+      hasChangedParent
     );
     tempExistingKnowledgeCategoryInfo.push(procedureWorkedOn);
   }

@@ -14,14 +14,36 @@ import {
 } from "../utils/constants";
 
 export type hasKnowledgeCategoryBeenMovedProps = {
-  knowledgeCategories: VanillaKnowledgeCategory[];
+  proceduresWithVanillaInfo: (VanillaKnowledgeCategory | VanillaArticle)[];
   procedure: VanillaKnowledgeCategory;
 };
 
 export const hasKnowledgeCategoryBeenMoved = ({
-  knowledgeCategories,
+  proceduresWithVanillaInfo,
   procedure,
 }: hasKnowledgeCategoryBeenMovedProps): boolean => {
+  const knowledgeCategoriesArray = proceduresWithVanillaInfo.filter(
+    isKnowledgeCategoryType
+  );
+  const { parentID, childrenPath, fileName } = procedure;
+  const [matchingKnowledgeCategory] = knowledgeCategoriesArray.filter(
+    (k) => k.knowledgeCategoryID === parentID
+  );
+  if (matchingKnowledgeCategory && childrenPath && fileName) {
+    const { name: matchingCategoryName } = matchingKnowledgeCategory;
+    const splitPath = childrenPath.split("/");
+    const indexOfProcedureInPath = splitPath.indexOf(fileName);
+    const partentFileName = splitPath[indexOfProcedureInPath - 1];
+
+    if (partentFileName) {
+      const nameOfProceduresParent = createDisplayName(partentFileName);
+      console.log(matchingCategoryName, "DING", nameOfProceduresParent);
+      if (matchingCategoryName === nameOfProceduresParent) {
+        return false;
+      }
+    }
+  }
+
   return true;
 };
 
