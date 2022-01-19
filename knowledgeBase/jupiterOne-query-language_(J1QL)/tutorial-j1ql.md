@@ -200,12 +200,17 @@ By default, the packaged queries provided by J1, as seen in the Query Library fr
 - `AccountName`
 - `Production`
 
-All custom tags ingested by J1 integrations are prefixed with
-`tag.<TagName>`, therefore. you must use the tags this way in the query.
+All custom tags ingested by J1 integrations are prefixed with `tag.<TagName>`, therefore. you must use the tags this way in the query.
 
 The `Classification` and `Owner` tags are automatically captured as properties so J1 can use them directly in the query without the `tag.` prefix, in all lower case: `classification = '...'` or `owner= '...'`.
 
 J1 can add the `tag.AccountName` (`string`) and `tag.Production` (`boolean`) tags as part of the advanced options in each integration configuration.
+
+More information about tagging resources is in:
+
+- [Add Enriched or Modified Properties](../asset-management/enriched-or-modified-props.md)
+- [Query for Enriched or Modified Properties](./adv-example-query-enriched-or-modified.md)
+- [Query Resources Without Specific Tags](./adv-example-resources-not-tagged.md)
 
 ### Network Resources and Configurations
 

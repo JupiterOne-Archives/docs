@@ -4,9 +4,7 @@
 
 > Therefore, the upload file should always include the **complete** set of entities or relationships within the defined `scope` to avoid unintended data deletion.
 
-> In the UI, users are prompted to select/enter a `scope` when uploading a file.
->
-> Via the API, `scope` is provided when starting a synchronization job.
+> In the UI, users are prompted to select/enter a `scope` when uploading a file.  In the API, `scope` is provided when starting a synchronization job.
 
 > **For example:**
 

@@ -1,4 +1,4 @@
-# Query resources that do _not_ have a certain tag
+# Query Resources Without Specific Tags
 
 Tagging is highly recommended for resources in cloud environments such as AWS, Azure, and GCP. For example, it is common to use tags to track `cost-center` or `project`. And it is recommended to assign `classification` tag to all databases and data stores (e.g. buckets, blobs, disks).
 
