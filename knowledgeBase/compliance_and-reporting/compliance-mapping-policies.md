@@ -47,4 +47,4 @@ compliance specifications, and then uploaded to the JupiterOne Compliance app:
 
 ### JSON Structure
 
-See the schema documented [here](../APIs_and-integrations/policies-compliance-schema.md).
+See the schema documented [here](../APIs_and-integrations/APIs/policies-compliance-schema.md).
