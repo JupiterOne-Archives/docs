@@ -26,6 +26,13 @@ pipeline {
         sh 'jupiterone-build'
 
 
+          withCredentials([
+            string(credentialsId: 'VANILLA_PROD_ENV_TOKEN', variable: 'TOKEN')
+                ]) {
+                  sh '''
+                    TOKEN="$TOKEN" targetVanillaEnv=prod yarn start
+                  '''
+                }
       }
 
     }
