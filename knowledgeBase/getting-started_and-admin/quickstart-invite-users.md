@@ -6,7 +6,7 @@ Adding others to your J1 account/organization is done using a simple invitation 
 
 2. In the user groups modal, click **Add Group** and enter a name for the new group and, optionally, a description.
 
-3. Click  ![](../assets/icons/add-user.png) **Add User** and enter the email address of the person you want to invite.
+3. Click ![](../assets/icons/add-user.png) **Add User** and enter the email address of the person you want to invite.
 
 4. Click ![](../assets/icons/send.png) **Send Invitation**.
 
@@ -16,5 +16,4 @@ Adding others to your J1 account/organization is done using a simple invitation 
 
     - You must be a member of the Administrators group to be able to invite other users.
 
-    - If you are an Enterprise customer and use SAML SSO, see the instructions [here](./configure-sso-integration.md).
-
+    - If you are an Enterprise customer and use SAML SSO, see the instructions [here](../APIs_and-integrations/APIs/identity_and-access-management/configure-sso-integration.md).

@@ -331,7 +331,7 @@ export const createArticle = async (
         ) {
           return {
             ...article.data,
-            path:bodyOfRequest.path,
+            path: bodyOfRequest.path,
             referencesNeedingUpdatesInMarkdown,
             procedureType: ProcedureTypeEnum.Article,
           };
@@ -395,10 +395,11 @@ export const editArticle = async (
           referencesNeedingUpdatesInMarkdown.length
         ) {
           return {
+            ...edits,
             ...article.data,
             referencesNeedingUpdatesInMarkdown,
             procedureType: ProcedureTypeEnum.Article,
-            path:edits.path
+            path: edits.path,
           };
         }
       }
@@ -416,16 +417,21 @@ export const makeRequestsToChangeMarkdownReferences = async (
   client: HttpClient
 ) => {
   const handledArticles = [];
+
   for (let a = 0; a < articlesNeedingLinkUpdates.length; a++) {
     const { articleID } = articlesNeedingLinkUpdates[a];
 
     if (articlesNeedingLinkUpdates[a].body && articleID !== null) {
       const editResponse = await editArticle(client, articleID, {
         body: articlesNeedingLinkUpdates[a].body,
-        format: "html",
       });
       if (editResponse) {
-        handledArticles.push(editResponse);
+        handledArticles.push({
+          ...articlesNeedingLinkUpdates[a],
+          ...editResponse,
+        });
+      } else {
+        handledArticles.push(articlesNeedingLinkUpdates[a]);
       }
     }
   }
@@ -455,7 +461,7 @@ export const uploadImageAndReturnUrl = async (
 ): Promise<string> => {
   const httpClient = new HttpClient();
   const form = new FormData();
-  const mediaLocation = imagePath.replace(/((\.\.\/){1,})/g,'')
+  const mediaLocation = imagePath.replace(/((\.\.\/){1,})/g, "");
   const mediaLocationChopped = imagePath.split("/");
   const imageName = mediaLocationChopped[mediaLocationChopped.length - 1];
   const fileLocation = path.join(
@@ -504,7 +510,7 @@ export const deleteEmptyCategories = async (client: HttpClient) => {
     }
   }
 };
-
+// This was made to remove categories when they only had one child. It was then asked to go back the way it started. Leaving for now in case its requested again
 export const removeSoloChildedCategories = async (client: HttpClient) => {
   const knowledgeCategories = await getKnowedgeCategories(client);
   const knowledgeCategoriesWithOneArticleChild = knowledgeCategories
