@@ -1,6 +1,6 @@
 # J1QL Tips and Tricks
 
-This guide contains tips and tricks that assist in creating J1QL queries in your account. If you haven't already, check out our [J1QL Tutorial](./tutorial-j1ql.md) as well as our [J1QL Language Specs](./jupiterOne-query-language.md) articles for helpful context. 
+This guide contains tips and tricks that assist in creating J1QL queries in your account. If you haven't already, check out our [J1QL Tutorial](./tutorial-j1ql.md) as well as our [J1QL Language Specs](./jupiterOne-query-language.md) articles for helpful context.
 
 Before creating your own query, we recommend starting with our wide-array of [pre-packaged questions](https://ask.us.jupiterone.io/), tweaking them as needed, then creating your own from scratch.
 
@@ -8,22 +8,22 @@ Before creating your own query, we recommend starting with our wide-array of [pr
 
 `WITH` and `WHERE` are both keywords used to filter the results of your query. The filtering of the results happens either pre-traversal or post-traversal. `WITH` is used for pre-traversal filtering and `WHERE` is used for post-traversal filtering.
 
-In a *pre-traversal* filter, the nodes specified in the query are filtered down before traversing child nodes and finding matching query results.
+In a _pre-traversal_ filter, the nodes specified in the query are filtered down before traversing child nodes and finding matching query results.
 
-In a *post-traversal* filter, the entire graph is traversed to find potential matching query results before filtering occurs on the resulting graph to produce the final query result.
+In a _post-traversal_ filter, the entire graph is traversed to find potential matching query results before filtering occurs on the resulting graph to produce the final query result.
 
 **TIP** Use `WITH` over `WHERE` when possible as the `WITH` operation is faster and more efficient.
 
 ### WITH
 
-1. `WITH` is used to filter entity **node** properties **pre-traversal**. 
+1. `WITH` is used to filter entity **node** properties **pre-traversal**.
 
 Take the following example.
 
 ```j1ql
-Find User with name~='john' 
+Find User with name~='john'
   that HAS UserGroup
-  that ASSIGNED AccessRole 
+  that ASSIGNED AccessRole
   that (ALLOWS|TRUSTS) Account
 ```
 
@@ -38,10 +38,10 @@ The query will find a filtered list of users with a name property that contains 
 Let's continue with the previous `WITH` example.
 
 ```j1ql
-Find User as u1 
-  that HAS UserGroup 
-  that ASSIGNED AccessRole 
-  that ASSIGNED User as u2 
+Find User as u1
+  that HAS UserGroup
+  that ASSIGNED AccessRole
+  that ASSIGNED User as u2
 WHERE u1.name=u2.name
 ```
 
@@ -86,7 +86,7 @@ Variable placeholder syntax cannot be used directly in the search bar. There are
 
 1. Save a New Question
 
-- Type a query into the search bar and enter a *temporary* value
+- Type a query into the search bar and enter a _temporary_ value
 - Click the star icon to save
 - Type in a Title that describes the query (this is the question name)
 - Edit the query, replacing the temporary value with `{{your variable placeholder name here}}`
@@ -97,7 +97,7 @@ Variable placeholder syntax cannot be used directly in the search bar. There are
 2. Duplicate an Existing Question
 
 - Click on the Library icon
-- Find an existing question with query elements similar to your new query  
+- Find an existing question with query elements similar to your new query
 - Click on the Duplicate icon
 - Update the Title
 - Update the existing query and add `{{your variable placeholder name here}}`
@@ -116,7 +116,7 @@ Leveraging the graph in JupiterOne to gain context on your cyber security enviro
 
 Check out the [Data Model - Overview](../jupiterOne-data-model/jupiterone-data-model.md) document for a comprehensive list of JupiterOne entities, their properties, and the relationships between entities. The graph is a tool that can be used when these details are unknown.
 
-When traversing the graph from a starting node, you will be able to see and expand every related node. For a comprehensive list of all entities and relationships for a specific integration, see the corresponding [Integration Guide](../APIs_and-integrations/faqs-integrations.md).
+When traversing the graph from a starting node, you will be able to see and expand every related node. For a comprehensive list of all entities and relationships for a specific integration, see the corresponding [Integration Guide](../APIs_and-integrations/other/faqs-integrations.md).
 
 **TIP** When you are in doubt about which verb to use to traverse an edge, use the catch-all verb `RELATES TO`, which graphs out related entities and the relationships between them. However, you should not use `RELATES TO` in your final/saved query because the query will run slow having to check all nodes as possible children instead of just those connected by a specific edge verb. See the following example.
 
@@ -130,13 +130,13 @@ Find User that RELATES TO *
 
 ![j1ql-custom-query-landing-bar](../assets/j1ql-custom-query-landing-bar.png)
 
-2. Click on the specific result you are interested in. 
+2. Click on the specific result you are interested in.
 
 3. Click on the vertical ellipses to open additional actions then click **Open in Graph**.
 
 ![j1ql-custom-query-result](../assets/j1ql-custom-query-result.png)
 
-A new browser tab will be opened and will run a query that returns a graph showing everything related to or mapped to the entity via a relationship. 
+A new browser tab will be opened and will run a query that returns a graph showing everything related to or mapped to the entity via a relationship.
 
 4. Click the queried entity and you will see the relationship verbs for each mapped entity.
 
@@ -175,12 +175,12 @@ From here we see several additional nodes. We can select a path that we are inte
 
 In the following example we traversed from a User to a UserGroup to an AccessRole to an Account. Written out more specifically using types we have an okta_user to an okta_user_group to an aws_iam_role to an aws_account.
 
-Our final query could be something similar to the following example, adding in filters, sorting, pagination, etc. as needed. See [J1QL Language Specs](./jupiterOne-query-language.md) to understand the query language features. 
+Our final query could be something similar to the following example, adding in filters, sorting, pagination, etc. as needed. See [J1QL Language Specs](./jupiterOne-query-language.md) to understand the query language features.
 
 ```j1ql
-Find User 
-  that HAS UserGroup 
-  that ASSIGNED AccessRole 
+Find User
+  that HAS UserGroup
+  that ASSIGNED AccessRole
   that TRUSTS Account
 ```
 
