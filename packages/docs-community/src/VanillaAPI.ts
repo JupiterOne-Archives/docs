@@ -417,6 +417,7 @@ export const makeRequestsToChangeMarkdownReferences = async (
   client: HttpClient
 ) => {
   const handledArticles = [];
+
   for (let a = 0; a < articlesNeedingLinkUpdates.length; a++) {
     const { articleID } = articlesNeedingLinkUpdates[a];
 

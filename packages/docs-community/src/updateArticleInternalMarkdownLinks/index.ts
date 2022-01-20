@@ -30,6 +30,7 @@ export const updateArticleInternalMarkdownLinks = async (
       let references: string[] =
         articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown || [];
       let secondTime = false;
+
       if (
         articleUndergoingChanges?.referencesToTryAgain !== undefined &&
         articleUndergoingChanges?.referencesToTryAgain &&
@@ -63,6 +64,7 @@ export const updateArticleInternalMarkdownLinks = async (
                 articleUrl,
                 secondTime
               );
+
             if (existingMatches) {
               if (articleUndergoingChanges.referencesToTryAgain) {
                 articleUndergoingChanges.referencesToTryAgain.push(
@@ -78,6 +80,18 @@ export const updateArticleInternalMarkdownLinks = async (
             }
 
             articleUndergoingChanges.body = bodyAlterations;
+          }
+        } else {
+          if (
+            articleUndergoingChanges.referencesToTryAgain == undefined ||
+            []
+          ) {
+            if (articleUndergoingChanges.referencesToTryAgain == undefined) {
+              articleUndergoingChanges.referencesToTryAgain = [];
+            }
+            if (articleUndergoingChanges.referencesToTryAgain) {
+              articleUndergoingChanges.referencesToTryAgain.push(references[r]);
+            }
           }
         }
       }
