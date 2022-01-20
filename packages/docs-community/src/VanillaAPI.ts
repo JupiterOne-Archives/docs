@@ -510,7 +510,7 @@ export const deleteEmptyCategories = async (client: HttpClient) => {
     }
   }
 };
-
+// This was made to remove categories when they only had one child. It was then asked to go back the way it started. Leaving for now in case its requested again
 export const removeSoloChildedCategories = async (client: HttpClient) => {
   const knowledgeCategories = await getKnowedgeCategories(client);
   const knowledgeCategoriesWithOneArticleChild = knowledgeCategories

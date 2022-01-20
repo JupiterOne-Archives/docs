@@ -24,7 +24,6 @@ import {
   getAllArticles,
   getKnowedgeCategories,
   makeRequestsToChangeMarkdownReferences,
-  removeSoloChildedCategories,
   uploadImageAndReturnUrl,
 } from "../VanillaAPI";
 import {
@@ -500,7 +499,7 @@ export const proceduresToVanillaRequests = async (
     logger.info(
       `PROCEDURES processed: ${JSON.stringify(finishedProcedures, null, 2)}`
     );
-    await removeSoloChildedCategories(httpClient);
+
     await deleteEmptyCategories(httpClient);
     return finishedProcedures;
   }
