@@ -92,7 +92,7 @@ The query language is case-insensitive except for the following:
 - `lowercase` asset keywords after `Find` and the `{relationship verb}`  search for assets of that type. An asset type with more than one word is generally in `snake_case` (for example, `github_repo`).
 - Asset property names and values, and alias names defined as part of the query, are case-sensitive. 
 
-Read the [J1QL query tutorial](../jupiterOne-query-language_(J1QL)/tutorial-j1ql.md) and the [complete J1QL documentation](../jupiterOne-query-language_(J1QL)/jupiterone-query-language.md) for more advanced examples.
+Read the [J1QL query tutorial](../jupiterOne-query-language_(J1QL)/tutorial-j1ql.md) and the [complete J1QL documentation](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md) for more advanced examples.
 
 ## Combining Full-Text Search with J1QL
 

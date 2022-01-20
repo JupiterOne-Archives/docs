@@ -13,6 +13,40 @@ import {
   SUPPORTED_FILE_TYPE_EXTENTIONS,
 } from "../utils/constants";
 
+export type hasKnowledgeCategoryBeenMovedProps = {
+  proceduresWithVanillaInfo: (VanillaKnowledgeCategory | VanillaArticle)[];
+  procedure: VanillaKnowledgeCategory;
+};
+
+export const hasKnowledgeCategoryBeenMoved = ({
+  proceduresWithVanillaInfo,
+  procedure,
+}: hasKnowledgeCategoryBeenMovedProps): boolean => {
+  const knowledgeCategoriesArray = proceduresWithVanillaInfo.filter(
+    isKnowledgeCategoryType
+  );
+  const { parentID, childrenPath, fileName } = procedure;
+  const [matchingKnowledgeCategory] = knowledgeCategoriesArray.filter(
+    (k) => k.knowledgeCategoryID === parentID
+  );
+
+  if (matchingKnowledgeCategory && childrenPath && fileName) {
+    const { name: matchingCategoryName } = matchingKnowledgeCategory;
+    const splitPath = childrenPath.split("/");
+    const indexOfProcedureInPath = splitPath.indexOf(fileName);
+    const partentFileName = splitPath[indexOfProcedureInPath - 1];
+
+    if (partentFileName) {
+      const nameOfProceduresParent = createDisplayName(partentFileName);
+      if (matchingCategoryName === nameOfProceduresParent) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+};
+
 export const markdownToString = async (filePath?: string): Promise<string> => {
   // we also want to use this to see if the file got deleted! the git diff wont differenitate
   const fileLocation = path.join(

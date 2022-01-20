@@ -120,24 +120,28 @@ export default class HttpClient {
     method: RESTTypes;
     options?: AxiosRequestConfig;
   }) {
-    return this.debounceRequests(
-      axios
-        .request({
-          url: this.buildUrl(relativeUrl),
-          headers: this.buildHeaders(headers),
-          data: body,
-          method,
-          ...options,
-        })
-        .catch((e) => {
-          if (e?.response?.status === 403) {
-            logger.error("Error from Vanilla Auth! Check the TOKEN");
-            return Promise.reject(e);
-          } else {
-            return Promise.reject(e);
-          }
-        })
-    );
+    try {
+      return this.debounceRequests(
+        axios
+          .request({
+            url: this.buildUrl(relativeUrl),
+            headers: this.buildHeaders(headers),
+            data: body,
+            method,
+            ...options,
+          })
+          .catch((e) => {
+            if (e?.response?.status === 403) {
+              logger.error("Error from Vanilla Auth! Check the TOKEN");
+              return Promise.reject(e);
+            } else {
+              return Promise.reject(e);
+            }
+          })
+      );
+    } catch (e) {
+      return e;
+    }
   }
 }
 
