@@ -4,7 +4,7 @@ JupiterOne supports the bulk upload of entity and relationship data via a JSON f
 
 ## Data Format
 
-For the bulk upload process to succeed, the file must adhere to the bulk upload schema defined [here](../APIs_and-integrations/bulk-upload-schema.md).
+For the bulk upload process to succeed, the file must adhere to the bulk upload schema defined [here](../APIs_and-integrations/APIs/bulk-upload-schema.md).
 
 ## Guide
 
