@@ -230,11 +230,20 @@ export const procedureToKnowledgeCategory = async (
   if (tempProcedureWorkedOn.knowledgeCategoryID !== null) {
     if (directoryExistsResult) {
       if (hasChangedParent && previousknowledgeCategoryID) {
-        console.log("STTTARRRRT", tempProcedureWorkedOn, "HHHHHEERRRE");
+        let isReleaseNotes = false;
+
+        if (
+          procedureWorkedOn.path &&
+          procedureWorkedOn.path.toLowerCase().indexOf("release-notes") !== -1
+        ) {
+          isReleaseNotes = true;
+        }
         const requestForEdit = {
           parentID: previousknowledgeCategoryID,
           name: tempProcedureWorkedOn.name,
-          knowledgeBaseID: tempProcedureWorkedOn.knowledgeBaseID,
+          knowledgeBaseID: isReleaseNotes
+            ? 2
+            : tempProcedureWorkedOn.knowledgeBaseID,
         };
         try {
           const editedCategory = await editKnowledgeCategory(
@@ -242,7 +251,7 @@ export const procedureToKnowledgeCategory = async (
             tempProcedureWorkedOn.knowledgeCategoryID,
             requestForEdit
           );
-          console.log("EDIT RETURN", editedCategory);
+
           if (editedCategory) {
             tempProcedureWorkedOn = {
               ...tempProcedureWorkedOn,
@@ -250,15 +259,6 @@ export const procedureToKnowledgeCategory = async (
             };
             return tempProcedureWorkedOn;
           } else {
-            let isReleaseNotes = false;
-            console.log("creatingnew!!!!!!");
-            if (
-              procedureWorkedOn.path &&
-              procedureWorkedOn.path.toLowerCase().indexOf("release-notes") !==
-                -1
-            ) {
-              isReleaseNotes = true;
-            }
             const newReqData = {
               name: tempProcedureWorkedOn.name,
               parentID: previousknowledgeCategoryID,
@@ -425,7 +425,7 @@ export const useProceduresForVanillaRequests = async (
 
 export const proceduresToVanillaRequests = async (
   procedures: (VanillaArticle | VanillaKnowledgeCategory)[]
-) => {
+): Promise<(VanillaArticle | VanillaKnowledgeCategory)[]> => {
   if (procedures && procedures.length) {
     const httpClient = new HttpClient();
     logger.info(`Getting knowledgeCategories`);
@@ -474,6 +474,14 @@ export const proceduresToVanillaRequests = async (
       articlesNeedingLinkUpdates,
       httpClient
     );
+    //run again for internal links that were not added due to article not existing yet
+    const hasChangesStillNeeded = updatesToInternalLinks.filter(
+      (a) => a.referencesToTryAgain
+    );
+    console.log("HAS CHANGES STILL", hasChangesStillNeeded);
+    if (hasChangesStillNeeded && hasChangesStillNeeded.length) {
+      return await proceduresToVanillaRequests(hasChangesStillNeeded);
+    }
     logger.info(
       `UpdatesToInternalLinks processed: ${JSON.stringify(
         updatesToInternalLinks,

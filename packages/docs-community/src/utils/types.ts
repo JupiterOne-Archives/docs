@@ -130,6 +130,7 @@ export interface VanillaArticle {
   requestCompleted?: boolean;
   procedureType: ProcedureTypeEnum;
   referencesNeedingUpdatesInMarkdown?: string[];
+  referencesToTryAgain?: string[] | false;
 }
 export interface ArticleBreadCrumbs {
   name: string;

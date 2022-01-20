@@ -12,21 +12,24 @@ import {
   gearImage,
   markdownAsString,
   markdownAsStringNOImages,
-  markdownAsStringWithInternalLinks,markdownAsStringWithInternalLinksCase
+  markdownAsStringWithInternalLinks,
+  markdownAsStringWithInternalLinksCase,
 } from "./mockMarkdown";
 describe("linksAndMediaHandlers", () => {
   describe("modifyBodyLinkForImageForReturnedArticles", () => {
     it("returns a modified string", () => {
       const replacement =
         "https://jupiterone.vanillastaging.com/kb/articles/545-catalog";
-      const body = `<li><a rel=\"nofollow\" href=\"../getting-started_and-admin/catalog.md\">look at this other doc</a></li>`;
+      const body = `<li><a rel=\"nofollow\" href=\"../getting-started_and-admin/catalog.md">look at this other doc</a></li>`;
       const expected = `<li><a rel=\"nofollow\" href="https://jupiterone.vanillastaging.com/kb/articles/545-catalog">look at this other doc</a></li>`;
-      const actual = modifyBodyLinkForImageForReturnedArticles(
-        body,
-        "../getting-started_and-admin/catalog.md",
-        replacement
-      );
-      expect(actual).toEqual(expected);
+      const { bodyAlterations, existingMatches } =
+        modifyBodyLinkForImageForReturnedArticles(
+          body,
+          "../getting-started_and-admin/catalog.md",
+          replacement
+        );
+      expect(bodyAlterations).toEqual(expected);
+      expect(existingMatches).toEqual(false);
     });
   });
   describe("getMarkdownImageSrcs", () => {
