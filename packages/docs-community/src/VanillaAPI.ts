@@ -331,7 +331,7 @@ export const createArticle = async (
         ) {
           return {
             ...article.data,
-            path:bodyOfRequest.path,
+            path: bodyOfRequest.path,
             referencesNeedingUpdatesInMarkdown,
             procedureType: ProcedureTypeEnum.Article,
           };
@@ -395,10 +395,11 @@ export const editArticle = async (
           referencesNeedingUpdatesInMarkdown.length
         ) {
           return {
+            ...edits,
             ...article.data,
             referencesNeedingUpdatesInMarkdown,
             procedureType: ProcedureTypeEnum.Article,
-            path:edits.path
+            path: edits.path,
           };
         }
       }
@@ -422,10 +423,11 @@ export const makeRequestsToChangeMarkdownReferences = async (
     if (articlesNeedingLinkUpdates[a].body && articleID !== null) {
       const editResponse = await editArticle(client, articleID, {
         body: articlesNeedingLinkUpdates[a].body,
-        format: "html",
       });
       if (editResponse) {
         handledArticles.push(editResponse);
+      } else {
+        handledArticles.push(articlesNeedingLinkUpdates[a]);
       }
     }
   }
@@ -455,7 +457,7 @@ export const uploadImageAndReturnUrl = async (
 ): Promise<string> => {
   const httpClient = new HttpClient();
   const form = new FormData();
-  const mediaLocation = imagePath.replace(/((\.\.\/){1,})/g,'')
+  const mediaLocation = imagePath.replace(/((\.\.\/){1,})/g, "");
   const mediaLocationChopped = imagePath.split("/");
   const imageName = mediaLocationChopped[mediaLocationChopped.length - 1];
   const fileLocation = path.join(

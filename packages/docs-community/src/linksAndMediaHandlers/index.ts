@@ -36,12 +36,17 @@ export const modifyBodyLinkForImage = (
   );
   return bodyAlterations;
 };
+export type modifyBodyLinkForImageForReturnedArticlesReturn = {
+  bodyAlterations: string;
+  existingMatches: string | false;
+};
 //return.body gives back a html type body string
 export const modifyBodyLinkForImageForReturnedArticles = (
   body: string,
   matchToBeReplaced: string,
-  replacement: string
-): string => {
+  replacement: string,
+  secondTime?: boolean
+): modifyBodyLinkForImageForReturnedArticlesReturn => {
   let bodyAlterations = `${body}`;
   const slashRegex = new RegExp("/", "gi");
   const matchToBeReplacedSanitized = matchToBeReplaced
@@ -57,8 +62,19 @@ export const modifyBodyLinkForImageForReturnedArticles = (
     markdownAssetRegularExpression,
     `${replacement}`
   );
-
-  return bodyAlterations;
+  if (secondTime) {
+    return {
+      bodyAlterations,
+      existingMatches: false,
+    };
+  }
+  const existingMatches = bodyAlterations.match(markdownAssetRegularExpression);
+  console.log(existingMatches, "EXISTING MATCHES");
+  return {
+    bodyAlterations,
+    existingMatches:
+      existingMatches && existingMatches.length ? matchToBeReplaced : false,
+  };
 };
 
 export const getMarkdownImageSrcs = (markdownAsString: string): string[] => {
@@ -94,16 +110,16 @@ export const getFullMarkdownReferencePathMatches = (
   ) {
     matches.push(array1[0]);
   }
-  const editedMatches= matches.map((m) => {
+  const editedMatches = matches.map((m) => {
     let matchEdit = m.substring(m.indexOf('"') + 1);
     if (matchEdit.indexOf('"') !== -1) {
       matchEdit = matchEdit.substring(0, matchEdit.length - 1);
     }
-   
+
     return matchEdit;
   });
 
-  return editedMatches.filter((m:string)=>m[0]==='.')
+  return editedMatches.filter((m: string) => m[0] === ".");
 };
 
 export const getArticleNameFromReference = async (

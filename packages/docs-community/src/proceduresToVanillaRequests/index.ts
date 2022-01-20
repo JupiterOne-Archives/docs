@@ -426,7 +426,7 @@ export const useProceduresForVanillaRequests = async (
 
 export const proceduresToVanillaRequests = async (
   procedures: (VanillaArticle | VanillaKnowledgeCategory)[]
-) => {
+): Promise<(VanillaArticle | VanillaKnowledgeCategory)[]> => {
   if (procedures && procedures.length) {
     const httpClient = new HttpClient();
     logger.info(`Getting knowledgeCategories`);
@@ -475,6 +475,14 @@ export const proceduresToVanillaRequests = async (
       articlesNeedingLinkUpdates,
       httpClient
     );
+    //run again for internal links that were not added due to article not existing yet
+    const hasChangesStillNeeded = updatesToInternalLinks.filter(
+      (a) => a.referencesToTryAgain
+    );
+    console.log(hasChangesStillNeeded, "CHANGES STILL NEEDED");
+    if (hasChangesStillNeeded && hasChangesStillNeeded.length) {
+      return await proceduresToVanillaRequests(hasChangesStillNeeded);
+    }
     logger.info(
       `UpdatesToInternalLinks processed: ${JSON.stringify(
         updatesToInternalLinks,
