@@ -478,7 +478,7 @@ export const proceduresToVanillaRequests = async (
     const hasChangesStillNeeded = updatesToInternalLinks.filter(
       (a) => a.referencesToTryAgain
     );
-
+    console.log("HAS CHANGES STILL", hasChangesStillNeeded);
     if (hasChangesStillNeeded && hasChangesStillNeeded.length) {
       return await proceduresToVanillaRequests(hasChangesStillNeeded);
     }
