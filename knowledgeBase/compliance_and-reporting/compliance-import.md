@@ -13,7 +13,7 @@ See [this GitHub repository](https://github.com/JupiterOne/security-policy-templ
 
 ## JSON Structure
 
-See the schema documented [here](../APIs_and-integrations/APIs/policies-compliance-schema.md).
+See the schema documented [here](../APIs_and-integrations/policies-compliance-schema.md).
 
 ## CSV Import
 
