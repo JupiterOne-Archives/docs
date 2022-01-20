@@ -426,7 +426,10 @@ export const makeRequestsToChangeMarkdownReferences = async (
         body: articlesNeedingLinkUpdates[a].body,
       });
       if (editResponse) {
-        handledArticles.push(editResponse);
+        handledArticles.push({
+          ...articlesNeedingLinkUpdates[a],
+          ...editResponse,
+        });
       } else {
         handledArticles.push(articlesNeedingLinkUpdates[a]);
       }
