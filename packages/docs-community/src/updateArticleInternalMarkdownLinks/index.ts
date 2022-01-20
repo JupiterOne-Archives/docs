@@ -27,8 +27,19 @@ export const updateArticleInternalMarkdownLinks = async (
       articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown?.length &&
       articleUndergoingChanges.body !== null
     ) {
-      const references =
+      let references: string[] =
         articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown || [];
+      let secondTime = false;
+
+      if (
+        articleUndergoingChanges?.referencesToTryAgain !== undefined &&
+        articleUndergoingChanges?.referencesToTryAgain &&
+        articleUndergoingChanges?.referencesToTryAgain.length
+      ) {
+        references = articleUndergoingChanges?.referencesToTryAgain;
+        articleUndergoingChanges.referencesToTryAgain = false;
+        secondTime = true;
+      }
       for (let r = 0; r < references.length; r++) {
         const articleName = await getArticleNameFromReference(
           references[r],
@@ -46,13 +57,41 @@ export const updateArticleInternalMarkdownLinks = async (
             existingArticleMatches[0]?.url || "doesNotExist";
 
           if (articleUndergoingChanges.body !== null && articleUrl) {
-            const changes = modifyBodyLinkForImageForReturnedArticles(
-              articleUndergoingChanges.body || "",
-              references[r],
-              articleUrl
-            );
+            const { bodyAlterations, existingMatches } =
+              modifyBodyLinkForImageForReturnedArticles(
+                articleUndergoingChanges.body || "",
+                references[r],
+                articleUrl,
+                secondTime
+              );
 
-            articleUndergoingChanges.body = changes;
+            if (existingMatches) {
+              if (articleUndergoingChanges.referencesToTryAgain) {
+                articleUndergoingChanges.referencesToTryAgain.push(
+                  existingMatches
+                );
+              } else {
+                articleUndergoingChanges.referencesToTryAgain = [
+                  existingMatches,
+                ];
+              }
+            } else {
+              articleUndergoingChanges.referencesToTryAgain = false;
+            }
+
+            articleUndergoingChanges.body = bodyAlterations;
+          }
+        } else {
+          if (
+            articleUndergoingChanges.referencesToTryAgain == undefined ||
+            []
+          ) {
+            if (articleUndergoingChanges.referencesToTryAgain == undefined) {
+              articleUndergoingChanges.referencesToTryAgain = [];
+            }
+            if (articleUndergoingChanges.referencesToTryAgain) {
+              articleUndergoingChanges.referencesToTryAgain.push(references[r]);
+            }
           }
         }
       }

@@ -5,6 +5,7 @@
 - MERGE to `vanilla-staging` will make changes to `https://jupiterone.vanillastaging.com/`
 - MERGE to `main` will make changes to `https://jupiterone.vanillacommunities.com/`
 - knowledgeBase/Release-Notes Is its own KNOWLEDGEBASE - anything other than `/assets` within this directory will create corresponding items in the knowledgeBase 'Release Notes' which is seperate from the docs
+- `When you move a file or folder, make sure to change any links TO that file/folder from other markdown files.`
 
 ### To 'Refresh' vanilla staging and/or production
 
@@ -189,4 +190,5 @@ Some questions and comments were posted [here](https://jptrone.slack.com/archive
 ![docs-community](./imagesForReadme/docs-community-flow.png)
 
 ## trigger slack
+
 test

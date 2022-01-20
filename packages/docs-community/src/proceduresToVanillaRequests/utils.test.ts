@@ -1,10 +1,223 @@
 import {
+  createKnowledgeCategoryMock,
   ProcedureTypeEnum,
   VanillaArticle,
   VanillaKnowledgeCategory,
 } from "../utils";
-import { getPreviousKnowledgeID, kCategoriesByPathSize } from "./utils";
+import {
+  getPreviousKnowledgeID,
+  hasKnowledgeCategoryBeenMoved,
+  kCategoriesByPathSize,
+} from "./utils";
+
 describe("utils", () => {
+  describe("hasKnowledgeCategoryBeenMoved", () => {
+    it("should return true if knowledgeCategory has moved", () => {
+      const notKCategoryPreviousParent = createKnowledgeCategoryMock({
+        parentID: 1,
+        knowledgeBaseID: 1,
+        name: "APIs and Integrations",
+        fileName: "APIs_and-integrations",
+        description: "",
+        knowledgeCategoryID: 512,
+        path: "APIs_and-integrations",
+        childrenPath: "APIs_and-integrations/atspoke/atspoke.md",
+        procedureType: ProcedureTypeEnum.Category,
+        sortChildren: null,
+        sort: 0,
+        insertUserID: 12,
+        dateInserted: "2021-12-30T23:31:35+00:00",
+        updateUserID: 12,
+        dateUpdated: "2022-01-19T19:25:56+00:00",
+        lastUpdatedArticleID: null,
+        lastUpdatedUserID: null,
+        articleCount: 71,
+        articleCountRecursive: 83,
+        childCategoryCount: 4,
+        url: "https://jupiterone.vanillastaging.com/kb/categories/512-apis-and-integrations",
+        foreignID: null,
+      });
+      const categoryProcedureWasNotMovedTo = createKnowledgeCategoryMock({
+        parentID: 512,
+        knowledgeBaseID: 1,
+        name: "Atspoke",
+        fileName: "atspoke",
+        description: "",
+        knowledgeCategoryID: 1157,
+        path: "APIs_and-integrations/atspoke",
+        childrenPath: "APIs_and-integrations/atspoke/atspoke.md",
+        procedureType: ProcedureTypeEnum.Category,
+        sortChildren: null,
+        sort: 3,
+        insertUserID: 12,
+        dateInserted: "2022-01-19T19:25:56+00:00",
+        updateUserID: 12,
+        dateUpdated: "2022-01-19T19:25:56+00:00",
+        lastUpdatedArticleID: null,
+        lastUpdatedUserID: null,
+        articleCount: 0,
+        articleCountRecursive: 0,
+        childCategoryCount: 0,
+        url: "https://jupiterone.vanillastaging.com/kb/categories/1157-atspoke",
+        foreignID: null,
+      });
+      const randomOtherKnowledgeCategory = createKnowledgeCategoryMock({});
+      const proceduresWithVanillaInfo: (
+        | VanillaKnowledgeCategory
+        | VanillaArticle
+      )[] = [
+        categoryProcedureWasNotMovedTo,
+        randomOtherKnowledgeCategory,
+        notKCategoryPreviousParent,
+      ];
+      const testProcedure: VanillaKnowledgeCategory =
+        createKnowledgeCategoryMock({
+          parentID: 512,
+          knowledgeBaseID: 1,
+          name: "Airwatch",
+          fileName: "airwatch",
+          description: "",
+          knowledgeCategoryID: 1157,
+          path: "APIs_and-integrations/airwatch",
+          childrenPath: "APIs_and-integrations/airwatch/airwatch.md",
+          procedureType: ProcedureTypeEnum.Category,
+          sortChildren: null,
+          sort: 3,
+          insertUserID: 12,
+          dateInserted: "2022-01-19T19:25:56+00:00",
+          updateUserID: 12,
+          dateUpdated: "2022-01-19T19:25:56+00:00",
+          lastUpdatedArticleID: null,
+          lastUpdatedUserID: null,
+          articleCount: 0,
+          articleCountRecursive: 0,
+          childCategoryCount: 0,
+          url: "https://jupiterone.vanillastaging.com/kb/categories/1157-airwatch",
+          foreignID: null,
+        });
+
+      const actual = hasKnowledgeCategoryBeenMoved({
+        proceduresWithVanillaInfo,
+        procedure: testProcedure,
+      });
+      expect(actual).toEqual(false);
+    });
+    it("should return false if knowledgeCategory has NOT moved", () => {
+      const notKCategoryPreviousParent = createKnowledgeCategoryMock({
+        parentID: 1,
+        knowledgeBaseID: 1,
+        name: "APIs and Integrations",
+        fileName: "APIs_and-integrations",
+        description: "",
+        knowledgeCategoryID: 512,
+        path: "APIs_and-integrations",
+        childrenPath: "APIs_and-integrations/atspoke/airwatch/airwatch.md",
+        procedureType: ProcedureTypeEnum.Category,
+        sortChildren: null,
+        sort: 0,
+        insertUserID: 12,
+        dateInserted: "2021-12-30T23:31:35+00:00",
+        updateUserID: 12,
+        dateUpdated: "2022-01-19T19:25:56+00:00",
+        lastUpdatedArticleID: null,
+        lastUpdatedUserID: null,
+        articleCount: 71,
+        articleCountRecursive: 83,
+        childCategoryCount: 4,
+        url: "https://jupiterone.vanillastaging.com/kb/categories/512-apis-and-integrations",
+        foreignID: null,
+      });
+      const sameName = createKnowledgeCategoryMock({
+        parentID: 512,
+        knowledgeBaseID: 1,
+        name: "Airwatch",
+        fileName: "airwatch",
+        description: "",
+        knowledgeCategoryID: 1157,
+        path: "APIs_and-integrations/atspoke",
+        childrenPath: "APIs_and-integrations/atspoke/airwatch/airwatch.md",
+        procedureType: ProcedureTypeEnum.Category,
+        sortChildren: null,
+        sort: 3,
+        insertUserID: 12,
+        dateInserted: "2022-01-19T19:25:56+00:00",
+        updateUserID: 12,
+        dateUpdated: "2022-01-19T19:25:56+00:00",
+        lastUpdatedArticleID: null,
+        lastUpdatedUserID: null,
+        articleCount: 0,
+        articleCountRecursive: 0,
+        childCategoryCount: 0,
+        url: "https://jupiterone.vanillastaging.com/kb/categories/1157-airwatch",
+        foreignID: null,
+      });
+      const categoryProcedureWasMovedTo = createKnowledgeCategoryMock({
+        parentID: 512,
+        knowledgeBaseID: 1,
+        name: "Atspoke",
+        fileName: "atspoke",
+        description: "",
+        knowledgeCategoryID: 1157,
+        path: "APIs_and-integrations/atspoke",
+        childrenPath: "APIs_and-integrations/atspoke/airwatch/airwatch.md",
+        procedureType: ProcedureTypeEnum.Category,
+        sortChildren: null,
+        sort: 3,
+        insertUserID: 12,
+        dateInserted: "2022-01-19T19:25:56+00:00",
+        updateUserID: 12,
+        dateUpdated: "2022-01-19T19:25:56+00:00",
+        lastUpdatedArticleID: null,
+        lastUpdatedUserID: null,
+        articleCount: 0,
+        articleCountRecursive: 0,
+        childCategoryCount: 0,
+        url: "https://jupiterone.vanillastaging.com/kb/categories/1157-atspoke",
+        foreignID: null,
+      });
+      const randomOtherKnowledgeCategory = createKnowledgeCategoryMock({});
+      const proceduresWithVanillaInfo: (
+        | VanillaKnowledgeCategory
+        | VanillaArticle
+      )[] = [
+        categoryProcedureWasMovedTo,
+        randomOtherKnowledgeCategory,
+        notKCategoryPreviousParent,
+        sameName,
+      ];
+      const testProcedure: VanillaKnowledgeCategory =
+        createKnowledgeCategoryMock({
+          parentID: 512,
+          knowledgeBaseID: 1,
+          name: "Airwatch",
+          fileName: "airwatch",
+          description: "",
+          knowledgeCategoryID: 1157,
+          path: "APIs_and-integrations/atspoke",
+          childrenPath: "APIs_and-integrations/atspoke/airwatch/airwatch.md",
+          procedureType: ProcedureTypeEnum.Category,
+          sortChildren: null,
+          sort: 3,
+          insertUserID: 12,
+          dateInserted: "2022-01-19T19:25:56+00:00",
+          updateUserID: 12,
+          dateUpdated: "2022-01-19T19:25:56+00:00",
+          lastUpdatedArticleID: null,
+          lastUpdatedUserID: null,
+          articleCount: 0,
+          articleCountRecursive: 0,
+          childCategoryCount: 0,
+          url: "https://jupiterone.vanillastaging.com/kb/categories/1157-airwatch",
+          foreignID: null,
+        });
+
+      const actual = hasKnowledgeCategoryBeenMoved({
+        proceduresWithVanillaInfo,
+        procedure: testProcedure,
+      });
+      expect(actual).toEqual(true);
+    });
+  });
   describe("kCategoriesByPathSize", () => {
     it("returns knowledgeCategories by lenght of path -longest first", async () => {
       const mockKCategories = [

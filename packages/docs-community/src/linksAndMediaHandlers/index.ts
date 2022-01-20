@@ -36,13 +36,18 @@ export const modifyBodyLinkForImage = (
   );
   return bodyAlterations;
 };
+export type modifyBodyLinkForImageForReturnedArticlesReturn = {
+  bodyAlterations: string;
+  existingMatches: string | false;
+};
 //return.body gives back a html type body string
 export const modifyBodyLinkForImageForReturnedArticles = (
   body: string,
   matchToBeReplaced: string,
-  replacement: string
-): string => {
-  let bodyAlterations = `${body}`;
+  replacement: string,
+  secondTime?: boolean
+): modifyBodyLinkForImageForReturnedArticlesReturn => {
+  const bodyAlterations = `${body}`;
   const slashRegex = new RegExp("/", "gi");
   const matchToBeReplacedSanitized = matchToBeReplaced
     .replace(slashRegex, "\\/")
@@ -53,12 +58,24 @@ export const modifyBodyLinkForImageForReturnedArticles = (
     "gi"
   );
 
-  bodyAlterations = bodyAlterations.replace(
+  const replacedBody = bodyAlterations.replace(
     markdownAssetRegularExpression,
     `${replacement}`
   );
+  if (secondTime) {
+    return {
+      bodyAlterations: replacedBody,
+      existingMatches: false,
+    };
+  }
 
-  return bodyAlterations;
+  const matchToBeReplacedex = new RegExp(matchToBeReplacedSanitized, "gi");
+  const existingMatches = replacedBody.match(matchToBeReplacedex);
+
+  return {
+    bodyAlterations: replacedBody,
+    existingMatches: existingMatches !== null ? matchToBeReplaced : false,
+  };
 };
 
 export const getMarkdownImageSrcs = (markdownAsString: string): string[] => {
@@ -94,16 +111,16 @@ export const getFullMarkdownReferencePathMatches = (
   ) {
     matches.push(array1[0]);
   }
-  const editedMatches= matches.map((m) => {
+  const editedMatches = matches.map((m) => {
     let matchEdit = m.substring(m.indexOf('"') + 1);
     if (matchEdit.indexOf('"') !== -1) {
       matchEdit = matchEdit.substring(0, matchEdit.length - 1);
     }
-   
+
     return matchEdit;
   });
 
-  return editedMatches.filter((m:string)=>m[0]==='.')
+  return editedMatches.filter((m: string) => m[0] === ".");
 };
 
 export const getArticleNameFromReference = async (

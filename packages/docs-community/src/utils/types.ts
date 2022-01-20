@@ -5,6 +5,7 @@ export interface KnowledgeBase {
   description: string;
   sortArticles: "manual" | "name" | "dateInserted" | "dateInsertedDesc";
 }
+// response from vanilla
 export interface KnowledgeCategory {
   knowledgeBaseID: null | number; // 1 is the docs
   knowledgeCategoryID: null | number;
@@ -129,6 +130,7 @@ export interface VanillaArticle {
   requestCompleted?: boolean;
   procedureType: ProcedureTypeEnum;
   referencesNeedingUpdatesInMarkdown?: string[];
+  referencesToTryAgain?: string[] | false;
 }
 export interface ArticleBreadCrumbs {
   name: string;
