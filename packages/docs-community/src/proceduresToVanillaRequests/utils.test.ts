@@ -127,6 +127,30 @@ describe("utils", () => {
         url: "https://jupiterone.vanillastaging.com/kb/categories/512-apis-and-integrations",
         foreignID: null,
       });
+      const sameName = createKnowledgeCategoryMock({
+        parentID: 512,
+        knowledgeBaseID: 1,
+        name: "Airwatch",
+        fileName: "airwatch",
+        description: "",
+        knowledgeCategoryID: 1157,
+        path: "APIs_and-integrations/atspoke",
+        childrenPath: "APIs_and-integrations/atspoke/airwatch/airwatch.md",
+        procedureType: ProcedureTypeEnum.Category,
+        sortChildren: null,
+        sort: 3,
+        insertUserID: 12,
+        dateInserted: "2022-01-19T19:25:56+00:00",
+        updateUserID: 12,
+        dateUpdated: "2022-01-19T19:25:56+00:00",
+        lastUpdatedArticleID: null,
+        lastUpdatedUserID: null,
+        articleCount: 0,
+        articleCountRecursive: 0,
+        childCategoryCount: 0,
+        url: "https://jupiterone.vanillastaging.com/kb/categories/1157-airwatch",
+        foreignID: null,
+      });
       const categoryProcedureWasMovedTo = createKnowledgeCategoryMock({
         parentID: 512,
         knowledgeBaseID: 1,
@@ -159,7 +183,7 @@ describe("utils", () => {
         categoryProcedureWasMovedTo,
         randomOtherKnowledgeCategory,
         notKCategoryPreviousParent,
-        // categoryThatWasMoved,
+        sameName,
       ];
       const testProcedure: VanillaKnowledgeCategory =
         createKnowledgeCategoryMock({

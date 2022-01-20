@@ -22,9 +22,10 @@ export const hasKnowledgeCategoryBeenMoved = ({
   proceduresWithVanillaInfo,
   procedure,
 }: hasKnowledgeCategoryBeenMovedProps): boolean => {
-  const knowledgeCategoriesArray = proceduresWithVanillaInfo.filter(
-    isKnowledgeCategoryType
-  );
+  const knowledgeCategoriesArray = proceduresWithVanillaInfo
+    .filter(isKnowledgeCategoryType)
+    .filter((k) => k.name !== procedure.name);
+
   const { parentID, childrenPath, fileName } = procedure;
   const [matchingKnowledgeCategory] = knowledgeCategoriesArray.filter(
     (k) => k.knowledgeCategoryID === parentID
