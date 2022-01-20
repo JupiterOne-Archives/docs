@@ -230,9 +230,8 @@ export const procedureToKnowledgeCategory = async (
   if (tempProcedureWorkedOn.knowledgeCategoryID !== null) {
     if (directoryExistsResult) {
       if (hasChangedParent && previousknowledgeCategoryID) {
-        console.log("MOVE", tempProcedureWorkedOn);
         let isReleaseNotes = false;
-        console.log("MOVE failed - CREATING NEW", tempProcedureWorkedOn);
+
         if (
           procedureWorkedOn.path &&
           procedureWorkedOn.path.toLowerCase().indexOf("release-notes") !== -1
@@ -479,7 +478,7 @@ export const proceduresToVanillaRequests = async (
     const hasChangesStillNeeded = updatesToInternalLinks.filter(
       (a) => a.referencesToTryAgain
     );
-    console.log(hasChangesStillNeeded, "CHANGES STILL NEEDED");
+
     if (hasChangesStillNeeded && hasChangesStillNeeded.length) {
       return await proceduresToVanillaRequests(hasChangesStillNeeded);
     }

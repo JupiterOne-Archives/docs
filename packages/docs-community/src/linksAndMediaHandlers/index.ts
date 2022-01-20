@@ -47,7 +47,7 @@ export const modifyBodyLinkForImageForReturnedArticles = (
   replacement: string,
   secondTime?: boolean
 ): modifyBodyLinkForImageForReturnedArticlesReturn => {
-  let bodyAlterations = `${body}`;
+  const bodyAlterations = `${body}`;
   const slashRegex = new RegExp("/", "gi");
   const matchToBeReplacedSanitized = matchToBeReplaced
     .replace(slashRegex, "\\/")
@@ -58,22 +58,23 @@ export const modifyBodyLinkForImageForReturnedArticles = (
     "gi"
   );
 
-  bodyAlterations = bodyAlterations.replace(
+  const replacedBody = bodyAlterations.replace(
     markdownAssetRegularExpression,
     `${replacement}`
   );
   if (secondTime) {
     return {
-      bodyAlterations,
+      bodyAlterations: replacedBody,
       existingMatches: false,
     };
   }
-  const existingMatches = bodyAlterations.match(markdownAssetRegularExpression);
-  console.log(existingMatches, "EXISTING MATCHES");
+
+  const matchToBeReplacedex = new RegExp(matchToBeReplacedSanitized, "gi");
+  const existingMatches = replacedBody.match(matchToBeReplacedex);
+
   return {
-    bodyAlterations,
-    existingMatches:
-      existingMatches && existingMatches.length ? matchToBeReplaced : false,
+    bodyAlterations: replacedBody,
+    existingMatches: existingMatches !== null ? matchToBeReplaced : false,
   };
 };
 
