@@ -325,7 +325,7 @@ The above query returns entities of the `Host` class with any of the following e
 
 ## Parameters
 
-The query language supports [parameters](./parameters.md) for referencing values stored on the server side. Parameter expressions are allowed in places that could otherwise include a literal value.
+The query language supports [parameters](../jupiterOne-data-model/parameters.md) for referencing values stored on the server side. Parameter expressions are allowed in places that could otherwise include a literal value.
 
 ```j1ql
 FIND Application WITH loginUrl = ${ param.loginUrl }
