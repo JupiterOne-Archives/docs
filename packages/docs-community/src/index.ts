@@ -140,6 +140,7 @@ export const refreshVanillaItems = async () => {
   await deleteAllThingsCurrentlyOnVanillaForum();
   await updateVanillaWithDirectoryToWatch();
 };
+
 // Useful for when you need a clean slate.
 // Removes Articles and Categories from Vanilla rather than having to click through their UI
 export const deleteAllThingsCurrentlyOnVanillaForum = async () => {
