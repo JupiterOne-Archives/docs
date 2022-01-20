@@ -1,6 +1,6 @@
 # Bulk Upload
 
-JupiterOne supports the bulk upload of entity and relationship data via a JSON file. This is done in the Assets app. 
+JupiterOne supports the bulk upload of entity and relationship data via a JSON file. This is done in the Assets app.
 
 ## Data Format
 
@@ -14,8 +14,8 @@ You will be prompted to select (or enter a new) "scope" for the upload. A scope 
 
 ## Public API
 
-JupiterOne exposes a public REST API to programmatically perform bulk entity and relationship uploads.  The details on that API can be seen [here](../APIs_and-integrations/jupiterone-api.md).
+JupiterOne exposes a public REST API to programmatically perform bulk entity and relationship uploads. The details on that API can be seen [here](../APIs_and-integrations/jupiterone-api.md).
 
 ## Notes
 
-Depending on the size of the uploaded file, the entities and relationships may not show up in the Inventory Table right away.  Hold tight!  JupiterOne is processing your data, and it will show up in your Inventory soon.
+Depending on the size of the uploaded file, the entities and relationships may not show up in the Inventory Table right away. Hold tight! JupiterOne is processing your data, and it will show up in your Inventory soon.
