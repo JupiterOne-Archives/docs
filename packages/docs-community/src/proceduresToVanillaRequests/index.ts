@@ -230,11 +230,21 @@ export const procedureToKnowledgeCategory = async (
   if (tempProcedureWorkedOn.knowledgeCategoryID !== null) {
     if (directoryExistsResult) {
       if (hasChangedParent && previousknowledgeCategoryID) {
-        console.log("STTTARRRRT", tempProcedureWorkedOn, "HHHHHEERRRE");
+        console.log("MOVE", tempProcedureWorkedOn);
+        let isReleaseNotes = false;
+        console.log("MOVE failed - CREATING NEW", tempProcedureWorkedOn);
+        if (
+          procedureWorkedOn.path &&
+          procedureWorkedOn.path.toLowerCase().indexOf("release-notes") !== -1
+        ) {
+          isReleaseNotes = true;
+        }
         const requestForEdit = {
           parentID: previousknowledgeCategoryID,
           name: tempProcedureWorkedOn.name,
-          knowledgeBaseID: tempProcedureWorkedOn.knowledgeBaseID,
+          knowledgeBaseID: isReleaseNotes
+            ? 2
+            : tempProcedureWorkedOn.knowledgeBaseID,
         };
         try {
           const editedCategory = await editKnowledgeCategory(
@@ -242,7 +252,7 @@ export const procedureToKnowledgeCategory = async (
             tempProcedureWorkedOn.knowledgeCategoryID,
             requestForEdit
           );
-          console.log("EDIT RETURN", editedCategory);
+
           if (editedCategory) {
             tempProcedureWorkedOn = {
               ...tempProcedureWorkedOn,
@@ -250,15 +260,6 @@ export const procedureToKnowledgeCategory = async (
             };
             return tempProcedureWorkedOn;
           } else {
-            let isReleaseNotes = false;
-            console.log("creatingnew!!!!!!");
-            if (
-              procedureWorkedOn.path &&
-              procedureWorkedOn.path.toLowerCase().indexOf("release-notes") !==
-                -1
-            ) {
-              isReleaseNotes = true;
-            }
             const newReqData = {
               name: tempProcedureWorkedOn.name,
               parentID: previousknowledgeCategoryID,
