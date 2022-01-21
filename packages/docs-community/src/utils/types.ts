@@ -129,7 +129,7 @@ export interface VanillaArticle {
   fileName: null | string;
   requestCompleted?: boolean;
   procedureType: ProcedureTypeEnum;
-  bodyReferencesNeedingUpdates?: string[];
+  referencesNeedingUpdatesInMarkdown?: string[];
   referencesToTryAgain?: string[] | false;
 }
 export interface ArticleBreadCrumbs {
