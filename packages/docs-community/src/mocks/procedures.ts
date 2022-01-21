@@ -131,6 +131,6 @@ export const completedProcedures = [
     foreignID: null,
 
     procedureType: "Article",
-    referencesNeedingUpdatesInMarkdown: references,
+    bodyReferencesNeedingUpdates: references,
   },
 ] as (VanillaArticle | VanillaKnowledgeCategory)[];
