@@ -168,7 +168,7 @@ export const procedureToArticle = async (
       const createdArticle = await createArticle(httpClient, articleRequest);
 
       if (createdArticle?.articleID) {
-        return createdArticle;
+        return { ...tempProcedureWorkedOn, ...createdArticle };
       } else {
         return tempProcedureWorkedOn;
       }
@@ -195,7 +195,7 @@ export const procedureToArticle = async (
       );
 
       if (editedArticle?.articleID) {
-        return editedArticle;
+        return { ...tempProcedureWorkedOn, ...editedArticle };
       }
     }
 
@@ -270,8 +270,10 @@ export const procedureToKnowledgeCategory = async (
             );
 
             if (createdKnowledgeCategory) {
-              tempProcedureWorkedOn = createdKnowledgeCategory;
-              return tempProcedureWorkedOn;
+              return (tempProcedureWorkedOn = {
+                ...tempProcedureWorkedOn,
+                ...createdKnowledgeCategory,
+              });
             }
           }
           return tempProcedureWorkedOn;
@@ -318,8 +320,7 @@ export const procedureToKnowledgeCategory = async (
       );
 
       if (createdKnowledgeCategory) {
-        tempProcedureWorkedOn = createdKnowledgeCategory;
-        return tempProcedureWorkedOn;
+        return { ...tempProcedureWorkedOn, ...createdKnowledgeCategory };
       }
     } else {
       tempProcedureWorkedOn.description = KNOWN_CATEGORY_BEEN_DELETED;
@@ -472,6 +473,10 @@ export const proceduresToVanillaRequests = async (
     const updatesToInternalLinks = await makeRequestsToChangeMarkdownReferences(
       articlesNeedingLinkUpdates,
       httpClient
+    );
+    console.log(
+      updatesToInternalLinks,
+      "updatesToInternalLinksupdatesToInternalLinks"
     );
     //run again for internal links that were not added due to article not existing yet
     const hasChangesStillNeeded = updatesToInternalLinks.filter(

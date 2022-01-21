@@ -291,9 +291,15 @@ describe("ProceduresToVanillaRequests", () => {
         const previousknowledgeCategoryID = 26;
         const articleID = 26;
         const mockVanillaReturn = {
-          articleID,
+          articleID: null,
+          body: "",
+          fileName: "soc2-with-jupiterone-copy.md",
+          format: "markdown",
+          knowledgeCategoryID: 26,
+          locale: "en",
           name: "Soc2 With Jupiterone Copy",
-          knowledgeCategoryID: previousknowledgeCategoryID,
+          path: "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
+          procedureType: "Article",
         } as any;
 
         mockCreateArticle.mockReset();
@@ -330,9 +336,15 @@ describe("ProceduresToVanillaRequests", () => {
           knowledgeCategoryID: previousknowledgeCategoryID,
         };
         const mockVanillaReturnValue = {
-          articleID,
+          articleID: 55,
+          body: "",
+          fileName: "soc2-with-jupiterone-copy.md",
+          format: "markdown",
+          knowledgeCategoryID: 28,
+          locale: "en",
           name: "Soc2 With Jupiterone Copy",
-          knowledgeCategoryID: previousknowledgeCategoryID,
+          path: "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
+          procedureType: "Article",
         } as any;
         const mockHttpclient = {} as any;
         mockEditArticle.mockResolvedValue(mockVanillaReturnValue);

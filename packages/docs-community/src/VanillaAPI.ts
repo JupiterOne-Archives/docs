@@ -61,7 +61,7 @@ export const getArticles = async (
       return articles.data.map((a) => ({
         ...a,
         procedureType: ProcedureTypeEnum.Article,
-        referencesNeedingUpdatesInMarkdown: getFullMarkdownReferencePathMatches(
+        bodyReferencesNeedingUpdates: getFullMarkdownReferencePathMatches(
           a.body
         ),
       }));
@@ -323,16 +323,17 @@ export const createArticle = async (
 
     if (!isErrorType(article.data)) {
       if (article.data.body !== null) {
-        const referencesNeedingUpdatesInMarkdown =
+        const bodyReferencesNeedingUpdates =
           getFullMarkdownReferencePathMatches(article.data.body);
         if (
-          referencesNeedingUpdatesInMarkdown &&
-          referencesNeedingUpdatesInMarkdown.length
+          bodyReferencesNeedingUpdates &&
+          bodyReferencesNeedingUpdates.length
         ) {
           return {
             ...article.data,
             path: bodyOfRequest.path,
-            referencesNeedingUpdatesInMarkdown,
+            bodyReferencesNeedingUpdates,
+            referencesToTryAgain: false,
             procedureType: ProcedureTypeEnum.Article,
           };
         }
@@ -388,16 +389,16 @@ export const editArticle = async (
 
     if (!isErrorType(article.data)) {
       if (article.data.body !== null) {
-        const referencesNeedingUpdatesInMarkdown =
+        const bodyReferencesNeedingUpdates =
           getFullMarkdownReferencePathMatches(article.data.body);
         if (
-          referencesNeedingUpdatesInMarkdown &&
-          referencesNeedingUpdatesInMarkdown.length
+          bodyReferencesNeedingUpdates &&
+          bodyReferencesNeedingUpdates.length
         ) {
           return {
             ...edits,
             ...article.data,
-            referencesNeedingUpdatesInMarkdown,
+            bodyReferencesNeedingUpdates,
             procedureType: ProcedureTypeEnum.Article,
             path: edits.path,
           };

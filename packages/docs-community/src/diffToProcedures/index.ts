@@ -50,6 +50,7 @@ export const createArticleChange = async (
     format: "markdown",
     locale: "en",
     procedureType: ProcedureTypeEnum.Article,
+    referencesToTryAgain: false,
   };
 
   return kb;

@@ -16,30 +16,32 @@ export const updateArticleInternalMarkdownLinks = async (
 
   const articleProcedures: VanillaArticle[] = processedProcedures
     .filter(isArticleType)
-    .filter((a) => a.referencesNeedingUpdatesInMarkdown?.length)
+    .filter((a) => a.bodyReferencesNeedingUpdates?.length)
     .filter((a) => a.status !== "deleted");
 
   const proceduresWithUpdatedBodies: VanillaArticle[] = [];
   for (let i = 0; i < articleProcedures.length; i++) {
     const articleUndergoingChanges = articleProcedures[i];
-
+    const retryReferences = [];
     if (
-      articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown?.length &&
+      articleUndergoingChanges?.bodyReferencesNeedingUpdates?.length &&
       articleUndergoingChanges.body !== null
     ) {
       let references: string[] =
-        articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown || [];
-      let secondTime = false;
+        articleUndergoingChanges?.bodyReferencesNeedingUpdates || [];
 
-      if (
-        articleUndergoingChanges?.referencesToTryAgain !== undefined &&
-        articleUndergoingChanges?.referencesToTryAgain &&
-        articleUndergoingChanges?.referencesToTryAgain.length
-      ) {
+      // if two articles are being created and the first one references the second.. the first time this runs it will fail
+      const secondTime =
+        articleUndergoingChanges.referencesToTryAgain &&
+        articleUndergoingChanges.referencesToTryAgain.length
+          ? true
+          : false;
+
+      if (secondTime && articleUndergoingChanges?.referencesToTryAgain) {
         references = articleUndergoingChanges?.referencesToTryAgain;
         articleUndergoingChanges.referencesToTryAgain = false;
-        secondTime = true;
       }
+
       for (let r = 0; r < references.length; r++) {
         const articleName = await getArticleNameFromReference(
           references[r],
@@ -82,23 +84,12 @@ export const updateArticleInternalMarkdownLinks = async (
             articleUndergoingChanges.body = bodyAlterations;
           }
         } else {
-          if (!secondTime) {
-            if (
-              articleUndergoingChanges.referencesToTryAgain == undefined ||
-              []
-            ) {
-              if (articleUndergoingChanges.referencesToTryAgain == undefined) {
-                articleUndergoingChanges.referencesToTryAgain = [];
-              }
-              if (articleUndergoingChanges.referencesToTryAgain) {
-                articleUndergoingChanges.referencesToTryAgain.push(
-                  references[r]
-                );
-              }
-            }
-          }
+          retryReferences.push(references[r]);
         }
       }
+    }
+    if (retryReferences.length) {
+      articleUndergoingChanges.referencesToTryAgain = retryReferences;
     }
     proceduresWithUpdatedBodies.push(articleUndergoingChanges);
   }

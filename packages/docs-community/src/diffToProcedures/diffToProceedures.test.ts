@@ -44,6 +44,7 @@ describe("diffToProceedures", () => {
         format: "markdown",
         locale: "en",
         procedureType: ProcedureTypeEnum.Article,
+        referencesToTryAgain: false,
       };
       expect(actual).toEqual(expected);
     });
@@ -62,6 +63,7 @@ describe("diffToProceedures", () => {
         format: "markdown",
         locale: "en",
         procedureType: ProcedureTypeEnum.Article,
+        referencesToTryAgain: false,
       };
       expect(expected).toEqual(actual);
     });

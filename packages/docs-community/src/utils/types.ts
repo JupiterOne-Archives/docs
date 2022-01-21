@@ -85,6 +85,7 @@ export interface VanillaArticlePatch {
     enabled: boolean;
     requestHandler: string[];
   };
+  referencesToTryAgain: string[] | false;
 }
 
 export interface VanillaArticle {
@@ -129,8 +130,8 @@ export interface VanillaArticle {
   fileName: null | string;
   requestCompleted?: boolean;
   procedureType: ProcedureTypeEnum;
-  referencesNeedingUpdatesInMarkdown?: string[];
-  referencesToTryAgain?: string[] | false;
+  bodyReferencesNeedingUpdates?: string[];
+  referencesToTryAgain: string[] | false;
 }
 export interface ArticleBreadCrumbs {
   name: string;
