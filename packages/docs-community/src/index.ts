@@ -105,6 +105,7 @@ export const updateVanillaWithDirectoryToWatch = async () => {
   }
 };
 
+// Adding in a folder name such as 'release-notes' will run the pipeline as if each item in knowledgeBase/release-notes has had a change
 export const addFullSubFolderManually = async (folderName: string) => {
   const directoryLocation = path.join(
     __dirname,

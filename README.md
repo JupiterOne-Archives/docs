@@ -6,6 +6,7 @@
 - MERGE to `main` will make changes to `https://jupiterone.vanillacommunities.com/`
 - knowledgeBase/Release-Notes Is its own KNOWLEDGEBASE - anything other than `/assets` within this directory will create corresponding items in the knowledgeBase 'Release Notes' which is seperate from the docs
 - `When you move a file or folder, make sure to change any links TO that file/folder from other markdown files.`
+- For a custom title (and not the file name), the first line `MUST` be "# Some Title". The '# ' will be removed and used for the title. Also, the first line will be removed from the article contents. If the first line is ANYTHING else (including a new line), the file name will be used.
 
 ### To 'Refresh' vanilla staging and/or production
 

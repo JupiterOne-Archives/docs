@@ -82,15 +82,19 @@ export const updateArticleInternalMarkdownLinks = async (
             articleUndergoingChanges.body = bodyAlterations;
           }
         } else {
-          if (
-            articleUndergoingChanges.referencesToTryAgain == undefined ||
-            []
-          ) {
-            if (articleUndergoingChanges.referencesToTryAgain == undefined) {
-              articleUndergoingChanges.referencesToTryAgain = [];
-            }
-            if (articleUndergoingChanges.referencesToTryAgain) {
-              articleUndergoingChanges.referencesToTryAgain.push(references[r]);
+          if (!secondTime) {
+            if (
+              articleUndergoingChanges.referencesToTryAgain == undefined ||
+              []
+            ) {
+              if (articleUndergoingChanges.referencesToTryAgain == undefined) {
+                articleUndergoingChanges.referencesToTryAgain = [];
+              }
+              if (articleUndergoingChanges.referencesToTryAgain) {
+                articleUndergoingChanges.referencesToTryAgain.push(
+                  references[r]
+                );
+              }
             }
           }
         }
