@@ -32,12 +32,13 @@ export const updateArticleInternalMarkdownLinks = async (
 
       // if two articles are being created and the first one references the second.. the first time this runs it will fail
       const secondTime =
-        articleUndergoingChanges.referencesToTryAgain &&
-        articleUndergoingChanges.referencesToTryAgain.length
-          ? true
-          : false;
+        articleUndergoingChanges.referencesToTryAgain !== undefined;
 
-      if (secondTime && articleUndergoingChanges?.referencesToTryAgain) {
+      if (
+        secondTime &&
+        articleUndergoingChanges?.referencesToTryAgain &&
+        articleUndergoingChanges?.referencesToTryAgain.length
+      ) {
         references = articleUndergoingChanges?.referencesToTryAgain;
         articleUndergoingChanges.referencesToTryAgain = false;
       }
@@ -68,30 +69,16 @@ export const updateArticleInternalMarkdownLinks = async (
               );
 
             if (existingMatches) {
-              if (articleUndergoingChanges.referencesToTryAgain) {
-                articleUndergoingChanges.referencesToTryAgain.push(
-                  existingMatches
-                );
-              } else {
-                articleUndergoingChanges.referencesToTryAgain = [
-                  existingMatches,
-                ];
-              }
-            } else {
-              articleUndergoingChanges.referencesToTryAgain = false;
+              retryReferences.push(references[r]);
             }
 
             articleUndergoingChanges.body = bodyAlterations;
           }
-        } else {
-          retryReferences.push(references[r]);
         }
       }
     }
     if (retryReferences.length) {
-      if (
-        articleUndergoingChanges.referencesToTryAgain !== (false || undefined)
-      ) {
+      if (articleUndergoingChanges.referencesToTryAgain === undefined) {
         articleUndergoingChanges.referencesToTryAgain = retryReferences;
       } else {
         articleUndergoingChanges.referencesToTryAgain = false;
