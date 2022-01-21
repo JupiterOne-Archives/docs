@@ -74,11 +74,15 @@ export const updateArticleInternalMarkdownLinks = async (
 
             articleUndergoingChanges.body = bodyAlterations;
           }
+        } else {
+          retryReferences.push(references[r]);
         }
       }
     }
     if (retryReferences.length) {
-      if (articleUndergoingChanges.referencesToTryAgain === undefined) {
+      if (
+        articleUndergoingChanges.referencesToTryAgain !== (false || undefined)
+      ) {
         articleUndergoingChanges.referencesToTryAgain = retryReferences;
       } else {
         articleUndergoingChanges.referencesToTryAgain = false;
