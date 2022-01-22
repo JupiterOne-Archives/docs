@@ -263,14 +263,20 @@ export const procedureToKnowledgeCategory = async (
               parentID: previousknowledgeCategoryID,
               knowledgeBaseID: isReleaseNotes ? 2 : 1,
             };
+            try {
+              const createdKnowledgeCategory = await createKnowledgeCategory(
+                httpClient,
+                newReqData
+              );
 
-            const createdKnowledgeCategory = await createKnowledgeCategory(
-              httpClient,
-              newReqData
-            );
-
-            if (createdKnowledgeCategory) {
-              tempProcedureWorkedOn = createdKnowledgeCategory;
+              if (createdKnowledgeCategory) {
+                tempProcedureWorkedOn = createdKnowledgeCategory;
+                return tempProcedureWorkedOn;
+              }
+            } catch (e) {
+              logger.error(
+                `EDIT ERROR Already exists- ${tempProcedureWorkedOn.path}\n ${e}`
+              );
               return tempProcedureWorkedOn;
             }
           }
@@ -473,14 +479,7 @@ export const proceduresToVanillaRequests = async (
       articlesNeedingLinkUpdates,
       httpClient
     );
-    //run again for internal links that were not added due to article not existing yet
-    const hasChangesStillNeeded = updatesToInternalLinks.filter(
-      (a) => a.referencesToTryAgain
-    );
-    console.log("HAS CHANGES STILL", hasChangesStillNeeded);
-    if (hasChangesStillNeeded && hasChangesStillNeeded.length) {
-      return await proceduresToVanillaRequests(hasChangesStillNeeded);
-    }
+
     logger.info(
       `UpdatesToInternalLinks processed: ${JSON.stringify(
         updatesToInternalLinks,
