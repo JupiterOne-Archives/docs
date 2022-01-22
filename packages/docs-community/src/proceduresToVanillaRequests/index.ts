@@ -479,14 +479,7 @@ export const proceduresToVanillaRequests = async (
       articlesNeedingLinkUpdates,
       httpClient
     );
-    // //run again for internal links that were not added due to article not existing yet
-    // const hasChangesStillNeeded = updatesToInternalLinks.filter(
-    //   (a) => a.referencesToTryAgain
-    // );
-    // console.log("HAS CHANGES STILL", hasChangesStillNeeded);
-    // if (hasChangesStillNeeded && hasChangesStillNeeded.length) {
-    //   return await proceduresToVanillaRequests(hasChangesStillNeeded);
-    // }
+
     logger.info(
       `UpdatesToInternalLinks processed: ${JSON.stringify(
         updatesToInternalLinks,
