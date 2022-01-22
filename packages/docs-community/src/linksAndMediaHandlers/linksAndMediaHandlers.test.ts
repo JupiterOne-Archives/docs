@@ -22,14 +22,14 @@ describe("linksAndMediaHandlers", () => {
         "https://jupiterone.vanillastaging.com/kb/articles/545-catalog";
       const body = `<li><a rel=\"nofollow\" href=\"../getting-started_and-admin/catalog.md">look at this other doc</a></li>`;
       const expected = `<li><a rel=\"nofollow\" href="https://jupiterone.vanillastaging.com/kb/articles/545-catalog">look at this other doc</a></li>`;
-      const { bodyAlterations, existingMatches } =
+      const { bodyAlterations } =
         modifyBodyLinkForImageForReturnedArticles(
           body,
           "../getting-started_and-admin/catalog.md",
           replacement
         );
       expect(bodyAlterations).toEqual(expected);
-      expect(existingMatches).toEqual(false);
+
     });
   });
   describe("getMarkdownImageSrcs", () => {
