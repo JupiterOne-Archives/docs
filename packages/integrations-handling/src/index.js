@@ -29,14 +29,28 @@ import remarkGfm from "remark-gfm";
 //   integrationName: string;
 //   githubFileContents: string;
 // };
+const addTitleToIntegrationDoc = (body, name) => {
+  let bodyAlterations = `${body}`;
+  const target = "# Integration with JupiterOne";
 
-const generateIntegrationPageContents = async ({
+  const markdownAssetRegularExpression = new RegExp(target, "gi");
+
+  bodyAlterations = bodyAlterations.replace(
+    markdownAssetRegularExpression,
+    `# ${name} Integration with JupiterOne`
+  );
+  return bodyAlterations;
+};
+const addVersionToIntegrationDoc = (body, version) => {
+  return `${body} \n<!--  jupiterOneDocVersion=${version} -->`;
+};
+const cleanIntegrationPageContents = async ({
   integrationName,
   githubFileContents,
   version,
+  displayName,
 }) => {
   const file = await remark()
-    // .use(remarkParse)
     .use(remarkGfm)
 
     // .use(rehypeStringify)
@@ -47,6 +61,7 @@ const generateIntegrationPageContents = async ({
     githubFileContents: file.toString(),
     integrationName,
     version,
+    displayName,
   };
 };
 // interface IntegrationProjectConfigRenderable extends IntegrationProjectConfig {
@@ -66,7 +81,7 @@ const getRepoVersion = async (projectName) => {
   const { data } = result;
 
   if (data) {
-    return data.version;
+    return data.version.replace(/\./g, "-");
   } else {
     return "not-found";
   }
@@ -128,7 +143,7 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
   const completedRequests = [];
 
   for (let i = 0; i < integrationConfigs.length; i++) {
-    const projectName = integrationConfigs[i].projectName;
+    const { projectName, displayName } = integrationConfigs[i];
     let version = undefined;
     try {
       version = await getRepoVersion(projectName);
@@ -143,23 +158,27 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
         integrationName: projectName,
         githubFileContents: "",
         version,
-        displayName: integrationConfigs[i].displayName,
+        displayName: displayName,
       };
 
       if (result.data) {
-        docContents = await generateIntegrationPageContents({
+        docContents = await cleanIntegrationPageContents({
           integrationName: projectName,
           githubFileContents: result.data,
           version,
-          displayName: integrationConfigs[i].displayName,
+          displayName,
         });
+        docContents.githubFileContents = addVersionToIntegrationDoc(
+          addTitleToIntegrationDoc(docContents.githubFileContents, displayName),
+          version
+        );
       }
 
       completedRequests.push(docContents);
     } catch (e) {
       completedRequests.push({
         integrationName: projectName,
-        githubFileContents: result.data,
+        githubFileContents: "not-found",
         version,
         displayName: integrationConfigs[i].displayName,
       });
@@ -178,7 +197,7 @@ const createAllIntegrationProjectDocFilesFromConfig = async (
   const changes = [];
   const missing = [];
   for (let r = 0; r < renderableConfigs.length; r++) {
-    const { githubFileContents, version, integrationName } =
+    const { githubFileContents, version, integrationName, displayName } =
       renderableConfigs[r];
     if (
       githubFileContents !== "" &&
@@ -189,12 +208,9 @@ const createAllIntegrationProjectDocFilesFromConfig = async (
         path.resolve(),
         `./integrations/${integrationName}`
       );
-
+      const markdownName = `${displayName}-integration_with-JupiterOne-VERSION${version}`;
       await createDirIfNotExist(docDirPath);
-      const docFilePath = path.join(
-        docDirPath,
-        `${version.replace(/\./g, "-")}.md`
-      );
+      const docFilePath = path.join(docDirPath, `${markdownName}.md`);
       console.log(docFilePath, "DOCK FILE FATH");
       const createChange = await createFileIfNotExist(
         docFilePath,
