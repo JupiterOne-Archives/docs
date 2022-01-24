@@ -1,4 +1,4 @@
-# VMware AirWatch Integration with JupiterOne
+#  VMware AirWatch Integration with JupiterOne
 
 ## AirWatch Integration Benefits
 
