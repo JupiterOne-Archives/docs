@@ -2,7 +2,7 @@
 
 The following article contains a list of compliance actions from the JupiterOne UI that a user can perform via the graphql API endpoint. 
 
-See the [JupiterOne Platform API](./jupiterone-api.md) for an introduction to the JupiterOne API.
+See the [JupiterOne Platform API](./jupiterone-api.md) for an introduction to the JupiterOne API. 
 
 **Base URL**: `https://api.us.jupiterone.io`
 
