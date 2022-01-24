@@ -246,9 +246,9 @@ export const SHAPEWEWANT = [
     description: "",
     fileName: "compliance-reporting",
     knowledgeBaseID: 1,
-    knowledgeCategoryID: 22,
-    name: "Getting Started Admin",
-    parentID: 1,
+    knowledgeCategoryID: 33,
+    name: "Compliance Reporting",
+    parentID: 22,
     path: "getting-started_and-admin/compliance-reporting",
     procedureType: "Category",
   },
@@ -275,15 +275,14 @@ export const SHAPEWEWANT = [
     procedureType: "Article",
   },
   {
-    childrenPath:
-      "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
+    childrenPath: "compliance-reporting",
     description: "",
     fileName: "compliance-reporting",
     knowledgeBaseID: 1,
-    knowledgeCategoryID: 33,
+    knowledgeCategoryID: null,
     name: "Compliance Reporting",
-    parentID: 22,
-    path: "getting-started_and-admin/compliance-reporting",
+    parentID: null,
+    path: "getting-started_and-admin/compliance-reporting/soc2-with-jupiterone-copy.md",
     procedureType: "Category",
   },
   {
@@ -387,17 +386,16 @@ export const PROCEDURESWithOneDeleteArticleAndCreates = [
 
 export const expectedDeleteANDCreatesPROCEDURES = [
   {
-    childrenPath: "getting-started_and-admin",
+    childrenPath: "compliance-reporting",
     description: "",
-    fileName: "getting-started_and-admin",
+    fileName: "compliance-reporting",
     knowledgeBaseID: 1,
-    knowledgeCategoryID: 22,
-    name: "Getting Started Admin",
-    parentID: 1,
-    path: "getting-started_and-admin/jupiterOne-query-language_(J1QL)-copy.md",
+    knowledgeCategoryID: 23,
+    name: "Compliance Reporting",
+    parentID: 22,
+    path: "getting-started_and-admin/compliance-reporting/compliance-with-jupiterone.md",
     procedureType: "Category",
   },
-  //deleting this one
   {
     articleID: 11,
     body: "FILE_DOES_NOT_EXIST",
@@ -405,12 +403,11 @@ export const expectedDeleteANDCreatesPROCEDURES = [
     format: "markdown",
     knowledgeCategoryID: 22,
     locale: "en",
-    status: "deleted",
     name: "Jupiterone Query Language Copy",
     path: "getting-started_and-admin/jupiterOne-query-language_(J1QL)-copy.md",
     procedureType: "Article",
+    status: "deleted",
   },
-  // editing this one
   {
     articleID: 12,
     body: "some body",
@@ -422,19 +419,28 @@ export const expectedDeleteANDCreatesPROCEDURES = [
     path: "getting-started_and-admin/jupiterOne-query-language.md",
     procedureType: "Article",
   },
-  //created
   {
     childrenPath: "compliance-reporting",
     description: "",
     fileName: "compliance-reporting",
     knowledgeBaseID: 1,
-    knowledgeCategoryID: 23,
+    knowledgeCategoryID: null,
     name: "Compliance Reporting",
-    parentID: 22,
+    parentID: null,
     path: "getting-started_and-admin/compliance-reporting/compliance-with-jupiterone.md",
     procedureType: "Category",
   },
-  //created
+  {
+    articleID: null,
+    body: "",
+    fileName: "jupiterOne-query-language_(J1QL)-copy.md",
+    format: "markdown",
+    knowledgeCategoryID: null,
+    locale: "en",
+    name: "Soc2 With Jupiterone Copy",
+    path: "getting-started_and-admin/jupiterOne-query-language_(J1QL)-copy.md",
+    procedureType: "Article",
+  },
   {
     articleID: 21,
     body: "",
@@ -444,18 +450,6 @@ export const expectedDeleteANDCreatesPROCEDURES = [
     locale: "en",
     name: "Soc2 With Jupiterone Copy",
     path: "getting-started_and-admin/jupiterOne-query-language_(J1QL)-copy.md",
-    procedureType: "Article",
-  },
-  // created
-  {
-    articleID: 22,
-    body: "",
-    fileName: "compliance-with-jupiterone.md",
-    format: "markdown",
-    knowledgeCategoryID: 23,
-    locale: "en",
-    name: "Compliance With Jupiterone",
-    path: "getting-started_and-admin/compliance-reporting/compliance-with-jupiterone.md",
     procedureType: "Article",
   },
 ] as (VanillaArticle | VanillaKnowledgeCategory)[];
