@@ -221,24 +221,31 @@ export const procedureToKnowledgeCategory = async (
   httpClient: HttpClient,
   procedureWorkedOn: VanillaKnowledgeCategory,
   previousknowledgeCategoryID: null | number,
-  hasChangedParent: boolean
+  hasChangedParent: null | number
 ): Promise<VanillaKnowledgeCategory> => {
   let tempProcedureWorkedOn = { ...procedureWorkedOn };
-
+  let isReleaseNotes = false;
+  let tempPreviousknowledgeCategoryID = previousknowledgeCategoryID;
+  if (typeof hasChangedParent === "number") {
+    tempPreviousknowledgeCategoryID = hasChangedParent;
+  }
+  if (
+    procedureWorkedOn.path &&
+    procedureWorkedOn.path.toLowerCase().indexOf("release-notes") !== -1
+  ) {
+    isReleaseNotes = true;
+  }
   const directoryExistsResult = directoryExists(tempProcedureWorkedOn?.path);
   if (tempProcedureWorkedOn.knowledgeCategoryID !== null) {
     if (directoryExistsResult) {
-      if (hasChangedParent && previousknowledgeCategoryID) {
-        let isReleaseNotes = false;
-
-        if (
-          procedureWorkedOn.path &&
-          procedureWorkedOn.path.toLowerCase().indexOf("release-notes") !== -1
-        ) {
-          isReleaseNotes = true;
+      if (tempPreviousknowledgeCategoryID) {
+        let parentID = tempPreviousknowledgeCategoryID;
+        if (hasChangedParent !== null && typeof hasChangedParent !== "string") {
+          parentID = hasChangedParent;
         }
+
         const requestForEdit = {
-          parentID: previousknowledgeCategoryID,
+          parentID: parentID,
           name: tempProcedureWorkedOn.name,
           knowledgeBaseID: isReleaseNotes
             ? 2
@@ -260,7 +267,7 @@ export const procedureToKnowledgeCategory = async (
           } else {
             const newReqData = {
               name: tempProcedureWorkedOn.name,
-              parentID: previousknowledgeCategoryID,
+              parentID: tempPreviousknowledgeCategoryID,
               knowledgeBaseID: isReleaseNotes ? 2 : 1,
             };
             try {
@@ -310,10 +317,10 @@ export const procedureToKnowledgeCategory = async (
         parentID: 1,
         knowledgeBaseID: isReleaseNotes ? 2 : 1,
       };
-      if (previousknowledgeCategoryID !== null) {
+      if (tempPreviousknowledgeCategoryID !== null) {
         reqData = {
           name: tempProcedureWorkedOn.name,
-          parentID: previousknowledgeCategoryID,
+          parentID: tempPreviousknowledgeCategoryID,
           knowledgeBaseID: isReleaseNotes ? 2 : 1,
         };
       }
@@ -401,6 +408,41 @@ export const useProceduresForVanillaRequests = async (
       proceduresWithVanillaInfo: existingknowledgeCategoryInfo,
       procedure: procedureWorkedOn,
     });
+
+    if (typeof hasChangedParent === "string") {
+      let isReleaseNotes = false;
+      if (
+        procedureWorkedOn.path &&
+        procedureWorkedOn.path.toLowerCase().indexOf("release-notes") !== -1
+      ) {
+        isReleaseNotes = true;
+      }
+
+      const newReqData = {
+        name: hasChangedParent,
+        parentID: previousknowledgeCategoryID,
+        knowledgeBaseID: isReleaseNotes ? 2 : 1,
+      };
+      try {
+        const createdKnowledgeCategory = await createKnowledgeCategory(
+          httpClient,
+          newReqData
+        );
+
+        if (createdKnowledgeCategory) {
+          tempExistingKnowledgeCategoryInfo.push(createdKnowledgeCategory);
+        }
+      } catch (e) {
+        logger.error(`CREATE ERROR Already exists- \n ${e}`);
+      }
+
+      return await useProceduresForVanillaRequests(
+        [...procedures],
+        httpHandling,
+        tempExistingKnowledgeCategoryInfo,
+        tempCompletedProcedures
+      );
+    }
 
     procedureWorkedOn = await procedureToKnowledgeCategory(
       httpClient,

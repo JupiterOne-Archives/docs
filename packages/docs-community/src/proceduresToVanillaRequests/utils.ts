@@ -21,31 +21,38 @@ export type hasKnowledgeCategoryBeenMovedProps = {
 export const hasKnowledgeCategoryBeenMoved = ({
   proceduresWithVanillaInfo,
   procedure,
-}: hasKnowledgeCategoryBeenMovedProps): boolean => {
+}: hasKnowledgeCategoryBeenMovedProps): number | null | string => {
   const knowledgeCategoriesArray = proceduresWithVanillaInfo
     .filter(isKnowledgeCategoryType)
     .filter((k) => k.name !== procedure.name);
 
-  const { parentID, childrenPath, fileName } = procedure;
-  const [matchingKnowledgeCategory] = knowledgeCategoriesArray.filter(
-    (k) => k.knowledgeCategoryID === parentID
-  );
+  const { parentID, path } = procedure;
 
-  if (matchingKnowledgeCategory && childrenPath && fileName) {
-    const { name: matchingCategoryName } = matchingKnowledgeCategory;
-    const splitPath = childrenPath.split("/");
-    const indexOfProcedureInPath = splitPath.indexOf(fileName);
-    const partentFileName = splitPath[indexOfProcedureInPath - 1];
+  const splitProcedurePath = path?.split("/");
+  let parentKnowledgeCategroyName: string | undefined = undefined;
+  if (splitProcedurePath?.length) {
+    parentKnowledgeCategroyName =
+      splitProcedurePath[splitProcedurePath.length - 2];
+  }
+  if (parentKnowledgeCategroyName) {
+    const nameOfKnowledgeCategroyBelongsTo = createDisplayName(
+      parentKnowledgeCategroyName
+    );
+    const [existingKnowledgeCategory] = knowledgeCategoriesArray.filter(
+      (k) => k.name === nameOfKnowledgeCategroyBelongsTo
+    );
 
-    if (partentFileName) {
-      const nameOfProceduresParent = createDisplayName(partentFileName);
-      if (matchingCategoryName === nameOfProceduresParent) {
-        return false;
-      }
+    if (!existingKnowledgeCategory) {
+      // need to create category with this name
+      return nameOfKnowledgeCategroyBelongsTo;
+    }
+    if (existingKnowledgeCategory.knowledgeCategoryID !== parentID) {
+      return existingKnowledgeCategory.knowledgeCategoryID;
+    } else {
+      return parentID;
     }
   }
-
-  return true;
+  return null;
 };
 
 export const markdownToString = async (filePath?: string): Promise<string> => {
