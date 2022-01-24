@@ -5,7 +5,10 @@ import { getDiffFromHead } from "./gitDifference";
 import HttpClient from "./httpClient";
 import { logger } from "./loggingUtil";
 import { proceduresToVanillaRequests } from "./proceduresToVanillaRequests";
-import { PATH_OF_DIRECTORY_TO_WATCH } from "./utils/constants";
+import {
+  PATH_OF_DIRECTORY_TO_WATCH,
+  PATH_OF_INTEGRATIONS,
+} from "./utils/constants";
 import {
   deleteArticle,
   deleteKnowledgeCategory,
@@ -58,6 +61,10 @@ export const updateCommunityDocs = async () => {
       });
     }
     const nestedMergedWithOriginal = [...diffChanges, ...nested];
+    const integrationChanges = nestedMergedWithOriginal.map((result) =>
+      result.substring(result.indexOf(PATH_OF_INTEGRATIONS))
+    );
+    console.log(integrationChanges, "integrationChanges***********");
     const nestedWithRemovedPath = nestedMergedWithOriginal.map((path) =>
       path.substring(path.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
@@ -104,6 +111,12 @@ export const updateVanillaWithDirectoryToWatch = async () => {
     }
   }
 };
+// export const integrationsDiffs = ()=>{
+//   const directoryLocation = path.join(
+//     __dirname,
+//     `../../${PATH_OF_INTEGRATIONS}/`,
+//   );
+// }
 
 // Adding in a folder name such as 'release-notes' will run the pipeline as if each item in knowledgeBase/release-notes has had a change
 export const addFullSubFolderManually = async (folderName: string) => {
@@ -123,7 +136,12 @@ export const addFullSubFolderManually = async (folderName: string) => {
     });
   });
   const fullArrayOfAllItems: string[] = await directoryPromise;
+  // here add integrations
   if (fullArrayOfAllItems) {
+    const integrationChanges = fullArrayOfAllItems.map((result) =>
+      result.substring(result.indexOf(PATH_OF_INTEGRATIONS))
+    );
+    console.log(integrationChanges, "IIDIDIDIDIDIDI");
     const trimmedDirectories = fullArrayOfAllItems.map((result) =>
       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
