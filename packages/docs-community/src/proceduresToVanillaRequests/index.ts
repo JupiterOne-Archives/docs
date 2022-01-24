@@ -220,32 +220,24 @@ export const procedureToArticle = async (
 export const procedureToKnowledgeCategory = async (
   httpClient: HttpClient,
   procedureWorkedOn: VanillaKnowledgeCategory,
-  previousknowledgeCategoryID: null | number,
-  hasChangedParent: null | number
+  previousknowledgeCategoryID: null | number
 ): Promise<VanillaKnowledgeCategory> => {
   let tempProcedureWorkedOn = { ...procedureWorkedOn };
   let isReleaseNotes = false;
-  let tempPreviousknowledgeCategoryID = previousknowledgeCategoryID;
-  if (typeof hasChangedParent === "number") {
-    tempPreviousknowledgeCategoryID = hasChangedParent;
-  }
+
   if (
     procedureWorkedOn.path &&
     procedureWorkedOn.path.toLowerCase().indexOf("release-notes") !== -1
   ) {
     isReleaseNotes = true;
   }
+
   const directoryExistsResult = directoryExists(tempProcedureWorkedOn?.path);
   if (tempProcedureWorkedOn.knowledgeCategoryID !== null) {
     if (directoryExistsResult) {
-      if (tempPreviousknowledgeCategoryID) {
-        let parentID = tempPreviousknowledgeCategoryID;
-        if (hasChangedParent !== null && typeof hasChangedParent !== "string") {
-          parentID = hasChangedParent;
-        }
-
+      if (previousknowledgeCategoryID) {
         const requestForEdit = {
-          parentID: parentID,
+          parentID: previousknowledgeCategoryID,
           name: tempProcedureWorkedOn.name,
           knowledgeBaseID: isReleaseNotes
             ? 2
@@ -267,7 +259,7 @@ export const procedureToKnowledgeCategory = async (
           } else {
             const newReqData = {
               name: tempProcedureWorkedOn.name,
-              parentID: tempPreviousknowledgeCategoryID,
+              parentID: previousknowledgeCategoryID,
               knowledgeBaseID: isReleaseNotes ? 2 : 1,
             };
             try {
@@ -304,23 +296,15 @@ export const procedureToKnowledgeCategory = async (
     }
   } else {
     if (directoryExistsResult) {
-      let isReleaseNotes = false;
-
-      if (
-        procedureWorkedOn.path &&
-        procedureWorkedOn.path.toLowerCase().indexOf("release-notes") !== -1
-      ) {
-        isReleaseNotes = true;
-      }
       let reqData: any = {
         name: tempProcedureWorkedOn.name,
         parentID: 1,
         knowledgeBaseID: isReleaseNotes ? 2 : 1,
       };
-      if (tempPreviousknowledgeCategoryID !== null) {
+      if (previousknowledgeCategoryID !== null) {
         reqData = {
           name: tempProcedureWorkedOn.name,
-          parentID: tempPreviousknowledgeCategoryID,
+          parentID: previousknowledgeCategoryID,
           knowledgeBaseID: isReleaseNotes ? 2 : 1,
         };
       }
@@ -408,6 +392,7 @@ export const useProceduresForVanillaRequests = async (
       proceduresWithVanillaInfo: existingknowledgeCategoryInfo,
       procedure: procedureWorkedOn,
     });
+    console.log(hasChangedParent, "HAS CHANGGGED APRTEDNT");
 
     if (typeof hasChangedParent === "string") {
       let isReleaseNotes = false;
@@ -428,29 +413,45 @@ export const useProceduresForVanillaRequests = async (
           httpClient,
           newReqData
         );
-
+        console.log(createdKnowledgeCategory, "CREATED NEW GGGGG");
         if (createdKnowledgeCategory) {
-          tempExistingKnowledgeCategoryInfo.push(createdKnowledgeCategory);
+          tempExistingKnowledgeCategoryInfo.push({
+            ...createdKnowledgeCategory,
+            childCategoryCount: createdKnowledgeCategory.childCategoryCount
+              ? createdKnowledgeCategory.childCategoryCount
+              : 1,
+          });
+          previousknowledgeCategoryID =
+            createdKnowledgeCategory.knowledgeCategoryID;
+          console.log("*&&*&*&&*&*&&*&*&&*&*&", createdKnowledgeCategory);
+          // return await useProceduresForVanillaRequests(
+          //   [...procedures],
+          //   httpHandling,
+          //   tempExistingKnowledgeCategoryInfo,
+          //   tempCompletedProcedures
+          // );
         }
       } catch (e) {
         logger.error(`CREATE ERROR Already exists- \n ${e}`);
       }
-
-      return await useProceduresForVanillaRequests(
-        [...procedures],
-        httpHandling,
-        tempExistingKnowledgeCategoryInfo,
-        tempCompletedProcedures
-      );
     }
-
-    procedureWorkedOn = await procedureToKnowledgeCategory(
-      httpClient,
-      procedureWorkedOn,
-      previousknowledgeCategoryID,
-      hasChangedParent
-    );
-    tempExistingKnowledgeCategoryInfo.push(procedureWorkedOn);
+    // if(hasChangedParent===null){}
+    if (typeof hasChangedParent === "number") {
+      console.log(hasChangedParent, "HAHSHSHSHSHSHSHSHS");
+      procedureWorkedOn = await procedureToKnowledgeCategory(
+        httpClient,
+        procedureWorkedOn,
+        hasChangedParent
+      );
+      tempExistingKnowledgeCategoryInfo.push(procedureWorkedOn);
+    } else {
+      procedureWorkedOn = await procedureToKnowledgeCategory(
+        httpClient,
+        procedureWorkedOn,
+        previousknowledgeCategoryID
+      );
+      tempExistingKnowledgeCategoryInfo.push(procedureWorkedOn);
+    }
   }
   if (isArticleType(procedureWorkedOn)) {
     procedureWorkedOn = await procedureToArticle(

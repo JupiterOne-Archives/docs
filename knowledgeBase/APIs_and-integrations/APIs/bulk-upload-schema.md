@@ -1,6 +1,6 @@
 # JupiterOne Bulk Upload Schema
 
-> IMPORTANT: Bulk upload triggers a data synchronization process that automatically **updates** or **deletes** entities/relationships as needed. Previously existing entities/relationships within the same `scope` that no longer exist in the latest upload will be marked for deletion..
+> IMPORTANT: Bulk upload triggers a data synchronization process that automatically **updates** or **deletes** entities/relationships as needed. Previously existing entities/relationships within the same `scope` that no longer exist in the latest upload will be marked for deletion.
 
 > Therefore, the upload file should always include the **complete** set of entities or relationships within the defined `scope` to avoid unintended data deletion.
 

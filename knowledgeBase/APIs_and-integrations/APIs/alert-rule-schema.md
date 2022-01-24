@@ -1,4 +1,4 @@
-# JupiterOne Alert Rule Schema
+# JupiterOne Alert Rule Schema 
 
 A rule uses the results of one or more queries to execute one or more actions. The basic alert workflows are described here: [JupiterOne Alert Rule configuration documentation](https://support.jupiterone.io/hc/en-us/articles/360022720474-6-9-Alerts-and-Alert-Rules). You can also directly edit the JSON that defines a rule for more advanced workflow execution.
 
