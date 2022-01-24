@@ -8,15 +8,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "getIntegrations": "yarn node ./src/index.js",
-    "watch-and-run": "ts-node-dev --respawn -- src/index.ts",
-    "test": "jest",
-    "clean": "rm -rf ./dist ./coverage",
-    "compile": "ttsc -p tsconfig.dist.json; cp package.json ./dist; cd ./dist;",
-    "autobuild": "yarn compile --watch",
-    "build": "yarn clean && yarn compile",
-    "start": "concurrently 'yarn autobuild' 'yarn watch-and-run'",
-    "build-ts": "tsc"
+    "getIntegrations": "yarn node ./src/index.js"
   },
   "dependencies": {
     "@types/glob": "^7.2.0",
