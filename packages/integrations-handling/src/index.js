@@ -1,13 +1,14 @@
 import axios from "axios";
 import { promises as fs } from "fs";
+// import simpleGit from 'simple-git'
 import * as yaml from "js-yaml";
-import pMap from "p-map";
+
 import path from "path";
-import remarkRehype from "remark-rehype";
+// import remarkRehype from "remark-rehype";
 import { remark } from "remark";
-import rehypeStringify from "rehype-stringify";
+// import rehypeStringify from "rehype-stringify";
 import remarkGfm from "remark-gfm";
-import remarkParse from "remark-parse";
+// import remarkParse from "remark-parse";
 
 // interface DocsConfig {
 //   integrations: IntegrationProjectConfig[];
@@ -90,14 +91,26 @@ export const directoryOrFileExists = async (filePath) => {
 
 const createDirIfNotExist = async (dirPath) => {
   const exists = await directoryOrFileExists(dirPath);
+  console.log(dirPath, "THIS IS THE DUR PATH");
   if (!exists) {
     return await fs.mkdir(dirPath, { recursive: true });
   }
 };
 
 const createFileIfNotExist = async (docFilePath, githubFileContents) => {
-  const exists = await directoryOrFileExists(docFilePath);
-
+  let exists = false;
+  try {
+    const blockingReadOfFile = await fs.readFile(fileLocation, {
+      encoding: "utf8",
+    });
+    if (blockingReadOfFile) {
+      console.log(blockingReadOfFile, "true");
+      exists = true;
+    }
+  } catch (error) {
+    console.log("fALLLLSEE IT EXISTS");
+    exists = false;
+  }
   if (!exists) {
     try {
       await fs.writeFile(docFilePath, githubFileContents, {
@@ -105,6 +118,7 @@ const createFileIfNotExist = async (docFilePath, githubFileContents) => {
       });
       return true;
     } catch (e) {
+      console.log(e, "WRITE ERRRIR");
       return false;
     }
   }
@@ -115,15 +129,21 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
 
   for (let i = 0; i < integrationConfigs.length; i++) {
     const projectName = integrationConfigs[i].projectName;
+    let version = undefined;
+    try {
+      version = await getRepoVersion(projectName);
+    } catch (e) {
+      console.log("VERSION FETCH ERROR");
+    }
 
     try {
-      const result = await axios.get(buildGithubDocFileUrl(projectName), {});
-      const version = await getRepoVersion(projectName);
+      const result = await axios.get(buildGithubDocFileUrl(projectName));
 
       let docContents = {
         integrationName: projectName,
-        githubFileContents: result.data,
+        githubFileContents: "",
         version,
+        displayName: integrationConfigs[i].displayName,
       };
 
       if (result.data) {
@@ -131,12 +151,18 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
           integrationName: projectName,
           githubFileContents: result.data,
           version,
+          displayName: integrationConfigs[i].displayName,
         });
       }
 
       completedRequests.push(docContents);
     } catch (e) {
-      console.log(projectName, ":NOT FOUND");
+      completedRequests.push({
+        integrationName: projectName,
+        githubFileContents: result.data,
+        version,
+        displayName: integrationConfigs[i].displayName,
+      });
     }
   }
 
@@ -161,7 +187,7 @@ const createAllIntegrationProjectDocFilesFromConfig = async (
     ) {
       const docDirPath = path.join(
         path.resolve(),
-        `./integrations/${getIntegrationDocFileBaseName(integrationName)}`
+        `./integrations/${integrationName}`
       );
 
       await createDirIfNotExist(docDirPath);
@@ -169,8 +195,11 @@ const createAllIntegrationProjectDocFilesFromConfig = async (
         docDirPath,
         `${version.replace(/\./g, "-")}.md`
       );
-
-      const createChange = await createFileIfNotExist(docFilePath);
+      console.log(docFilePath, "DOCK FILE FATH");
+      const createChange = await createFileIfNotExist(
+        docFilePath,
+        githubFileContents
+      );
 
       if (createChange) {
         changes.push({ githubFileContents, version, integrationName });
@@ -201,18 +230,19 @@ async function readDocsConfig(docsConfigFilePath) {
   const docsConfig = await readDocsConfig(
     path.join(path.resolve("src"), "./integrations.config.yaml")
   );
-
+  // simplegit checkout new branch
   const successes = await createAllIntegrationProjectDocFilesFromConfig(
     docsConfig.integrations
   );
   console.log(
     "Changes added:",
-    successes.changes.map((c) => i.integrationName)
+    successes.changes.map((c) => c.integrationName)
   );
   console.log(
     "Changes MISSING:",
-    successes.missing.map((c) => i.integrationName)
+    successes.missing.map((c) => c.integrationName)
   );
+  // simplegit if changes commit and push to new branch
 })().catch((err) => {
   console.error("Error generating integration docs: ", err);
 });
