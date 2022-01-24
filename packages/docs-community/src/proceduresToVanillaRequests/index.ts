@@ -183,7 +183,7 @@ export const procedureToArticle = async (
         format: "markdown",
         knowledgeCategoryID: previousknowledgeCategoryID,
         locale: "en",
-        name: tempProcedureWorkedOn.name,
+        name: tempProcedureWorkedOn.name?.trim(),
         sort: 0,
         path: tempProcedureWorkedOn.path,
       };
