@@ -64,7 +64,26 @@ export const updateCommunityDocs = async () => {
     const integrationChanges = nestedMergedWithOriginal.map((result) =>
       result.substring(result.indexOf(PATH_OF_INTEGRATIONS))
     );
-    console.log(integrationChanges, "integrationChanges***********");
+    const filteredIntegrationChanges = integrationChanges.filter(
+      (i) => i.indexOf(".md") !== -1
+    );
+    const structForReplacingBody = filteredIntegrationChanges.map((item) => {
+      const version = item.substring(item.indexOf("-VERSION"));
+      const articleNameSplit = item
+        .substring(0, item.indexOf("-VERSION"))
+        .split("/");
+      const articleName = articleNameSplit[articleNameSplit.length - 1];
+      return {
+        version: version.replace("-VERSION", ""),
+        articleName,
+        path: item,
+      };
+    });
+    console.log(
+      "START INTFISLS",
+      structForReplacingBody,
+      "filteredIntegrationChangesEDN"
+    );
     const nestedWithRemovedPath = nestedMergedWithOriginal.map((path) =>
       path.substring(path.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
