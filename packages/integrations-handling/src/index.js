@@ -8,10 +8,7 @@ import { remark } from "remark";
 import rehypeStringify from "rehype-stringify";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
-// .use(remarkParse)
-// .use(remarkGfm)
-// .use(remarkRehype)
-// .use(rehypeStringify)
+
 // interface DocsConfig {
 //   integrations: IntegrationProjectConfig[];
 // }
@@ -35,6 +32,7 @@ import remarkParse from "remark-parse";
 const generateIntegrationPageContents = async ({
   integrationName,
   githubFileContents,
+  version,
 }) => {
   const file = await remark()
     // .use(remarkParse)
@@ -43,10 +41,11 @@ const generateIntegrationPageContents = async ({
     // .use(rehypeStringify)
     // .use(remarkRehype)
     .process(githubFileContents);
-  console.log(file, "immafile");
+
   return {
     githubFileContents: file.toString(),
     integrationName,
+    version,
   };
 };
 // interface IntegrationProjectConfigRenderable extends IntegrationProjectConfig {
@@ -60,6 +59,18 @@ function buildGithubDocFileUrl(projectName) {
   return `https://raw.githubusercontent.com/JupiterOne/${projectName}/main/docs/jupiterone.md`;
 }
 
+const getRepoVersion = async (projectName) => {
+  const url = `https://raw.githubusercontent.com/JupiterOne/${projectName}/main/package.json`;
+  const result = await axios.get(url);
+  const { data } = result;
+
+  if (data) {
+    return data.version;
+  } else {
+    return "not-found";
+  }
+};
+
 /**
  * Example input: Google Cloud
  * Example output: google-cloud
@@ -68,121 +79,108 @@ function getIntegrationDocFileBaseName(displayName) {
   return displayName.trim().toLowerCase().replace(/ /g, "-");
 }
 
-async function createDirIfNotExist(dirPath) {
+export const directoryOrFileExists = async (filePath) => {
   try {
-    const dir = await fs.stat(dirPath);
-    console.log(dirPath, "dirpatsssssh");
-    if (!dir.isDirectory()) {
-      throw new Error(
-        `A file that is not a directory already exists at this path (path=${dirPath})`
-      );
-    }
-  } catch (err) {
-    if (err.code == "ENOENT") {
-      await fs.mkdir(dirPath);
-    } else {
-      throw err;
+    await fs.access(filePath, fs.constants.F_OK);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+const createDirIfNotExist = async (dirPath) => {
+  const exists = await directoryOrFileExists(dirPath);
+  if (!exists) {
+    return await fs.mkdir(dirPath, { recursive: true });
+  }
+};
+
+const createFileIfNotExist = async (docFilePath, githubFileContents) => {
+  const exists = await directoryOrFileExists(docFilePath);
+
+  if (!exists) {
+    try {
+      await fs.writeFile(docFilePath, githubFileContents, {
+        encoding: "utf-8",
+      });
+      return true;
+    } catch (e) {
+      return false;
     }
   }
-}
+};
 
 async function generateRenderableIntegrationConfigs(integrationConfigs) {
   const completedRequests = [];
 
   for (let i = 0; i < integrationConfigs.length; i++) {
+    const projectName = integrationConfigs[i].projectName;
+
     try {
-      const result = await axios.get(
-        buildGithubDocFileUrl(integrationConfigs[i].projectName),
-        {}
-      );
+      const result = await axios.get(buildGithubDocFileUrl(projectName), {});
+      const version = await getRepoVersion(projectName);
+
       let docContents = {
-        integrationName: integrationConfigs[i].projectName,
+        integrationName: projectName,
         githubFileContents: result.data,
+        version,
       };
 
       if (result.data) {
         docContents = await generateIntegrationPageContents({
-          integrationName: integrationConfigs[i].projectName,
+          integrationName: projectName,
           githubFileContents: result.data,
+          version,
         });
       }
 
       completedRequests.push(docContents);
     } catch (e) {
-      console.log(e, "EEEIRR");
+      console.log(projectName, ":NOT FOUND");
     }
   }
-  console.log(completedRequests, "I DIDIDIDID");
+
   return completedRequests;
-
-  // console.log(completedRequests,'completed reeeeeuuuu')
-  //   const result = await pMap(
-  //     integrationConfigs,
-  //     async (config) => {
-  //       const response = await axios.get(
-  //         buildGithubDocFileUrl(config.projectName),
-  //         {}
-  //       );
-
-  //       if (response.status === 404) {
-  //         console.log(
-  //           "Could not fetch documentation file for project",
-  //           config.projectName
-  //         );
-  //         return null;
-  //       }
-
-  //       const docContents = generateIntegrationPageContents({
-  //         integrationName: config.displayName,
-  //         githubFileContents: await response.data,
-  //       });
-  //       completedRequests.push(docContents);
-
-  //       const renderableConfig: IntegrationProjectConfigRenderable = {
-  //         ...config,
-  //         body: docContents.githubFileContents,
-  //       };
-
-  //       return renderableConfig;
-  //     },
-  //     {
-  //       concurrency: 5,
-  //     }
-  //   );
-  //   console.log(
-  //     completedRequests,
-  //     "completedRequestscompletedRequestscompletedRequests"
-  //   );
-  //   return result.filter(
-  //     (r) => r !== null
-  //   ) as IntegrationProjectConfigRenderable[];
 }
 
-async function createAllIntegrationProjectDocFilesFromConfig(
+const createAllIntegrationProjectDocFilesFromConfig = async (
   integrationConfigs
-) {
+) => {
   const renderableConfigs = await generateRenderableIntegrationConfigs(
     integrationConfigs
   );
-  console.log(renderableConfigs, "renderableConfigsrenderableConfigs");
-  const getthing = await pMap(renderableConfigs, async (config) => {
-    const docDirPath = path.join(
-      path.resolve(),
-      `./docs/integrations/${getIntegrationDocFileBaseName(
-        config.integrationName
-      )}`
-    );
-    console.log(docDirPath, "dddddddooockkk");
-    await createDirIfNotExist(docDirPath);
+  const changes = [];
+  const missing = [];
+  for (let r = 0; r < renderableConfigs.length; r++) {
+    const { githubFileContents, version, integrationName } =
+      renderableConfigs[r];
+    if (
+      githubFileContents !== "" &&
+      version !== "not-found" &&
+      integrationName
+    ) {
+      const docDirPath = path.join(
+        path.resolve(),
+        `./integrations/${getIntegrationDocFileBaseName(integrationName)}`
+      );
 
-    const docFilePath = path.join(docDirPath, `index.md`);
+      await createDirIfNotExist(docDirPath);
+      const docFilePath = path.join(
+        docDirPath,
+        `${version.replace(/\./g, "-")}.md`
+      );
 
-    await fs.writeFile(docFilePath, config.githubFileContents, {
-      encoding: "utf-8",
-    });
-  });
-  console.log("getTHigns", getthing);
-}
+      const createChange = await createFileIfNotExist(docFilePath);
+
+      if (createChange) {
+        changes.push({ githubFileContents, version, integrationName });
+      }
+    } else {
+      missing.push({ githubFileContents, version, integrationName });
+    }
+  }
+  return { changes, missing };
+};
 
 async function readDocsConfig(docsConfigFilePath) {
   const fileContents = await fs.readFile(docsConfigFilePath, {
@@ -204,7 +202,17 @@ async function readDocsConfig(docsConfigFilePath) {
     path.join(path.resolve("src"), "./integrations.config.yaml")
   );
 
-  await createAllIntegrationProjectDocFilesFromConfig(docsConfig.integrations);
+  const successes = await createAllIntegrationProjectDocFilesFromConfig(
+    docsConfig.integrations
+  );
+  console.log(
+    "Changes added:",
+    successes.changes.map((c) => i.integrationName)
+  );
+  console.log(
+    "Changes MISSING:",
+    successes.missing.map((c) => i.integrationName)
+  );
 })().catch((err) => {
   console.error("Error generating integration docs: ", err);
 });
