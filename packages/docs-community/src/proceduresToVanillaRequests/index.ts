@@ -392,7 +392,6 @@ export const useProceduresForVanillaRequests = async (
       proceduresWithVanillaInfo: existingknowledgeCategoryInfo,
       procedure: procedureWorkedOn,
     });
-    console.log(hasChangedParent, "HAS CHANGGGED APRTEDNT");
 
     if (typeof hasChangedParent === "string") {
       let isReleaseNotes = false;
@@ -413,7 +412,7 @@ export const useProceduresForVanillaRequests = async (
           httpClient,
           newReqData
         );
-        console.log(createdKnowledgeCategory, "CREATED NEW GGGGG");
+
         if (createdKnowledgeCategory) {
           tempExistingKnowledgeCategoryInfo.push({
             ...createdKnowledgeCategory,
@@ -423,21 +422,13 @@ export const useProceduresForVanillaRequests = async (
           });
           previousknowledgeCategoryID =
             createdKnowledgeCategory.knowledgeCategoryID;
-          console.log("*&&*&*&&*&*&&*&*&&*&*&", createdKnowledgeCategory);
-          // return await useProceduresForVanillaRequests(
-          //   [...procedures],
-          //   httpHandling,
-          //   tempExistingKnowledgeCategoryInfo,
-          //   tempCompletedProcedures
-          // );
         }
       } catch (e) {
         logger.error(`CREATE ERROR Already exists- \n ${e}`);
       }
     }
-    // if(hasChangedParent===null){}
+
     if (typeof hasChangedParent === "number") {
-      console.log(hasChangedParent, "HAHSHSHSHSHSHSHSHS");
       procedureWorkedOn = await procedureToKnowledgeCategory(
         httpClient,
         procedureWorkedOn,

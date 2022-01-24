@@ -40,10 +40,7 @@ export const hasKnowledgeCategoryBeenMoved = ({
         splitProcedurePath[splitProcedurePath.length - 2];
     }
   }
-  console.log(
-    parentKnowledgeCategroyName,
-    "parentKnowledgeCategroyNameparentKnowledgeCategroyName"
-  );
+
   if (parentKnowledgeCategroyName) {
     const nameOfKnowledgeCategroyBelongsTo = createDisplayName(
       parentKnowledgeCategroyName
@@ -149,15 +146,6 @@ export const getPreviousKnowledgeID = (
     existingknowledgeCategoryInfo && existingknowledgeCategoryInfo.length
       ? [...existingknowledgeCategoryInfo]
       : [];
-  if (isKnowledgeCategoryType(procedureBeingWorkedOn)) {
-    console.log(
-      hasKnowledgeCategoryBeenMoved({
-        proceduresWithVanillaInfo: existingknowledgeCategoryInfo,
-        procedure: procedureBeingWorkedOn,
-      }),
-      "(*@(*(@*#@(#*@*#@(*#@(#*@*#@(#@#(*@(*#"
-    );
-  }
 
   const pathSplit = procedureBeingWorkedOn?.path?.split("/");
 
