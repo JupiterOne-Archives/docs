@@ -164,6 +164,7 @@ export const handleNestedKnowledgeCategoryChanges = async (
 
 export const diffToProcedures = async (gitDiffArray: string[]) => {
   const gitDiffWithOutDocs = filterDiffs(gitDiffArray);
+
   logger.info(`Filtered Diffs used to generate procedures: ${gitDiffArray}`);
   if (gitDiffWithOutDocs && gitDiffWithOutDocs.length) {
     const { completed } = await handleNestedKnowledgeCategoryChanges({
