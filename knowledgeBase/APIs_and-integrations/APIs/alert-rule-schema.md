@@ -345,7 +345,7 @@ Example:
 | `type`                  | `string` | Rule operation action type: `PUBLISH_SNS_MESSAGE`. |
 | `integrationInstanceId` | `string` | The ID of the AWS integration instance to use. The integration role must have `sns:Publish` permission. |
 | `topicArn`              | `string` | The ARN of the SNS topic to publish the message to. |
-| `data`                  | `object` | User-provided data to include in the message. See [Operation Templating](#operationtemplating) for details on using variable data. |
+| `data`                  | `object` | User-provided data to include in the message. See [Operation Templating](./alert-rule-schema#operationtemplating) for details on using variable data. |
 
 Example:
 
@@ -386,7 +386,7 @@ Example:
 | `type`                  | `string` | Rule operation action type: `SEND_SQS_MESSAGE`. |
 | `integrationInstanceId` | `string` | The ID of the AWS integration instance to use. The integration role must have `sqs:SendMessage` permission. |
 | `queueUrl`              | `string` | The URL of the SQS queue to publish the message to. |
-| `data`                  | `object` | User-provided data to include in the message. See [Operation Templating](#operationtemplating) for details on using variable data. |
+| `data`                  | `object` | User-provided data to include in the message. See [Operation Templating](./alert-rule-schema#operationtemplating) for details on using variable data. |
 
 Example:
 
@@ -743,7 +743,7 @@ which is referenced when the rule is evaluated. These parameters are
 always referenced with the preceding token `param.`. The subsequent 
 string (without special characters) identifies the name of a parameter.
 
-Parameters are supported anywhere that [Operation Templating](#operationtemplating) 
+Parameters are supported anywhere that [Operation Templating](./alert-rule-schema#operationtemplating) 
 is supported, and the value of a parameter can be any type of 
 [native type](#nativetypes) with the **exclusion of objects**, 
 which support comparison *against* parameters but cannot be the 
