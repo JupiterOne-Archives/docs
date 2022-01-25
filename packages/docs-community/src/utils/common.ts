@@ -3,7 +3,6 @@ import path from "path";
 import {
   FLAG_FOR_DELETE,
   PATH_OF_DIRECTORY_TO_WATCH,
-  PATH_OF_INTEGRATIONS,
   SUPPORTED_FILE_TYPE_EXTENTIONS,
   VanillaArticle,
   VanillaKnowledgeCategory,
@@ -33,11 +32,7 @@ export const createDisplayName = (name: string) => {
     .join(" ");
 };
 export const getIntegrationMarkdownAsString = async (filePath: string) => {
-  const fileLocation = path.join(
-    __dirname,
-    `../../../../${PATH_OF_INTEGRATIONS}`,
-    `/${filePath}`
-  );
+  const fileLocation = path.join(__dirname, `../../../../`, `${filePath}`);
 
   let supportedTypeOfFile = false;
   SUPPORTED_FILE_TYPE_EXTENTIONS.forEach((extention) => {

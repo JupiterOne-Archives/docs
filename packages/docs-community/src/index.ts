@@ -6,6 +6,7 @@ import HttpClient from "./httpClient";
 import { logger } from "./loggingUtil";
 import { proceduresToVanillaRequests } from "./proceduresToVanillaRequests";
 import {
+  createDisplayName,
   IntegrationChange,
   PATH_OF_DIRECTORY_TO_WATCH,
   PATH_OF_INTEGRATIONS,
@@ -57,7 +58,9 @@ const getDirectories = (src: string, cb: (err: any, res: any) => any) => {
 const createIntegrationChanges = (diffs: string[]): IntegrationChange[] => {
   const filteredIntegrationChanges = [...diffs]
     .filter((i) => i.indexOf(".md") !== -1)
-    .map((result) => result.substring(result.indexOf(PATH_OF_INTEGRATIONS)));
+    .map((result) =>
+      result.substring(result.indexOf(`${PATH_OF_INTEGRATIONS}/`))
+    );
   return filteredIntegrationChanges.map((item: string): IntegrationChange => {
     const version = item.substring(item.indexOf("-VERSION"));
     const articleNameSplit = item
@@ -65,9 +68,9 @@ const createIntegrationChanges = (diffs: string[]): IntegrationChange[] => {
       .split("/");
     const articleName = articleNameSplit[articleNameSplit.length - 1];
     return {
-      version: version.replace("-VERSION", ""),
-      articleName,
-      path: item,
+      version: version.replace("-VERSION", "").replace(".md", ""),
+      articleName: createDisplayName(articleName),
+      path: item.replace(/\s/g, "-"),
     };
   });
 };
@@ -98,11 +101,6 @@ export const updateCommunityDocs = async () => {
       nestedMergedWithOriginal
     );
 
-    console.log(
-      "START INTFISLS",
-      filteredIntegrationChanges,
-      "filteredIntegrationChangesEDN"
-    );
     const nestedWithRemovedPath = nestedMergedWithOriginal.map((path) =>
       path.substring(path.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
@@ -182,7 +180,7 @@ export const addFullSubFolderManually = async (folderName: string) => {
     const integrationChanges = createIntegrationChanges(
       fullArrayOfAllIntegrations
     );
-    console.log(integrationChanges, "IIDIDIDIDIDIDI");
+
     const trimmedDirectories = fullArrayOfAllItems.map((result) =>
       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
