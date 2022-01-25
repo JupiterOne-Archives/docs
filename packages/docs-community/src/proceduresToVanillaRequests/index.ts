@@ -10,6 +10,8 @@ import {
   getIntegrationMarkdownAsString,
   isArticleType,
   isKnowledgeCategoryType,
+  removeTitleFromArticleBody,
+  TITLE_FROM_MARKDOWN_REGEX,
 } from "../utils";
 import {
   FLAG_FOR_DELETE,
@@ -472,6 +474,11 @@ export const useProceduresForVanillaRequests = async (
   );
 };
 
+export interface IntegrationChangeContainsNewerVersion {
+  matchingIntegrationChange: IntegrationChange;
+  currentArticleBody: string;
+}
+
 export interface ReplaceArticleBodyWithIntegrationProps {
   procedures: (VanillaArticle | VanillaKnowledgeCategory)[];
   integrationChanges: IntegrationChange[];
@@ -482,19 +489,21 @@ export const replaceArticleBodyWithIntegration = async ({
 }: ReplaceArticleBodyWithIntegrationProps): Promise<
   (VanillaArticle | VanillaKnowledgeCategory)[]
 > => {
-  const alteredProcedures: (VanillaArticle | VanillaKnowledgeCategory)[] = [];
+  const alteredProcedures: (VanillaArticle | VanillaKnowledgeCategory)[] =
+    procedures || [];
   if (integrationChanges && integrationChanges.length) {
-    for (let p = 0; p < procedures.length; p++) {
-      const procedure = procedures[p];
+    for (let p = 0; p < alteredProcedures.length; p++) {
+      const procedure = alteredProcedures[p];
       if (isArticleType(procedure)) {
         const [matchingIntegrationChange] = integrationChanges.filter(
           (i) => i.articleName === procedure.name
         );
-        console.log("MATCHINGNGNGN", matchingIntegrationChange);
+
         if (matchingIntegrationChange) {
           const newBody = await getIntegrationMarkdownAsString(
             matchingIntegrationChange.path
           );
+
           if (newBody !== FLAG_FOR_DELETE) {
             logger.info(
               `Article update from integration: ${JSON.stringify(
@@ -503,17 +512,21 @@ export const replaceArticleBodyWithIntegration = async ({
                 2
               )}`
             );
-            procedure.body = newBody;
+
+            procedure.body = removeTitleFromArticleBody(
+              newBody,
+              TITLE_FROM_MARKDOWN_REGEX
+            );
+
+            alteredProcedures[p] = procedure;
           }
         }
-        alteredProcedures.push(procedure);
-      } else {
-        alteredProcedures.push(procedures[p]);
       }
     }
   }
   return alteredProcedures;
 };
+
 export interface ProceduresToVanillaRequestProps {
   procedures: (VanillaArticle | VanillaKnowledgeCategory)[];
   integrationChanges?: IntegrationChange[];
@@ -550,21 +563,20 @@ export const proceduresToVanillaRequests = async ({
     });
     // add body to article before links and images get added
 
-    let proceduresWithArticleInfo = addVanillaArticlesToProcedures(
+    const proceduresWithArticleInfo = addVanillaArticlesToProcedures(
       proceduresWithVanillaCategories,
       articles
     );
-    console.log("SJSJSJSJSS", integrationChanges);
-    if (integrationChanges && integrationChanges.length) {
-      proceduresWithArticleInfo = await replaceArticleBodyWithIntegration({
+
+    const alteredProceduresWithArticleInfo =
+      await replaceArticleBodyWithIntegration({
         procedures: [...proceduresWithArticleInfo],
-        integrationChanges,
+        integrationChanges: integrationChanges || [],
       });
-      console.log(proceduresWithArticleInfo);
-    }
-    return procedures;
+
+    // return procedures;
     const processedProcedures = await useProceduresForVanillaRequests(
-      proceduresWithArticleInfo,
+      alteredProceduresWithArticleInfo,
       httpClient,
       existingknowledgeCategoryInfo
     );

@@ -30,10 +30,10 @@ describe("diffToProceedures", () => {
 
   describe("createArticleChange", () => {
     it("handles index files", async () => {
-      const actual = await createArticleChange(
-        "index.md",
-        "k-category/index.md"
-      );
+      const actual = await createArticleChange({
+        articleChanges: "index.md",
+        path: "k-category/index.md",
+      });
       const expected: VanillaArticle = {
         knowledgeCategoryID: null, //will need to create it and get it- for sub folders
         articleID: null,
@@ -48,10 +48,10 @@ describe("diffToProceedures", () => {
       expect(actual).toEqual(expected);
     });
     it("handles named files", async () => {
-      const actual = await createArticleChange(
-        "article-title.md",
-        "k-category/article-title.md"
-      );
+      const actual = await createArticleChange({
+        articleChanges: "article-title.md",
+        path: "k-category/article-title.md",
+      });
       const expected: VanillaArticle = {
         knowledgeCategoryID: null, //will need to create it and get it- for sub folders
         articleID: null,
