@@ -2,8 +2,7 @@ import { authToken } from "../auth";
 export const FLAG_FOR_DELETE: string = "FILE_DOES_NOT_EXIST";
 export const SUPPORTED_FILE_TYPE_EXTENTIONS: string[] = [".md"];
 export const PATH_OF_DIRECTORY_TO_WATCH: string = "knowledgeBase";
-export const PATH_OF_INTEGRATIONS: string =
-  "packages/integrations-handling/integrations/";
+export const PATH_OF_INTEGRATIONS: string = "integrations";
 export const DEV_URL: string = "https://jupiterone.vanillastaging.com/api/v2";
 export const PROD_URL: string =
   "https://jupiterone.vanillacommunities.com/api/v2";

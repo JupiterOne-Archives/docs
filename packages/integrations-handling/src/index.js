@@ -1,5 +1,5 @@
 import axios from "axios";
-import { promises as fs } from "fs";
+import { promises as fs, existsSync } from "fs";
 // import simpleGit from 'simple-git'
 import * as yaml from "js-yaml";
 
@@ -114,18 +114,13 @@ const createDirIfNotExist = async (dirPath) => {
 
 const createFileIfNotExist = async (docFilePath, githubFileContents) => {
   let exists = false;
-  try {
-    const blockingReadOfFile = await fs.readFile(fileLocation, {
-      encoding: "utf8",
-    });
-    if (blockingReadOfFile) {
-      console.log(blockingReadOfFile, "true");
-      exists = true;
-    }
-  } catch (error) {
-    console.log("fALLLLSEE IT EXISTS");
+  if (existsSync(docFilePath)) {
+    // path exists
+    exists = true;
+  } else {
     exists = false;
   }
+
   if (!exists) {
     try {
       await fs.writeFile(docFilePath, githubFileContents, {
@@ -137,6 +132,7 @@ const createFileIfNotExist = async (docFilePath, githubFileContents) => {
       return false;
     }
   }
+  return false;
 };
 
 async function generateRenderableIntegrationConfigs(integrationConfigs) {
@@ -195,7 +191,7 @@ const createAllIntegrationProjectDocFilesFromConfig = async (
     integrationConfigs
   );
   const changes = [];
-  const missing = [];
+  const existing = [];
   for (let r = 0; r < renderableConfigs.length; r++) {
     const { githubFileContents, version, integrationName, displayName } =
       renderableConfigs[r];
@@ -206,7 +202,7 @@ const createAllIntegrationProjectDocFilesFromConfig = async (
     ) {
       const docDirPath = path.join(
         path.resolve(),
-        `./integrations/${integrationName}`
+        `../../integrations/${integrationName}`
       );
       const markdownName = `${displayName}-integration_with-JupiterOne-VERSION${version}`;
       await createDirIfNotExist(docDirPath);
@@ -216,15 +212,15 @@ const createAllIntegrationProjectDocFilesFromConfig = async (
         docFilePath,
         githubFileContents
       );
-
+      console.log(createChange, "createChangecreateChange");
       if (createChange) {
         changes.push({ githubFileContents, version, integrationName });
+      } else {
+        existing.push({ githubFileContents, version, integrationName });
       }
-    } else {
-      missing.push({ githubFileContents, version, integrationName });
     }
   }
-  return { changes, missing };
+  return { changes, existing };
 };
 
 async function readDocsConfig(docsConfigFilePath) {
@@ -256,7 +252,7 @@ async function readDocsConfig(docsConfigFilePath) {
   );
   console.log(
     "Changes MISSING:",
-    successes.missing.map((c) => c.integrationName)
+    successes.existing.map((c) => c.integrationName)
   );
   // simplegit if changes commit and push to new branch
 })().catch((err) => {
