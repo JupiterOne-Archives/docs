@@ -116,9 +116,9 @@ export const getArticleNameFromReference = async (
   currentArticlePath: string | undefined
 ): Promise<string | false> => {
   if (currentArticlePath) {
-    const directoryForSingleSlash = currentArticlePath.split("/");
+    const directoryArticleResidesSplit = currentArticlePath.split("/");
     const pathForMissing: string[] = [];
-    directoryForSingleSlash.forEach((p) => {
+    directoryArticleResidesSplit.forEach((p) => {
       if (p.indexOf(".md") == -1) {
         pathForMissing.push(p);
       }
