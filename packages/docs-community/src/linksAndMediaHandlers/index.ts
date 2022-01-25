@@ -115,11 +115,7 @@ export const getArticleNameFromReference = async (
   pathOfReference: string,
   currentArticlePath: string | undefined
 ): Promise<string | false> => {
-  const regexTwoDots = new RegExp(/\.\.\//, "g");
-  const regexOneDot = new RegExp(/\.\//, "g");
-  let cleanedPath = pathOfReference.replace(regexTwoDots, "");
-  if (cleanedPath.indexOf("./") !== -1 && currentArticlePath) {
-    cleanedPath = cleanedPath.replace(regexOneDot, "");
+  if (currentArticlePath) {
     const directoryForSingleSlash = currentArticlePath.split("/");
     const pathForMissing: string[] = [];
     directoryForSingleSlash.forEach((p) => {
@@ -128,14 +124,17 @@ export const getArticleNameFromReference = async (
       }
     });
     const newPath = pathForMissing.join("/");
-    cleanedPath = `/${newPath}/${cleanedPath}`;
+    const createdPathFromReferencingArticle = `${newPath}/${pathOfReference}`;
+
+    const articleBody = await markdownToString(
+      createdPathFromReferencingArticle
+    );
+
+    const titleFromBody = checkBodyForTitleToUseForArticle(
+      articleBody,
+      TITLE_FROM_MARKDOWN_REGEX
+    );
+    return titleFromBody;
   }
-
-  const articleBody = await markdownToString(cleanedPath);
-
-  const titleFromBody = checkBodyForTitleToUseForArticle(
-    articleBody,
-    TITLE_FROM_MARKDOWN_REGEX
-  );
-  return titleFromBody;
+  return false;
 };

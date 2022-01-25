@@ -27,7 +27,6 @@ export const updateArticleInternalMarkdownLinks = async (
       articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown?.length &&
       articleUndergoingChanges.body !== null
     ) {
-
       const references: string[] =
         articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown || [];
 
@@ -36,19 +35,21 @@ export const updateArticleInternalMarkdownLinks = async (
           references[r],
           articleUndergoingChanges.path
         );
-
+        console.log(articleName, "ARTICLE NAME");
         if (articleName) {
           const existingArticleMatches = [...articlesToUseForSlugs]
             .filter((article) => {
               return article.name === articleName;
             })
             .filter((a) => a.status !== "deleted");
-
+          console.log(
+            existingArticleMatches,
+            "existingArticleMatchesexistingArticleMatches"
+          );
           const articleUrl: string =
             existingArticleMatches[0]?.url || "doesNotExist";
 
           if (articleUndergoingChanges.body !== null && articleUrl) {
-
             const { bodyAlterations } =
               modifyBodyLinkForImageForReturnedArticles(
                 articleUndergoingChanges.body || "",
@@ -56,11 +57,9 @@ export const updateArticleInternalMarkdownLinks = async (
                 articleUrl
               );
 
-
             articleUndergoingChanges.body = bodyAlterations;
-
           }
-        } 
+        }
       }
     }
     proceduresWithUpdatedBodies.push(articleUndergoingChanges);
