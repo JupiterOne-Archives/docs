@@ -220,8 +220,7 @@ export const procedureToArticle = async (
 export const procedureToKnowledgeCategory = async (
   httpClient: HttpClient,
   procedureWorkedOn: VanillaKnowledgeCategory,
-  previousknowledgeCategoryID: null | number,
-  hasChangedParent: boolean
+  previousknowledgeCategoryID: null | number
 ): Promise<VanillaKnowledgeCategory> => {
   let tempProcedureWorkedOn = { ...procedureWorkedOn };
   let isReleaseNotes = false;
@@ -236,9 +235,7 @@ export const procedureToKnowledgeCategory = async (
   const directoryExistsResult = directoryExists(tempProcedureWorkedOn?.path);
   if (tempProcedureWorkedOn.knowledgeCategoryID !== null) {
     if (directoryExistsResult) {
-
       if (previousknowledgeCategoryID) {
-
         const requestForEdit = {
           parentID: previousknowledgeCategoryID,
           name: tempProcedureWorkedOn.name,
@@ -448,7 +445,6 @@ export const useProceduresForVanillaRequests = async (
       );
       tempExistingKnowledgeCategoryInfo.push(procedureWorkedOn);
     }
-
   }
   if (isArticleType(procedureWorkedOn)) {
     procedureWorkedOn = await procedureToArticle(
