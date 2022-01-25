@@ -2,33 +2,14 @@ import axios from "axios";
 import { promises as fs, existsSync } from "fs";
 // import simpleGit from 'simple-git'
 import * as yaml from "js-yaml";
-
+import remarkSqueezeParagraphs from "remark-squeeze-paragraphs";
 import path from "path";
-// import remarkRehype from "remark-rehype";
 import { remark } from "remark";
-// import rehypeStringify from "rehype-stringify";
+import remarkPresetLintConsistent from "remark-preset-lint-consistent";
+import remarkPresetLintRecommended from "remark-preset-lint-recommended";
+import remarkLintListItemIndent from "remark-lint-list-item-indent";
 import remarkGfm from "remark-gfm";
-// import remarkParse from "remark-parse";
 
-// interface DocsConfig {
-//   integrations: IntegrationProjectConfig[];
-// }
-
-// interface IntegrationProjectConfig {
-//   /**
-//    * e.g. graph-google-cloud
-//    */
-//   projectName: string;
-//   /**
-//    * e.g. Google Cloud
-//    */
-//   displayName: string;
-// }
-
-// type generatedGithubContents = {
-//   integrationName: string;
-//   githubFileContents: string;
-// };
 const addTitleToIntegrationDoc = (body, name) => {
   let bodyAlterations = `${body}`;
   const target = "# Integration with JupiterOne";
@@ -44,18 +25,23 @@ const addTitleToIntegrationDoc = (body, name) => {
 const addVersionToIntegrationDoc = (body, version) => {
   return `${body} \n<!--  jupiterOneDocVersion=${version} -->`;
 };
+
 const cleanIntegrationPageContents = async ({
   integrationName,
   githubFileContents,
   version,
   displayName,
 }) => {
+  const contents = `${githubFileContents}`;
+
   const file = await remark()
+    .use(remarkSqueezeParagraphs)
+    .use(remarkPresetLintRecommended)
+    .use(remarkPresetLintConsistent)
+    .use(remarkLintListItemIndent)
     .use(remarkGfm)
 
-    // .use(rehypeStringify)
-    // .use(remarkRehype)
-    .process(githubFileContents);
+    .process(contents);
 
   return {
     githubFileContents: file.toString(),
@@ -64,12 +50,6 @@ const cleanIntegrationPageContents = async ({
     displayName,
   };
 };
-// interface IntegrationProjectConfigRenderable extends IntegrationProjectConfig {
-//   /**
-//    * The body contents of the integration documentation
-//    */
-//   body: string;
-// }
 
 function buildGithubDocFileUrl(projectName) {
   return `https://raw.githubusercontent.com/JupiterOne/${projectName}/main/docs/jupiterone.md`;
@@ -87,10 +67,6 @@ const getRepoVersion = async (projectName) => {
   }
 };
 
-/**
- * Example input: Google Cloud
- * Example output: google-cloud
- */
 function getIntegrationDocFileBaseName(displayName) {
   return displayName.trim().toLowerCase().replace(/ /g, "-");
 }
@@ -106,7 +82,7 @@ export const directoryOrFileExists = async (filePath) => {
 
 const createDirIfNotExist = async (dirPath) => {
   const exists = await directoryOrFileExists(dirPath);
-  console.log(dirPath, "THIS IS THE DUR PATH");
+
   if (!exists) {
     return await fs.mkdir(dirPath, { recursive: true });
   }
@@ -128,7 +104,7 @@ const createFileIfNotExist = async (docFilePath, githubFileContents) => {
       });
       return true;
     } catch (e) {
-      console.log(e, "WRITE ERRRIR");
+      console.log(e, "WRITE Error", docFilePath);
       return false;
     }
   }
@@ -144,7 +120,7 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
     try {
       version = await getRepoVersion(projectName);
     } catch (e) {
-      console.log("VERSION FETCH ERROR");
+      console.log("VERSION FETCH ERROR:", projectName);
     }
 
     try {
@@ -158,16 +134,23 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
       };
 
       if (result.data) {
-        docContents = await cleanIntegrationPageContents({
-          integrationName: projectName,
-          githubFileContents: result.data,
-          version,
-          displayName,
-        });
-        docContents.githubFileContents = addVersionToIntegrationDoc(
-          addTitleToIntegrationDoc(docContents.githubFileContents, displayName),
-          version
-        );
+        try {
+          docContents = await cleanIntegrationPageContents({
+            integrationName: projectName,
+            githubFileContents: result.data,
+            version,
+            displayName,
+          });
+          docContents.githubFileContents = addVersionToIntegrationDoc(
+            addTitleToIntegrationDoc(
+              docContents.githubFileContents,
+              displayName
+            ),
+            version
+          );
+        } catch (e) {
+          console.log(e, "Markdown cleaning error");
+        }
       }
 
       completedRequests.push(docContents);
@@ -206,13 +189,16 @@ const createAllIntegrationProjectDocFilesFromConfig = async (
       );
       const markdownName = `${displayName}-integration_with-JupiterOne-VERSION${version}`;
       await createDirIfNotExist(docDirPath);
-      const docFilePath = path.join(docDirPath, `${markdownName}.md`);
-      console.log(docFilePath, "DOCK FILE FATH");
+      const docFilePath = path.join(
+        docDirPath,
+        `${markdownName.replace(/\s/g, "-")}.md`
+      );
+
       const createChange = await createFileIfNotExist(
         docFilePath,
         githubFileContents
       );
-      console.log(createChange, "createChangecreateChange");
+
       if (createChange) {
         changes.push({ githubFileContents, version, integrationName });
       } else {
