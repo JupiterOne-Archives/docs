@@ -39,7 +39,7 @@ export const markdownToString = async (filePath?: string): Promise<string> => {
     `../../../../${PATH_OF_DIRECTORY_TO_WATCH}`,
     `/${filePath}`
   );
-  console.log(fileLocation, "FILE LOCATION");
+
   let supportedTypeOfFile = false;
   SUPPORTED_FILE_TYPE_EXTENTIONS.forEach((extention) => {
     if (fileLocation.endsWith(extention)) {
