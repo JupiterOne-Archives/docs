@@ -11,10 +11,14 @@ import {
 } from "../utils";
 import { filterDiffs } from "./utils";
 
-export const createArticleChange = async (
-  articleChanges: string, // diff string of a file
-  path: string
-): Promise<VanillaArticle> => {
+export interface CreateArticleChangeProps {
+  articleChanges: string; // diff string of a file
+  path: string;
+}
+export const createArticleChange = async ({
+  articleChanges,
+  path,
+}: CreateArticleChangeProps): Promise<VanillaArticle> => {
   let displayName = "";
   // we dont want articles to be called 'index'
   let articleBody = await markdownToString(path);
@@ -40,6 +44,7 @@ export const createArticleChange = async (
       TITLE_FROM_MARKDOWN_REGEX
     );
   }
+
   const kb: VanillaArticle = {
     knowledgeCategoryID: null, //will need to create it and get it- for sub folders
     articleID: null,
@@ -107,10 +112,10 @@ export const handleNestedKnowledgeCategoryChanges = async (
   ) {
     tempHandled.push(identifierForDirectoryOrFile);
     if (identifierForDirectoryOrFile.endsWith(".md")) {
-      const markDownFileToKnowledgeArticle = await createArticleChange(
-        target,
-        input.originalChangesArray[tempParentIndex]
-      );
+      const markDownFileToKnowledgeArticle = await createArticleChange({
+        articleChanges: target,
+        path: input.originalChangesArray[tempParentIndex],
+      });
       tempCompleted.push(markDownFileToKnowledgeArticle);
     } else {
       const displayName = createDisplayName(identifierForDirectoryOrFile);

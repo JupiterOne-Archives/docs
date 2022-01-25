@@ -6,15 +6,29 @@ import HttpClient from "./httpClient";
 import { logger } from "./loggingUtil";
 import { proceduresToVanillaRequests } from "./proceduresToVanillaRequests";
 import {
+  IntegrationChange,
   PATH_OF_DIRECTORY_TO_WATCH,
   PATH_OF_INTEGRATIONS,
-} from "./utils/constants";
+} from "./utils";
 import {
   deleteArticle,
   deleteKnowledgeCategory,
   getAllArticles,
   getKnowedgeCategories,
 } from "./VanillaAPI";
+
+const resourceLocation = (resource: string) =>
+  path.join(__dirname, `../../../${PATH_OF_DIRECTORY_TO_WATCH}/`);
+const directoryPromise = (directoryLocation: string) =>
+  new Promise<string[]>((resolve, reject) => {
+    return getDirectories(directoryLocation, (err, matches) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(matches as string[]);
+      }
+    });
+  });
 
 export const getAllSubChanges = async (gitChange: string) => {
   if (gitChange.indexOf(".") != -1) {
@@ -40,6 +54,24 @@ const getDirectories = (src: string, cb: (err: any, res: any) => any) => {
   glob(src + "/**/*", cb);
 };
 
+const createIntegrationChanges = (diffs: string[]): IntegrationChange[] => {
+  const filteredIntegrationChanges = [...diffs]
+    .filter((i) => i.indexOf(".md") !== -1)
+    .map((result) => result.substring(result.indexOf(PATH_OF_INTEGRATIONS)));
+  return filteredIntegrationChanges.map((item: string): IntegrationChange => {
+    const version = item.substring(item.indexOf("-VERSION"));
+    const articleNameSplit = item
+      .substring(0, item.indexOf("-VERSION"))
+      .split("/");
+    const articleName = articleNameSplit[articleNameSplit.length - 1];
+    return {
+      version: version.replace("-VERSION", ""),
+      articleName,
+      path: item,
+    };
+  });
+};
+
 // Main function to be used to use changes to markdown files merged to github to be converted
 // to procedures that alter Vanillia forums
 export const updateCommunityDocs = async () => {
@@ -61,27 +93,14 @@ export const updateCommunityDocs = async () => {
       });
     }
     const nestedMergedWithOriginal = [...diffChanges, ...nested];
-    const integrationChanges = nestedMergedWithOriginal.map((result) =>
-      result.substring(result.indexOf(PATH_OF_INTEGRATIONS))
+
+    const filteredIntegrationChanges = createIntegrationChanges(
+      nestedMergedWithOriginal
     );
-    const filteredIntegrationChanges = integrationChanges.filter(
-      (i) => i.indexOf(".md") !== -1
-    );
-    const structForReplacingBody = filteredIntegrationChanges.map((item) => {
-      const version = item.substring(item.indexOf("-VERSION"));
-      const articleNameSplit = item
-        .substring(0, item.indexOf("-VERSION"))
-        .split("/");
-      const articleName = articleNameSplit[articleNameSplit.length - 1];
-      return {
-        version: version.replace("-VERSION", ""),
-        articleName,
-        path: item,
-      };
-    });
+
     console.log(
       "START INTFISLS",
-      structForReplacingBody,
+      filteredIntegrationChanges,
       "filteredIntegrationChangesEDN"
     );
     const nestedWithRemovedPath = nestedMergedWithOriginal.map((path) =>
@@ -91,8 +110,14 @@ export const updateCommunityDocs = async () => {
     logger.info(
       `Procedures Count: ${JSON.stringify(procedures?.length, null, " ")}`
     );
-    if (procedures && procedures.length > 0) {
-      const completedProcedures = await proceduresToVanillaRequests(procedures);
+    if (
+      (procedures && procedures.length > 0) ||
+      filteredIntegrationChanges.length
+    ) {
+      const completedProcedures = await proceduresToVanillaRequests({
+        procedures: procedures || [],
+        integrationChanges: filteredIntegrationChanges,
+      });
 
       logger.info(`Completed: ${completedProcedures}`);
       return completedProcedures;
@@ -104,38 +129,30 @@ export const updateCommunityDocs = async () => {
 
 // converts all items in the PATH_OF_DIRECTORY_TO_WATCH into Vanilla forum items
 export const updateVanillaWithDirectoryToWatch = async () => {
-  const directoryLocation = path.join(
-    __dirname,
-    `../../../${PATH_OF_DIRECTORY_TO_WATCH}/`
+  const fullArrayOfAllItems: string[] = await directoryPromise(
+    resourceLocation(PATH_OF_DIRECTORY_TO_WATCH)
   );
-  const directoryPromise = new Promise<string[]>((resolve, reject) => {
-    return getDirectories(directoryLocation, (err, matches) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(matches as string[]);
-      }
-    });
-  });
-  const fullArrayOfAllItems: string[] = await directoryPromise;
+  const fullArrayOfAllIntegrations: string[] = await directoryPromise(
+    resourceLocation(PATH_OF_INTEGRATIONS)
+  );
 
   if (fullArrayOfAllItems) {
     const trimmedDirectories = fullArrayOfAllItems.map((result) =>
       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
+    const integrationChanges = createIntegrationChanges(
+      fullArrayOfAllIntegrations
+    );
     const procedures = await diffToProcedures(trimmedDirectories);
 
     if (procedures && procedures.length > 0) {
-      return await proceduresToVanillaRequests(procedures);
+      return await proceduresToVanillaRequests({
+        procedures: procedures || [],
+        integrationChanges: integrationChanges,
+      });
     }
   }
 };
-// export const integrationsDiffs = ()=>{
-//   const directoryLocation = path.join(
-//     __dirname,
-//     `../../${PATH_OF_INTEGRATIONS}/`,
-//   );
-// }
 
 // Adding in a folder name such as 'release-notes' will run the pipeline as if each item in knowledgeBase/release-notes has had a change
 export const addFullSubFolderManually = async (folderName: string) => {
@@ -145,20 +162,25 @@ export const addFullSubFolderManually = async (folderName: string) => {
     folderName
   );
 
-  const directoryPromise = new Promise<string[]>((resolve, reject) => {
-    return getDirectories(directoryLocation, (err, matches) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(matches as string[]);
-      }
-    });
-  });
-  const fullArrayOfAllItems: string[] = await directoryPromise;
-  // here add integrations
+  // const directoryPromise = new Promise<string[]>((resolve, reject) => {
+  //   return getDirectories(directoryLocation, (err, matches) => {
+  //     if (err) {
+  //       reject(err);
+  //     } else {
+  //       resolve(matches as string[]);
+  //     }
+  //   });
+  // });
+  const fullArrayOfAllItems: string[] = await directoryPromise(
+    directoryLocation
+  );
+  const fullArrayOfAllIntegrations: string[] = await directoryPromise(
+    resourceLocation(PATH_OF_INTEGRATIONS)
+  );
+
   if (fullArrayOfAllItems) {
-    const integrationChanges = fullArrayOfAllItems.map((result) =>
-      result.substring(result.indexOf(PATH_OF_INTEGRATIONS))
+    const integrationChanges = createIntegrationChanges(
+      fullArrayOfAllIntegrations
     );
     console.log(integrationChanges, "IIDIDIDIDIDIDI");
     const trimmedDirectories = fullArrayOfAllItems.map((result) =>
@@ -168,7 +190,10 @@ export const addFullSubFolderManually = async (folderName: string) => {
     logger.info(`Path of changes: ${fullArrayOfAllItems}`);
     logger.info(`list of procedures: ${procedures}`);
     if (procedures && procedures.length > 0) {
-      return await proceduresToVanillaRequests(procedures);
+      return await proceduresToVanillaRequests({
+        procedures,
+        integrationChanges,
+      });
     }
   }
 };
