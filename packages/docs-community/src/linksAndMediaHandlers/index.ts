@@ -44,7 +44,6 @@ export const modifyBodyLinkForImageForReturnedArticles = (
   body: string,
   matchToBeReplaced: string,
   replacement: string
-
 ): modifyBodyLinkForImageForReturnedArticlesReturn => {
   const bodyAlterations = `${body}`;
   const slashRegex = new RegExp("/", "gi");
@@ -61,16 +60,9 @@ export const modifyBodyLinkForImageForReturnedArticles = (
     markdownAssetRegularExpression,
     `${replacement}`
   );
-  if (secondTime) {
-    return {
-      bodyAlterations: replacedBody,
-      existingMatches: false,
-    };
-  }
 
   return {
     bodyAlterations: replacedBody,
-
   };
 };
 
