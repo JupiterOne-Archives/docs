@@ -3,6 +3,7 @@ import path from "path";
 import {
   FLAG_FOR_DELETE,
   PATH_OF_DIRECTORY_TO_WATCH,
+  PATH_OF_INTEGRATIONS,
   SUPPORTED_FILE_TYPE_EXTENTIONS,
   VanillaArticle,
   VanillaKnowledgeCategory,
@@ -30,6 +31,36 @@ export const createDisplayName = (name: string) => {
     .split(/-/g)
     .map((item) => `${item[0].toUpperCase()}${item.substring(1)}`)
     .join(" ");
+};
+export const getIntegrationMarkdownAsString = async (filePath: string) => {
+  const fileLocation = path.join(
+    __dirname,
+    `../../../../${PATH_OF_INTEGRATIONS}`,
+    `/${filePath}`
+  );
+
+  let supportedTypeOfFile = false;
+  SUPPORTED_FILE_TYPE_EXTENTIONS.forEach((extention) => {
+    if (fileLocation.endsWith(extention)) {
+      supportedTypeOfFile = true;
+    }
+  });
+  if (!supportedTypeOfFile) {
+    return FLAG_FOR_DELETE;
+  }
+
+  try {
+    const blockingReadOfFile = await fs.promises.readFile(fileLocation, {
+      encoding: "utf8",
+    });
+    if (blockingReadOfFile) {
+      return blockingReadOfFile.toString();
+    }
+  } catch (error) {
+    return FLAG_FOR_DELETE;
+  }
+
+  return FLAG_FOR_DELETE;
 };
 
 export const markdownToString = async (filePath?: string): Promise<string> => {
