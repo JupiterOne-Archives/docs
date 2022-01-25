@@ -6,13 +6,21 @@ import {
 } from "../linksAndMediaHandlers";
 import { logger } from "../loggingUtil";
 import { updateArticleInternalMarkdownLinks } from "../updateArticleInternalMarkdownLinks";
-import { isArticleType, isKnowledgeCategoryType } from "../utils";
+import {
+  getIntegrationMarkdownAsString,
+  isArticleType,
+  isKnowledgeCategoryType,
+} from "../utils";
 import {
   FLAG_FOR_DELETE,
   KNOWN_CATEGORY_BEEN_DELETED,
   SHOULD_REALLY_UPLOAD_IMAGES,
 } from "../utils/constants";
-import { VanillaArticle, VanillaKnowledgeCategory } from "../utils/types";
+import {
+  IntegrationChange,
+  VanillaArticle,
+  VanillaKnowledgeCategory,
+} from "../utils/types";
 import {
   createArticle,
   createKnowledgeCategory,
@@ -462,10 +470,63 @@ export const useProceduresForVanillaRequests = async (
   );
 };
 
-export const proceduresToVanillaRequests = async (
-  procedures: (VanillaArticle | VanillaKnowledgeCategory)[]
-): Promise<(VanillaArticle | VanillaKnowledgeCategory)[]> => {
-  if (procedures && procedures.length) {
+export interface ReplaceArticleBodyWithIntegrationProps {
+  procedures: (VanillaArticle | VanillaKnowledgeCategory)[];
+  integrationChanges: IntegrationChange[];
+}
+export const replaceArticleBodyWithIntegration = async ({
+  procedures,
+  integrationChanges,
+}: ReplaceArticleBodyWithIntegrationProps): Promise<
+  (VanillaArticle | VanillaKnowledgeCategory)[]
+> => {
+  const alteredProcedures: (VanillaArticle | VanillaKnowledgeCategory)[] = [];
+  if (integrationChanges && integrationChanges.length) {
+    for (let p = 0; p < procedures.length; p++) {
+      const procedure = procedures[p];
+      if (isArticleType(procedure)) {
+        const [matchingIntegrationChange] = integrationChanges.filter(
+          (i) => i.articleName === procedure.name
+        );
+        console.log("MATCHINGNGNGN", matchingIntegrationChange);
+        if (matchingIntegrationChange) {
+          const newBody = await getIntegrationMarkdownAsString(
+            matchingIntegrationChange.path
+          );
+          if (newBody !== FLAG_FOR_DELETE) {
+            logger.info(
+              `Article update from integration: ${JSON.stringify(
+                procedure.name,
+                null,
+                2
+              )}`
+            );
+            procedure.body = newBody;
+          }
+        }
+        alteredProcedures.push(procedure);
+      } else {
+        alteredProcedures.push(procedures[p]);
+      }
+    }
+  }
+  return alteredProcedures;
+};
+export interface ProceduresToVanillaRequestProps {
+  procedures: (VanillaArticle | VanillaKnowledgeCategory)[];
+  integrationChanges?: IntegrationChange[];
+}
+
+export const proceduresToVanillaRequests = async ({
+  procedures,
+  integrationChanges,
+}: ProceduresToVanillaRequestProps): Promise<
+  (VanillaArticle | VanillaKnowledgeCategory)[]
+> => {
+  if (
+    (procedures && procedures.length) ||
+    (integrationChanges && integrationChanges.length)
+  ) {
     const httpClient = new HttpClient();
     logger.info(`Getting knowledgeCategories`);
     const existingknowledgeCategoryInfo = await getKnowedgeCategories(
@@ -485,12 +546,21 @@ export const proceduresToVanillaRequests = async (
       }
       return p;
     });
+    // add body to article before links and images get added
 
-    const proceduresWithArticleInfo = addVanillaArticlesToProcedures(
+    let proceduresWithArticleInfo = addVanillaArticlesToProcedures(
       proceduresWithVanillaCategories,
       articles
     );
-
+    console.log("SJSJSJSJSS", integrationChanges);
+    if (integrationChanges && integrationChanges.length) {
+      proceduresWithArticleInfo = await replaceArticleBodyWithIntegration({
+        procedures: [...proceduresWithArticleInfo],
+        integrationChanges,
+      });
+      console.log(proceduresWithArticleInfo);
+    }
+    return procedures;
     const processedProcedures = await useProceduresForVanillaRequests(
       proceduresWithArticleInfo,
       httpClient,
