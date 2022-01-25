@@ -13,6 +13,7 @@ import {
 describe("utils", () => {
   describe("hasKnowledgeCategoryBeenMoved", () => {
     it("should return knowledgeCategory name needed if its knowledgeCategory does not exist", () => {
+
       const notKCategoryPreviousParent = createKnowledgeCategoryMock({
         parentID: 1,
         knowledgeBaseID: 1,
@@ -61,6 +62,7 @@ describe("utils", () => {
         url: "https://jupiterone.vanillastaging.com/kb/categories/1157-atspoke",
         foreignID: null,
       });
+
       const categoryProcedureWasMovedTo = createKnowledgeCategoryMock({
         parentID: 512,
         knowledgeBaseID: 1,
@@ -200,6 +202,7 @@ describe("utils", () => {
         url: "https://jupiterone.vanillastaging.com/kb/categories/1157-atspoke",
         foreignID: null,
       });
+
       const randomOtherKnowledgeCategory = createKnowledgeCategoryMock({});
       const proceduresWithVanillaInfo: (
         | VanillaKnowledgeCategory
@@ -207,7 +210,9 @@ describe("utils", () => {
       )[] = [
         categoryProcedureWasNotMovedTo,
         randomOtherKnowledgeCategory,
+
         categoryProcedureWasMovedTo,
+
         notKCategoryPreviousParent,
       ];
       const testProcedure: VanillaKnowledgeCategory =
@@ -219,6 +224,7 @@ describe("utils", () => {
           description: "",
           knowledgeCategoryID: 1157,
           path: "APIs_and-integrations/APIs/airwatch",
+
           childrenPath: "APIs_and-integrations/airwatch/airwatch.md",
           procedureType: ProcedureTypeEnum.Category,
           sortChildren: null,
@@ -240,7 +246,9 @@ describe("utils", () => {
         proceduresWithVanillaInfo,
         procedure: testProcedure,
       });
+
       expect(actual).toEqual(1199);
+
     });
     it("should return false if knowledgeCategory has NOT moved", () => {
       const notKCategoryPreviousParent = createKnowledgeCategoryMock({
@@ -333,6 +341,7 @@ describe("utils", () => {
           fileName: "airwatch",
           description: "",
           knowledgeCategoryID: 1157,
+
           path: "APIs_and-integrations/airwatch",
           childrenPath: "APIs_and-integrations/airwatch/airwatch.md",
           procedureType: ProcedureTypeEnum.Category,
@@ -355,7 +364,9 @@ describe("utils", () => {
         proceduresWithVanillaInfo,
         procedure: testProcedure,
       });
+
       expect(actual).toEqual(512);
+
     });
   });
   describe("kCategoriesByPathSize", () => {

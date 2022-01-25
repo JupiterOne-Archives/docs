@@ -1,5 +1,6 @@
 # Creating User and Account API Keys 
 
+
 API keys enable users to use the J1 APIs in queries and with integrations. You can enable the use of API keys for a group of users and create API keys for your organization account.
 
 ## Enable User-Level API Key Access

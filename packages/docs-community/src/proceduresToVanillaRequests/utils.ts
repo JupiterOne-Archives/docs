@@ -22,6 +22,7 @@ export const hasKnowledgeCategoryBeenMoved = ({
   proceduresWithVanillaInfo,
   procedure,
 }: hasKnowledgeCategoryBeenMovedProps): number | null | string => {
+
   const knowledgeCategoriesArray = proceduresWithVanillaInfo
     .filter(isKnowledgeCategoryType)
     .filter((k) => k.name !== procedure.name);
@@ -60,6 +61,7 @@ export const hasKnowledgeCategoryBeenMoved = ({
     }
   }
   return null;
+
 };
 
 export const markdownToString = async (filePath?: string): Promise<string> => {

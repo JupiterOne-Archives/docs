@@ -8,6 +8,7 @@
 - `When you move a file or folder, make sure to change any links TO that file/folder from other markdown files.`
 - For a custom title (and not the file name), the first line `MUST` be "# Some Title". The '# ' will be removed and used for the title. Also, the first line will be removed from the article contents. If the first line is ANYTHING else (including a new line), the file name will be used.
 
+
 ### To 'Refresh' vanilla staging and/or production
 
 Create a branch from vanilla-staging. I like to use 'refresh-some-date'.

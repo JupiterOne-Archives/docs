@@ -6,6 +6,7 @@
 
 > In the UI, users are prompted to select/enter a `scope` when uploading a file. In the API, `scope` is provided when starting a synchronization job.
 
+
 > **For example:**
 
 > ```text
@@ -19,7 +20,9 @@
 > }
 > ```
 
+
 > See the [API documentation](./jupiterone-api.md) for more details.
+
 
 To successfully upload entity and relationship data, follow the schema outlined below:
 
@@ -42,6 +45,7 @@ To successfully upload entity and relationship data, follow the schema outlined 
       "owner": "Owner's name"
       // ...any other properties defined for the given type/class
     }
+
   ],
   "relationships": [
     {
@@ -51,18 +55,21 @@ To successfully upload entity and relationship data, follow the schema outlined 
       "_fromEntityKey": "1",
       "_toEntityKey": "2"
     },
+
     {
       "_key": "b",
       "_type": "bulk_upload_relationship",
       "_class": "VERB",
       "_fromEntityKey": "2",
       "_toEntityKey": "1"
+
     }
   ]
 }
 ```
 
 ## Entity Properties
+
 
 | Property | Type                   | Description                                                                   |
 | -------- | ---------------------- | ----------------------------------------------------------------------------- |
@@ -71,9 +78,11 @@ To successfully upload entity and relationship data, follow the schema outlined 
 | `_class` | `string` or `string[]` | The defined class for this entity. Value should be in `TitleCase`.            |
 | `owner`  | `string`               | Identifier for the person/thing responsible for this entity.                  |
 
+
 > Properties with `_` prefix are reserved as JupiterOne system internal metadata properties. Other than `_key`, `_type`, `_class` as listed above, any other property beginning with `_` will be ignored when processing the upload.
 
 ## Relationship Properties
+
 
 | Property         | Type     | Description                                                                                                                   |
 | ---------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------- |
@@ -84,3 +93,4 @@ To successfully upload entity and relationship data, follow the schema outlined 
 | `_toEntityKey`   | `string` | The unique key for the entity on the "to" side of this relationship.                                                          |
 
 > Properties with `_` prefix are reserved as JupiterOne system internal metadata properties. Other than `_key`, `_type`, `_class`, `_fromEntityKey`, and `_toEntityKey` as listed above, any other property beginning with `_` will be ignored when processing the upload.
+
