@@ -27,6 +27,7 @@ export const updateArticleInternalMarkdownLinks = async (
       articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown?.length &&
       articleUndergoingChanges.body !== null
     ) {
+
       const references: string[] =
         articleUndergoingChanges?.referencesNeedingUpdatesInMarkdown || [];
 
@@ -47,6 +48,7 @@ export const updateArticleInternalMarkdownLinks = async (
             existingArticleMatches[0]?.url || "doesNotExist";
 
           if (articleUndergoingChanges.body !== null && articleUrl) {
+
             const { bodyAlterations } =
               modifyBodyLinkForImageForReturnedArticles(
                 articleUndergoingChanges.body || "",
@@ -56,6 +58,7 @@ export const updateArticleInternalMarkdownLinks = async (
 
 
             articleUndergoingChanges.body = bodyAlterations;
+
           }
         } 
       }

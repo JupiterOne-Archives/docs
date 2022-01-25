@@ -1,4 +1,4 @@
-# Policies and Compliance Data Structure 
+# Policies and Compliance Data Structure
 
 ## Compliance Standard and Security Questionnaire JSON Specification
 

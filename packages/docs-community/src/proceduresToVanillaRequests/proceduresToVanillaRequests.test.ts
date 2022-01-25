@@ -459,7 +459,8 @@ describe("ProceduresToVanillaRequests", () => {
       const actual = await procedureToKnowledgeCategory(
         mockHttpclient,
         procedureKnowledgeCategoryReleaseNotes,
-        22
+        22,
+        false
       );
       expect(mockCreateKnowledgeCategory).toHaveBeenCalledWith(
         {},
@@ -524,7 +525,8 @@ describe("ProceduresToVanillaRequests", () => {
       const actual = await procedureToKnowledgeCategory(
         mockHttpclient,
         procedureKnowledgeCategoryNOKCID,
-        22
+        22,
+        false
       );
       expect(mockCreateKnowledgeCategory).toHaveBeenLastCalledWith(
         mockHttpclient,
@@ -554,7 +556,8 @@ describe("ProceduresToVanillaRequests", () => {
         const actual = await procedureToKnowledgeCategory(
           mockHttpclient,
           procedureKnowledgeCategoryWITHKCID,
-          22
+          22,
+          false
         );
 
         expect(actual).toEqual(expected);
@@ -595,7 +598,8 @@ describe("ProceduresToVanillaRequests", () => {
         const actual = await procedureToKnowledgeCategory(
           mockHttpclient,
           procedureKnowledgeCategoryNOKCID,
-          22
+          22,
+          false
         );
 
         expect(actual.description).toEqual(FLAG_FOR_DELETE);
@@ -612,7 +616,8 @@ describe("ProceduresToVanillaRequests", () => {
         const actual = await procedureToKnowledgeCategory(
           mockHttpclient,
           procedureKnowledgeCategoryNOKCID,
-          22
+          22,
+          false
         );
 
         expect(actual.description).toEqual(KNOWN_CATEGORY_BEEN_DELETED);
