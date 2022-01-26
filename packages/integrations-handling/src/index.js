@@ -9,7 +9,7 @@ import remarkPresetLintConsistent from "remark-preset-lint-consistent";
 import remarkPresetLintRecommended from "remark-preset-lint-recommended";
 import remarkLintListItemIndent from "remark-lint-list-item-indent";
 import remarkGfm from "remark-gfm";
-import simpleGit, { CleanOptions } from "simple-git";
+
 const addTitleToIntegrationDoc = (body, name) => {
   let bodyAlterations = `${body}`;
   const target = "# Integration with JupiterOne";
@@ -249,6 +249,7 @@ const createCommitMessage = (arrayOfDocNames) => {
     const git = simpleGit();
     await git.stash();
     try {
+      console.log("Creating branch", branchName);
       await git.checkout(["-b", branchName]);
       await git.stash(["pop"]);
       await git.add(["-A"]);
@@ -263,6 +264,7 @@ const createCommitMessage = (arrayOfDocNames) => {
       await git.commit(["-m", createCommitMessage(changesNeededForPR)]);
       await git.push();
     }
+    await git.checkout(["-"]);
   }
 })().catch((err) => {
   console.error("Error generating integration docs: ", err);

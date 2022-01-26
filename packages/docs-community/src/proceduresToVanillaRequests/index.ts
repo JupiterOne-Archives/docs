@@ -567,11 +567,12 @@ export const proceduresToVanillaRequests = async ({
       proceduresWithVanillaCategories,
       articles
     );
-
+    // TEMP! this keeps integrations from overwritting current docs
+    // When ready (has been merged so changes wont show) 575 gets integrationChanges || []
     const alteredProceduresWithArticleInfo =
       await replaceArticleBodyWithIntegration({
         procedures: [...proceduresWithArticleInfo],
-        integrationChanges: integrationChanges || [],
+        integrationChanges: [],
       });
 
     // return procedures;
