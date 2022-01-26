@@ -1,6 +1,6 @@
 import axios from "axios";
 import { promises as fs, existsSync } from "fs";
-// import simpleGit from 'simple-git'
+import simpleGit from "simple-git";
 import * as yaml from "js-yaml";
 import remarkSqueezeParagraphs from "remark-squeeze-paragraphs";
 import path from "path";
@@ -9,7 +9,7 @@ import remarkPresetLintConsistent from "remark-preset-lint-consistent";
 import remarkPresetLintRecommended from "remark-preset-lint-recommended";
 import remarkLintListItemIndent from "remark-lint-list-item-indent";
 import remarkGfm from "remark-gfm";
-
+import simpleGit, { CleanOptions } from "simple-git";
 const addTitleToIntegrationDoc = (body, name) => {
   let bodyAlterations = `${body}`;
   const target = "# Integration with JupiterOne";
@@ -62,8 +62,6 @@ const getRepoVersion = async (projectName) => {
 
   if (data) {
     return data.version.replace(/\./g, "-");
-  } else {
-    return "not-found";
   }
 };
 
@@ -71,7 +69,7 @@ function getIntegrationDocFileBaseName(displayName) {
   return displayName.trim().toLowerCase().replace(/ /g, "-");
 }
 
-export const directoryOrFileExists = async (filePath) => {
+export const directoryExists = async (filePath) => {
   try {
     await fs.access(filePath, fs.constants.F_OK);
     return true;
@@ -81,7 +79,7 @@ export const directoryOrFileExists = async (filePath) => {
 };
 
 const createDirIfNotExist = async (dirPath) => {
-  const exists = await directoryOrFileExists(dirPath);
+  const exists = await directoryExists(dirPath);
 
   if (!exists) {
     return await fs.mkdir(dirPath, { recursive: true });
@@ -224,6 +222,12 @@ async function readDocsConfig(docsConfigFilePath) {
   }
 }
 
+const createCommitMessage = (arrayOfDocNames) => {
+  const commitInfo = arrayOfDocNames.join(" \n ");
+
+  return `Changes to: \n${commitInfo}`;
+};
+
 (async () => {
   const docsConfig = await readDocsConfig(
     path.join(path.resolve("src"), "./integrations.config.yaml")
@@ -232,15 +236,34 @@ async function readDocsConfig(docsConfigFilePath) {
   const successes = await createAllIntegrationProjectDocFilesFromConfig(
     docsConfig.integrations
   );
-  console.log(
-    "Changes added:",
-    successes.changes.map((c) => c.integrationName)
-  );
+  const changesNeededForPR = successes.changes.map((c) => c.integrationName);
+  console.log("Changes added:", changesNeededForPR);
   console.log(
     "Changes MISSING:",
     successes.existing.map((c) => c.integrationName)
   );
-  // simplegit if changes commit and push to new branch
+  if (changesNeededForPR && changesNeededForPR.length) {
+    const dateString = new Date();
+    const formatedDate = dateString.toISOString().split("T")[0];
+    const branchName = `integrationDocs-updated${formatedDate}`;
+    const git = simpleGit();
+    await git.stash();
+    try {
+      await git.checkout(["-b", branchName]);
+      await git.stash(["pop"]);
+      await git.add(["-A"]);
+      await git.commit(["-m", createCommitMessage(changesNeededForPR)]);
+      await git.push(["--set-upstream", "origin", branchName]);
+    } catch (e) {
+      console.log("Branch already Exists ", e);
+      await git.checkout(branchName);
+      await git.pull();
+      await git.stash(["pop"]);
+      await git.add(["-A"]);
+      await git.commit(["-m", createCommitMessage(changesNeededForPR)]);
+      await git.push();
+    }
+  }
 })().catch((err) => {
   console.error("Error generating integration docs: ", err);
 });
