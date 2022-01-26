@@ -6,13 +6,23 @@ import {
 } from "../linksAndMediaHandlers";
 import { logger } from "../loggingUtil";
 import { updateArticleInternalMarkdownLinks } from "../updateArticleInternalMarkdownLinks";
-import { isArticleType, isKnowledgeCategoryType } from "../utils";
+import {
+  getIntegrationMarkdownAsString,
+  isArticleType,
+  isKnowledgeCategoryType,
+  removeTitleFromArticleBody,
+  TITLE_FROM_MARKDOWN_REGEX,
+} from "../utils";
 import {
   FLAG_FOR_DELETE,
   KNOWN_CATEGORY_BEEN_DELETED,
   SHOULD_REALLY_UPLOAD_IMAGES,
 } from "../utils/constants";
-import { VanillaArticle, VanillaKnowledgeCategory } from "../utils/types";
+import {
+  IntegrationChange,
+  VanillaArticle,
+  VanillaKnowledgeCategory,
+} from "../utils/types";
 import {
   createArticle,
   createKnowledgeCategory,
@@ -464,10 +474,74 @@ export const useProceduresForVanillaRequests = async (
   );
 };
 
-export const proceduresToVanillaRequests = async (
-  procedures: (VanillaArticle | VanillaKnowledgeCategory)[]
-): Promise<(VanillaArticle | VanillaKnowledgeCategory)[]> => {
-  if (procedures && procedures.length) {
+export interface IntegrationChangeContainsNewerVersion {
+  matchingIntegrationChange: IntegrationChange;
+  currentArticleBody: string;
+}
+
+export interface ReplaceArticleBodyWithIntegrationProps {
+  procedures: (VanillaArticle | VanillaKnowledgeCategory)[];
+  integrationChanges: IntegrationChange[];
+}
+export const replaceArticleBodyWithIntegration = async ({
+  procedures,
+  integrationChanges,
+}: ReplaceArticleBodyWithIntegrationProps): Promise<
+  (VanillaArticle | VanillaKnowledgeCategory)[]
+> => {
+  const alteredProcedures: (VanillaArticle | VanillaKnowledgeCategory)[] =
+    procedures || [];
+  if (integrationChanges && integrationChanges.length) {
+    for (let p = 0; p < alteredProcedures.length; p++) {
+      const procedure = alteredProcedures[p];
+      if (isArticleType(procedure)) {
+        const [matchingIntegrationChange] = integrationChanges.filter(
+          (i) => i.articleName === procedure.name
+        );
+
+        if (matchingIntegrationChange) {
+          const newBody = await getIntegrationMarkdownAsString(
+            matchingIntegrationChange.path
+          );
+
+          if (newBody !== FLAG_FOR_DELETE) {
+            logger.info(
+              `Article update from integration: ${JSON.stringify(
+                procedure.name,
+                null,
+                2
+              )}`
+            );
+
+            procedure.body = removeTitleFromArticleBody(
+              newBody,
+              TITLE_FROM_MARKDOWN_REGEX
+            );
+
+            alteredProcedures[p] = procedure;
+          }
+        }
+      }
+    }
+  }
+  return alteredProcedures;
+};
+
+export interface ProceduresToVanillaRequestProps {
+  procedures: (VanillaArticle | VanillaKnowledgeCategory)[];
+  integrationChanges?: IntegrationChange[];
+}
+
+export const proceduresToVanillaRequests = async ({
+  procedures,
+  integrationChanges,
+}: ProceduresToVanillaRequestProps): Promise<
+  (VanillaArticle | VanillaKnowledgeCategory)[]
+> => {
+  if (
+    (procedures && procedures.length) ||
+    (integrationChanges && integrationChanges.length)
+  ) {
     const httpClient = new HttpClient();
     logger.info(`Getting knowledgeCategories`);
     const existingknowledgeCategoryInfo = await getKnowedgeCategories(
@@ -487,14 +561,23 @@ export const proceduresToVanillaRequests = async (
       }
       return p;
     });
+    // add body to article before links and images get added
 
     const proceduresWithArticleInfo = addVanillaArticlesToProcedures(
       proceduresWithVanillaCategories,
       articles
     );
+    // TEMP! this keeps integrations from overwritting current docs
+    // When ready (has been merged so changes wont show) 575 gets integrationChanges || []
+    const alteredProceduresWithArticleInfo =
+      await replaceArticleBodyWithIntegration({
+        procedures: [...proceduresWithArticleInfo],
+        integrationChanges: [],
+      });
 
+    // return procedures;
     const processedProcedures = await useProceduresForVanillaRequests(
-      proceduresWithArticleInfo,
+      alteredProceduresWithArticleInfo,
       httpClient,
       existingknowledgeCategoryInfo
     );

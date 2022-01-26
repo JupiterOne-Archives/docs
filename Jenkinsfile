@@ -1,8 +1,7 @@
 #!groovy
 
-
 pipeline {
- agent none
+  agent none
 
   options {
     ansiColor('xterm')
@@ -24,21 +23,18 @@ pipeline {
         sh 'yarn bundle'
 
         sh 'jupiterone-build'
-
-
       }
-
     }
 
-    stage("Deploying to vanilla staging") {
+    stage('Deploying to vanilla staging') {
       when {
         beforeAgent true
-        branch 'vanilla-staging' 
-        }
-      
+        branch 'vanilla-staging'
+      }
+
       agent { label 'ecs-builder-node14' }
       steps {
-         initBuild()
+        initBuild()
             sh 'yarn install --frozen-lockfile'
 
             sh 'yarn lint'
@@ -52,20 +48,18 @@ pipeline {
             withCredentials([
               string(credentialsId: 'VANILLA_STAGING_ENV_TOKEN', variable: 'TOKEN')
                 ]) {
-                  sh '''
+          sh '''
                     TOKEN="$TOKEN" targetVanillaEnv=staging yarn start
                   '''
                 }
-
-            
       }
     }
-    stage("Deploying to vanilla production") {
+    stage('Deploying to vanilla production') {
       when {
         beforeAgent true
-        branch 'main' 
-        }
-      
+        branch 'main'
+      }
+
       agent { label 'ecs-builder-node14' }
       steps {
         initBuild()
@@ -82,12 +76,10 @@ pipeline {
           withCredentials([
             string(credentialsId: 'VANILLA_PROD_ENV_TOKEN', variable: 'TOKEN')
                 ]) {
-                  sh '''
+          sh '''
                     TOKEN="$TOKEN" targetVanillaEnv=prod yarn start
                   '''
                 }
-         
-            
       }
     }
   }

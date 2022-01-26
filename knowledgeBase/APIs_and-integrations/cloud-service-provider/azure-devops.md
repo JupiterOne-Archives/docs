@@ -4,7 +4,7 @@
 
 - Visualize Azure DevOps projects, teams, and users in the JupiterOne graph.
 - Map Azure DevOps users to employees in your JupiterOne account.
-- Monitor changes to Azure DevOps users using JupiterOne alerts.
+- Monitor changes to Azure DevOps users using JupiterOne alerts..
 
 ## How it Works
 
