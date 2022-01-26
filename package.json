@@ -16,6 +16,7 @@
     "test:unit": "./bin/run-tests.unit.sh",
     "bundle": "cd packages/docs-community; yarn compile",
     "deploy": "yarn bundle && yarn jupiterone-manual-deploy -t jupiterone-dev",
+    "updateIntegrations": "cd packages/integrations-handling; yarn getIntegrations",
     "start": "cd packages/docs-community; yarn publishDiffs $TOKEN $targetVanillaEnv"
   },
   "dependencies": {
