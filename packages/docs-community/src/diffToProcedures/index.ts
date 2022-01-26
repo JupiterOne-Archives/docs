@@ -44,7 +44,7 @@ export const createArticleChange = async (
     knowledgeCategoryID: null, //will need to create it and get it- for sub folders
     articleID: null,
     fileName: articleChanges,
-    name: displayName,
+    name: displayName.trim(),
     body: articleBody ? articleBody : "",
     path: path,
     format: "markdown",

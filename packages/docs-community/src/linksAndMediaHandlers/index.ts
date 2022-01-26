@@ -38,14 +38,12 @@ export const modifyBodyLinkForImage = (
 };
 export type modifyBodyLinkForImageForReturnedArticlesReturn = {
   bodyAlterations: string;
-  existingMatches: string | false;
 };
 //return.body gives back a html type body string
 export const modifyBodyLinkForImageForReturnedArticles = (
   body: string,
   matchToBeReplaced: string,
-  replacement: string,
-  secondTime?: boolean
+  replacement: string
 ): modifyBodyLinkForImageForReturnedArticlesReturn => {
   const bodyAlterations = `${body}`;
   const slashRegex = new RegExp("/", "gi");
@@ -62,19 +60,9 @@ export const modifyBodyLinkForImageForReturnedArticles = (
     markdownAssetRegularExpression,
     `${replacement}`
   );
-  if (secondTime) {
-    return {
-      bodyAlterations: replacedBody,
-      existingMatches: false,
-    };
-  }
-
-  const matchToBeReplacedex = new RegExp(matchToBeReplacedSanitized, "gi");
-  const existingMatches = replacedBody.match(matchToBeReplacedex);
 
   return {
     bodyAlterations: replacedBody,
-    existingMatches: existingMatches !== null ? matchToBeReplaced : false,
   };
 };
 
@@ -127,27 +115,26 @@ export const getArticleNameFromReference = async (
   pathOfReference: string,
   currentArticlePath: string | undefined
 ): Promise<string | false> => {
-  const regexTwoDots = new RegExp(/\.\.\//, "g");
-  const regexOneDot = new RegExp(/\.\//, "g");
-  let cleanedPath = pathOfReference.replace(regexTwoDots, "");
-  if (cleanedPath.indexOf("./") !== -1 && currentArticlePath) {
-    cleanedPath = cleanedPath.replace(regexOneDot, "");
-    const directoryForSingleSlash = currentArticlePath.split("/");
+  if (currentArticlePath) {
+    const directoryArticleResidesSplit = currentArticlePath.split("/");
     const pathForMissing: string[] = [];
-    directoryForSingleSlash.forEach((p) => {
+    directoryArticleResidesSplit.forEach((p) => {
       if (p.indexOf(".md") == -1) {
         pathForMissing.push(p);
       }
     });
     const newPath = pathForMissing.join("/");
-    cleanedPath = `/${newPath}/${cleanedPath}`;
+    const createdPathFromReferencingArticle = `${newPath}/${pathOfReference}`;
+
+    const articleBody = await markdownToString(
+      createdPathFromReferencingArticle
+    );
+
+    const titleFromBody = checkBodyForTitleToUseForArticle(
+      articleBody,
+      TITLE_FROM_MARKDOWN_REGEX
+    );
+    return titleFromBody;
   }
-
-  const articleBody = await markdownToString(cleanedPath);
-
-  const titleFromBody = checkBodyForTitleToUseForArticle(
-    articleBody,
-    TITLE_FROM_MARKDOWN_REGEX
-  );
-  return titleFromBody;
+  return false;
 };
