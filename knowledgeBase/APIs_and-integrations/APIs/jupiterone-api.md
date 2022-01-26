@@ -1,6 +1,6 @@
 # JupiterOne API
 
-The JupiterOne platform exposes a number of public GraphQL endpoints.
+The JupiterOne platform exposes a number of public GraphQL endpoints. 
 
 **Base URL**: `https://api.us.jupiterone.io`
 
