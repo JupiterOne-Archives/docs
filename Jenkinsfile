@@ -8,7 +8,9 @@ pipeline {
     ansiColor('xterm')
     timestamps()
   }
-
+  triggers {
+    cron('H/15 * * * *')
+  }
   stages {
     stage('Build and scan') {
       agent { label 'ecs-builder-node14' }
@@ -28,6 +30,41 @@ pipeline {
 
       }
 
+    }
+
+      stage("Checking for Integration Doc Updates") {
+     when {
+       not {
+           branch 'main'
+       }
+       not{ 
+         branch 'vanilla-staging'
+       }
+   }
+      
+      agent { label 'ecs-builder-node14' }
+      steps {
+         initBuild()
+            sh 'yarn install --frozen-lockfile'
+
+            sh 'yarn lint'
+
+            sh 'yarn test:unit'
+
+            sh 'yarn bundle'
+
+            sh 'jupiterone-build'
+
+            withCredentials([
+              string(credentialsId: 'VANILLA_STAGING_ENV_TOKEN', variable: 'TOKEN')
+                ]) {
+                  sh '''
+                    TOKEN="$TOKEN" targetVanillaEnv=staging yarn start
+                  '''
+                }
+
+            
+      }
     }
 
     stage("Deploying to vanilla staging") {
