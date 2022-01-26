@@ -160,15 +160,6 @@ export const addFullSubFolderManually = async (folderName: string) => {
     folderName
   );
 
-  // const directoryPromise = new Promise<string[]>((resolve, reject) => {
-  //   return getDirectories(directoryLocation, (err, matches) => {
-  //     if (err) {
-  //       reject(err);
-  //     } else {
-  //       resolve(matches as string[]);
-  //     }
-  //   });
-  // });
   const fullArrayOfAllItems: string[] = await directoryPromise(
     directoryLocation
   );
