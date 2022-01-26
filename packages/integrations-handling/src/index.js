@@ -246,7 +246,7 @@ const createCommitMessage = (arrayOfDocNames) => {
   );
   if (changesNeededForPR && changesNeededForPR.length) {
     const dateString = new Date();
-    const formatedDate = dateString.toISOString().split("T")[0];
+    const formatedDate = dateString.toISOString()//.split("T")[0];
     const branchName = `integrationDocs-updated${formatedDate}`;
     const git = simpleGit();
     await git.stash();
