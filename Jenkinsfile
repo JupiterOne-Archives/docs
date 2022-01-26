@@ -31,7 +31,7 @@ pipeline {
       stage('Checking for Integration Doc Updates') {
       when {
         beforeAgent true
-      { triggeredBy 'TimerTrigger' }
+        triggeredBy 'TimerTrigger'
       }
 
       agent { label 'ecs-builder-node14' }
