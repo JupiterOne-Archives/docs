@@ -241,7 +241,7 @@ const createCommitMessage = (arrayOfDocNames) => {
   const changesNeededForPR = successes.changes.map((c) => c.integrationName);
   console.log("Changes added:", changesNeededForPR);
   console.log(
-    "Changes MISSING:",
+    "Changes NOT NEEDED:",
     successes.existing.map((c) => c.integrationName)
   );
   if (changesNeededForPR && changesNeededForPR.length) {

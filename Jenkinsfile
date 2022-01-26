@@ -31,12 +31,7 @@ pipeline {
       stage('Checking for Integration Doc Updates') {
       when {
         beforeAgent true
-        not {
-          anyOf {
-            branch 'main'
-            branch 'vanilla-staging'
-          }
-        }
+      { triggeredBy 'TimerTrigger' }
       }
 
       agent { label 'ecs-builder-node14' }
