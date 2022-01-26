@@ -1,7 +1,5 @@
 # Azure DevOps Integration with JupiterOne
 
-bryancooooo
-
 ## Azure DevOps + JupiterOne Integration Benefits
 
 - Visualize Azure DevOps projects, teams, and users in the JupiterOne graph.
