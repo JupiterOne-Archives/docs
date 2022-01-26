@@ -8,7 +8,7 @@ pipeline {
     timestamps()
   }
   triggers {
-    cron('H/15 * * * *')
+    @midnight
   }
   stages {
     stage('Build and scan') {
