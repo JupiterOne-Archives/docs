@@ -241,12 +241,12 @@ const createCommitMessage = (arrayOfDocNames) => {
   const changesNeededForPR = successes.changes.map((c) => c.integrationName);
   console.log("Changes added:", changesNeededForPR);
   console.log(
-    "Changes MISSING:",
+    "Changes NOT NEEDED:",
     successes.existing.map((c) => c.integrationName)
   );
   if (changesNeededForPR && changesNeededForPR.length) {
     const dateString = new Date();
-    const formatedDate = dateString.toISOString().split("T")[0];
+    const formatedDate = dateString.toISOString()//.split("T")[0];
     const branchName = `integrationDocs-updated${formatedDate}`;
     const git = simpleGit();
     await git.stash();
