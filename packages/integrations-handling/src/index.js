@@ -245,9 +245,11 @@ const createCommitMessage = (arrayOfDocNames) => {
     successes.existing.map((c) => c.integrationName)
   );
   if (changesNeededForPR && changesNeededForPR.length) {
+    const randomdec = Math.random()
+    const randomNumber = Math.round(randomdec*1000)
     const dateString = new Date();
-    const formatedDate = dateString.toISOString()//.split("T")[0];
-    const branchName = `integrationDocs-updated${formatedDate}`;
+    const formatedDate = dateString.toISOString().split("T")[0];
+    const branchName = `integrationDocs-updated${formatedDate}-${randomNumber}`;
     const git = simpleGit();
     await git.stash();
     try {
