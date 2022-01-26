@@ -55,6 +55,9 @@ pipeline {
       when {
         beforeAgent true
         branch 'vanilla-staging'
+        not {
+          triggeredBy 'TimerTrigger'
+        }
       }
 
       agent { label 'ecs-builder-node14' }
@@ -83,6 +86,9 @@ pipeline {
       when {
         beforeAgent true
         branch 'main'
+        not {
+          triggeredBy 'TimerTrigger'
+        }
       }
 
       agent { label 'ecs-builder-node14' }
