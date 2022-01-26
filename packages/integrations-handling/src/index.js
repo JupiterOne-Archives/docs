@@ -62,6 +62,8 @@ const getRepoVersion = async (projectName) => {
 
   if (data) {
     return data.version.replace(/\./g, "-");
+  } else{
+    return 'not-found'
   }
 };
 

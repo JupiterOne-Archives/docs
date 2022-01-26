@@ -8,6 +8,29 @@
 - `When you move a file or folder, make sure to change any links TO that file/folder from other markdown files.`
 - For a custom title (and not the file name), the first line `MUST` be "# Some Title". The '# ' will be removed and used for the title. Also, the first line will be removed from the article contents. If the first line is ANYTHING else (including a new line), the file name will be used.
 
+### Integrations
+
+Integrations are added by querying each repository in the `integrations.config.yaml` file. If their version is higher than the one stored in the integrations folder, the file is added to its directory.
+
+These changes, once merged to staging or main, will overwrite what is present in their knowledgeBase file.
+
+If a changes is needed in an integration doc, correct it in the branch that was created. Once it looks correct
+- Make a comment
+- Merge to that branch
+- Check that branches pr and merge to staging
+
+Any additional changes to the integration docs can be made in the integrations folder and NOT/knowledgeBase.
+
+After staging looks correct merge to main.
+
+#### *To Add a new integration doc*
+- create a new branch from vanilla-staging
+- Add a projectName/displayName to the `integrations.config.yaml` file
+- Add a markdown file to the `knowledgeBase/` directory (in any folder or subfolder)
+- make sure the first line is the same as that of the integration's jupiterone.md first line (example: `# Azure Integration with JupiterOne`)
+- Commit, push and create a PR
+- After it is in staging, during the next integration pull (Once a week) it will appear.
+
 
 ### To 'Refresh' vanilla staging and/or production
 
