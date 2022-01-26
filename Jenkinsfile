@@ -1,16 +1,13 @@
 #!groovy
 
-
 pipeline {
- agent none
+  agent none
 
   options {
     ansiColor('xterm')
     timestamps()
   }
-  triggers {
-    cron('H/15 * * * *')
-  }
+
   stages {
     stage('Build and scan') {
       agent { label 'ecs-builder-node14' }
@@ -26,25 +23,18 @@ pipeline {
         sh 'yarn bundle'
 
         sh 'jupiterone-build'
-
-
       }
-
     }
 
-      stage("Checking for Integration Doc Updates") {
-     when {
-       not {
-           branch 'main'
-       }
-       not{ 
-         branch 'vanilla-staging'
-       }
-   }
-      
+    stage('Deploying to vanilla staging') {
+      when {
+        beforeAgent true
+        branch 'vanilla-staging'
+      }
+
       agent { label 'ecs-builder-node14' }
       steps {
-         initBuild()
+        initBuild()
             sh 'yarn install --frozen-lockfile'
 
             sh 'yarn lint'
@@ -58,51 +48,18 @@ pipeline {
             withCredentials([
               string(credentialsId: 'VANILLA_STAGING_ENV_TOKEN', variable: 'TOKEN')
                 ]) {
-                  sh '''
+          sh '''
                     TOKEN="$TOKEN" targetVanillaEnv=staging yarn start
                   '''
                 }
-
-            
       }
     }
-
-    stage("Deploying to vanilla staging") {
+    stage('Deploying to vanilla production') {
       when {
         beforeAgent true
-        branch 'vanilla-staging' 
-        }
-      
-      agent { label 'ecs-builder-node14' }
-      steps {
-         initBuild()
-            sh 'yarn install --frozen-lockfile'
-
-            sh 'yarn lint'
-
-            sh 'yarn test:unit'
-
-            sh 'yarn bundle'
-
-            sh 'jupiterone-build'
-
-            withCredentials([
-              string(credentialsId: 'VANILLA_STAGING_ENV_TOKEN', variable: 'TOKEN')
-                ]) {
-                  sh '''
-                    TOKEN="$TOKEN" targetVanillaEnv=staging yarn start
-                  '''
-                }
-
-            
+        branch 'main'
       }
-    }
-    stage("Deploying to vanilla production") {
-      when {
-        beforeAgent true
-        branch 'main' 
-        }
-      
+
       agent { label 'ecs-builder-node14' }
       steps {
         initBuild()
@@ -119,12 +76,10 @@ pipeline {
           withCredentials([
             string(credentialsId: 'VANILLA_PROD_ENV_TOKEN', variable: 'TOKEN')
                 ]) {
-                  sh '''
+          sh '''
                     TOKEN="$TOKEN" targetVanillaEnv=prod yarn start
                   '''
                 }
-         
-            
       }
     }
   }
