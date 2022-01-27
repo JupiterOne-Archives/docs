@@ -25,10 +25,8 @@ pipeline {
         sh 'yarn bundle'
 
         sh 'jupiterone-build'
-
         withCredentials([
-
-          string(credentialsId: 'internal-automation-scripts-github-access-token', variable: 'GITHUB_ACCESS_TOKEN'),
+          string(credentialsId: 'AUTO_GITHUB_PAT_TOKEN', variable: 'GH_TOKEN')
         ]) {
           sh 'yarn updateIntegrations'
         }
@@ -55,8 +53,7 @@ pipeline {
         sh 'jupiterone-build'
 
         withCredentials([
-
-          string(credentialsId: 'internal-automation-scripts-github-access-token', variable: 'GITHUB_ACCESS_TOKEN'),
+          string(credentialsId: 'AUTO_GITHUB_PAT_TOKEN', variable: 'GH_TOKEN')
         ]) {
           sh 'yarn updateIntegrations'
         }
