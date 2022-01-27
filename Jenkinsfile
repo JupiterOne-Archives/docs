@@ -28,9 +28,8 @@ pipeline {
         withCredentials([
           string(credentialsId: 'AUTO_GITHUB_PAT_TOKEN', variable: 'GH_TOKEN')
         ]) {
-
           sh '''
-                  git config --local credential.helper "!f() { echo username=\\'auto'; echo password=\\$GH_TOKEN; }; f"
+                  git config --local credential.helper "!f() { echo username=auto; echo password=\\$GH_TOKEN; }; f"
                     yarn updateIntegrations
                   '''
         }
@@ -59,7 +58,6 @@ pipeline {
         withCredentials([
           string(credentialsId: 'AUTO_GITHUB_PAT_TOKEN', variable: 'GH_TOKEN')
         ]) {
-
           sh '''
                   git config --local credential.helper "!f() { echo username=\\'auto'; echo password=\\$GH_TOKEN; }; f"
                     yarn updateIntegrations
