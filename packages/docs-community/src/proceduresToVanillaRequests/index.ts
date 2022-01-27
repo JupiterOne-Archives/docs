@@ -474,23 +474,26 @@ export const useProceduresForVanillaRequests = async (
   );
 };
 
-export interface IntegrationChangeContainsNewerVersion {
-  matchingIntegrationChange: IntegrationChange;
-  currentArticleBody: string;
-}
+
 
 export interface ReplaceArticleBodyWithIntegrationProps {
   procedures: (VanillaArticle | VanillaKnowledgeCategory)[];
   integrationChanges: IntegrationChange[];
+  articles:VanillaArticle[],
+  httpClient: HttpClient
 }
 export const replaceArticleBodyWithIntegration = async ({
   procedures,
   integrationChanges,
+  articles,
+  httpClient
 }: ReplaceArticleBodyWithIntegrationProps): Promise<
   (VanillaArticle | VanillaKnowledgeCategory)[]
 > => {
   const alteredProcedures: (VanillaArticle | VanillaKnowledgeCategory)[] =
     procedures || [];
+    const proceduresAffected:VanillaArticle[] =[]
+    // let articlesAffected = [];
   if (integrationChanges && integrationChanges.length) {
     for (let p = 0; p < alteredProcedures.length; p++) {
       const procedure = alteredProcedures[p];
@@ -517,12 +520,45 @@ export const replaceArticleBodyWithIntegration = async ({
               newBody,
               TITLE_FROM_MARKDOWN_REGEX
             );
-
+            proceduresAffected.push(procedure);
             alteredProcedures[p] = procedure;
           }
         }
       }
     }
+    
+      const integrationChangesNotHandled:IntegrationChange[] = integrationChanges.filter(i=>{
+
+      const [match] = proceduresAffected.filter(p=>p.name===i.articleName)
+      return !match
+      })
+      const holding:{[articleName:string]:IntegrationChange} = {}
+      let removeDuplicates:IntegrationChange[] = []
+      integrationChangesNotHandled.forEach(i=>{
+        if(i.articleName&&!holding.articleName){
+          holding[i.articleName] = i
+        }
+      })
+      const keys = Object.keys(holding)
+      removeDuplicates = keys.map(k=>holding[k])
+
+      for(let i=0;i< removeDuplicates.length; i++){
+        const [matchingArticle] = articles.filter(article=>article.name ===removeDuplicates[i].articleName )
+        const newBody = await getIntegrationMarkdownAsString(
+          removeDuplicates[i].path
+        );
+  
+        if(matchingArticle &&matchingArticle.articleID &&newBody&&newBody!==FLAG_FOR_DELETE){
+          const body = removeTitleFromArticleBody(
+            newBody,
+            TITLE_FROM_MARKDOWN_REGEX
+          );
+
+          await editArticle(httpClient, matchingArticle.articleID,{body})
+        }
+
+    }
+
   }
   return alteredProcedures;
 };
@@ -568,10 +604,13 @@ export const proceduresToVanillaRequests = async ({
       articles
     );
 
+
     const alteredProceduresWithArticleInfo =
       await replaceArticleBodyWithIntegration({
         procedures: [...proceduresWithArticleInfo],
         integrationChanges: integrationChanges || [],
+        articles,
+        httpClient
       });
 
     // return procedures;
