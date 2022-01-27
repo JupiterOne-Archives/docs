@@ -54,6 +54,7 @@ pipeline {
             passwordVariable: 'GIT_PASSWORD')]) {
           sh '''
                   git config --local credential.helper "!f() { echo username=\\$GIT_USERNAME; echo password=\\$GIT_PASSWORD; }; f"
+
                   yarn updateIntegrations
                   '''
             }
@@ -87,10 +88,6 @@ pipeline {
                 ]) {
           sh '''
                     TOKEN="$TOKEN" targetVanillaEnv=staging yarn start
-                  '''
-          sh '''
-
-                  yarn updateIntegrations
                   '''
                 }
       }
