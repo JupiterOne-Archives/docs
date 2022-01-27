@@ -251,22 +251,16 @@ const createCommitMessage = (arrayOfDocNames) => {
     const formatedDate = dateString.toISOString().split("T")[0];
     const branchName = `integrationDocs-updated${formatedDate}-${randomNumber}`;
     const git = simpleGit();
-    await git.stash();
+    // await git.stash();
     try {
       console.log("Creating branch", branchName);
       await git.checkout(["-b", branchName]);
-      await git.stash(["pop"]);
       await git.add(["-A"]);
       await git.commit(["-m", createCommitMessage(changesNeededForPR)]);
       await git.push(["--set-upstream", "origin", branchName]);
     } catch (e) {
-      console.log("Branch already Exists ", e);
-      await git.checkout(branchName);
-      await git.pull();
-      await git.stash(["pop"]);
-      await git.add(["-A"]);
-      await git.commit(["-m", createCommitMessage(changesNeededForPR)]);
-      await git.push();
+      console.log("Creating Branch Error ", e);
+     
     }
     await git.checkout(["-"]);
   }
