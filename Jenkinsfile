@@ -46,11 +46,8 @@ pipeline {
         sh 'yarn bundle'
 
         sh 'jupiterone-build'
+        sh 'yarn updateIntegrations'
 
-          sh '''
-
-                  yarn updateIntegrations
-                  '''
         }
       }
 
