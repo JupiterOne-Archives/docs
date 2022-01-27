@@ -47,17 +47,10 @@ pipeline {
 
         sh 'jupiterone-build'
 
-        withCredentials([
-        usernamePassword(
-            credentialsId: 'github-app-jupiterone',
-            usernameVariable: 'GIT_USERNAME',
-            passwordVariable: 'GIT_PASSWORD')]) {
           sh '''
-                  git config --local credential.helper "!f() { echo username=\\$GIT_USERNAME; echo password=\\$GIT_PASSWORD; }; f"
 
                   yarn updateIntegrations
                   '''
-            }
         }
       }
 
