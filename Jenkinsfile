@@ -8,7 +8,7 @@ pipeline {
     timestamps()
   }
   triggers {
-    cron('H/15 * * * *')
+    cron('0 0 * * *')
   }
   stages {
     stage('Build and scan') {
@@ -25,17 +25,6 @@ pipeline {
         sh 'yarn bundle'
 
         sh 'jupiterone-build'
-        withCredentials([
-        usernamePassword(
-            credentialsId: 'github-app-jupiterone',
-            usernameVariable: 'GIT_USERNAME',
-            passwordVariable: 'GIT_PASSWORD')]) {
-          sh '''
-          echo $GIT_USERNAME
-                  git config --local credential.helper "!f() { echo username=\\$GIT_USERNAME; echo password=\\$GIT_PASSWORD; }; f"
-                  yarn updateIntegrations
-                  '''
-            }
       }
     }
 
