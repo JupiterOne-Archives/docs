@@ -1,5 +1,4 @@
 # Snowflake Integration with JupiterOne
-only works in winter
 
 ## Snowflake + JupiterOne Integration Benefits
 
