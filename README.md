@@ -8,6 +8,10 @@
 - `When you move a file or folder, make sure to change any links TO that file/folder from other markdown files.`
 - For a custom title (and not the file name), the first line `MUST` be "# Some Title". The '# ' will be removed and used for the title. Also, the first line will be removed from the article contents. If the first line is ANYTHING else (including a new line), the file name will be used.
 
+## How to find changes
+
+Vanilla Visable changes can be seen with an update to knowledgeBase folder, which can occur manually or with a run of `yarn updateIntegrations` and a merge to vanilla-staging. Also, at midnight, integration docs are pulled and used to overwrite the contents of their matching articles. The most recent changes will be visable within the `https://jupiterone.vanillastaging.com/kb/docs`'s `Changes From  Updates` article. This will be visable in staging but not in production. It contains each article's name and a link to that article for ease of checking links and images.
+
 ## Integrations
 
 To add a new integration
