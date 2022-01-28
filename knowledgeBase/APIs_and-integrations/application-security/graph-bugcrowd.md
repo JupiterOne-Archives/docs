@@ -3,7 +3,7 @@
 ## Bugcrowd + JupiterOne Integration Benefits
 
 *   Visualize Bugcrowd bounty programs and submitted findings in the JupiterOne
-    graph.test
+    graph.
 *   Monitor Bugcrowd findings within the alerts app.
 *   Monitor changes to Bugcrowd bounty programs using JupiterOne alerts.
 
