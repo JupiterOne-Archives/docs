@@ -28,7 +28,7 @@ pipeline {
       }
     }
 
-      stage('Checking for Integration Doc Updates') {
+      stage('Updating Staging docs from their repo docs') {
       when {
         beforeAgent true
         triggeredBy 'TimerTrigger'
@@ -46,8 +46,13 @@ pipeline {
         sh 'yarn bundle'
 
         sh 'jupiterone-build'
-        sh 'yarn updateIntegrations'
-
+            withCredentials([
+              string(credentialsId: 'VANILLA_STAGING_ENV_TOKEN', variable: 'TOKEN')
+                ]) {
+          sh '''
+                    TOKEN="$TOKEN" targetVanillaEnv=staging yarn replaceIntegrationDocs
+                  '''
+                }
         }
       }
 
@@ -77,7 +82,8 @@ pipeline {
               string(credentialsId: 'VANILLA_STAGING_ENV_TOKEN', variable: 'TOKEN')
                 ]) {
           sh '''
-                    TOKEN="$TOKEN" targetVanillaEnv=staging yarn start
+                    TOKEN="$TOKEN" targetVanillaEnv=staging yarn start;
+                    TOKEN="$TOKEN" targetVanillaEnv=staging yarn replaceIntegrationDocs
                   '''
                 }
       }

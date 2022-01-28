@@ -13,7 +13,6 @@ import {
 describe("utils", () => {
   describe("hasKnowledgeCategoryBeenMoved", () => {
     it("should return knowledgeCategory name needed if its knowledgeCategory does not exist", () => {
-
       const notKCategoryPreviousParent = createKnowledgeCategoryMock({
         parentID: 1,
         knowledgeBaseID: 1,
@@ -106,7 +105,7 @@ describe("utils", () => {
           description: "",
           knowledgeCategoryID: 1157,
           path: "APIs_and-integrations/Other/airwatch",
-          childrenPath: "APIs_and-integrations/airwatch/airwatch.md",
+          childrenPath: "APIs_and-integrations/airwatch/graph-airwatch.md",
           procedureType: ProcedureTypeEnum.Category,
           sortChildren: null,
           sort: 3,
@@ -225,7 +224,7 @@ describe("utils", () => {
           knowledgeCategoryID: 1157,
           path: "APIs_and-integrations/APIs/airwatch",
 
-          childrenPath: "APIs_and-integrations/airwatch/airwatch.md",
+          childrenPath: "APIs_and-integrations/airwatch/graph-airwatch.md",
           procedureType: ProcedureTypeEnum.Category,
           sortChildren: null,
           sort: 3,
@@ -248,7 +247,6 @@ describe("utils", () => {
       });
 
       expect(actual).toEqual(1199);
-
     });
     it("should return false if knowledgeCategory has NOT moved", () => {
       const notKCategoryPreviousParent = createKnowledgeCategoryMock({
@@ -259,7 +257,8 @@ describe("utils", () => {
         description: "",
         knowledgeCategoryID: 512,
         path: "APIs_and-integrations",
-        childrenPath: "APIs_and-integrations/atspoke/airwatch/airwatch.md",
+        childrenPath:
+          "APIs_and-integrations/atspoke/airwatch/graph-airwatch.md",
         procedureType: ProcedureTypeEnum.Category,
         sortChildren: null,
         sort: 0,
@@ -283,7 +282,8 @@ describe("utils", () => {
         description: "",
         knowledgeCategoryID: 1157,
         path: "APIs_and-integrations/atspoke",
-        childrenPath: "APIs_and-integrations/atspoke/airwatch/airwatch.md",
+        childrenPath:
+          "APIs_and-integrations/atspoke/airwatch/graph-airwatch.md",
         procedureType: ProcedureTypeEnum.Category,
         sortChildren: null,
         sort: 3,
@@ -307,7 +307,8 @@ describe("utils", () => {
         description: "",
         knowledgeCategoryID: 1157,
         path: "APIs_and-integrations/atspoke",
-        childrenPath: "APIs_and-integrations/atspoke/airwatch/airwatch.md",
+        childrenPath:
+          "APIs_and-integrations/atspoke/airwatch/graph-airwatch.md",
         procedureType: ProcedureTypeEnum.Category,
         sortChildren: null,
         sort: 3,
@@ -343,7 +344,7 @@ describe("utils", () => {
           knowledgeCategoryID: 1157,
 
           path: "APIs_and-integrations/airwatch",
-          childrenPath: "APIs_and-integrations/airwatch/airwatch.md",
+          childrenPath: "APIs_and-integrations/airwatch/graph-airwatch.md",
           procedureType: ProcedureTypeEnum.Category,
           sortChildren: null,
           sort: 3,
@@ -366,7 +367,6 @@ describe("utils", () => {
       });
 
       expect(actual).toEqual(512);
-
     });
   });
   describe("kCategoriesByPathSize", () => {
