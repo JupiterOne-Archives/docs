@@ -522,23 +522,26 @@ export const replaceArticleBodyWithIntegration = async ({
 export interface CreateChangesContentForStagingProps {
   procedures: VanillaArticle[];
   httpClient: HttpClient;
+  combinationOfArticlesAndProcedures: VanillaArticle[];
 }
 export const createChangesContentForStaging = async ({
   procedures,
   httpClient,
+  combinationOfArticlesAndProcedures,
 }: CreateChangesContentForStagingProps) => {
   if (process.env.targetVanillaEnv === "staging") {
-    console.log("DING STAGING");
-    const [changesArticle] = procedures.filter(
-      (p) => p.name === "Changes From Integrations Updates"
+    const [changesArticle] = combinationOfArticlesAndProcedures.filter(
+      (p) => p.name === "Changes From Updates"
     );
-    const body = `# Changes From Integrations Updates \n \n ${procedures.map(
-      (p) => `\n [${p.name}](${p.url})`
-    )}`;
+    const body = `${procedures.map((p) => `\n [${p.name}](${p.url})`)}`;
     if (changesArticle && changesArticle.articleID) {
+      const now = new Date();
+      const date = now.toISOString();
       try {
         await editArticle(httpClient, changesArticle.articleID, {
-          body,
+          body: `## ${date.substring(0, date.indexOf("T"))} \n ${
+            changesArticle.body ? changesArticle.body : ""
+          } \n ${body}`,
         });
       } catch (e) {
         logger.error(`error editing changes article: \n ${e}`);
@@ -550,16 +553,15 @@ export const createChangesContentForStaging = async ({
         format: "markdown",
         knowledgeCategoryID: 1,
         locale: "en",
-        name: "Changes From Integrations Updates",
+        name: "Changes From Updates",
         sort: 0,
       };
       try {
-        const created = await createArticle(
+        await createArticle(
           httpClient,
 
           articleRequest
         );
-        console.log("DIDNDNDNDND", created);
       } catch (e) {
         logger.error(`error creating changes article: \n ${e}`);
       }
@@ -639,9 +641,11 @@ export const proceduresToVanillaRequests = async ({
       articlesNeedingLinkUpdates,
       httpClient
     );
+
     await createChangesContentForStaging({
       httpClient,
-      procedures: combinationOfArticlesAndProcedures,
+      procedures: processedProcedures.filter(isArticleType),
+      combinationOfArticlesAndProcedures,
     });
 
     logger.info(

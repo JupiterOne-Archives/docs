@@ -75,10 +75,10 @@ export const updateCommunityDocs = async () => {
     if (process.env.targetVanillaEnv === "staging") {
       if (
         nestedMergedWithOriginal.indexOf(
-          "changes-from-integrations-update.md"
+          "changes-from-update.md"
         ) === -1
       ) {
-        nestedMergedWithOriginal.push("changes-from-integrations-update.md");
+        nestedMergedWithOriginal.push("changes-from-update.md");
       }
     }
     const nestedWithRemovedPath = nestedMergedWithOriginal.map((path) =>
@@ -103,8 +103,8 @@ export const updateCommunityDocs = async () => {
 export const updateIntegrationArticles = async () => {
   const pathsArray = await createDifsFromConfig();
   if (process.env.targetVanillaEnv === "staging") {
-    if (pathsArray.indexOf("changes-from-integrations-update.md") === -1) {
-      pathsArray.push("changes-from-integrations-update.md");
+    if (pathsArray.indexOf("changes-from-update.md") === -1) {
+      pathsArray.push("changes-from-update.md");
     }
   }
   logger.info(`Updating: ${pathsArray}`);
@@ -130,9 +130,9 @@ export const updateVanillaWithDirectoryToWatch = async () => {
     );
     if (process.env.targetVanillaEnv === "staging") {
       if (
-        trimmedDirectories.indexOf("changes-from-integrations-update.md") === -1
+        trimmedDirectories.indexOf("changes-from-update.md") === -1
       ) {
-        trimmedDirectories.push("changes-from-integrations-update.md");
+        trimmedDirectories.push("changes-from-update.md");
       }
     }
     const procedures = await diffToProcedures(trimmedDirectories);
@@ -158,9 +158,9 @@ export const addFullSubFolderManually = async (folderName: string) => {
   );
   if (process.env.targetVanillaEnv === "staging") {
     if (
-      fullArrayOfAllItems.indexOf("changes-from-integrations-update.md") === -1
+      fullArrayOfAllItems.indexOf("changes-from-update.md") === -1
     ) {
-      fullArrayOfAllItems.push("changes-from-integrations-update.md");
+      fullArrayOfAllItems.push("changes-from-update.md");
     }
   }
   if (fullArrayOfAllItems) {
