@@ -72,7 +72,15 @@ export const updateCommunityDocs = async () => {
       });
     }
     const nestedMergedWithOriginal = [...diffChanges, ...nested];
-
+    if (process.env.staging) {
+      if (
+        nestedMergedWithOriginal.indexOf(
+          "changes-from-integrations-update.md"
+        ) === -1
+      ) {
+        nestedMergedWithOriginal.push("changes-from-integrations-update.md");
+      }
+    }
     const nestedWithRemovedPath = nestedMergedWithOriginal.map((path) =>
       path.substring(path.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
@@ -94,6 +102,11 @@ export const updateCommunityDocs = async () => {
 };
 export const updateIntegrationArticles = async () => {
   const pathsArray = await createDifsFromConfig();
+  if (process.env.staging) {
+    if (pathsArray.indexOf("changes-from-integrations-update.md") === -1) {
+      pathsArray.push("changes-from-integrations-update.md");
+    }
+  }
   logger.info(`Updating: ${pathsArray}`);
   const procedures = await diffToProcedures(pathsArray);
   if (procedures && procedures.length > 0) {
@@ -115,7 +128,13 @@ export const updateVanillaWithDirectoryToWatch = async () => {
     const trimmedDirectories = fullArrayOfAllItems.map((result) =>
       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
-
+    if (process.env.staging) {
+      if (
+        trimmedDirectories.indexOf("changes-from-integrations-update.md") === -1
+      ) {
+        trimmedDirectories.push("changes-from-integrations-update.md");
+      }
+    }
     const procedures = await diffToProcedures(trimmedDirectories);
 
     if (procedures && procedures.length > 0) {
@@ -137,7 +156,13 @@ export const addFullSubFolderManually = async (folderName: string) => {
   const fullArrayOfAllItems: string[] = await directoryPromise(
     directoryLocation
   );
-
+  if (process.env.staging) {
+    if (
+      fullArrayOfAllItems.indexOf("changes-from-integrations-update.md") === -1
+    ) {
+      fullArrayOfAllItems.push("changes-from-integrations-update.md");
+    }
+  }
   if (fullArrayOfAllItems) {
     const trimmedDirectories = fullArrayOfAllItems.map((result) =>
       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))

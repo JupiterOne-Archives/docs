@@ -47,14 +47,14 @@ To create your own custom alert rule:
 
    ![](../assets/alerts-create-rule.png)
 
-The custom rule you have added is evaluated daily, hourly, or with streaming evaluation for Enterprise customers. If the query you have  specified in the rule returns at least one match, it triggers an alert.
+The custom rule you have added is evaluated daily, hourly, or with streaming evaluation for Enterprise customers. If the query you have specified in the rule returns at least one match, it triggers an alert.
 
 ## Additional Alert Options
 
 J1 provides the ability to trigger the following workflows from alerts:
 
-- Slack: You must configure the Slack integration for JupiterOne by [following these instructions](../APIs_and-integrations/slack/slack.md). Ensure that you specify the channel in the format `#channel`.
-- JIRA: You must configure the JIRA integration for JupiterOne by [following these instructions](../APIs_and-integrations/jira/jira.md)
+- Slack: You must configure the Slack integration for JupiterOne by [following these instructions](../APIs_and-integrations/workflow/graph-slack.md). Ensure that you specify the channel in the format `#channel`.
+- JIRA: You must configure the JIRA integration for JupiterOne by [following these instructions](../APIs_and-integrations/jira/graph-jira.md)
 - SNS: The AWS account you want to send to must be configured as an AWS Integration, and the J1 IAM role for the AWS account you want to publish to must have the `SNS:Publish` permission.
 - SQS: The AWS account you want to send to must be configured as an AWS Integration, and the J1 IAM role for the AWS account you want to publish to must have the `SQS:SendMessage` permission.
 
@@ -78,6 +78,6 @@ To receive daily notification of new and active alerts:
 
 1. In the Alerts app, go to **MANAGE ALERTS > EMAIL REPORTS**.
 2. Enter the email addresses of the users or teams in the daily and weekly recipients fields, with one address per line.
-3. Ensure that `@jupiterone.io` and`@us.jupiterone.io`  are in the allowlist in your email configuration.
+3. Ensure that `@jupiterone.io` and`@us.jupiterone.io` are in the allowlist in your email configuration.
 
 > ![](../assets/alerts-daily-email.png)
