@@ -102,20 +102,24 @@ export const updateCommunityDocs = async () => {
 };
 export const updateIntegrationArticles = async () => {
   const pathsArray = await createDifsFromConfig();
+
   if (process.env.targetVanillaEnv === "staging") {
     if (pathsArray.indexOf("changes-from-update.md") === -1) {
       pathsArray.push("changes-from-update.md");
     }
   }
-  logger.info(`Updating: ${pathsArray}`);
-  const procedures = await diffToProcedures(pathsArray);
+  const filterPaths = pathsArray.filter(p=>p!==undefined).map(p=>`knowledgeBase/${p}`)
+  logger.info(`Updating: ${filterPaths}`);
+  const procedures = await diffToProcedures(filterPaths);
   if (procedures && procedures.length > 0) {
     const completedProcedures = await proceduresToVanillaRequests({
       procedures: procedures || [],
       integrationsOnly: true,
     });
     logger.info(`Completed: ${completedProcedures}`);
+    return completedProcedures
   }
+
 };
 
 // converts all items in the PATH_OF_DIRECTORY_TO_WATCH into Vanilla forum items
