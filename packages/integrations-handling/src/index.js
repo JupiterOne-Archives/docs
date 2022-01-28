@@ -1,6 +1,5 @@
 import axios from "axios";
 import { promises as fs, existsSync } from "fs";
-import simpleGit from "simple-git";
 import * as yaml from "js-yaml";
 import remarkSqueezeParagraphs from "remark-squeeze-paragraphs";
 import path from "path";
@@ -27,10 +26,11 @@ const addVersionToIntegrationDoc = (body, version) => {
 };
 
 const cleanIntegrationPageContents = async ({
-  integrationName,
+  projectName,
   githubFileContents,
   version,
   displayName,
+  knowledgeCategoriesPaths,
 }) => {
   const contents = `${githubFileContents}`;
 
@@ -45,9 +45,10 @@ const cleanIntegrationPageContents = async ({
 
   return {
     githubFileContents: file.toString(),
-    integrationName,
+    projectName,
     version,
     displayName,
+    knowledgeCategoriesPaths,
   };
 };
 
@@ -62,8 +63,8 @@ const getRepoVersion = async (projectName) => {
 
   if (data) {
     return data.version.replace(/\./g, "-");
-  } else{
-    return 'not-found'
+  } else {
+    return "not-found";
   }
 };
 
@@ -115,7 +116,8 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
   const completedRequests = [];
 
   for (let i = 0; i < integrationConfigs.length; i++) {
-    const { projectName, displayName } = integrationConfigs[i];
+    const { projectName, displayName, knowledgeCategoriesPaths } =
+      integrationConfigs[i];
     let version = undefined;
     try {
       version = await getRepoVersion(projectName);
@@ -127,19 +129,22 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
       const result = await axios.get(buildGithubDocFileUrl(projectName));
 
       let docContents = {
-        integrationName: projectName,
+        projectName,
         githubFileContents: "",
         version,
-        displayName: displayName,
+        knowledgeCategoriesPaths,
+        displayName,
+        projectName,
       };
 
       if (result.data) {
         try {
           docContents = await cleanIntegrationPageContents({
-            integrationName: projectName,
+            projectName,
             githubFileContents: result.data,
             version,
             displayName,
+            knowledgeCategoriesPaths,
           });
           docContents.githubFileContents = addVersionToIntegrationDoc(
             addTitleToIntegrationDoc(
@@ -156,10 +161,11 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
       completedRequests.push(docContents);
     } catch (e) {
       completedRequests.push({
-        integrationName: projectName,
+        projectName,
         githubFileContents: "not-found",
         version,
-        displayName: integrationConfigs[i].displayName,
+        knowledgeCategoriesPaths,
+        displayName,
       });
     }
   }
@@ -176,18 +182,30 @@ const createAllIntegrationProjectDocFilesFromConfig = async (
   const changes = [];
   const existing = [];
   for (let r = 0; r < renderableConfigs.length; r++) {
-    const { githubFileContents, version, integrationName, displayName } =
-      renderableConfigs[r];
+    const {
+      githubFileContents,
+      version,
+      projectName,
+      knowledgeCategoriesPaths,
+    } = renderableConfigs[r];
+    console.log(
+      projectName,
+      "knowledgeCategoriesPaths",
+      knowledgeCategoriesPaths
+    );
     if (
       githubFileContents !== "" &&
       version !== "not-found" &&
-      integrationName
+      projectName &&
+      knowledgeCategoriesPaths
     ) {
       const docDirPath = path.join(
         path.resolve(),
-        `../../integrations/${integrationName}`
+        `../../knowledgeBase/`,
+        knowledgeCategoriesPaths
       );
-      const markdownName = `${displayName}-integration_with-JupiterOne-VERSION${version}`;
+
+      const markdownName = `${projectName}`;
       await createDirIfNotExist(docDirPath);
       const docFilePath = path.join(
         docDirPath,
@@ -200,9 +218,9 @@ const createAllIntegrationProjectDocFilesFromConfig = async (
       );
 
       if (createChange) {
-        changes.push({ githubFileContents, version, integrationName });
+        changes.push({ githubFileContents, version, projectName });
       } else {
-        existing.push({ githubFileContents, version, integrationName });
+        existing.push({ githubFileContents, version, projectName });
       }
     }
   }
@@ -224,46 +242,21 @@ async function readDocsConfig(docsConfigFilePath) {
   }
 }
 
-const createCommitMessage = (arrayOfDocNames) => {
-  const commitInfo = arrayOfDocNames.join(" \n ");
-
-  return `Changes to: \n${commitInfo}`;
-};
-
 (async () => {
   const docsConfig = await readDocsConfig(
-    path.join(path.resolve("src"), "./integrations.config.yaml")
+    path.join(path.resolve(), "../../integrations.config.yaml")
   );
+
   // simplegit checkout new branch
   const successes = await createAllIntegrationProjectDocFilesFromConfig(
     docsConfig.integrations
   );
-  const changesNeededForPR = successes.changes.map((c) => c.integrationName);
-  console.log("Changes added:", changesNeededForPR);
+  const changesNeededForPR = successes.changes.map((c) => c.projectName);
+  console.log("Integrations added:", changesNeededForPR);
   console.log(
-    "Changes NOT NEEDED:",
-    successes.existing.map((c) => c.integrationName)
+    "Integrations NOT Added:",
+    successes.existing.map((c) => c.projectName)
   );
-  if (changesNeededForPR && changesNeededForPR.length) {
-    const randomdec = Math.random()
-    const randomNumber = Math.round(randomdec*1000)
-    const dateString = new Date();
-    const formatedDate = dateString.toISOString().split("T")[0];
-    const branchName = `integrationDocs-updated${formatedDate}-${randomNumber}`;
-    const git = simpleGit();
-    // await git.stash();
-    try {
-      console.log("Creating branch", branchName);
-      await git.checkout(["-b", branchName]);
-      await git.add(["-A"]);
-      await git.commit(["-m", createCommitMessage(changesNeededForPR)]);
-      await git.push(["--set-upstream", "origin", branchName]);
-    } catch (e) {
-      console.log("Creating Branch Error ", e);
-     
-    }
-    await git.checkout(["-"]);
-  }
 })().catch((err) => {
   console.error("Error generating integration docs: ", err);
 });
