@@ -1,6 +1,6 @@
 import axios from "axios";
 import { promises as fs, existsSync } from "fs";
-import simpleGit from "simple-git";
+// import simpleGit from "simple-git";
 import * as yaml from "js-yaml";
 import remarkSqueezeParagraphs from "remark-squeeze-paragraphs";
 import path from "path";
@@ -31,6 +31,7 @@ const cleanIntegrationPageContents = async ({
   githubFileContents,
   version,
   displayName,
+  knowledgeCategoriesPaths
 }) => {
   const contents = `${githubFileContents}`;
 
@@ -48,6 +49,7 @@ const cleanIntegrationPageContents = async ({
     integrationName,
     version,
     displayName,
+    knowledgeCategoriesPaths
   };
 };
 
@@ -115,7 +117,7 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
   const completedRequests = [];
 
   for (let i = 0; i < integrationConfigs.length; i++) {
-    const { projectName, displayName } = integrationConfigs[i];
+    const { projectName, displayName,knowledgeCategoriesPaths } = integrationConfigs[i];
     let version = undefined;
     try {
       version = await getRepoVersion(projectName);
@@ -130,6 +132,7 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
         integrationName: projectName,
         githubFileContents: "",
         version,
+        knowledgeCategoriesPaths,
         displayName: displayName,
       };
 
@@ -140,6 +143,7 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
             githubFileContents: result.data,
             version,
             displayName,
+            knowledgeCategoriesPaths
           });
           docContents.githubFileContents = addVersionToIntegrationDoc(
             addTitleToIntegrationDoc(
@@ -159,6 +163,7 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
         integrationName: projectName,
         githubFileContents: "not-found",
         version,
+        knowledgeCategoriesPaths,
         displayName: integrationConfigs[i].displayName,
       });
     }
@@ -176,7 +181,7 @@ const createAllIntegrationProjectDocFilesFromConfig = async (
   const changes = [];
   const existing = [];
   for (let r = 0; r < renderableConfigs.length; r++) {
-    const { githubFileContents, version, integrationName, displayName } =
+    const { githubFileContents, version, integrationName, displayName,knowledgeCategoriesPaths } =
       renderableConfigs[r];
     if (
       githubFileContents !== "" &&
@@ -185,9 +190,9 @@ const createAllIntegrationProjectDocFilesFromConfig = async (
     ) {
       const docDirPath = path.join(
         path.resolve(),
-        `../../integrations/${integrationName}`
+        `../../knowledgeBase/${knowledgeCategoriesPaths}`
       );
-      const markdownName = `${displayName}-integration_with-JupiterOne-VERSION${version}`;
+      const markdownName = `${projectName}-VERSION${version}`;
       await createDirIfNotExist(docDirPath);
       const docFilePath = path.join(
         docDirPath,
@@ -244,26 +249,26 @@ const createCommitMessage = (arrayOfDocNames) => {
     "Changes NOT NEEDED:",
     successes.existing.map((c) => c.integrationName)
   );
-  if (changesNeededForPR && changesNeededForPR.length) {
-    const randomdec = Math.random()
-    const randomNumber = Math.round(randomdec*1000)
-    const dateString = new Date();
-    const formatedDate = dateString.toISOString().split("T")[0];
-    const branchName = `integrationDocs-updated${formatedDate}-${randomNumber}`;
-    const git = simpleGit();
-    // await git.stash();
-    try {
-      console.log("Creating branch", branchName);
-      await git.checkout(["-b", branchName]);
-      await git.add(["-A"]);
-      await git.commit(["-m", createCommitMessage(changesNeededForPR)]);
-      await git.push(["--set-upstream", "origin", branchName]);
-    } catch (e) {
-      console.log("Creating Branch Error ", e);
+  // if (changesNeededForPR && changesNeededForPR.length) {
+  //   const randomdec = Math.random()
+  //   const randomNumber = Math.round(randomdec*1000)
+  //   const dateString = new Date();
+  //   const formatedDate = dateString.toISOString().split("T")[0];
+  //   const branchName = `integrationDocs-updated${formatedDate}-${randomNumber}`;
+  //   const git = simpleGit();
+  //   // await git.stash();
+  //   try {
+  //     console.log("Creating branch", branchName);
+  //     await git.checkout(["-b", branchName]);
+  //     await git.add(["-A"]);
+  //     await git.commit(["-m", createCommitMessage(changesNeededForPR)]);
+  //     await git.push(["--set-upstream", "origin", branchName]);
+  //   } catch (e) {
+  //     console.log("Creating Branch Error ", e);
      
-    }
-    await git.checkout(["-"]);
-  }
+  //   }
+  //   await git.checkout(["-"]);
+  // }
 })().catch((err) => {
   console.error("Error generating integration docs: ", err);
 });
