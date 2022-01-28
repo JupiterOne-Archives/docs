@@ -30,7 +30,7 @@ const cleanIntegrationPageContents = async ({
   githubFileContents,
   version,
   displayName,
-  knowledgeCategoriesPaths
+  knowledgeCategoriesPaths,
 }) => {
   const contents = `${githubFileContents}`;
 
@@ -48,7 +48,7 @@ const cleanIntegrationPageContents = async ({
     projectName,
     version,
     displayName,
-    knowledgeCategoriesPaths
+    knowledgeCategoriesPaths,
   };
 };
 
@@ -63,8 +63,8 @@ const getRepoVersion = async (projectName) => {
 
   if (data) {
     return data.version.replace(/\./g, "-");
-  } else{
-    return 'not-found'
+  } else {
+    return "not-found";
   }
 };
 
@@ -116,7 +116,8 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
   const completedRequests = [];
 
   for (let i = 0; i < integrationConfigs.length; i++) {
-    const { projectName, displayName,knowledgeCategoriesPaths, } = integrationConfigs[i];
+    const { projectName, displayName, knowledgeCategoriesPaths } =
+      integrationConfigs[i];
     let version = undefined;
     try {
       version = await getRepoVersion(projectName);
@@ -133,7 +134,7 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
         version,
         knowledgeCategoriesPaths,
         displayName,
-        projectName
+        projectName,
       };
 
       if (result.data) {
@@ -143,7 +144,7 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
             githubFileContents: result.data,
             version,
             displayName,
-            knowledgeCategoriesPaths
+            knowledgeCategoriesPaths,
           });
           docContents.githubFileContents = addVersionToIntegrationDoc(
             addTitleToIntegrationDoc(
@@ -175,27 +176,35 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
 const createAllIntegrationProjectDocFilesFromConfig = async (
   integrationConfigs
 ) => {
-  console.log(integrationConfigs,'ICONG')
   const renderableConfigs = await generateRenderableIntegrationConfigs(
     integrationConfigs
   );
   const changes = [];
   const existing = [];
   for (let r = 0; r < renderableConfigs.length; r++) {
-    const { githubFileContents, version, projectName,knowledgeCategoriesPaths } =
-      renderableConfigs[r];
-      console.log(projectName,'knowledgeCategoriesPaths',knowledgeCategoriesPaths)
+    const {
+      githubFileContents,
+      version,
+      projectName,
+      knowledgeCategoriesPaths,
+    } = renderableConfigs[r];
+    console.log(
+      projectName,
+      "knowledgeCategoriesPaths",
+      knowledgeCategoriesPaths
+    );
     if (
       githubFileContents !== "" &&
       version !== "not-found" &&
-      projectName &&knowledgeCategoriesPaths
+      projectName &&
+      knowledgeCategoriesPaths
     ) {
       const docDirPath = path.join(
         path.resolve(),
         `../../knowledgeBase/`,
         knowledgeCategoriesPaths
       );
-      console.log(docDirPath,'docDirPathdocDirPath')
+
       const markdownName = `${projectName}`;
       await createDirIfNotExist(docDirPath);
       const docFilePath = path.join(
@@ -233,46 +242,21 @@ async function readDocsConfig(docsConfigFilePath) {
   }
 }
 
-const createCommitMessage = (arrayOfDocNames) => {
-  const commitInfo = arrayOfDocNames.join(" \n ");
-
-  return `Changes to: \n${commitInfo}`;
-};
-
 (async () => {
   const docsConfig = await readDocsConfig(
-    path.join(path.resolve("src"), "./integrations.config.yaml")
+    path.join(path.resolve(), "../../integrations.config.yaml")
   );
+
   // simplegit checkout new branch
   const successes = await createAllIntegrationProjectDocFilesFromConfig(
     docsConfig.integrations
   );
   const changesNeededForPR = successes.changes.map((c) => c.projectName);
-  console.log("Changes added:", changesNeededForPR);
+  console.log("Integrations added:", changesNeededForPR);
   console.log(
-    "Changes NOT NEEDED:",
+    "Integrations NOT Added:",
     successes.existing.map((c) => c.projectName)
   );
-  // if (changesNeededForPR && changesNeededForPR.length) {
-  //   const randomdec = Math.random()
-  //   const randomNumber = Math.round(randomdec*1000)
-  //   const dateString = new Date();
-  //   const formatedDate = dateString.toISOString().split("T")[0];
-  //   const branchName = `integrationDocs-updated${formatedDate}-${randomNumber}`;
-  //   const git = simpleGit();
-  //   // await git.stash();
-  //   try {
-  //     console.log("Creating branch", branchName);
-  //     await git.checkout(["-b", branchName]);
-  //     await git.add(["-A"]);
-  //     await git.commit(["-m", createCommitMessage(changesNeededForPR)]);
-  //     await git.push(["--set-upstream", "origin", branchName]);
-  //   } catch (e) {
-  //     console.log("Creating Branch Error ", e);
-     
-  //   }
-  //   await git.checkout(["-"]);
-  // }
 })().catch((err) => {
   console.error("Error generating integration docs: ", err);
 });

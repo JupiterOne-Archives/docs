@@ -15,7 +15,7 @@ To add a new integration
 - Make a branch and alter the `integrations.config.yaml`. Add a value for `projectName` (as it appears in the repository name), `displayName`, and `knowledgeCategoriesPaths`.
 
 - Run `yarn updateIntegrations`
-Integrations are added by querying each repository in the `integrations.config.yaml` file.
+  Integrations are added by querying each repository in the `integrations.config.yaml` file.
 
 - Check to make sure a new file has been created in the desired location.
 - Add your changes
@@ -24,11 +24,9 @@ Integrations are added by querying each repository in the `integrations.config.y
 
 `knowledgeCategoriesPaths` is the path the where the parsed markdown (from the repositories `jupiterone.md`) is placed within the knowledgeBase. It corresponds to the knowledge categories that will be generated for the article's location in vanilla. Adding a path that does not exist will create new knowledgeCategories for which the article to reside after a merge to vanilla-staging or main.
 
-
 After staging looks correct, open a pr to merge to main.
 
-After the article appears in vanilla, it will be updated when a new version of that repository's docs is published. This is via checking the repositories project.json.version against the appened version that is added to the articles body in a comment (not visible).
-
+After the article appears in vanilla, it will be updated when a new version of that repository's docs is published and changes added to the knowledgeBase will be overridden with next update. The file needs to remain to allow us to keep track of their location on vanilla for structure, moves and deletes.
 
 ## To 'Refresh' vanilla staging and/or production
 
@@ -211,4 +209,3 @@ Some questions and comments were posted [here](https://jptrone.slack.com/archive
 - A trigger that pulls in integrations docs on a schedule and creates a pr to staging for review is wanted. I tested the script from the docs repo, it needs some improvements but does collect the collection of docs. Simple-git could be used to create a pr via yarn script
 
 ![docs-community](./imagesForReadme/docs-community-flow.png)
-
