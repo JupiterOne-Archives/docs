@@ -530,6 +530,7 @@ export const createChangesContentForStaging = async ({
   combinationOfArticlesAndProcedures,
 }: CreateChangesContentForStagingProps) => {
   if (process.env.targetVanillaEnv === "staging") {
+
     const [changesArticle] = combinationOfArticlesAndProcedures.filter(
       (p) => p.name === "Changes From Updates"
     );
@@ -537,11 +538,13 @@ export const createChangesContentForStaging = async ({
     if (changesArticle && changesArticle.articleID) {
       const now = new Date();
       const date = now.toISOString();
+      const editBody = `## ${date.substring(0, date.indexOf("T"))} \n ${
+        changesArticle.body ? changesArticle.body : ""
+      } \n ${body}`
+
       try {
         await editArticle(httpClient, changesArticle.articleID, {
-          body: `## ${date.substring(0, date.indexOf("T"))} \n ${
-            changesArticle.body ? changesArticle.body : ""
-          } \n ${body}`,
+          body: `${editBody}`,
         });
       } catch (e) {
         logger.error(`error editing changes article: \n ${e}`);
