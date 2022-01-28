@@ -32,6 +32,8 @@ After staging looks correct, open a pr to merge to main.
 
 After the article appears in vanilla, it will be updated when a new version of that repository's docs is published and changes added to the knowledgeBase will be overridden with next update. The file needs to remain to allow us to keep track of their location on vanilla for structure, moves and deletes.
 
+Adding a value to `ignoreUpdates` on a `integrations.config.yaml` property will keep it from being updated with the midnight integrations pull.
+
 ## To 'Refresh' vanilla staging and/or production
 
 Create a branch from vanilla-staging. I like to use 'refresh-some-date'.

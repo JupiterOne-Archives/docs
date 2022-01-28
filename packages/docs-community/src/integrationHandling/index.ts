@@ -8,6 +8,7 @@ export interface YamlShape {
     projectName: string;
     displayName: string;
     knowledgeCategoriesPaths: string;
+    ignoreUpdates?:string;
   }[];
 }
 export const readDocsConfig = async (): Promise<YamlShape> => {
@@ -33,7 +34,7 @@ export const readDocsConfig = async (): Promise<YamlShape> => {
 export const createDifsFromConfig = async (): Promise<string[]> => {
   const docsConfig = await readDocsConfig();
   const proceduresPaths = docsConfig.integrations.map(
-    (i) => i.knowledgeCategoriesPaths
+    (i) => i.ignoreUpdates?'':`${i.knowledgeCategoriesPaths}/${i.projectName}.md`
   );
   return proceduresPaths;
 };
@@ -46,9 +47,10 @@ export const getProjectDoc = async (projectName: string) => {
   try {
     const body = await axios.get(buildGithubDocFileUrl(projectName));
     if (body.data) {
+
       return body.data;
     }
   } catch (e) {
-    return e;
+   console.log(projectName, '\n error:',e )
   }
 };
