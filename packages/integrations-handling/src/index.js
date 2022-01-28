@@ -1,6 +1,5 @@
 import axios from "axios";
 import { promises as fs, existsSync } from "fs";
-// import simpleGit from "simple-git";
 import * as yaml from "js-yaml";
 import remarkSqueezeParagraphs from "remark-squeeze-paragraphs";
 import path from "path";
@@ -27,7 +26,7 @@ const addVersionToIntegrationDoc = (body, version) => {
 };
 
 const cleanIntegrationPageContents = async ({
-  integrationName,
+  projectName,
   githubFileContents,
   version,
   displayName,
@@ -46,7 +45,7 @@ const cleanIntegrationPageContents = async ({
 
   return {
     githubFileContents: file.toString(),
-    integrationName,
+    projectName,
     version,
     displayName,
     knowledgeCategoriesPaths
@@ -117,7 +116,7 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
   const completedRequests = [];
 
   for (let i = 0; i < integrationConfigs.length; i++) {
-    const { projectName, displayName,knowledgeCategoriesPaths } = integrationConfigs[i];
+    const { projectName, displayName,knowledgeCategoriesPaths, } = integrationConfigs[i];
     let version = undefined;
     try {
       version = await getRepoVersion(projectName);
@@ -129,17 +128,18 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
       const result = await axios.get(buildGithubDocFileUrl(projectName));
 
       let docContents = {
-        integrationName: projectName,
+        projectName,
         githubFileContents: "",
         version,
         knowledgeCategoriesPaths,
-        displayName: displayName,
+        displayName,
+        projectName
       };
 
       if (result.data) {
         try {
           docContents = await cleanIntegrationPageContents({
-            integrationName: projectName,
+            projectName,
             githubFileContents: result.data,
             version,
             displayName,
@@ -160,11 +160,11 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
       completedRequests.push(docContents);
     } catch (e) {
       completedRequests.push({
-        integrationName: projectName,
+        projectName,
         githubFileContents: "not-found",
         version,
         knowledgeCategoriesPaths,
-        displayName: integrationConfigs[i].displayName,
+        displayName,
       });
     }
   }
@@ -175,24 +175,28 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
 const createAllIntegrationProjectDocFilesFromConfig = async (
   integrationConfigs
 ) => {
+  console.log(integrationConfigs,'ICONG')
   const renderableConfigs = await generateRenderableIntegrationConfigs(
     integrationConfigs
   );
   const changes = [];
   const existing = [];
   for (let r = 0; r < renderableConfigs.length; r++) {
-    const { githubFileContents, version, integrationName, displayName,knowledgeCategoriesPaths } =
+    const { githubFileContents, version, projectName,knowledgeCategoriesPaths } =
       renderableConfigs[r];
+      console.log(projectName,'knowledgeCategoriesPaths',knowledgeCategoriesPaths)
     if (
       githubFileContents !== "" &&
       version !== "not-found" &&
-      integrationName
+      projectName &&knowledgeCategoriesPaths
     ) {
       const docDirPath = path.join(
         path.resolve(),
-        `../../knowledgeBase/${knowledgeCategoriesPaths}`
+        `../../knowledgeBase/`,
+        knowledgeCategoriesPaths
       );
-      const markdownName = `${projectName}-VERSION${version}`;
+      console.log(docDirPath,'docDirPathdocDirPath')
+      const markdownName = `${projectName}`;
       await createDirIfNotExist(docDirPath);
       const docFilePath = path.join(
         docDirPath,
@@ -205,9 +209,9 @@ const createAllIntegrationProjectDocFilesFromConfig = async (
       );
 
       if (createChange) {
-        changes.push({ githubFileContents, version, integrationName });
+        changes.push({ githubFileContents, version, projectName });
       } else {
-        existing.push({ githubFileContents, version, integrationName });
+        existing.push({ githubFileContents, version, projectName });
       }
     }
   }
@@ -243,11 +247,11 @@ const createCommitMessage = (arrayOfDocNames) => {
   const successes = await createAllIntegrationProjectDocFilesFromConfig(
     docsConfig.integrations
   );
-  const changesNeededForPR = successes.changes.map((c) => c.integrationName);
+  const changesNeededForPR = successes.changes.map((c) => c.projectName);
   console.log("Changes added:", changesNeededForPR);
   console.log(
     "Changes NOT NEEDED:",
-    successes.existing.map((c) => c.integrationName)
+    successes.existing.map((c) => c.projectName)
   );
   // if (changesNeededForPR && changesNeededForPR.length) {
   //   const randomdec = Math.random()

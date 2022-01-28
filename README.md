@@ -1,6 +1,6 @@
 # docs-community
 
-### Please note
+## Please note
 
 - MERGE to `vanilla-staging` will make changes to `https://jupiterone.vanillastaging.com/`
 - MERGE to `main` will make changes to `https://jupiterone.vanillacommunities.com/`
@@ -8,31 +8,29 @@
 - `When you move a file or folder, make sure to change any links TO that file/folder from other markdown files.`
 - For a custom title (and not the file name), the first line `MUST` be "# Some Title". The '# ' will be removed and used for the title. Also, the first line will be removed from the article contents. If the first line is ANYTHING else (including a new line), the file name will be used.
 
-### Integrations
+## Integrations
 
-Integrations are added by querying each repository in the `integrations.config.yaml` file. If their version is higher than the one stored in the integrations folder, the file is added to its directory.
+To add a new integration
 
-These changes, once merged to staging or main, will overwrite what is present in their knowledgeBase file.
+- Make a branch and alter the `integrations.config.yaml`. Add a value for `projectName` (as it appears in the repository name), `displayName`, and `knowledgeCategoriesPaths`.
 
-If a changes is needed in an integration doc, correct it in the branch that was created. Once it looks correct
-- Make a comment
-- Merge to that branch
-- Check that branches pr and merge to staging
+- Run `yarn updateIntegrations`
+Integrations are added by querying each repository in the `integrations.config.yaml` file.
 
-Any additional changes to the integration docs can be made in the integrations folder and NOT/knowledgeBase.
+- Check to make sure a new file has been created in the desired location.
+- Add your changes
+- Make a commit
+- Push and create a pr for vanilla-staging
 
-After staging looks correct merge to main.
-
-#### *To Add a new integration doc*
-- create a new branch from vanilla-staging
-- Add a projectName/displayName to the `integrations.config.yaml` file
-- Add a markdown file to the `knowledgeBase/` directory (in any folder or subfolder)
-- make sure the first line is the same as that of the integration's jupiterone.md first line (example: `# Azure Integration with JupiterOne`)
-- Commit, push and create a PR
-- After it is in staging, during the next integration pull (Once a week) it will appear.
+`knowledgeCategoriesPaths` is the path the where the parsed markdown (from the repositories `jupiterone.md`) is placed within the knowledgeBase. It corresponds to the knowledge categories that will be generated for the article's location in vanilla. Adding a path that does not exist will create new knowledgeCategories for which the article to reside after a merge to vanilla-staging or main.
 
 
-### To 'Refresh' vanilla staging and/or production
+After staging looks correct, open a pr to merge to main.
+
+After the article appears in vanilla, it will be updated when a new version of that repository's docs is published. This is via checking the repositories project.json.version against the appened version that is added to the articles body in a comment (not visible).
+
+
+## To 'Refresh' vanilla staging and/or production
 
 Create a branch from vanilla-staging. I like to use 'refresh-some-date'.
 
@@ -118,7 +116,7 @@ A Quick rundown
 - After merging, you will need to wait at least 5 mins (depending on changes) for the script to run. After that, you will need to refresh vanilla forums to see the changes (navigation within is not the same).
 - If you dont see an image, but you know it exists and is in the correct directory, try adding different size and making a change to the markdown file (so it will re-add it).
 
-# Pipeline helpers
+## Pipeline helpers
 
 DO NOT USE SPACES IN FILE OR DIRECTORY NAMES
 
@@ -131,7 +129,7 @@ If you do NOT want the next word capitalized, using the '\_' character will just
 
 The markdown files used initially had some formatting issues with the way new line characters(`\n`) were used. Now when an article is created, single (`\n`)
 
-# Dos and Donts
+## Dos and Donts
 
 Dont name any two directories or markdown with the same name.
 
@@ -168,7 +166,7 @@ Example usage:
   - Articles are removed first since they are not dependant
   - Longest flagged for delete `change` removed recursively
 
-### How the scripts functions
+## How the scripts functions
 
 - `getDiff` returns the changes in the most recent merge.
 - `updateCommunityDocs` cleans up the paths, filters out irrelevant path and converts to consumable array for `diffToProcedures`
@@ -214,6 +212,3 @@ Some questions and comments were posted [here](https://jptrone.slack.com/archive
 
 ![docs-community](./imagesForReadme/docs-community-flow.png)
 
-## trigger slack
-
-test
