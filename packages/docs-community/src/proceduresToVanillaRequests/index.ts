@@ -1,4 +1,5 @@
 import HttpClient from "../httpClient";
+import { getProjectDoc, readDocsConfig } from "../integrationHandling";
 import {
   getMarkdownImageSrcs,
   isSupportedMediaType,
@@ -6,23 +7,13 @@ import {
 } from "../linksAndMediaHandlers";
 import { logger } from "../loggingUtil";
 import { updateArticleInternalMarkdownLinks } from "../updateArticleInternalMarkdownLinks";
-import {
-  getIntegrationMarkdownAsString,
-  isArticleType,
-  isKnowledgeCategoryType,
-  removeTitleFromArticleBody,
-  TITLE_FROM_MARKDOWN_REGEX,
-} from "../utils";
+import { isArticleType, isKnowledgeCategoryType } from "../utils";
 import {
   FLAG_FOR_DELETE,
   KNOWN_CATEGORY_BEEN_DELETED,
   SHOULD_REALLY_UPLOAD_IMAGES,
 } from "../utils/constants";
-import {
-  IntegrationChange,
-  VanillaArticle,
-  VanillaKnowledgeCategory,
-} from "../utils/types";
+import { VanillaArticle, VanillaKnowledgeCategory } from "../utils/types";
 import {
   createArticle,
   createKnowledgeCategory,
@@ -474,110 +465,67 @@ export const useProceduresForVanillaRequests = async (
   );
 };
 
-
-
 export interface ReplaceArticleBodyWithIntegrationProps {
   procedures: (VanillaArticle | VanillaKnowledgeCategory)[];
-  integrationChanges: IntegrationChange[];
-  articles:VanillaArticle[],
-  httpClient: HttpClient
+  httpClient: HttpClient;
 }
 export const replaceArticleBodyWithIntegration = async ({
   procedures,
-  integrationChanges,
-  articles,
-  httpClient
+  httpClient,
 }: ReplaceArticleBodyWithIntegrationProps): Promise<
   (VanillaArticle | VanillaKnowledgeCategory)[]
 > => {
+  const { integrations } = await readDocsConfig();
+  // ${name} Integration with JupiterOne
   const alteredProcedures: (VanillaArticle | VanillaKnowledgeCategory)[] =
     procedures || [];
-    const proceduresAffected:VanillaArticle[] =[]
-    // let articlesAffected = [];
-  if (integrationChanges && integrationChanges.length) {
-    for (let p = 0; p < alteredProcedures.length; p++) {
-      const procedure = alteredProcedures[p];
-      if (isArticleType(procedure)) {
-        const [matchingIntegrationChange] = integrationChanges.filter(
-          (i) => i.articleName === procedure.name
+
+  // let articlesAffected = [];
+
+  for (let p = 0; p < alteredProcedures.length; p++) {
+    const procedure = alteredProcedures[p];
+    if (isArticleType(procedure) && procedure.articleID) {
+      if (integrations) {
+        const [integrationInfo] = integrations.filter(
+          (i) =>
+            `${i.displayName} Integration with JupiterOne` === procedure.name
         );
-
-        if (matchingIntegrationChange) {
-          const newBody = await getIntegrationMarkdownAsString(
-            matchingIntegrationChange.path
-          );
-
-          if (newBody !== FLAG_FOR_DELETE) {
-            logger.info(
-              `Article update from integration: ${JSON.stringify(
-                procedure.name,
-                null,
-                2
-              )}`
+        if (integrationInfo) {
+          const articleBody = await getProjectDoc(integrationInfo.projectName);
+          if (articleBody) {
+            const bodyWithremovedFirstTitle = articleBody.replace(
+              "# Integration with JupiterOne",
+              ""
             );
-
-            procedure.body = removeTitleFromArticleBody(
-              newBody,
-              TITLE_FROM_MARKDOWN_REGEX
-            );
-            proceduresAffected.push(procedure);
+            procedure.body = bodyWithremovedFirstTitle;
             alteredProcedures[p] = procedure;
+            await editArticle(httpClient, procedure.articleID, {
+              body: bodyWithremovedFirstTitle,
+            });
           }
+          //  fetch from github
+          // rm first #
+          // add to article body
         }
       }
     }
-    
-      const integrationChangesNotHandled:IntegrationChange[] = integrationChanges.filter(i=>{
-
-      const [match] = proceduresAffected.filter(p=>p.name===i.articleName)
-      return !match
-      })
-      const holding:{[articleName:string]:IntegrationChange} = {}
-      let removeDuplicates:IntegrationChange[] = []
-      integrationChangesNotHandled.forEach(i=>{
-        if(i.articleName&&!holding.articleName){
-          holding[i.articleName] = i
-        }
-      })
-      const keys = Object.keys(holding)
-      removeDuplicates = keys.map(k=>holding[k])
-
-      for(let i=0;i< removeDuplicates.length; i++){
-        const [matchingArticle] = articles.filter(article=>article.name ===removeDuplicates[i].articleName )
-        const newBody = await getIntegrationMarkdownAsString(
-          removeDuplicates[i].path
-        );
-  
-        if(matchingArticle &&matchingArticle.articleID &&newBody&&newBody!==FLAG_FOR_DELETE){
-          const body = removeTitleFromArticleBody(
-            newBody,
-            TITLE_FROM_MARKDOWN_REGEX
-          );
-
-          await editArticle(httpClient, matchingArticle.articleID,{body})
-        }
-
-    }
-
   }
+
   return alteredProcedures;
 };
 
 export interface ProceduresToVanillaRequestProps {
   procedures: (VanillaArticle | VanillaKnowledgeCategory)[];
-  integrationChanges?: IntegrationChange[];
+  integrationsOnly?: boolean;
 }
 
 export const proceduresToVanillaRequests = async ({
   procedures,
-  integrationChanges,
+  integrationsOnly,
 }: ProceduresToVanillaRequestProps): Promise<
   (VanillaArticle | VanillaKnowledgeCategory)[]
 > => {
-  if (
-    (procedures && procedures.length) ||
-    (integrationChanges && integrationChanges.length)
-  ) {
+  if (procedures && procedures.length) {
     const httpClient = new HttpClient();
     logger.info(`Getting knowledgeCategories`);
     const existingknowledgeCategoryInfo = await getKnowedgeCategories(
@@ -604,14 +552,12 @@ export const proceduresToVanillaRequests = async ({
       articles
     );
 
-
-    const alteredProceduresWithArticleInfo =
-      await replaceArticleBodyWithIntegration({
-        procedures: [...proceduresWithArticleInfo],
-        integrationChanges: integrationChanges || [],
-        articles,
-        httpClient
-      });
+    const alteredProceduresWithArticleInfo = integrationsOnly
+      ? await replaceArticleBodyWithIntegration({
+          procedures: [...proceduresWithArticleInfo],
+          httpClient,
+        })
+      : proceduresWithArticleInfo;
 
     // return procedures;
     const processedProcedures = await useProceduresForVanillaRequests(

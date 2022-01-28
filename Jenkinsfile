@@ -25,21 +25,10 @@ pipeline {
         sh 'yarn bundle'
 
         sh 'jupiterone-build'
-        withCredentials([
-usernamePassword(
-      credentialsId: 'github-app-jupiterone',
-      usernameVariable: 'GIT_USERNAME',
-      passwordVariable: 'GIT_PASSWORD')
-        ]) {
-          sh '''
-                 git config --local credential.helper "!f() { echo username=\\"$GIT_USERNAME"; echo password=\\"$GIT_PASSWORD"; }; f"
-                    yarn updateIntegrations
-                  '''
-        }
       }
     }
 
-      stage('Checking for Integration Doc Updates') {
+      stage('Updating Staging docs from their repo docs') {
       when {
         beforeAgent true
         triggeredBy 'TimerTrigger'
@@ -57,15 +46,13 @@ usernamePassword(
         sh 'yarn bundle'
 
         sh 'jupiterone-build'
-
-        withCredentials([
-          string(credentialsId: 'AUTO_GITHUB_PAT_TOKEN', variable: 'GH_TOKEN')
-        ]) {
+            withCredentials([
+              string(credentialsId: 'VANILLA_STAGING_ENV_TOKEN', variable: 'TOKEN')
+                ]) {
           sh '''
-                  git config --local credential.helper "!f() { echo username=\\'auto'; echo password=\\$GH_TOKEN; }; f"
-                    yarn updateIntegrations
+                    TOKEN="$TOKEN" targetVanillaEnv=staging yarn replaceIntegrationDocs
                   '''
-        }
+                }
         }
       }
 
@@ -95,7 +82,8 @@ usernamePassword(
               string(credentialsId: 'VANILLA_STAGING_ENV_TOKEN', variable: 'TOKEN')
                 ]) {
           sh '''
-                    TOKEN="$TOKEN" targetVanillaEnv=staging yarn start
+                    TOKEN="$TOKEN" targetVanillaEnv=staging yarn start;
+                    TOKEN="$TOKEN" targetVanillaEnv=staging yarn replaceIntegrationDocs
                   '''
                 }
       }
