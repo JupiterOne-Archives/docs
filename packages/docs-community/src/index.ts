@@ -72,7 +72,7 @@ export const updateCommunityDocs = async () => {
       });
     }
     const nestedMergedWithOriginal = [...diffChanges, ...nested];
-    if (process.env.staging) {
+    if (process.env.targetVanillaEnv === "staging") {
       if (
         nestedMergedWithOriginal.indexOf(
           "changes-from-integrations-update.md"
@@ -102,7 +102,7 @@ export const updateCommunityDocs = async () => {
 };
 export const updateIntegrationArticles = async () => {
   const pathsArray = await createDifsFromConfig();
-  if (process.env.staging) {
+  if (process.env.targetVanillaEnv === "staging") {
     if (pathsArray.indexOf("changes-from-integrations-update.md") === -1) {
       pathsArray.push("changes-from-integrations-update.md");
     }
@@ -128,7 +128,7 @@ export const updateVanillaWithDirectoryToWatch = async () => {
     const trimmedDirectories = fullArrayOfAllItems.map((result) =>
       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
-    if (process.env.staging) {
+    if (process.env.targetVanillaEnv === "staging") {
       if (
         trimmedDirectories.indexOf("changes-from-integrations-update.md") === -1
       ) {
@@ -156,7 +156,7 @@ export const addFullSubFolderManually = async (folderName: string) => {
   const fullArrayOfAllItems: string[] = await directoryPromise(
     directoryLocation
   );
-  if (process.env.staging) {
+  if (process.env.targetVanillaEnv === "staging") {
     if (
       fullArrayOfAllItems.indexOf("changes-from-integrations-update.md") === -1
     ) {

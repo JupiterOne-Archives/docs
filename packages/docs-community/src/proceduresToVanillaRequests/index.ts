@@ -527,7 +527,8 @@ export const createChangesContentForStaging = async ({
   procedures,
   httpClient,
 }: CreateChangesContentForStagingProps) => {
-  if (process.env.staging) {
+  if (process.env.targetVanillaEnv === "staging") {
+    console.log("DING STAGING");
     const [changesArticle] = procedures.filter(
       (p) => p.name === "Changes From Integrations Updates"
     );
@@ -553,11 +554,12 @@ export const createChangesContentForStaging = async ({
         sort: 0,
       };
       try {
-        await createArticle(
+        const created = await createArticle(
           httpClient,
 
           articleRequest
         );
+        console.log("DIDNDNDNDND", created);
       } catch (e) {
         logger.error(`error creating changes article: \n ${e}`);
       }
