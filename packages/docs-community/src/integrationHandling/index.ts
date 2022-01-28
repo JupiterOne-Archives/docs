@@ -47,7 +47,7 @@ export const getProjectDoc = async (projectName: string) => {
   try {
     const body = await axios.get(buildGithubDocFileUrl(projectName));
     if (body.data) {
-      console.log(body.data, 'DING')
+
       return body.data;
     }
   } catch (e) {
