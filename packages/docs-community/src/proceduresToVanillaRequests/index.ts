@@ -534,7 +534,7 @@ export const createChangesContentForStaging = async ({
     const [changesArticle] = combinationOfArticlesAndProcedures.filter(
       (p) => p.name === "Changes From Updates"
     );
-    const body = `${procedures.map((p) => `\n [${p.name}](${p.url})`)}`;
+    const body = `${procedures.map((p) => `\n [${p.name}](${p.url})${p.status !=='published'||!p.url?' - Deleted':''}`)}`;
     if (changesArticle && changesArticle.articleID) {
       const now = new Date();
       const date = now.toISOString();
