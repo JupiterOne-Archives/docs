@@ -83,7 +83,6 @@ pipeline {
                 ]) {
           sh '''
                     TOKEN="$TOKEN" targetVanillaEnv=staging yarn start;
-                    TOKEN="$TOKEN" targetVanillaEnv=staging yarn replaceIntegrationDocs
                   '''
                 }
       }

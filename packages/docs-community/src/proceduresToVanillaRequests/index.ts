@@ -481,7 +481,7 @@ export const replaceArticleBodyWithIntegration = async ({
   // ${name} Integration with JupiterOne
   const alteredProcedures: (VanillaArticle | VanillaKnowledgeCategory)[] =
     procedures || [];
-
+console.log(procedures,'PPPPPPPP')
   for (let p = 0; p < alteredProcedures.length; p++) {
     const procedure = alteredProcedures[p];
     if (isArticleType(procedure) && procedure.articleID) {
