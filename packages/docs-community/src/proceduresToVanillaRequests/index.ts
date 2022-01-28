@@ -465,6 +465,10 @@ export const useProceduresForVanillaRequests = async (
   );
 };
 
+export interface ProceduresReplaceArticleBodyWithIntegrationReturn {
+  alteredProcedures: (VanillaArticle | VanillaKnowledgeCategory)[];
+}
+
 export interface ReplaceArticleBodyWithIntegrationProps {
   procedures: (VanillaArticle | VanillaKnowledgeCategory)[];
   httpClient: HttpClient;
@@ -472,15 +476,11 @@ export interface ReplaceArticleBodyWithIntegrationProps {
 export const replaceArticleBodyWithIntegration = async ({
   procedures,
   httpClient,
-}: ReplaceArticleBodyWithIntegrationProps): Promise<
-  (VanillaArticle | VanillaKnowledgeCategory)[]
-> => {
+}: ReplaceArticleBodyWithIntegrationProps): Promise<ProceduresReplaceArticleBodyWithIntegrationReturn> => {
   const { integrations } = await readDocsConfig();
   // ${name} Integration with JupiterOne
   const alteredProcedures: (VanillaArticle | VanillaKnowledgeCategory)[] =
     procedures || [];
-
-  // let articlesAffected = [];
 
   for (let p = 0; p < alteredProcedures.length; p++) {
     const procedure = alteredProcedures[p];
@@ -499,9 +499,15 @@ export const replaceArticleBodyWithIntegration = async ({
             );
             procedure.body = bodyWithremovedFirstTitle;
             alteredProcedures[p] = procedure;
-            await editArticle(httpClient, procedure.articleID, {
-              body: bodyWithremovedFirstTitle,
-            });
+            try {
+              await editArticle(httpClient, procedure.articleID, {
+                body: bodyWithremovedFirstTitle,
+              });
+            } catch (e) {
+              logger.error(
+                `error editing for integration doc: ${integrationInfo.projectName}\n ${e}`
+              );
+            }
           }
           //  fetch from github
           // rm first #
@@ -511,7 +517,52 @@ export const replaceArticleBodyWithIntegration = async ({
     }
   }
 
-  return alteredProcedures;
+  return { alteredProcedures };
+};
+export interface CreateChangesContentForStagingProps {
+  procedures: VanillaArticle[];
+  httpClient: HttpClient;
+}
+export const createChangesContentForStaging = async ({
+  procedures,
+  httpClient,
+}: CreateChangesContentForStagingProps) => {
+  if (process.env.staging) {
+    const [changesArticle] = procedures.filter(
+      (p) => p.name === "Changes From Integrations Updates"
+    );
+    const body = `# Changes From Integrations Updates \n \n ${procedures.map(
+      (p) => `\n [${p.name}](${p.url})`
+    )}`;
+    if (changesArticle && changesArticle.articleID) {
+      try {
+        await editArticle(httpClient, changesArticle.articleID, {
+          body,
+        });
+      } catch (e) {
+        logger.error(`error editing changes article: \n ${e}`);
+      }
+    } else {
+      const articleRequest: Partial<VanillaArticle> = {
+        body,
+
+        format: "markdown",
+        knowledgeCategoryID: 1,
+        locale: "en",
+        name: "Changes From Integrations Updates",
+        sort: 0,
+      };
+      try {
+        await createArticle(
+          httpClient,
+
+          articleRequest
+        );
+      } catch (e) {
+        logger.error(`error creating changes article: \n ${e}`);
+      }
+    }
+  }
 };
 
 export interface ProceduresToVanillaRequestProps {
@@ -552,13 +603,16 @@ export const proceduresToVanillaRequests = async ({
       articles
     );
 
-    const alteredProceduresWithArticleInfo = integrationsOnly
-      ? await replaceArticleBodyWithIntegration({
-          procedures: [...proceduresWithArticleInfo],
-          httpClient,
-        })
-      : proceduresWithArticleInfo;
+    let alteredProceduresWithArticleInfo = proceduresWithArticleInfo;
 
+    if (integrationsOnly) {
+      const { alteredProcedures } = await replaceArticleBodyWithIntegration({
+        procedures: [...proceduresWithArticleInfo],
+        httpClient,
+      });
+
+      alteredProceduresWithArticleInfo = alteredProcedures;
+    }
     // return procedures;
     const processedProcedures = await useProceduresForVanillaRequests(
       alteredProceduresWithArticleInfo,
@@ -568,6 +622,7 @@ export const proceduresToVanillaRequests = async ({
     logger.info(
       `processedProcedures: ${JSON.stringify(processedProcedures, null, 2)}`
     );
+
     const combinationOfArticlesAndProcedures = [
       ...processedProcedures,
       ...articles,
@@ -582,6 +637,10 @@ export const proceduresToVanillaRequests = async ({
       articlesNeedingLinkUpdates,
       httpClient
     );
+    await createChangesContentForStaging({
+      httpClient,
+      procedures: combinationOfArticlesAndProcedures,
+    });
 
     logger.info(
       `UpdatesToInternalLinks processed: ${JSON.stringify(
