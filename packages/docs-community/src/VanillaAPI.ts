@@ -160,7 +160,7 @@ export const createKnowledgeCategory = async (
   if (path && path.toLowerCase().indexOf("release-notes") !== -1) {
     isReleaseNotes = true;
   }
-
+  console.log("BEING CALLED FOR EAR");
   try {
     const category = (await client.post("/knowledge-categories", {
       ...bodyOfRequest,
