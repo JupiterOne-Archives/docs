@@ -1,4 +1,3 @@
-import glob from "glob";
 import path from "path";
 import { diffToProcedures } from "./diffToProcedures";
 import { getDiffFromHead } from "./gitDifference";
@@ -6,50 +5,18 @@ import HttpClient from "./httpClient";
 import { createDifsFromConfig } from "./integrationHandling";
 import { logger } from "./loggingUtil";
 import { proceduresToVanillaRequests } from "./proceduresToVanillaRequests";
-import { PATH_OF_DIRECTORY_TO_WATCH } from "./utils";
+import {
+  directoryPromise,
+  getAllSubChanges,
+  PATH_OF_DIRECTORY_TO_WATCH,
+  resourceLocation,
+} from "./utils";
 import {
   deleteArticle,
   deleteKnowledgeCategory,
   getAllArticles,
   getKnowedgeCategories,
 } from "./VanillaAPI";
-
-const resourceLocation = (resource: string) =>
-  path.join(__dirname, `../../../${PATH_OF_DIRECTORY_TO_WATCH}/`);
-const directoryPromise = (directoryLocation: string) =>
-  new Promise<string[]>((resolve, reject) => {
-    return getDirectories(directoryLocation, (err, matches) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(matches as string[]);
-      }
-    });
-  });
-
-export const getAllSubChanges = async (gitChange: string) => {
-  if (gitChange.indexOf(".") != -1) {
-    return [gitChange];
-  }
-  const directoryLocation = path.join(__dirname, `../../../`, gitChange);
-
-  const directoryPromise = new Promise<string[]>((resolve, reject) => {
-    return getDirectories(directoryLocation, (err, matches) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(matches as string[]);
-      }
-    });
-  });
-  return await directoryPromise;
-};
-
-// what is used to chop up folder aditions/removals
-
-const getDirectories = (src: string, cb: (err: any, res: any) => any) => {
-  glob(src + "/**/*", cb);
-};
 
 // Main function to be used to use changes to markdown files merged to github to be converted
 // to procedures that alter Vanillia forums
@@ -73,11 +40,7 @@ export const updateCommunityDocs = async () => {
     }
     const nestedMergedWithOriginal = [...diffChanges, ...nested];
     if (process.env.targetVanillaEnv === "staging") {
-      if (
-        nestedMergedWithOriginal.indexOf(
-          "changes-from-update.md"
-        ) === -1
-      ) {
+      if (nestedMergedWithOriginal.indexOf("changes-from-update.md") === -1) {
         nestedMergedWithOriginal.push("changes-from-update.md");
       }
     }
@@ -100,6 +63,7 @@ export const updateCommunityDocs = async () => {
     }
   }
 };
+
 export const updateIntegrationArticles = async () => {
   const pathsArray = await createDifsFromConfig();
 
@@ -108,8 +72,12 @@ export const updateIntegrationArticles = async () => {
       pathsArray.push("changes-from-update.md");
     }
   }
-  const filterPaths = pathsArray.filter(p=>p!==undefined).map(p=>`knowledgeBase/${p}`)
+  const filterPaths = pathsArray
+    .filter((p) => p !== undefined)
+    .map((p) => `knowledgeBase/${p}`);
+
   logger.info(`Updating: ${filterPaths}`);
+
   const procedures = await diffToProcedures(filterPaths);
   if (procedures && procedures.length > 0) {
     const completedProcedures = await proceduresToVanillaRequests({
@@ -117,9 +85,8 @@ export const updateIntegrationArticles = async () => {
       integrationsOnly: true,
     });
     logger.info(`Completed: ${completedProcedures}`);
-    return completedProcedures
+    return completedProcedures;
   }
-
 };
 
 // converts all items in the PATH_OF_DIRECTORY_TO_WATCH into Vanilla forum items
@@ -133,9 +100,7 @@ export const updateVanillaWithDirectoryToWatch = async () => {
       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
     if (process.env.targetVanillaEnv === "staging") {
-      if (
-        trimmedDirectories.indexOf("changes-from-update.md") === -1
-      ) {
+      if (trimmedDirectories.indexOf("changes-from-update.md") === -1) {
         trimmedDirectories.push("changes-from-update.md");
       }
     }
@@ -161,9 +126,7 @@ export const addFullSubFolderManually = async (folderName: string) => {
     directoryLocation
   );
   if (process.env.targetVanillaEnv === "staging") {
-    if (
-      fullArrayOfAllItems.indexOf("changes-from-update.md") === -1
-    ) {
+    if (fullArrayOfAllItems.indexOf("changes-from-update.md") === -1) {
       fullArrayOfAllItems.push("changes-from-update.md");
     }
   }
