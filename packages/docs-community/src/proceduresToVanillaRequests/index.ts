@@ -1,4 +1,5 @@
 import HttpClient from "../httpClient";
+import { getProjectDoc, readDocsConfig } from "../integrationHandling";
 import {
   getMarkdownImageSrcs,
   isSupportedMediaType,
@@ -464,9 +465,124 @@ export const useProceduresForVanillaRequests = async (
   );
 };
 
-export const proceduresToVanillaRequests = async (
-  procedures: (VanillaArticle | VanillaKnowledgeCategory)[]
-): Promise<(VanillaArticle | VanillaKnowledgeCategory)[]> => {
+export interface ProceduresReplaceArticleBodyWithIntegrationReturn {
+  alteredProcedures: (VanillaArticle | VanillaKnowledgeCategory)[];
+}
+
+export interface ReplaceArticleBodyWithIntegrationProps {
+  procedures: (VanillaArticle | VanillaKnowledgeCategory)[];
+  httpClient: HttpClient;
+}
+export const replaceArticleBodyWithIntegration = async ({
+  procedures,
+  httpClient,
+}: ReplaceArticleBodyWithIntegrationProps): Promise<ProceduresReplaceArticleBodyWithIntegrationReturn> => {
+  const { integrations } = await readDocsConfig();
+
+  const alteredProcedures: (VanillaArticle | VanillaKnowledgeCategory)[] =
+    procedures || [];
+
+  for (let p = 0; p < alteredProcedures.length; p++) {
+    const procedure = alteredProcedures[p];
+    if (isArticleType(procedure) && procedure.articleID) {
+      if (integrations) {
+        const [integrationInfo] = integrations.filter(
+          (i) =>
+            `${i.displayName} Integration with JupiterOne` === procedure.name
+        );
+        if (integrationInfo) {
+          const articleBody = await getProjectDoc(integrationInfo.projectName);
+          if (articleBody) {
+            const bodyWithremovedFirstTitle = articleBody.replace(
+              "# Integration with JupiterOne",
+              ""
+            );
+            procedure.body = bodyWithremovedFirstTitle;
+            alteredProcedures[p] = procedure;
+            try {
+              await editArticle(httpClient, procedure.articleID, {
+                body: bodyWithremovedFirstTitle,
+              });
+            } catch (e) {
+              logger.error(
+                `error editing for integration doc: ${integrationInfo.projectName}\n ${e}`
+              );
+            }
+          }
+          //  fetch from github
+          // rm first #
+          // add to article body
+        }
+      }
+    }
+  }
+
+  return { alteredProcedures };
+};
+export interface CreateChangesContentForStagingProps {
+  procedures: VanillaArticle[];
+  httpClient: HttpClient;
+  combinationOfArticlesAndProcedures: VanillaArticle[];
+}
+export const createChangesContentForStaging = async ({
+  procedures,
+  httpClient,
+  combinationOfArticlesAndProcedures,
+}: CreateChangesContentForStagingProps) => {
+  if (process.env.targetVanillaEnv === "staging") {
+
+    const [changesArticle] = combinationOfArticlesAndProcedures.filter(
+      (p) => p.name === "Changes From Updates"
+    );
+    const body = `${procedures.map((p) => `\n [${p.name}](${p.url})${p.status !=='published'||!p.url?' - Deleted':''}`)}`;
+    if (changesArticle && changesArticle.articleID) {
+      const now = new Date();
+      const date = now.toISOString();
+      const editBody = `## ${date.substring(0, date.indexOf("T"))} \n ${
+        changesArticle.body ? changesArticle.body : ""
+      } \n ${body}`
+
+      try {
+        await editArticle(httpClient, changesArticle.articleID, {
+          body: `${editBody}`,
+        });
+      } catch (e) {
+        logger.error(`error editing changes article: \n ${e}`);
+      }
+    } else {
+      const articleRequest: Partial<VanillaArticle> = {
+        body,
+
+        format: "markdown",
+        knowledgeCategoryID: 1,
+        locale: "en",
+        name: "Changes From Updates",
+        sort: 0,
+      };
+      try {
+        await createArticle(
+          httpClient,
+
+          articleRequest
+        );
+      } catch (e) {
+        logger.error(`error creating changes article: \n ${e}`);
+      }
+    }
+  }
+};
+
+export interface ProceduresToVanillaRequestProps {
+  procedures: (VanillaArticle | VanillaKnowledgeCategory)[];
+  integrationsOnly?: boolean;
+}
+
+export const proceduresToVanillaRequests = async ({
+  procedures,
+  integrationsOnly,
+}: ProceduresToVanillaRequestProps): Promise<
+  (VanillaArticle | VanillaKnowledgeCategory)[]
+> => {
   if (procedures && procedures.length) {
     const httpClient = new HttpClient();
     logger.info(`Getting knowledgeCategories`);
@@ -487,20 +603,33 @@ export const proceduresToVanillaRequests = async (
       }
       return p;
     });
+    // add body to article before links and images get added
 
     const proceduresWithArticleInfo = addVanillaArticlesToProcedures(
       proceduresWithVanillaCategories,
       articles
     );
 
+    let alteredProceduresWithArticleInfo = proceduresWithArticleInfo;
+
+    if (integrationsOnly) {
+      const { alteredProcedures } = await replaceArticleBodyWithIntegration({
+        procedures: [...proceduresWithArticleInfo],
+        httpClient,
+      });
+
+      alteredProceduresWithArticleInfo = alteredProcedures;
+    }
+    // return procedures;
     const processedProcedures = await useProceduresForVanillaRequests(
-      proceduresWithArticleInfo,
+      alteredProceduresWithArticleInfo,
       httpClient,
       existingknowledgeCategoryInfo
     );
     logger.info(
       `processedProcedures: ${JSON.stringify(processedProcedures, null, 2)}`
     );
+
     const combinationOfArticlesAndProcedures = [
       ...processedProcedures,
       ...articles,
@@ -515,6 +644,12 @@ export const proceduresToVanillaRequests = async (
       articlesNeedingLinkUpdates,
       httpClient
     );
+
+    await createChangesContentForStaging({
+      httpClient,
+      procedures: processedProcedures.filter(isArticleType),
+      combinationOfArticlesAndProcedures,
+    });
 
     logger.info(
       `UpdatesToInternalLinks processed: ${JSON.stringify(

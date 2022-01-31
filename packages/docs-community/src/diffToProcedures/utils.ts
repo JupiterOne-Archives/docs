@@ -4,6 +4,7 @@ import {
 } from "../utils/constants";
 
 export const filterDiffs = (gitDiffArray: string[]) => {
+
   const filteredArray = gitDiffArray
     .filter((diff) => diff.startsWith(PATH_OF_DIRECTORY_TO_WATCH))
 

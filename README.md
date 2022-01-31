@@ -1,6 +1,6 @@
 # docs-community
 
-### Please note
+## Please note
 
 - MERGE to `vanilla-staging` will make changes to `https://jupiterone.vanillastaging.com/`
 - MERGE to `main` will make changes to `https://jupiterone.vanillacommunities.com/`
@@ -8,8 +8,33 @@
 - `When you move a file or folder, make sure to change any links TO that file/folder from other markdown files.`
 - For a custom title (and not the file name), the first line `MUST` be "# Some Title". The '# ' will be removed and used for the title. Also, the first line will be removed from the article contents. If the first line is ANYTHING else (including a new line), the file name will be used.
 
+## How to find changes
 
-### To 'Refresh' vanilla staging and/or production
+Vanilla Visable changes can be seen with an update to knowledgeBase folder, which can occur manually or with a run of `yarn updateIntegrations` and a merge to vanilla-staging. Also, at midnight, integration docs are pulled and used to overwrite the contents of their matching articles. The most recent changes will be visable within the `https://jupiterone.vanillastaging.com/kb/docs`'s `Changes From  Updates` article. This will be visable in staging but not in production. It contains each article's name and a link to that article for ease of checking links and images.
+
+## Integrations
+
+To add a new integration
+
+- Make a branch and alter the `integrations.config.yaml`. Add a value for `projectName` (as it appears in the repository name), `displayName`, and `knowledgeCategoriesPaths`.
+
+- Run `yarn updateIntegrations`
+  Integrations are added by querying each repository in the `integrations.config.yaml` file.
+
+- Check to make sure a new file has been created in the desired location.
+- Add your changes
+- Make a commit
+- Push and create a pr for vanilla-staging
+
+`knowledgeCategoriesPaths` is the path the where the parsed markdown (from the repositories `jupiterone.md`) is placed within the knowledgeBase. It corresponds to the knowledge categories that will be generated for the article's location in vanilla. Adding a path that does not exist will create new knowledgeCategories for which the article to reside after a merge to vanilla-staging or main.
+
+After staging looks correct, open a pr to merge to main.
+
+After the article appears in vanilla, it will be updated when a new version of that repository's docs is published and changes added to the knowledgeBase will be overridden with next update. The file needs to remain to allow us to keep track of their location on vanilla for structure, moves and deletes.
+
+Adding a value to `ignoreUpdates` on a `integrations.config.yaml` property will keep it from being updated with the midnight integrations pull.
+
+## To 'Refresh' vanilla staging and/or production
 
 Create a branch from vanilla-staging. I like to use 'refresh-some-date'.
 
@@ -95,7 +120,7 @@ A Quick rundown
 - After merging, you will need to wait at least 5 mins (depending on changes) for the script to run. After that, you will need to refresh vanilla forums to see the changes (navigation within is not the same).
 - If you dont see an image, but you know it exists and is in the correct directory, try adding different size and making a change to the markdown file (so it will re-add it).
 
-# Pipeline helpers
+## Pipeline helpers
 
 DO NOT USE SPACES IN FILE OR DIRECTORY NAMES
 
@@ -108,7 +133,7 @@ If you do NOT want the next word capitalized, using the '\_' character will just
 
 The markdown files used initially had some formatting issues with the way new line characters(`\n`) were used. Now when an article is created, single (`\n`)
 
-# Dos and Donts
+## Dos and Donts
 
 Dont name any two directories or markdown with the same name.
 
@@ -145,7 +170,7 @@ Example usage:
   - Articles are removed first since they are not dependant
   - Longest flagged for delete `change` removed recursively
 
-### How the scripts functions
+## How the scripts functions
 
 - `getDiff` returns the changes in the most recent merge.
 - `updateCommunityDocs` cleans up the paths, filters out irrelevant path and converts to consumable array for `diffToProcedures`
@@ -190,7 +215,3 @@ Some questions and comments were posted [here](https://jptrone.slack.com/archive
 - A trigger that pulls in integrations docs on a schedule and creates a pr to staging for review is wanted. I tested the script from the docs repo, it needs some improvements but does collect the collection of docs. Simple-git could be used to create a pr via yarn script
 
 ![docs-community](./imagesForReadme/docs-community-flow.png)
-
-## trigger slack
-
-test
