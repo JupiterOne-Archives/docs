@@ -11,113 +11,76 @@ import {
 } from "../utils";
 import {
   createKnowledgeCategory,
-  deleteAllFlaggedCategories,
   deleteEmptyCategories,
   getAllArticles,
   getKnowedgeCategories,
   makeRequestsToChangeMarkdownReferences,
 } from "../VanillaAPI";
-import { procedureToArticle, procedureToKnowledgeCategory } from "./creation";
+import {
+  addVanillaArticlesToProcedures,
+  addVanillaCategoryToProcedure,
+} from "./addMeta";
+import {
+  procedureToArticle,
+  procedureToKnowledgeCategory,
+  removeDeletedCategories,
+} from "./conversion";
 import { createChangesContentForStaging } from "./stagingUpdateArticle";
 import { getPreviousKnowledgeID, hasKnowledgeCategoryBeenMoved } from "./utils";
 
-export const addVanillaCategoryToProcedure = (
-  procedure: VanillaKnowledgeCategory,
-  vanillaReturn: VanillaKnowledgeCategory[]
-) => {
-  const tempVanillaReturn: VanillaKnowledgeCategory[] = vanillaReturn || [];
-  let procedureTarget: VanillaKnowledgeCategory = procedure;
+export interface HandleKnowledgeCategoryChangedParentCreateProps {
+  procedure: VanillaKnowledgeCategory;
+  newName: string;
+  previousknowledgeCategoryID: number | null;
+  httpClient: HttpClient;
+  existingknowledgeCategoryInfo: VanillaKnowledgeCategory[];
+}
 
-  const match = tempVanillaReturn.filter(
-    (v) => v.name.toLowerCase() === procedureTarget.name.toLowerCase()
-  );
-
-  if (match.length) {
-    procedureTarget = {
-      ...procedureTarget,
-      ...match[0],
-      name: procedureTarget.name,
-    };
+export const handleKnowledgeCategoryChangedParentCreate = async ({
+  procedure,
+  newName,
+  previousknowledgeCategoryID,
+  httpClient,
+  existingknowledgeCategoryInfo,
+}: HandleKnowledgeCategoryChangedParentCreateProps) => {
+  let isReleaseNotes = false;
+  const tempExistingKnowledgeCategoryInfo = existingknowledgeCategoryInfo;
+  const procedureWorkedOn = { ...procedure };
+  if (
+    procedureWorkedOn.path &&
+    procedureWorkedOn.path.toLowerCase().indexOf("release-notes") !== -1
+  ) {
+    isReleaseNotes = true;
   }
 
-  return procedureTarget;
-};
-
-// singular
-export const addVanillaArticleInfoToProcedure = (
-  procedure: VanillaArticle,
-  vanillaArticles: VanillaArticle[]
-): VanillaArticle => {
-  let procedureTarget = procedure;
-
-  const match = vanillaArticles.filter(
-    (v) => v.name?.toLowerCase() === procedureTarget.name?.toLowerCase()
-  );
-
-  if (match.length) {
-    procedureTarget = {
-      ...procedure,
-      name: procedure.name,
-      path: procedure.path,
-      knowledgeCategoryID: match[0].knowledgeCategoryID,
-      articleID: match[0].articleID,
-      locale: "en",
-      format: "markdown",
-    };
-  }
-
-  return procedureTarget;
-};
-
-export const addVanillaArticlesToProcedures = (
-  procedures: (VanillaArticle | VanillaKnowledgeCategory)[],
-  vanillaArticles: VanillaArticle[]
-) => {
-  logger.info(`Adding vanilla article information to procedures`);
-
-  return procedures.map((p) => {
-    if (isArticleType(p)) {
-      const articleWithVanilla = addVanillaArticleInfoToProcedure(
-        p,
-        vanillaArticles
-      );
-
-      return articleWithVanilla;
-    } else {
-      return p;
-    }
-  });
-};
-
-export const removeDeletedCategories = async (
-  httpClient: HttpClient,
-  procedures: (VanillaArticle | VanillaKnowledgeCategory)[]
-) => {
-  logger.info(
-    `Removing deleted categories${JSON.stringify(procedures, null, 2)}`
-  );
-
-  // at this point all vanillaArticles that need deleting should be deleted.
-  const deletedKCategories: VanillaKnowledgeCategory[] = procedures.filter(
-    isKnowledgeCategoryType
-  );
-
-  const categoriesDelete = await deleteAllFlaggedCategories(
-    httpClient,
-    deletedKCategories
-  );
-
-  if (categoriesDelete) {
-    return {
-      categoriesDeleted: categoriesDelete,
-      procedures,
-    };
-  }
-
-  return {
-    categoriesDeleted: categoriesDelete,
-    procedures,
+  const newReqData = {
+    name: newName,
+    parentID: previousknowledgeCategoryID,
+    knowledgeBaseID: isReleaseNotes ? 2 : 1,
   };
+  try {
+    const createdKnowledgeCategory = await createKnowledgeCategory(
+      httpClient,
+      newReqData
+    );
+
+    if (createdKnowledgeCategory) {
+      tempExistingKnowledgeCategoryInfo.push({
+        ...createdKnowledgeCategory,
+        childCategoryCount: createdKnowledgeCategory.childCategoryCount
+          ? createdKnowledgeCategory.childCategoryCount
+          : 1,
+      });
+
+      return {
+        existingknowledgeCategoryInfo: tempExistingKnowledgeCategoryInfo,
+        updatedPreviousKnowledgeCategoryID:
+          createdKnowledgeCategory.knowledgeCategoryID,
+      };
+    }
+  } catch (e) {
+    logger.error(`CREATE ERROR Already exists- \n ${e}`);
+  }
 };
 
 export const useProceduresForVanillaRequests = async (
@@ -131,7 +94,7 @@ export const useProceduresForVanillaRequests = async (
     ? [...completedProcedures]
     : [];
   const tempProcedures = [...procedures];
-  const tempExistingKnowledgeCategoryInfo = [...existingknowledgeCategoryInfo];
+  let tempExistingKnowledgeCategoryInfo = [...existingknowledgeCategoryInfo];
   let previousknowledgeCategoryID = null;
 
   // this needs to be syncronous, going in order of the procedures.
@@ -156,37 +119,19 @@ export const useProceduresForVanillaRequests = async (
     });
 
     if (typeof hasChangedParent === "string") {
-      let isReleaseNotes = false;
-      if (
-        procedureWorkedOn.path &&
-        procedureWorkedOn.path.toLowerCase().indexOf("release-notes") !== -1
-      ) {
-        isReleaseNotes = true;
-      }
-
-      const newReqData = {
-        name: hasChangedParent,
-        parentID: previousknowledgeCategoryID,
-        knowledgeBaseID: isReleaseNotes ? 2 : 1,
-      };
-      try {
-        const createdKnowledgeCategory = await createKnowledgeCategory(
-          httpClient,
-          newReqData
-        );
-
-        if (createdKnowledgeCategory) {
-          tempExistingKnowledgeCategoryInfo.push({
-            ...createdKnowledgeCategory,
-            childCategoryCount: createdKnowledgeCategory.childCategoryCount
-              ? createdKnowledgeCategory.childCategoryCount
-              : 1,
-          });
-          previousknowledgeCategoryID =
-            createdKnowledgeCategory.knowledgeCategoryID;
-        }
-      } catch (e) {
-        logger.error(`CREATE ERROR Already exists- \n ${e}`);
+      const parentCreation = await handleKnowledgeCategoryChangedParentCreate({
+        procedure: procedureWorkedOn,
+        newName: hasChangedParent,
+        previousknowledgeCategoryID,
+        httpClient,
+        existingknowledgeCategoryInfo,
+      });
+      if (parentCreation) {
+        tempExistingKnowledgeCategoryInfo =
+          parentCreation.existingknowledgeCategoryInfo;
+        previousknowledgeCategoryID =
+          parentCreation.updatedPreviousKnowledgeCategoryID ||
+          previousknowledgeCategoryID;
       }
     }
 
@@ -237,17 +182,20 @@ export const proceduresToVanillaRequests = async ({
 > => {
   if (procedures && procedures.length) {
     const httpClient = new HttpClient();
-    logger.info(`Getting knowledgeCategories`);
+
     const existingknowledgeCategoryInfo = await getKnowedgeCategories(
       httpClient
     );
-
+    console.log(
+      existingknowledgeCategoryInfo,
+      "existingknowledgeCategoryInfoexistingknowledgeCategoryInfo"
+    );
     logger.info(`Getting Articles`);
     const articles = await getAllArticles(
       httpClient,
       existingknowledgeCategoryInfo
     );
-
+    console.log(getAllArticles, "sjsjsjsjs");
     logger.info(`Mapping Vanilla responses to procedures`);
     const proceduresWithVanillaCategories = procedures.map((p) => {
       if (isKnowledgeCategoryType(p)) {
@@ -272,7 +220,7 @@ export const proceduresToVanillaRequests = async ({
 
       alteredProceduresWithArticleInfo = alteredProcedures;
     }
-    // return procedures;
+
     const processedProcedures = await useProceduresForVanillaRequests(
       alteredProceduresWithArticleInfo,
       httpClient,

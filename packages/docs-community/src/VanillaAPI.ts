@@ -218,7 +218,7 @@ export const deleteKnowledgeCategory = async (
   knowledgeCategory: VanillaKnowledgeCategory
 ): Promise<VanillaKnowledgeCategory> => {
   const tempKnowledgeCategory: VanillaKnowledgeCategory = knowledgeCategory;
-
+  console.log(knowledgeCategory, "HITTTT");
   try {
     await client.delete(
       `knowledge-categories/${knowledgeCategory.knowledgeCategoryID}`
