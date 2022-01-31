@@ -8,7 +8,7 @@ pipeline {
     timestamps()
   }
   triggers {
-    cron('H/15 * * * *')
+    cron('0 0 * * *')
   }
   stages {
     stage('Build and scan') {
@@ -51,6 +51,13 @@ pipeline {
                 ]) {
           sh '''
                     TOKEN="$TOKEN" targetVanillaEnv=staging yarn replaceIntegrationDocs
+                  '''
+                }
+        withCredentials([
+              string(credentialsId: 'VANILLA_STAGING_ENV_TOKEN', variable: 'TOKEN')
+                ]) {
+          sh '''
+                    TOKEN="$TOKEN" targetVanillaEnv=prod yarn replaceIntegrationDocs
                   '''
                 }
         }
