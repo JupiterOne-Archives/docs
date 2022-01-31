@@ -86,7 +86,11 @@ export interface VanillaArticlePatch {
     requestHandler: string[];
   };
 }
-
+export interface IntegrationChange {
+  version: string;
+  articleName: string;
+  path: string;
+}
 export interface VanillaArticle {
   articleID: number | null;
   knowledgeCategoryID: number | null;
