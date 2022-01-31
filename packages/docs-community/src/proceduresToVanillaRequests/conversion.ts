@@ -3,6 +3,7 @@ import { logger } from "../loggingUtil";
 import {
   directoryExists,
   FLAG_FOR_DELETE,
+  isKnowledgeCategoryType,
   KNOWN_CATEGORY_BEEN_DELETED,
   VanillaArticle,
   VanillaKnowledgeCategory,
@@ -10,6 +11,7 @@ import {
 import {
   createArticle,
   createKnowledgeCategory,
+  deleteAllFlaggedCategories,
   deleteArticle,
   editArticle,
   editKnowledgeCategory,
@@ -97,7 +99,6 @@ export const procedureToKnowledgeCategory = async (
       return tempProcedureWorkedOn;
     }
   } else {
-    console.log(directoryExistsResult, "SSJSJSJ");
     if (directoryExistsResult) {
       let reqData: any = {
         name: tempProcedureWorkedOn.name,
@@ -211,4 +212,35 @@ export const procedureToArticle = async (
   }
 
   return tempProcedureWorkedOn;
+};
+
+export const removeDeletedCategories = async (
+  httpClient: HttpClient,
+  procedures: (VanillaArticle | VanillaKnowledgeCategory)[]
+) => {
+  logger.info(
+    `Removing deleted categories${JSON.stringify(procedures, null, 2)}`
+  );
+
+  // at this point all vanillaArticles that need deleting should be deleted.
+  const deletedKCategories: VanillaKnowledgeCategory[] = procedures.filter(
+    isKnowledgeCategoryType
+  );
+  console.log("deletedKCategoriesdeletedKCategories", deletedKCategories);
+  const categoriesDelete = await deleteAllFlaggedCategories(
+    httpClient,
+    deletedKCategories
+  );
+  console.log("DINNNG", categoriesDelete);
+  if (categoriesDelete) {
+    return {
+      categoriesDeleted: categoriesDelete,
+      procedures,
+    };
+  }
+
+  return {
+    categoriesDeleted: categoriesDelete,
+    procedures,
+  };
 };

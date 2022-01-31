@@ -2,9 +2,20 @@ import {
   createKnowledgeCategoryMock,
   FLAG_FOR_DELETE,
   KNOWN_CATEGORY_BEEN_DELETED,
+  VanillaKnowledgeCategory,
 } from "../utils";
-import { procedureToArticle, procedureToKnowledgeCategory } from "./creation";
-import { procedureArticle, procedureKnowledgeCategory } from "./mocks";
+import { deleteAllFlaggedCategories } from "../VanillaAPI";
+import {
+  procedureToArticle,
+  procedureToKnowledgeCategory,
+  removeDeletedCategories,
+} from "./conversion";
+import {
+  procedureArticle,
+  procedureKnowledgeCategory,
+  PROCEDURESKCategoriesDELETED,
+  PROCEDURESWithKCategoriesToDelete,
+} from "./mocks";
 jest.mock("../VanillaAPI");
 
 describe("proceduresToVanillaRequests", () => {
@@ -22,11 +33,6 @@ describe("proceduresToVanillaRequests", () => {
       }));
       const articleID = 234;
       const previousknowledgeCategoryID = 8;
-      //   const mockVanillaReturnValue = {
-      //     articleID,
-      //     name: "Soc2 With Jupiterone Copy",
-      //     knowledgeCategoryID: previousknowledgeCategoryID,
-      //   } as any;
 
       const procedureWithArticle = {
         ...procedureArticle,
@@ -148,38 +154,6 @@ describe("proceduresToVanillaRequests", () => {
         procedureType: "Article",
       });
     });
-
-    // it("deletes existing article when body contains delete flag", async () => {
-    //   jest.doMock("../utils", () => ({
-    //     mockMarkdownToString: jest.fn(() => FLAG_FOR_DELETE),
-    //   }));
-    //   jest.doMock("../VanillaAPI", () => ({
-    //     deleteArticle: jest.fn().mockResolvedValue({
-    //       mockReturnForDelete,
-    //     } as any),
-    //   }));
-    //   const articleID = 234;
-    //   const previousknowledgeCategoryID = 8;
-    //   const procedureWithArticle = {
-    //     ...procedureArticle,
-    //     body: FLAG_FOR_DELETE,
-    //     articleID,
-    //     knowledgeCategoryID: previousknowledgeCategoryID,
-    //   };
-    //   const mockReturnForDelete = {
-    //     ...procedureWithArticle,
-    //   } as any;
-    //   // mockDeleteArticle.mockResolvedValue(mockReturnForDelete);
-
-    //   const mockHttpclient = {} as any;
-
-    //   const actual = await procedureToArticle(
-    //     mockHttpclient,
-    //     procedureWithArticle,
-    //     previousknowledgeCategoryID
-    //   );
-    //   expect(actual).toEqual(mockReturnForDelete);
-    // });
   });
   describe("procedureToKnowledgeCategory", () => {
     beforeEach(() => {
@@ -245,13 +219,7 @@ describe("proceduresToVanillaRequests", () => {
       jest.doMock("../utils", () => ({
         mockDirectoryExists: jest.fn(() => false),
       }));
-      // jest.doMock("../VanillaAPI", () => ({
-      //     createKnowledgeCategory: jest.fn().mockResolvedValue({
-      //       ...procedure,
-      //       description: "",
-      //       knowledgeCategoryID,
-      //     } as any),
-      //   }));
+
       const procedureKnowledgeCategoryNOKCID = {
         ...procedureKnowledgeCategory,
         knowledgeCategoryID,
@@ -339,6 +307,47 @@ describe("proceduresToVanillaRequests", () => {
       );
 
       expect(actual.knowledgeBaseID).toEqual(2);
+    });
+  });
+
+  describe("deleteAllFlaggedCategories", () => {
+    const mockDeleteAllFlaggedCategories =
+      deleteAllFlaggedCategories as jest.MockedFunction<
+        typeof deleteAllFlaggedCategories
+      >;
+    it("returns obj with procedures, categoriesDeleted", async () => {
+      mockDeleteAllFlaggedCategories.mockResolvedValue(
+        PROCEDURESKCategoriesDELETED
+      );
+      const expected = {
+        procedures: PROCEDURESWithKCategoriesToDelete,
+        categoriesDeleted: PROCEDURESKCategoriesDELETED,
+      };
+      const mockHttpclient = {
+        delete: jest.fn().mockResolvedValue(PROCEDURESKCategoriesDELETED[0]),
+      } as any;
+      const actual = await removeDeletedCategories(
+        mockHttpclient,
+        PROCEDURESWithKCategoriesToDelete
+      );
+      expect(actual).toEqual(expected);
+    });
+    it("handles empty array", async () => {
+      const noneToDelete: VanillaKnowledgeCategory[] = [];
+      mockDeleteAllFlaggedCategories.mockResolvedValue(noneToDelete);
+      const expected = {
+        procedures: [],
+        categoriesDeleted: noneToDelete,
+      };
+      const mockHttpclient = {
+        delete: jest.fn().mockResolvedValue(noneToDelete),
+      } as any;
+      const actual = await removeDeletedCategories(
+        mockHttpclient,
+        noneToDelete
+      );
+      expect(actual).toEqual(expected);
+      expect(noneToDelete).toEqual(actual.procedures);
     });
   });
 });
