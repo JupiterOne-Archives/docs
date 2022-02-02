@@ -3,22 +3,22 @@ import {
   FLAG_FOR_DELETE,
   KNOWN_CATEGORY_BEEN_DELETED,
   VanillaKnowledgeCategory,
-} from "../utils";
-import { deleteAllFlaggedCategories } from "../VanillaAPI";
-import {
-  procedureToArticle,
-  procedureToKnowledgeCategory,
-  removeDeletedCategories,
-} from "./conversion";
+} from "../../utils";
+import { deleteAllFlaggedCategories } from "../../VanillaAPI";
 import {
   procedureArticle,
   procedureKnowledgeCategory,
   PROCEDURESKCategoriesDELETED,
   PROCEDURESWithKCategoriesToDelete,
-} from "./mocks";
-jest.mock("../VanillaAPI");
+} from "../mocks";
+import {
+  procedureToArticle,
+  procedureToKnowledgeCategory,
+  removeDeletedCategories,
+} from "./conversion";
+jest.mock("../../VanillaAPI");
 
-describe("proceduresToVanillaRequests", () => {
+describe("conversion", () => {
   beforeEach(() => {
     jest.resetModules();
   });
@@ -28,7 +28,7 @@ describe("proceduresToVanillaRequests", () => {
     });
 
     it("deletes existing article when body contains delete flag", async () => {
-      jest.doMock("../utils", () => ({
+      jest.doMock("../../utils", () => ({
         mockMarkdownToString: jest.fn(() => FLAG_FOR_DELETE),
       }));
       const articleID = 234;
@@ -40,7 +40,7 @@ describe("proceduresToVanillaRequests", () => {
         articleID,
         knowledgeCategoryID: previousknowledgeCategoryID,
       };
-      jest.doMock("../VanillaAPI", () => ({
+      jest.doMock("../../VanillaAPI", () => ({
         editArticle: jest.fn().mockResolvedValue(procedureWithArticle),
       }));
 
@@ -65,7 +65,7 @@ describe("proceduresToVanillaRequests", () => {
         name: "Soc2 With Jupiterone Copy",
         knowledgeCategoryID: previousknowledgeCategoryID,
       } as any;
-      jest.doMock("../VanillaAPI", () => ({
+      jest.doMock("../../VanillaAPI", () => ({
         editArticle: jest.fn().mockResolvedValue(mockVanillaReturnValue),
       }));
 
@@ -105,7 +105,7 @@ describe("proceduresToVanillaRequests", () => {
         name: "Soc2 With Jupiterone Copy",
         knowledgeCategoryID: previousknowledgeCategoryID,
       } as any;
-      jest.doMock("../VanillaAPI", () => ({
+      jest.doMock("../../VanillaAPI", () => ({
         createArticle: jest.fn().mockResolvedValue(mockVanillaReturn),
       }));
 
@@ -130,7 +130,7 @@ describe("proceduresToVanillaRequests", () => {
     });
     it("returns procedure when previous knowledgeCategoryId doesnt exist", async () => {
       const procedureWithNoArticle = procedureArticle;
-      jest.doMock("../VanillaAPI", () => ({
+      jest.doMock("../../VanillaAPI", () => ({
         createArticle: jest.fn().mockResolvedValue({
           articleID: null,
         } as any),
@@ -160,7 +160,7 @@ describe("proceduresToVanillaRequests", () => {
       jest.resetModules();
     });
     it("returns procedure when file exists, knowledgeCategoryID and has not moved", async () => {
-      jest.doMock("../VanillaAPI", () => ({
+      jest.doMock("../../VanillaAPI", () => ({
         editKnowledgeCategory: jest.fn().mockResolvedValue({
           ...procedure,
           knowledgeCategoryID,
@@ -168,10 +168,10 @@ describe("proceduresToVanillaRequests", () => {
       }));
       const knowledgeCategoryID = 111;
       const procedure = createKnowledgeCategoryMock({ knowledgeCategoryID });
-      jest.doMock("../utils", () => ({
+      jest.doMock("../../utils", () => ({
         directoryExists: jest.fn(() => true),
       }));
-      jest.doMock("./utils", () => ({
+      jest.doMock("../utils", () => ({
         hasKnowledgeCategoryBeenMoved: jest.fn(() => knowledgeCategoryID),
       }));
 
@@ -188,18 +188,18 @@ describe("proceduresToVanillaRequests", () => {
     it("edits and returns procedure when file exists and has knowledgeCategoryID and HAS moved", async () => {
       const knowledgeCategoryID = 111;
       const procedure = createKnowledgeCategoryMock({ knowledgeCategoryID });
-      jest.doMock("../VanillaAPI", () => ({
+      jest.doMock("../../VanillaAPI", () => ({
         createKnowledgeCategory: jest.fn().mockResolvedValue({
           ...procedure,
           description: "",
           knowledgeCategoryID,
         } as any),
       }));
-      jest.doMock("../utils", () => ({
+      jest.doMock("../../utils", () => ({
         directoryExists: jest.fn(() => true),
         mockMarkdownToString: jest.fn().mockResolvedValue(""),
       }));
-      jest.doMock("./utils", () => ({
+      jest.doMock("../utils", () => ({
         hasKnowledgeCategoryBeenMoved: jest.fn(() => 22),
         getPreviousKnowledgeID: jest.fn(() => 111),
       }));
@@ -216,7 +216,7 @@ describe("proceduresToVanillaRequests", () => {
     });
     it(" Marks kcategories AS deleted when missing kcategory file and knowledgeCategoryID", async () => {
       const knowledgeCategoryID = null;
-      jest.doMock("../utils", () => ({
+      jest.doMock("../../utils", () => ({
         mockDirectoryExists: jest.fn(() => false),
       }));
 
@@ -237,7 +237,7 @@ describe("proceduresToVanillaRequests", () => {
 
     it(" Marks kcategories for delete when kcategory file does not exist", async () => {
       const knowledgeCategoryID = 111;
-      jest.doMock("../utils", () => ({
+      jest.doMock("../../utils", () => ({
         mockDirectoryExists: jest.fn(() => false),
       }));
       const procedureKnowledgeCategoryNOKCID = {
@@ -255,13 +255,13 @@ describe("proceduresToVanillaRequests", () => {
       expect(actual.description).toEqual(FLAG_FOR_DELETE);
     });
     it("Creates", async () => {
-      jest.doMock("../VanillaAPI", () => ({
+      jest.doMock("../../VanillaAPI", () => ({
         createKnowledgeCategory: jest.fn().mockResolvedValue({
           ...procedure,
           knowledgeCategoryID: 99,
         } as any),
       }));
-      jest.doMock("../utils", () => ({
+      jest.doMock("../../utils", () => ({
         hasKnowledgeCategoryBeenMoved: jest.fn(() => 22),
         directoryExists: jest.fn().mockResolvedValue(true),
       }));
@@ -274,21 +274,21 @@ describe("proceduresToVanillaRequests", () => {
         procedure,
         22
       );
-      console.log(actual, "ACTUTUTUTUTU");
+
       expect(actual).toEqual(procedure);
     });
 
     it("Creates- Adds the knowledgeBase of Release-Notes for release-notes path", async () => {
-      jest.doMock("../utils", () => ({
+      jest.doMock("../../utils", () => ({
         directoryExists: jest.fn().mockReturnValue(true),
       }));
-      jest.doMock("../VanillaAPI", () => ({
+      jest.doMock("../../VanillaAPI", () => ({
         createKnowledgeCategory: jest.fn().mockResolvedValue({
           ...procedure,
           knowledgeCategoryID: 99,
         } as any),
       }));
-      jest.doMock("../utils", () => ({
+      jest.doMock("../../utils", () => ({
         hasKnowledgeCategoryBeenMoved: jest.fn(() => "nameOfparent"),
         directoryExists: jest.fn().mockResolvedValue(true),
       }));

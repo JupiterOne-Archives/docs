@@ -17,6 +17,7 @@ export interface YamlShape {
     displayName: string;
     knowledgeCategoriesPaths: string;
     ignoreUpdates?: string;
+    alternateLocationOfDoc?: string;
   }[];
 }
 export const readDocsConfig = async (): Promise<YamlShape> => {
@@ -41,6 +42,7 @@ export const readDocsConfig = async (): Promise<YamlShape> => {
 
 export const createDifsFromConfig = async (): Promise<string[]> => {
   const docsConfig = await readDocsConfig();
+  console.log(docsConfig, "DOCKS");
   const proceduresPaths = docsConfig.integrations.map((i) =>
     i.ignoreUpdates ? "" : `${i.knowledgeCategoriesPaths}/${i.projectName}.md`
   );
@@ -51,9 +53,15 @@ export const buildGithubDocFileUrl = (projectName: string) => {
   return `https://raw.githubusercontent.com/JupiterOne/${projectName}/main/docs/jupiterone.md`;
 };
 
-export const getProjectDoc = async (projectName: string) => {
+export const getProjectDoc = async (
+  projectName: string,
+  alternateLocationOfDoc?: string
+) => {
+  const url = alternateLocationOfDoc
+    ? alternateLocationOfDoc
+    : buildGithubDocFileUrl(projectName);
   try {
-    const body = await axios.get(buildGithubDocFileUrl(projectName));
+    const body = await axios.get(url);
     if (body.data) {
       return body.data;
     }
@@ -74,42 +82,51 @@ export const replaceArticleBodyWithIntegration = async ({
   procedures,
   httpClient,
 }: ReplaceArticleBodyWithIntegrationProps): Promise<ProceduresReplaceArticleBodyWithIntegrationReturn> => {
-  const { integrations } = await readDocsConfig();
+  try {
+    const { integrations } = await readDocsConfig();
 
-  const alteredProcedures: (VanillaArticle | VanillaKnowledgeCategory)[] =
-    procedures || [];
+    const alteredProcedures: (VanillaArticle | VanillaKnowledgeCategory)[] =
+      procedures || [];
 
-  for (let p = 0; p < alteredProcedures.length; p++) {
-    const procedure = alteredProcedures[p];
-    if (isArticleType(procedure) && procedure.articleID) {
-      if (integrations) {
-        const [integrationInfo] = integrations.filter(
-          (i) =>
-            `${i.displayName} Integration with JupiterOne` === procedure.name
-        );
-        if (integrationInfo) {
-          const articleBody = await getProjectDoc(integrationInfo.projectName);
-          if (articleBody) {
-            const bodyWithremovedFirstTitle = articleBody.replace(
-              "# Integration with JupiterOne",
-              ""
+    for (let p = 0; p < alteredProcedures.length; p++) {
+      const procedure = alteredProcedures[p];
+      if (isArticleType(procedure) && procedure.articleID) {
+        if (integrations) {
+          const [integrationInfo] = integrations.filter(
+            (i) =>
+              `${i.displayName} Integration with JupiterOne` === procedure.name
+          );
+          if (integrationInfo) {
+            const articleBody = await getProjectDoc(
+              integrationInfo.projectName,
+              integrationInfo.alternateLocationOfDoc
             );
-            procedure.body = bodyWithremovedFirstTitle;
-            alteredProcedures[p] = procedure;
-            try {
-              await editArticle(httpClient, procedure.articleID, {
-                body: bodyWithremovedFirstTitle,
-              });
-            } catch (e) {
-              logger.error(
-                `error editing for integration doc: ${integrationInfo.projectName}\n ${e}`
+
+            if (articleBody) {
+              const bodyWithremovedFirstTitle = articleBody.replace(
+                "# Integration with JupiterOne",
+                ""
               );
+              procedure.body = bodyWithremovedFirstTitle;
+              alteredProcedures[p] = procedure;
+              try {
+                await editArticle(httpClient, procedure.articleID, {
+                  body: bodyWithremovedFirstTitle,
+                });
+              } catch (e) {
+                logger.error(
+                  `error editing for integration doc: ${integrationInfo.projectName}\n ${e}`
+                );
+              }
             }
           }
         }
       }
     }
-  }
 
-  return { alteredProcedures };
+    return { alteredProcedures };
+  } catch (e) {
+    logger.error(`Integrations Yaml Error: ${e}`);
+    return { alteredProcedures: [] };
+  }
 };

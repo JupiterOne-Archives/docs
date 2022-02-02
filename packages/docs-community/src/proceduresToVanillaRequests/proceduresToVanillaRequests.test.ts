@@ -13,9 +13,9 @@ import {
   proceduresToVanillaRequests,
   useProceduresForVanillaRequests,
 } from "./";
-import * as mockAddMeta from "./addMeta";
+import * as mockAddMeta from "./actions/addMeta";
+import * as createChangesContentForStagingMock from "./actions/stagingUpdateArticle";
 import {
-  childVanillaKnowledgeCategory,
   expectedDeleteANDCreatesPROCEDURES,
   oneArticleAndOneProcedure,
   PROCEDURES,
@@ -24,7 +24,6 @@ import {
   vanillaArticleWithInfo,
   vanillaKnowledgeArticle,
 } from "./mocks";
-import * as createChangesContentForStagingMock from "./stagingUpdateArticle";
 jest.mock("../httpClient");
 describe("ProceduresToVanillaRequests", () => {
   let integrationHandling = jest
@@ -51,9 +50,11 @@ describe("ProceduresToVanillaRequests", () => {
   let addVanillaArticlesToProcedures = jest
     .spyOn(mockAddMeta, "addVanillaArticlesToProcedures")
     .mockReturnValue([vanillaKnowledgeArticle]);
-  let addVanillaCategoryToProcedure = jest
-    .spyOn(mockAddMeta, "addVanillaCategoryToProcedure")
-    .mockReturnValue(childVanillaKnowledgeCategory);
+  let addVanillaCategoryToProcedure = jest.spyOn(
+    mockAddMeta,
+    "addVanillaCategoryToProcedure"
+  );
+
   let createChangesContentForStaging = jest
     .spyOn(createChangesContentForStagingMock, "createChangesContentForStaging")
     .mockResolvedValue();
@@ -91,9 +92,11 @@ describe("ProceduresToVanillaRequests", () => {
     addVanillaArticlesToProcedures = jest
       .spyOn(mockAddMeta, "addVanillaArticlesToProcedures")
       .mockReturnValue([vanillaKnowledgeArticle]);
-    addVanillaCategoryToProcedure = jest
-      .spyOn(mockAddMeta, "addVanillaCategoryToProcedure")
-      .mockReturnValue(childVanillaKnowledgeCategory);
+    addVanillaCategoryToProcedure = jest.spyOn(
+      mockAddMeta,
+      "addVanillaCategoryToProcedure"
+    );
+
     createChangesContentForStaging = jest
       .spyOn(
         createChangesContentForStagingMock,

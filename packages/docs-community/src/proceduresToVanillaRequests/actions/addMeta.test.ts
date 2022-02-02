@@ -2,7 +2,7 @@ import {
   ProcedureTypeEnum,
   VanillaArticle,
   VanillaKnowledgeCategory,
-} from "../utils";
+} from "../../utils";
 import {
   addVanillaArticleInfoToProcedure,
   addVanillaArticlesToProcedures,
@@ -95,7 +95,7 @@ describe("AddMeta", () => {
       knowledgeCategoryID: 22,
       articleID: 43, // used in path
     } as VanillaArticle;
-    it("return proceduresWithVanillaCategoryInfo", () => {
+    it("matches article by name to procedure and maps article to procedure", () => {
       const expected = [
         {
           articleID: 43,

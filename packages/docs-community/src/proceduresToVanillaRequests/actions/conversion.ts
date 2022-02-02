@@ -1,5 +1,5 @@
-import HttpClient from "../httpClient";
-import { logger } from "../loggingUtil";
+import HttpClient from "../../httpClient";
+import { logger } from "../../loggingUtil";
 import {
   directoryExists,
   FLAG_FOR_DELETE,
@@ -7,7 +7,7 @@ import {
   KNOWN_CATEGORY_BEEN_DELETED,
   VanillaArticle,
   VanillaKnowledgeCategory,
-} from "../utils";
+} from "../../utils";
 import {
   createArticle,
   createKnowledgeCategory,
@@ -15,8 +15,8 @@ import {
   deleteArticle,
   editArticle,
   editKnowledgeCategory,
-} from "../VanillaAPI";
-import { addImagesToArticleMarkdown } from "./utils";
+} from "../../VanillaAPI";
+import { addImagesToArticleMarkdown } from "../utils";
 
 export const procedureToKnowledgeCategory = async (
   httpClient: HttpClient,
@@ -226,12 +226,12 @@ export const removeDeletedCategories = async (
   const deletedKCategories: VanillaKnowledgeCategory[] = procedures.filter(
     isKnowledgeCategoryType
   );
-  console.log("deletedKCategoriesdeletedKCategories", deletedKCategories);
+
   const categoriesDelete = await deleteAllFlaggedCategories(
     httpClient,
     deletedKCategories
   );
-  console.log("DINNNG", categoriesDelete);
+
   if (categoriesDelete) {
     return {
       categoriesDeleted: categoriesDelete,
