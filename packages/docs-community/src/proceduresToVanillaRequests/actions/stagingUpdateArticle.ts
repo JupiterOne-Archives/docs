@@ -1,7 +1,7 @@
-import HttpClient from "../httpClient";
-import { logger } from "../loggingUtil";
-import { VanillaArticle } from "../utils";
-import { createArticle, editArticle } from "../VanillaAPI";
+import HttpClient from "../../httpClient";
+import { logger } from "../../loggingUtil";
+import { VanillaArticle } from "../../utils";
+import { createArticle, editArticle } from "../../VanillaAPI";
 
 export interface CreateChangesContentForStagingProps {
   procedures: VanillaArticle[];
@@ -13,7 +13,7 @@ export const createChangesContentForStaging = async ({
   httpClient,
   combinationOfArticlesAndProcedures,
 }: CreateChangesContentForStagingProps) => {
-  if (process.env.targetVanillaEnv === "staging") {
+  if (process.env.targetVanillaEnv === "staging" || process.env.RUNNING_TESTS) {
     const [changesArticle] = combinationOfArticlesAndProcedures.filter(
       (p) => p.name === "Changes From Updates"
     );
@@ -23,6 +23,7 @@ export const createChangesContentForStaging = async ({
           p.status !== "published" || !p.url ? " - Deleted" : ""
         }`
     )}`;
+
     if (changesArticle && changesArticle.articleID) {
       const now = new Date();
       const date = now.toISOString();
@@ -38,6 +39,7 @@ export const createChangesContentForStaging = async ({
         logger.error(`error editing changes article: \n ${e}`);
       }
     } else {
+      console.log(body, "PPPDDDUYYY");
       const articleRequest: Partial<VanillaArticle> = {
         body,
 

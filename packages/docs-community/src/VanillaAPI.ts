@@ -160,7 +160,7 @@ export const createKnowledgeCategory = async (
   if (path && path.toLowerCase().indexOf("release-notes") !== -1) {
     isReleaseNotes = true;
   }
-  console.log("BEING CALLED FOR EAR");
+
   try {
     const category = (await client.post("/knowledge-categories", {
       ...bodyOfRequest,
@@ -218,7 +218,7 @@ export const deleteKnowledgeCategory = async (
   knowledgeCategory: VanillaKnowledgeCategory
 ): Promise<VanillaKnowledgeCategory> => {
   const tempKnowledgeCategory: VanillaKnowledgeCategory = knowledgeCategory;
-  console.log(knowledgeCategory, "HITTTT");
+
   try {
     await client.delete(
       `knowledge-categories/${knowledgeCategory.knowledgeCategoryID}`

@@ -1,9 +1,9 @@
-import { logger } from "../loggingUtil";
+import { logger } from "../../loggingUtil";
 import {
   isArticleType,
   VanillaArticle,
   VanillaKnowledgeCategory,
-} from "../utils";
+} from "../../utils";
 
 export const addVanillaArticleInfoToProcedure = (
   procedure: VanillaArticle,

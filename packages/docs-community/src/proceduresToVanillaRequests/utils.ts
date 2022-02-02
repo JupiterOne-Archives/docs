@@ -1,3 +1,4 @@
+import HttpClient from "../httpClient";
 import {
   getMarkdownImageSrcs,
   isSupportedMediaType,
@@ -12,7 +13,10 @@ import {
   VanillaArticle,
   VanillaKnowledgeCategory,
 } from "../utils";
-import { uploadImageAndReturnUrl } from "../VanillaAPI";
+import {
+  createKnowledgeCategory,
+  uploadImageAndReturnUrl,
+} from "../VanillaAPI";
 
 export type hasKnowledgeCategoryBeenMovedProps = {
   proceduresWithVanillaInfo: (VanillaKnowledgeCategory | VanillaArticle)[];
@@ -197,4 +201,59 @@ export const getPreviousKnowledgeID = (
   }
 
   return null;
+};
+
+export interface HandleKnowledgeCategoryChangedParentCreateProps {
+  procedure: VanillaKnowledgeCategory;
+  newName: string;
+  previousknowledgeCategoryID: number | null;
+  httpClient: HttpClient;
+  existingknowledgeCategoryInfo: VanillaKnowledgeCategory[];
+}
+
+export const handleKnowledgeCategoryChangedParentCreate = async ({
+  procedure,
+  newName,
+  previousknowledgeCategoryID,
+  httpClient,
+  existingknowledgeCategoryInfo,
+}: HandleKnowledgeCategoryChangedParentCreateProps) => {
+  let isReleaseNotes = false;
+  const tempExistingKnowledgeCategoryInfo = existingknowledgeCategoryInfo;
+  const procedureWorkedOn = { ...procedure };
+  if (
+    procedureWorkedOn.path &&
+    procedureWorkedOn.path.toLowerCase().indexOf("release-notes") !== -1
+  ) {
+    isReleaseNotes = true;
+  }
+
+  const newReqData = {
+    name: newName,
+    parentID: previousknowledgeCategoryID,
+    knowledgeBaseID: isReleaseNotes ? 2 : 1,
+  };
+  try {
+    const createdKnowledgeCategory = await createKnowledgeCategory(
+      httpClient,
+      newReqData
+    );
+
+    if (createdKnowledgeCategory) {
+      tempExistingKnowledgeCategoryInfo.push({
+        ...createdKnowledgeCategory,
+        childCategoryCount: createdKnowledgeCategory.childCategoryCount
+          ? createdKnowledgeCategory.childCategoryCount
+          : 1,
+      });
+
+      return {
+        existingknowledgeCategoryInfo: tempExistingKnowledgeCategoryInfo,
+        updatedPreviousKnowledgeCategoryID:
+          createdKnowledgeCategory.knowledgeCategoryID,
+      };
+    }
+  } catch (e) {
+    logger.error(`CREATE ERROR Already exists- \n ${e}`);
+  }
 };
