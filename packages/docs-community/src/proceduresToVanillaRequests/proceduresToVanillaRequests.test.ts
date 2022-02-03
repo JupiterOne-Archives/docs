@@ -244,7 +244,6 @@ describe("ProceduresToVanillaRequests", () => {
     });
     it("returns Articles and Procedures", async () => {
       const actual = await proceduresToVanillaRequests({ procedures });
-      // expect(actual).toEqual([]);
       expect(getKnowedgeCategories).toHaveBeenCalledTimes(1);
       expect(getAllArticles).toHaveBeenCalledTimes(1);
       expect(addVanillaCategoryToProcedure).toHaveBeenCalledTimes(1);
