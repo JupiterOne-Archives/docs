@@ -39,7 +39,6 @@ export const createChangesContentForStaging = async ({
         logger.error(`error editing changes article: \n ${e}`);
       }
     } else {
-      console.log(body, "PPPDDDUYYY");
       const articleRequest: Partial<VanillaArticle> = {
         body,
 

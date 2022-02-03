@@ -13,7 +13,6 @@ export interface KnowledgeCategory {
   childrenPath: string; // key added to add correct articles to category
   path?: string; // the path we use during diff
   name: string;
-  // displayName: string;
   description: string;
   sort?: number | null;
   url?: string | null;

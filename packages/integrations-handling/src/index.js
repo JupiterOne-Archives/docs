@@ -68,10 +68,6 @@ const getRepoVersion = async (projectName) => {
   }
 };
 
-function getIntegrationDocFileBaseName(displayName) {
-  return displayName.trim().toLowerCase().replace(/ /g, "-");
-}
-
 export const directoryExists = async (filePath) => {
   try {
     await fs.access(filePath, fs.constants.F_OK);
@@ -92,7 +88,6 @@ const createDirIfNotExist = async (dirPath) => {
 const createFileIfNotExist = async (docFilePath, githubFileContents) => {
   let exists = false;
   if (existsSync(docFilePath)) {
-    // path exists
     exists = true;
   } else {
     exists = false;
@@ -247,7 +242,6 @@ async function readDocsConfig(docsConfigFilePath) {
     path.join(path.resolve(), "../../integrations.config.yaml")
   );
 
-  // simplegit checkout new branch
   const successes = await createAllIntegrationProjectDocFilesFromConfig(
     docsConfig.integrations
   );
