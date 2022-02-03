@@ -1,4 +1,3 @@
-import path from "path";
 import { diffToProcedures } from "./diffToProcedures";
 import { getDiffFromHead } from "./gitDifference";
 import HttpClient from "./httpClient";
@@ -39,6 +38,7 @@ export const updateCommunityDocs = async () => {
       });
     }
     const nestedMergedWithOriginal = [...diffChanges, ...nested];
+    // Add of article to staging for the changes that have occured
     if (process.env.targetVanillaEnv === "staging") {
       if (nestedMergedWithOriginal.indexOf("changes-from-update.md") === -1) {
         nestedMergedWithOriginal.push("changes-from-update.md");
@@ -106,37 +106,6 @@ export const updateVanillaWithDirectoryToWatch = async () => {
     }
     const procedures = await diffToProcedures(trimmedDirectories);
 
-    if (procedures && procedures.length > 0) {
-      return await proceduresToVanillaRequests({
-        procedures,
-      });
-    }
-  }
-};
-
-// Adding in a folder name such as 'release-notes' will run the pipeline as if each item in knowledgeBase/release-notes has had a change
-export const addFullSubFolderManually = async (folderName: string) => {
-  const directoryLocation = path.join(
-    __dirname,
-    `../../../${PATH_OF_DIRECTORY_TO_WATCH}/`,
-    folderName
-  );
-
-  const fullArrayOfAllItems: string[] = await directoryPromise(
-    directoryLocation
-  );
-  if (process.env.targetVanillaEnv === "staging") {
-    if (fullArrayOfAllItems.indexOf("changes-from-update.md") === -1) {
-      fullArrayOfAllItems.push("changes-from-update.md");
-    }
-  }
-  if (fullArrayOfAllItems) {
-    const trimmedDirectories = fullArrayOfAllItems.map((result) =>
-      result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
-    );
-    const procedures = await diffToProcedures(trimmedDirectories);
-    logger.info(`Path of changes: ${fullArrayOfAllItems}`);
-    logger.info(`list of procedures: ${procedures}`);
     if (procedures && procedures.length > 0) {
       return await proceduresToVanillaRequests({
         procedures,

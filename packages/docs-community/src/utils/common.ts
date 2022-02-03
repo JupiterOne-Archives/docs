@@ -31,32 +31,6 @@ export const createDisplayName = (name: string) => {
     .map((item) => `${item[0].toUpperCase()}${item.substring(1)}`)
     .join(" ");
 };
-// export const getIntegrationMarkdownAsString = async (filePath: string) => {
-//   const fileLocation = path.join(__dirname, `../../../../`, `${filePath}`);
-
-//   let supportedTypeOfFile = false;
-//   SUPPORTED_FILE_TYPE_EXTENTIONS.forEach((extention) => {
-//     if (fileLocation.endsWith(extention)) {
-//       supportedTypeOfFile = true;
-//     }
-//   });
-//   if (!supportedTypeOfFile) {
-//     return FLAG_FOR_DELETE;
-//   }
-
-//   try {
-//     const blockingReadOfFile = await fs.promises.readFile(fileLocation, {
-//       encoding: "utf8",
-//     });
-//     if (blockingReadOfFile) {
-//       return blockingReadOfFile.toString();
-//     }
-//   } catch (error) {
-//     return FLAG_FOR_DELETE;
-//   }
-
-//   return FLAG_FOR_DELETE;
-// };
 
 export const markdownToString = async (filePath?: string): Promise<string> => {
   // we also want to use this to see if the file got deleted! the git diff wont differenitate
@@ -135,14 +109,4 @@ export const removeTitleFromArticleBody = (
   }
 
   return bodyAlterations.trim();
-};
-// Was used for APP-62223, but we instead need to have correct markdown rather than altering it. was causing issue with code blocks and tables
-export const sanitizeMarkdownNewLines = (markdownAsString: string) => {
-  if (markdownAsString) {
-    return markdownAsString
-      .split(/\n\n/g)
-      .map((line) => line.replace(/\n/g, " "))
-      .join("\n\n");
-  }
-  return markdownAsString;
 };
