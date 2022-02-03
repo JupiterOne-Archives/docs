@@ -283,7 +283,7 @@ export const getAllArticles = async (
       client,
       filteredExistingknowledgeCategoryInfo[a].knowledgeCategoryID
     );
-    console.log(article,'DING',filteredExistingknowledgeCategoryInfo)
+
     if (article) {
       resolved.push(article);
     }
