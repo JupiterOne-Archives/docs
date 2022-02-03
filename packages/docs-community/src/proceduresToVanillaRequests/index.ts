@@ -141,6 +141,7 @@ export const proceduresToVanillaRequests = async ({
       httpClient,
       existingknowledgeCategoryInfo
     );
+    console.log(articles, "ALLLRAR");
 
     logger.info(`Mapping Vanilla responses to procedures`);
     const proceduresWithVanillaCategories = procedures.map((p) => {
@@ -212,6 +213,10 @@ export const proceduresToVanillaRequests = async ({
       httpClient,
       deletableCategories
     );
+    // const deletableArticles = processedProcedures
+    //   .filter(isArticleType)
+    //   .filter((c) => c.body === FLAG_FOR_DELETE);
+    // await deleteArticlesMissingId;
     logger.info(
       `PROCEDURES processed: ${JSON.stringify(finishedProcedures, null, 2)}`
     );

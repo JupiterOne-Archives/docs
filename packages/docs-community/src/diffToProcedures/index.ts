@@ -111,10 +111,7 @@ export const handleNestedKnowledgeCategoryChanges = async (
     tempNestedCategoryChanges.unshift(directorySplitBySlash.join("/"));
   }
 
-  if (
-    identifierForDirectoryOrFile &&
-    !tempHandled.includes(identifierForDirectoryOrFile)
-  ) {
+  if (identifierForDirectoryOrFile) {
     tempHandled.push(identifierForDirectoryOrFile);
     if (identifierForDirectoryOrFile.endsWith(".md")) {
       const markDownFileToKnowledgeArticle = await createArticleChange({
