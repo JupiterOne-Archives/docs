@@ -136,6 +136,7 @@ export const proceduresToVanillaRequests = async ({
     );
 
     logger.info(`Getting Articles`);
+    console.log(existingknowledgeCategoryInfo,'existingknowledgeCategoryInfoexistingknowledgeCategoryInfo')
     const articles = await getAllArticles(
       httpClient,
       existingknowledgeCategoryInfo
