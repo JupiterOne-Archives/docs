@@ -40,19 +40,6 @@ export const procedureArticle = {
   procedureType: ProcedureTypeEnum.Article,
 } as VanillaArticle;
 
-// export const childVanillaKnowledgeCategory = {
-//   parentID: 23,
-//   knowledgeBaseID: 1,
-//   name: "Other",
-//   fileName: "other",
-//   description: "",
-//   knowledgeCategoryID: 283,
-//   path: "getting-started_and-admin/compliance-reporting/other",
-//   childrenPath:
-//     "getting-started_and-admin/compliance-reporting/other/soc2-with-jupiterone-copy.md",
-//   procedureType: ProcedureTypeEnum.Category,
-// } as VanillaKnowledgeCategory;
-
 export const procedureKnowledgeCategory = {
   parentID: null,
   knowledgeBaseID: 1,
@@ -65,17 +52,6 @@ export const procedureKnowledgeCategory = {
     "getting-started_and-admin/soc2-reporting/soc2-with-jupiterone-copy.md",
   procedureType: ProcedureTypeEnum.Category,
 };
-// export const procedureKnowledgeCategoryReleaseNotes = {
-//   parentID: null,
-//   knowledgeBaseID: 2,
-//   name: "2020-20-99",
-//   fileName: "2020-20-99",
-//   description: "",
-//   knowledgeCategoryID: null,
-//   path: "release-notes/2020-20-99.md",
-//   childrenPath: "release-notes/2020-20-99.md",
-//   procedureType: ProcedureTypeEnum.Category,
-// };
 
 export const PROCEDURES = [
   {
@@ -500,33 +476,3 @@ export const PROCEDURESKCategoriesDELETED = [
     procedureType: "Category",
   },
 ] as VanillaKnowledgeCategory[];
-
-// export const createKCategory = ({
-//   parentID,
-//   knowledgeBaseID,
-//   name,
-//   fileName,
-//   description,
-//   knowledgeCategoryID,
-//   path,
-//   childrenPath,
-// }: {
-//   parentID?: number | null;
-//   knowledgeBaseID?: number;
-//   name?: string;
-//   fileName?: string;
-//   description?: string;
-//   knowledgeCategoryID?: number | null;
-//   path?: string;
-//   childrenPath?: string;
-// }): VanillaKnowledgeCategory => ({
-//   parentID: parentID || null,
-//   knowledgeBaseID: knowledgeBaseID || 1,
-//   name: name || "Other Sub Category Reporting",
-//   fileName: fileName || "other-sub-category-reporting",
-//   description: description || FLAG_FOR_DELETE,
-//   knowledgeCategoryID: 542,
-//   path: "getting-started_and-admin/other-reporting/other-sub-category-reporting/soc2-with-jupiterone-copy.md",
-//   childrenPath: "other-sub-category-reporting",
-//   procedureType: ProcedureTypeEnum.Category,
-// });
