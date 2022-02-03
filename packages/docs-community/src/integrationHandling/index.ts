@@ -42,7 +42,6 @@ export const readDocsConfig = async (): Promise<YamlShape> => {
 
 export const createDifsFromConfig = async (): Promise<string[]> => {
   const docsConfig = await readDocsConfig();
-  console.log(docsConfig, "DOCKS");
   const proceduresPaths = docsConfig.integrations.map((i) =>
     i.ignoreUpdates ? "" : `${i.knowledgeCategoriesPaths}/${i.projectName}.md`
   );
@@ -66,7 +65,7 @@ export const getProjectDoc = async (
       return body.data;
     }
   } catch (e) {
-    console.log(projectName, "\n error:", e);
+    logger.error(`Get docs error for ${projectName} \n ${e}`);
   }
 };
 

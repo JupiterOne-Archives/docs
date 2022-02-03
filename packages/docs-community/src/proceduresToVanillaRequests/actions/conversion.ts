@@ -139,9 +139,16 @@ export const procedureToArticle = async (
   const tempProcedureWorkedOn = { ...procedureWorkedOn };
 
   if (tempProcedureWorkedOn.body) {
-    tempProcedureWorkedOn.body = await addImagesToArticleMarkdown(
-      tempProcedureWorkedOn.body
-    );
+    try {
+      const mardkownWithImagesAdded = await addImagesToArticleMarkdown(
+        tempProcedureWorkedOn.body
+      );
+      tempProcedureWorkedOn.body = mardkownWithImagesAdded;
+    } catch (e) {
+      logger.error(
+        `Error adding images to Article markdown \n ${e} \n ${procedureWorkedOn.name}`
+      );
+    }
   }
 
   if (tempProcedureWorkedOn.articleID === null) {
@@ -161,15 +168,19 @@ export const procedureToArticle = async (
         name: tempProcedureWorkedOn.name,
         sort: 0,
       };
-
-      const createdArticle = await createArticle(httpClient, articleRequest);
-
+      let createdArticle;
+      try {
+        createdArticle = await createArticle(httpClient, articleRequest);
+      } catch (e) {
+        logger.error(`Create Error for ${tempProcedureWorkedOn.path} \n ${e}`);
+      }
       if (createdArticle?.articleID) {
         return createdArticle;
       } else {
         return tempProcedureWorkedOn;
       }
     }
+    return tempProcedureWorkedOn;
   } else {
     if (
       tempProcedureWorkedOn.body !== FLAG_FOR_DELETE &&
