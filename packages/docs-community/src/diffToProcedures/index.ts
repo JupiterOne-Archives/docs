@@ -20,8 +20,13 @@ export const createArticleChange = async ({
   path,
 }: CreateArticleChangeProps): Promise<VanillaArticle> => {
   let displayName = "";
-  // we dont want articles to be called 'index'
-  let articleBody = await markdownToString(path);
+  let articleBody = "";
+
+  try {
+    articleBody = await markdownToString(path);
+  } catch (e) {
+    logger.error(`articleChanges Error${e}`);
+  }
 
   const titleFromBody = checkBodyForTitleToUseForArticle(
     articleBody,
