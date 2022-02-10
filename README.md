@@ -10,7 +10,7 @@
 
 ## How to find changes
 
-Vanilla Visable changes can be seen with an update to knowledgeBase folder, which can occur manually or with a run of `yarn updateIntegrations` and a merge to vanilla-staging. Also, at midnight, integration docs are pulled and used to overwrite the contents of their matching articles. The most recent changes will be visable within the `https://jupiterone.vanillastaging.com/kb/docs`'s `Changes From  Updates` article. This will be visable in staging but not in production. It contains each article's name and a link to that article for ease of checking links and images.
+Vanilla Visable changes can be seen with an update to knowledgeBase folder, which can occur manually or with a run of `yarn updateIntegrations` and a merge to vanilla-staging. Also, at midnight, integration docs are pulled and used to overwrite the contents of their matching articles. The most recent changes will be visable within the `https://jupiterone.vanillastaging.com/kb/docs`'s `Changes From Updates` article. This will be visable in staging but not in production. It contains each article's name and a link to that article for ease of checking links and images.
 
 ## Integrations
 
@@ -33,6 +33,10 @@ After staging looks correct, open a pr to merge to main.
 After the article appears in vanilla, it will be updated when a new version of that repository's docs is published and changes added to the knowledgeBase will be overridden with next update. The file needs to remain to allow us to keep track of their location on vanilla for structure, moves and deletes.
 
 Adding a value to `ignoreUpdates` on a `integrations.config.yaml` property will keep it from being updated with the midnight integrations pull.
+
+`alternateLocationOfDoc` Most integration documents are located at `https://raw.githubusercontent.com/JupiterOne/${projectName}/main/docs/jupiterone.md`.
+
+- Supply `alternateLocationOfDoc` and a value within the `integrations.config.yaml` to use an alternate location.
 
 ## To 'Refresh' vanilla staging and/or production
 

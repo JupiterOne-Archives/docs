@@ -5,11 +5,7 @@ import HttpClient from "./httpClient";
 import { getFullMarkdownReferencePathMatches } from "./linksAndMediaHandlers";
 import { logger } from "./loggingUtil";
 import { kCategoriesByPathSize } from "./proceduresToVanillaRequests/utils";
-import {
-  FLAG_FOR_DELETE,
-  KNOWN_CATEGORY_BEEN_DELETED,
-  PATH_OF_DIRECTORY_TO_WATCH,
-} from "./utils/constants";
+import { FLAG_FOR_DELETE, PATH_OF_DIRECTORY_TO_WATCH } from "./utils/constants";
 import {
   ProcedureTypeEnum,
   VanillaArticle,
@@ -83,18 +79,18 @@ export const deleteAllArticles = async (
     tempExistingknowledgeArticleInfo.filter(
       (ek) => typeof ek.articleID === "number"
     );
-  const allArticlesPromises = filteredExistingknowledgeArticleInfo.map((a) =>
-    deleteArticle(client, a?.articleID)
-  );
   const resolved: VanillaArticle[] = [];
   for (
-    let promiseIndex = 0;
-    promiseIndex < allArticlesPromises.length;
-    promiseIndex++
+    let articleIndex = 0;
+    articleIndex < filteredExistingknowledgeArticleInfo.length;
+    articleIndex++
   ) {
-    const resolvedPromise = await allArticlesPromises[promiseIndex];
-    if (resolvedPromise) {
-      resolved.push(resolvedPromise);
+    const deleted = await deleteArticle(
+      client,
+      filteredExistingknowledgeArticleInfo[articleIndex]?.articleID
+    );
+    if (deleted) {
+      resolved.push(deleted);
     }
   }
 
@@ -104,6 +100,7 @@ export const deleteAllArticles = async (
 
   return [];
 };
+
 export const getKnowedgeCategories = async (
   client: HttpClient,
   fetchedCategories?: VanillaKnowledgeCategory[],
@@ -126,6 +123,7 @@ export const getKnowedgeCategories = async (
     if (categories?.headers.link) {
       areMorePagesTemp = categories?.headers.link.indexOf('rel="next"') !== -1;
     }
+
     if (!isErrorType(categories?.data)) {
       categories.data.forEach((c) => {
         fetchedCategoriesTemp.push({
@@ -247,36 +245,26 @@ export const deleteAllFlaggedCategories = async (
   const orderedCategories = kCategoriesByPathSize(
     tempExistingknowledgeCategories
   );
+
   const filteredExistingknowledgeCategoryWithFlags = orderedCategories.filter(
     (ek) =>
-      ek.knowledgeCategoryID !== null &&
-      ek?.description === (KNOWN_CATEGORY_BEEN_DELETED || FLAG_FOR_DELETE)
+      ek.knowledgeCategoryID !== null && ek?.description == FLAG_FOR_DELETE
   );
-  const allDeletePromises = filteredExistingknowledgeCategoryWithFlags.map(
-    (c) => {
-      if (c.knowledgeCategoryID) {
-        return deleteKnowledgeCategory(client, c);
+
+  const resolved: VanillaKnowledgeCategory[] = [];
+  for (let i = 0; i < filteredExistingknowledgeCategoryWithFlags.length; i++) {
+    if (filteredExistingknowledgeCategoryWithFlags[i].knowledgeCategoryID) {
+      const deleted = await deleteKnowledgeCategory(
+        client,
+        filteredExistingknowledgeCategoryWithFlags[i]
+      );
+      if (deleted) {
+        resolved.push(deleted);
       }
     }
-  );
-  const resolved: VanillaKnowledgeCategory[] = [];
-  for (
-    let promiseIndex = 0;
-    promiseIndex < allDeletePromises.length;
-    promiseIndex++
-  ) {
-    const resolvedPromise = await allDeletePromises[promiseIndex];
-    if (resolvedPromise) {
-      resolved.push(resolvedPromise);
-    }
   }
+
   const categoriesAfterIteration = resolved.flat();
-  const categoriesNOTDeletedYet = categoriesAfterIteration.filter(
-    (c) => c.description === FLAG_FOR_DELETE
-  );
-  if (categoriesNOTDeletedYet.length) {
-    return deleteAllFlaggedCategories(client, categoriesNOTDeletedYet);
-  }
 
   return categoriesAfterIteration;
 };
@@ -289,19 +277,15 @@ export const getAllArticles = async (
     existingknowledgeCategoryInfo ? [...existingknowledgeCategoryInfo] : [];
   const filteredExistingknowledgeCategoryInfo =
     tempExistingknowledgeCategoryInfo.filter((ek) => !!ek.knowledgeCategoryID);
-  const allArticlesPromises = filteredExistingknowledgeCategoryInfo.map((c) =>
-    getArticles(client, c.knowledgeCategoryID)
-  );
   const resolved: VanillaArticle[][] = [];
+  for (let a = 0; a < filteredExistingknowledgeCategoryInfo.length; a++) {
+    const article = await getArticles(
+      client,
+      filteredExistingknowledgeCategoryInfo[a].knowledgeCategoryID
+    );
 
-  for (
-    let promiseIndex = 0;
-    promiseIndex < allArticlesPromises.length;
-    promiseIndex++
-  ) {
-    const resolvedPromise = await allArticlesPromises[promiseIndex];
-    if (resolvedPromise) {
-      resolved.push(resolvedPromise);
+    if (article) {
+      resolved.push(article);
     }
   }
 
@@ -495,6 +479,7 @@ export const deleteEmptyCategories = async (client: HttpClient) => {
     .filter((k) => k.articleCount === 0)
     .filter((k) => k.articleCountRecursive === 0)
     .filter((k) => k.childCategoryCount === 0);
+
   for (let k = 0; k < emptyKnowedgeCategories.length; k++) {
     try {
       logger.info(

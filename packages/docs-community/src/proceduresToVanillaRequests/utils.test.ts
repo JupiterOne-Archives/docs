@@ -5,12 +5,27 @@ import {
   VanillaKnowledgeCategory,
 } from "../utils";
 import {
+  addImagesToArticleMarkdown,
   getPreviousKnowledgeID,
   hasKnowledgeCategoryBeenMoved,
   kCategoriesByPathSize,
 } from "./utils";
 
 describe("utils", () => {
+  describe("addImagesToArticleMarkdown", () => {
+    it("returns empty string when no input supplied", async () => {
+      const actual = await addImagesToArticleMarkdown("");
+      const expected = "";
+      expect(actual).toEqual(expected);
+    });
+    it("returns inputted string when length of imageSrcMap is 0", async () => {
+      const inputedString =
+        "markdown turned into a string and does not contain ()[assets/images]";
+      const actual = await addImagesToArticleMarkdown(inputedString);
+      const expected = inputedString;
+      expect(actual).toEqual(expected);
+    });
+  });
   describe("hasKnowledgeCategoryBeenMoved", () => {
     it("should return knowledgeCategory name needed if its knowledgeCategory does not exist", () => {
       const notKCategoryPreviousParent = createKnowledgeCategoryMock({

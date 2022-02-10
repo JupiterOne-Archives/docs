@@ -3,7 +3,6 @@ import {
   createDisplayName,
   getMarkdownAsStringFromPath,
   removeTitleFromArticleBody,
-  sanitizeMarkdownNewLines,
 } from "./common";
 import { TITLE_FROM_MARKDOWN_REGEX } from "./constants";
 describe("checkBodyForTitleToUseForArticle", () => {
@@ -58,24 +57,5 @@ describe("createDisplayName", () => {
     const expected = "The Name is Big";
     const actual = createDisplayName("the-name_is-big");
     expect(actual).toEqual(expected);
-  });
-});
-
-describe("sanitizeMarkdownNewLines", () => {
-  it("removes extra spaces and trims lines", async () => {
-    const markdown = await getMarkdownAsStringFromPath("markdownWithBreaks.md");
-
-    if (markdown) {
-      const actual = sanitizeMarkdownNewLines(markdown);
-      let spacesNotWantedCount = 0;
-      actual.split("").forEach((line) => {
-        if (line === "") {
-          spacesNotWantedCount++;
-        }
-      });
-      expect(spacesNotWantedCount).toEqual(0);
-    } else {
-      expect(markdown).toBeDefined();
-    }
   });
 });

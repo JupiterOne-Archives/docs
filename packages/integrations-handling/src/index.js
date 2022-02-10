@@ -68,10 +68,6 @@ const getRepoVersion = async (projectName) => {
   }
 };
 
-function getIntegrationDocFileBaseName(displayName) {
-  return displayName.trim().toLowerCase().replace(/ /g, "-");
-}
-
 export const directoryExists = async (filePath) => {
   try {
     await fs.access(filePath, fs.constants.F_OK);
@@ -92,7 +88,6 @@ const createDirIfNotExist = async (dirPath) => {
 const createFileIfNotExist = async (docFilePath, githubFileContents) => {
   let exists = false;
   if (existsSync(docFilePath)) {
-    // path exists
     exists = true;
   } else {
     exists = false;
@@ -116,8 +111,12 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
   const completedRequests = [];
 
   for (let i = 0; i < integrationConfigs.length; i++) {
-    const { projectName, displayName, knowledgeCategoriesPaths } =
-      integrationConfigs[i];
+    const {
+      projectName,
+      displayName,
+      knowledgeCategoriesPaths,
+      alternateLocationOfDoc,
+    } = integrationConfigs[i];
     let version = undefined;
     try {
       version = await getRepoVersion(projectName);
@@ -126,7 +125,11 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
     }
 
     try {
-      const result = await axios.get(buildGithubDocFileUrl(projectName));
+      let urlLocationOfDoc = buildGithubDocFileUrl(projectName);
+      if (alternateLocationOfDoc) {
+        urlLocationOfDoc = alternateLocationOfDoc;
+      }
+      const result = await axios.get(urlLocationOfDoc);
 
       let docContents = {
         projectName,
@@ -247,7 +250,6 @@ async function readDocsConfig(docsConfigFilePath) {
     path.join(path.resolve(), "../../integrations.config.yaml")
   );
 
-  // simplegit checkout new branch
   const successes = await createAllIntegrationProjectDocFilesFromConfig(
     docsConfig.integrations
   );
