@@ -1,17 +1,22 @@
-import { default as fs, default as fsSync } from "fs";
-import path from "path";
+import HttpClient from "../httpClient";
+import {
+  getMarkdownImageSrcs,
+  isSupportedMediaType,
+  modifyBodyLinkForImage,
+} from "../linksAndMediaHandlers";
+import { logger } from "../loggingUtil";
 import {
   createDisplayName,
   isArticleType,
   isKnowledgeCategoryType,
+  SHOULD_REALLY_UPLOAD_IMAGES,
   VanillaArticle,
   VanillaKnowledgeCategory,
 } from "../utils";
 import {
-  FLAG_FOR_DELETE,
-  PATH_OF_DIRECTORY_TO_WATCH,
-  SUPPORTED_FILE_TYPE_EXTENTIONS,
-} from "../utils/constants";
+  createKnowledgeCategory,
+  uploadImageAndReturnUrl,
+} from "../VanillaAPI";
 
 export type hasKnowledgeCategoryBeenMovedProps = {
   proceduresWithVanillaInfo: (VanillaKnowledgeCategory | VanillaArticle)[];
@@ -22,7 +27,6 @@ export const hasKnowledgeCategoryBeenMoved = ({
   proceduresWithVanillaInfo,
   procedure,
 }: hasKnowledgeCategoryBeenMovedProps): number | null | string => {
-
   const knowledgeCategoriesArray = proceduresWithVanillaInfo
     .filter(isKnowledgeCategoryType)
     .filter((k) => k.name !== procedure.name);
@@ -51,7 +55,6 @@ export const hasKnowledgeCategoryBeenMoved = ({
     );
 
     if (!existingKnowledgeCategory) {
-      // need to create category with this name
       return nameOfKnowledgeCategroyBelongsTo;
     }
     if (existingKnowledgeCategory.knowledgeCategoryID !== parentID) {
@@ -61,55 +64,39 @@ export const hasKnowledgeCategoryBeenMoved = ({
     }
   }
   return null;
-
 };
 
-export const markdownToString = async (filePath?: string): Promise<string> => {
-  // we also want to use this to see if the file got deleted! the git diff wont differenitate
-  const fileLocation = path.join(
-    __dirname,
-    `../../../../${PATH_OF_DIRECTORY_TO_WATCH}`,
-    `/${filePath}`
-  );
-
-  let supportedTypeOfFile = false;
-  SUPPORTED_FILE_TYPE_EXTENTIONS.forEach((extention) => {
-    if (fileLocation.endsWith(extention)) {
-      supportedTypeOfFile = true;
+export const uploadImagesAndAddToMarkdown = async (
+  imageSrcArray: string[],
+  markdownAsString: string
+) => {
+  logger.info(`Uploading and adding images: ${imageSrcArray}`);
+  let markdownTarget = markdownAsString;
+  const supportedImages = imageSrcArray.filter((m) => isSupportedMediaType(m));
+  for (let i = 0; i < supportedImages.length; i++) {
+    if (SHOULD_REALLY_UPLOAD_IMAGES) {
+      const newLocation = await uploadImageAndReturnUrl(supportedImages[i]);
+      markdownTarget = modifyBodyLinkForImage(
+        markdownTarget,
+        supportedImages[i],
+        newLocation
+      );
     }
-  });
-  if (!supportedTypeOfFile) {
-    return FLAG_FOR_DELETE;
-  }
-  try {
-    const blockingReadOfFile = await fs.promises.readFile(fileLocation, {
-      encoding: "utf8",
-    });
-    if (blockingReadOfFile) {
-      return blockingReadOfFile.toString();
-    }
-  } catch (error) {
-    return FLAG_FOR_DELETE;
   }
 
-  return FLAG_FOR_DELETE;
+  return markdownTarget;
 };
 
-export const directoryExists = (filePath?: string): boolean => {
-  // we also want to use this to see if the file got deleted! the git diff wont differenitate
-  if (!filePath) {
-    return false;
+export const addImagesToArticleMarkdown = async (markdownAsString: string) => {
+  if (!markdownAsString || !markdownAsString.length) {
+    return "";
   }
-
-  const fileLocation = path.join(
-    __dirname,
-    `../../../../${PATH_OF_DIRECTORY_TO_WATCH}`,
-    `/${filePath}`
-  );
-  try {
-    return fsSync.existsSync(fileLocation);
-  } catch (e) {
-    return false;
+  const alteredMarkdown = markdownAsString;
+  const imageSrcArray = getMarkdownImageSrcs(alteredMarkdown);
+  if (!imageSrcArray.length) {
+    return alteredMarkdown;
+  } else {
+    return await uploadImagesAndAddToMarkdown(imageSrcArray, markdownAsString);
   }
 };
 
@@ -214,4 +201,59 @@ export const getPreviousKnowledgeID = (
   }
 
   return null;
+};
+
+export interface HandleKnowledgeCategoryChangedParentCreateProps {
+  procedure: VanillaKnowledgeCategory;
+  newName: string;
+  previousknowledgeCategoryID: number | null;
+  httpClient: HttpClient;
+  existingknowledgeCategoryInfo: VanillaKnowledgeCategory[];
+}
+
+export const handleKnowledgeCategoryChangedParentCreate = async ({
+  procedure,
+  newName,
+  previousknowledgeCategoryID,
+  httpClient,
+  existingknowledgeCategoryInfo,
+}: HandleKnowledgeCategoryChangedParentCreateProps) => {
+  let isReleaseNotes = false;
+  const tempExistingKnowledgeCategoryInfo = existingknowledgeCategoryInfo;
+  const procedureWorkedOn = { ...procedure };
+  if (
+    procedureWorkedOn.path &&
+    procedureWorkedOn.path.toLowerCase().indexOf("release-notes") !== -1
+  ) {
+    isReleaseNotes = true;
+  }
+
+  const newReqData = {
+    name: newName,
+    parentID: previousknowledgeCategoryID,
+    knowledgeBaseID: isReleaseNotes ? 2 : 1,
+  };
+  try {
+    const createdKnowledgeCategory = await createKnowledgeCategory(
+      httpClient,
+      newReqData
+    );
+
+    if (createdKnowledgeCategory) {
+      tempExistingKnowledgeCategoryInfo.push({
+        ...createdKnowledgeCategory,
+        childCategoryCount: createdKnowledgeCategory.childCategoryCount
+          ? createdKnowledgeCategory.childCategoryCount
+          : 1,
+      });
+
+      return {
+        existingknowledgeCategoryInfo: tempExistingKnowledgeCategoryInfo,
+        updatedPreviousKnowledgeCategoryID:
+          createdKnowledgeCategory.knowledgeCategoryID,
+      };
+    }
+  } catch (e) {
+    logger.error(`CREATE ERROR Already exists- \n ${e}`);
+  }
 };

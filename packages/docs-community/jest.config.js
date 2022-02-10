@@ -5,5 +5,9 @@ module.exports = {
   ...buildJestConfig({ packageDir: __dirname }),
   setupFilesAfterEnv: ["../../jest.setup.ts"],
   globalSetup: "../../jest.globalSetup.ts",
-  coveragePathIgnorePatterns: ["./src/utils/index.ts", "./src/utils/types.ts"],
+  coveragePathIgnorePatterns: [
+    "./src/utils/index.ts",
+    "./src/loggingUtil.ts",
+    "./src/utils/types.ts",
+  ],
 };
