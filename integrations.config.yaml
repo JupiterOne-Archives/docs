@@ -154,3 +154,30 @@ integrations:
   - projectName: graph-whois
     displayName: Whois
     knowledgeCategoriesPaths: APIs_and-integrations/other
+  - projectName: graph-salesforce
+    displayName: Salesforce
+    knowledgeCategoriesPaths: APIs_and-integrations/CRM
+  - projectName: graph-wpengine
+    displayName: WordPress Engine
+    knowledgeCategoriesPaths: APIs_and-integrations/app-hosting
+  - projectName: graph-sentinelone
+    displayName: SentinelOne
+    knowledgeCategoriesPaths: APIs_and-integrations/EDR
+  - projectName: graph-signal-sciences
+    displayName: Signal Sciences
+    knowledgeCategoriesPaths: APIs_and-integrations/application-security
+  - projectName: graph-zoom
+    displayName: Zoom
+    knowledgeCategoriesPaths: APIs_and-integrations/workflow
+  - projectName: graph-aquasec
+    displayName: Aqua Security
+    knowledgeCategoriesPaths: APIs_and-integrations/workload-protection
+  - projectName: graph-addigy
+    displayName: Addigy
+    knowledgeCategoriesPaths: APIs_and-integrations/EDM
+  - projectName: graph-rumble
+    displayName: Rumble
+    knowledgeCategoriesPaths: APIs_and-integrations/network
+  - projectName: graph-mimecast
+    displayName: Mimecast
+    knowledgeCategoriesPaths: APIs_and-integrations/training
