@@ -2,16 +2,16 @@
 
 J1 provides an compliance artifacts summary package for you to download. 
 
-From the details view of a security framework in the J1 Compliance app, click the ![][../../assets/icons/download.png]
+From the details view of a security framework in the J1 Compliance app, click the ![](../assets/icons/download.png)
 download button. J1 builds an evidence package that can take several minutes to
 prepare. You can navigate away from the
 
-![](../../assets/compliance-download.png)
+![](../assets/compliance-download.png)
 
 - **Summary**
 - **All Evidence**
 
-> Compliance artifact export is an asynchronous background job. The ![download][download-icon] download
+> Compliance artifact export is an asynchronous background job. The ![download](../assets/icons/download.png) download icon
 > turns green when the evidence package finishes building in the background, and J1 downloads
 > the zip file to your computer. You can leave the app while J1 is generating the package.
 

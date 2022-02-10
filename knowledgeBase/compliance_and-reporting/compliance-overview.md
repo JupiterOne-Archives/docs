@@ -21,12 +21,12 @@ add data-driven compliance evidence and link to controls.
 
 You can use the J1 Compliance app for each step in the security compliance workflow:
 
-- [Select security frameworks](../compliance/compliance-import.md) 
-- [Add data-driven compliance evidence](../compliance/compliance-mapping-evidence.md) 
-- [Link to controls](../compliance/compliance-controls.md)
-- [Link policies and procedures](../compliance/compliance-mapping-policies.md)
-- [Perform automated gap analysis](../compliance/compliance-gap-analysis.md)
-- [Export compliance artifacts](../compliance/compliance-export.md)
+- [Select security frameworks](./compliance-import.md) 
+- [Add data-driven compliance evidence](./compliance-mapping-evidence.md) 
+- [Link to controls](./compliance-controls.md)
+- [Link policies and procedures](./compliance-mapping-policies.md)
+- [Perform automated gap analysis](./compliance-gap-analysis.md)
+- [Export compliance artifacts](./compliance-export.md)
 
 
 
@@ -41,6 +41,6 @@ controls:
 - Gap analysis between fulfilled requirements and outstanding remediation
 - Continuous monitoring and remediation
 
-![](../../assets/compliance-summary-status-bars.png)
+![](../assets/compliance-summary-status-bars.png)
 
 [Watch this video](https://try.jupiterone.com/blog/video-managing-grc-with-jupiterone) for more information about managing compliance with automated policies and procedures.

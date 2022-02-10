@@ -6,14 +6,14 @@ in questions that you have added as evidence to meeting compliance.
 At any time, you can review where the gaps are in your compliance but clicking the
 information icon next to gap analysis in a selected framework.
 
-![](../../assets/compliance-gap-analysis.png)
+![](../assets/compliance-gap-analysis.png)
 
 
 
 From the selected framework details view, click the filter icon next to the gap category
 to see where the gaps are in your compliance status. 
 
-![](../../assets/compliance-gaps.png)
+![](../assets/compliance-gaps.png)
 
 Each query in a saved question has a property to indicate whether the results
 from the query are good, bad, unknown, or informative. You can configure this in the 
@@ -115,7 +115,7 @@ following:
 The status is determined by the presence and output of the named queries in the
 mapped questions, as shown in this matrix:
 
-![](../../assets/compliance-query-gap-analysis-status-2.png)
+![](../assets/compliance-query-gap-analysis-status-2.png)
 
 
 

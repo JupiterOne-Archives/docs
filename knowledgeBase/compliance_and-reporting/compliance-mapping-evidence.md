@@ -5,7 +5,7 @@ or access control and management. By default, all the requirements are applied t
 If you do not want to apply a specific requirement, you can toggle it off from the requirement 
 details view.
 
-![](../../assets/compliance-toggle-applicable.png)
+![](../assets/compliance-toggle-applicable.png)
 
 After you have reviewed the requirements for your framework, you can click **Add Evidence** in 
 the requirement details view and provide any of the following items as evidence.
@@ -21,7 +21,7 @@ that you write queries about your assets and their relationships that can provid
 data-driven compliance evidence.
 
 Each question can have one or more queries. You can name the queries so that they 
-trigger [automated compliance gap analysis](../compliance/compliance-gap-analysis.md).
+trigger [automated compliance gap analysis](./compliance-gap-analysis.md).
 
 #### External Evidence
 

@@ -12,11 +12,11 @@ import your own configuration.
 
 **Note:** You must have the adminCompliance permission to be able to import frameworks.
 
-Open the J1 Compliance app by clicking ![](../../assets/icons/apps.png) and select Compliance.  To add a framework:
+Open the J1 Compliance app by clicking ![](../assets/icons/apps.png) and select Compliance.  To add a framework:
 
 1. Select **Frameworks** from the left navigation panel and click **Add Framework**.
    ​
-   ![](../../assets/compliance-frmwk-overview.png)
+   ![](../assets/compliance-frmwk-overview.png)
 2. Choose one of the templates that J1 provides, or click **Import JSON/CSV** and 
    paste your compliance framework file in JSON or CSV format. 
    ​
@@ -28,7 +28,7 @@ and Benchmarks.
 
 ### JSON Structure
 
-If you want to import a JSON file, follow [this schema](../../docs/schemas/policies-compliance.md).
+If you want to import a JSON file, follow [this schema](../APIs_and-integrations/APIs/policies-compliance-schema.md).
 
 ### CSV Import
 
