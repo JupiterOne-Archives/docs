@@ -1,4 +1,4 @@
-# Sample J1QL queries for Hardware and Software Inventory and Configuration
+# Sample J1QL Queries for Hardware and Software Inventory and Configuration
 
 ### What Workloads are in my environment?
 
