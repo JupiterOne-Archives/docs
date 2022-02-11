@@ -123,7 +123,7 @@ integrations:
     displayName: Slack
     knowledgeCategoriesPaths: APIs_and-integrations/workflow
   - projectName: graph-snipe-it
-    displayName: Snipe It
+    displayName: Snipe-IT
     knowledgeCategoriesPaths: APIs_and-integrations/IT-service-management
   - projectName: graph-snowflake
     displayName: Snowflake
@@ -132,7 +132,7 @@ integrations:
     displayName: Snyk
     knowledgeCategoriesPaths: APIs_and-integrations/application-security
   - projectName: graph-tenable-io
-    displayName: Tenable io
+    displayName: Tenable-io
     knowledgeCategoriesPaths: APIs_and-integrations/application-security
   - projectName: graph-threatstack
     displayName: ThreatStack
