@@ -3,9 +3,6 @@ import glob from "glob";
 import path from "path";
 import { PATH_OF_DIRECTORY_TO_WATCH } from "./";
 
-export const resourceLocation = (resource: string) =>
-  path.join(__dirname, `../../../${PATH_OF_DIRECTORY_TO_WATCH}/`);
-
 export const directoryPromise = (directoryLocation: string) =>
   new Promise<string[]>((resolve, reject) => {
     return getDirectories(directoryLocation, (err, matches) => {
