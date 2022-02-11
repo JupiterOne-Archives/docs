@@ -30,21 +30,27 @@ export const removeDeletedArticles = async ({
     logger.error("error reading integration config");
   }
 
-  console.log("STARHTHTHTHTHTH");
   const allKnowledgeBaseAsADiff = await getAllItemsAsDiff();
+  if (!allKnowledgeBaseAsADiff.length) {
+    throw new Error("Fail in getting local resources");
+  }
   const existingknowledgeCategoryInfo = await getKnowedgeCategories(httpClient);
   const articles = await getAllArticles(
     httpClient,
     existingknowledgeCategoryInfo
   );
-  const procedures = await diffToProcedures(allKnowledgeBaseAsADiff);
 
+  const procedures = await diffToProcedures(allKnowledgeBaseAsADiff);
+  if (!procedures) {
+    throw new Error("Fail in getting local resources");
+  }
   const onlyProceduresThatAreArticles = procedures
     ? procedures.filter((p) => p.procedureType === ProcedureTypeEnum.Article)
     : [];
   const articleNamesThatShouldExist = onlyProceduresThatAreArticles.map(
     (a) => a.name
   );
+
   const articlesToKeep = [
     ...namesOfIntegrations,
     ...articleNamesThatShouldExist,
@@ -52,10 +58,11 @@ export const removeDeletedArticles = async ({
   const articlesNeedingDeleting = articles.filter(
     (article) => articlesToKeep.indexOf(article.name) === -1
   );
+
   const deleted = [];
   for (
     let articleIndex = 0;
-    articleIndex <= articlesNeedingDeleting.length;
+    articleIndex < articlesNeedingDeleting.length;
     articleIndex++
   ) {
     try {

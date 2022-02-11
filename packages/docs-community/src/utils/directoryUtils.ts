@@ -3,9 +3,6 @@ import glob from "glob";
 import path from "path";
 import { PATH_OF_DIRECTORY_TO_WATCH } from "./";
 
-export const resourceLocation = () =>
-  path.join(__dirname, "../../../../integrations.config.yaml");
-
 export const directoryPromise = (directoryLocation: string) =>
   new Promise<string[]>((resolve, reject) => {
     return getDirectories(directoryLocation, (err, matches) => {

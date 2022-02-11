@@ -1,3 +1,4 @@
+import path from "path";
 import { diffToProcedures } from "./diffToProcedures";
 import { getDiffFromHead } from "./gitDifference";
 import HttpClient from "./httpClient";
@@ -8,7 +9,6 @@ import {
   directoryPromise,
   getAllSubChanges,
   PATH_OF_DIRECTORY_TO_WATCH,
-  resourceLocation,
 } from "./utils";
 import {
   deleteArticle,
@@ -91,10 +91,9 @@ export const updateIntegrationArticles = async () => {
 
 export const getAllItemsAsDiff = async () => {
   const fullArrayOfAllItems: string[] = await directoryPromise(
-    resourceLocation()
+    path.join(__dirname, `../../../${PATH_OF_DIRECTORY_TO_WATCH}/`)
   );
-  console.log(fullArrayOfAllItems, "FULL ");
-  console.log(resourceLocation(), "REISSISI");
+
   if (fullArrayOfAllItems) {
     const trimmedDirectories = fullArrayOfAllItems.map((result) =>
       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))

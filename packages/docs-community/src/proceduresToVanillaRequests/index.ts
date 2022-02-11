@@ -192,12 +192,6 @@ export const proceduresToVanillaRequests = async ({
       httpClient
     );
 
-    await createChangesContentForStaging({
-      httpClient,
-      procedures: processedProcedures.filter(isArticleType),
-      combinationOfArticlesAndProcedures,
-    });
-
     logger.info(
       `UpdatesToInternalLinks processed: ${JSON.stringify(
         updatesToInternalLinks,
@@ -216,16 +210,22 @@ export const proceduresToVanillaRequests = async ({
     try {
       await removeDeletedArticles({ httpClient });
     } catch (e) {
-      console.log(e, "EEEEEEEEEOOOJMSJSJSJSJ");
+      logger.error(`error deleting articles that dont exist`);
     }
-
+    await createChangesContentForStaging({
+      httpClient,
+      procedures: processedProcedures.filter(isArticleType),
+      combinationOfArticlesAndProcedures,
+    });
     logger.info(
       `PROCEDURES processed: ${JSON.stringify(finishedProcedures, null, 2)}`
     );
     try {
       await deleteEmptyCategories(httpClient);
     } catch (e) {
-      console.log(e, "AAHAHAHAHAHAHAHA");
+      logger.error(
+        `Error deleting empty categories: ${JSON.stringify(e, null, 2)}`
+      );
     }
 
     return finishedProcedures;

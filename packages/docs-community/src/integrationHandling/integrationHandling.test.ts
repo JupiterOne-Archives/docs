@@ -157,7 +157,7 @@ describe("IntegrationHandling", () => {
         },
       ];
       const expected = {
-        alteredProcedures: procedures,
+        alteredProcedures: [],
       };
       const httpClient = {} as any;
 
@@ -166,7 +166,7 @@ describe("IntegrationHandling", () => {
         procedures,
         httpClient,
       });
-      console.log("Procedures", procedures);
+
       expect(axiosSpy).toHaveBeenCalledTimes(0);
       expect(editArticle).toHaveBeenCalledTimes(0);
       expect(actual).toEqual(expected);
