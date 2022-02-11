@@ -131,8 +131,33 @@ describe("IntegrationHandling", () => {
     });
 
     it("handles when doc is not found", async () => {
+      procedures = [
+        {
+          //post
+          parentID: null,
+          knowledgeBaseID: 1,
+          name: "Getting Started Admin",
+          fileName: "getting-started_and-admin",
+          description: "",
+          knowledgeCategoryID: null,
+          path: "getting-started_and-admin/jupiterOne-query-language_(J1QL)-copy.md",
+          childrenPath: "getting-started_and-admin",
+          procedureType: ProcedureTypeEnum.Category,
+        },
+        {
+          knowledgeCategoryID: null,
+          articleID: 87,
+          fileName: "jupiterOne-query-language_(J1QL)-copy.md",
+          name: "Trend LARGE Integration with JupiterOne",
+          body: "",
+          path: "getting-started_and-admin/jupiterOne-query-language_(J1QL)-copy.md",
+          format: "markdown",
+          locale: "en",
+          procedureType: ProcedureTypeEnum.Article,
+        },
+      ];
       const expected = {
-        alteredProcedures: [],
+        alteredProcedures: procedures,
       };
       const httpClient = {} as any;
 
@@ -141,6 +166,7 @@ describe("IntegrationHandling", () => {
         procedures,
         httpClient,
       });
+      console.log("Procedures", procedures);
       expect(axiosSpy).toHaveBeenCalledTimes(0);
       expect(editArticle).toHaveBeenCalledTimes(0);
       expect(actual).toEqual(expected);
