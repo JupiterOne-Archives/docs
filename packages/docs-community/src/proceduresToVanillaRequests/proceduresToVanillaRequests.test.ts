@@ -1,5 +1,6 @@
 /* eslint-disable jest/no-focused-tests */
 import * as integrationHandlingMock from "../integrationHandling";
+import * as removeArticlesMock from "../removeDeletedArticles";
 import * as updateMarkdownMock from "../updateArticleInternalMarkdownLinks";
 import {
   createKnowledgeCategoryMock,
@@ -26,6 +27,10 @@ import {
 } from "./mocks";
 jest.mock("../httpClient");
 describe("ProceduresToVanillaRequests", () => {
+  const removeDeletedArticles = jest.spyOn(
+    removeArticlesMock,
+    "removeDeletedArticles"
+  );
   let integrationHandling = jest
     .spyOn(integrationHandlingMock, "replaceArticleBodyWithIntegration")
     .mockResolvedValue({ alteredProcedures: [] });
@@ -270,6 +275,7 @@ describe("ProceduresToVanillaRequests", () => {
       expect(createChangesContentForStaging).toHaveBeenCalledTimes(1);
       expect(deleteAllFlaggedCategories).toHaveBeenCalledTimes(1);
       expect(integrationHandling).toHaveBeenCalledTimes(1);
+      expect(removeDeletedArticles).toHaveBeenCalledTimes(1);
       expect(actual).toEqual([]);
     });
   });

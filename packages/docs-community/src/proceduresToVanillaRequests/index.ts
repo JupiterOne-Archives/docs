@@ -1,6 +1,7 @@
 import HttpClient from "../httpClient";
 import { replaceArticleBodyWithIntegration } from "../integrationHandling";
 import { logger } from "../loggingUtil";
+import { removeDeletedArticles } from "../removeDeletedArticles";
 import { updateArticleInternalMarkdownLinks } from "../updateArticleInternalMarkdownLinks";
 import {
   FLAG_FOR_DELETE,
@@ -191,12 +192,6 @@ export const proceduresToVanillaRequests = async ({
       httpClient
     );
 
-    await createChangesContentForStaging({
-      httpClient,
-      procedures: processedProcedures.filter(isArticleType),
-      combinationOfArticlesAndProcedures,
-    });
-
     logger.info(
       `UpdatesToInternalLinks processed: ${JSON.stringify(
         updatesToInternalLinks,
@@ -212,12 +207,27 @@ export const proceduresToVanillaRequests = async ({
       httpClient,
       deletableCategories
     );
-
+    try {
+      await removeDeletedArticles({ httpClient });
+    } catch (e) {
+      logger.error(`error deleting articles that dont exist`);
+    }
+    await createChangesContentForStaging({
+      httpClient,
+      procedures: processedProcedures.filter(isArticleType),
+      combinationOfArticlesAndProcedures,
+    });
     logger.info(
       `PROCEDURES processed: ${JSON.stringify(finishedProcedures, null, 2)}`
     );
+    try {
+      await deleteEmptyCategories(httpClient);
+    } catch (e) {
+      logger.error(
+        `Error deleting empty categories: ${JSON.stringify(e, null, 2)}`
+      );
+    }
 
-    await deleteEmptyCategories(httpClient);
     return finishedProcedures;
   }
 
