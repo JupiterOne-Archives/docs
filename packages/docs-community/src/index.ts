@@ -89,12 +89,12 @@ export const updateIntegrationArticles = async () => {
   }
 };
 
-// converts all items in the PATH_OF_DIRECTORY_TO_WATCH into Vanilla forum items
-export const updateVanillaWithDirectoryToWatch = async () => {
+export const getAllItemsAsDiff = async () => {
   const fullArrayOfAllItems: string[] = await directoryPromise(
-    resourceLocation(PATH_OF_DIRECTORY_TO_WATCH)
+    resourceLocation()
   );
-
+  console.log(fullArrayOfAllItems, "FULL ");
+  console.log(resourceLocation(), "REISSISI");
   if (fullArrayOfAllItems) {
     const trimmedDirectories = fullArrayOfAllItems.map((result) =>
       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
@@ -104,13 +104,21 @@ export const updateVanillaWithDirectoryToWatch = async () => {
         trimmedDirectories.push("changes-from-update.md");
       }
     }
-    const procedures = await diffToProcedures(trimmedDirectories);
+    return trimmedDirectories;
+  }
+  return [];
+};
 
-    if (procedures && procedures.length > 0) {
-      return await proceduresToVanillaRequests({
-        procedures,
-      });
-    }
+// converts all items in the PATH_OF_DIRECTORY_TO_WATCH into Vanilla forum items
+// Means that all article urls will change! web-Toolkit changes will be needed
+export const updateVanillaWithDirectoryToWatch = async () => {
+  const allAsDiff = await getAllItemsAsDiff();
+  const procedures = await diffToProcedures(allAsDiff);
+
+  if (procedures && procedures.length > 0) {
+    return await proceduresToVanillaRequests({
+      procedures,
+    });
   }
 };
 

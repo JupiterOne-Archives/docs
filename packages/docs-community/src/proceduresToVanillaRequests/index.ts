@@ -1,6 +1,7 @@
 import HttpClient from "../httpClient";
 import { replaceArticleBodyWithIntegration } from "../integrationHandling";
 import { logger } from "../loggingUtil";
+import { removeDeletedArticles } from "../removeDeletedArticles";
 import { updateArticleInternalMarkdownLinks } from "../updateArticleInternalMarkdownLinks";
 import {
   FLAG_FOR_DELETE,
@@ -212,12 +213,21 @@ export const proceduresToVanillaRequests = async ({
       httpClient,
       deletableCategories
     );
+    try {
+      await removeDeletedArticles({ httpClient });
+    } catch (e) {
+      console.log(e, "EEEEEEEEEOOOJMSJSJSJSJ");
+    }
 
     logger.info(
       `PROCEDURES processed: ${JSON.stringify(finishedProcedures, null, 2)}`
     );
+    try {
+      await deleteEmptyCategories(httpClient);
+    } catch (e) {
+      console.log(e, "AAHAHAHAHAHAHAHA");
+    }
 
-    await deleteEmptyCategories(httpClient);
     return finishedProcedures;
   }
 
