@@ -26,7 +26,6 @@ export const readDocsConfig = async (): Promise<IntegrationsConfigProps> => {
     "../../../../integrations.config.yaml"
   );
 
-  console.log(pathOfDocsConfig, "axxxxdd");
   const fileContents = await fs.promises.readFile(pathOfDocsConfig, {
     encoding: "utf-8",
   });
@@ -84,7 +83,7 @@ export const replaceArticleBodyWithIntegration = async ({
 }: ReplaceArticleBodyWithIntegrationProps): Promise<ProceduresReplaceArticleBodyWithIntegrationReturn> => {
   try {
     const { integrations } = await readDocsConfig();
-    console.log(integrations, "REPLACEEHEHEHEH");
+
     const alteredProcedures: (VanillaArticle | VanillaKnowledgeCategory)[] =
       procedures || [];
 
