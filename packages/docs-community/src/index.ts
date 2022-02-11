@@ -1,3 +1,4 @@
+import path from "path";
 import { diffToProcedures } from "./diffToProcedures";
 import { getDiffFromHead } from "./gitDifference";
 import HttpClient from "./httpClient";
@@ -8,7 +9,6 @@ import {
   directoryPromise,
   getAllSubChanges,
   PATH_OF_DIRECTORY_TO_WATCH,
-  resourceLocation,
 } from "./utils";
 import {
   deleteArticle,
@@ -89,10 +89,9 @@ export const updateIntegrationArticles = async () => {
   }
 };
 
-// converts all items in the PATH_OF_DIRECTORY_TO_WATCH into Vanilla forum items
-export const updateVanillaWithDirectoryToWatch = async () => {
+export const getAllItemsAsDiff = async () => {
   const fullArrayOfAllItems: string[] = await directoryPromise(
-    resourceLocation(PATH_OF_DIRECTORY_TO_WATCH)
+    path.join(__dirname, `../../../${PATH_OF_DIRECTORY_TO_WATCH}/`)
   );
 
   if (fullArrayOfAllItems) {
@@ -104,13 +103,21 @@ export const updateVanillaWithDirectoryToWatch = async () => {
         trimmedDirectories.push("changes-from-update.md");
       }
     }
-    const procedures = await diffToProcedures(trimmedDirectories);
+    return trimmedDirectories;
+  }
+  return [];
+};
 
-    if (procedures && procedures.length > 0) {
-      return await proceduresToVanillaRequests({
-        procedures,
-      });
-    }
+// converts all items in the PATH_OF_DIRECTORY_TO_WATCH into Vanilla forum items
+// Means that all article urls will change! web-Toolkit changes will be needed
+export const updateVanillaWithDirectoryToWatch = async () => {
+  const allAsDiff = await getAllItemsAsDiff();
+  const procedures = await diffToProcedures(allAsDiff);
+
+  if (procedures && procedures.length > 0) {
+    return await proceduresToVanillaRequests({
+      procedures,
+    });
   }
 };
 

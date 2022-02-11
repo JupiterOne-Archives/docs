@@ -11,7 +11,7 @@ import {
 } from "../utils";
 import { editArticle } from "../VanillaAPI";
 
-export interface YamlShape {
+export interface IntegrationsConfigProps {
   integrations: {
     projectName: string;
     displayName: string;
@@ -20,10 +20,10 @@ export interface YamlShape {
     alternateLocationOfDoc?: string;
   }[];
 }
-export const readDocsConfig = async (): Promise<YamlShape> => {
+export const readDocsConfig = async (): Promise<IntegrationsConfigProps> => {
   const pathOfDocsConfig = path.join(
-    path.resolve(),
-    "../../integrations.config.yaml"
+    __dirname,
+    "../../../../integrations.config.yaml"
   );
 
   const fileContents = await fs.promises.readFile(pathOfDocsConfig, {
@@ -32,7 +32,7 @@ export const readDocsConfig = async (): Promise<YamlShape> => {
 
   try {
     const yamlContents = yaml.load(fileContents);
-    return yamlContents as YamlShape;
+    return yamlContents as IntegrationsConfigProps;
   } catch (err) {
     throw new Error(
       `Failed to convert config file to YAML (path=${fileContents}, msg=${err.message})`
