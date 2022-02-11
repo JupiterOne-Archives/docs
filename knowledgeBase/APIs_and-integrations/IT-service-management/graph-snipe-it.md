@@ -1,4 +1,4 @@
-# Snipe It Integration with JupiterOne
+# Snipe-IT Integration with JupiterOne
 
 ## Snipe-IT + JupiterOne Integration Benefits
 
