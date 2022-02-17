@@ -58,6 +58,17 @@ pipeline {
           }
       }
 
+      stage('Sleeping prior to updating staging integrations') {
+        when {
+          beforeAgent true
+          branch 'vanilla-staging'
+          triggeredBy 'TimerTrigger'
+        }
+      steps {
+        sleep(time:1, unit:'HOURS')
+      }
+      }
+
       stage('Updating Staging Integration Articles') {
         when {
           beforeAgent true
@@ -67,10 +78,6 @@ pipeline {
 
         agent { label 'ecs-builder-node14' }
           steps {
-            echo 'Delaying by one hour for rate limit'
-
-            sleep(time:1, unit:'HOURS')
-
             initBuild()
 
             sh 'yarn install --frozen-lockfile'
