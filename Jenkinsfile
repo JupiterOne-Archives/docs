@@ -63,10 +63,11 @@ pipeline {
           beforeAgent true
           branch 'vanilla-staging'
           triggeredBy 'TimerTrigger'
+        }
+      steps {
+        sleep(time:1, unit:'HOURS')
       }
-      agent { label 'ecs-builder-node14' }
-      sleep(time:1, unit:'HOURS')
-    }
+      }
 
       stage('Updating Staging Integration Articles') {
         when {
