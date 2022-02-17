@@ -160,7 +160,7 @@ export const proceduresToVanillaRequests = async ({
       url: x.url,
       path: x.path,
     }));
-    JSON.stringify(withInfo, null, 2);
+    console.log(JSON.stringify(withInfo, null, 2));
     return [];
     // const processedProcedures = await useProceduresForVanillaRequests(
     //   alteredProceduresWithArticleInfo,
