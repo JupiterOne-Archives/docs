@@ -181,3 +181,6 @@ integrations:
   - projectName: graph-mimecast
     displayName: Mimecast
     knowledgeCategoriesPaths: APIs_and-integrations/training
+  - projectName: graph-aws
+    displayName: AWS
+    knowledgeCategoriesPaths: APIs_and-integrations/cloud-service-provider
