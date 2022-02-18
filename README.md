@@ -40,7 +40,8 @@ Adding a value to `ignoreUpdates` on a `integrations.config.yaml` property will 
 
 ## To 'Refresh' vanilla staging and/or production
 
-Create a branch from vanilla-staging. I like to use 'refresh-some-date'.
+Create a branch from vanilla-staging. I like to use 'refresh-some-date'. 
+`Refreshing is highly discouraged as all the articles will change their urls. Links.json and j1qlDocsConfig.json will need to be updated with the correct urls.`
 
 Change runDiff.ts to
 
@@ -196,17 +197,7 @@ Example usage:
 - Knowledge Categories are matched on name regardless of WHERE they reside. So if there already exists a category for `hot-to/compliance/making-policies.md` policies and you are merging a change a new directory `getting-started/compliance/policies.md`, the new file policies.md will be added as an article to
   `hot-to/compliance/`
 
-## Dev Info and Notes
 
-Generate procedures per array of paths, default will be for commit changes. Currently targets all of `PATH_OF_DIRECTORY_TO_WATCH` which is the 'knowledgeBase' directory.
-
-`SHOULD_REALLY_UPLOAD_IMAGES` is a constant allowing to skip uploading images when running locally. By default (SHOULD_REALLY_UPLOAD_IMAGES=true) will upload all referenced assets (in markdown files for articles) and replace their link with that of the return from Vanilla's upload media route. This takes far too long to do during debugging and creation but was tested thoroughly.
-
-Deleting of categories handled last. As procedures information is mapped to actual vanilla resources that already exist, articles are deleted and categories are marked for deletion. Vanilla does not support the deleting of categories that have items. To resolve this, articles are deleted first. We then sort the marked Knowledge categories by length of their path structure. Longer paths (deeper nested) get deleted first as deletable procedures are consumed.
-
-Empty knowledge Categories are deleted.
-
-Logging has been added (Logging.ts). This might not be the final solution but will write out error, info and debugging info into the info directories corresponding markdown files. If we change it later we just need to add the new tool to the abstraction layer in logging.ts.
 
 ## Past Docs flow for reference
 
