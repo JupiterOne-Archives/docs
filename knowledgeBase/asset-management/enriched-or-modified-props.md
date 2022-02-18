@@ -24,7 +24,7 @@ You can now enrich the classification property in the UI for each of the resourc
 
 ![enrich-modify-edit-page](../assets/enrich-modify-edit-page.png)
 
-Keep in mind that when you enrich/modify a property in JupiterOne, these changes are only reflected in JupiterOne, and not to the properties of a entity at the source. It is recommended to make changes at the data source when possible.
+Keep in mind that when you enrich/modify a property in JupiterOne, these changes are only reflected in JupiterOne, and not to the properties of a entity at the source. It is recommended to make changes at the data source when possible. 
 
 ### Modify a resource's properties in the UI
 
