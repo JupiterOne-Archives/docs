@@ -1,12 +1,21 @@
 import HttpClient from "../httpClient";
+import { replaceArticleBodyWithIntegration } from "../integrationHandling";
 import { logger } from "../loggingUtil";
+import { removeDeletedArticles } from "../removeDeletedArticles";
+import { updateArticleInternalMarkdownLinks } from "../updateArticleInternalMarkdownLinks";
 import {
+  FLAG_FOR_DELETE,
   isArticleType,
   isKnowledgeCategoryType,
   VanillaArticle,
   VanillaKnowledgeCategory,
 } from "../utils";
-import { getAllArticles, getKnowedgeCategories } from "../VanillaAPI";
+import {
+  deleteEmptyCategories,
+  getAllArticles,
+  getKnowedgeCategories,
+  makeRequestsToChangeMarkdownReferences,
+} from "../VanillaAPI";
 import {
   addVanillaArticlesToProcedures,
   addVanillaCategoryToProcedure,
@@ -14,7 +23,9 @@ import {
 import {
   procedureToArticle,
   procedureToKnowledgeCategory,
+  removeDeletedCategories,
 } from "./actions/conversion";
+import { createChangesContentForStaging } from "./actions/stagingUpdateArticle";
 import {
   getPreviousKnowledgeID,
   handleKnowledgeCategoryChangedParentCreate,
@@ -146,83 +157,78 @@ export const proceduresToVanillaRequests = async ({
       articles
     );
 
-    // let alteredProceduresWithArticleInfo = proceduresWithArticleInfo;
+    let alteredProceduresWithArticleInfo = proceduresWithArticleInfo;
 
-    // if (integrationsOnly) {
-    //   const { alteredProcedures } = await replaceArticleBodyWithIntegration({
-    //     procedures: [...proceduresWithArticleInfo],
-    //     httpClient,
-    //   });
+    if (integrationsOnly) {
+      const { alteredProcedures } = await replaceArticleBodyWithIntegration({
+        procedures: [...proceduresWithArticleInfo],
+        httpClient,
+      });
 
-    //   alteredProceduresWithArticleInfo = alteredProcedures;
-    // }
-    const withInfo = proceduresWithArticleInfo.map((x) => ({
-      url: x.url,
-      path: x.path,
-    }));
-    console.log(JSON.stringify(withInfo, null, 2));
-    return [];
-    // const processedProcedures = await useProceduresForVanillaRequests(
-    //   alteredProceduresWithArticleInfo,
-    //   httpClient,
-    //   existingknowledgeCategoryInfo
-    // );
-    // logger.info(
-    //   `processedProcedures: ${JSON.stringify(processedProcedures, null, 2)}`
-    // );
+      alteredProceduresWithArticleInfo = alteredProcedures;
+    }
 
-    // const combinationOfArticlesAndProcedures = [
-    //   ...processedProcedures,
-    //   ...articles,
-    // ].filter(isArticleType);
+    const processedProcedures = await useProceduresForVanillaRequests(
+      alteredProceduresWithArticleInfo,
+      httpClient,
+      existingknowledgeCategoryInfo
+    );
+    logger.info(
+      `processedProcedures: ${JSON.stringify(processedProcedures, null, 2)}`
+    );
 
-    // const articlesNeedingLinkUpdates = await updateArticleInternalMarkdownLinks(
-    //   [...processedProcedures],
-    //   combinationOfArticlesAndProcedures
-    // );
+    const combinationOfArticlesAndProcedures = [
+      ...processedProcedures,
+      ...articles,
+    ].filter(isArticleType);
 
-    // const updatesToInternalLinks = await makeRequestsToChangeMarkdownReferences(
-    //   articlesNeedingLinkUpdates,
-    //   httpClient
-    // );
+    const articlesNeedingLinkUpdates = await updateArticleInternalMarkdownLinks(
+      [...processedProcedures],
+      combinationOfArticlesAndProcedures
+    );
 
-    // logger.info(
-    //   `UpdatesToInternalLinks processed: ${JSON.stringify(
-    //     updatesToInternalLinks,
-    //     null,
-    //     2
-    //   )}`
-    // );
-    // const deletableCategories = processedProcedures
-    //   .filter(isKnowledgeCategoryType)
-    //   .filter((c) => c.description === FLAG_FOR_DELETE);
+    const updatesToInternalLinks = await makeRequestsToChangeMarkdownReferences(
+      articlesNeedingLinkUpdates,
+      httpClient
+    );
 
-    // const { procedures: finishedProcedures } = await removeDeletedCategories(
-    //   httpClient,
-    //   deletableCategories
-    // );
-    // try {
-    //   await removeDeletedArticles({ httpClient });
-    // } catch (e) {
-    //   logger.error(`error deleting articles that dont exist`);
-    // }
-    // await createChangesContentForStaging({
-    //   httpClient,
-    //   procedures: processedProcedures.filter(isArticleType),
-    //   combinationOfArticlesAndProcedures,
-    // });
-    // logger.info(
-    //   `PROCEDURES processed: ${JSON.stringify(finishedProcedures, null, 2)}`
-    // );
-    // try {
-    //   await deleteEmptyCategories(httpClient);
-    // } catch (e) {
-    //   logger.error(
-    //     `Error deleting empty categories: ${JSON.stringify(e, null, 2)}`
-    //   );
-    // }
+    logger.info(
+      `UpdatesToInternalLinks processed: ${JSON.stringify(
+        updatesToInternalLinks,
+        null,
+        2
+      )}`
+    );
+    const deletableCategories = processedProcedures
+      .filter(isKnowledgeCategoryType)
+      .filter((c) => c.description === FLAG_FOR_DELETE);
 
-    // return finishedProcedures;
+    const { procedures: finishedProcedures } = await removeDeletedCategories(
+      httpClient,
+      deletableCategories
+    );
+    try {
+      await removeDeletedArticles({ httpClient });
+    } catch (e) {
+      logger.error(`error deleting articles that dont exist`);
+    }
+    await createChangesContentForStaging({
+      httpClient,
+      procedures: processedProcedures.filter(isArticleType),
+      combinationOfArticlesAndProcedures,
+    });
+    logger.info(
+      `PROCEDURES processed: ${JSON.stringify(finishedProcedures, null, 2)}`
+    );
+    try {
+      await deleteEmptyCategories(httpClient);
+    } catch (e) {
+      logger.error(
+        `Error deleting empty categories: ${JSON.stringify(e, null, 2)}`
+      );
+    }
+
+    return finishedProcedures;
   }
 
   return [];
