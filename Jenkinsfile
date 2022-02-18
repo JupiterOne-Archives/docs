@@ -15,6 +15,7 @@ pipeline {
       agent { label 'ecs-builder-node14' }
       steps {
         initBuild()
+
         securityScan()
         sh 'yarn install --frozen-lockfile'
 
