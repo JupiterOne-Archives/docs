@@ -38,11 +38,30 @@ Adding a value to `ignoreUpdates` on a `integrations.config.yaml` property will 
 
 - Supply `alternateLocationOfDoc` and a value within the `integrations.config.yaml` to use an alternate location.
 
+## Monorepo Drawer
+
+Located on landing(/search) - 'query library' button - third tab.
+Its code lives in packages/jupiter-web-search/src/components/QuestionsLibrary/QuestionsTabContent/jupiterDocs
+
+On mount it pulls the j1qlDocsConfig.json (from this repo) to render the table of contents.
+
+links.json is used to map the relative links (within the markdown) to the external links on vanilla prod.
+
+### Tips
+
+If a link is not working from the drawer
+
+- When, on click the link navigates the user to /search (still in the j1 app) the links.json requires a change or addition. The name used as the key should be the path and file name from the relative link in the markdown. Dont change the markdown relative link for drawer issues (That will break the links within the vanilla article).
+- When the link doesnt look as expected, the markdown link is proabaly not in the format `[some display](relative path)`
+- When this work was done the list was not complete and some links key to vanilla article urls will need to be added to the links.json
+
 ## To 'Refresh' vanilla staging and/or production
 
 Create a branch from vanilla-staging. I like to use 'refresh-some-date'.
+
 `Refreshing is highly discouraged as all the articles will change their urls. Links.json and j1qlDocsConfig.json will need to be updated with the correct urls.`
 
+Create a branch from vanilla-staging. I like to use 'refresh-some-date'.
 Change runDiff.ts to
 
 ```ts
