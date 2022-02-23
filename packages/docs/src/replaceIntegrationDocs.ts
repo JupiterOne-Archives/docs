@@ -1,4 +1,4 @@
-import { updateIntegrationArticles } from "./";
+import { updateIntegrationArticles } from ".";
 import { logger } from "./loggingUtil";
 
 const replaceIntegrationDocsWithGitHubRepoDocs = async () => {

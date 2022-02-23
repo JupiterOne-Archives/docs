@@ -1,4 +1,4 @@
-import { getAllItemsAsDiff } from "../";
+import { getAllItemsAsDiff } from "..";
 import { diffToProcedures } from "../diffToProcedures";
 import HttpClient from "../httpClient";
 import { readDocsConfig } from "../integrationHandling";
