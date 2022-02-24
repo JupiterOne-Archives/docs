@@ -2,7 +2,7 @@
   "name": "@jupiterone/integrations-handling",
   "version": "1.0.0",
   "main": "index.ts",
-  "repository": "git@github.com:JupiterOne/docs-community.git",
+  "repository": "git@github.com:JupiterOne/docs.git",
   "author": "Bryanschauerte <bryan.schauerte@gmail.com>",
   "license": "NONE",
   "private": true,

@@ -1,4 +1,4 @@
-# docs-community
+# docs
 
 ## Please note
 
@@ -56,6 +56,8 @@ If a link is not working from the drawer
 - When this work was done the list was not complete and some links key to vanilla article urls will need to be added to the links.json
 
 ## To 'Refresh' vanilla staging and/or production
+
+Create a branch from vanilla-staging. I like to use 'refresh-some-date'.
 
 `Refreshing is highly discouraged as all the articles will change their urls. Links.json and j1qlDocsConfig.json will need to be updated with the correct urls.`
 
@@ -129,7 +131,7 @@ A Quick rundown
 - '-' or '\_' in a file or drectory's name become a space in the article or knowledgeCategory and the next letter is capitalized.
   - Example. `knowledgeBase/hello-there/nice_people.md` becomes an article `Nice People` in a knowledge category called `Hello There`
 - Assets go into the `knowledgeBase/assets` directory.
-- When a merge to docs-community's `knowledgeBase` (non-assets directory) occurs, a series of processes occur to update the corresponding vanilla environment.
+- When a merge to docs's `knowledgeBase` (non-assets directory) occurs, a series of processes occur to update the corresponding vanilla environment.
   - Files become `articles` in their parent `knowledgeCategory`(the directory in which the markdown file resides)
   - Assets are uploaded to vanilla (with usage in the markdown files) and the vanilla image source replaces the relative source in the markdown.
   - Links to other markdown files add extra steps of ensuring that article exists already (or adds it for you) and replaces the markdown link with that of the vanilla article's location.
@@ -224,4 +226,4 @@ Some questions and comments were posted [here](https://jptrone.slack.com/archive
 
 - A trigger that pulls in integrations docs on a schedule and creates a pr to staging for review is wanted. I tested the script from the docs repo, it needs some improvements but does collect the collection of docs. Simple-git could be used to create a pr via yarn script
 
-![docs-community](./imagesForReadme/docs-community-flow.png)
+![docs](./imagesForReadme/docs-flow.png)

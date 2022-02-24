@@ -6,7 +6,7 @@ import {
   VanillaKnowledgeCategory,
 } from "../utils";
 import * as vanillaAPIMock from "../VanillaAPI";
-import { replaceArticleBodyWithIntegration } from "./";
+import { replaceArticleBodyWithIntegration } from ".";
 describe("IntegrationHandling", () => {
   let procedures: (VanillaArticle | VanillaKnowledgeCategory)[] = [
     {

@@ -5,7 +5,7 @@ import {
   isSupportedMediaType,
   modifyBodyLinkForImage,
   modifyBodyLinkForImageForReturnedArticles,
-} from "./";
+} from ".";
 import {
   assetDefinition,
   criticalAsset,
@@ -24,12 +24,11 @@ describe("linksAndMediaHandlers", () => {
       const expected = `<li><a rel=\"nofollow\" href="https://jupiterone.vanillastaging.com/kb/articles/545-catalog">look at this other doc</a></li>`;
 
       const { bodyAlterations } = modifyBodyLinkForImageForReturnedArticles(
-          body,
-          "../getting-started_and-admin/catalog.md",
-          replacement
-        );
+        body,
+        "../getting-started_and-admin/catalog.md",
+        replacement
+      );
       expect(bodyAlterations).toEqual(expected);
-
     });
   });
   describe("getMarkdownImageSrcs", () => {

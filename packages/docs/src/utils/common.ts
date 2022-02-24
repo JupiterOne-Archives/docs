@@ -6,7 +6,7 @@ import {
   SUPPORTED_FILE_TYPE_EXTENTIONS,
   VanillaArticle,
   VanillaKnowledgeCategory,
-} from "./";
+} from ".";
 
 export const isKnowledgeCategoryType = (
   procedure: VanillaArticle | VanillaKnowledgeCategory
