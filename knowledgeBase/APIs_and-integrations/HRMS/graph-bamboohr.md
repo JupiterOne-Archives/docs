@@ -1,46 +1,39 @@
-# BambooHR Integration with JupiterOne
+# Integration with JupiterOne
 
 ## BambooHR + JupiterOne Integration Benefits
 
-*   Visualize BambooHR users and files in the JupiterOne graph.
-*   Map BambooHR users to employees in your JupiterOne account.
-*   Map BambooHR users identified as employees to their managers to provide an
-    organization chart in JupiterOne.
-*   Monitor changes to BambooHR users using JupiterOne alerts.
+- Visualize BambooHR users and files in the JupiterOne graph.
+- Map BambooHR users to employees in your JupiterOne account.
+- Map BambooHR users identified as employees to their managers to provide an
+  organization chart in JupiterOne.
+- Monitor changes to BambooHR users using JupiterOne alerts.
 
 ## How it Works
 
-*   JupiterOne periodically fetches users and files from BambooHR to update the
-    graph.
-*   Additional details stored in BambooHR users is used to map your organization
-    management structure.
-*   Write JupiterOne queries to review and monitor updates to the graph.
-*   Configure alerts to take action when JupiterOne graph changes.
+- JupiterOne periodically fetches employees, users, and files from BambooHR to
+  update the graph.
+- Additional details stored in BambooHR users is used to map your organization
+  management structure.
+- Write JupiterOne queries to review and monitor updates to the graph.
+- Configure alerts to take action when JupiterOne graph changes.
 
 Important notes:
 
-*   The employee directory API does not include employees that have been
-    terminated. The employee records will not be included in the graph output of
-    the integration.
-*   The users listing API includes user records of employees that have been
-    terminated (the status will be 'disabled', `active: false` in the `User`
-    entity). Over time you will see the number of user entities exceed the number
-    of employees, and the `User` will have no relationship to an employee
-    `Record`.
-*   BambooHR employee records have an "Employee #" that is assigned when the
-    employee is created and which may later be modified. There is also a permanent
-    record "id" property that does not change and very likely is not equal to the
-    Employee #. The "Employee #" is not returned in employee list API and is
-    therefore not stored in the graph data.
+- The users listing API includes user records of employees that have been
+  terminated (`status: 'disabled'`, `active: false` in the `User` entity).
+- BambooHR employee records have an `employeeNumber` that is assigned when the
+  employee is created and which may later be modified. There is also a permanent
+  `id` property that does not change and very likely is not equal to the
+  `employeeNumber`.
 
 ## Requirements
 
-*   JupiterOne requires the subdomain of your BambooHR account. For example:
-    "mycompany" is the subdomain of `https://mycompany.bamboohr.com`.
-*   JupiterOne requires a REST API key. You need permission to create a user in
-    BambooHR for association with JupiterOne and obtain an API key associated with
-    that user.
-*   You must have permission in JupiterOne to install new integrations.
+- JupiterOne requires the subdomain of your BambooHR account. For example:
+  "mycompany" is the subdomain of `https://mycompany.bamboohr.com`.
+- JupiterOne requires a REST API key. You need permission to create a user in
+  BambooHR for association with JupiterOne and obtain an API key associated with
+  that user.
+- You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
@@ -51,43 +44,42 @@ If you need help with this integration, please contact
 
 ### In BambooHR
 
-1.  [Generate a REST API key](https://documentation.bamboohr.com/docs/getting-started).
+1. [Generate a REST API key](https://documentation.bamboohr.com/docs/getting-started).
 
-    As described in the BambooHR documentation, the API key will have the
-    permissions of the associated user. This means the user must have sufficient
-    permissions to create an API key,
-    [list users metadata](https://www.bamboohr.com/api/documentation/metadata.php),
-    and
-    [list employee files](https://www.bamboohr.com/api/documentation/employees.php)
-    (we do not read the content).
+   As described in the BambooHR documentation, the API key will have the
+   permissions of the associated user. This means the user must have sufficient
+   permissions to create an API key,
+   [list users metadata](https://www.bamboohr.com/api/documentation/metadata.php),
+   and
+   [list employee files](https://www.bamboohr.com/api/documentation/employees.php)
+   (we do not read the content).
 
 ### In JupiterOne
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **BambooHR** integration tile and click it.
-3.  Click the **Add Configuration** button.
-4.  Enter the **Account Name** by which you'd like to identify this BambooHR
-    account in JupiterOne. Ingested entities will have this value stored in
-    `tag.AccountName` when **Tag with Account Name** is checked.
-5.  Enter a **Description** that will further assist your team when identifying
-    the integration instance.
-6.  Select a **Polling Interval** that you feel is sufficient for your monitoring
-    needs. You may leave this as `DISABLED` and manually execute the integration.
-7.  Enter the **Client Namespace** (subdomain) for your BoombooHR account.
-8.  Enter the BambooHR **API Key** generated for use by JupiterOne.
-9.  Click **Create Configuration** once all values are provided.
+1. From the configuration **Gear Icon**, select **Integrations**.
+2. Scroll to the **BambooHR** integration tile and click it.
+3. Click the **Add Configuration** button.
+4. Enter the **Account Name** by which you'd like to identify this BambooHR
+   account in JupiterOne. Ingested entities will have this value stored in
+   `tag.AccountName` when **Tag with Account Name** is checked.
+5. Enter a **Description** that will further assist your team when identifying
+   the integration instance.
+6. Select a **Polling Interval** that you feel is sufficient for your monitoring
+   needs. You may leave this as `DISABLED` and manually execute the integration.
+7. Enter the **Client Namespace** (subdomain) for your BoombooHR account.
+8. Enter the BambooHR **API Key** generated for use by JupiterOne.
+9. Click **Create Configuration** once all values are provided.
 
 # How to Uninstall
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **BambooHR** integration tile and click it.
-3.  Identify and click the **integration to delete**.
-4.  Click the **trash can** icon.
-5.  Click the **Remove** button to delete the integration.
-6.  Delete the BambooHR user created for use by JupiterOne.
+1. From the configuration **Gear Icon**, select **Integrations**.
+2. Scroll to the **BambooHR** integration tile and click it.
+3. Identify and click the **integration to delete**.
+4. Click the **trash can** icon.
+5. Click the **Remove** button to delete the integration.
+6. Delete the BambooHR user created for use by JupiterOne.
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
-
 <!--
 ********************************************************************************
 NOTE: ALL OF THE FOLLOWING DOCUMENTATION IS GENERATED USING THE
@@ -128,7 +120,4 @@ The following relationships are created:
 END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 ********************************************************************************
 -->
-
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
- 
-<!--  jupiterOneDocVersion=0-5-0 -->

@@ -5,7 +5,7 @@ import {
   VanillaArticle,
   VanillaKnowledgeCategory,
 } from "../utils";
-import { updateArticleInternalMarkdownLinks } from "./";
+import { updateArticleInternalMarkdownLinks } from ".";
 
 describe("updateArticleInternalMarkdownLinks", () => {
   const getArticleNameFromReferenceSpy = jest.spyOn(

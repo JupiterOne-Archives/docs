@@ -13,7 +13,7 @@ import * as mockVanillaAPI from "../VanillaAPI";
 import {
   proceduresToVanillaRequests,
   useProceduresForVanillaRequests,
-} from "./";
+} from ".";
 import * as mockAddMeta from "./actions/addMeta";
 import * as createChangesContentForStagingMock from "./actions/stagingUpdateArticle";
 import {

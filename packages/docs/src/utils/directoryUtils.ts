@@ -1,7 +1,7 @@
 import { default as fsSync } from "fs";
 import glob from "glob";
 import path from "path";
-import { PATH_OF_DIRECTORY_TO_WATCH } from "./";
+import { PATH_OF_DIRECTORY_TO_WATCH } from ".";
 
 export const directoryPromise = (directoryLocation: string) =>
   new Promise<string[]>((resolve, reject) => {
