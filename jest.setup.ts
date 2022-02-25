@@ -3,7 +3,7 @@ import { mockLogging } from "@jupiterone/platform-sdk-logging/src/test";
 mockLogging({
   enableLogging: false,
 });
-jest.mock("./packages/docs-community/src/httpClient", () => {
+jest.mock("./packages/docs/src/httpClient", () => {
   const mGit = {
     get: jest.fn(),
     post: jest.fn(),

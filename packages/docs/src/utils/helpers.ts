@@ -1,4 +1,4 @@
-import { VanillaKnowledgeCategory } from "./";
+import { VanillaKnowledgeCategory } from ".";
 
 export const createKnowledgeCategoryMock = (
   overrides: Partial<VanillaKnowledgeCategory>
