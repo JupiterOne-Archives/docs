@@ -4,7 +4,31 @@ To get started using the JupiterOne (J1) platform, you must first pull your data
 
 There are multiple, managed integrations available, out-of-the-box, for turnkey configuration.
 
-Each integration may have a slightly different mechanism for authentication and configuration, as required by the provider. For example, the AWS integration uses an IAM role and assume role trust policies for access. Other integrations may use an API key/token, OAuth, or Basic Auth.
+All integrations have a set of common configuration fields as well as those that are unique to the integration.
+
+For each integration you configure you will need to provide:
+
+* `Account Name` - an alias that uniquely identifies the configuration
+* `Description` - a description of the configuration
+* `Polling Interval` - determines how often the data will be ingested to J1.  The options are:
+  * `DISABLED`  - the configuration only runs if manually triggered by a user or via API
+  * `THIRTY_MINUTES`
+  * `ONE_HOUR`
+  * `FOUR_HOURS`
+  * `EIGHT_HOURS`
+  * `TWELVE_HOURS`
+  * `ONE_DAY`
+  * `ONE_WEEK`
+
+Each integration will have a slightly different mechanism for authentication as required by the provider. For example, the AWS integration uses an IAM role and assume role trust policies for access. Other integrations may use an API key/token, OAuth, or Basic Auth.
+
+Additional options are also available for each integration.  Common options include:
+
+* `Tag with Account` - if you want data from this integration the `Account Name` of this configuration
+
+* `Tag as Production` - adds a tag indicating this is production data
+
+Depending on the integration there will may be other choices in the additional options section.
 
 This video shows an example of how to configure an AWS integration.
 
