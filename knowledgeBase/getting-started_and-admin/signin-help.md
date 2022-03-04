@@ -24,3 +24,6 @@ For easy access to all your J1 accounts, click **Get links to your accounts**. E
 
 
 You receive an email containing links to all your organization accounts that you have access. This list includes SSO organization accounts that you must sign in to from the designated URL.
+
+
+![](../assets/signin-links.png) 
