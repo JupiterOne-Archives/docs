@@ -1,0 +1,23 @@
+{
+  "extends": "./node_modules/@jupiterone/typescript-tools/config/typescript-node12-monorepo",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
+    "skipLibCheck": true
+  },
+  "include": [
+    "*.js",
+    "*.ts",
+    "packages/*/*.js",
+    "packages/*/*.ts",
+    "packages/*/package.json",
+    "packages/**/*.ts",
+    "packages/**/*.json"
+  ],
+  "exclude": [
+    "packages/*/dist/**/*",
+    "packages/*/coverage/**/*",
+    "**/bak/**/*",
+    "**/*.bak/**/*"
+  ]
+}

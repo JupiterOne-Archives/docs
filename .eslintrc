@@ -1,0 +1,18 @@
+{
+  "root": true,
+  "extends": ["@jupiterone/eslint-config/node"],
+  "ignorePatterns": [
+    "node_modules/",
+    "dist/",
+    "work/",
+    "coverage/",
+    "bak/",
+    "index.js",
+    "tools/",
+    "packages/*/*.js"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "tsconfigRootDir": "."
+  }
+}

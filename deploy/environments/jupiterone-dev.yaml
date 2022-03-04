@@ -1,0 +1,14 @@
+vanilla_staging_auth_token:
+  ciphertext:
+    type: s3
+    region: us-east-1
+    bucket: jupiterone-infra-state
+    key: jupiterone-dev/community-docs/secrets/vanilla_staging_auth_token
+    versionId: 7wwH1gFmp_6fW5JB7FRvJ7tlU59RHsnS
+vanilla_staging_env_token:
+  ciphertext:
+    type: s3
+    region: us-east-1
+    bucket: jupiterone-infra-state
+    key: jupiterone-dev/community-docs/secrets/vanilla_staging_env_token
+    versionId: Pw9RLPWIDC2vYxMpBHVUjR73Rjt7u9Kr
