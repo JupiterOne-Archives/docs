@@ -1,10 +1,11 @@
 # Compliance Gap Analysis
 
-The J1 Compliance app performs automated gap analysis based on the queries saved 
-in questions that you have added as evidence to meeting compliance.
+The J1 Compliance app performs automated gap analysis based on the queries saved in questions that you have added as evidence to meeting compliance. At any time, you can review where the gaps are in your compliance but clicking the information icon next to gap analysis in a selected framework.
 
-At any time, you can review where the gaps are in your compliance but clicking the
-information icon next to gap analysis in a selected framework.
+If you have access to the Compliance app, you have access to the gap analysis view. If you do not have access to the Compliance app, your J1 administrator can grant you access to the gaps table by adding a special, read-only permissions role to the group permissions for group to which you belong. With this role, you can see the compliance gap information but are not able to perform any other actions in the Compliance app.  
+
+
+
 
 ![](../assets/compliance-gap-analysis.png)
 
@@ -12,6 +13,7 @@ information icon next to gap analysis in a selected framework.
 
 From the selected framework details view, click the filter icon next to the gap category
 to see where the gaps are in your compliance status. 
+
 
 ![](../assets/compliance-gaps.png)
 
@@ -47,7 +49,7 @@ At the API level, this is set with the `resultsAre` property. For example:
           historyCount < 12
 ```
 
-## Gap Analysis
+## Gap Analysis Queries
 
 Queries with `resultsAre` property in a question that is mapped to a compliance
 requirement trigger automated gap analysis, as follow:
