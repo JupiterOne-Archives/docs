@@ -1,6 +1,6 @@
 # Compliance Gap Analysis
 
-The J1 Compliance app performs automated gap analysis based on the queries saved in questions that you have added as evidence to meeting compliance. At any time, you can review where the gaps are in your compliance but clicking the information icon next to gap analysis in a selected framework.
+The J1 Compliance app performs automated gap analysis based on the queries saved in questions that you have added as evidence to meeting compliance. At any time, you can review where the gaps are in your compliance by clicking the information icon next to gap analysis in a selected framework.
 
 If you have access to the Compliance app, you have access to the gap analysis view. If you do not have access to the Compliance app, your J1 administrator can grant you access to the gaps table by adding a special, read-only permissions role to the group permissions for group to which you belong. With this role, you can see the compliance gap information but are not able to perform any other actions in the Compliance app.  
 
@@ -11,15 +11,13 @@ If you have access to the Compliance app, you have access to the gap analysis vi
 
 
 
-From the selected framework details view, click the filter icon next to the gap category
-to see where the gaps are in your compliance status. 
+From the selected framework details view, click the filter icon next to the gap category to see where the gaps are in your compliance status. 
 
 
 ![](../assets/compliance-gaps.png)
 
-Each query in a saved question has a property to indicate whether the results
-from the query are good, bad, unknown, or informative. You can configure this in the 
-J1Query Language app UI or via the API.
+Each query in a saved question has a property to indicate whether the results from the query are good, bad, unknown, or informative. You can configure this property in the 
+J1Query Language app UI or via the J1 API.
 
 At the API level, this is set with the `resultsAre` property. For example:
 
@@ -51,8 +49,8 @@ At the API level, this is set with the `resultsAre` property. For example:
 
 ## Gap Analysis Queries
 
-Queries with `resultsAre` property in a question that is mapped to a compliance
-requirement trigger automated gap analysis, as follow:
+Queries with the `resultsAre` property in a question that is mapped to a compliance
+requirement trigger automated gap analysis, as follows:
 
 - `GOOD`:
 
@@ -90,7 +88,7 @@ A question can have one or all of the above named queries.
 
 ## Gap Analysis Status
 
-The gap analysis status of each requirement of control may be one of the
+The gap analysis status of each requirement of control can be one of the
 following:
 
 - `TESTED`
@@ -112,7 +110,7 @@ following:
   Manual review is needed because J1 was unable to auto-determine the
   status with the queries provided.
 
-  This status appears also when the requirement or control has no mapped query question _and_ no external evidence provided.
+  This status also appears when the requirement or control has no mapped query question _and_ no external evidence provided.
 
 The status is determined by the presence and output of the named queries in the
 mapped questions, as shown in this matrix:
