@@ -1,6 +1,6 @@
 # Endpoint Agent FAQs
 
-### Endpoint compliance data isn't appearing as expected. How can I troubleshoot this?
+### Endpoint compliance data is not appearing as expected. How can I troubleshoot this?
 
 For the Stethoscope-powered compliance data to report successfully:
 
