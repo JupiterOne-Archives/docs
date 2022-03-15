@@ -1,6 +1,8 @@
 # Getting Started with JupiterOne
 
-The JupiterOne (J1) Search Anything is the home page that gets you started as a new user or is the landing page for all other functions if you are a frequent user. 
+The JupiterOne (J1) Search for Anything is the home page that gets you started as a new user or is the landing page for all other functions if you are a frequent user. 
+
+![homepage](../assets/landing-signin.png)
 
 ## Configuring Your Account
 
