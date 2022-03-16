@@ -14,7 +14,7 @@ You will be prompted to select (or enter a new) "scope" for the upload. A scope 
 
 ## Public API
 
-JupiterOne exposes a public REST API to programmatically perform bulk entity and relationship uploads. The details on that API can be seen [here](../APIs_and-integrations/jupiterone-api.md).
+JupiterOne exposes a public REST API to programmatically perform bulk entity and relationship uploads. The details on that API can be seen [here](../APIs_and-integrations/APIs/jupiterone-api.md).
 
 ## Notes
 
