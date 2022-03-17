@@ -16,14 +16,13 @@ pipeline {
       steps {
         initBuild()
 
-        securityScan()
         sh 'yarn install --frozen-lockfile'
 
         sh 'yarn lint'
-
         sh 'yarn test:unit'
-
         sh 'yarn bundle'
+
+        securityScan()
 
         sh 'jupiterone-build'
       }
