@@ -16,6 +16,7 @@ pipeline {
       steps {
         initBuild()
 
+        sh 'echo "hello"'
         sh 'yarn install --frozen-lockfile'
 
         sh 'yarn lint'
