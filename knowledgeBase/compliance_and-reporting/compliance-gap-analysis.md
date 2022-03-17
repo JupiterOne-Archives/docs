@@ -1,23 +1,20 @@
 # Compliance Gap Analysis
 
-The J1 Compliance app performs automated gap analysis based on the queries saved 
-in questions that you have added as evidence to meeting compliance.
+The J1 Compliance app performs automated gap analysis based on the queries saved in questions that you have added as evidence to meeting compliance.
 
-At any time, you can review where the gaps are in your compliance but clicking the
-information icon next to gap analysis in a selected framework.
+At any time, you can review where the gaps are in your compliance but clicking the information icon next to gap analysis in a selected framework.
+
 
 ![](../assets/compliance-gap-analysis.png)
 
 
 
-From the selected framework details view, click the filter icon next to the gap category
-to see where the gaps are in your compliance status. 
+From the selected framework details view, click the filter icon next to the gap category to see where the gaps are in your compliance status. 
+
 
 ![](../assets/compliance-gaps.png)
 
-Each query in a saved question has a property to indicate whether the results
-from the query are good, bad, unknown, or informative. You can configure this in the 
-J1Query Language app UI or via the API.
+Each query in a saved question has a property to indicate whether the results from the query are good, bad, unknown, or informative. You can configure this in the J1Query Language app UI or via the API.
 
 At the API level, this is set with the `resultsAre` property. For example:
 
@@ -49,8 +46,7 @@ At the API level, this is set with the `resultsAre` property. For example:
 
 ## Gap Analysis
 
-Queries with `resultsAre` property in a question that is mapped to a compliance
-requirement trigger automated gap analysis, as follow:
+Queries with `resultsAre` property in a question that is mapped to a compliance requirement trigger automated gap analysis, as follows:
 
 - `GOOD`:
 
@@ -88,8 +84,7 @@ A question can have one or all of the above named queries.
 
 ## Gap Analysis Status
 
-The gap analysis status of each requirement of control may be one of the
-following:
+The gap analysis status of each requirement of control may be one of the following:
 
 - `TESTED`
 
@@ -97,9 +92,7 @@ following:
 
 - `ATTENTION`
 
-  Potential remediation is needed because J1 has detected a potential gap, 
-  with a mix of properly configured resources and misconfigurations, such 
-  as partially fulfilled.
+  Potential remediation is needed because J1 has detected a potential gap, with a mix of properly configured resources and misconfigurations, such as partially fulfilled.
 
 - `GAP`
 
@@ -107,13 +100,12 @@ following:
 
 - `UNKNOWN`
 
-  Manual review is needed because J1 was unable to auto-determine the
-  status with the queries provided.
+  Manual review is needed because J1 was unable to auto-determine the status with the queries provided.
 
   This status appears also when the requirement or control has no mapped query question _and_ no external evidence provided.
 
-The status is determined by the presence and output of the named queries in the
-mapped questions, as shown in this matrix:
+The status is determined by the presence and output of the named queries in the mapped questions, as shown in this matrix:
+
 
 ![](../assets/compliance-query-gap-analysis-status-2.png)
 

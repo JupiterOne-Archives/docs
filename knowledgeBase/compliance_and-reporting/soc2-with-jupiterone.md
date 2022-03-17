@@ -18,7 +18,7 @@ Additional support documentation:
 
 Review all of the templated, out-of-the-box policies + procedures, ensuring they accurately represent your organization’s principles/processes, tailoring and/or adding your own documentation where relevant. 
 
-Out of the box, the policies app comes with templated policies + procedures that can be edited/modified. Additionally, you can add your own policies + procedures
+Out of the box, the policies app comes with templated policies + procedures that can be edited/modified. Additionally, you can add your own policies + procedures.
 + remove/delete documents that aren’t relevant to your organization.
 
 ![policies](../assets/policies-1.png)
@@ -26,8 +26,6 @@ Out of the box, the policies app comes with templated policies + procedures that
 Reviewing + tailoring instructions are provided for the default, templated policies + procedures in the UI. 
 
 If not completed during JupiterOne account setup, the policy builder should be populated to prefill the templated policies + procedures.
-
-![policy-builder](../assets/policy-builder.png)
 
 [In-app policies setup](https://apps.us.jupiterone.io/policies)
 
@@ -38,7 +36,7 @@ Additional support documentation:
 [Policies + procedures structure](./policies-app.md)
 [Compliance policies mapping](./compliance-mapping-policies.md)
 
-## 3. Import compliance framework
+## 3. Import Compliance Framework
 
 Import the **SOC 2 Security Controls** compliance framework within the Compliance app. 
 
@@ -50,7 +48,7 @@ Additional support documentation:
 
 [Import compliance standard or security questionnaire](./compliance-import.md)
 
-## 4. Adding, editing, removing controls (control mapping)
+## 4. Adding, Editing, Removing Controls (control mapping)
 
 Within the default SOC 2 framework, templated controls are mapped to the Common Criteria required to meet the 'Security' Trust Service Category. 
 
@@ -58,7 +56,7 @@ There is the functionality within JupiterOne to add controls, remove controls, a
 
 ![control-mapping](../assets/edit-control-mapping.gif)
 
-## 5. Review evidence mapping
+## 5. Review Evidence Mapping
 
 For each control, the desired outcome is the corresponding evidence will suffice to demonstrate reasonable assurance the control has been designed + implemented (SOC 2 Type I) + operating effectively over the review period (SOC 2 Type II). 
 
@@ -77,7 +75,7 @@ Additional support documentation:
 [Search quickstart](../getting-started_and-admin/quickstart-search.md)
 [J1QL language specs](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md) 
 
-### Add additional queries
+### Add Additional Queries
 1. Adding a new query
 
 Additional support documentation: 
@@ -96,16 +94,16 @@ Additional support documentation:
 
 [All questions + queries](https://ask.us.jupiterone.io/filter?tagFilter=all)
 
-### Adding additional evidence
+### Adding Additional Evidence
 1. Link additional evidence, i.e., hyperlink
 2. Upload additional evidence, e.g., spreadsheets, compressed files, etc.
 3. Add notes/attestations
 
 ![alternative-evidence](../assets/alternative-evidence.gif)
 
-## 6. Reporting on/monitoring SOC 2 progress/readiness + workflows
+## 6. Reporting on/Monitoring SOC 2 Progress/Readiness + Workflows
 
-### Reporting/monitoring
+### Reporting/Monitoring
 
 For visibility, the default SOC 2 compliance framework landing page has the status of both evidence collection + a gap analysis to quickly identify which controls require your attention.
 
@@ -113,7 +111,7 @@ Hovering over any of the three (3) progress bars will provide a more detailed su
 
 ![gap-status](../assets/status-gap.gif)
 
-### Internal + auditor workflows
+### Internal Auditor Workflows
 
 With the Compliance app in JupiterOne, you can enable workflow functionality that will allow your team to internally track workflow status, along with the ability to invite your external auditors to use JupiterOne to conduct the assessment with the same workflow functionality.
 
@@ -121,7 +119,7 @@ With the Compliance app in JupiterOne, you can enable workflow functionality tha
 
 [Watch this video](https://try.jupiterone.com/blog/video-workflows-within-the-j1-compliance-app) for more information about compliance workflows for collaboration. 
 
-#### Managing access
+#### Managing Access
 
 You can invite internal team members or external users, e.g., auditors, into your JupiterOne instance/environment.
 
@@ -135,7 +133,7 @@ Additional support documentation:
 
 ![access](../assets/access.gif)
 
-#### Recurring review configuration
+#### Recurring Review Configuration
 
 For ongoing/continuous compliance monitoring, you can set the recurring review configuration workflow to assign specific team members to receive notifications to review/maintain individual controls, groups of controls, or entire frameworks.
 
@@ -143,7 +141,7 @@ By default, controls with queries/questions mapped for evidence are re-evaluated
 
 ![review-config](../assets/review-config.gif)
 
-## 7. Exporting compliance artifacts
+## 7. Exporting Compliance Artifacts
 
 JupiterOne provides the capability to export compliance artifacts, e.g, control evidence, policies + procedures, reports, etc.
 

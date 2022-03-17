@@ -31,7 +31,7 @@ By using this version of Stethoscope, you will be able to specify endpoint polic
  ]
 ```
 
-NOTE: support for `applications` checks like the above is not backwards compatible with previous versions of Stethoscope. You will want to ensure that all of your JupiterOne endpoint devices are using v4.0.0 or later before specifying a policy fragment like the above example in the JupiterOne Endpoint Power-Up configuration panel.
+**Note**: support for `applications` checks like the above is not backwards compatible with previous versions of Stethoscope. You will want to ensure that all of your JupiterOne endpoint devices are using v4.0.0 or later before specifying a policy fragment like the above example in the JupiterOne Endpoint Power-Up configuration panel.
 
 ## Upgrading from a previous version
 
