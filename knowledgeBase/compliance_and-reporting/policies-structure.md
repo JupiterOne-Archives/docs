@@ -85,7 +85,7 @@ The `procedures` section is a repository of the procedure modules. Each entry is
 
 - `id` - typically matches the filename of the procedures without the extension
 - `file` - path to the markdown module (without the `.tmpl` extension)
-- `name` - procedure name, which typically matches the title in the procedure doc
+- `name` - procedure name, which typically matches the title in the procedure doc 
 - `type` - specifies one of the following procedure types:
   - `administrative`
   - `technical`
