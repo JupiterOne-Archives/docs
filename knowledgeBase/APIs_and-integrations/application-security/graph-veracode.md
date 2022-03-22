@@ -37,32 +37,32 @@ The integration instance configuration requires the customer's API ID and secret
 to authenticate requests to the Veracode REST APIs. To do this in a
 least-privledged access manner, do the following:
 
-1. using a Veracode account with admin permissions, create an
+1. Using a Veracode account with admin permissions, create an
    [Api service account](https://docs.veracode.com/r/c_about_veracode_accounts)
 
-- at the time of this writing, user creation can be done in Settings Button (top
+- At the time of this writing, user creation can be done in Settings Button (top
   right) => Admin => Add New User
-- be sure to check the `Non-Human User` checkbox, and enter an email you have
+- Be sure to check the `Non-Human User` checkbox, and enter an email you have
   access to. You will login as the integration to generate keys scoped to the
   limited permission set
-- in `Access Settings` enable the `Results API` option
-- feel free to use any username, first/last name you see fit. We recommend it
+- In `Access Settings` enable the `Results API` option
+- Feel free to use any username, first/last name you see fit. We recommend it
   clearly indicate that the user is being used for a JupiterOne Integration
-- be sure to have `Login Enabled` set to `Yes`. Setting to `No` will not send
+- Be sure to have `Login Enabled` set to `Yes`. Setting to `No` will not send
   your email an activation link.
 
-2. after activating your integration's Api Service Account and setting your
+2. After activating your integration's Api Service Account and setting your
    password, login as the integration
 
-- be sure to verify you are logged in as integration by going to the
+- Be sure to verify you are logged in as integration by going to the
   `Your Account` page in the veracode UI
 
-3. now generate your api keys for the integration
+3. Now generate your api keys for the integration
 
 - Drag your mouse to your user icon in the top right (same place you find the
   `Your Account` button)
-- select `API Credentials` => `Generate API Credentials`
-- copy your Api Id and Secret contents (note that this only shows up once at
+- Select `API Credentials` => `Generate API Credentials`
+- Copy your Api Id and Secret contents (note that this only shows up once at
   generation)
 
 4. Note that by default, your keys will expire after one year. If you have
