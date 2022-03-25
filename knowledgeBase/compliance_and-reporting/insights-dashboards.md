@@ -5,7 +5,7 @@ This guide will walk through how to:
 1. Import prebuilt Insights Dashboards
 2. Create your own custom Insight dashboard
 
-JupiterOne Insights app allows users to build reporting dashboards using J1QL queries.
+The J1 Insights app allows you to build reporting dashboards using J1QL queries.
 
 Each dashboard can be configured as either a Team board that is shared with other account users or a Personal board for the individual user. 
 
@@ -23,21 +23,27 @@ Here are a few example boards and their configurations: [https://github.com/Jupi
 
 2. Pick the specific board, for example, "AWS Accounts".
 
-3. Click into ‘board.json’
+3. Click into ‘board.json’.
 
-4. Right click on **Raw** -> **Save File**
+4. Right-click **Raw** -> **Save File**.
+
+   ​
 
    ![save-dashboard](../assets/save-dashboard.gif)
 
+   ​
+
 5. Navigate within JupiterOne to **Apps** -> **Insights** to add a board.
+   ​
 
    ![insights](../assets/insights.png)
 
-6. Expand the left sidebar by hitting the **>** carrot .
+6. Expand the left sidebar by clicking the **>** carrot .
 
-7. Hit the **Add** button + choose whether you want a personal or team board.
+7. Click **Add** and choose whether you want a personal or team board.
 
 8. Click **Upload From JSON Schema** + select the file you previously saved.
+   ​
 
    ![import-dashboard](../assets/import-dashboard.gif)
 
@@ -49,9 +55,12 @@ Here are a few example boards and their configurations: [https://github.com/Jupi
 
 You can build your own custom dashboard with customized individual charts. Each chart is powered by one or more J1QL queries.
 
-1. Navigate within JupiterOne to **Apps** -> **Insights** to add a board
+1. Navigate within JupiterOne to **Apps** -> **Insights** to add a board.
+   ​
 
    ![insights](../assets/insights.png)
+
+   ​
 
 2. Expand the left sidebar by clicking the ‘>’ carrot .
 
@@ -62,6 +71,7 @@ You can build your own custom dashboard with customized individual charts. Each 
    - type of visual chart, such as number, pie, line, bar.
    - the chart’s query or queries
    - formatting options 
+     ​
 
      ![custom-board](../assets/custom-board.gif)
 
@@ -77,18 +87,28 @@ For more information about custom Insights dashboards, [watch this video](https:
 ## General Insights Dashboard Functionality 
 
 - Rename, clone, or delete boards:
+  ​
 
   ![clone-delete-rename](../assets/clone-delete-rename.png)
 
+  ​
+
 - Download board schema, share boards (create public links), save or reset board layout, add charts:
+  ​
 
   ![share-download-add-layout](../assets/share-download-add-layout.png)
 
+  ​
+
 - Delete charts:
+  ​
 
   ![delete-widget](../assets/delete-widget.png)
 
+  ​
+
 - Reorder either charts within a specific board, or the board within the side panel by dragging the chart or board to the desired spot:
+  ​
 
   ![reorder](../assets/reorder.gif)
 

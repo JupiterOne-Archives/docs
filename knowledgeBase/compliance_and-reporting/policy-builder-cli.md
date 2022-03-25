@@ -2,7 +2,7 @@
 
 Policy and procedure documents can be managed in code, checked into a Git repository, such that the Git Pull Request (PR) process can be leveraged for revisions and reviews.
 
-JupiterOne provides a command line for this purpose.
+JupiterOne provides a command line for this purpose. 
 
 ## Installing and Building
 
