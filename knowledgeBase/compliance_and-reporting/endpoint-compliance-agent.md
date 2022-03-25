@@ -2,7 +2,7 @@
 
 JupiterOne is not an endpoint security solution. Rather, it is a graph platform designed for security operations and compliance. So, why are we even talking about an endpoint agent?
 
-The JupiterOne internal security operations team is a highly distributed and self-managed. We needed a lightweight approach to ensure that users have correctly configured their own endpoint devices (i.e. laptops) and prompt them to remediate if a non-compliant configuration is detected.
+The JupiterOne internal security operations team is a highly distributed and self-managed. We needed a lightweight approach to ensure that users have correctly configured their own endpoint devices (such as  laptops) and prompt them to remediate if a non-compliant configuration is detected.
 
 Read [this blog](https://jupiterone.com/blog/solving-for-endpoint-compliance-in-a-cloud-first-landscape) for more on our journey in solving endpoint compliance in a cloud-first landscape.
 
