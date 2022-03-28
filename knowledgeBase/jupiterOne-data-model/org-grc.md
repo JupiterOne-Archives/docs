@@ -1,6 +1,8 @@
 # JupiterOne Data Model for Governance, Risk, and Compliance (GRC)
 
-<iframe src="https://my.mindnode.com/2ayndotqvjEJ3qAeEfwyy6sgkRciyxRvH1sgpYw4/em#333.4,207.2,-2" frameborder="0" marginheight="0" marginwidth="0" style="border: 1px solid rgb(204, 204, 204); width: 720px; height: 720px;" onmousewheel=""></iframe>
+![https://my.mindnode.com/2ayndotqvjEJ3qAeEfwyy6sgkRciyxRvH1sgpYw4/em#333.4,207.2,-2](../assets/data-model-org-grc.png)
+
+
 
 ## Standards, Sections, Requirements
 
