@@ -12,8 +12,8 @@
   ],
   "scripts": {
     "lint": "eslint --ext .ts,.js .",
-    "test": "./bin/run-tests.local.sh",
-    "test:unit": "./bin/run-tests.unit.sh",
+    "test": "chmod u+r+x ./bin/run-tests.local.sh && ./bin/run-tests.local.sh",
+    "test:unit": "chmod u+r+x ./bin/run-tests.unit.sh && ./bin/run-tests.unit.sh",
     "bundle": "cd packages/docs; yarn compile",
     "deploy": "yarn bundle && yarn jupiterone-manual-deploy -t jupiterone-dev",
     "updateIntegrations": "cd packages/integrations-handling; yarn getIntegrations",

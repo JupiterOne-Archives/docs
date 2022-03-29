@@ -57,8 +57,6 @@ If a link is not working from the drawer
 
 ## To 'Refresh' vanilla staging and/or production
 
-Create a branch from vanilla-staging. I like to use 'refresh-some-date'.
-
 `Refreshing is highly discouraged as all the articles will change their urls. Links.json and j1qlDocsConfig.json will need to be updated with the correct urls.`
 
 Create a branch from vanilla-staging. I like to use 'refresh-some-date'.
