@@ -101,9 +101,6 @@ integrations:
   - projectName: graph-onelogin
     displayName: OneLogin
     knowledgeCategoriesPaths: APIs_and-integrations/identity_and-access-management
-  - projectName: graph-openshift
-    displayName: OpenShift
-    knowledgeCategoriesPaths: APIs_and-integrations/cloud-service-provider
   - projectName: graph-pagerduty
     displayName: PagerDuty
     knowledgeCategoriesPaths: APIs_and-integrations/incident-management
@@ -132,7 +129,7 @@ integrations:
     displayName: Snyk
     knowledgeCategoriesPaths: APIs_and-integrations/application-security
   - projectName: graph-tenable-io
-    displayName: Tenable-io
+    displayName: Tenable.io
     knowledgeCategoriesPaths: APIs_and-integrations/application-security
   - projectName: graph-threatstack
     displayName: ThreatStack
@@ -181,6 +178,3 @@ integrations:
   - projectName: graph-mimecast
     displayName: Mimecast
     knowledgeCategoriesPaths: APIs_and-integrations/training
-  - projectName: graph-aws
-    displayName: AWS
-    knowledgeCategoriesPaths: APIs_and-integrations/cloud-service-provider

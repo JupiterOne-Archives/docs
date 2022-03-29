@@ -1,3 +1,5 @@
-# JupiterOne data model for vulnerability management
+# JupiterOne Data Model for Vulnerability Management
 
-<iframe src="https://my.mindnode.com/8G2MirWYz1zs1sbynAj7XUMtCeDctYiqqjy1hjnN/em#520,-145,-2" frameborder="0" marginheight="0" marginwidth="0" style="border: 1px solid rgb(204, 204, 204); width: 1720px; height: 1720px;" onmousewheel=""></iframe>
+
+
+![https://my.mindnode.com/8G2MirWYz1zs1sbynAj7XUMtCeDctYiqqjy1hjnN/em#520,-145,-2](../assets/data-model-vuln-mgmt.png)
