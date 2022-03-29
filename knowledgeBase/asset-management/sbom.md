@@ -25,7 +25,7 @@ To generate an SBOM:
 
 3. If you have met the prerequisite criteria above, then you can click Generate Download, and J1 downloads the SBOM in the form of a JSON file.
 
-If you do not meet any of the prerequisite criteria, you see a red X next to the criteria. Click the red X for more information about the error.
+If you do not meet any of the prerequisite criteria, you see a red X next to the criteria. Click the red X for more information about the error. 
 
 
 
