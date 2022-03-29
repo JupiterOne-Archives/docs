@@ -1,4 +1,4 @@
-# JupiterOne Data Model for Vulnerability Management
+# JupiterOne data model for vulnerability management
 
 
 
