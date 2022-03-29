@@ -129,7 +129,7 @@ integrations:
     displayName: Snyk
     knowledgeCategoriesPaths: APIs_and-integrations/application-security
   - projectName: graph-tenable-io
-    displayName: Tenable-io
+    displayName: Tenable.io
     knowledgeCategoriesPaths: APIs_and-integrations/application-security
   - projectName: graph-threatstack
     displayName: ThreatStack
