@@ -8,7 +8,8 @@ The JupiterOne Compliance app is a flexible platform for you to import and manag
 
 The first step in managing compliance is adding the security frameworks to which your organization wants to be compliant. Frameworks comprise benchmarks, standards, and security questionnaires.
 
-By default, J1 applies requirements to each framework to which you can then add data-driven compliance evidence and link to controls. See the [J1 data model for GRC](../jupiterOne-data-model/org-grc.md) for further context.
+By default, J1 applies requirements to each framework to which you can then add data-driven compliance evidence and link to controls. See the J1 data model for GRC for further context
+
 
 You can use the J1 Compliance app for each step in the security compliance workflow:
 
