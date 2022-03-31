@@ -1,11 +1,11 @@
 # docs
 
-## Please note
+## Release Information
 
 - MERGE to `vanilla-staging` will make changes to `https://jupiterone.vanillastaging.com/`
 - MERGE to `main` will make changes to `https://jupiterone.vanillacommunities.com/`
-- knowledgeBase/Release-Notes Is its own KNOWLEDGEBASE - anything other than `/assets` within this directory will create corresponding items in the knowledgeBase 'Release Notes' which is seperate from the docs
-- `When you move a file or folder, make sure to change any links TO that file/folder from other markdown files.`
+- `knowledgeBase/Release-Notes` Is its own KNOWLEDGEBASE - anything other than `/assets` within this directory will create corresponding items in the knowledgeBase 'Release Notes' which is seperate from the docs
+- **When you move a file or folder, make sure to change any links TO that file/folder from other markdown files.**
 - For a custom title (and not the file name), the first line `MUST` be "# Some Title". The '# ' will be removed and used for the title. Also, the first line will be removed from the article contents. If the first line is ANYTHING else (including a new line), the file name will be used.
 
 ## How to find changes
@@ -82,38 +82,36 @@ export default updateCommunityDocsByMergeChanges();
 
 Then change the jenkins file to run on pr rather than merge to 'vanilla-staging' and 'main'. Replace the build and scan step with this.
 
-```
-  stage('Build and scan') {
-      agent { label 'ecs-builder-node14' }
-      steps {
-        initBuild()
-        securityScan()
-        sh 'yarn install --frozen-lockfile'
+```groovy
+stage('Build and scan') {
+  agent { label 'ecs-builder-node14' }
+  steps {
+    initBuild()
+    securityScan()
 
-        sh 'yarn lint'
+    sh 'yarn install --frozen-lockfile'
+    sh 'yarn lint'
+    sh 'yarn test:unit'
+    sh 'yarn bundle'
+    sh 'jupiterone-build'
 
-        sh 'yarn test:unit'
-
-        sh 'yarn bundle'
-
-        sh 'jupiterone-build'
-            withCredentials([
-              string(credentialsId: 'VANILLA_STAGING_ENV_TOKEN', variable: 'TOKEN')
-                ]) {
-                  sh '''
-                    TOKEN="$TOKEN" targetVanillaEnv=staging yarn start
-                  '''
-                }
-                        withCredentials([
-            string(credentialsId: 'VANILLA_PROD_ENV_TOKEN', variable: 'TOKEN')
-                ]) {
-                  sh '''
-                    TOKEN="$TOKEN" targetVanillaEnv=prod yarn start
-                  '''
-                }
-
-      }
+    withCredentials([
+      string(credentialsId: 'VANILLA_STAGING_ENV_TOKEN', variable: 'TOKEN')
+    ]) {
+      sh '''
+        TOKEN="$TOKEN" targetVanillaEnv=staging yarn start
+      '''
     }
+
+    withCredentials([
+      string(credentialsId: 'VANILLA_PROD_ENV_TOKEN', variable: 'TOKEN')
+    ]) {
+      sh '''
+        TOKEN="$TOKEN" targetVanillaEnv=prod yarn start
+      '''
+    }
+  }
+}
 ```
 
 Create a pull request with the branch. You will have to watch jenkins to see when it is finished. This can take anywhere from 30 mins to an hour.
