@@ -390,7 +390,7 @@ For example:
 ```j1ql
 Find DataStore with createdOn > date(2019-10-30)
 ```
-The static date must be specified in ISO ISO 8601 format:
+The static date must be specified in ISO 8601 format:
 
 - `date(YYYY)`
 - `date(YYYY-MM)`
@@ -399,6 +399,8 @@ The static date must be specified in ISO ISO 8601 format:
 - `date(YYYY-MM-DDThh:mmTZD)`
 - `date(YYYY-MM-DDThh:mm:ssTZD)`
 - `date(YYYY-MM-DDThh:mm:ss.sTZD)`
+
+If your query with a date comparison does not return anything refer to the [Troubleshooting and Reporting Common Data Issues](../getting-started_and-admin/faqs-troubleshoot-data-issues.md) guide for help.
 
 ## Sorting and Pagination via `ORDER BY`, `SKIP`, and `LIMIT`
 
