@@ -27,7 +27,7 @@ The JupiterOne Query Language (J1QL) is a query language for querying data store
 
 `FIND` is followed by an **Entity** `class` or `type` value.
 
-The value is case sensitive in order to automatically determine if the query needs to search for entities by the `class` or the `type`, without requiring authors to specifically call it out.
+The value is case sensitive to automatically determine if the query needs to search for entities by the `class` or the `type`, without requiring authors to specifically call it out.
 
 Entity `class` is stored in `TitleCase` while `type` is stored in `snake_case`.  A wildcard `*` can be used to find _any entity_.  For example:
 
@@ -383,7 +383,7 @@ The following units are supported:
 
 ### Static Date Comparison
 
-Static date comparison allows filtering based on a given datetime.
+Static date comparison allows filtering based on a specified datetime.
 
 For example:
 
