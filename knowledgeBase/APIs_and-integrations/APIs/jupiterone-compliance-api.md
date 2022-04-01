@@ -1,13 +1,13 @@
 # Compliance API Endpoints
 
-The following article contains a list of compliance actions from the JupiterOne UI that a user can perform via the graphql API endpoint. 
+This article contains a list of compliance actions from the JupiterOne UI that a user can perform using the GraphQL API endpoint. 
 
 See the [JupiterOne Platform API](./jupiterone-api.md) for an introduction to the JupiterOne API.
 
 ### Some key things to note:
 
-- Most of the compliance related data is exposed in one large GraphQL graph.  The sections in this document will break down the API by object, but they are usually accessed at the same GraphQL resolver.
-- In order to see the full GraphQL graph, perform [introspection](https://graphql.org/learn/introspection/) on the public API.
+- Most of the compliance-related data is exposed in one large GraphQL graph. The sections in this document break down the API by object, but you can access them at the same GraphQL resolver.
+- To see the full GraphQL graph, perform [introspection](https://graphql.org/learn/introspection/) on the public API.
 
 **Base URL**: `https://api.us.jupiterone.io`
 
@@ -19,7 +19,7 @@ See the [JupiterOne Platform API](./jupiterone-api.md) for an introduction to th
 
 ## List Frameworks
 
-This query retrieves a list of all frameworks (benchmarks, compliance standards, questionnaires) that have been added to your JupiterOne account, along with any metadata about them.  Note, this does not retrieve the entire framework model, only the base properties of a framework.
+This query retrieves a list of all frameworks (benchmarks, compliance standards, questionnaires) that were added to your JupiterOne account, as well as any metadata about them. Note, this query does not retrieve the entire framework model, only the base properties of a framework.
 
 **Query**
 
@@ -74,7 +74,7 @@ query ListFrameworks() {
 
 ## Get Framework
 
-Retrieves the full ComplianceFramework model by id. Includes details such as overall summary, nested groups and framework items, linked controls, and more.
+Retrieves the full ComplianceFramework model by ID. It includes details such as overall summary, nested groups and framework items, linked controls, and more.
 
 **Variables**
 
@@ -206,7 +206,7 @@ query ComplianceFramework($input: ComplianceFrameworkInput!) {
 
 ## Create Framework from Template
 
-This query is used to create an empty framework (no groups or framework items). Visit the 
+This query creates an empty framework (no groups or framework items). See the 
 [security-policy-templates project](https://github.com/JupiterOne/security-policy-templates/tree/master/templates/standards) for templated JSON frameworks.
 
 **Variables**
@@ -242,7 +242,7 @@ mutation CreateFramework($input: CreateComplianceFrameworkInput!) {
 
 ## Import Framework from Template
 
-This query is used to import a framework from JupiterOne's predefined templates. Visit the 
+This query imports a framework from the J1 predefined templates. See the 
 [security-policy-templates project](https://github.com/JupiterOne/security-policy-templates/tree/master/templates/standards) for templated JSON frameworks.
 
 **Variables**
@@ -273,7 +273,7 @@ mutation ImportFrameworkByName($input: ImportComplianceFrameworkByNameInput!) {
 
 ## Import Framework from JSON
 
-This query is used to import a framework via raw JSON.  The JSON must adhere to the structure defined in the 
+This query imports a framework using raw JSON. The JSON must adhere to the structure defined in the 
 [security-policy-templates project](https://github.com/JupiterOne/security-policy-templates/tree/master/templates/standards).
 
 **Variables**
@@ -303,12 +303,12 @@ mutation ImportFramework($input: ImportComplianceFrameworkInput!) {
 
 ## Update Review Configurations
 
-The following queries are used to update the review configuration of a framework, group, or frameworkItem. Each query requires the ID of the framework you are updating as well as an input variable object, which includes a list of owner emails, the review frequency, and the origin of action links (the domain of your JupiterOne account).
+The following queries update the review configuration of a framework, group, or frameworkItem. Each query requires the ID of the framework you are updating as well as an input variable object, which includes a list of owner emails, the review frequency, and the origin of action links (the domain of your JupiterOne account).
 
 **Variables**
 
 - `frameworkId`: The unique identifier for the framework, returned by the `List frameworks` query.
-- `input`: The input variable is used to capture additional values, including: the origin of the action link, the owner(s) of the review configuration, and the review frequency. See an example below.
+- `input`: The input variable captures additional values, including: the origin of the action link, the owner(s) of the review configuration, and the review frequency. For example:
 
 ```json
 "input": {
@@ -363,7 +363,7 @@ mutation SetReviewConfigurationForComplianceFrameworkItem($frameworkItemId: ID!,
 
 ## List Controls (Library ITems)
 
-Controls (called "Library Items" in our internal data model) are reusable objects of compliance data that live outside the context of a framework.  They can be linked to different frameworkItems to provide additional evidence.
+Controls (called "Library Items" in our internal data model) are reusable objects of compliance data that exist outside the context of a framework. You can link the controls to different frameworkItems to provide additional evidence.
 
 **Variables**
 
@@ -409,7 +409,7 @@ query ComplianceLibraryItemMetadatas($input: ComplianceLibraryItemMetadatasInput
 
 ## Get Control with Evidence and associated Framework Items
 
-This query exposes more data on top of the base `ComplianceLibraryItemMetadatas` object.  Any information you will need about a control should be exposed via this query.
+This query exposes more data on top of the base `ComplianceLibraryItemMetadatas` object. Any information you need about a control is exposed via this query.
 
 **Variables**
 
@@ -551,7 +551,7 @@ query ComplianceControl($input: ComplianceLibraryItemInput!) {
 
 ## Create Control
 
-This query is used to create a control.
+This query creates a control.
 
 **Variables**
 
