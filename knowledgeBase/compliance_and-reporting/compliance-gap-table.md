@@ -13,7 +13,7 @@ If you do not have access to J1 Compliance, you can have the gaps-only role, whi
 The gaps table displays all deficiencies and weaknesses within your environment, as well the total count of affected assets, enabling you to identify and address specific gaps. You can filter the gaps on one or more of the following:
 
 - Affected frameworks: displays only the frameworks within your environment that have deficiencies.
-- Integration accounts: accounts that are linked to the one with gaps.d
+- Integration accounts: accounts that are linked to the one with gaps.
 - AWS account ID: the AWS accounts in your environment with gaps. 
 - Azure subscription ID: the Azure accounts in your environment with gaps. 
 - GCP project ID: Google Cloud Platform accounts in your environment with gaps.
@@ -24,6 +24,8 @@ The gaps view helps you identify affected assets so that you can take corrective
 
 1. Click **Run query** to see all assets that have gaps. The query opens the search page with the query prepopulated. If you apply all filters, such as affected frameworks or account IDs, they are included in the query. After the query loads, you can export the findings to view all assets. 
 2. Export assets for a single gap. When, clicking in to a gap, you can select the affected entities tab to view all assets impacted by that gap. From this tab, click **Export CSV** to download the list of affected assets for the gap (such as approved software). 
+
+![](../assets/gaps-table.png)
 
 ### Viewing Gaps in the Graph
 
