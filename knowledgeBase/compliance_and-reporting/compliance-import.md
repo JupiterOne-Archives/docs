@@ -20,7 +20,7 @@ Open the J1 Compliance app by clicking ![](../assets/icons/apps.png) and select 
 
 ### JSON Structure
 
-If you want to import a JSON file, follow [this schema](../APIs_and-integrations/APIs/policies-compliance-schema.md).
+If you want to import a JSON file, follow [this schema](https://github.com/JupiterOne/security-policy-templates/tree/main/templates/standards).
 
 ### CSV Import
 
