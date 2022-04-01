@@ -1,13 +1,8 @@
 import axios from "axios";
 import { promises as fs, existsSync } from "fs";
 import * as yaml from "js-yaml";
-import remarkSqueezeParagraphs from "remark-squeeze-paragraphs";
 import path from "path";
-import { remark } from "remark";
-import remarkPresetLintConsistent from "remark-preset-lint-consistent";
-import remarkPresetLintRecommended from "remark-preset-lint-recommended";
-import remarkLintListItemIndent from "remark-lint-list-item-indent";
-import remarkGfm from "remark-gfm";
+import { formatIntegrationFileContents } from "./format.js";
 
 const addTitleToIntegrationDoc = (body, name) => {
   let bodyAlterations = `${body}`;
@@ -33,18 +28,10 @@ const cleanIntegrationPageContents = async ({
   knowledgeCategoriesPaths,
 }) => {
   const contents = `${githubFileContents}`;
-
-  const file = await remark()
-    .use(remarkSqueezeParagraphs)
-    .use(remarkPresetLintRecommended)
-    .use(remarkPresetLintConsistent)
-    .use(remarkLintListItemIndent)
-    .use(remarkGfm)
-
-    .process(contents);
+  const formattedFile = await formatIntegrationFileContents(contents);
 
   return {
-    githubFileContents: file.toString(),
+    githubFileContents: formattedFile,
     projectName,
     version,
     displayName,

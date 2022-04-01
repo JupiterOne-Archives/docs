@@ -8,6 +8,7 @@
     "coverage/",
     "bak/",
     "index.js",
+    "format.js",
     "tools/",
     "packages/*/*.js"
   ],
