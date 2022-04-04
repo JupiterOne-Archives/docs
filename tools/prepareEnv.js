@@ -4,13 +4,8 @@ require('dotenv').config();
 module.exports = () => {
   process.env.USING_LOCAL_STACK = process.env.USING_LOCAL_STACK ?? 'true';
 
-
   if (process.env.USING_LOCAL_STACK === 'true') {
     process.env.LOCALSTACK_HOSTNAME = 'localhost';
-
-    // Setup environment for using localstack
-    process.env.VANILLA_AUTH_TOKEN = process.env.AUTH_TOKEN ?? '';
-
   } else {
     const awsProfile =
       process.env.AWS_DEFAULT_PROFILE ??
