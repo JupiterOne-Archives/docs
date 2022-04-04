@@ -27,7 +27,7 @@ The JupiterOne Query Language (J1QL) is a query language for querying data store
 
 `FIND` is followed by an **Entity** `class` or `type` value.
 
-The value is case sensitive in order to automatically determine if the query needs to search for entities by the `class` or the `type`, without requiring authors to specifically call it out.
+The value is case-sensitive to automatically determine if the query needs to search for assets by the `class` or the `type`, without requiring authors to specifically stating it.
 
 Entity `class` is stored in `TitleCase` while `type` is stored in `snake_case`.  A wildcard `*` can be used to find _any entity_.  For example:
 
@@ -383,14 +383,14 @@ The following units are supported:
 
 ### Static Date Comparison
 
-Static date comparison allows filtering based on a given datetime.
+Static date comparison allows filtering based on a specified datetime.
 
 For example:
 
 ```j1ql
 Find DataStore with createdOn > date(2019-10-30)
 ```
-The static date must be specified in ISO ISO 8601 format:
+The static date must be specified in ISO 8601 format:
 
 - `date(YYYY)`
 - `date(YYYY-MM)`
@@ -399,6 +399,8 @@ The static date must be specified in ISO ISO 8601 format:
 - `date(YYYY-MM-DDThh:mmTZD)`
 - `date(YYYY-MM-DDThh:mm:ssTZD)`
 - `date(YYYY-MM-DDThh:mm:ss.sTZD)`
+
+If your query with a date comparison does not return anything, refer to the [Troubleshooting and Reporting Common Data Issues](../getting-started_and-admin/faqs-troubleshoot-data-issues.md) guide for help.
 
 ## Sorting and Pagination via `ORDER BY`, `SKIP`, and `LIMIT`
 
@@ -488,9 +490,9 @@ RETURN
 
 ## De-duplicate results with `UNIQUE` and `RETURN`
 
-Sometimes a query may generate duplicate results. This occurs if there are multiple paths of traversals (i.e. relationships) between the vertices (i.e. entities) referenced in a particular query.
+Sometimes a query may generate duplicate results. This duplication occurs if there are multiple paths of traversals (such as relationships) between the vertices (such as assets) referenced in a specific query.
 
-Take the example below:
+In this example:
 ```j1ql
 Find aws_eni with publicIpAddress != undefined as nic
   that relates to aws_instance
