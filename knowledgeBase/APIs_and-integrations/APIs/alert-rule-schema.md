@@ -100,6 +100,7 @@ whose responses can be used in any `RuleOperation`.
 | `name?`   | `string` | Optional name to assign the query that will be used when referencing query data in `RuleOperation`s. If not provided, the query name is automatically assigned based on the index in the `queries` array (for example, `query0`, `query1`). |
 | `query`   | `string` | JupiterOne query to execute.             |
 | `version` | `string` | JupiterOne query language execution version (for example, `v1`). |
+| `includeDeleted` | `boolean` | Whether deleted data should be considered for the specific query (defaults to `false`). |
 
 ### Type: RuleOperationCondition
 
