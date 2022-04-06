@@ -7,17 +7,20 @@ pipeline {
     ansiColor('xterm')
     timestamps()
   }
+
   triggers {
     cron('0 0 * * *')
   }
+
   stages {
     stage('Build and scan') {
-      agent { label 'ecs-builder-node14' }
+      agent {
+        label 'ecs-builder-node14'
+      }
       steps {
         initBuild()
 
         sh 'yarn install --frozen-lockfile'
-
         sh 'yarn lint'
         sh 'yarn test:unit'
         sh 'yarn bundle'
@@ -28,76 +31,76 @@ pipeline {
       }
     }
 
-      stage('Updating Prod Integration Articles') {
-        when {
-          beforeAgent true
-          branch 'main'
-          triggeredBy 'TimerTrigger'
-        }
-
-        agent { label 'ecs-builder-node14' }
-          steps {
-            initBuild()
-            sh 'yarn install --frozen-lockfile'
-
-            sh 'yarn lint'
-
-            sh 'yarn test:unit'
-
-            sh 'yarn bundle'
-
-            sh 'jupiterone-build'
-
-            withCredentials([
-              string(credentialsId: 'VANILLA_PROD_ENV_TOKEN', variable: 'TOKEN')
-                ]) {
-          sh '''
-                    TOKEN="$TOKEN" targetVanillaEnv=prod yarn replaceIntegrationDocs
-                  '''
-                }
-          }
+    stage('Updating Prod Integration Articles') {
+      when {
+        beforeAgent true
+        branch 'main'
+        triggeredBy 'TimerTrigger'
       }
 
-      stage('Sleeping prior to updating staging integrations') {
-        when {
-          beforeAgent true
-          branch 'vanilla-staging'
-          triggeredBy 'TimerTrigger'
-        }
+      agent {
+        label 'ecs-builder-node14'
+      }
+
       steps {
-        sleep(time:1, unit:'HOURS')
-      }
-      }
+        initBuild()
 
-      stage('Updating Staging Integration Articles') {
-        when {
-          beforeAgent true
-          branch 'vanilla-staging'
-          triggeredBy 'TimerTrigger'
-        }
+        sh 'yarn install --frozen-lockfile'
+        sh 'yarn lint'
+        sh 'yarn test:unit'
+        sh 'yarn bundle'
+        sh 'jupiterone-build'
 
-        agent { label 'ecs-builder-node14' }
-          steps {
-            initBuild()
-
-            sh 'yarn install --frozen-lockfile'
-
-            sh 'yarn lint'
-
-            sh 'yarn test:unit'
-
-            sh 'yarn bundle'
-
-            sh 'jupiterone-build'
-            withCredentials([
-              string(credentialsId: 'VANILLA_STAGING_ENV_TOKEN', variable: 'TOKEN')
-                ]) {
+        withCredentials([
+          string(credentialsId: 'VANILLA_PROD_ENV_TOKEN', variable: 'TOKEN')
+        ]) {
           sh '''
-                    TOKEN="$TOKEN" targetVanillaEnv=staging yarn replaceIntegrationDocs
-                  '''
-                }
-          }
+          TOKEN="$TOKEN" targetVanillaEnv=prod yarn replaceIntegrationDocs 
+          '''
+        }
       }
+    }
+
+    stage('Sleeping prior to updating staging integrations') {
+      when {
+        beforeAgent true
+        branch 'vanilla-staging'
+        triggeredBy 'TimerTrigger'
+      }
+
+      steps {
+        sleep(time: 1, unit: 'HOURS')
+      }
+    }
+
+    stage('Updating Staging Integration Articles') {
+      when {
+        beforeAgent true
+        branch 'vanilla-staging'
+        triggeredBy 'TimerTrigger'
+      }
+
+      agent {
+        label 'ecs-builder-node14'
+      }
+      steps {
+        initBuild()
+
+        sh 'yarn install --frozen-lockfile'
+        sh 'yarn lint'
+        sh 'yarn test:unit'
+        sh 'yarn bundle'
+        sh 'jupiterone-build'
+
+        withCredentials([
+          string(credentialsId: 'VANILLA_STAGING_ENV_TOKEN', variable: 'TOKEN')
+        ]) {
+          sh '''
+          TOKEN="$TOKEN" targetVanillaEnv=staging yarn replaceIntegrationDocs 
+          '''
+        }
+      }
+    }
 
     stage('Deploying to vanilla staging') {
       when {
@@ -108,26 +111,26 @@ pipeline {
         }
       }
 
-      agent { label 'ecs-builder-node14' }
+      agent {
+        label 'ecs-builder-node14'
+      }
+
       steps {
         initBuild()
+
         sh 'yarn install --frozen-lockfile'
-
         sh 'yarn lint'
-
         sh 'yarn test:unit'
-
         sh 'yarn bundle'
-
         sh 'jupiterone-build'
 
         withCredentials([
           string(credentialsId: 'VANILLA_STAGING_ENV_TOKEN', variable: 'TOKEN')
-            ]) {
+        ]) {
           sh '''
-                TOKEN="$TOKEN" targetVanillaEnv=staging yarn start;
-              '''
-            }
+          TOKEN="$TOKEN" targetVanillaEnv=staging yarn start;
+          '''
+        }
       }
     }
     stage('Deploying to vanilla production') {
@@ -139,26 +142,26 @@ pipeline {
         }
       }
 
-      agent { label 'ecs-builder-node14' }
+      agent {
+        label 'ecs-builder-node14'
+      }
+
       steps {
         initBuild()
-          sh 'yarn install --frozen-lockfile'
 
-          sh 'yarn lint'
+        sh 'yarn install --frozen-lockfile'
+        sh 'yarn lint'
+        sh 'yarn test:unit'
+        sh 'yarn bundle'
+        sh 'jupiterone-build'
 
-          sh 'yarn test:unit'
-
-          sh 'yarn bundle'
-
-          sh 'jupiterone-build'
-
-          withCredentials([
-            string(credentialsId: 'VANILLA_PROD_ENV_TOKEN', variable: 'TOKEN')
-                ]) {
-            sh '''
-                    TOKEN="$TOKEN" targetVanillaEnv=prod yarn start
-                  '''
-                }
+        withCredentials([
+          string(credentialsId: 'VANILLA_PROD_ENV_TOKEN', variable: 'TOKEN')
+        ]) {
+          sh '''
+          TOKEN="$TOKEN" targetVanillaEnv=prod yarn start 
+          '''
+        }
       }
     }
   }
