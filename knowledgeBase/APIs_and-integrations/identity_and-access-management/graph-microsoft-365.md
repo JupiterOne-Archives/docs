@@ -38,15 +38,15 @@ If you need help with this integration, please contact
 
 1.  From the configuration **Gear Icon**, select **Integrations**.
 
-    <img src="./images/LandingPage.png" alt="drawing" width="200"/>
+    ![jupiterone-landing-page](../../assets/integrations/microsoft-365/LandingPage.png)
 
 2.  Scroll to the **Microsoft-365** integration tile and click it.
 
-    <img src="./images/DefinitionsPage.png" alt="drawing" width="200"/>
+    ![jupiterone-definitions-page](../../assets/integrations/microsoft-365/DefinitionsPage.png)
 
 3.  Click the **Add Configuration** button.
 
-    <img src="./images/InstancesPage.png" alt="drawing" width="200"/>
+    ![jupiterone-integration-instances-page](../../assets/integrations/microsoft-365/InstancesPage.png)
 
 4.  Enter the **Account Name** by which you'd like to identify this Microsoft 365
     account in JupiterOne. Ingested entities will have this value stored in
@@ -60,18 +60,18 @@ If you need help with this integration, please contact
 
 7.  Click **Create Configuration** once all values are provided.
 
-    <img src="./images/CompleteConfiguration.png" alt="drawing" width="200"/>
-    <img src="./images/IntegrationCreatedDialog.png" alt="drawing" width="200"/>
+    ![jupiterone-integration-complete-configuration-page](../../assets/integrations/microsoft-365/CompleteConfiguration.png)
+    ![jupiterone-integration-page-created-dialog](../../assets/integrations/microsoft-365/IntegrationCreatedDialog.png)
 
 8.  When prompted, click "Complete Offsite" in the dialog.
 
-    <img src="./images/OffsiteDialog.png" alt="drawing" width="200"/>
+    ![microsoft-365-offsite-dialog](../../assets/integrations/microsoft-365/OffsiteDialog.png)
 
 9.  You will be directed to Microsoft's identity platform where you must login in
     as a global administrator of the organizational Active Directory tenant you
     intend to integrate with.
 
-       <img src="./images/PickAnAccount.png" alt="drawing" width="200"/>
+    ![microsoft-365-pick-account](../../assets/integrations/microsoft-365/PickAnAccount.png)
 
     NOTE: You must select an account belonging to an organizational tenant. When
     you are already logged into an account, the badge icons indicate the nature
@@ -79,7 +79,7 @@ If you need help with this integration, please contact
 
     Selecting a personal account produces the following error message.
 
-       <img src="./images/PersonalAccountError.png" alt="drawing" width="200"/>
+    ![microsoft-365-personal-account-error](../../assets/integrations/microsoft-365/PersonalAccountError.png)
 
 10. Review requested permissions (which are described below) and grant consent.
 
