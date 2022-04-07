@@ -3,8 +3,8 @@
 ## Qualys + JupiterOne Integration Benefits
 
 *   Visualize Qualys scanners and findings in the JupiterOne graph.
-*   Monitor Checkmarx findings within the alerts app.
-*   Monitor changes to Checkmarx scanners using JupiterOne alerts.
+*   Monitor Qualys findings within the alerts app.
+*   Monitor changes to Qualys scanners using JupiterOne alerts.
 
 ## How it Works
 
