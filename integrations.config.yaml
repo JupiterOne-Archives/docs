@@ -84,9 +84,10 @@ integrations:
   - projectName: graph-malwarebytes
     displayName: Malwarebytes
     knowledgeCategoriesPaths: APIs_and-integrations/EDR
-  - projectName: graph-microsoft-365
-    displayName: Microsoft 365
-    knowledgeCategoriesPaths: APIs_and-integrations/identity_and-access-management
+  # Temporarily disable
+  # - projectName: graph-microsoft-365
+  #   displayName: Microsoft 365
+  #   knowledgeCategoriesPaths: APIs_and-integrations/identity_and-access-management
   - projectName: graph-nmap
     displayName: Nmap
   - projectName: graph-nowsecure
