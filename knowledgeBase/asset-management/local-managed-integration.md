@@ -116,7 +116,7 @@ There are also some integration specific values that are listed in the .env.exam
 
 ### Using a Dockerfile 
 
-Docker is just one example of how you can automate the environment setup and execution of the previous steps. [This Docker repo](https://github.com/ajahoda/j1-graph-docker) walks you through the process of copying over its contents into your cloned integration repository, building a Docker image, and running a Docker container to collect information from the integration and sync it with the JupiterOne platform.
+Docker is just one example of how you can automate the environment setup and execution of the previous steps. [This Docker repository](https://github.com/ajahoda/j1-graph-docker) walks you through the process of copying over its contents into your cloned integration repository, building a Docker image, and running a Docker container to collect information from the integration and sync it with the JupiterOne platform.
 
 ## Resources
 
