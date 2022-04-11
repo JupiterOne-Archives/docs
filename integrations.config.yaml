@@ -179,3 +179,8 @@ integrations:
   - projectName: graph-mimecast
     displayName: Mimecast
     knowledgeCategoriesPaths: APIs_and-integrations/training
+  - projectName: graph-datadog
+    displayName: Datadog
+    knowledgeCategoriesPaths: APIs_and-integrations/other
+    
+    
