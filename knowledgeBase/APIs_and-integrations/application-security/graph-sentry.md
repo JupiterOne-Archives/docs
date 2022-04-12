@@ -66,11 +66,6 @@ If you need help with this integration, please contact
 
 # How to Uninstall
 
-TODO: Awaiting final completion of this section out later once the final method
-of authentication has been fully implemented. TODO: List specific actions that
-must be taken to uninstall the integration. Many of the following steps will be
-reusable; take care to be sure they remain accurate.
-
 1. From the configuration **Gear Icon**, select **Integrations**.
 2. Scroll to the **Sentry** integration tile and click it.
 3. Identify and click the **integration to delete**.
