@@ -182,3 +182,7 @@ integrations:
   - projectName: graph-sentry
     displayName: Sentry
     knowledgeCategoriesPaths: APIs_and-integrations/application-security
+  - projectName: graph-datadog
+    displayName: Datadog
+    knowledgeCategoriesPaths: APIs_and-integrations/SIEM
+
