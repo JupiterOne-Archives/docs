@@ -182,5 +182,6 @@ integrations:
   - projectName: graph-datadog
     displayName: Datadog
     knowledgeCategoriesPaths: APIs_and-integrations/other
-    
-    
+  - projectName: graph-sentry
+    displayName: Sentry
+    knowledgeCategoriesPaths: APIs_and-integrations/application-security
