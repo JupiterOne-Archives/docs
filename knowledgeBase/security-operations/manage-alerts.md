@@ -8,6 +8,8 @@ You must have at least one active alert rule to trigger any alert. The easiest w
 
 1. From the apps menu ![apps](../assets/icons/apps.png), select **Alerts**.
 
+   ​
+
    ![](../assets/alerts-header.png)
 
 2. Click **MANAGE RULES**.
@@ -57,6 +59,7 @@ J1 provides the ability to trigger the following workflows from alerts:
 - JIRA: You must configure the JIRA integration for JupiterOne by [following these instructions](../APIs_and-integrations/workflow/graph-jira.md)
 - SNS: The AWS account you want to send to must be configured as an AWS Integration, and the J1 IAM role for the AWS account you want to publish to must have the `SNS:Publish` permission.
 - SQS: The AWS account you want to send to must be configured as an AWS Integration, and the J1 IAM role for the AWS account you want to publish to must have the `SQS:SendMessage` permission.
+- Tag Entities: The tag name and tag value, including multiple tag names and values, as well as the option to add the critical asset tag.
 
 To trigger any of these workflows, when creating a custom rule, scroll down to the Additional Alerts section. Select the one you want and provide the required information.
 
