@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Sentry Integration with JupiterOne
 
 ## Sentry + JupiterOne Integration Benefits
 
