@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Datadog Integration with JupiterOne
 
 ## Datadog + JupiterOne Integration Benefits
 
