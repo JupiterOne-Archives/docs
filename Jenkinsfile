@@ -34,7 +34,7 @@ pipeline {
     stage('Updating Prod Integration Articles') {
       when {
         beforeAgent true
-        branch 'main2'
+        branch 'main'
         triggeredBy 'TimerTrigger'
       }
 
@@ -136,7 +136,7 @@ pipeline {
     stage('Deploying to vanilla production') {
       when {
         beforeAgent true
-        branch 'main2'
+        branch 'main'
         not {
           triggeredBy 'TimerTrigger'
         }
