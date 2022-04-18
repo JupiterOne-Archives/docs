@@ -24,8 +24,8 @@ Each integration has a slightly different mechanism for authentication as requir
 
 Additional options are also available for each integration. Common options include:
 
-- `Tag with Account` - if you want to tag the data from this integration with the `Account Name` of this configuration.
-- `Tag as Production` - adds a tag indicating this is production data.
+- `Tag with Account` - if you want to tag the data from this integration with the `Account Name` of this configuration. 
+- `Tag as Production` - adds a tag indicating this is production data. 
 
 Depending on the integration, there may be other choices in the additional options section.
 
