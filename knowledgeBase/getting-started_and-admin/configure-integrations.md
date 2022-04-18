@@ -8,31 +8,32 @@ All integrations have a set of common configuration fields in addition to the on
 
 For each integration you configure you must provide:
 
-* `Account Name` - an alias that uniquely identifies the configuration.
-* `Description` - a description of the configuration.
-* `Polling Interval` - determines how often you want J1 to ingest the data. The options are:
-  * `DISABLED`  - the configuration only runs if manually triggered by a user or via API
-  * `THIRTY_MINUTES`
-  * `ONE_HOUR`
-  * `FOUR_HOURS`
-  * `EIGHT_HOURS`
-  * `TWELVE_HOURS`
-  * `ONE_DAY`
-  * `ONE_WEEK`
+- `Account Name` - an alias that uniquely identifies the configuration.
+- `Description` - a description of the configuration.
+- `Polling Interval` - determines how often you want J1 to ingest the data. The options are:
+  - `DISABLED`  - the configuration only runs if manually triggered by a user or via API
+  - `THIRTY_MINUTES`
+  - `ONE_HOUR`
+  - `FOUR_HOURS`
+  - `EIGHT_HOURS`
+  - `TWELVE_HOURS`
+  - `ONE_DAY`
+  - `ONE_WEEK`
 
 Each integration has a slightly different mechanism for authentication as required by the provider. For example, the AWS integration uses an IAM role and assume role trust policies for access. Other integrations may use an API key/token, OAuth, or Basic Auth.
 
 Additional options are also available for each integration. Common options include:
 
-* `Tag with Account` - if you want to tag the data from this integration with the `Account Name` of this configuration.
-
-* `Tag as Production` - adds a tag indicating this is production data.
+- `Tag with Account` - if you want to tag the data from this integration with the `Account Name` of this configuration.
+- `Tag as Production` - adds a tag indicating this is production data.
 
 Depending on the integration, there may be other choices in the additional options section.
 
 This video shows an example of how to configure an AWS integration.
 
-![configure-video](../assets/j1-aws-config-720p.gif)
+![configure-integration](../assets/j1-aws-config-720p.gif)
+
+
 
 For details on other integrations, see the respective documentation under **Managed Integrations**.
 
