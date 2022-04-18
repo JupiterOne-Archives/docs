@@ -32,7 +32,7 @@ Depending on the integration, there may be other choices in the additional optio
 
 This video shows an example of how to configure an AWS integration.
 
-![](../assets/j1-aws-config-720p.gif)
+![configure-video](../assets/j1-aws-config-720p.gif)
 
 For details on other integrations, see the respective documentation under **Managed Integrations**.
 
