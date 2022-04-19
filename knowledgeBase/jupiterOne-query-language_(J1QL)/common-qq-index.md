@@ -1,6 +1,6 @@
 # Common Questions and Corresponding J1QL Queries
 
-Here are some commonly asked questions and their corresponding J1QL queries. You can easily modify the properties and tags used in each query to customize it for your own specific scenario. 
+Here are some commonly asked questions and their corresponding J1QL queries. You can easily modify the properties and tags used in each query to customize it for your own specific scenario.
 
 Many of these are packaged in the Query Library directly accessible in the landing page in JupiterOne.
 
@@ -8,7 +8,7 @@ Here is [a catalog of the packaged questions](../getting-started_and-admin/catal
 
 ## Question/Query Categories
 
-- [AWS Permissions and Trusts](../APIs_and-integrations/AWS/common-qq-aws-permissions.md)
+- [AWS Permissions and Trusts](./common-qq-aws-permissions.md)
 - [Hardware/software inventory and configuration](./common-qq-inventory-config.md)
 - [Running applications and processes](./common-qq-apps-processes.md)
 - [Secrets and key management](./common-qq-key-mgmt.md)
@@ -20,4 +20,3 @@ Here is [a catalog of the packaged questions](../getting-started_and-admin/catal
 - [Development](./common-qq-dev.md)
 - [User training and awareness](./common-qq-training.md)
 - [Endpoint security](./common-qq-endpoint.md)
-
