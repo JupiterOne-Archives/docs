@@ -72,7 +72,7 @@
       "documents": [
         {
           "title": "AWS Access Permissions and Trusts",
-          "markdownUrl": "knowledgeBase/APIs_and-integrations/cloud-service-provider/common-qq-aws-permissions.md"
+          "markdownUrl": "knowledgeBase/jupiterOne-query-language_(J1QL)/common-qq-aws-permissions.md"
         },
         {
           "title": "J1 Queries for AWS Vulnerability Findings and Threat Monitoring",
