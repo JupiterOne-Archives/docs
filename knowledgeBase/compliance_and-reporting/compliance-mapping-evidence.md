@@ -29,6 +29,8 @@ If you choose to add your own question:
 
 The added question is now linked to the framework. 
 
+![](../assets/compliance-add-question.png)
+
 #### External Evidence
 
 In some cases, compliance evidence cannot be provided using the data available in J1. There are two ways to provide external evidence for a given control: 
