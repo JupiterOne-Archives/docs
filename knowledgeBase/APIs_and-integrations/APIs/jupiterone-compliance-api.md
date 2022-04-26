@@ -588,7 +588,7 @@ query ComplianceControl($input: CreateComplianceLibraryItemInput!) {
 ```
 
 ## Get Requirement (Framework Item)
-In the API, anywhere the term "Framework Item" is used, that corresponds to a Requirement in the JupiterOne UI.
+In the API, the term "Framework Item" corresponds to a requirement in the JupiterOne UI
 
 **Variables**
 
@@ -652,12 +652,12 @@ actions must be taken in sequential order:
 3. Use the completed EvidenceCollectionJob to receive an AWS s3 link to download its output
 
 
-### Kick off an EvidenceCollectionJob via API
+### Start an EvidenceCollectionJob via API
 
-Each object type has a different GraphQL mutation to call to start its EvidenceCollectionJob.  Make sure
-to use the correct mutation for the object type in question
+Each object type has a different GraphQL mutation to call to start its EvidenceCollectionJob. Ensure
+to use the correct mutation for the specified object type.
 
-#### Kick off Framework EvidenceCollectionJob
+#### Start Framework EvidenceCollectionJob
 
 **Variables**
 
@@ -685,7 +685,7 @@ to use the correct mutation for the object type in question
   }
 ```
 
-#### Kick off Requirement EvidenceCollectionJob
+#### Start Requirement EvidenceCollectionJob
 
 **Variables**
 
@@ -713,12 +713,12 @@ to use the correct mutation for the object type in question
   }
 ```
 
-#### Kick off Control EvidenceCollectionJob
+#### Start Control EvidenceCollectionJob
 
 **Variables**
 
 - `input`
-    - `libraryItemId` - The identifier of the library item (i.e. Control) to start an EvidenceCollectionJob for
+    - `libraryItemId` - The identifier of the library item (such as Control) to start an EvidenceCollectionJob for
 
 **Mutation**
 
@@ -743,7 +743,7 @@ mutation startEvidenceCollectionJobforLibraryItem(
 
 ### Poll for the completion of the EvidenceCollectionJob
 
-When the job has completed, its `status` field will be set to `COMPLETED`
+When the job has completed, its `status` field is set to `COMPLETED`
 
 **Variables**
 
@@ -771,8 +771,8 @@ query evidenceCollectionJob($input: EvidenceCollectionJobInput!) {
 
 ### Fetch AWS S3 Download Link from the Completed EvidenceCollectionJob
 
-The returned `link` property will be an [AWS S3 Presigned URL](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html) that contains the zipped evidence file to download.  This URL will be valid for 2 hours.  In order to generate a new URL (if the timeout
-is hit), just call the same query below again.
+The returned `link` property is an [AWS S3 Presigned URL](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html) that contains the zipped evidence file to download.  This URL will be valid for 2 hours. To generate a new URL (if the timeout
+is reached), just call the same query below again.
 
 **Variables**
 
