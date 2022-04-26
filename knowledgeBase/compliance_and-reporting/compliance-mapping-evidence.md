@@ -13,9 +13,23 @@ After you have reviewed the requirements for your framework, you can click **Add
 
 #### Query Questions
 
-You can add an existing query question or write a new one.  It is recommended that you write queries about your assets and their relationships that can provide data-driven compliance evidence.
+You can add an existing query question or write a new one.  It is recommended that you write queries about your assets and their relationships that can provide data-driven compliance evidence. 
 
-Each question can have one or more queries. You can name the queries so that they trigger [automated compliance gap analysis](./compliance-gap-analysis.md).
+To add a query question as evidence:
+
+1. In the framework detail page, click **Add Evidence > Add Question**.
+2. Select a template question or click the Custom tab to enter your own.
+
+If you choose to add your own question:
+
+1. Enter the name for the question, a detailed description about what the object of the question
+2. Select the **Enable daily trend data collection** option if you want to poll the results to create a trend chart in the results view. 
+3. Enter the name, results type, and J1QL syntax for each query that answers the question. You can name the queries so that they trigger [automated compliance gap analysis](./compliance-gap-analysis.md).
+4. Click **Add**.
+
+The added question is now linked to the framework. 
+
+![](../assets/compliance-add-question.png)
 
 #### External Evidence
 
