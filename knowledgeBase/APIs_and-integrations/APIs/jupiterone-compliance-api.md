@@ -24,8 +24,8 @@ This query retrieves a list of all frameworks (benchmarks, compliance standards,
 **Query**
 
 ```graphql
-query ListFrameworks() {
-  complianceFrameworks() {
+query ListFrameworks {
+  complianceFrameworks {
     benchmarks {
       id
       createTimestamp
@@ -361,7 +361,7 @@ mutation SetReviewConfigurationForComplianceFrameworkItem($frameworkItemId: ID!,
 ```
 
 
-## List Controls (Library ITems)
+## List Controls (Library Items)
 
 Controls (called "Library Items" in our internal data model) are reusable objects of compliance data that exist outside the context of a framework. You can link the controls to different frameworkItems to provide additional evidence.
 
@@ -584,5 +584,209 @@ query ComplianceControl($input: CreateComplianceLibraryItemInput!) {
         name
       }
     }
+}
+```
+
+## Get Requirement (Framework Item)
+In the API, the term "Framework Item" corresponds to a requirement in the JupiterOne UI
+
+**Variables**
+
+- `input`
+    - `id` - The ID of the requirement (framework item) to retrieve
+
+**Query**
+
+```graphql
+query complianceFrameworkItem($input: ComplianceFrameworkItemInput!) {
+  complianceFrameworkItem(input: $input) {
+    id
+    name
+    description
+    displayCategory
+    ref
+    evaluationProgress
+    lastEvaluationTimestamp
+    evaluationResult
+    auditStatus
+    groupId
+    webLink
+    summary {
+      id
+      hasLinkedPolicyItem
+      evidenceCollectionSummary {
+        id
+        hasEvidence
+        hasInternalEvidenceCollected
+        hasExternalEvidenceAttached
+        questionnaireAnswer
+      }
+    }
+  }
+}
+```
+
+
+## Gap Status
+In the Compliance API, the "Gap Status" is exposed via the `evaluationResult` property on the following objects:
+
+* Requirement (Framework Item)
+* Control (Library Item)
+
+The valid values of `evaluationResult` are
+
+* `FULFILLED`
+* `GAP_DETECTED`
+* `NOT_APPLICABLE`
+* `WARNING`
+* `UNKNOWN`
+
+
+## Evidence Collection
+
+Evidence collection can be performed at the framework, requirement, or control level. In order to complete the process, three
+actions must be taken in sequential order:
+
+1. Kick off an EvidenceCollectionJob via API
+2. Poll for the completion of the EvidenceCollectionJob
+3. Use the completed EvidenceCollectionJob to receive an AWS s3 link to download its output
+
+
+### Start an EvidenceCollectionJob via API
+
+Each object type has a different GraphQL mutation to call to start its EvidenceCollectionJob. Ensure
+to use the correct mutation for the specified object type.
+
+#### Start Framework EvidenceCollectionJob
+
+**Variables**
+
+- `input`
+    - `frameworkId` - The identifier of the framework to start an EvidenceCollectionJob for
+
+**Mutation**
+
+```graphql
+  mutation startEvidenceCollectionJobforFramework(
+    $input: StartEvidenceCollectionJobForFrameworkInput!
+  ) {
+    startEvidenceCollectionJobforFramework(input: $input) {
+      id
+      accountId
+      userId
+      frameworkId
+      frameworkItemId
+      libraryItemId
+      status
+      progress
+      createTimestamp
+      endTimestamp
+    }
+  }
+```
+
+#### Start Requirement EvidenceCollectionJob
+
+**Variables**
+
+- `input`
+    - `frameworkItemId` - The identifier of the requirement(i.e. framework item) to start an EvidenceCollectionJob for
+
+**Mutation**
+
+```graphql
+  mutation startEvidenceCollectionJobforFrameworkItem(
+    $input: StartEvidenceCollectionJobForFrameworkItemInput!
+  ) {
+    startEvidenceCollectionJobforFrameworkItem(input: $input) {
+      id
+      accountId
+      userId
+      frameworkId
+      frameworkItemId
+      libraryItemId
+      status
+      progress
+      createTimestamp
+      endTimestamp
+    }
+  }
+```
+
+#### Start Control EvidenceCollectionJob
+
+**Variables**
+
+- `input`
+    - `libraryItemId` - The identifier of the library item (such as Control) to start an EvidenceCollectionJob for
+
+**Mutation**
+
+```graphql
+mutation startEvidenceCollectionJobforLibraryItem(
+  $input: StartEvidenceCollectionJobForLibraryItemInput!
+) {
+  startEvidenceCollectionJobforLibraryItem(input: $input) {
+    id
+    accountId
+    userId
+    frameworkId
+    frameworkItemId
+    libraryItemId
+    status
+    progress
+    createTimestamp
+    endTimestamp
+  }
+}
+```
+
+### Poll for the completion of the EvidenceCollectionJob
+
+When the job has completed, its `status` field is set to `COMPLETED`
+
+**Variables**
+
+- `input`
+    - `id` - The identifier of the EvidenceCollectionJob to fetch
+
+**Query**
+
+```graphql
+query evidenceCollectionJob($input: EvidenceCollectionJobInput!) {
+    evidenceCollectionJob(input: $input) {
+      id
+      accountId
+      userId
+      frameworkId
+      frameworkItemId
+      libraryItemId
+      status
+      progress
+      createTimestamp
+      endTimestamp
+    }
+  }
+```
+
+### Fetch AWS S3 Download Link from the Completed EvidenceCollectionJob
+
+The returned `link` property is an [AWS S3 Presigned URL](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html) that contains the zipped evidence file to download.  This URL will be valid for 2 hours. To generate a new URL (if the timeout
+is reached), just call the same query below again.
+
+**Variables**
+
+- `input`
+    - `evidenceCollectionJobId` - The identifier of the EvidenceCollectionJob to get the download link for
+
+**Query**
+
+```graphql
+query downloadLinkForEvidenceCollectionJob(
+  $input: DownloadLinkForEvidenceCollectionJobInput!
+) {
+  downloadLinkForEvidenceCollectionJob(input: $input) {
+    link
+  }
 }
 ```
