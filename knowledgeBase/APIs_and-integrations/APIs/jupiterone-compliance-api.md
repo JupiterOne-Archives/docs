@@ -24,8 +24,8 @@ This query retrieves a list of all frameworks (benchmarks, compliance standards,
 **Query**
 
 ```graphql
-query ListFrameworks() {
-  complianceFrameworks() {
+query ListFrameworks {
+  complianceFrameworks {
     benchmarks {
       id
       createTimestamp
