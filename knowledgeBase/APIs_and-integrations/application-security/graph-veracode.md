@@ -19,8 +19,8 @@
 
 ## Requirements
 
-*   You must have administrator access in Veracode to create the
-    least-privledged access
+*   You must have administrator access in Veracode to create the least-privledged
+    access
     [API service account](https://docs.veracode.com/r/c_about_veracode_accounts)
     that the integration uses.
 
@@ -40,14 +40,14 @@ least-privledged access manner, do the following:
 1.  Using a Veracode account with admin permissions, create an
     [API service account](https://docs.veracode.com/r/c_about_veracode_accounts)
 
-*   At the time of this writing, user creation can be done by clicking
-    the Settings button (top-right) => Admin => Add New User.
+*   At the time of this writing, user creation can be done by clicking the
+    Settings button (top-right) => Admin => Add New User.
 *   Be sure to select the `Non-Human User` checkbox, and enter an email you have
     access to. You will log in as the integration to generate keys scoped to the
     limited permission set
 *   In `Access Settings`, enable the `Results API` option.
-*   Enter a username, first/last name of your choice. We recommend it
-    clearly indicates that the user is being used for a JupiterOne Integration,
+*   Enter a username, first/last name of your choice. We recommend it clearly
+    indicates that the user is being used for a JupiterOne Integration,
 *   Be sure to have `Login Enabled` set to `Yes`. Setting to `No` does not send
     your email an activation link.
 
@@ -59,14 +59,14 @@ least-privledged access manner, do the following:
 
 3.  Generate your API keys for the integration.
 
-*   Select the user icon in the top-right (same place you find the `Your Account` 
+*   Select the user icon in the top-right (same place you find the `Your Account`
     button).
 *   Select `API Credentials` => `Generate API Credentials`.
 *   Copy your API Id and secret key contents (note that this only displays once at
     generation).
 
-4.  Note that by default, your keys expire after one year. If you have
-    expired keys, re-generate and update your integration in JupiterOne.
+4.  Note that by default, your keys expire after one year. If you have expired
+    keys, re-generate and update your integration in JupiterOne.
 
 ### In JupiterOne
 
@@ -74,14 +74,14 @@ least-privledged access manner, do the following:
 2.  Scroll to and click the **Veracode** integration tile.
 3.  Click **Add Configuration** and configure the following settings:
 
-*   Enter the **Account Name** by which you want to identify this Veracode
-    account in JupiterOne. Ingested entities store the value `tag.AccountName` 
-    when **Tag with Account Name** is selected.
-*   Enter a **Description** that helps your team identify the integration 
+*   Enter the **Account Name** by which you want to identify this Veracode account
+    in JupiterOne. Ingested entities store the value `tag.AccountName` when **Tag
+    with Account Name** is selected.
+*   Enter a **Description** that helps your team identify the integration
     instance.
 *   Select a **Polling Interval** that is sufficient for your monitoring
-    requirements. You can leave this as `DISABLED` and manually execute 
-    the integration.
+    requirements. You can leave this as `DISABLED` and manually execute the
+    integration.
 *   Enter the **API ID** used to authenticate with Veracode.
 *   Enter the **API Secret** used to authenticate with Veracode.
 
