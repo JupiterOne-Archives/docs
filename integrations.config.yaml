@@ -138,7 +138,7 @@ integrations:
   - projectName: graph-trend-micro
     displayName: Trend Micro
     knowledgeCategoriesPaths: APIs_and-integrations/EDR
-  - projectName: graph-veracode-v2
+  - projectName: graph-veracode
     displayName: Veracode
     knowledgeCategoriesPaths: APIs_and-integrations/application-security
   - projectName: graph-vuls-findings
