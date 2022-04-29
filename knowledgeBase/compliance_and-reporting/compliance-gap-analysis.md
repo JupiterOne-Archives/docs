@@ -1,8 +1,26 @@
 # Compliance Gap Analysis
 
-The J1 Compliance app performs automated gap analysis based on the queries saved in questions that you have added as evidence to meeting compliance. At any time, you can review where the gaps are in your compliance by clicking the information icon next to gap analysis in a selected framework.
+Compliance gaps are defined as deficiencies in the security framework of your organization between fulfilled compliance requirements and outstanding remediation.
 
-If you have access to the Compliance app, you have access to the gap analysis view. If you do not have access to the Compliance app, your J1 administrator can grant you access to the gaps table by adding a special, read-only permissions role to the group permissions for group to which you belong. With this role, you can see the compliance gap information but are not able to perform any other actions in the Compliance app.  
+Your compliance department, your compliance officer, or security lead decides the security frameworks with which your organization must be compliant. Frameworks comprise benchmarks, standards, and security questionnaires as part of your comprehensive compliance program. 
+
+J1 Compliance performs regular, automated gap analysis based on your compliance status. The gap analysis results are color-coded:
+
+- Green = All controls are in place and being monitored by J1
+- Orange = You may potentially have items to remediate
+- Red = There are gaps in your compliance that you must remove
+- Grey = Manual review of a compliance issue is necessary
+
+You have compliance gaps when:
+
+- There is no external evidence (such as notes, links, file uploads) that you have completed a framework requirement.
+- There are J1QL question queries whose results show there is no evidence that a framework requirement is complete.
+
+At any time, you can review where the gaps are in your compliance by clicking the information icon next to gap analysis in a selected framework.
+
+## Accessing Gap Analysis
+
+If you have access to J1 Compliance, you have access to the gap analysis view. If you do not have access to J1 Compliance, your J1 administrator can grant you access to the gaps table by adding a special, read-only permissions role to the group permissions for group to which you belong. With this role, you can see the compliance gap information but are not able to perform any other actions in J1 Compliance.  
 
 
 
@@ -16,10 +34,9 @@ From the selected framework details view, click the filter icon next to the gap 
 
 ![](../assets/compliance-gaps.png)
 
-Each query in a saved question has a property to indicate whether the results from the query are good, bad, unknown, or informative. You can configure this property in the 
-J1Query Language app UI or via the J1 API.
+Each query in a saved question has a property to indicate whether the results from the query are good, bad, unknown, or informative. You can configure this property in the J1Query Language UI or via the J1 API.
 
-At the API level, this is set with the `resultsAre` property. For example:
+At the API level, this value is set with the `resultsAre` property. For example:
 
 ```yaml
 - id: managed-question-access-password-policy
