@@ -14,40 +14,44 @@ The J1 Compliance Status view provides measurements and status indicators at fou
 
 ## Status Symbols
 
-The J1 Compliance UI uses status symbols to help you quickly scan your status view to see the level of compliance for each of the frameworks in your environment. 
+The J1 Compliance UI uses status symbols to help you quickly scan your compliance status view to see the level of compliance for each of the frameworks in your environment. Click any of the requirements under a framework to see those statuses.
 
 ![](../assets/compliance-status-overview.png)
 
-In J1 Compliance, click Status to 
 
-| Symbol                                  | Meaning                                  |
-| --------------------------------------- | ---------------------------------------- |
-| ![](../assets/compliance-scoped.png)    | Filters are applied to a framework to narrow the scope of what the linked evidence looks at |
-| Policies                                |                                          |
-| ![](../assets/compliance-evidences.png) |                                          |
-| Attention                               |                                          |
-| Unknown                                 |                                          |
-| Warning                                 |                                          |
-| Fulfilled                               |                                          |
 
-## Gap Analysis Status
+### Requirements and Evidences Statuses
 
-J1 Compliance performs regular, automated gap analysis based on your compliance status. In the Compliance UI, the gap analysis statuses are color-coded:
+Compliance is measured by requirements and evidence that you have met those requirements. The different statuses indicate where action and attention is needed.
 
-- Red - Gap = There are gaps in your compliance that you must remove
-- Orange - Warning = You may potentially have items to remediate
-- Green - Fulfilled = All controls are in place and being monitored by J1
-- Grey - Unknown = Manual review of a compliance issue is necessary
+| Symbol                                   | Meaning                                  |
+| ---------------------------------------- | ---------------------------------------- |
+| ![](../assets/compliance-attention-white.png) | Potential remediation is needed because J1 has detected a potential gap in compliance. |
+| ![](../assets/compliance-evidences.png)  | Linked evidence files provide proof of compliance. |
+| ![](../assets/compliance-evidences-grey.png) | No linked evidence files to prove compliance. |
+| ![](../assets/compliance-unknown.png)    | A manual review of a compliance issue is necessary. |
+| ![](../assets/compliance-gap-white.png)  | There are [gaps in your compliance](../compliance-gap-table.md) that you must remove. |
+| ![](../assets/compliance-tested-white.png) | The framework requirement is complete and being monitoring. |
+| ![](../assets/compliance-unknown.png)    | A manual review of a compliance issue is necessary. |
 
-![](../assets/compliance-status-chips.png) 
+Click any of these symbols from the frameworks view to see more details about the status.
+
+If you see the ![](../assets/compliance-scoped.png)symbol next to a framework, it indicates that filters are applied to this framework to narrow the scope of what the linked evidence looks at.
 
 
 
+## Query Statuses
 
+If there are compliance gaps in the results of any of the queries in linked questions, these gaps also have color-coded statuses.
 
+| Symbol                                   | Meaning                                  |
+| ---------------------------------------- | ---------------------------------------- |
+| ![](../assets/compliance-attention-white2.png) | You may potentially have items to remediate |
+| ![](../assets/icons/compliance-gap-grey.png) | You must remove these gaps in your compliance |
+|                                          | All controls are in place and being monitored by J1 |
+| ![](../assets/icons/compliance-unknown-grey.png) | Manual review of a compliance issue is necessary |
 
-
-You can also use J1QL to query each framework requirement or control, which return the following statuses:
+You can also use J1QL to query each framework requirement or control, which return similar statuses:
 
 - `TESTED`
 
@@ -72,11 +76,5 @@ The status is determined by the presence and output of the named queries in the 
 ![](../assets/compliance-query-gap-analysis-status-2.png)
 
 **Note**: A single query in a question without the `resultsAre` property set is implicitly interpreted as a `GOOD` query.
-
-
-
-
-
-
 
 [Watch this video](https://try.jupiterone.com/blog/video-managing-grc-with-jupiterone) for more information about managing compliance with automated policies and procedures.
