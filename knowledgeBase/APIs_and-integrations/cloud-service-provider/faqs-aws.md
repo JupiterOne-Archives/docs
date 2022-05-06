@@ -1,5 +1,7 @@
 # AWS FAQs
 
+[TOC]
+
 ## Some of my AWS resources seem to be missing from the Asset Inventory / Graph. What is going on?
 
 This is most commonly caused by incorrect or insufficient permissions. Check the IAM policy assigned to the IAM role used by JupiterOne in your AWS account. You can find details on the required permissions by going to **Integrations Configuration** > **Add AWS Configuration** > and clicking on the **Setup Instructions** button.
@@ -139,9 +141,9 @@ find aws_s3_bucket that publishes to aws_s3_bucket return tree
 
 **Note:**
     There are additional properties captured on the edge in each case, which can be used for additional filtering (see screenshots). 
-    
+
     For example:
-    
+
     ​```j1ql
     find aws_s3_bucket 
     that sends aws_cloudtrail 
@@ -149,3 +151,16 @@ find aws_s3_bucket that publishes to aws_s3_bucket return tree
     where logs.read=true and logs.write=true
     return TREE
     ​```
+## How can I add or configure all the sub-accounts in my AWS Organization?
+
+First, configure your AWS Organization master account to JupiterOne, using the instructions in the J1 Integrations UI or those found in the [jupiterone-aws-integration](https://github.com/JupiterOne/jupiterone-aws-cloudformation) project on Github. During this process, you  create an IAM role for J1, attaching specific policies and using a specific external trust ID. Remember to note the IAM role name, policies, and external trust ID that you use. Do not select the **Auto-configure additional integrations...**option yet.
+
+Next, use your preferred infrastructure-as-code method to systematically generate an identical J1 IAM role in each of your sub-accounts. Ensure you name the IAM Role identically, attach the same policies, and use the same external trust ID as you used with the master account configuration.
+
+Finally, in the J1 Integrations UI, select a polling interval and the **Auto-configure additional integrations...** option in your master account configuration.
+
+Jupiter1 automatically ingests all sub-accounts from the Organization the next time it polls your environment.
+
+## How can I omit certain sub-accounts when auto-configuring my AWS Organization?
+
+To omit specific sub-accounts when auto-configuring J1 AWS integrations from an Organizations master account, add the optional `j1-integration: SKIP` tag to the sub-account in your infrastructure-as-code or from the AWS Organizations web console.
