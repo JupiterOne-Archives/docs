@@ -253,7 +253,7 @@ If your SSO provider supports configuring a bookmark or secure web authenticatio
 
 ## Troubleshooting
 
-While different SSO providers have varying UIs and nomenclature, ultimately the SAML response and attribute statement should look similar.
+Different SSO providers have varying UIs and nomenclature, therefore, ultimately the SAML response and attribute statement should look similar.
 
 **Common Problems:**
 
@@ -273,8 +273,7 @@ A common problem during SSO configuration is an incorrect SAML subject. Here is 
 
 **SAML Attribute Statement**
 
-Another common problem during SSO configuration is an incorrect SAML attribute statement.
-An example of a correct attribute statement is:
+Another common problem during SSO configuration is an incorrect SAML attribute statement. An example of a correct attribute statement is:
 
 ```xml
 <saml2:AttributeStatement>
@@ -295,10 +294,9 @@ An example of a correct attribute statement is:
 
 **Viewing the SAML Response**
 
-To view the SAML response, you can use browser plugins to capture the POST to `/saml2/idpresponse`.
-For example, in the Chrome browser the plugin, you can use [SAML-tracer](https://chrome.google.com/webstore/detail/saml-tracer/mpdajninpobndbfcldcmbpnnbhibjmch?hl=en) to decode and view the SAML response and, therefore, the SAML attribute statement.
+To view the SAML response, you can use browser plugins to capture the POST to `/saml2/idpresponse`. For example, in the Chrome browser the plugin, you can use [SAML-tracer](https://chrome.google.com/webstore/detail/saml-tracer/mpdajninpobndbfcldcmbpnnbhibjmch?hl=en) to decode and view the SAML response and, therefore, the SAML attribute statement.
 
-Here is an example of what SAML-tracer looks like after logging in by SSO. The `SAML` tab is active to view the XML.
-Calls that have SAML are also marked with a yellow `SAML` tag on the right of the HTTP request.
+The following is an example of what SAML-tracer looks like after logging in by SSO. The `SAML` tab is active to view the XML.
+Calls that have SAML are also flagged with a yellow `SAML` tag on the right of the HTTP request.
 
 ![SAML-tracer](../../assets/saml-tracer-example.png)
