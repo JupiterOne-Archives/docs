@@ -29,3 +29,27 @@ If you want to import a compliance standard specification from a CSV file, the C
 - `ID`
 - `Requirement` or `Control`
 - `Section` or `Domain`
+
+## Filter on Scope
+
+When you select the frameworks with which you want to be compliant, you can narrow the scope by using filters. You can determine what J1 monitors for compliance to save time and resources.
+
+![](../assets/compliance-scope-filters.png)
+
+
+
+You can filter on:
+
+- `_type`:  Type of asset, such as datastore or persons
+- `_class`:  Class of asset, such as____________
+- `_integrationClass`:  Category of integration, such as Data Loss Prevention or App Hosting
+- `_integrationType`:  Type of integration, such as ____________
+- `integrationInstanceId`:  Your integration account ID
+- A custom filter of your own
+  ​
+
+![](../assets/compliance-add-filters.png) 
+
+
+
+After you set the filters, they take effect the next time J1 evaluates the framework requirements.

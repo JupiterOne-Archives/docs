@@ -1,25 +1,30 @@
 # Compliance Gap Analysis
 
-The J1 Compliance app performs automated gap analysis based on the queries saved in questions that you have added as evidence to meeting compliance. At any time, you can review where the gaps are in your compliance by clicking the information icon next to gap analysis in a selected framework.
+Compliance gaps are defined as deficiencies in the security framework of your organization between fulfilled compliance requirements and outstanding remediation.
 
-If you have access to the Compliance app, you have access to the gap analysis view. If you do not have access to the Compliance app, your J1 administrator can grant you access to the gaps table by adding a special, read-only permissions role to the group permissions for group to which you belong. With this role, you can see the compliance gap information but are not able to perform any other actions in the Compliance app.  
+Your compliance department, your compliance officer, or security lead decides the security frameworks with which your organization must be compliant. Frameworks comprise benchmarks, standards, and security questionnaires as part of your comprehensive compliance program. 
 
+You have compliance gaps when:
 
+- There is no external evidence (such as notes, links, file uploads) that you have completed a framework requirement.
+- There are J1QL question queries whose results show there is no evidence that a framework requirement is complete.
 
+At any time, you can review where the gaps are in your compliance by clicking the information icon next to gap analysis in a selected framework.
 
-![](../assets/compliance-gap-analysis.png)
+## Accessing Gap Analysis
 
-
+If you have access to J1 Compliance, you have access to the gap analysis view. If you do not have access to J1 Compliance, your J1 administrator can grant you access to the gaps table by adding a special, read-only permissions role to the group permissions for group to which you belong. With this role, you can see the compliance gap information but are not able to perform any other actions in J1 Compliance.  
 
 From the selected framework details view, click the filter icon next to the gap category to see where the gaps are in your compliance status. 
 
 
+
 ![](../assets/compliance-gaps.png)
 
-Each query in a saved question has a property to indicate whether the results from the query are good, bad, unknown, or informative. You can configure this property in the 
-J1Query Language app UI or via the J1 API.
 
-At the API level, this is set with the `resultsAre` property. For example:
+Each query in a saved question has a property to indicate whether the results from the query are good, bad, unknown, or informative. You can configure this property in the J1Query Language UI or via the J1 API.
+
+At the API level, this value is set with the `resultsAre` property. For example:
 
 ```yaml
 - id: managed-question-access-password-policy
@@ -49,8 +54,7 @@ At the API level, this is set with the `resultsAre` property. For example:
 
 ## Gap Analysis Queries
 
-Queries with the `resultsAre` property in a question that is mapped to a compliance
-requirement trigger automated gap analysis, as follows:
+Queries with the `resultsAre` property in a question that is mapped to a compliance requirement trigger automated gap analysis, as follows:
 
 - `GOOD`:
 
@@ -82,41 +86,6 @@ requirement trigger automated gap analysis, as follows:
   Find DataStore with classification=undefined
   ```
 
-`INFORMATIVE` queries are not used in compliance gap analysis.
+`INFORMATIVE` queries are not used in compliance gap analysis. A question can have one or all of the above named queries.
 
-A question can have one or all of the above named queries.
-
-## Gap Analysis Status
-
-The gap analysis status of each requirement of control can be one of the
-following:
-
-- `TESTED`
-
-  The requirement is fulfilled and monitoring.
-
-- `ATTENTION`
-
-  Potential remediation is needed because J1 has detected a potential gap, 
-  with a mix of properly configured resources and misconfigurations, such 
-  as partially fulfilled.
-
-- `GAP`
-
-  A control gap is detected with no properly configured resources identified.
-
-- `UNKNOWN`
-
-  Manual review is needed because J1 was unable to auto-determine the
-  status with the queries provided.
-
-  This status also appears when the requirement or control has no mapped query question _and_ no external evidence provided.
-
-The status is determined by the presence and output of the named queries in the
-mapped questions, as shown in this matrix:
-
-![](../assets/compliance-query-gap-analysis-status-2.png)
-
-
-
-**Note**: A single query in a question without the `resultsAre` property set is implicitly interpreted as a `GOOD` query.
+[Read more about gap analysis statuses](./compliance-status.md).
