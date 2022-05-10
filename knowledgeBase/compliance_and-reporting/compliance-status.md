@@ -27,11 +27,11 @@ Compliance is measured by requirements and evidence that you have met those requ
 | Symbol                                   | Meaning                                  |
 | ---------------------------------------- | ---------------------------------------- |
 | ![](../assets/compliance-attention-white.png) | Potential remediation is needed because J1 has detected a potential gap in compliance. |
-| ![](../assets/compliance-evidences.png)  | Linked evidence files provide proof of compliance. |
+| ![](../assets/compliance-evidences-grey2.png) | Linked evidence files provide proof of compliance. |
 | ![](../assets/compliance-evidences-grey.png) | No linked evidence files to prove compliance. |
-| ![](../assets/compliance-unknown.png)    | A manual review of a compliance issue is necessary. |
+| ![](../assets/compliance-unknown-grey.png) | A manual review of a compliance issue is necessary. |
 | ![](../assets/compliance-gap-white.png)  | There are [gaps in your compliance](../compliance-gap-table.md) that you must remove. |
-| ![](../assets/compliance-tested-white.png) | The framework requirement is complete and being monitoring. |
+| ![](../assets/compliance-tested-grey.png) | The framework requirement is complete and being monitoring. |
 | ![](../assets/compliance-unknown.png)    | A manual review of a compliance issue is necessary. |
 
 Click any of these symbols from the frameworks view to see more details about the status.
@@ -46,10 +46,10 @@ If there are compliance gaps in the results of any of the queries in linked ques
 
 | Symbol                                   | Meaning                                  |
 | ---------------------------------------- | ---------------------------------------- |
-| ![](../assets/compliance-attention-white2.png) | You may potentially have items to remediate |
-| ![](../assets/icons/compliance-gap-grey.png) | You must remove these gaps in your compliance |
-|                                          | All controls are in place and being monitored by J1 |
-| ![](../assets/icons/compliance-unknown-grey.png) | Manual review of a compliance issue is necessary |
+| ![](../assets/../assets/compliance-attention-white-small.png) | You may potentially have items to remediate. |
+| ![](../assets/icons/compliance-gap-grey.png) | You must remove these gaps in your compliance. |
+| ![](../assets/compliance-tested-white-small.png) | All controls are in place and being monitored by J1. |
+| ![](../assets/icons/compliance-unknown-grey.png) | Manual review of a compliance issue is necessary. |
 
 You can also use J1QL to query each framework requirement or control, which return similar statuses:
 
