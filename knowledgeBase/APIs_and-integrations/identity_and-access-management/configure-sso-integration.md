@@ -250,3 +250,53 @@ If your SSO provider supports configuring a bookmark or secure web authenticatio
 
 - Hide the app icon to users for the configured JupiterOne SAML SSO app.
 - Configure a Bookmark/SWA app with your JupiterOne account URL and assign it to the same users and groups that are assigned the JupiterOne SAML app.
+
+## Troubleshooting
+
+Different SSO providers have varying UIs and nomenclature, therefore, ultimately the SAML response and attribute statement should look similar.
+
+**Common Problems:**
+
+- Infinite Redirect Loop
+  - An infinite redirct loop can occur if the SAML subject is incorrect or missing or if the required SAML attribute `email` (case-sensitive) is not present.
+
+**SAML Subject**
+
+A common problem during SSO configuration is an incorrect SAML subject. Here is an example of a correct subject:
+
+```xml
+<saml2:Subject>
+    <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress">john.smith@example.com</saml2:NameID>
+    ...
+</saml2:Subject>
+```
+
+**SAML Attribute Statement**
+
+Another common problem during SSO configuration is an incorrect SAML attribute statement. An example of a correct attribute statement is:
+
+```xml
+<saml2:AttributeStatement>
+    <saml2:Attribute Name="email">
+        <saml2:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:anyType">john.smith@example.com</saml2:AttributeValue>
+    </saml2:Attribute>
+    <saml2:Attribute Name="family_name">
+        <saml2:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:anyType">Smith</saml2:AttributeValue>
+    </saml2:Attribute>
+    <saml2:Attribute Name="given_name">
+        <saml2:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:anyType">John</saml2:AttributeValue>
+    </saml2:Attribute>
+    <saml2:Attribute Name="group_names">
+        <saml2:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:anyType">Administrators,Users</saml2:AttributeValue>
+    </saml2:Attribute>
+</saml2:AttributeStatement>
+```
+
+**Viewing the SAML Response**
+
+To view the SAML response, you can use browser plugins to capture the POST to `/saml2/idpresponse`. For example, in the Chrome browser the plugin, you can use [SAML-tracer](https://chrome.google.com/webstore/detail/saml-tracer/mpdajninpobndbfcldcmbpnnbhibjmch?hl=en) to decode and view the SAML response and, therefore, the SAML attribute statement.
+
+The following is an example of what SAML-tracer looks like after logging in by SSO. The `SAML` tab is active to view the XML.
+Calls that have SAML are also flagged with a yellow `SAML` tag on the right of the HTTP request.
+
+![SAML-tracer](../../assets/saml-tracer-example.png)
