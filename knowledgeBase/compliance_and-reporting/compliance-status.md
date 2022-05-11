@@ -51,6 +51,7 @@ If there are compliance gaps in the results of any of the queries in linked ques
 | ![](../assets/compliance-tested-white-small.png) | All controls are in place and being monitored by J1. |
 | ![](../assets/icons/compliance-unknown-grey.png) | Manual review of a compliance issue is necessary. |
 
+
 You can also use J1QL to query each framework requirement or control, which return similar statuses:
 
 - `TESTED`
