@@ -1,4 +1,4 @@
-# Integration with JupiterOne
+# Aqua Security Integration with JupiterOne
 
 ## Aqua Security + JupiterOne Integration Benefits
 
