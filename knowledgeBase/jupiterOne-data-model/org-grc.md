@@ -1,5 +1,7 @@
 # JupiterOne Data Model for Governance, Risk, and Compliance (GRC)
 
+As we build integrations for Governance, Risk and Compliance (GRC) products we start with a reference model like this and attempt to collect these types of entities and map these kinds of relationships so that customers using GRC products will be able to use similar queries for any GRC product integrated with JupiterOne.  Based on the product and what is available to import to JupiterOne, adjustments are made that will be unique to each product.
+
 ![https://my.mindnode.com/2ayndotqvjEJ3qAeEfwyy6sgkRciyxRvH1sgpYw4/em#333.4,207.2,-2](../assets/data-model-org-grc.png)
 
 
