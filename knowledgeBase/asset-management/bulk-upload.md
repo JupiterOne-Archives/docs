@@ -18,4 +18,4 @@ JupiterOne exposes a public REST API to programmatically perform bulk entity and
 
 ## Notes
 
-Depending on the size of the uploaded file, the entities and relationships may not show up in the Inventory Table right away. Hold tight! JupiterOne is processing your data, and it will show up in your Inventory soon.
+Depending on the size of the uploaded file, the entities and relationships may not show up in the Inventory Table right away. Hold tight! JupiterOne is processing your data, and it will show up in your inventory soon.
