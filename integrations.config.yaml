@@ -188,3 +188,6 @@ integrations:
   - projectName: graph-microsoft-active-directory
     displayName: Microsoft Active Directory
     knowledgeCategoriesPaths: APIs_and-integrations/identity_and-access-management
+  - projectName: graph-asana
+    displayName: Asana
+    knowledgeCategoriesPaths: APIs_and-integrations/workflow
