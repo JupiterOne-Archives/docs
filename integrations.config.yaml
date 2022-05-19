@@ -191,3 +191,27 @@ integrations:
   - projectName: graph-asana
     displayName: Asana
     knowledgeCategoriesPaths: APIs_and-integrations/workflow
+  - projectName: graph-automox
+    displayName: Automox
+    knowledgeCategoriesPaths: APIs_and-integrations/device-management
+  - projectName: graph-circleci
+    displayName: CircleCI
+    knowledgeCategoriesPaths: APIs_and-integrations/code
+  - projectName: graph-cloudbees
+    displayName: CloudBees
+    knowledgeCategoriesPaths: APIs_and-integrations/code
+  - projectName: graph-hexnode
+    displayName: Hexnode
+    knowledgeCategoriesPaths: APIs_and-integrations/device-management
+  - projectName: graph-orca
+    displayName: Orca
+    knowledgeCategoriesPaths: APIs_and-integrations/device-management
+  - projectName: graph-pingidentity
+    displayName: Ping Identity
+    knowledgeCategoriesPaths: APIs_and-integrations/identity_and-access-management
+  - projectName: graph-travisci
+    displayName: Travis CI
+    knowledgeCategoriesPaths: APIs_and-integrations/code
+  - projectName: graph-zendesk
+    displayName: Zendesk
+    knowledgeCategoriesPaths: APIs_and-integrations/IT-service-management
