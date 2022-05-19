@@ -185,4 +185,6 @@ integrations:
   - projectName: graph-datadog
     displayName: Datadog
     knowledgeCategoriesPaths: APIs_and-integrations/SIEM
-
+  - projectName: graph-microsoft-active-directory
+    displayName: Microsoft Active Directory
+    knowledgeCategoriesPaths: APIs_and-integrations/identity_and-access-management
