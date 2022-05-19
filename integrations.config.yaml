@@ -191,3 +191,6 @@ integrations:
   - projectName: graph-asana
     displayName: Asana
     knowledgeCategoriesPaths: APIs_and-integrations/workflow
+  - projectName: graph-automox
+    displayName: Automox
+    knowledgeCategoriesPaths: APIs_and-integrations/device-management
