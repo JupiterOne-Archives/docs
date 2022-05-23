@@ -1,41 +1,49 @@
 # How to configure SAML SSO integration with JupiterOne
 
-Single sign-on is supported using a custom authentication client configured within a JupiterOne account. This feature is available to all Enterprise customers.
+Single sign-on is supported using a custom authentication client configured within a J1 account. This feature is available to all Enterprise customers.
 
 ## Supported Features
 
 - **SP-initiated SSO**
 
-  Service Provider-Initiated (SP-initiated) SSO means when the service provider (SP) initiates SAML authentication. It is triggered when the enduser tries to access a resource in JupiterOne or log in directly to a JupiterOne account.
+  Service Provider-Initiated (SP-initiated) SSO means when the service provider (SP) initiates SAML authentication. SP-initiated SSO is triggered when you try to access a resource in J1 or sign in directly to a J1 account.
 
 - **JIT (Just In Time) Provisioning**
 
-  Users are created and updated instantly using the SAML attributes sent as part of the SAML response coming from the Identity Provider (IdP). The user is created during the initial login to JupiterOne and updated during subsequent logins. 
+  Users are created and updated instantly using the SAML attributes sent as part of the SAML response coming from the Identity Provider (IdP). The user is created during the initial sign-in to J1 and updated during subsequent sign-ins. 
 
-_IdP-initiated SSO is currently unsupported due to a limitation of Amazon Cognito._
+**Note**: IdP-initiated SSO is currently unsupported due to a limitation of Amazon Cognito.
 
-## Configuration Steps
+## Configuring SSO
 
 You must be a member of the Administrators group to perform configurations.
 
-1. Log in to your JupiterOne account.
+1. Sign in to your JupiterOne account.
 
-2. Go to the **Single Sign On** setup from the Configurations menu ![](../assets/icons/gear.png). 
+2. Go to the **Single Sign On** setup from the Settings menu ![](../../assets/icons/gear.png). 
+   ​
 
-   ![sso-menu](../assets/j1-sso-menu.png)
+   ![sso-menu](../../assets/sso_select.png) 
+
+   ​
 
 3. Click **Configure**.
+   ​
 
-   ![configure-sso](../assets/j1-configure-sso.png)
+   ![configure-sso](../../assets/j1-configure-sso.png)
 
-4. In the configuration screen, copy the following two variables to use when adding JupiterOne as an application in your SAML IdP account:
+   ​
 
-    - **Single sign on URL**
-    - **Audience URI (SP Entity ID)**
+4. In the configuration page, copy the following two variables to use when adding J1 as an application in your SAML IdP account:
 
-    ![sso-setup-page](../assets/sso-setup-page.png)
+    - SSO URL
+    - Audience URI (SP Entity ID)
+      ​
 
-5. In your IdP Account, add a new SAML application and name it JupiterOne.
+    ![sso-setup-page](../../assets/sso-setup-page.png)
+    ​
+
+5. In your IdP account, add a new SAML application and name it JupiterOne.
 
     - Copy the previous two variable values in the SAML settings.
     - Use the same single sign-on URL string value for Recipient URL and Destination URL.
@@ -48,7 +56,7 @@ You must be a member of the Administrators group to perform configurations.
 
    In Okta, you can find this link on the **Sign On** tab of the application, under View Setup Instructions.
 
-   ![okta-idp-metadata](../assets/okta-idp-metadata.png)
+   ![okta-idp-metadata](../../assets/okta-idp-metadata.png)
 
 7. Go back to the JupiterOne Auth Client Settings screen, and paste the identity provider metadata link in the SAML Metadata Document URL field.
 
@@ -56,7 +64,7 @@ You must be a member of the Administrators group to perform configurations.
 
 9. Under Allowed OAuth Flows, select the **Authorization code grant** and **Implicit Grant** checkboxes.
 
-   ![allowed-oauth-flows](../assets/j1-sso-client-oauth-flows.png)
+   ![allowed-oauth-flows](../../assets/j1-sso-client-oauth-flows.png)
 
    Save your settings to complete the configuration. Next time you access your JupiterOne account using your organization custom URL (for example, https://your_company.apps.us.jupiterone.io), you are redirected to your SAML IdP for authentication.
 
@@ -71,6 +79,10 @@ JupiterOne supports the following attribute mappings:
 - `group_names`: Dynamically assigns the user to the specified groups within JupiterOne.
   Use a comma to separate multiple group names (without spaces).
 
+J1 recommends that you use the `group_names` attribute if you are a large organization and require the synchronization of your usernames with J1 on a regular basis. 
+
+
+
 **NOTE:** Provisioning users with a `group_names` attribute mapping is OPTIONAL. Users without `group_names` mapping are assigned to the **Users** group within your JupiterOne account by default.
 
 ## Okta Configuration
@@ -79,15 +91,15 @@ To configure SSO for Okta, you must have administrator access. In addition, ensu
 
 1. From the Okta Applications menu, select **Create App Integration**.
 
-  ![Okta-Create-App-Integration](../assets/okta-create-app-integration.png)
+  ![Okta-Create-App-Integration](../../assets/okta-create-app-integration.png)
 
 2. Select **SAML 2.0** and click **Next**.
 
-  ![okta-saml-select](../assets/okta-saml-select.png)
+  ![okta-saml-select](../../assets/okta-saml-select.png)
 
 3. Enter a name in the **App Name** field. The name JupiterOne is used in the example below, and click **Next**.
 
-  ![okta-sso-general-settings](../assets/okta-sso-general-settings.png)
+  ![okta-sso-general-settings](../../assets/okta-sso-general-settings.png)
 
 4. In the SAML Settings sections: 
     - In the Single sign on URL field, enter your SSO URL.
@@ -95,7 +107,7 @@ To configure SSO for Okta, you must have administrator access. In addition, ensu
     - In the Name ID format field, select **EmailAddress**.
     - In the *Application username* field, select **Email**.
 
-  ![okta-saml-settings](../assets/okta-saml-settings.png)
+  ![okta-saml-settings](../../assets/okta-saml-settings.png)
 
 5. Configure the attribute mappings in the Attribute Statements section. Only the email attribute is mandatory.
 
@@ -106,27 +118,27 @@ To configure SSO for Okta, you must have administrator access. In addition, ensu
     - `group_names` > `appuser.jupiterone_groups` where `jupiterone_groups` is optional naming. 
       - You must configure the group attribute in the Profile Editor in the **Directory** menu, and then assign it after completing the configuration.
 
-    ![okta-saml-mapping](../assets/okta-saml-mapping.png)
+    ![okta-saml-mapping](../../assets/okta-saml-mapping.png)
 
 6. After mapping the attributes, click **Next**.
 
-    ![okta-saml-next](../assets/okta-saml-next.png)
+    ![okta-saml-next](../../assets/okta-saml-next.png)
 
 7. In the Feedback menu, select *I'm an Okta Customer adding an internal app*, and click **Finish**.
 
-    ![okta-saml-feedback](../assets/okta-saml-feedback.png)
+    ![okta-saml-feedback](../../assets/okta-saml-feedback.png)
 
 8. In the Settings section of the Sign On menu, right-click the **ddd** link and select **Copy Link Address**.
 
-    ![okta-metadata-link](../assets/okta-metadata-link.png)
+    ![okta-metadata-link](../../assets/okta-metadata-link.png)
 
 9. Paste the link into the SAML Metadata Document URL field.
 
-    ![okta-metadata-field](../assets/okta-metadata-field.png)
+    ![okta-metadata-field](../../assets/okta-metadata-field.png)
 
 10. Click the floppy disk icon to save your configuration. A green confirmation message displays in the lower-left corner of the screen.
 
-  ![okta-sso-save](../assets/okta-sso-save.png)
+  ![okta-sso-save](../../assets/okta-sso-save.png)
   ![okta-sso-success](../assets/okta-sso-success.png)
 
 ### Okta Group Attribute Configuration
