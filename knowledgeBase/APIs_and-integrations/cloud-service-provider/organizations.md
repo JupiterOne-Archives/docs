@@ -79,15 +79,15 @@ The CIS Benchmark requires that you associate a contact email address with an AW
 
 If an incorrect/unexpected email address is associated with an AWS account, refer to the following AWS article: [How do I change the email address that's associated with my AWS account?](https://aws.amazon.com/premiumsupport/knowledge-center/change-email-address/)
 
-## Master Account
+## Management Account
 
-After creating the configuration for the organization, you see confirmation of a successful integration of the master JupiterOne AWS integration in the list of configurations. The master account shows how many assets it has in the system.
+After creating the configuration for the organization, you see confirmation of a successful integration of the  management account for the JupiterOne AWS integration in the list of configurations. The management account shows how many assets it has in the system.
 
 ![](../../assets/integration-confirmation.png)
 
 
 
-J1 automatically ingests and configures all the AWS child accounts using the CloudFormation stackset.
+J1 automatically ingests and configures all the AWS member accounts that are managed by the management account using the CloudFormation stackset.
 
 
 
