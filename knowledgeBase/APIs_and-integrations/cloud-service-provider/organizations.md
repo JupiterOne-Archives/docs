@@ -87,9 +87,9 @@ After creating the configuration for the organization, you see confirmation of a
 
 
 
-J1 automatically ingests and configures all the AWS member accounts that are managed by the management account using the CloudFormation stackset.
+J1 automatically ingests and configures all the AWS member (child) accounts that are managed by the management account using the CloudFormation stackset.
 
-
+ 
 
 ![](../../assets/integration-children.png)
 
@@ -105,7 +105,7 @@ The child accounts in J1 should match those in your AWS Organization hierarchy.
 
 ## Properties 
 
-The following properties are created on the master account and sub-accounts:
+The following properties are created on the management account and  member accounts:
 
 | Properties                               |
 | ---------------------------------------- |
@@ -118,8 +118,8 @@ The following properties are created on the master account and sub-accounts:
 | `joinedMethod`: The method by which the account joined the organization |
 | `joinedOn`: The date the account became a part of the organization |
 | `name`: The friendly name of the account |
-| `orgAccountArn`: The ARN of this Account within the Organization |
-| `orgAccountName`: The name of this Account as seen in the Organizations UI |
+| `orgAccountArn`: The ARN of this account within the Organization |
+| `orgAccountName`: The name of this account as seen in the Organizations UI |
 | `status`: The status of the account in the organization |
 
 ## Relationships 
@@ -128,4 +128,4 @@ The following relationships are mapped:
 
 | Relationships                            |
 | ---------------------------------------- |
-| `aws_account` (master) **HAS** `aws_account` (sub-account) |
+| `aws_account` (management account) **HAS** `aws_account` (member account) |
