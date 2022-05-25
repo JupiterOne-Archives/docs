@@ -4,7 +4,7 @@
 
 JupiterOne's asset inventory, search and visualization supports any data imported that follows the [reference data model](../jupiterOne-data-model/jupiterone-data-model.md), not limited to data ingested by managed integrations.
 
-This is easily done via the API or CLI. Each entity object can be represented in a few lines of JSON or YAML code. The [J1 API Client or CLI](../APIs_and-integrations/APIs/j1-client-and-cli.md) can create/update them to your JupiterOne account. You can also develop a script to run on a schedule (such as via a cron job) or integrate into your DevOps automation.
+This is easily done via the API or CLI. Each entity object can be represented in a few lines of JSON or YAML code. The [J1 API Client or CLI](../APIs/j1-client-and-cli.md) can create/update them to your JupiterOne account. You can also develop a script to run on a schedule (such as via a cron job) or integrate into your DevOps automation.
 
 ## Where do these `Person` entities come from? Why are they not tagged with an integration?
 
