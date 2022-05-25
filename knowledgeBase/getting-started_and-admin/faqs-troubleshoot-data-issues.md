@@ -31,7 +31,7 @@ For a general query guide, refer to our [J1QL Query Tutorial](../jupiterOne-quer
 For queries written against any JupiterOne managed integrations, visit our [Integrations](../getting-started_and-admin/configure-integrations.md) 
 guides to understand which entities and properties are ingested along with the relationships that are configured. 
 
-For queries written against custom integrations, ensure your integration has been configured properly referring to the [Node.js Client and CLI](../APIs_and-integrations/j1-client-and-cli.md) guide.
+For queries written against custom integrations, ensure your integration has been configured properly referring to the [Node.js Client and CLI](../j1-client-and-cli.md) guide.
 
 For queries written against all integration types, refer to the [JupiterOne Graph Data Model](../jupiterOne-data-model/jupiterone-data-model.md) 
 to understand the class and relationship model.
@@ -52,9 +52,9 @@ If a deleted entity/relationship is still being returned after you have verified
 2. Click on the Metadata tab.
 3. Look for the property _deleted.
 - If the value is equal to true, continue to the section **Reporting an Issue**.
-- If the value is equal to false, verify that the entity was deleted at the source.
+- If the value is equal to false, verify that the entity was deleted at the source. 
 
-![troubleshoot-metadata-deleted](../assets/troubleshoot-metadata-deleted.png)
+![troubleshoot-metadata-deleted](../assets/troubleshoot-metadata-deleted.png) 
 
 ### 4. My query with a date comparison does not return anything
 

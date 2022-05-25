@@ -4,7 +4,7 @@ JupiterOne supports the bulk upload of entity and relationship data via a JSON f
 
 ## Data Format
 
-For the bulk upload process to succeed, the file must adhere to the bulk upload schema defined [here](../APIs_and-integrations/APIs/bulk-upload-schema.md).
+For the bulk upload process to succeed, the file must adhere to the bulk upload schema defined [here](../APIs/bulk-upload-schema.md).
 
 ## Guide
 
@@ -14,7 +14,7 @@ You will be prompted to select (or enter a new) "scope" for the upload. A scope 
 
 ## Public API
 
-JupiterOne exposes a public REST API to programmatically perform bulk entity and relationship uploads. The details on that API can be seen [here](../APIs_and-integrations/APIs/jupiterone-api.md).
+JupiterOne exposes a public REST API to programmatically perform bulk entity and relationship uploads. The details on that API can be seen [here](../APIs/jupiterone-api.md).
 
 ## Notes
 

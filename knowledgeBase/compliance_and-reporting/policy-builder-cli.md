@@ -39,7 +39,7 @@ psp build -t ./templates -c path/to/your/config.json
 
 ## Publishing
 
-Run the following command to publish your policies and procedures to your JupiterOne account. You will need to [generate an API key](../APIs_and-integrations/APIs/api-key-access.md) for your user and the user needs to have policies admin permissions.
+Run the following command to publish your policies and procedures to your JupiterOne account. You will need to [generate an API key](../APIs/api-key-access.md) for your user and the user needs to have policies admin permissions.
 
 ```bash
 export J1_ACCOUNT=<your_j1_account_id>
