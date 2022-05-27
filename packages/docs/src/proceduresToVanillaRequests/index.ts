@@ -137,11 +137,11 @@ export const proceduresToVanillaRequests = async ({
     );
 
     logger.info(`Getting Articles`);
-
     const articles = await getAllArticles(
       httpClient,
       existingknowledgeCategoryInfo
     );
+    logger.info(`${JSON.stringify(articles)}`);
 
     logger.info(`Mapping Vanilla responses to procedures`);
     const proceduresWithVanillaCategories = procedures.map((p) => {
@@ -151,7 +151,7 @@ export const proceduresToVanillaRequests = async ({
       return p;
     });
     // add body to article before links and images get added
-
+    logger.info(`${JSON.stringify(proceduresWithVanillaCategories)}`);
     const proceduresWithArticleInfo = addVanillaArticlesToProcedures(
       proceduresWithVanillaCategories,
       articles
