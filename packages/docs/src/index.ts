@@ -79,6 +79,7 @@ export const updateIntegrationArticles = async () => {
   logger.info(`Updating: ${filterPaths}`);
 
   const procedures = await diffToProcedures(filterPaths);
+  logger.info(`${procedures}: procedures`);
   if (procedures && procedures.length > 0) {
     const completedProcedures = await proceduresToVanillaRequests({
       procedures: procedures || [],
