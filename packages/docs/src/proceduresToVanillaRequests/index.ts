@@ -207,7 +207,9 @@ export const proceduresToVanillaRequests = async ({
     );
     const deletableCategories = processedProcedures
       .filter(isKnowledgeCategoryType)
-      .filter((c) => c.description === FLAG_FOR_DELETE);
+      .filter(
+        (c: { description: string }) => c.description === FLAG_FOR_DELETE
+      );
 
     const { procedures: finishedProcedures } = await removeDeletedCategories(
       httpClient,
