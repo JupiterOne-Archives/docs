@@ -1,3 +1,4 @@
-- projectName: graph-zendesk
-  displayName: Zendesk
-  knowledgeCategoriesPaths: APIs_and-integrations/IT-service-management
+integrations:
+  - projectName: graph-zendesk
+    displayName: Zendesk
+    knowledgeCategoriesPaths: APIs_and-integrations/IT-service-management
