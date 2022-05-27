@@ -363,6 +363,7 @@ export const editArticle = async (
   edits: Partial<VanillaArticle>
 ): Promise<VanillaArticle | undefined> => {
   try {
+    logger.info("making patch request...");
     const article = (await client.patch(`/articles/${articleID}`, {
       format: "markdown",
       ...edits,
@@ -370,14 +371,29 @@ export const editArticle = async (
       data: VanillaArticle | ErrorType;
     };
 
+    logger.info(`article result: ${JSON.stringify(article || {})}`);
+
     if (!isErrorType(article.data)) {
-      if (article.data.body !== null) {
+      if (article?.data?.body !== null) {
+        logger.info(
+          "article.data.body is not null. checking for referencesNeedingUpdatesInMarkdown"
+        );
+
         const referencesNeedingUpdatesInMarkdown =
           getFullMarkdownReferencePathMatches(article.data.body);
+
+        logger.info(
+          `referencesNeedingUpdatesInMarkdown:${JSON.stringify(
+            referencesNeedingUpdatesInMarkdown
+          )}`
+        );
+
         if (
           referencesNeedingUpdatesInMarkdown &&
           referencesNeedingUpdatesInMarkdown.length
         ) {
+          logger.info("returning with referencesNeedingUpdatesInMarkdown...");
+
           return {
             ...edits,
             ...article.data,
@@ -387,8 +403,11 @@ export const editArticle = async (
           };
         }
       }
+
+      logger.info("article.data.body is null. returning...");
       return { ...article.data, procedureType: ProcedureTypeEnum.Article };
     }
+    logger.info("article.data was error type!");
   } catch (e) {
     logger.error(
       `editArticle error: ${JSON.stringify(e)} \n ArticleName: ${articleID}`

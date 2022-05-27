@@ -102,6 +102,8 @@ export const replaceArticleBodyWithIntegration = async ({
             );
 
             if (articleBody) {
+              logger.info(`articleBody found: ${JSON.stringify(articleBody)}`);
+
               const bodyWithremovedFirstTitle = articleBody.replace(
                 "# Integration with JupiterOne",
                 ""
@@ -109,9 +111,17 @@ export const replaceArticleBodyWithIntegration = async ({
               procedure.body = bodyWithremovedFirstTitle;
               alteredProcedures[p] = procedure;
               try {
-                await editArticle(httpClient, procedure.articleID, {
+                logger.info(
+                  `editing article with: articleID: ${
+                    procedure.articleID
+                  } and body: ${JSON.stringify(bodyWithremovedFirstTitle)}`
+                );
+
+                const editResult = await editArticle(httpClient, procedure.articleID, {
                   body: bodyWithremovedFirstTitle,
                 });
+
+                logger.info(`Edit Article Result: ${JSON.stringify(editResult)}`)
               } catch (e) {
                 logger.error(
                   `error editing for integration doc: ${integrationInfo.projectName}\n ${e}`

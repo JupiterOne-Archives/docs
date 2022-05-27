@@ -104,6 +104,8 @@ export default class HttpClient {
       setTimeout(() => {
         resolve(request);
       }, timeout);
+    }).catch((error) => {
+      logger.error(`Error in debounceRequests: ${JSON.stringify(error)}`);
     });
   }
 
@@ -121,23 +123,28 @@ export default class HttpClient {
     options?: AxiosRequestConfig;
   }) {
     try {
+      const requestBody = {
+        url: this.buildUrl(relativeUrl),
+        headers: this.buildHeaders(headers),
+        data: body,
+        method,
+        ...options,
+      };
+
+      if (method === RESTTypes.PATCH) {
+        logger.info(`making PATCH request: ${JSON.stringify(requestBody)}`);
+      }
+
       return this.debounceRequests(
-        axios
-          .request({
-            url: this.buildUrl(relativeUrl),
-            headers: this.buildHeaders(headers),
-            data: body,
-            method,
-            ...options,
-          })
-          .catch((e) => {
-            if (e?.response?.status === 403) {
-              logger.error("Error from Vanilla Auth! Check the TOKEN");
-              return Promise.reject(e);
-            } else {
-              return Promise.reject(e);
-            }
-          })
+        axios.request(requestBody).catch((e) => {
+          if (e?.response?.status === 403) {
+            logger.error("Error from Vanilla Auth! Check the TOKEN");
+            return Promise.reject(e);
+          } else {
+            logger.error(`Error from axios.request: ${JSON.stringify(e)}`);
+            return Promise.reject(e);
+          }
+        })
       );
     } catch (e) {
       logger.info("Error message in HTTPClient catch");
