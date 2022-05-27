@@ -1,7 +1,7 @@
 integrations:
   - projectName: graph-azure
     displayName: Azure
-    knowledgeCategoriesPaths: APIs_and-integrations/cloud-service-provider
+    knowledgeCategoriesPaths: cloud-service-provider
   - projectName: graph-microsoft-365
     displayName: Microsoft 365
-    knowledgeCategoriesPaths: APIs_and-integrations/identity_and-access-management
+    knowledgeCategoriesPaths: identity_and-access-management
