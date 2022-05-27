@@ -140,6 +140,8 @@ export default class HttpClient {
           })
       );
     } catch (e) {
+      logger.info("Error message in HTTPClient catch");
+      logger.error(JSON.stringify(e));
       return e;
     }
   }

@@ -38,6 +38,7 @@ export const useProceduresForVanillaRequests = async (
   existingknowledgeCategoryInfo: VanillaKnowledgeCategory[],
   completedProcedures?: (VanillaArticle | VanillaKnowledgeCategory)[]
 ): Promise<(VanillaArticle | VanillaKnowledgeCategory)[]> => {
+  logger.info("useProceduresForVanillaRequests");
   const httpClient = httpHandling;
   const tempCompletedProcedures = completedProcedures
     ? [...completedProcedures]
@@ -167,15 +168,20 @@ export const proceduresToVanillaRequests = async ({
 
       alteredProceduresWithArticleInfo = alteredProcedures;
     }
-
-    const processedProcedures = await useProceduresForVanillaRequests(
-      alteredProceduresWithArticleInfo,
-      httpClient,
-      existingknowledgeCategoryInfo
-    );
-    logger.info(
-      `processedProcedures: ${JSON.stringify(processedProcedures, null, 2)}`
-    );
+    let processedProcedures = [] as any;
+    try {
+      processedProcedures = await useProceduresForVanillaRequests(
+        alteredProceduresWithArticleInfo,
+        httpClient,
+        existingknowledgeCategoryInfo
+      );
+      logger.info(
+        `processedProcedures: ${JSON.stringify(processedProcedures, null, 2)}`
+      );
+    } catch (e) {
+      logger.info("useProceduresForVanillaRequests error");
+      logger.error(e);
+    }
 
     const combinationOfArticlesAndProcedures = [
       ...processedProcedures,
