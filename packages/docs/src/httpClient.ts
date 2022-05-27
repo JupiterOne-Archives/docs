@@ -104,6 +104,8 @@ export default class HttpClient {
       setTimeout(() => {
         resolve(request);
       }, timeout);
+    }).catch((error) => {
+      logger.error(`Error in debounceRequests: ${JSON.stringify(error)}`);
     });
   }
 
@@ -135,6 +137,7 @@ export default class HttpClient {
               logger.error("Error from Vanilla Auth! Check the TOKEN");
               return Promise.reject(e);
             } else {
+              logger.error(`Error from axios.request: ${JSON.stringify(e)}`);
               return Promise.reject(e);
             }
           })
