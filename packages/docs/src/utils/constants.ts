@@ -7,7 +7,6 @@ export const DEV_URL: string = "https://jupiterone.vanillastaging.com/api/v2";
 export const PROD_URL: string =
   "https://jupiterone.vanillacommunities.com/api/v2";
 export const Authorization: string = authToken;
-console.log(authToken);
 console.log(`STAGING TOKEN ${process.env.TOKEN}`);
 console.log(`STAGING ${JSON.stringify(process.env.TOKEN)}`);
 export const REQUEST_DELAY: number = 1500;
