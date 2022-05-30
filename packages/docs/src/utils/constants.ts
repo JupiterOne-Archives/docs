@@ -7,10 +7,6 @@ export const DEV_URL: string = "https://jupiterone.vanillastaging.com/api/v2";
 export const PROD_URL: string =
   "https://jupiterone.vanillacommunities.com/api/v2";
 export const Authorization: string = authToken;
-console.log(`STAGING TOKEN`);
-for (const char of String(process.env.TOKEN)) {
-  console.log(`${char}`);
-}
 export const REQUEST_DELAY: number = 1500;
 export const SUPPORTED_MEDIA_TYPES = ["png", "jpg", "jpeg", "gif"];
 export const MARKDOWN_IMAGE_REGEX = /\]\(((..\/){1,}assets.*?)\)/;
