@@ -38,6 +38,7 @@ export const useProceduresForVanillaRequests = async (
   existingknowledgeCategoryInfo: VanillaKnowledgeCategory[],
   completedProcedures?: (VanillaArticle | VanillaKnowledgeCategory)[]
 ): Promise<(VanillaArticle | VanillaKnowledgeCategory)[]> => {
+  logger.info("useProceduresForVanillaRequests");
   const httpClient = httpHandling;
   const tempCompletedProcedures = completedProcedures
     ? [...completedProcedures]
@@ -137,11 +138,11 @@ export const proceduresToVanillaRequests = async ({
     );
 
     logger.info(`Getting Articles`);
-
     const articles = await getAllArticles(
       httpClient,
       existingknowledgeCategoryInfo
     );
+    logger.info(`${JSON.stringify(articles)}`);
 
     logger.info(`Mapping Vanilla responses to procedures`);
     const proceduresWithVanillaCategories = procedures.map((p) => {
@@ -151,7 +152,7 @@ export const proceduresToVanillaRequests = async ({
       return p;
     });
     // add body to article before links and images get added
-
+    logger.info(`${JSON.stringify(proceduresWithVanillaCategories)}`);
     const proceduresWithArticleInfo = addVanillaArticlesToProcedures(
       proceduresWithVanillaCategories,
       articles
@@ -167,15 +168,20 @@ export const proceduresToVanillaRequests = async ({
 
       alteredProceduresWithArticleInfo = alteredProcedures;
     }
-
-    const processedProcedures = await useProceduresForVanillaRequests(
-      alteredProceduresWithArticleInfo,
-      httpClient,
-      existingknowledgeCategoryInfo
-    );
-    logger.info(
-      `processedProcedures: ${JSON.stringify(processedProcedures, null, 2)}`
-    );
+    let processedProcedures = [] as any;
+    try {
+      processedProcedures = await useProceduresForVanillaRequests(
+        alteredProceduresWithArticleInfo,
+        httpClient,
+        existingknowledgeCategoryInfo
+      );
+      logger.info(
+        `processedProcedures: ${JSON.stringify(processedProcedures, null, 2)}`
+      );
+    } catch (e) {
+      logger.info("useProceduresForVanillaRequests error");
+      logger.error(e);
+    }
 
     const combinationOfArticlesAndProcedures = [
       ...processedProcedures,
@@ -201,7 +207,9 @@ export const proceduresToVanillaRequests = async ({
     );
     const deletableCategories = processedProcedures
       .filter(isKnowledgeCategoryType)
-      .filter((c) => c.description === FLAG_FOR_DELETE);
+      .filter(
+        (c: { description: string }) => c.description === FLAG_FOR_DELETE
+      );
 
     const { procedures: finishedProcedures } = await removeDeletedCategories(
       httpClient,
