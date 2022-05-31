@@ -9,7 +9,7 @@ import { removeDeletedArticles } from "./index";
 jest.mock("../VanillaAPI");
 jest.mock("../diffToProcedures");
 jest.mock("../loggingUtil");
-describe("conversion", () => {
+describe.skip("conversion", () => {
   const categories = [
     {
       knowledgeCategoryID: 22,

@@ -42,7 +42,8 @@ export const addVanillaArticlesToProcedures = (
         p,
         vanillaArticles
       );
-
+      logger.info("articleWithVanilla");
+      logger.info(JSON.stringify(articleWithVanilla));
       return articleWithVanilla;
     } else {
       return p;
