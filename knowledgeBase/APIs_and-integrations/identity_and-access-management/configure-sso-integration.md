@@ -6,7 +6,7 @@ Single sign-on is supported using a custom authentication client configured with
 
 - **SP-initiated SSO**
 
-  Service Provider-Initiated (SP-initiated) SSO means when the service provider (SP) initiates SAML authentication. SP-initiated SSO is triggered when you try to access a resource in J1 or sign in directly to a J1 account.
+  Service Provider-Initiated (SP-initiated) SSO means when the service provider (SP) initiates SAML authentication. SP-initiated SSO is triggered when you try to access a resource in J1.
 
 - **JIT (Just In Time) Provisioning**
 
