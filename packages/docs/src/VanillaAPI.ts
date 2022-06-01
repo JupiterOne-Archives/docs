@@ -371,13 +371,26 @@ export const editArticle = async (
     };
 
     if (!isErrorType(article.data)) {
-      if (article.data.body !== null) {
+      if (article?.data?.body !== null) {
+        logger.info(
+          "article.data.body is not null. checking for referencesNeedingUpdatesInMarkdown"
+        );
+
         const referencesNeedingUpdatesInMarkdown =
           getFullMarkdownReferencePathMatches(article.data.body);
+
+        logger.info(
+          `referencesNeedingUpdatesInMarkdown:${JSON.stringify(
+            referencesNeedingUpdatesInMarkdown
+          )}`
+        );
+
         if (
           referencesNeedingUpdatesInMarkdown &&
           referencesNeedingUpdatesInMarkdown.length
         ) {
+          logger.info("returning with referencesNeedingUpdatesInMarkdown...");
+
           return {
             ...edits,
             ...article.data,
@@ -387,6 +400,7 @@ export const editArticle = async (
           };
         }
       }
+
       return { ...article.data, procedureType: ProcedureTypeEnum.Article };
     }
   } catch (e) {

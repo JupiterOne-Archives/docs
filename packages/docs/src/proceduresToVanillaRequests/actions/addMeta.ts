@@ -42,7 +42,6 @@ export const addVanillaArticlesToProcedures = (
         p,
         vanillaArticles
       );
-
       return articleWithVanilla;
     } else {
       return p;
