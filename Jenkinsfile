@@ -8,6 +8,9 @@ pipeline {
     timestamps()
   }
 
+  triggers {
+    cron('0 0 * * *')
+  }
 
   stages {
     stage('Build and scan') {
@@ -74,6 +77,7 @@ pipeline {
       when {
         beforeAgent true
         branch 'vanilla-staging'
+        triggeredBy 'TimerTrigger'
       }
 
       agent {
