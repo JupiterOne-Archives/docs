@@ -7,6 +7,7 @@ import {
   VanillaArticle,
   VanillaKnowledgeCategory,
 } from ".";
+import { logger } from "../loggingUtil";
 
 export const isKnowledgeCategoryType = (
   procedure: VanillaArticle | VanillaKnowledgeCategory
@@ -58,6 +59,8 @@ export const markdownToString = async (filePath?: string): Promise<string> => {
       return blockingReadOfFile.toString();
     }
   } catch (error) {
+    logger.info(`ERROR in markdownToString for ${filePath}`);
+    logger.info(JSON.string(error));
     return FLAG_FOR_DELETE;
   }
 
