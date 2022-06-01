@@ -73,6 +73,7 @@ pipeline {
       when {
         beforeAgent true
         branch 'vanilla-staging'
+        triggeredBy 'TimerTrigger'
       }
 
       agent {
