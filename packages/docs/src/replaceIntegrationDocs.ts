@@ -3,17 +3,16 @@ import { logger } from "./loggingUtil";
 
 const replaceIntegrationDocsWithGitHubRepoDocs = async () => {
   try {
-    const completed = await updateIntegrationArticles();
+    logger.info(
+      "------------ STARTING TO UPDATE INTEGRATIONS DOCS ------------"
+    );
+    await updateIntegrationArticles();
 
     logger.info(
-      `Update integrations from integrationConfig: ${JSON.stringify(
-        completed,
-        null,
-        2
-      )}`
+      "------------ COMPLETED INTEGRATIONS DOCS UPDATES ------------"
     );
   } catch (error) {
-    logger.error(`integrationConfig Errored: \n ${JSON.stringify(error)}`);
+    logger.error(`ERROR UPDATING INTEGRATIONS DOCS: ${JSON.stringify(error)}`);
   }
 };
 export default replaceIntegrationDocsWithGitHubRepoDocs();
