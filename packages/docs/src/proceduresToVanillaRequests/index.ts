@@ -1,7 +1,6 @@
 import HttpClient from "../httpClient";
 import { replaceArticleBodyWithIntegration } from "../integrationHandling";
 import { logger } from "../loggingUtil";
-import { removeDeletedArticles } from "../removeDeletedArticles";
 import { updateArticleInternalMarkdownLinks } from "../updateArticleInternalMarkdownLinks";
 import {
   FLAG_FOR_DELETE,
@@ -216,7 +215,7 @@ export const proceduresToVanillaRequests = async ({
       deletableCategories
     );
     try {
-      await removeDeletedArticles({ httpClient });
+      // await removeDeletedArticles({ httpClient });
     } catch (e) {
       logger.error(`error deleting articles that dont exist`);
     }
