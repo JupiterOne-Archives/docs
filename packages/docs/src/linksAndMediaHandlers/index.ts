@@ -83,9 +83,6 @@ export const getMarkdownImageSrcs = (markdownAsString: string): string[] => {
 export const getFullMarkdownReferencePathMatches = (
   markdownAsString: string
 ): string[] => {
-  if (!markdownAsString) {
-    return [];
-  }
   const markdownAssetRegularExpression = new RegExp(
     MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK_V2,
     "gi"

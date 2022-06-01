@@ -56,7 +56,7 @@ export const updateCommunityDocs = async () => {
         procedures: procedures || [],
       });
 
-      logger.info(`Completed: ${completedProcedures}`);
+      logger.info(`Completed: ${JSON.stringify(completedProcedures)}`);
       return completedProcedures;
     } else {
       logger.info(`Completed - no procedures generated`);
@@ -76,15 +76,16 @@ export const updateIntegrationArticles = async () => {
     .filter((p) => p !== undefined)
     .map((p) => `knowledgeBase/${p}`);
 
-  logger.info(`Updating: ${filterPaths}`);
+  logger.info(`FILTERED PATHS: ${JSON.stringify(filterPaths)}`);
 
   const procedures = await diffToProcedures(filterPaths);
+  logger.info(`${JSON.stringify(procedures)}: procedures`);
   if (procedures && procedures.length > 0) {
     const completedProcedures = await proceduresToVanillaRequests({
       procedures: procedures || [],
       integrationsOnly: true,
     });
-    logger.info(`Completed: ${completedProcedures}`);
+    logger.info(`Completed: ${JSON.stringify(completedProcedures)}`);
     return completedProcedures;
   }
 };
