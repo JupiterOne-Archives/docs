@@ -363,15 +363,12 @@ export const editArticle = async (
   edits: Partial<VanillaArticle>
 ): Promise<VanillaArticle | undefined> => {
   try {
-    logger.info("making patch request...");
     const article = (await client.patch(`/articles/${articleID}`, {
       format: "markdown",
       ...edits,
     })) as {
       data: VanillaArticle | ErrorType;
     };
-
-    logger.info(`article result: ${JSON.stringify(article || {})}`);
 
     if (!isErrorType(article.data)) {
       if (article?.data?.body !== null) {
@@ -406,7 +403,6 @@ export const editArticle = async (
 
       return { ...article.data, procedureType: ProcedureTypeEnum.Article };
     }
-    logger.info("article.data was error type!");
   } catch (e) {
     logger.error(
       `editArticle error: ${JSON.stringify(e)} \n ArticleName: ${articleID}`
