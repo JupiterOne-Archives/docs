@@ -109,6 +109,10 @@ export const replaceArticleBodyWithIntegration = async ({
               procedure.body = bodyWithremovedFirstTitle;
               alteredProcedures[p] = procedure;
               try {
+                logger.info(
+                  `editing article with: articleID: ${procedure.articleID}`
+                );
+
                 await editArticle(httpClient, procedure.articleID, {
                   body: bodyWithremovedFirstTitle,
                 });
