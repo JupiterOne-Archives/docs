@@ -60,7 +60,7 @@ export const markdownToString = async (filePath?: string): Promise<string> => {
     }
   } catch (error) {
     logger.info(`ERROR in markdownToString for ${filePath}`);
-    logger.info(JSON.string(error));
+    logger.info(JSON.stringify(error));
     return FLAG_FOR_DELETE;
   }
 
