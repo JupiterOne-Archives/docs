@@ -76,7 +76,7 @@ export const updateIntegrationArticles = async () => {
     .filter((p) => p !== undefined)
     .map((p) => `knowledgeBase/${p}`);
 
-  logger.info(`Integration articles Updating: ${filterPaths}`);
+  logger.info(`FILTERED PATHS: ${JSON.stringify(filterPaths)}`);
 
   const procedures = await diffToProcedures(filterPaths);
   logger.info(`${JSON.stringify(procedures)}: procedures`);
