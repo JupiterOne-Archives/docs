@@ -2,3 +2,101 @@ integrations:
   - projectName: graph-zendesk
     displayName: Zendesk
     knowledgeCategoriesPaths: APIs_and-integrations/IT-service-management
+  - projectName: graph-slack
+    displayName: Slack
+    knowledgeCategoriesPaths: APIs_and-integrations/workflow
+  - projectName: graph-snipe-it
+    displayName: Snipe-IT
+    knowledgeCategoriesPaths: APIs_and-integrations/IT-service-management
+  - projectName: graph-snowflake
+    displayName: Snowflake
+    knowledgeCategoriesPaths: APIs_and-integrations/cloud-service-provider
+  - projectName: graph-snyk
+    displayName: Snyk
+    knowledgeCategoriesPaths: APIs_and-integrations/application-security
+  - projectName: graph-tenable-io
+    displayName: Tenable.io
+    knowledgeCategoriesPaths: APIs_and-integrations/application-security
+  - projectName: graph-threatstack
+    displayName: ThreatStack
+    knowledgeCategoriesPaths: APIs_and-integrations/EDR
+  - projectName: graph-trend-micro
+    displayName: Trend Micro
+    knowledgeCategoriesPaths: APIs_and-integrations/EDR
+  - projectName: graph-veracode
+    displayName: Veracode
+    knowledgeCategoriesPaths: APIs_and-integrations/application-security
+  - projectName: graph-vuls-findings
+    displayName: Vuls Findings
+  - projectName: graph-wazuh
+    displayName: Wazuh
+    knowledgeCategoriesPaths: APIs_and-integrations/EDR
+  - projectName: graph-whitehat
+    displayName: WhiteHat
+    knowledgeCategoriesPaths: APIs_and-integrations/application-security
+  - projectName: graph-whois
+    displayName: Whois
+    knowledgeCategoriesPaths: APIs_and-integrations/other
+  - projectName: graph-salesforce
+    displayName: Salesforce
+    knowledgeCategoriesPaths: APIs_and-integrations/CRM
+  - projectName: graph-wpengine
+    displayName: WordPress Engine
+    knowledgeCategoriesPaths: APIs_and-integrations/app-hosting
+  - projectName: graph-sentinelone
+    displayName: SentinelOne
+    knowledgeCategoriesPaths: APIs_and-integrations/EDR
+  - projectName: graph-signal-sciences
+    displayName: Signal Sciences
+    knowledgeCategoriesPaths: APIs_and-integrations/application-security
+  - projectName: graph-zoom
+    displayName: Zoom
+    knowledgeCategoriesPaths: APIs_and-integrations/workflow
+  - projectName: graph-aquasec
+    displayName: Aqua Security
+    knowledgeCategoriesPaths: APIs_and-integrations/workload-protection
+  - projectName: graph-addigy
+    displayName: Addigy
+    knowledgeCategoriesPaths: APIs_and-integrations/EDM
+  - projectName: graph-rumble
+    displayName: Rumble
+    knowledgeCategoriesPaths: APIs_and-integrations/network
+  - projectName: graph-mimecast
+    displayName: Mimecast
+    knowledgeCategoriesPaths: APIs_and-integrations/training
+  - projectName: graph-sentry
+    displayName: Sentry
+    knowledgeCategoriesPaths: APIs_and-integrations/application-security
+  - projectName: graph-datadog
+    displayName: Datadog
+    knowledgeCategoriesPaths: APIs_and-integrations/SIEM
+  - projectName: graph-microsoft-active-directory
+    displayName: Microsoft Active Directory
+    knowledgeCategoriesPaths: APIs_and-integrations/identity_and-access-management
+  - projectName: graph-asana
+    displayName: Asana
+    knowledgeCategoriesPaths: APIs_and-integrations/workflow
+  - projectName: graph-automox
+    displayName: Automox
+    knowledgeCategoriesPaths: APIs_and-integrations/device-management
+  - projectName: graph-circleci
+    displayName: CircleCI
+    knowledgeCategoriesPaths: APIs_and-integrations/code
+  - projectName: graph-cloudbees
+    displayName: CloudBees
+    knowledgeCategoriesPaths: APIs_and-integrations/code
+  - projectName: graph-hexnode
+    displayName: Hexnode
+    knowledgeCategoriesPaths: APIs_and-integrations/device-management
+  - projectName: graph-orca
+    displayName: Orca
+    knowledgeCategoriesPaths: APIs_and-integrations/device-management
+  - projectName: graph-pingidentity
+    displayName: Ping Identity
+    knowledgeCategoriesPaths: APIs_and-integrations/identity_and-access-management
+  - projectName: graph-travisci
+    displayName: Travis CI
+    knowledgeCategoriesPaths: APIs_and-integrations/code
+  - projectName: graph-zendesk
+    displayName: Zendesk
+    knowledgeCategoriesPaths: APIs_and-integrations/IT-service-management
