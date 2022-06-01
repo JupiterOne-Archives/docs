@@ -214,7 +214,7 @@ describe("conversion", () => {
 
       expect(actual).toEqual(expected);
     });
-    it(" Marks kcategories AS deleted when missing kcategory file and knowledgeCategoryID", async () => {
+    it("Marks kcategories AS deleted when missing kcategory file and knowledgeCategoryID", async () => {
       const knowledgeCategoryID = null;
       jest.doMock("../../utils", () => ({
         mockDirectoryExists: jest.fn(() => false),
@@ -235,7 +235,7 @@ describe("conversion", () => {
       expect(actual.description).toEqual(KNOWN_CATEGORY_BEEN_DELETED);
     });
 
-    it(" Marks kcategories for delete when kcategory file does not exist", async () => {
+    it("Marks kcategories for delete when kcategory file does not exist", async () => {
       const knowledgeCategoryID = 111;
       jest.doMock("../../utils", () => ({
         mockDirectoryExists: jest.fn(() => false),
