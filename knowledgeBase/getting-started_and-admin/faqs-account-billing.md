@@ -48,25 +48,40 @@ return
 
 <details><summary>Billable Entities Table</summary>
 
-    Entity             | Description             | Billable
-    ------             | -----------             | --------
-    `AccessKey`        | A key used to grant access, such as ssh-key, access-key, api-key/token, mfa-token/device, etc. | Yes 
-    `AccessPolicy`     | A policy for access control assigned to a Host, Role, User, UserGroup, or Service. | Yes 
-    `AccessRole`       | An access control role mapped to a Principal (e.g. user, group, or service). | Yes 
-    `Account`          | An organizational account for a service or a set of services (e.g. AWS, Okta, Bitbucket Team, Google G-Suite account, Apple Developer Account). Each Account should be connected to a Service. | Yes 
-    `Application`      | A software product or application. | Yes 
-    `ApplicationEndpoint` | An application endpoint is a program interface that either initiates or receives a request, such as an API. | Yes 
-    `Assessment`       | An object to represent an assessment, including both compliance assessment such as a HIPAA Risk Assessment or a technical assessment such as a Penetration Testing. Each assessment should have findings (e.g. Vulnerability or Risk) associated. | Yes 
-    `Attacker`         | An attacker or threat actor. | Yes 
-    `Backup`           | A specific repository or data store containing backup data. | Yes 
-    `Certificate`      | A digital Certificate such as an SSL or S/MIME certificate. | Yes 
-    `Channel`          | A communication channel, such as a Slack channel or AWS SNS topic. | Yes 
-    `Cluster`          | A cluster of compute or database resources/workloads. | Yes 
-    `CodeCommit`       | A code commit to a repo. The commit id is captured in the _id property of the Entity. | No 
-    `CodeDeploy`       | A code deploy job. | Yes 
-    `CodeModule`       | A software module. Such as an npm_module or java_library. | Yes 
-    `CodeRepo`         | A source code repository. A CodeRepo is also a DataRepository therefore should carry all the required properties of DataRepository. | Yes 
-    `CodeReview`       | A code review record. | Yes 
+    Entity            		 | Description             						| Billable
+    ------            		 | -----------             						| --------
+    `AccessKey`       		 | A key used to grant access, such as ssh-key, 
+    				 		 | access-key, api-key/token, mfa-token/device, etc. | Yes 
+    `AccessPolicy`     		 | A policy for access control assigned to a 
+    						   Host, Role, User, UserGroup, or Service. | Yes 
+    `AccessRole`       		 | An access control role mapped to a Principal 
+    						   (e.g. user, group, or service). | Yes 
+    `Account`         		 | An organizational account for a service 
+    						   or a set of services (e.g. AWS, Okta, Bitbucket 
+    						   Team, Google G-Suite account, Apple Developer 
+    						   Account). Each Account should be connected to a Service. | Yes 
+    `Application`      		 | A software product or application. | Yes 
+    `ApplicationEndpoint` 	 | An application endpoint is a program interface 
+    						   that either initiates or receives a request, such as an API. | Yes 
+    `Assessment`       		 | An object to represent an assessment, including 
+    						   both compliance assessment such as a HIPAA Risk 
+    						   Assessment or a technical assessment such as a 
+    						   Penetration Testing. Each assessment should have 
+    						   findings (e.g. Vulnerability or Risk) associated. | Yes 
+    `Attacker`         		 | An attacker or threat actor. | Yes 
+    `Backup`           		 | A specific repository or data store containing backup data. | Yes 
+    `Certificate`     		 | A digital Certificate such as an SSL or S/MIME certificate. | Yes 
+    `Channel`          		 | A communication channel, such as a Slack channel 
+    						   or AWS SNS topic. | Yes 
+    `Cluster`           	 | A cluster of compute or database resources/workloads. | Yes 
+    `CodeCommit`        	 | A code commit to a repo. The commit id is captured 
+    						   in the _id property of the Entity. | No 
+    `CodeDeploy`       		 | A code deploy job. | Yes 
+    `CodeModule`       		 | A software module. Such as an npm_module or java_library. | Yes 
+    `CodeRepo`         		 | A source code repository. A CodeRepo is also a 
+    						   DataRepository therefore should carry all the 
+    						   required properties of DataRepository. | Yes 
+    `CodeReview`       		 | A code review record. | Yes 
     `Configuration`    | A Configuration contains definitions that describe a resource such as a Task, Deployment or Workload. For example, an `aws_ecs_task_definition` is a `Configuration`. | Yes 
     `Container`        | A standard unit of software that packages up code and all its dependencies and configurations. | Yes 
     `Control`          | A security or IT Control. A control can be implemented by a vendor/service, a person/team, a program/process, an automation code/script/configuration, or a system/host/device. Therefore, this is most likely an additional Class applied to a Service (e.g. Okta SSO), a Device (e.g. a physical firewall), or a HostAgent (e.g. Carbon Black CbDefense Agent). Controls are mapped to security policy procedures and compliance standards/requirements. | Yes 
