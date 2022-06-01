@@ -8,10 +8,6 @@ pipeline {
     timestamps()
   }
 
-  triggers {
-    cron('0 0 * * *')
-  }
-
   stages {
     stage('Build and scan') {
       agent {
