@@ -196,32 +196,68 @@ return
     						   Vulnerability/Weakness). The exact record type is captured in 
     						   the _type property of the Entity. | No 
     `Repository`       		  | A repository that contains resources. For example, a Docker
-    						 container registry repository hosting Docker container images. | Yes 
-    `Requirement`      | An individual requirement for security, compliance, regulation or design. | Yes 
-    `Resource`         | A generic assignable resource. A resource is typically non-functional by itself unless used by or attached to a host or workload. | Yes 
-    `Review`           | A review record. | Yes 
-    `Risk`             | An object that represents an identified Risk as the result of an Assessment. The collection of Risk objects in JupiterOne make up the Risk Register. A Control may have a `MITIGATES` relationship to a Risk. | Yes 
-    `Root`             | The root node in the graph. There should be only one Root node per organization account. | Yes 
-    `Rule`             | An operational or configuration compliance rule, often part of a Ruleset. | Yes 
-    `Ruleset`          | An operational or configuration compliance ruleset with rules that govern (or enforce, evaluate, monitor) a security control or IT system. | Yes 
-    `Scanner`          | A system vulnerability, application code or network infrastructure scanner. | Yes 
-    `Section`          | An object to represent a section such as a compliance section. | Yes 
-    `Service`          | A service provided by a vendor. | Yes 
-    `Site`             | The physical location of an organization. A Person (i.e. employee) would typically has a relationship to a Site (i.e. located_at or work_at). Also used as the abstract reference to AWS Regions. | Yes 
-    `Standard`         | An object to represent a standard such as a compliance or technical standard. | Yes 
-    `Subscription`     | A subscription to a service or channel. | Yes 
-    `Task`             | A computational task. Examples include AWS Batch Job, ECS Task, etc. | Yes 
-    `Team`             | A team consists of multiple member Person entities. For example, the Development team or the Security team. | Yes 
-    `ThreatIntel`      | Threat intelligence captures information collected from vulnerability risk analysis by those with substantive expertise and access to all-source information. Threat intelligence helps a security professional determine the risk of a vulnerability finding to their organization. | Yes 
-    `Training`         | A training module, such as a security awareness training or secure development training. | Yes 
-    `User`             | A user account/login to access certain systems and/or services. Examples include okta-user, aws-iam-user, ssh-user, local-user (on a host), etc. | Yes 
-    `UserGroup`        | A user group, typically associated with some type of access control, such as a group in Okta or in Office365. If a UserGroup has an access policy attached, and all member Users of the UserGroup would inherit the policy. | Yes 
-    `Vault`            | A collection of secrets such as a key ring | Yes 
-    `Vendor`           | An external organization that is a vendor or service provider. | Yes 
-    `Vulnerability`    | A security vulnerability (application or system or infrastructure). A single vulnerability may relate to multiple findings and impact multiple resources. The `IMPACTS` relationship between the Vulnerability and the resource entity that was impacted serves as the record of the finding. The `IMPACTS` relationship carries properties such as 'identifiedOn', 'remediatedOn', 'remediationDueOn', 'issueLink', etc. | Yes 
-    `Weakness`         | A security weakness. | Yes 
-    `Workload`         | A virtual compute instance, it could be an aws-ec2-instance, a docker-container, an aws-lambda-function, an application-process, or a vmware-instance. The exact workload type is described in the _type property of the Entity. | Yes 
-    \[System Mapped Entities\]   | Entities with `_source='system-mapper'`   | No 
+    						    container registry repository hosting Docker container 
+    							images. | Yes 
+    `Requirement`      		  | An individual requirement for security, compliance, 
+    							regulation or design. | Yes 
+    `Resource`         		  | A generic assignable resource. A resource is typically 
+    							non-functional by itself unless used by or attached to a host 
+    							or workload. | Yes 
+    `Review`           		  | A review record. | Yes 
+    `Risk`             		  | An object that represents an identified Risk as the result of 
+    						    an Assessment. The collection of Risk objects in JupiterOne make 
+    							up the Risk Register. A Control may have a `MITIGATES` relationship
+    						    to a Risk. | Yes 
+    `Root`             		  | The root node in the graph. There should be only one Root node 
+    						    per organization account. | Yes 
+    `Rule`             		  | An operational or configuration compliance rule, often part of 
+    							a Ruleset. | Yes 
+    `Ruleset`          		  | An operational or configuration compliance ruleset with rules 
+    							that govern (or enforce, evaluate, monitor) a security control 
+    							or IT system. | Yes 
+    `Scanner`          		  | A system vulnerability, application code or network infrastructure
+    						    scanner. | Yes 
+    `Section`          		  | An object to represent a section such as a compliance section. | Yes 
+    `Service`          		  | A service provided by a vendor. | Yes 
+    `Site`             		  | The physical location of an organization. A Person (i.e. employee)
+    						    would typically has a relationship to a Site (i.e. located_at or
+    						    work_at). Also used as the abstract reference to AWS Regions. | Yes 
+    `Standard`         		  | An object to represent a standard such as a compliance or 
+    							technical standard. | Yes 
+    `Subscription`     		  | A subscription to a service or channel. | Yes 
+    `Task`             		  | A computational task. Examples include AWS Batch Job, ECS 
+    							Task, etc. | Yes 
+    `Team`             		  | A team consists of multiple member Person entities. For example, 
+    						    the Development team or the Security team. | Yes 
+    `ThreatIntel`      		  | Threat intelligence captures information collected from
+    							vulnerability risk analysis by those with substantive expertise 
+    							and access to all-source information. Threat intelligence helps a
+    							security professional determine the risk of a vulnerability 
+    							finding to their organization. | Yes 
+    `Training`         		  | A training module, such as a security awareness training or secure
+    							development training. | Yes 
+    `User`             		  | A user account/login to access certain systems and/or services.
+    						    Examples include okta-user, aws-iam-user, ssh-user, local-user (on
+    							a host), etc. | Yes 
+    `UserGroup`        		  | A user group, typically associated with some type of access 
+    							control, such as a group in Okta or in Office365. If a UserGroup
+    							has an access policy attached, and all member Users of the
+    							UserGroup would inherit the policy. | Yes 
+    `Vault`            		  | A collection of secrets such as a key ring | Yes 
+    `Vendor`           		  | An external organization that is a vendor or service provider. | Yes 
+    `Vulnerability`    		  | A security vulnerability (application or system or infrastructure).
+    						    A single vulnerability may relate to multiple findings and impact
+    							multiple resources. The `IMPACTS` relationship between the
+    							Vulnerability and the resource entity that was impacted serves as
+    							the record of the finding. The `IMPACTS` relationship carries
+    						    properties such as 'identifiedOn', 'remediatedOn',
+    						    'remediationDueOn', 'issueLink', etc. | Yes 
+    `Weakness`         		  | A security weakness. | Yes 
+    `Workload`         		  | A virtual compute instance, it could be an aws-ec2-instance, a
+    						    docker-container, an aws-lambda-function, an application-process,
+    							or a vmware-instance. The exact workload type is described in the
+    						    _type property of the Entity. | Yes 
+    \[System Mapped Entities\] 		| Entities with `_source='system-mapper'`   | No 
     \[System Internal Entities\] | Entities with `_source='system-internal'` | No 
     \[Custom Created Entities\]  | Entities created with a custom-defined _class or _type | Yes 
 </details>
