@@ -43,6 +43,12 @@ Optional OAuth scopes:
 *   `global`
     *   Allows for fetching members of a Heroku team
 
+The account used to generate the API key will dictate what permissions it has.
+For full access to all available data, an account with the `admin` role should
+be used. Using an account with the `member` role will be able to pull in most
+data, but currently application add-on information is only available using the
+`admin` role.
+
 ### In JupiterOne
 
 1.  From the configuration **Gear Icon**, select **Integrations**.
@@ -114,4 +120,4 @@ END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
  
-<!--  jupiterOneDocVersion=2-3-2 -->
+<!--  jupiterOneDocVersion=2-3-3 -->

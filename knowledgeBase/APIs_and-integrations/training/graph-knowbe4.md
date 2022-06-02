@@ -1,25 +1,25 @@
-# Integration with JupiterOne
+# Knowbe4 Integration with JupiterOne
 
 ## KnowBe4 + JupiterOne Integration Benefits
 
-- Visualize KnowBe4 user groups, users, training campaigns, and modules in the
-  JupiterOne graph.
-- Map KnowBe4 users and their associated trainings to the JupiterOne employee.
-- Monitor changes to user groups, users, training campaigns, and modules using
-  JupiterOne alerts.
+*   Visualize KnowBe4 user groups, users, training campaigns, and modules in the
+    JupiterOne graph.
+*   Map KnowBe4 users and their associated trainings to the JupiterOne employee.
+*   Monitor changes to user groups, users, training campaigns, and modules using
+    JupiterOne alerts.
 
 ## How it Works
 
-- JupiterOne periodically fetches KnowBe4 groups, users, and trainings to update
-  the graph.
-- Write JupiterOne queries to review and monitor updates to the graph.
-- Configure alerts to take action when the JupiterOne graph changes.
+*   JupiterOne periodically fetches KnowBe4 groups, users, and trainings to update
+    the graph.
+*   Write JupiterOne queries to review and monitor updates to the graph.
+*   Configure alerts to take action when the JupiterOne graph changes.
 
 ## Requirements
 
-- JupiterOne requires the site for where your account is located and an API
-  key/token.
-- You must have permission in JupiterOne to install new integrations.
+*   JupiterOne requires the site for where your account is located and an API
+    key/token.
+*   You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
@@ -31,41 +31,47 @@ If you need help with this integration, please contact
 ### In KnowBe4
 
 You can generate a new key in your
-[KnowBe4 Account Settings](https://training.knowbe4.com/account/info) under the
-API section. Be sure to request a key for the **Reporting API** not the **User
-Event API**. KnowBe4 APIs are available to Platinum and Diamond customers. See
-the [KnowBe4 API Reference Guide](https://developer.knowbe4.com/reporting/) for
-more info.
+[KnowBe4 Account Settings](https://training.knowbe4.com/account/info#api-settings)
+under the API section. Be sure to request a key for the **Reporting API** not
+the **User Event API**. After checking the `Enabled Reporting API Access`
+checkbox, you must press the `Save Changes` button at the bottom. Refresh the
+page to ensure that the changes were saved. Once confirmed, copy the API Token.
+It'll be used in the next section.
+
+KnowBe4 APIs are available to Platinum and Diamond customers only. See the
+[KnowBe4 API Reference Guide](https://developer.knowbe4.com/reporting/) for more
+info.
 
 ### In JupiterOne
 
-1. From the configuration **Gear Icon**, select **Integrations**.
-2. Scroll to the **KnowBe4** integration tile and click it.
-3. Click the **Add Configuration** button and configure the following settings:
+1.  From the configuration **Gear Icon**, select **Integrations**.
+2.  Scroll to the **KnowBe4** integration tile and click it.
+3.  Click the **Add Configuration** button and configure the following settings:
 
-- Enter the **Account Name** by which you'd like to identify this KnowBe4
-  account in JupiterOne. Ingested entities will have this value stored in
-  `tag.AccountName` when **Tag with Account Name** is checked.
-- Enter a **Description** that will further assist your team when identifying
-  the integration instance.
-- Select a **Polling Interval** that you feel is sufficient for your monitoring
-  needs. You may leave this as `DISABLED` and manually execute the integration.
-- Enter the **Site** of your KnowBe4 account, either US or EU.
-- Enter the **API Key** configured in your KnowBe4 account.
+*   Enter the **Account Name** by which you'd like to identify this KnowBe4
+    account in JupiterOne. Ingested entities will have this value stored in
+    `tag.AccountName` when **Tag with Account Name** is checked.
+*   Enter a **Description** that will further assist your team when identifying
+    the integration instance.
+*   Select a **Polling Interval** that you feel is sufficient for your monitoring
+    needs. You may leave this as `DISABLED` and manually execute the integration.
+*   Enter the **Site** of your KnowBe4 account, either US or EU.
+*   Enter the **API Key** configured in your KnowBe4 account.
 
-4. Click **Create Configuration** once all values are provided.
+4.  Click **Create Configuration** once all values are provided.
 
 ## How to Uninstall
 
-1. From the configuration **Gear Icon**, select **Integrations**.
-2. Scroll to the **KnowBe4** integration tile and click it.
-3. Identify and click the **integration to delete**.
-4. Click the **trash can** icon.
-5. Click the **Remove** button to delete the integration.
+1.  From the configuration **Gear Icon**, select **Integrations**.
+2.  Scroll to the **KnowBe4** integration tile and click it.
+3.  Identify and click the **integration to delete**.
+4.  Click the **trash can** icon.
+5.  Click the **Remove** button to delete the integration.
 
 [knowbe4 account settings]: https://training.knowbe4.com/account/info
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
+
 <!--
 ********************************************************************************
 NOTE: ALL OF THE FOLLOWING DOCUMENTATION IS GENERATED USING THE
@@ -117,4 +123,7 @@ The following relationships are created:
 END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 ********************************************************************************
 -->
+
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
+ 
+<!--  jupiterOneDocVersion=2-3-0 -->

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { promises as fs, existsSync } from "fs";
+import { promises as fs } from "fs";
 import * as yaml from "js-yaml";
 import path from "path";
 import { formatIntegrationFileContents } from "./format.js";
@@ -73,25 +73,15 @@ const createDirIfNotExist = async (dirPath) => {
 };
 
 const createFileIfNotExist = async (docFilePath, githubFileContents) => {
-  let exists = false;
-  if (existsSync(docFilePath)) {
-    exists = true;
-  } else {
-    exists = false;
+  try {
+    await fs.writeFile(docFilePath, githubFileContents, {
+      encoding: "utf-8",
+    });
+    return true;
+  } catch (e) {
+    console.log(e, "WRITE Error", docFilePath);
+    return false;
   }
-
-  if (!exists) {
-    try {
-      await fs.writeFile(docFilePath, githubFileContents, {
-        encoding: "utf-8",
-      });
-      return true;
-    } catch (e) {
-      console.log(e, "WRITE Error", docFilePath);
-      return false;
-    }
-  }
-  return false;
 };
 
 async function generateRenderableIntegrationConfigs(integrationConfigs) {
@@ -202,16 +192,9 @@ const createAllIntegrationProjectDocFilesFromConfig = async (
         `${markdownName.replace(/\s/g, "-")}.md`
       );
 
-      const createChange = await createFileIfNotExist(
-        docFilePath,
-        githubFileContents
-      );
+      await createFileIfNotExist(docFilePath, githubFileContents);
 
-      if (createChange) {
-        changes.push({ githubFileContents, version, projectName });
-      } else {
-        existing.push({ githubFileContents, version, projectName });
-      }
+      changes.push({ githubFileContents, version, projectName });
     }
   }
   return { changes, existing };
