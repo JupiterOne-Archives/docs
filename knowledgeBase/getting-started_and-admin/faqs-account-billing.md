@@ -82,53 +82,121 @@ return
     						   DataRepository therefore should carry all the 
     						   required properties of DataRepository. | Yes 
     `CodeReview`       		 | A code review record. | Yes 
-    `Configuration`    | A Configuration contains definitions that describe a resource such as a Task, Deployment or Workload. For example, an `aws_ecs_task_definition` is a `Configuration`. | Yes 
-    `Container`        | A standard unit of software that packages up code and all its dependencies and configurations. | Yes 
-    `Control`          | A security or IT Control. A control can be implemented by a vendor/service, a person/team, a program/process, an automation code/script/configuration, or a system/host/device. Therefore, this is most likely an additional Class applied to a Service (e.g. Okta SSO), a Device (e.g. a physical firewall), or a HostAgent (e.g. Carbon Black CbDefense Agent). Controls are mapped to security policy procedures and compliance standards/requirements. | Yes 
-    `ControlPolicy`    | An technical or operational policy with rules that govern (or enforce, evaluate, monitor) a security control. | Yes 
-    `CryptoKey`        | A key used to perform cryptographic functions, such as an encryption key. | Yes 
-    `DataObject`       | An individual data object, such as an aws-s3-object, sharepoint-document, source-code, or a file (on disk). The exact data type is described in the _type property of the Entity. | No 
-    `DataStore`        | A virtual repository where data is stored, such as aws-s3-bucket, aws-rds-cluster, aws-dynamodb-table, bitbucket-repo, sharepoint-site, docker-registry. The exact type is described in the _type property of the Entity. | Yes 
-    `Database`         | A database cluster/instance. | Yes 
-    `Deployment`       | A deployment of code, application, infrastructure or service. For example, a Kubernetes deployment. An auto scaling group is also considered a deployment. | Yes 
-    `Device`           | A physical device or media, such as a server, laptop, workstation, smartphone, tablet, router, firewall, switch, wifi-access-point, usb-drive, etc. The exact data type is described in the _type property of the Entity. | Yes 
-    `Directory`        | Directory, such as LDAP or Active Directory. | Yes 
-    `Disk`             | A disk storage device such as an AWS EBS volume | Yes 
-    `Document`         | A document or data object. | No 
-    `Domain`           | An internet domain. | Yes 
-    `DomainRecord`     | The DNS Record of a Domain Zone. | No 
-    `DomainZone`       | The DNS Zone of an Internet Domain. | Yes 
-    `Finding`          | A security finding, which may be a vulnerability or just an informative issue. A single finding may impact one or more resources. The `IMPACTS` relationship between the Vulnerability and the resource entity that was impacted serves as the record of the finding. The `IMPACTS` relationship carries properties such as 'identifiedOn', 'remediatedOn', 'remediationDueOn', 'issueLink', etc. | No 
-    `Firewall`         | A piece of hardware or software that protects a network/host/application. | Yes 
-    `Framework`        | An object to represent a standard compliance or technical security framework. | Yes 
-    `Function`         | A virtual application function. For example, an aws_lambda_function, azure_function, or google_cloud_function | Yes 
-    `Gateway`          | A gateway/proxy that can be a system/appliance or software service, such as a network router or application gateway. | Yes 
-    `Group`            | A defined, generic group of Entities. This could represent a group of Resources, Users, Workloads, DataRepositories, etc. | Yes 
-    `Host`             | A compute instance that itself owns a whole network stack and serves as an environment for workloads. Typically it runs an operating system. The exact host type is described in the _type property of the Entity. The UUID of the host should be captured in the _id property of the Entity | Yes 
-    `HostAgent`        | A software agent or sensor that runs on a host/endpoint. | Yes 
-    `Image`            | A system image. For example, an AWS AMI (Amazon Machine Image). | No 
-    `Incident`         | An operational or security incident. | Yes 
-    `Internet`         | The Internet node in the graph. There should be only one Internet node. | No 
-    `IpAddress`        | An re-assignable IpAddress resource entity. Do not create an entity for an IP Address _configured_ on a Host. Use this only if the IP Address is a reusable resource, such as an Elastic IP Address object in AWS. | No 
-    `Key`              | An ssh-key, access-key, api-key/token, pgp-key, etc. | Yes 
-    `Logs`             | A specific repository or destination containing application, network, or system logs. | Yes 
-    `Module`           | A software or hardware module. Such as an npm_module or java_library. | Yes 
-    `Network`          | A network, such as an aws-vpc, aws-subnet, cisco-meraki-vlan. | Yes 
-    `NetworkEndpoint`  | A network endpoint for connecting to or accessing network resources. For example, NFS mount targets or VPN endpoints. | Yes 
-    `NetworkInterface` | An re-assignable software defined network interface resource entity. Do not create an entity for a network interface _configured_ on a Host. Use this only if the network interface is a reusable resource, such as an Elastic Network Interface object in AWS. | No 
-    `Organization`     | An organization, such as a company (e.g. JupiterOne) or a business unit (e.g. HR). An organization can be internal or external. Note that there is a more specific Vendor class. | Yes 
-    `PR`               | A pull request. | No 
-    `PasswordPolicy`   | A password policy is a specific `Ruleset`. It is separately defined because of its pervasive usage across digital environments and the well known properties (such as length and complexity) unique to a password policy. | Yes 
-    `Person`           | An entity that represents an actual person, such as an employee of an organization. | Yes 
-    `Policy`           | A written policy documentation. | Yes 
-    `Procedure`        | A written procedure and control documentation. A Procedure typically `IMPLEMENTS` a parent Policy. An actual Control further `IMPLEMENTS` a Procedure. | Yes 
-    `Process`          | A compute process -- i.e. an instance of a computer program / software application that is being executed by one or many threads. This is NOT a program level operational process (i.e. a Procedure). | Yes 
-    `Product`          | A product developed by the organization, such as a software product. | Yes 
-    `Program`          | A program. For example, a bug bounty/vuln disclosure program. | Yes 
-    `Project`          | A software development project. Can be used for other generic projects as well but the defined properties are geared towards software development projects. | Yes 
-    `Queue`            | A scheduling queue of computing processes or devices. | Yes 
-    `Record`           | A DNS record; or an official record (e.g. Risk); or a written document (e.g. Policy/Procedure); or a reference (e.g. Vulnerability/Weakness). The exact record type is captured in the _type property of the Entity. | No 
-    `Repository`       | A repository that contains resources. For example, a Docker container registry repository hosting Docker container images. | Yes 
+    `Configuration`    		 | A Configuration contains definitions that describe 
+    						   a resource such as a Task, Deployment or Workload. 
+    						   For example, an `aws_ecs_task_definition` is a 
+    						   `Configuration`. | Yes 
+    `Container`        		 | A standard unit of software that packages up code and 
+    						   all its dependencies and configurations. | Yes 
+    `Control`          		 | A security or IT Control. A control can be implemented 
+    						   by a vendor/service, a person/team, a program/process, 
+    						   an automation code/script/configuration, or a system/host/device.
+    						   Therefore, this is most likely an additional Class applied to a
+    						   Service (e.g. Okta SSO), a Device (e.g. a physical firewall), or 
+    						   a HostAgent (e.g. Carbon Black CbDefense Agent). Controls are 
+    						   mapped to security policy procedures and compliance
+    						   standards/requirements. | Yes 
+    `ControlPolicy`    		 | An technical or operational policy with rules that govern 
+    						   (or enforce, evaluate, monitor) a security control. | Yes 
+    `CryptoKey`        		 | A key used to perform cryptographic functions, such as an 
+    						   encryption key. | Yes 
+    `DataObject`       		 | An individual data object, such as an aws-s3-object, 
+    						   sharepoint-document, source-code, or a file (on disk). 
+    						   The exact data type is described in the _type property of 
+    						   the Entity. | No 
+    `DataStore`        		 | A virtual repository where data is stored, such as aws-s3-bucket,
+    						   aws-rds-cluster, aws-dynamodb-table, bitbucket-repo, sharepoint-
+    						   site, docker-registry. The exact type is described in the _type
+    						   property of the Entity. | Yes 
+    `Database`         		  | A database cluster/instance. | Yes 
+    `Deployment`       		  | A deployment of code, application, infrastructure or service. For
+    						    example, a Kubernetes deployment. An auto scaling group is also 
+    						    considered a deployment. | Yes 
+    `Device`           		  | A physical device or media, such as a server, laptop, workstation,
+    						    smartphone, tablet, router, firewall, switch, wifi-access-point,
+    							usb-drive, etc. The exact data type is described in the _type
+    						    property of the Entity. | Yes 
+    `Directory`        		  | Directory, such as LDAP or Active Directory. | Yes 
+    `Disk`             		  | A disk storage device such as an AWS EBS volume | Yes 
+    `Document`         		  | A document or data object. | No 
+    `Domain`           		  | An internet domain. | Yes 
+    `DomainRecord`     		  | The DNS Record of a Domain Zone. | No 
+    `DomainZone`       		  | The DNS Zone of an Internet Domain. | Yes 
+    `Finding`          		  | A security finding, which may be a vulnerability or just 
+    							an informative issue. A single finding may impact one or more
+    						    resources. The `IMPACTS` relationship between the Vulnerability 
+    							and the resource entity that was impacted serves as the record 
+    							of the finding. The `IMPACTS` relationship carries properties 
+    							such as 'identifiedOn', 'remediatedOn', 'remediationDueOn',
+    							'issueLink', etc. | No 
+    `Firewall`         		  | A piece of hardware or software that protects a
+    						    network/host/application. | Yes 
+    `Framework`        		  | An object to represent a standard compliance or technical 
+    						    security framework. | Yes 
+    `Function`         		  | A virtual application function. For example, an aws_lambda_function, 
+    						    azure_function, or google_cloud_function | Yes 
+    `Gateway`          		  | A gateway/proxy that can be a system/appliance or software 
+    						    service, such as a network router or application gateway. | Yes 
+    `Group`            		  | A defined, generic group of Entities. This could represent a group
+    						    of Resources, Users, Workloads, DataRepositories, etc. | Yes 
+    `Host`             		  | A compute instance that itself owns a whole network stack and 
+    						    serves as an environment for workloads. Typically it runs an
+    							operating system. The exact host type is described in the _type
+    							property of the Entity. The UUID of the host should be captured in
+    							the _id property of the Entity | Yes 
+    `HostAgent`        		  | A software agent or sensor that runs on a host/endpoint. | Yes 
+    `Image`            		  | A system image. For example, an AWS AMI (Amazon Machine Image). | No 
+    `Incident`         		  | An operational or security incident. | Yes 
+    `Internet`         		  | The Internet node in the graph. There should be only one 
+    						    Internet node. | No 
+    `IpAddress`        		  | An re-assignable IpAddress resource entity. Do not create an entity
+    							for an IP Address _configured_ on a Host. Use this only if the IP
+    							Address is a reusable resource, such as an Elastic IP Address
+    							object in AWS. | No 
+    `Key`              		  | An ssh-key, access-key, api-key/token, pgp-key, etc. | Yes 
+    `Logs`             		  | A specific repository or destination containing application,
+    							network, or system logs. | Yes 
+    `Module`           		  | A software or hardware module. Such as an npm_module or
+    							java_library. | Yes 
+    `Network`          		  | A network, such as an aws-vpc, aws-subnet, cisco-meraki-vlan. | Yes 
+    `NetworkEndpoint`  		  | A network endpoint for connecting to or accessing network 
+    						    resources. For example, NFS mount targets or VPN endpoints. | Yes 
+    `NetworkInterface` 		  | An re-assignable software defined network interface resource 
+    						    entity. Do not create an entity for a network interface
+    							_configured_ on a Host. Use this only if the network interface 
+    							is a reusable resource, such as an Elastic Network Interface 
+    							object in AWS. | No 
+    `Organization`     		  | An organization, such as a company (e.g. JupiterOne) or a 
+    							business unit (e.g. HR). An organization can be internal or
+    						    external. Note that there is a more specific Vendor class. | Yes 
+    `PR`               		  | A pull request. | No 
+    `PasswordPolicy`   		  | A password policy is a specific `Ruleset`. It is separately 
+    							defined because of its pervasive usage across digital environments
+    							and the well known properties (such as length and complexity)
+    							unique to a password policy. | Yes 
+    `Person`           		  | An entity that represents an actual person, such as an employee 
+    						    of an organization. | Yes 
+    `Policy`           		  | A written policy documentation. | Yes 
+    `Procedure`        		  | A written procedure and control documentation. A Procedure 
+    						    typically `IMPLEMENTS` a parent Policy. An actual Control 
+    							further `IMPLEMENTS` a Procedure. | Yes 
+    `Process`           	  | A compute process -- i.e. an instance of a computer program /
+    							software application that is being executed by one or many threads.
+    							This is NOT a program level operational process (i.e. a 
+    							Procedure). | Yes 
+    `Product`          		  | A product developed by the organization, such as a software 
+    						    product. | Yes 
+    `Program`          		  | A program. For example, a bug bounty/vuln disclosure program. | Yes 
+    `Project`          		  | A software development project. Can be used for other generic
+    							projects as well but the defined properties are geared towards
+    						    software development projects. | Yes 
+    `Queue`            		  | A scheduling queue of computing processes or devices. | Yes 
+    `Record`           		  | A DNS record; or an official record (e.g. Risk); or a written
+    						   document (e.g. Policy/Procedure); or a reference (e.g. 
+    						   Vulnerability/Weakness). The exact record type is captured in 
+    						   the _type property of the Entity. | No 
+    `Repository`       		  | A repository that contains resources. For example, a Docker
+    						 container registry repository hosting Docker container images. | Yes 
     `Requirement`      | An individual requirement for security, compliance, regulation or design. | Yes 
     `Resource`         | A generic assignable resource. A resource is typically non-functional by itself unless used by or attached to a host or workload. | Yes 
     `Review`           | A review record. | Yes 
