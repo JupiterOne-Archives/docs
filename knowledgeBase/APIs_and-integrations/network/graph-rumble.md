@@ -19,16 +19,18 @@
 
 ## Requirements
 
-<!--
-TODO: Only export token for assets a possibility
-TODO: Organization Admin for org admin vs account admin
--->
-
 *   JupiterOne integration requires a Rumble **Account API Key**. To generate an
     **Account API Key** you'll need:
 
     *   Rumble Enterprise License
     *   Administrator access
+
+*   JupiterOne integration also requires an **Export Token** for each organization
+    whose asset, services, and wireless data you want to include. To generate an
+    **Export Token** you'll need:
+
+    *   Admin access to the organization for which you want to generate an **Export
+        Token**
 
 *   You must have permission in JupiterOne to install new integrations.
 
@@ -40,16 +42,32 @@ If you need help with this integration, please contact
 ## Integration Walkthrough
 
 You'll need an **Account API Key** and administrator access to the account to
-integrate with JupiterOne.
+integrate with JupiterOne. You'll also need to generate **Export Tokens** for
+all organizations whose data you want to ingest.
 
 ### In Rumble
 
+**Account API Key Generation**
+
 1.  Navigate to the [Rumble Console](https://console.rumble.run/).
-2.  In the navigation bar, go to Account
+2.  In the navigation bar, go to `Account`
 3.  On the Account page under the Account API keys section, click "Generate API
     Key"
 4.  A new **Account API Key** will be created. This key will be used in the next
     section.
+
+**Export Token Generation**
+
+You'll need to generate an export token for each organization whose assets,
+services, and wireless data you want to include in the graph. The integration
+will automatically collect these tokens if they are present. Organizations
+without export tokens will not have assets, services, or wireless data ingested.
+
+1.  Navigate to the [Rumble Console](https://console.rumble/run)
+2.  In the navigation bar, go to `Organizations`
+3.  Click on the organization in which you want to create an `Export Token`
+4.  Press the **Generate Export Token** button.
+5.  Repeat for all organizations whosse data you want to ingest.
 
 ### In JupiterOne
 
@@ -94,9 +112,25 @@ https://github.com/JupiterOne/sdk/blob/main/docs/integrations/development.md
 
 The following entities are created:
 
-| Resources | Entity `_type`   | Entity `_class` |
-| --------- | ---------------- | --------------- |
-| Account   | `rumble_account` | `Account`       |
+| Resources    | Entity `_type`        | Entity `_class` |
+| ------------ | --------------------- | --------------- |
+| Account      | `rumble_account`      | `Account`       |
+| Asset        | `rumble_asset`        | `Device`        |
+| Organization | `rumble_organization` | `Organization`  |
+| Site         | `rumble_site`         | `Site`          |
+| User         | `rumble_user`         | `User`          |
+
+### Relationships
+
+The following relationships are created:
+
+| Source Entity `_type` | Relationship `_class` | Target Entity `_type` |
+| --------------------- | --------------------- | --------------------- |
+| `rumble_account`      | **HAS**               | `rumble_organization` |
+| `rumble_account`      | **HAS**               | `rumble_user`         |
+| `rumble_organization` | **HAS**               | `rumble_site`         |
+| `rumble_site`         | **HAS**               | `rumble_asset`        |
+| `rumble_user`         | **ASSIGNED**          | `rumble_organization` |
 
 <!--
 ********************************************************************************
@@ -106,4 +140,4 @@ END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
  
-<!--  jupiterOneDocVersion=0-0-0 -->
+<!--  jupiterOneDocVersion=1-2-2 -->

@@ -4,17 +4,17 @@ export const logger: {
   error: (message: string) => void;
 } = {
   info: (msg) => {
-    const message = new Date().toISOString() + " : " + "\n" + msg + "\n";
+    const message = "\n" + msg + "\n";
 
-    if (process.env && process.env.RUNNING_TESTS !== "true") {
-      console.log(message, "MESSAGE&Info");
+    if (process.env.RUNNING_TESTS !== "true") {
+      console.log(message);
     }
   },
 
   error: (msg) => {
-    const message = new Date().toISOString() + " : " + "\n" + msg + "\n";
-    if (process.env && process.env.RUNNING_TESTS !== "true") {
-      console.log(message, "MESSAGE&Error");
+    const message = " : " + "\n" + msg + "\n";
+    if (process.env.RUNNING_TESTS !== "true") {
+      console.log(message);
     }
   },
 };

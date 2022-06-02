@@ -1,15 +1,16 @@
-# Datadog Integration with JupiterOne
+# CloudBees Integration with JupiterOne
 
-## Datadog + JupiterOne Integration Benefits
+## CloudBees CI + JupiterOne Integration Benefits
 
-*   Visualize Datadog services, teams, and users in the JupiterOne graph.
-*   Map Datadog users to employees in your JupiterOne account.
-*   Monitor changes to Datadog users using JupiterOne alerts.
+*   Visualize CloudBees CI users, groups, roles, and account in the JupiterOne
+    graph.
+*   Map CloudBees CI users to employees in your JupiterOne account.
+*   Monitor changes to CloudBees CI users using JupiterOne alerts.
 
 ## How it Works
 
-*   JupiterOne periodically fetches services, teams, and users from Datadog to
-    update the graph.
+*   JupiterOne periodically fetches users, groups, roles, and account from
+    CloudBees CI to update the graph.
 *   Write JupiterOne queries to review and monitor updates to the graph, or
     leverage existing queries.
 *   Configure alerts to take action when JupiterOne graph changes, or leverage
@@ -17,8 +18,14 @@
 
 ## Requirements
 
-*   Datadog supports authentication via an API key and an application key.
+*   You must have a deployed CloudBees CI Operations Center
+*   CloudBees CI supports Basic Authentication.
 *   You must have permission in JupiterOne to install new integrations.
+
+## Permissions
+
+This integration will only work if the user credentials provided have
+administrator-level permissions.
 
 ## Support
 
@@ -27,42 +34,33 @@ If you need help with this integration, please contact
 
 ## Integration Walkthrough
 
-### In Datadog
+### In CloudBees CI
 
-1.  Register for a Datadog account.
-2.  Create an API key by going to
-    <https://app.datadoghq.com/organization-settings/api-keys>. (click on 'New Key'
-    at the top right corner). The account must have the "Datadog Admin Role" to
-    be able to generate an API key.
-3.  Create an application key by going to
-    <https://app.datadoghq.com/organization-settings/application-keys>. (click on
-    'New Key' at the top right corner). An account with any role can generate
-    application key.
-4.  Take note of these credentials and supply them to the integration's
-    [.env file](../env.example).
+1.  Create a user account
+2.  Take note of the login credentials which will latter be used for request
+    authentication.
 
 ### In JupiterOne
 
 1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **Datadog** integration tile and click it.
+2.  Scroll to the **CloudBees CI** integration tile and click it.
 3.  Click the **Add Configuration** button and configure the following settings:
 
-*   Enter the **Account Name** by which you'd like to identify this Datadog
+*   Enter the **Account Name** by which you'd like to identify this CloudBees CI
     account in JupiterOne. Ingested entities will have this value stored in
     `tag.AccountName` when **Tag with Account Name** is checked.
 *   Enter a **Description** that will further assist your team when identifying
     the integration instance.
 *   Select a **Polling Interval** that you feel is sufficient for your monitoring
     needs. You may leave this as `DISABLED` and manually execute the integration.
-*   {{additional provider-specific settings}} Enter the **Datadog API Key**
-    generated for use by JupiterOne.
+*   Enter the **User ID**, **API key**, and **Hostname** for use by JupiterOne.
 
 4.  Click **Create Configuration** once all values are provided.
 
 # How to Uninstall
 
 1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **Datadog** integration tile and click it.
+2.  Scroll to the **CloudBees CI** integration tile and click it.
 3.  Identify and click the **integration to delete**.
 4.  Click the **trash can** icon.
 5.  Click the **Remove** button to delete the integration.
@@ -85,11 +83,12 @@ https://github.com/JupiterOne/sdk/blob/main/docs/integrations/development.md
 
 The following entities are created:
 
-| Resources | Entity `_type`    | Entity `_class` |
-| --------- | ----------------- | --------------- |
-| Account   | `datadog_account` | `User`          |
-| Role      | `datadog_role`    | `AccessRole`    |
-| User      | `datadog_user`    | `User`          |
+| Resources | Entity `_type`      | Entity `_class` |
+| --------- | ------------------- | --------------- |
+| Account   | `cloudbees_account` | `Account`       |
+| Role      | `cloudbees_role`    | `AccessRole`    |
+| User      | `cloudbees_user`    | `User`          |
+| UserGroup | `cloudbees_group`   | `UserGroup`     |
 
 ### Relationships
 
@@ -97,9 +96,11 @@ The following relationships are created:
 
 | Source Entity `_type` | Relationship `_class` | Target Entity `_type` |
 | --------------------- | --------------------- | --------------------- |
-| `datadog_account`     | **HAS**               | `datadog_role`        |
-| `datadog_account`     | **HAS**               | `datadog_user`        |
-| `datadog_user`        | **ASSIGNED**          | `datadog_role`        |
+| `cloudbees_account`   | **HAS**               | `cloudbees_group`     |
+| `cloudbees_account`   | **HAS**               | `cloudbees_role`      |
+| `cloudbees_account`   | **HAS**               | `cloudbees_user`      |
+| `cloudbees_group`     | **ASSIGNED**          | `cloudbees_role`      |
+| `cloudbees_group`     | **HAS**               | `cloudbees_user`      |
 
 <!--
 ********************************************************************************
@@ -109,4 +110,4 @@ END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
  
-<!--  jupiterOneDocVersion=1-0-1 -->
+<!--  jupiterOneDocVersion=1-1-0 -->

@@ -2,28 +2,28 @@
 
 ## Sentry + JupiterOne Integration Benefits
 
-- Visualize Sentry services, teams, and users in the JupiterOne graph.
-- Map Sentry users to employees in your JupiterOne account.
-- Monitor changes to Sentry users using JupiterOne alerts.
+*   Visualize Sentry services, teams, and users in the JupiterOne graph.
+*   Map Sentry users to employees in your JupiterOne account.
+*   Monitor changes to Sentry users using JupiterOne alerts.
 
 ## How it Works
 
-- JupiterOne periodically fetches organizations, projects, teams, and users from
-  Sentry to update the graph.
-- Write JupiterOne queries to review and monitor updates to the graph, or
-  leverage existing queries.
-- Configure alerts to take action when JupiterOne graph changes, or leverage
-  existing alerts.
+*   JupiterOne periodically fetches organizations, projects, teams, and users from
+    Sentry to update the graph.
+*   Write JupiterOne queries to review and monitor updates to the graph, or
+    leverage existing queries.
+*   Configure alerts to take action when JupiterOne graph changes, or leverage
+    existing alerts.
 
 ## Requirements
 
-- JupiterOne requires an Auth Token. You need sufficient access in Sentry to
-  create an Auth Token with the following scopes:
-  - `member:read`
-  - `org:read`
-  - `project:read`
-  - `team:read`
-- You must have permission in JupiterOne to install new integrations.
+*   JupiterOne requires an Auth Token. You need sufficient access in Sentry to
+    create an Auth Token with the following scopes:
+    *   `member:read`
+    *   `org:read`
+    *   `project:read`
+    *   `team:read`
+*   You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
@@ -38,41 +38,45 @@ If you need help with this integration, please contact
 
 [Generate am Auth Token](https://sentry.io/settings/account/api/auth-tokens/)
 
-1. Navigate to the Auth Tokens page in Sentry Settings.
-2. Select **Create New Token** in the top right corner.
-3. Select `project:read`, `team:read`, `org:read`, and `member:read` and then
-   click **Create Token**.
+1.  Navigate to the Auth Tokens page in Sentry Settings.
+2.  Select **Create New Token** in the top right corner.
+3.  Select `project:read`, `team:read`, `org:read`, and `member:read` and then
+    click **Create Token**.
 
 ### In JupiterOne
 
-1. From the configuration **Gear Icon**, select **Integrations**.
-2. Scroll to the **Sentry** integration tile and click it.
-3. Click the **Add Configuration** button and configure the following settings:
+1.  From the configuration **Gear Icon**, select **Integrations**.
+2.  Scroll to the **Sentry** integration tile and click it.
+3.  Click the **Add Configuration** button and configure the following settings:
 
-- Enter the **Account Name** by which you'd like to identify this Sentry account
-  in JupiterOne. Ingested entities will have this value stored in
-  `tag.AccountName` when **Tag with Account Name** is checked.
-- Enter a **Description** that will further assist your team when identifying
-  the integration instance.
-- Select a **Polling Interval** that you feel is sufficient for your monitoring
-  needs. You may leave this as `DISABLED` and manually execute the integration.
-- Enter the **Auth Token** generated for use by JupiterOne in the Sentry steps
-  above.
-- Enter Sentry organization slug in the **Organization** field. This is the URL
-  safe version of your organization and can be found in your Sentry URL at
-  _sentry.io/organizations/`organization-slug`/..._
+*   Enter the **Account Name** by which you'd like to identify this Sentry account
+    in JupiterOne. Ingested entities will have this value stored in
+    `tag.AccountName` when **Tag with Account Name** is checked.
+*   Enter a **Description** that will further assist your team when identifying
+    the integration instance.
+*   Select a **Polling Interval** that you feel is sufficient for your monitoring
+    needs. You may leave this as `DISABLED` and manually execute the integration.
+*   Enter the **Auth Token** generated for use by JupiterOne in the Sentry steps
+    above.
+*   Enter Sentry organization slug in the **Organization** field. This is the URL
+    safe version of your organization and can be found in your Sentry URL at
+    *sentry.io/organizations/`organization-slug`/...*
 
-4. Click **Create Configuration** once all values are provided.
+4.  Click **Create Configuration** once all values are provided.
 
 # How to Uninstall
 
-1. From the configuration **Gear Icon**, select **Integrations**.
-2. Scroll to the **Sentry** integration tile and click it.
-3. Identify and click the **integration to delete**.
-4. Click the **trash can** icon.
-5. Click the **Remove** button to delete the integration.
+1.  From the configuration **Gear Icon**, select **Integrations**.
+2.  Scroll to the **Sentry** integration tile and click it.
+3.  Identify and click the **integration to delete**.
+4.  Click the **trash can** icon.
+5.  Click the **Remove** button to delete the integration.
+6.  Navigate to the Auth Tokens page in Sentry Settings.
+7.  Click the **Remove** button to the right of the appropriate Auth Token that
+    was in use for this integration.
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
+
 <!--
 ********************************************************************************
 NOTE: ALL OF THE FOLLOWING DOCUMENTATION IS GENERATED USING THE
@@ -113,4 +117,7 @@ The following relationships are created:
 END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 ********************************************************************************
 -->
+
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
+ 
+<!--  jupiterOneDocVersion=1-1-2 -->

@@ -1,4 +1,4 @@
-# Tenable-io Integration with JupiterOne
+# Tenable.io Integration with JupiterOne
 
 ## Tenable.io + JupiterOne Integration Benefits
 
@@ -124,4 +124,4 @@ END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
  
-<!--  jupiterOneDocVersion=8-2-0 -->
+<!--  jupiterOneDocVersion=8-3-9 -->

@@ -131,9 +131,10 @@ export default class HttpClient {
         ...options,
       };
 
-      if (method === RESTTypes.PATCH) {
-        logger.info(`making PATCH request: ${JSON.stringify(requestBody)}`);
-      }
+      logger.info(`------------ MAKING ${method} REQUEST ------------`);
+      logger.info(`REQUEST URL: ${requestBody.url}`);
+      logger.info(`REQUEST DATA ${JSON.stringify(requestBody.data)}`);
+      logger.info("------------ END REQUEST DATA ------------");
 
       return this.debounceRequests(
         axios.request(requestBody).catch((e) => {

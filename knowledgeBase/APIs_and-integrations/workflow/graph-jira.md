@@ -26,10 +26,28 @@
     *   `Vulnerability`
 
 (\*) The integration performs a rolling ingestion of up to 2000 of the most
-recently created or updated issues. Already ingested issues that are not
-modified will remain in the graph when the integration runs again. Issues are
-only deleted along with other entities associated with the integration instance
-when the integration instance is deleted.
+recently created or updated issues **per project** since the last integration
+execution in Jupiterone. If it is the integration's first run, all issues in
+each project are fair game for ingestion (up to 2000).
+
+(\*) Already ingested issues that are not modified will remain in the graph when
+the integration runs again. Issues are only deleted along with other entities
+associated with the integration instance when the integration instance is
+deleted.
+
+(\*) Note that for projects with > 2000 issues, the first run of the integration
+will not ingest all issues. Nor will they get ingested in subsequent integration
+runs. If you have a need for all Jira issues to be ingested for a large project,
+please contact Support.
+
+(\*) This integration logs a warning anytime the per-project issue cap is
+encountered. It is technically possible to encounter this warning on an
+integration execution other than the first, but it is quite rare (over 2000
+issues would have had to have been updated since the last integration
+execution). If this happens, it is likely your `Polling Interval` in Jupiterone
+is too large. We recommend setting it to a smaller value. If you require
+re-ingestion of missed issue updates as a result of hitting our limits, please
+contact Support.
 
 ## Requirements
 
@@ -116,6 +134,14 @@ Before you use an existing user, you should verify a couple of things.
 4.  Click the **trash can** icon.
 5.  Click the **Remove** button to delete the integration.
 
+## Jira Cloud vs Jira On-Prem
+
+This integration supports both Jira Cloud and Jira on-prem deployments and will
+automatically detect which is being ingested. It is important to note that there
+are some minor differences in the APIs for cloud and on-prem. For this reason,
+we recommended that you recreate your integration configuration in the event of
+an on-prem -> cloud migration or vice versa.
+
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
 
 <!--
@@ -171,4 +197,4 @@ END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 
 [5]: https://confluence.atlassian.com/adminjiraserver/managing-global-permissions-938847142.html
  
-<!--  jupiterOneDocVersion=2-2-1 -->
+<!--  jupiterOneDocVersion=3-0-0 -->
