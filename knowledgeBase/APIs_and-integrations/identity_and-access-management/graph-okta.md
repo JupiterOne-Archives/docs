@@ -54,6 +54,12 @@ If you need help with this integration, please contact
     is revoked and cannot be used again. Tokens are also only valid if the user
     who created the token is also active."
 
+NOTE: JupiterOne pulls in information regarding whether or not Okta Support has
+access to a given account. This query currently requires the supplied token to
+have Super Administrator privileges, but will be skipped without failing the
+rest of the data ingestion if Read Only Administrator or Organization
+Administrator are provided instead.
+
 ### In JupiterOne
 
 1.  From the configuration **Gear Icon**, select **Integrations**.
@@ -175,4 +181,4 @@ END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 
 [2]: https://developer.okta.com/docs/reference/rate-limits/
  
-<!--  jupiterOneDocVersion=2-1-6 -->
+<!--  jupiterOneDocVersion=2-1-8 -->
