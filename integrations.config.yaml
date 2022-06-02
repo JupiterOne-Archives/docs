@@ -211,3 +211,6 @@ integrations:
   - projectName: graph-zendesk
     displayName: Zendesk
     knowledgeCategoriesPaths: APIs_and-integrations/IT-service-management
+  - projectName: graph-github
+    displayName: GitHub
+    knowledgeCategoriesPaths: APIs_and-integrations/code
