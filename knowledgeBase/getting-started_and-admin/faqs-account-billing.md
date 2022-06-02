@@ -48,13 +48,14 @@ return
 
 <details><summary>Billable Entities Table</summary>
 
-    Entity            		 | Description             								| Billable
-    ------            		 | -----------             								| --------
-    `AccessKey`       		 | A key used to grant access, such as ssh-key, access-key, api-key/token, mfa-token/device, etc. 												| Yes 
+    Entity            		 | Description             									| Billable
+    ------            		 | -----------             									| --------
+    `AccessKey`       		 | A key used to grant access, such as ssh-key, 
+    access-key, api-key/token, mfa-token/device, etc. 									| Yes 
     `AccessPolicy`     		 | A policy for access control assigned to a 
-    						   Host, Role, User, UserGroup, or Service. | Yes 
+    						   Host, Role, User, UserGroup, or Service. 				| Yes 
     `AccessRole`       		 | An access control role mapped to a Principal 
-    						   (e.g. user, group, or service). | Yes 
+    						   (e.g. user, group, or service). 							| Yes 
     `Account`         		 | An organizational account for a service 
     						   or a set of services (e.g. AWS, Okta, Bitbucket 
     						   Team, Google G-Suite account, Apple Developer 
