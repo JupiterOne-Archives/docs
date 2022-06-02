@@ -48,18 +48,19 @@ return
 
 <details><summary>Billable Entities Table</summary>
 
-    Entity            		 | Description             									| Billable
-    ------            		 | -----------             									| --------
-    `AccessKey`       		 | A key used to grant access, such as ssh-key, 
-    access-key, api-key/token, mfa-token/device, etc. 									| Yes 
+    Entity            		 | Description             								| Billable
+    ------            		 | -----------             								| --------
+    `AccessKey`       		 | A key used to grant access, such as ssh-key,
+    						   access-key, api-key/token, mfa-token/device, etc. 	| Yes 
     `AccessPolicy`     		 | A policy for access control assigned to a 
-    						   Host, Role, User, UserGroup, or Service. 				| Yes 
+    						   Host, Role, User, UserGroup, or Service. 			| Yes 
     `AccessRole`       		 | An access control role mapped to a Principal 
-    						   (e.g. user, group, or service). 							| Yes 
+    						   (e.g. user, group, or service). 						| Yes 
     `Account`         		 | An organizational account for a service 
     						   or a set of services (e.g. AWS, Okta, Bitbucket 
     						   Team, Google G-Suite account, Apple Developer 
-    						   Account). Each Account should be connected to a Service. | Yes 
+    						   Account). Each Account should be connected to 
+    						  a Service. 											| Yes 
     `Application`      		 | A software product or application. | Yes 
     `ApplicationEndpoint` 	 | An application endpoint is a program interface 
     						   that either initiates or receives a request, such as an API. | Yes 
@@ -71,8 +72,8 @@ return
     `Attacker`         		 | An attacker or threat actor. | Yes 
     `Backup`           		 | A specific repository or data store containing backup data. | Yes 
     `Certificate`     		 | A digital Certificate such as an SSL or S/MIME certificate. | Yes 
-    `Channel`          		 | A communication channel, such as a Slack channel 
-    						   or AWS SNS topic. | Yes 
+    `Channel`          		 | A communication channel, such as a Slack channel or AWS 
+    						  SNS topic. 												| Yes 
     `Cluster`           	 | A cluster of compute or database resources/workloads. | Yes 
     `CodeCommit`        	 | A code commit to a repo. The commit id is captured 
     						   in the _id property of the Entity. | No 
