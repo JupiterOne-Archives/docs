@@ -283,7 +283,7 @@ When you unassign or remove a user from the JupiterOne app within your IdP, the 
 
 ### IdP-initiated sign-on flow is not supported
 
-J1 uses Amazon Cognito service to manage authentication, including SSO. Cognito currently does _not_ support IdP-initiated sign-on. This means you can _not_ click on the app icon in your IdP account (such as JumpCloud, Okta, OneLogin). Instead, you must initiate single sign-on by going to your JupiterOne vanity URL or your account login url:
+J1 uses Amazon Cognito service to manage authentication, including SSO. Cognito currently does _not_ support IdP-initiated sign-on. This means you can _not_ click on the app icon in your IdP account (such as JumpCloud, Okta, OneLogin). Instead, you must initiate single sign-on by going to your JupiterOne vanity (custom) URL or your account sign-in URL:
 
 JupiterOne vanity URL:
 ```text
