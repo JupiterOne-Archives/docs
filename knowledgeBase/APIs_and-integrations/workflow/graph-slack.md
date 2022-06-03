@@ -56,6 +56,12 @@ ingesting relevant information and send notifications via the
 4.  Review the request scopes, click "Allow", and then you will be redirected
     back to JupiterOne.
 
+NOTE: Some permissions are tied to the user who installs the JupiterOne Slack
+application. For example, if a non-Admin level user installs the application on
+behalf of a workspace, the integration will not have the ability to ingest data
+on which users have two factor authentication enabled within Slack. It is
+recommended that an Administrator or Owner install the application.
+
 ### In JupiterOne
 
 1.  From the configuration **Gear Icon**, select **Integrations**.
@@ -140,5 +146,7 @@ END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 -->
 
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
+
+[Privacy Policy](https://www.jupiterone.com/privacy-policy)
  
-<!--  jupiterOneDocVersion=4-0-0 -->
+<!--  jupiterOneDocVersion=4-0-5 -->
