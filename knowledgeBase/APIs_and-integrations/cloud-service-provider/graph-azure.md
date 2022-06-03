@@ -130,10 +130,20 @@ information:
 
 ### Key Vault Access Policy
 
-Please note that listing Key Vault keys and secrets (rm-keyvault-keys and
-rm-keyvault-secrets steps) require a given security principal to have necessary
-policies. The steps necesssary for that are outlined on this page
-[Assign a Key Vault access policy ](https://go.microsoft.com/fwlink/?linkid=2125287).
+Please note that listing Key Vault keys and secrets (`rm-keyvault-keys` and
+`rm-keyvault-secrets` steps) require JupiterOne users to grant the following
+permissions to the JupiterOne security principal *for each Key Vault in their
+account*:
+
+*   Key Permissions
+    *   Key Management Operations
+        *   List
+*   Secret Permisisons
+    *   Secret Management Operations
+        *   List
+
+The steps necesssary for that are outlined on this page:
+[Assign a Key Vault access policy](https://go.microsoft.com/fwlink/?linkid=2125287).
 
 ### In JupiterOne
 
@@ -335,7 +345,6 @@ The following relationships are created:
 | `azure_keyvault_service`           | **CONTAINS**          | `azure_keyvault_key`                              |
 | `azure_keyvault_service`           | **CONTAINS**          | `azure_keyvault_secret`                           |
 | `azure_lb`                         | **CONNECTS**          | `azure_nic`                                       |
-| `azure_location`                   | **HAS**               | `azure_network_watcher`                           |
 | `azure_management_group`           | **CONTAINS**          | `azure_management_group`                          |
 | `azure_mariadb_server`             | **HAS**               | `azure_mariadb_database`                          |
 | `azure_monitor_activity_log_alert` | **MONITORS**          | `ANY_SCOPE`                                       |
@@ -434,7 +443,6 @@ The following relationships are created:
 | `azure_subscription`               | **HAS**               | `azure_security_center_setting`                   |
 | `azure_subscription`               | **HAS**               | `azure_security_center_subscription_pricing`      |
 | `azure_subscription`               | **PERFORMED**         | `azure_security_assessment`                       |
-| `azure_subscription`               | **USES**              | `azure_location`                                  |
 | `azure_vm`                         | **GENERATED**         | `azure_shared_image_version`                      |
 | `azure_vm`                         | **USES**              | `azure_image`                                     |
 | `azure_vm`                         | **USES**              | `azure_managed_disk`                              |
@@ -446,6 +454,15 @@ The following relationships are created:
 | `azure_vm`                         | **USES**              | `azure_storage_account`                           |
 | `azure_vnet`                       | **CONTAINS**          | `azure_subnet`                                    |
 | `azure_web_app`                    | **USES**              | `azure_app_service_plan`                          |
+
+### Mapped Relationships
+
+The following mapped relationships are created:
+
+| Source Entity `_type`   | Relationship `_class` | Target Entity `_type` | Direction |
+| ----------------------- | --------------------- | --------------------- | --------- |
+| `azure_network_watcher` | **HAS**               | `*azure_location*`    | REVERSE   |
+| `azure_subscription`    | **USES**              | `*azure_location*`    | FORWARD   |
 
 <!--
 ********************************************************************************
@@ -513,4 +530,4 @@ END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 
 [3]: https://docs.microsoft.com/en-us/graph/api/organization-get
  
-<!--  jupiterOneDocVersion=5-35-3 -->
+<!--  jupiterOneDocVersion=5-37-0 -->

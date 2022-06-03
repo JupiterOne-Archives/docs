@@ -62,25 +62,45 @@ and a username and password to JupiterOne.
 4.  Click the **trash can** icon.
 5.  Click the **Remove** button to delete the integration.
 
+<!-- {J1_DOCUMENTATION_MARKER_START} -->
+
+<!--
+********************************************************************************
+NOTE: ALL OF THE FOLLOWING DOCUMENTATION IS GENERATED USING THE
+"j1-integration document" COMMAND. DO NOT EDIT BY HAND! PLEASE SEE THE DEVELOPER
+DOCUMENTATION FOR USAGE INFORMATION:
+
+https://github.com/JupiterOne/sdk/blob/main/docs/integrations/development.md
+********************************************************************************
+-->
+
 ## Data Model
 
 ### Entities
 
-The following entity resources are ingested when the integration runs:
+The following entities are created:
 
-| Example Entity Resource | \_type : \_class of the Entity         |
-| ----------------------- | -------------------------------------- |
-| Manager                 | `wazuh_manager` : `Service`, `Control` |
-| Agent                   | `wazuh_agent` : `HostAgent`            |
+| Resources | Entity `_type`  | Entity `_class`      |
+| --------- | --------------- | -------------------- |
+| Account   | `wazuh_manager` | `Service`, `Control` |
+| Agent     | `wazuh_agent`   | `HostAgent`          |
 
 ### Relationships
 
-The following relationships are created/mapped:
+The following relationships are created:
 
-| From            | Type    | To            |
-| --------------- | ------- | ------------- |
-| `wazuh_manager` | **HAS** | `wazuh_agent` |
+| Source Entity `_type` | Relationship `_class` | Target Entity `_type` |
+| --------------------- | --------------------- | --------------------- |
+| `wazuh_manager`       | **HAS**               | `wazuh_agent`         |
+
+<!--
+********************************************************************************
+END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
+********************************************************************************
+-->
+
+<!-- {J1_DOCUMENTATION_MARKER_END} -->
 
 [1]: https://wazuh.com
  
-<!--  jupiterOneDocVersion=1-0-10 -->
+<!--  jupiterOneDocVersion=2-0-0 -->
