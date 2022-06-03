@@ -1,6 +1,117 @@
 integrations:
-  - projectName: graph-zendesk
-    displayName: Zendesk
+  - projectName: graph-airwatch
+    displayName: AirWatch
+    knowledgeCategoriesPaths: APIs_and-integrations/device-management
+    alternateMarkdownLocation:
+  - projectName: graph-artifactory
+    displayName: JFrog Artifactory
+    knowledgeCategoriesPaths: APIs_and-integrations/code
+  - projectName: graph-auth0
+    displayName: Auth0
+    knowledgeCategoriesPaths: APIs_and-integrations/identity_and-access-management
+  - projectName: graph-azure
+    displayName: Azure
+    knowledgeCategoriesPaths: APIs_and-integrations/cloud-service-provider
+  - projectName: graph-azure-devops
+    displayName: Azure DevOps
+    knowledgeCategoriesPaths: APIs_and-integrations/cloud-service-provider
+  - projectName: graph-bamboohr
+    displayName: BambooHR
+    knowledgeCategoriesPaths: APIs_and-integrations/HRMS
+  - projectName: graph-bugcrowd
+    displayName: Bugcrowd
+    knowledgeCategoriesPaths: APIs_and-integrations/application-security
+  - projectName: graph-cbdefense
+    displayName: CbDefense
+  - projectName: graph-cisco-amp
+    displayName: Cisco Amp
+  - projectName: graph-cisco-meraki
+    displayName: Cisco Meraki
+    knowledgeCategoriesPaths: APIs_and-integrations/device-management
+  - projectName: graph-cloudflare
+    displayName: Cloudflare
+    knowledgeCategoriesPaths: APIs_and-integrations/content-delivery-network
+  - projectName: graph-crowdstrike
+    displayName: CrowdStrike
+    knowledgeCategoriesPaths: APIs_and-integrations/EDR
+  - projectName: graph-detectify
+    displayName: Detectify
+    knowledgeCategoriesPaths: APIs_and-integrations/application-security
+  - projectName: graph-digicert
+    displayName: DigiCert
+    knowledgeCategoriesPaths: APIs_and-integrations/other
+  - projectName: graph-duo
+    displayName: Duo
+    knowledgeCategoriesPaths: APIs_and-integrations/identity_and-access-management
+  - projectName: graph-fastly
+    displayName: Fastly
+    knowledgeCategoriesPaths: APIs_and-integrations/content-delivery-network
+  - projectName: graph-feroot
+    displayName: Feroot
+    knowledgeCategoriesPaths: APIs_and-integrations/data-loss-prevention
+  - projectName: graph-gitlab
+    displayName: Gitlab
+    knowledgeCategoriesPaths: APIs_and-integrations/code
+  - projectName: graph-gitleaks-findings
+    displayName: Gitleaks Findings
+  - projectName: graph-godaddy
+    displayName: GoDaddy
+    knowledgeCategoriesPaths: APIs_and-integrations/cloud-service-provider
+  - projectName: graph-google
+    displayName: Google
+    knowledgeCategoriesPaths: APIs_and-integrations/identity_and-access-management
+  - projectName: graph-google-cloud
+    displayName: Google Cloud
+    knowledgeCategoriesPaths: APIs_and-integrations/cloud-service-provider
+  - projectName: graph-hackerone
+    displayName: HackerOne
+    knowledgeCategoriesPaths: APIs_and-integrations/application-security
+  - projectName: graph-heroku
+    displayName: Heroku
+    knowledgeCategoriesPaths: APIs_and-integrations/cloud-service-provider
+  - projectName: graph-jamf
+    displayName: Jamf
+    knowledgeCategoriesPaths: APIs_and-integrations/device-management
+  - projectName: graph-jira
+    displayName: Jira
+    knowledgeCategoriesPaths: APIs_and-integrations/workflow
+  - projectName: graph-jumpcloud
+    displayName: JumpCloud
+    knowledgeCategoriesPaths: APIs_and-integrations/identity_and-access-management
+  - projectName: graph-knowbe4
+    displayName: Knowbe4
+    knowledgeCategoriesPaths: APIs_and-integrations/training
+  - projectName: graph-malwarebytes
+    displayName: Malwarebytes
+    knowledgeCategoriesPaths: APIs_and-integrations/EDR
+  - projectName: graph-nmap
+    displayName: Nmap
+  - projectName: graph-nowsecure
+    displayName: NowSecure
+    knowledgeCategoriesPaths: APIs_and-integrations/application-security
+  - projectName: graph-npm
+    displayName: NPM
+    knowledgeCategoriesPaths: APIs_and-integrations/code
+  - projectName: graph-okta
+    displayName: Okta
+    knowledgeCategoriesPaths: APIs_and-integrations/identity_and-access-management
+  - projectName: graph-onelogin
+    displayName: OneLogin
+    knowledgeCategoriesPaths: APIs_and-integrations/identity_and-access-management
+  - projectName: graph-pagerduty
+    displayName: PagerDuty
+    knowledgeCategoriesPaths: APIs_and-integrations/incident-management
+  - projectName: graph-qualys
+    displayName: Qualys
+    knowledgeCategoriesPaths: APIs_and-integrations/application-security
+  - projectName: graph-rapid7
+    displayName: Rapid7
+    knowledgeCategoriesPaths: APIs_and-integrations/application-security
+  - projectName: graph-sentinelone
+    displayName: SentinelOne
+    knowledgeCategoriesPaths: APIs_and-integrations/EDR
+  - projectName: graph-servicenow
+    displayName: ServiceNow
     knowledgeCategoriesPaths: APIs_and-integrations/IT-service-management
   - projectName: graph-slack
     displayName: Slack
@@ -100,3 +211,6 @@ integrations:
   - projectName: graph-zendesk
     displayName: Zendesk
     knowledgeCategoriesPaths: APIs_and-integrations/IT-service-management
+  - projectName: graph-github
+    displayName: GitHub
+    knowledgeCategoriesPaths: APIs_and-integrations/code

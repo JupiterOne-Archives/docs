@@ -7,12 +7,13 @@
 *   Map Veracode findings to a code repo, project, or application in your
     JupiterOne account.
 *   Monitor Veracode CWEs and findings within J1 Alerts.
-*   Monitor changes to Veracode application scans using JupiterOne alerts.
+*   Monitor changes to Veracode application scans (known as assessments in j1)
+    using JupiterOne alerts.
 
 ## How it Works
 
-*   JupiterOne periodically fetches Veracode application scan results, CWEs, and
-    findings to update the graph.
+*   JupiterOne periodically fetches Veracode application scan (assessment)
+    results, CWEs, and findings to update the graph.
 *   Write JupiterOne queries to review and monitor updates to the graph.
 *   Configure alerts to reduce the noise of findings.
 *   Configure alerts to take action when the JupiterOne graph changes.
@@ -115,20 +116,23 @@ https://github.com/JupiterOne/sdk/blob/main/docs/integrations/development.md
 
 The following entities are created:
 
-| Resources   | Entity `_type`         | Entity `_class` |
-| ----------- | ---------------------- | --------------- |
-| Account     | `veracode_account`     | `Account`       |
-| Application | `veracode_application` | `Application`   |
-| Finding     | `veracode_finding`     | `Finding`       |
+| Resources  | Entity `_type`        | Entity `_class` |
+| ---------- | --------------------- | --------------- |
+| Account    | `veracode_account`    | `Account`       |
+| Assessment | `veracode_assessment` | `Assessment`    |
+| Finding    | `veracode_finding`    | `Finding`       |
+| Project    | `veracode_project`    | `Project`       |
 
 ### Relationships
 
 The following relationships are created:
 
-| Source Entity `_type`  | Relationship `_class` | Target Entity `_type`  |
-| ---------------------- | --------------------- | ---------------------- |
-| `veracode_account`     | **HAS**               | `veracode_application` |
-| `veracode_application` | **IDENTIFIED**        | `veracode_finding`     |
+| Source Entity `_type` | Relationship `_class` | Target Entity `_type` |
+| --------------------- | --------------------- | --------------------- |
+| `veracode_account`    | **HAS**               | `veracode_project`    |
+| `veracode_assessment` | **IDENTIFIED**        | `veracode_finding`    |
+| `veracode_project`    | **HAS**               | `veracode_assessment` |
+| `veracode_project`    | **HAS**               | `veracode_finding`    |
 
 ### Mapped Relationships
 
@@ -146,4 +150,4 @@ END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
  
-<!--  jupiterOneDocVersion=2-1-0 -->
+<!--  jupiterOneDocVersion=4-0-1 -->

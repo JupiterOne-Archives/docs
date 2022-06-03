@@ -36,7 +36,9 @@ for more information.
 After testing for quite a bit, this integration was unable to ingest host
 findings with the built-in READER role event after adding all of the modules.
 This may be related to parts of the Qualys "host detection" feature being
-controlled by a license setting.
+controlled by a license setting. Instead use the built-in MANAGER role if you do
+not want to create a custom role. Please refer to the Troubleshooting section
+below, if you would like to issue granular permissions to J1.
 
 ### In JupiterOne
 
@@ -130,18 +132,26 @@ The following entities are created:
 
 The following relationships are created:
 
-| Source Entity `_type`          | Relationship `_class` | Target Entity `_type`          |
-| ------------------------------ | --------------------- | ------------------------------ |
-| `qualys_account`               | **HAS**               | `qualys_vulnerability_manager` |
-| `qualys_account`               | **HAS**               | `qualys_web_app_scanner`       |
-| `qualys_host_finding`          | **IS**                | `cve`                          |
-| `qualys_host_finding`          | **IS**                | `qualys_vuln`                  |
-| `qualys_vulnerability_manager` | **SCANS**             | `aws_instance`                 |
-| `qualys_vulnerability_manager` | **SCANS**             | `discovered_host`              |
-| `qualys_web_app_finding`       | **IS**                | `cve`                          |
-| `qualys_web_app_finding`       | **IS**                | `qualys_vuln`                  |
-| `qualys_web_app_scanner`       | **IDENTIFIED**        | `qualys_web_app_finding`       |
-| `qualys_web_app_scanner`       | **SCANS**             | `web_app`                      |
+| Source Entity `_type`    | Relationship `_class` | Target Entity `_type`          |
+| ------------------------ | --------------------- | ------------------------------ |
+| `qualys_account`         | **HAS**               | `qualys_vulnerability_manager` |
+| `qualys_account`         | **HAS**               | `qualys_web_app_scanner`       |
+| `qualys_host_finding`    | **IS**                | `cve`                          |
+| `qualys_host_finding`    | **IS**                | `qualys_vuln`                  |
+| `qualys_web_app_finding` | **IS**                | `cve`                          |
+| `qualys_web_app_finding` | **IS**                | `qualys_vuln`                  |
+| `qualys_web_app_scanner` | **IDENTIFIED**        | `qualys_web_app_finding`       |
+| `qualys_web_app_scanner` | **SCANS**             | `web_app`                      |
+
+### Mapped Relationships
+
+The following mapped relationships are created:
+
+| Source Entity `_type`          | Relationship `_class` | Target Entity `_type`       | Direction |
+| ------------------------------ | --------------------- | --------------------------- | --------- |
+| `qualys_vulnerability_manager` | **SCANS**             | `*aws_instance*`            | FORWARD   |
+| `qualys_vulnerability_manager` | **SCANS**             | `*discovered_host*`         | FORWARD   |
+| `qualys_vulnerability_manager` | **SCANS**             | `*google_compute_instance*` | FORWARD   |
 
 <!--
 ********************************************************************************
@@ -163,4 +173,4 @@ These global mappings are defined as follows:
 | `ThreatIntel`          | `qid`           | **HAS**               | `Finding`              | `qid`           |
 | `ThreatIntel`          | `qid`           | **HAS**               | `Vulnerability`        | `qid`           |
  
-<!--  jupiterOneDocVersion=5-9-3 -->
+<!--  jupiterOneDocVersion=5-11-9 -->
