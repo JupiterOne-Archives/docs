@@ -2,7 +2,6 @@ integrations:
   - projectName: graph-airwatch
     displayName: AirWatch
     knowledgeCategoriesPaths: APIs_and-integrations/device-management
-    alternateMarkdownLocation:
   - projectName: graph-artifactory
     displayName: JFrog Artifactory
     knowledgeCategoriesPaths: APIs_and-integrations/code
