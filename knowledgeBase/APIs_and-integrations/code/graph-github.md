@@ -32,6 +32,14 @@ execution*. This is an accumulative process resulting in existing `issues` and
 `pull requests` which have been ingested, but are not changing, remain in the
 graph.
 
+### **Note on `active` property for deleted or removed `users`:**
+
+`users` who have been deleted or removed from a Github Organization will only show when "Include recently deleted entities in query/search" is selected when running queries. 
+
+However, the `active` property for the deleted/removed `users` will still show as `true` since it is the last thing we ingested about the entity before they were deleted or removed from a Github Organization. 
+
+This was done to make GitHub user accounts more closely adhere to the data model for our `User` class and to reflect the user account lifecycle that GitHub follows.
+
 ## Requirements
 
 *   JupiterOne requires the JupiterOne GitHub app with read-only permissions be
