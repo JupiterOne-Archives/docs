@@ -15,7 +15,13 @@ See the [JupiterOne Platform API](./jupiterone-api.md) for an introduction to th
 
 **Endpoint for compliance operations**: `/graphql`
 
-**Rate Limits**: Rate limiting is enforced based on your account tier. A `429` HTTP response code indicates the limit has been reached. The API does not currently return any rate limit headers.
+**Rate Limits**: Rate limiting is enforced based on your account tier. 
+
+- Free: 10/min, no burst
+- Freemium: 30/min, no burst
+- Enterprise: 30-60/min with burst
+
+A `429` HTTP response code indicates the limit has been reached. The API does not currently return any rate limit headers.
 
 ## List Frameworks
 
