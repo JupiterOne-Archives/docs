@@ -8,7 +8,13 @@ The JupiterOne platform exposes a number of public GraphQL endpoints.
 
 **Endpoint for alert and rules operations**: `/rules/graphql`
 
-**Rate Limits**: Rate limiting is enforced based on your account tier. A `429` HTTP response code indicates the limit has been reached. The API does not currently return any rate limit headers.
+**Rate Limits**: Rate limiting is enforced based on your account tier: 
+
+- Free: 10/min, no burst
+- Freemium: 30/min, no burst
+- Enterprise: 30-60/min with burst
+
+A `429` HTTP response code indicates the limit has been reached. The API does not currently return any rate limit headers.
 
 **Authentication**: The JupiterOne APIs use a Bearer Token to authenticate. Include the API key in the header as a Bearer Token. You also need to include `JupiterOne-Account` as a header parameter. You can find the `Jupiterone-Account` value in your account by running the following J1QL query:
 
