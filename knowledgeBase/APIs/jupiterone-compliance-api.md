@@ -15,7 +15,7 @@ See the [JupiterOne Platform API](./jupiterone-api.md) for an introduction to th
 
 **Endpoint for compliance operations**: `/graphql`
 
-**Rate Limits**: Rate limiting is enforced based on your account tier. 
+**Rate Limits**: Rate limiting is enforced based on your account tier: 
 
 - Free: 10/min, no burst
 - Freemium: 30/min, no burst
