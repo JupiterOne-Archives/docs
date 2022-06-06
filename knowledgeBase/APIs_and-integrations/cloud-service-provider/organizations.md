@@ -1,6 +1,6 @@
 # AWS Organizations
 
-JupiterOne supports the ingestion of multiple AWS accounts that AWS Organizations manages by configuring a single integration on the AWS master account of the Organization. 
+JupiterOne supports the ingestion of multiple AWS accounts that AWS Organizations manages by configuring a single integration on the AWS management account of the Organization. 
 
 When you create an AWS configuration in the [J1 AWS Integrations UI](./graph-aws.md), in the Configure Organization Accounts section, select to auto-configure additional integrations for organization accounts. 
 
@@ -75,7 +75,7 @@ To exclude an AWS account, you can assign the tag `j1-integration:SKIP` to that 
 
 ### Account Email Address Property 
 
-The CIS Benchmark requires that you associate a contact email address with an AWS account in the event of a breach or security compromise. The `email` property for an `aws_account` is only ingested when an AWS integration configuration for the master account has the option selected to enable auto-configuration of AWS organization accounts. 
+The CIS Benchmark requires that you associate a contact email address with an AWS account in the event of a breach or security compromise. The `email` property for an `aws_account` is only ingested when an AWS integration configuration for the management account has the option selected to enable auto-configuration of AWS organization accounts. 
 
 If an incorrect/unexpected email address is associated with an AWS account, refer to the following AWS article: [How do I change the email address that's associated with my AWS account?](https://aws.amazon.com/premiumsupport/knowledge-center/change-email-address/)
 
@@ -87,7 +87,7 @@ After creating the configuration for the organization, you see confirmation of a
 
 
 
-J1 automatically ingests and configures all the AWS member (child) accounts that are managed by the management account using the CloudFormation stackset.
+J1 automatically ingests and configures all the AWS member accounts that are managed by the management account using the CloudFormation stackset
 
  
 
@@ -95,7 +95,7 @@ J1 automatically ingests and configures all the AWS member (child) accounts that
 
 
 
-The child accounts in J1 should match those in your AWS Organization hierarchy.
+The member accounts in J1 should match those in your AWS Organization hierarchy.
 
 
 
