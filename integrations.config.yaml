@@ -213,3 +213,6 @@ integrations:
   - projectName: graph-github
     displayName: GitHub
     knowledgeCategoriesPaths: APIs_and-integrations/code
+  - projectName: graph-kubernetes
+    displayName: Kubernetes
+    knowledgeCategoriesPaths: APIs_and-integrations/cloud-service-provider
