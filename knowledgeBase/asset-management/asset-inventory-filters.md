@@ -8,7 +8,7 @@ To see all the digital assets (entities) you have, in JupiterOne, go to **Apps !
 
 ## Quick Filtering the Critical Assets
 
-Click the **Critical Assets** tap at the top of the page to go directly to the most important of your assets.
+Click the **Critical Assets** tab at the top of the page to go directly to the most important of your assets.
 
 
 
