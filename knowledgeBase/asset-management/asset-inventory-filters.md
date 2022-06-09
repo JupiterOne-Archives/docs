@@ -1,4 +1,4 @@
-# Using Filters in the J1 Assets
+# Using Filters in JupiterOne Assets
 
 To see all the digital assets (entities) you have, in JupiterOne, go to **Apps ![](../assets/icons/apps.png) > Assets**. There are several ways to filter the large list of entities displayed in Assets:
 
@@ -33,7 +33,7 @@ Click the double-arrows in the Class row to display all the possible asset class
 
 
 By default, all the classes are represented by an icon. To see the names of the classes, click the eye icon. Select all the classes by which you want to filter your assets.
- 
+
 
 ![](../assets/asset-classes.png)
 
