@@ -57,14 +57,9 @@ When you select any of the assets in the filtered results table, its detailed pr
 
 ![](../assets/asset-selected-entity-properties.png)
 
-## Granular Filtering by Properties
+## Asset Properties
 
-After you have filtered on class, type, and property, you can apply granular filters to a specific asset you have selected in the list of results.
+When you select an asset in the list of results, click the three-dot icon  ![](../assets/icons/assets-more.png)  in the top-right corner to see more options and to edit any of the asset properties.
 
-To apply granular filters to your selected asset:
 
-1. Click the three-dot icon  ![](../assets/icons/assets-more.png)  in the top-right corner.
-2. Select the filters you want to apply.
-
-   ​
-   ![](../assets/asset-property-filter-select.png) 
+![](../assets/asset-property-filter-select.png) 
