@@ -22,9 +22,9 @@ Click ![](../assets/icons/gear.png) to edit the critical asset definition defaul
 
 Add asset classes and properties that your organization comprises a critical asset, and click **Update Definition**.
 
-## Quick Filtering
+## Quick Filtering of All Assets
 
-From the Assets landing page, you can filter by Class, Type, or Property in the left pane.
+From the Assets landing page, you can filter all your assets by Class, Type, or Property in the left pane.
 
 Click the double-arrows in the Class row to display all the possible asset classes. The class of an asset is an abstract label that defines what the asset is within the concept of security operations. For more details, see the [JupiterOne Data Model documentation](../jupiterOne-data-model/jupiterone-data-model.md).
 
@@ -47,7 +47,7 @@ In addition, you can click the double arrows next to Type to further filter the 
 
 
 
-You can also filter your assets by property by clicking the double arrows at the bottom of the pane. Drop down the options for each property to set it. If you select more than one value for the same property are always, the filtering algorithm uses OR.
+You can also filter your assets by property by clicking the double arrows at the bottom of the pane. Drop down the options for each property to set it. If you select more than one value for the same property, the filtering algorithm uses OR.
 
 ![](../assets/assets-filter-property.png) 
 
