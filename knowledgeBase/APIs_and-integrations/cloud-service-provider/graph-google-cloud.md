@@ -149,6 +149,13 @@ integration by configuring a custom role with the following permissions:
     compute.projects.get
     orgpolicy.policy.get
 
+For BigQuery, the following *additional* permissions are needed to ingest
+BigQuery datasets, models, and tables respectively:
+
+    bigquery.datasets.get
+    bigquery.models.getMetadata
+    bigquery.tables.get
+
 See the
 [Google Cloud custom role documentation](https://cloud.google.com/iam/docs/creating-custom-roles#creating_a_custom_role)
 for additional information on how custom roles can be configured and assigned.
