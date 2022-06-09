@@ -22,9 +22,9 @@ Click ![](../assets/icons/gear.png) to edit the critical asset definition defaul
 
 Add asset classes and properties that your organization comprises a critical asset, and click **Update Definition**.
 
-## Quick Filtering by Class and/or Type
+## Quick Filtering
 
-From the Assets landing page, you can filter by Class, Type, or custom property in the left pane.
+From the Assets landing page, you can filter by Class, Type, or Property in the left pane.
 
 Click the double-arrows in the Class row to display all the possible asset classes. The class of an asset is an abstract label that defines what the asset is within the concept of security operations. For more details, see the [JupiterOne Data Model documentation](../jupiterOne-data-model/jupiterone-data-model.md).
 
@@ -47,15 +47,21 @@ In addition, you can click the double arrows next to Type to further filter the 
 
 
 
+You can also filter your assets by property by clicking the double arrows at the bottom of the pane. Drop down the options for each property to set it. If you select more than one value for the same property are always, the filtering algorithm uses OR.
+
+![](../assets/assets-filter-property.png) 
+
+
+
 When you select any of the assets in the filtered results table, its detailed properties side panel opens on the right.
 
 ![](../assets/asset-selected-entity-properties.png)
 
 ## Granular Filtering by Properties
 
-After you have filtered on class and type, you can apply granular filters by selecting specific property values.
+After you have filtered on class, type, and property, you can apply granular filters to a specific asset you have selected in the list of results.
 
-To apply granular filters to your class and type filtered results:
+To apply granular filters to your selected asset:
 
 1. Click the three-dot icon  ![](../assets/icons/assets-more.png)  in the top-right corner.
 2. Select the filters you want to apply.
