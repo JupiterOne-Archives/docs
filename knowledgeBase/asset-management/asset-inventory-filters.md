@@ -59,7 +59,7 @@ When you select any of the assets in the filtered results table, its detailed pr
 
 ## Asset Properties
 
-When you select an asset in the list of results, click the three-dot icon  ![](../assets/icons/assets-more.png)  in the top-right corner to see more options and to edit any of the asset properties.
+In the detailed properties pane opens on the right, click the three-dot icon  ![](../assets/icons/assets-more.png)  in the top-right corner to see more options and to edit any of the asset properties.
 
 
 ![](../assets/asset-property-filter-select.png) 
