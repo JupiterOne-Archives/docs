@@ -18,7 +18,8 @@
     "deploy": "yarn bundle && yarn jupiterone-manual-deploy -t jupiterone-dev",
     "updateIntegrations": "cd packages/integrations-handling; yarn getIntegrations",
     "start": "cd packages/docs; yarn publishDiffs $TOKEN $targetVanillaEnv",
-    "replaceIntegrationDocs": "cd packages/docs; yarn replaceIntegrationDocs $TOKEN $targetVanillaEnv"
+    "replaceIntegrationDocs": "cd packages/docs; yarn replaceIntegrationDocs $TOKEN $targetVanillaEnv",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@types/node": "^16.11.7",
