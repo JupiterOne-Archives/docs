@@ -2,7 +2,7 @@
 
 ## GitHub + JupiterOne Integration Benefits
 
-**GitHub Enterprise Server is Now Supported**
+**GitHub Enterprise Server is now supported**
 
 *   Visualize GitHub users, teams, code repositories, pull requests, issues,
     installed GitHub applications, organizational secrets, repo secrets, repo
@@ -31,14 +31,6 @@ execution to 500 of the most recently created/modified *since the last
 execution*. This is an accumulative process resulting in existing `issues` and
 `pull requests` which have been ingested, but are not changing, remain in the
 graph.
-
-### **Note on `active` property for deleted or removed `users`:**
-
-`users` who have been deleted and also removed from a Github Organization only show when "Include recently deleted entities in query/search" is selected when running queries. 
-
-However, the `active` property for the deleted/removed `users` still shows as `true` because it is the last thing J1 ingested about the asset before they were deleted and removed from a Github Organization. 
-
-This change was done to make GitHub user accounts more closely adhere to the data model for the J1 `User` class and to reflect the user account lifecycle that GitHub follows.
 
 ## Requirements
 
