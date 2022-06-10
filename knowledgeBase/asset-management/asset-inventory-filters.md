@@ -20,7 +20,7 @@ Click ![](../assets/icons/gear.png) to edit the critical asset definition defaul
 
 ![](../assets/asset-definition.png)
 
-Add asset classes and properties that your organization comprises a critical asset, and click **Update Definition**.
+Add asset classes and properties that your organization comprises a critical asset, and click **Update Definition**. Example critical asset classes include `Application`, `CodeRepo`, `Datastore`, `Function`, `Host`, and `Logs`.
 
 ## Quick Filtering of All Assets
 
