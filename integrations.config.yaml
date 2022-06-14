@@ -216,3 +216,6 @@ integrations:
   - projectName: graph-kubernetes
     displayName: Kubernetes
     knowledgeCategoriesPaths: APIs_and-integrations/cloud-service-provider
+  - projectName: graph-cisco-secure-workload
+    displayName: Cisco Secure Workload
+    knowledgeCategoriesPaths: APIs_and-integrations/application-security
