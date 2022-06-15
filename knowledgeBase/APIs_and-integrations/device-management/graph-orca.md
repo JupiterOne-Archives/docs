@@ -85,6 +85,8 @@ The following entities are created:
 | Resources | Entity `_type` | Entity `_class` |
 | --------- | -------------- | --------------- |
 | Account   | `orca_account` | `Account`       |
+| Asset     | `orca_asset`   | `Resource`      |
+| Finding   | `orca_finding` | `Finding`       |
 | Role      | `orca_role`    | `AccessRole`    |
 | User      | `orca_user`    | `User`          |
 | UserGroup | `orca_group`   | `UserGroup`     |
@@ -95,8 +97,12 @@ The following relationships are created:
 
 | Source Entity `_type` | Relationship `_class` | Target Entity `_type` |
 | --------------------- | --------------------- | --------------------- |
+| `orca_account`        | **HAS**               | `orca_asset`          |
+| `orca_account`        | **HAS**               | `orca_finding`        |
 | `orca_account`        | **HAS**               | `orca_group`          |
 | `orca_account`        | **HAS**               | `orca_user`           |
+| `orca_asset`          | **HAS**               | `orca_finding`        |
+| `orca_finding`        | **HAS**               | `cve`                 |
 | `orca_group`          | **HAS**               | `orca_user`           |
 | `orca_user`           | **ASSIGNED**          | `orca_role`           |
 
@@ -108,4 +114,4 @@ END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
  
-<!--  jupiterOneDocVersion=1-0-0 -->
+<!--  jupiterOneDocVersion=1-1-1 -->
