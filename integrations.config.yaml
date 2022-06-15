@@ -22,8 +22,6 @@ integrations:
     knowledgeCategoriesPaths: APIs_and-integrations/application-security
   - projectName: graph-cbdefense
     displayName: CbDefense
-  - projectName: graph-cisco-amp
-    displayName: Cisco Amp
   - projectName: graph-cisco-meraki
     displayName: Cisco Meraki
     knowledgeCategoriesPaths: APIs_and-integrations/device-management
@@ -219,3 +217,36 @@ integrations:
   - projectName: graph-cisco-secure-workload
     displayName: Cisco Secure Workload
     knowledgeCategoriesPaths: APIs_and-integrations/application-security
+  - projectName: graph-alibaba-cloud
+    displayName: Alibaba Cloud
+    knowledgeCategoriesPaths: APIs_and-integrations/cloud-service-provider
+  - projectName: graph-alibaba-cloud
+    displayName: Alibaba Cloud
+    knowledgeCategoriesPaths: APIs_and-integrations/cloud-service-provider
+  - projectName: graph-cisco-secure-endpoint
+    displayName: Cisco Secure Endpoint
+    knowledgeCategoriesPaths: APIs_and-integrations/EDR
+  - projectName: graph-cisco-secure-workload
+    displayName: Cisco Secure Workload
+    knowledgeCategoriesPaths: APIs_and-integrations/application-security
+  - projectName: graph-esper
+    displayName: Esper
+    knowledgeCategoriesPaths: APIs_and-integrations/device-management
+  - projectName: graph-netskope
+    displayName: Netskope
+    knowledgeCategoriesPaths: APIs_and-integrations/application-security
+  - projectName: graph-red-hat-quay
+    displayName: Red Hat Quay
+    knowledgeCategoriesPaths: APIs_and-integrations/cloud-service-provider
+  - projectName: graph-semaphore
+    displayName: Semaphore
+    knowledgeCategoriesPaths: APIs_and-integrations/code
+  - projectName: graph-sysdig
+    displayName: Sysdig
+    knowledgeCategoriesPaths: APIs_and-integrations/application-security
+  - projectName: graph-terraform-cloud
+    displayName: Terraform Cloud
+    knowledgeCategoriesPaths: APIs_and-integrations/application-security
+    
+    
+    
