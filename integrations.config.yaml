@@ -22,6 +22,8 @@ integrations:
     knowledgeCategoriesPaths: APIs_and-integrations/application-security
   - projectName: graph-cbdefense
     displayName: CbDefense
+  - projectName: graph-cisco-amp
+    displayName: Cisco Amp
   - projectName: graph-cisco-meraki
     displayName: Cisco Meraki
     knowledgeCategoriesPaths: APIs_and-integrations/device-management
@@ -247,6 +249,3 @@ integrations:
   - projectName: graph-terraform-cloud
     displayName: Terraform Cloud
     knowledgeCategoriesPaths: APIs_and-integrations/application-security
-    
-    
-    
