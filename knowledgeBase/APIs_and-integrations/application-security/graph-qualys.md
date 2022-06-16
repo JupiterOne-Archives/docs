@@ -173,4 +173,4 @@ These global mappings are defined as follows:
 | `ThreatIntel`          | `qid`           | **HAS**               | `Finding`              | `qid`           |
 | `ThreatIntel`          | `qid`           | **HAS**               | `Vulnerability`        | `qid`           |
  
-<!--  jupiterOneDocVersion=5-11-9 -->
+<!--  jupiterOneDocVersion=5-12-0 -->
