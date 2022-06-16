@@ -72,61 +72,42 @@ Grant permission to read Microsoft Graph information:
 
 2.  Grant the following permissions to the application:
 
-    **Required**
-
     *   `Directory.Read.All`
-
-    **Optional**
-
-    | Permission         | Endpoint(s)                                                                                                                                                                     |
-    | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-    | `Policy.Read.All`  | [/policies/identitySecurityDefaultsEnforcementPolicy](https://docs.microsoft.com/en-us/graph/api/identitysecuritydefaultsenforcementpolicy-get?view=graph-rest-1.0\&tabs=http)  |
-    | `Reports.Read.All` | [/beta/reports/credentialUserRegistrationDetails](https://docs.microsoft.com/en-us/graph/api/reportroot-list-credentialuserregistrationdetails?view=graph-rest-beta\&tabs=http) |
+    *   `Policy.Read.All`
+    *   `Reports.Read.All`
 
 3.  Grant admin consent for this directory for the permissions above
 
 #### IAM Roles (Azure Management Groups / Subscriptions)
-
-Please note that minimally [`User.Read` is required][3] even when AD ingestion
-is disabled. The integration will request Organization information to maintain
-the `Account` entity.
 
 Grant the `Reader` RBAC subscription role to read Azure Resource Manager
 information:
 
 1.  Navigate to the correct scope for your integration.
 
-    *If configuring a single Azure Subscription:*
-
-    *   navigate to **Subscriptions**, choose the subscription from which you want
-        to ingest resources.
+    *If configuring a single Azure Subscription:* navigate to **Subscriptions**,
+    choose the subscription from which you want to ingest resources.
 
     *If configuring all subscriptions for a tenant (using the
-    `Configure Subscription Instances` flag in JupiterOne):*
+    `Configure Subscription Instances` flag in JupiterOne):* navigate to
+    **Management Groups**, then to the
+    [Tenant Root Group](https://docs.microsoft.com/en-us/azure/governance/management-groups/overview#root-management-group-for-each-directory).
 
-    *   navigate to **Management Groups**, then to the
-        [Tenant Root Group](https://docs.microsoft.com/en-us/azure/governance/management-groups/overview#root-management-group-for-each-directory).
+2.  Create custom role "JupiterOne Reader"
+    1.  Navigate to **Access control (IAM)** -> **Add** -> **Add custom role**
+    2.  Create a custom role called "JupiterOne Reader" with the following
+        permissions:
+        *   `Microsoft.PolicyInsights/policyStates/queryResults/action`
+        *   `Microsoft.Web/sites/config/list/Action`
 
-2.  Navigate to **Access control (IAM)**, then **Add role assignment**
-
-3.  Select **Role** "Reader", **Assign access to** "Azure AD user, group, or
-    service principal", and select the App "JupiterOne"
-
-4.  Create a custom role called "JupiterOne Reader" with the following
-    permissions:
-    *   `Microsoft.PolicyInsights/policyStates/queryResults/action`
-
-5.  (Optional) If you'd like integration to be able to fetch auth settings for
-    all Web Apps, add the following permissions to the same custom role:
-    *   `Microsoft.Web/sites/config/list/Action`
-
-6.  Select **Role** "JupiterOne Reader", **Assign access to** "Azure AD user,
-    group, or service principal", and select the app "JupiterOne"
-
-7.  *If configuring all subscriptions for a tenant (using the
-    `Configure Subscription Instances` flag in JupiterOne):*
-
-    *   Also assign the "Management Group Reader" role to the App "JupiterOne"
+3.  Assign Roles to "JupiterOne" App
+    1.  Navigate to **Access control (IAM)** -> **Add** -> **Add role assignment**
+    2.  Assign each of the three roles to the "JupiterOne" member
+        1.  JupiterOne Reader
+        2.  Reader
+        3.  Key Vault Reader
+        4.  Management Group Reader (If using `Configure Subscription Instances`
+            flag in JupiterOne)
 
 ### Key Vault Access Policy
 
@@ -138,11 +119,11 @@ account*:
 *   Key Permissions
     *   Key Management Operations
         *   List
-*   Secret Permisisons
+*   Secret Permissions
     *   Secret Management Operations
         *   List
 
-The steps necesssary for that are outlined on this page:
+The steps necessary for that are outlined on this page:
 [Assign a Key Vault access policy](https://go.microsoft.com/fwlink/?linkid=2125287).
 
 ### In JupiterOne
@@ -212,6 +193,11 @@ The following entities are created:
 
 | Resources                                       | Entity `_type`                                    | Entity `_class`                    |
 | ----------------------------------------------- | ------------------------------------------------- | ---------------------------------- |
+| FrontDoor                                       | `azure_frontdoor`                                 | `Service`                          |
+| FrontDoor Backend Pool                          | `azure_frontdoor_backend_pool`                    | `Configuration`                    |
+| FrontDoor Frontend Endpoint                     | `azure_frontdoor_frontend_endpoint`               | `Gateway`                          |
+| FrontDoor Routing Rule                          | `azure_frontdoor_routing_rule`                    | `Route`                            |
+| FrontDoor Rules Engine                          | `azure_frontdoor_rules_engine`                    | `Ruleset`                          |
 | \[AD] Account                                   | `azure_account`                                   | `Account`                          |
 | \[AD] Group                                     | `azure_user_group`                                | `UserGroup`                        |
 | \[AD] Group Member                              | `azure_group_member`                              | `User`                             |
@@ -336,6 +322,10 @@ The following relationships are created:
 | `azure_event_grid_domain`          | **HAS**               | `azure_event_grid_domain_topic`                   |
 | `azure_event_grid_domain_topic`    | **HAS**               | `azure_event_grid_topic_subscription`             |
 | `azure_event_grid_topic`           | **HAS**               | `azure_event_grid_topic_subscription`             |
+| `azure_frontdoor`                  | **HAS**               | `azure_frontdoor_backend_pool`                    |
+| `azure_frontdoor`                  | **HAS**               | `azure_frontdoor_frontend_endpoint`               |
+| `azure_frontdoor`                  | **HAS**               | `azure_frontdoor_routing_rule`                    |
+| `azure_frontdoor`                  | **HAS**               | `azure_frontdoor_rules_engine`                    |
 | `azure_function_app`               | **USES**              | `azure_app_service_plan`                          |
 | `azure_gallery`                    | **CONTAINS**          | `azure_shared_image`                              |
 | `azure_user_group`                 | **HAS**               | `azure_user_group`                                |
@@ -373,6 +363,7 @@ The following relationships are created:
 | `azure_resource_group`             | **HAS**               | `azure_dns_zone`                                  |
 | `azure_resource_group`             | **HAS**               | `azure_event_grid_domain`                         |
 | `azure_resource_group`             | **HAS**               | `azure_event_grid_topic`                          |
+| `azure_resource_group`             | **HAS**               | `azure_frontdoor`                                 |
 | `azure_resource_group`             | **HAS**               | `azure_function_app`                              |
 | `azure_resource_group`             | **HAS**               | `azure_gallery`                                   |
 | `azure_resource_group`             | **HAS**               | `azure_image`                                     |
@@ -530,4 +521,4 @@ END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 
 [3]: https://docs.microsoft.com/en-us/graph/api/organization-get
  
-<!--  jupiterOneDocVersion=5-37-0 -->
+<!--  jupiterOneDocVersion=5-39-0 -->
