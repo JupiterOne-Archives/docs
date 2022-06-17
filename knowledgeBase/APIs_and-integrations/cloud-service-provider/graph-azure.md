@@ -83,31 +83,30 @@ Grant permission to read Microsoft Graph information:
 Grant the `Reader` RBAC subscription role to read Azure Resource Manager
 information:
 
-1.  Navigate to the correct scope for your integration.
+1. Navigate to the correct scope for your integration.
 
-    *If configuring a single Azure Subscription:* navigate to **Subscriptions**,
-    choose the subscription from which you want to ingest resources.
+   - _(RECOMMENDED) If configuring all subscriptions for a tenant:_ navigate to
+     **Management Groups**, then to the
+     [Tenant Root Group](https://docs.microsoft.com/en-us/azure/governance/management-groups/overview#root-management-group-for-each-directory).
 
-    *If configuring all subscriptions for a tenant (using the
-    `Configure Subscription Instances` flag in JupiterOne):* navigate to
-    **Management Groups**, then to the
-    [Tenant Root Group](https://docs.microsoft.com/en-us/azure/governance/management-groups/overview#root-management-group-for-each-directory).
+   - _If configuring a single Azure Subscription:_ navigate to
+     **Subscriptions**, choose the subscription from which you want to ingest
+     resources.
 
-2.  Create custom role "JupiterOne Reader"
-    1.  Navigate to **Access control (IAM)** -> **Add** -> **Add custom role**
-    2.  Create a custom role called "JupiterOne Reader" with the following
-        permissions:
-        *   `Microsoft.PolicyInsights/policyStates/queryResults/action`
-        *   `Microsoft.Web/sites/config/list/Action`
-
-3.  Assign Roles to "JupiterOne" App
-    1.  Navigate to **Access control (IAM)** -> **Add** -> **Add role assignment**
-    2.  Assign each of the three roles to the "JupiterOne" member
-        1.  JupiterOne Reader
-        2.  Reader
-        3.  Key Vault Reader
-        4.  Management Group Reader (If using `Configure Subscription Instances`
-            flag in JupiterOne)
+1. Create custom role "JupiterOne Reader"
+   1. Navigate to **Access control (IAM)** -> **Add** -> **Add custom role**
+   2. Create a custom role called "JupiterOne Reader" with the following
+      permissions:
+      - `Microsoft.PolicyInsights/policyStates/queryResults/action`
+      - `Microsoft.Web/sites/config/list/Action`
+2. Assign Roles to "JupiterOne" App
+   1. Navigate to **Access control (IAM)** -> **Add** -> **Add role assignment**
+   2. Assign each of the three roles to the "JupiterOne" member
+      1. JupiterOne Reader
+      2. Reader
+      3. Key Vault Reader
+      4. Management Group Reader (If using `Configure Subscription Instances`
+         flag in JupiterOne)
 
 ### Key Vault Access Policy
 
