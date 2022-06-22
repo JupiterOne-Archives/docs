@@ -1,7 +1,7 @@
-# `Using J1 Metadata
+# s`Using J1 Metadata
 
 JupiterOne adds metadata properties to all data in the J1 system, regardless of how the data was created. All metadata properties begin with an underscore `_` and are visible when you click on any asset in J1 Assets. The asset properties drawer opens, and the Metadata tab displays all the metadata for that asset.
- 
+
 
 ![](../assets/asset-drawer.png) 
 
@@ -28,7 +28,9 @@ You can query metadata properties like any other property in J1QL or via the API
 | `_key`                      | Locally unique value (string) for the asset within the `_scope` of the integration or API ingestion job it came from. These properties are set by JupiterOne for integrations, and by you for custom uploads. Two assets can have the same` _key` or the same `_scope`, but not both. |
 | `_scope`                    | Value (string) to define a group of assets that are ingested together via an integration or API (such as all entities uploaded via API in the same synchronization job would have the same user-defined `_scope` value). |
 | `_source`                   | Can be one of three values ('integration-managed', 'system-mapper', 'api') (string). |
-| `_type`                     | Value of the JupiterOne type of  asset (string)(such as 'aws_s3_bucket'). |
+| `_toEntityId`               | `_id` of the asset with which the "to" relationship exists. |
+| `_toEntityKey`              | `_key` of the asset with which the "to" relationship exists. |
+| `_type`                     | Value of the JupiterOne type of  asset (string) (such as 'aws_s3_bucket'). |
 | `_version`                  | Value of the number (integer) of times the asset has been updated in JupiterOne (such as 59). |
 
 *All metadata properties beginning with _integration are null/undefined if the asset did not come from an integration.
