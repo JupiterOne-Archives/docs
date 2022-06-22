@@ -1,4 +1,4 @@
-# Account and billing related FAQs
+# Account and Billing-Related FAQs
 
 ## What are entities? And how are they counted for usage/billing?
 
@@ -50,7 +50,7 @@ return
 
 | Entity                     | Description                              | Billable |
 | -------------------------- | ---------------------------------------- | -------- |
-| `AccessKey`                | A key used to grant access, such as ssh-key, access-key, api-key/token, <br />mfa-token/device, etc. | Yes      |
+| `AccessKey`                | A key used to grant access, such as ssh-key, access-key, api-key/token, mfa-token/device, etc. | Yes      |
 | `AccessPolicy`             | A policy for access control assigned to a Host, Role, User, UserGroup, or Service. | Yes      |
 | `AccessRole`               | An access control role mapped to a Principal (e.g. user, group, or service). | Yes      |
 | `Account`Entity            | An organizational account for a service or a set of services (e.g. AWS, Okta, Bitbucket Team, Google G-Suite account, Apple Developer Account). Each Account should be connected to a Service.Description | Yes      |
