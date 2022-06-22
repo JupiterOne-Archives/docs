@@ -31,8 +31,8 @@
 
 ## Support
 
-If you need help with this integration, please contact
-[JupiterOne Support](https://support.jupiterone.io).
+If you need help with this integration, please contact [JupiterOne Support](https://support.jupiterone.io).
+See also the [Troubleshooting section](#troubleshooting) in this article.
 
 ## Integration Walkthrough
 
