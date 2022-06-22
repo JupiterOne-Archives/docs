@@ -1,4 +1,4 @@
-# Account and billing related FAQs
+# Account and Billing-Related FAQs
 
 ## What are entities? And how are they counted for usage/billing?
 
