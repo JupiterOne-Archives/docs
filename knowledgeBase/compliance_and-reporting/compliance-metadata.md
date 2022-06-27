@@ -1,4 +1,4 @@
-# s`Using J1 Metadata
+# Using J1 Metadata
 
 JupiterOne adds metadata properties to all data in the J1 system, regardless of how the data was created. All metadata properties begin with an underscore `_` and are visible when you click on any asset in J1 Assets. The asset properties drawer opens, and the Metadata tab displays all the metadata for that asset.
 
