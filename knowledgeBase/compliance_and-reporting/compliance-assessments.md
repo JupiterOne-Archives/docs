@@ -22,7 +22,6 @@ To create an assessment:
    ​
 
 
-3. ​
-
-
+3. If you want to create a custom assessment, click the Custom tab, enter a name for the assessment and, optionally, a description, and click **Create**. 
+4. If you are using a template assessment, select which of the provided questions to be part of your assessment, and click **Save**.
 
