@@ -26,17 +26,29 @@ To create an assessment:
 
    If you are using a template assessment, select which of the provided questions to be part of your assessment, and click **Save**.
 
-   ![](../assets/compliance-adding-question.png)
-
    ​
 
    ​
 
-4. ​
+   ​
 
-   ![](../assets/compliance-add-template-question.png) 
+4. If you want to add more questions to a template assessment, click Add Questions.
+
+5. From the **By Template** tab, select the additional questions you want to include, and click **Save**.
 
    ​
+
+   ![](../assets/compliance-question-adding.png) 
+   ​
+
+6. If you want to add questions to a custom assessment, click the Custom tab and enter the following information:
+
+   - Name in the form of a question (required)
+   - Description to explain what the question should answer (optional)
+   - Any tags you want to add to the question (optional)
+   - Queries with the name and J1QL query syntax, indicating if you want the query results to be informative, good, bad, or unknown (required).
+
+7. Click **Add**.
 
    ![](../assets/compliance-add-question.png)
 
