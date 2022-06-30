@@ -10,18 +10,34 @@ If you are a new user, you see on the J1 landing page, the option to run a start
 
 J1 Compliance provides starter assessments, grouped by subject-matter categories, such as access, data, and privacy. 
 
-### Creating a Custom Assessment
+### Creating an Assessment
 
 To create an assessment:
 
 1. Click **New Assessment**.
 
-2. To use a template, select the template type from the list, and click **Create**.
+2. To use a template, click the By Template tab, select the assessment category from the list, and click **Create**.
 
    ![](../assets/compliance-create-assess.png)
    ​
 
 
 3. If you want to create a custom assessment, click the Custom tab, enter a name for the assessment and, optionally, a description, and click **Create**. 
-4. If you are using a template assessment, select which of the provided questions to be part of your assessment, and click **Save**.
+
+   If you are using a template assessment, select which of the provided questions to be part of your assessment, and click **Save**.
+
+   ![](../assets/compliance-adding-question.png)
+
+   ​
+
+   ​
+
+4. ​
+
+   ![](../assets/compliance-add-template-question.png) 
+
+   ​
+
+   ![](../assets/compliance-add-question.png)
+
 
