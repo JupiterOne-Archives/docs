@@ -49,15 +49,10 @@ To add questions:
 3. If you want to add questions to a custom assessment, click the Custom tab and enter the following information:
 
    - Name in the form of a question (required)
-
-
    - Description to explain what the question should answer (optional)
-
-
    - Any tags you want to add to the question (optional)
-
-
    - Queries with the name and J1QL query syntax, indicating if you want the query results to be informative, good, bad, or unknown (required).
+
 
 4. Click **Add**.
 
