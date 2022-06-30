@@ -31,8 +31,8 @@ If you need help with this integration, please contact
 
 ### In Salesforce
 
-1.  First navigate to the JupiterOne Salesforce integration configuration page
-    (see detailed steps in the **In JupiterOne** section below)
+1.  First navigate to the Salesforce developer account creation page or go to this webpage https://developer.salesforce.com/signup (note this must be a developer account.  The integration will not run if you create a generic salesforce account).
+    
 
 2.  Once the relevant form information has been filled out, submitting the form
     will redirect the user to Salesforce to authorize the requested scopes.
@@ -42,7 +42,7 @@ If you need help with this integration, please contact
 
 ### In JupiterOne
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
+1.  From the JupiterOne Salesforce integration configuration page  **Gear Icon**, select **Integrations**.
 2.  Scroll to the **Salesforce** integration tile and click it.
 3.  Click the **Add Configuration** button and configure the following settings:
 
