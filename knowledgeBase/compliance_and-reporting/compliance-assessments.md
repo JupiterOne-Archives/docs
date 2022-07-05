@@ -1,6 +1,6 @@
 # Using J1 Assessments
 
-JupiterOne Assessments enable you to run multiple questions at the same time to evaluate your security posture based on template, category, or tag. You can also create your own custom assessment by selecting any questions from the J1 questions library. Each selected question creates one associated compliance requirement in the assessment. You access the assessments from the left navigation pane in J1 Compliance.
+JupiterOne Assessments enable you to run multiple questions at the same time to evaluate your security posture based on template, category, or tag. You can also create your own custom assessment by selecting any questions from the J1 questions library. Each selected question is evaluated similar to a compliance requirement in the assessment. You access J1 Assessments from the left navigation pane in J1 Compliance.
 
 ### Running a Starter Assessment
 
@@ -26,6 +26,8 @@ To create an assessment:
 
 4. If you want to add more questions to the ones already in a template assessment, click **Add Questions**.
 
+   The questions in assessments check your environment for criteria that your organization must meet. Each time you add a question to an assessment, J1 runs an evaluation of your environment to report where there are deviations from the expected outputs.
+
 5. From the **By Template** tab, select the additional questions you want to include, and click **Save**.
 
    ​
@@ -45,3 +47,7 @@ To create an assessment:
    ![](../assets/compliance-add-question.png)
 
 
+
+You can easily edit or delete assessments and questions by using the pencil and trash can icons next to them. 
+
+![](../assets/compliance-assess-edit.png) 
