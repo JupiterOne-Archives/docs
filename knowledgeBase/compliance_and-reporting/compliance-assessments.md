@@ -1,6 +1,6 @@
-# Using J1 Assessments
+# Using JupiterOne Assessments
 
-JupiterOne Assessments enable you to run multiple questions at the same time to evaluate your security posture based on template, category, or tag. You can also create your own custom assessment by selecting any questions from the J1 questions library. Each selected question is evaluated similar to a compliance requirement in the assessment. You access J1 Assessments from the left navigation pane in J1 Compliance.
+JupiterOne Assessments enable you to run multiple questions at the same time to evaluate your security posture based on template, category, or tag. You can also create your own custom assessment by selecting any questions from the J1 managed questions library. Each selected question is evaluated similar to a compliance requirement in the assessment. You access J1 Assessments from the left navigation pane in J1 Compliance.
 
 ### Running a Starter Assessment
 
@@ -10,10 +10,17 @@ If you are a new user, you see on the J1 landing page, the option to run a start
 
 J1 provides starter assessments, grouped by subject-matter categories, such as access, data, and privacy. 
 
-You can also filter existing assessments for your organization by compliance gap status. Click the **Gap Status** dropdown menu and select Gap, Attention, Tested, and Unknown to find ....
+You can also filter existing assessments for your organization by compliance gap status. Click the **Gap Status** dropdown menu and select Gap, Attention, Tested, or Unknown to find existing assessments whose results reveal where there are:
+
+- Gaps in compliance.
+- Areas that potentially need remediation.
+- Requirements are met and being monitored.
+- A manual review of a compliance issue is necessary.
+  ​
 
 
  ![](../assets/compliance-gap-status.png) 
+
 
 ### Creating an Assessment
 
@@ -40,7 +47,7 @@ To create an assessment:
    ![](../assets/compliance-question-adding.png) 
    ​
 
-6. If you want to add questions to a custom assessment, click the **Custom** tab and enter the following information:
+6. If you want to add custom questions to an assessment, click the **Custom** tab and enter the following information:
 
    - Name in the form of a question (required)
    - Description to explain what the question should answer (optional)
@@ -48,6 +55,7 @@ To create an assessment:
    - Queries with the name and J1QL query syntax, indicating if you want the query results to be informative, good, bad, or unknown (required).
 
 7. Click **Add**.
+   ​
 
    ![](../assets/compliance-add-question.png)
 
