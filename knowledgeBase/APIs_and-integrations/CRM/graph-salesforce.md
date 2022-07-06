@@ -54,7 +54,7 @@ If you need help with this integration, please contact
 *   Select a **Polling Interval** that you feel is sufficient for your monitoring
     needs. You may leave this as `DISABLED` and manually execute the integration.
 
-4.  Click **Create Configuration** once all values are provided.
+4.  Click **Create Configuration** once all values are provided. 
 
 # How to Uninstall
 
