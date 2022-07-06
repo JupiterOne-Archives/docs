@@ -73,9 +73,6 @@ You can also configure rules to include deleted data in the results. For example
   ...
 }
 ```
-
-
-
 ## Rule Properties
 
 | Property           | Type              | Description                              |
