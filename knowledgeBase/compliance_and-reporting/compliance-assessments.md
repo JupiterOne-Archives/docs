@@ -8,7 +8,12 @@ If you are a new user, you see on the J1 landing page, the option to run a start
 
 ![](../assets/compliance-start-assessment.png)
 
-J1 Compliance provides starter assessments, grouped by subject-matter categories, such as access, data, and privacy. 
+J1 provides starter assessments, grouped by subject-matter categories, such as access, data, and privacy. 
+
+You can also filter existing assessments for your organization by compliance gap status. Click the **Gap Status** dropdown menu and select Gap, Attention, Tested, and Unknown to find ....
+
+
+ ![](../assets/compliance-gap-status.png) 
 
 ### Creating an Assessment
 
