@@ -29,16 +29,10 @@ If you need help with this integration, please contact
 
 ## Integration Walkthrough
 
-### In Salesforce
+### Salesforce Account Creation (if you already have a Salesforce developer account you can skip this part)
 
-1.  First navigate to the JupiterOne Salesforce integration configuration page
-    (see detailed steps in the **In JupiterOne** section below)
+1.  First navigate to the Salesforce developer account creation page or go to this webpage https://developer.salesforce.com/signup (note this must be a developer account.  The integration will not run if you create a generic salesforce account).
 
-2.  Once the relevant form information has been filled out, submitting the form
-    will redirect the user to Salesforce to authorize the requested scopes.
-
-3.  Review the request, click "Allow", and then you will be redirected back to
-    JupiterOne.
 
 ### In JupiterOne
 
@@ -54,7 +48,10 @@ If you need help with this integration, please contact
 *   Select a **Polling Interval** that you feel is sufficient for your monitoring
     needs. You may leave this as `DISABLED` and manually execute the integration.
 
-4.  Click **Create Configuration** once all values are provided.
+4.  Click **Create Configuration** once all values are provided. Once the relevant form information has been filled out, submitting the form
+    will redirect the user to Salesforce to authorize the requested scopes. Click "Begin Authorization" to be redirected to Salesforce. From there log in     with your Salesforce developer account username and password.
+
+6.  You may be directed back to Jupiter One to log in again.  After logging in you should be at the Salesforce Integration page again and your integration     can now be run.
 
 # How to Uninstall
 
