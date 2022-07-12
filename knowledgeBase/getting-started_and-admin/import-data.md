@@ -47,7 +47,7 @@ In the Salesforce example, some of the relationships J1 creates include:
 In addition, you may need to identify the relationships between assets in Salesforce 
 and assets in other applications that you have in your J1 account.
 
-[The J1 data model](../docs/jupiterone-data-model.png) is a reference model that describes as an entity-relationship graph 
+[The J1 data model](../jupiterOne-data-model/jupiterone-data-model.md) is a reference model that describes as an entity-relationship graph 
 the digital resources and complex interconnections among all the resources 
 in a technology organization. It represents a reference model, not a strict or rigid structure.
 
