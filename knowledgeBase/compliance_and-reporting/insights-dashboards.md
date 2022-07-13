@@ -1,15 +1,15 @@
 # Getting Started with Insights Dashboards
 
-This article explains how to:
+This guide will walk through how to:
 
-1. Import prebuilt Insights dashboards
-2. Create your own custom Insights dashboard
+1. Import prebuilt Insights Dashboards
+2. Create your own custom Insight dashboard
 
-J1 Insights allows you to build reporting dashboards using J1QL queries.
+The J1 Insights app allows you to build reporting dashboards using J1QL queries.
 
-You can configure each dashboard either as a team dashboard that you share with other account users or a personal dashboard for a single user. 
+Each dashboard can be configured as either a Team board that is shared with other account users or a Personal board for the individual user. 
 
-The layout of each dashboard is individually saved per user, including the layout for team boards, so that  users can configure layouts according to their own preferences without impacting others. Administrators can save a team board layout as a default for other users.
+The layout of each board is individually saved per user, including the layout for Team boards, so that each user may configure layouts according to their own preferences without impacting others. Administrators can save a Team board layout as "default" for other users.
 
 You can build your own custom dashboards or utilize any of the existing boards that have already been built.
 
