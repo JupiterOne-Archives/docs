@@ -1,4 +1,4 @@
-# Salesforce Integration with JupiterOne
+# Salesforce
 
 ## Salesforce + JupiterOne Integration Benefits
 
@@ -29,14 +29,20 @@ If you need help with this integration, please contact
 
 ## Integration Walkthrough
 
-### Salesforce Account Creation (if you already have a Salesforce developer account you can omit this step)
+### In Salesforce
 
-1.  Navigate to the Salesforce developer account creation page or go to https://developer.salesforce.com/signup (note this must be a developer account. The integration does not run if you create a generic salesforce account).
+1.  Navigate to the Salesforce developer account creation page or go to this webpage https://developer.salesforce.com/signup (note this must be a developer account.  The integration will not run if you create a generic salesforce account).
+    
 
+2.  Once the relevant form information has been filled out, submitting the form
+    will redirect the user to Salesforce to authorize the requested scopes.
+
+3.  Review the request, click "Allow", and then you will be redirected back to
+    JupiterOne.
 
 ### In JupiterOne
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
+1.  From the top navigation of the J1 Search homepage, select **Integrations**.
 2.  Scroll to the **Salesforce** integration tile and click it.
 3.  Click the **Add Configuration** button and configure the following settings:
 
@@ -48,10 +54,7 @@ If you need help with this integration, please contact
 *   Select a **Polling Interval** that you feel is sufficient for your monitoring
     needs. You may leave this as `DISABLED` and manually execute the integration.
 
-4.  Click **Create Configuration** after you have provided all the values. When you have entered the relevant form information, submitting the form
-    redirects you to Salesforce to authorize the requested scopes. Click "Begin Authorization" to be redirected to Salesforce. From there, log in with your Salesforce developer account username and password.
-
-6.  You may be directed back to JupiterOne to sign in again. After signing in you are at the Salesforce Integration page again and your integration can now run.
+4.  Click **Create Configuration** once all values are provided.
 
 # How to Uninstall
 
@@ -59,7 +62,7 @@ If you need help with this integration, please contact
 2.  Scroll to the **Salesforce** integration tile and click it.
 3.  Identify and click the **integration to delete**.
 4.  Click the **trash can** icon.
-5.  Click **Remove** to delete the integration.
+5.  Click the **Remove** button to delete the integration.
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
 
