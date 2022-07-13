@@ -85,7 +85,7 @@ integrations:
     knowledgeCategoriesPaths: APIs_and-integrations/EDR
   - projectName: graph-nmap
     displayName: Nmap
-  - projectName: graph-now
+  - projectName: graph-nowsecure
     displayName: NowSecure
     knowledgeCategoriesPaths: APIs_and-integrations/application-security
   - projectName: graph-npm
@@ -264,6 +264,3 @@ integrations:
   - projectName: graph-microsoft-teams
     displayName: Microsoft Teams
     knowledgeCategoriesPaths: APIs_and-integrations/workflow
-    
-    
-    
