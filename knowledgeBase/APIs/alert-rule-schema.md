@@ -44,6 +44,35 @@ JSON Example:
 }
 ```
 
+You can also configure rules to include deleted data in the results. For example:
+
+```
+{
+  "id": "...",
+  "question": {
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find DataStore with classification='critical' and encrypted=false as d return d.tag.AccountName as Account, d.displayName as UnencryptedDataStores, d._type as Type, d.encrypted as Encrypted",
+        "version": "v1",
+        "includeDeleted": true
+      },
+      {
+        "name": "query1",
+        "query": "...",
+        "version": "v1",
+        "includeDeleted": false
+      },
+      {
+        "name": "query2",
+        "query": "...",
+        "version": "v1"
+      }
+    ]
+  },
+  ...
+}
+```
 ## Rule Properties
 
 | Property           | Type              | Description                              |
@@ -95,11 +124,11 @@ during the rule evaluation process and whose responses can be used in any `RuleO
 A named query that should be executed during the rule evaluation process and 
 whose responses can be used in any `RuleOperation`.
 
-| Property  | Type     | Description                              |
-| --------- | -------- | ---------------------------------------- |
-| `name?`   | `string` | Optional name to assign the query that will be used when referencing query data in `RuleOperation`s. If not provided, the query name is automatically assigned based on the index in the `queries` array (for example, `query0`, `query1`). |
-| `query`   | `string` | JupiterOne query to execute.             |
-| `version` | `string` | JupiterOne query language execution version (for example, `v1`). |
+| Property         | Type      | Description                              |
+| ---------------- | --------- | ---------------------------------------- |
+| `name?`          | `string`  | Optional name to assign the query that will be used when referencing query data in `RuleOperation`s. If not provided, the query name is automatically assigned based on the index in the `queries` array (for example, `query0`, `query1`). |
+| `query`          | `string`  | JupiterOne query to execute.             |
+| `version`        | `string`  | JupiterOne query language execution version (for example, `v1`). |
 | `includeDeleted` | `boolean` | Whether deleted data should be considered for the specific query (defaults to `false`). |
 
 ### Type: RuleOperationCondition
