@@ -1,23 +1,16 @@
 # Getting Started with Insights Dashboards
 
-This article explains how to:
-
-1. Import prebuilt Insights dashboards
-2. Create your own custom Insights dashboard
-
-J1 Insights allows you to build reporting dashboards using J1QL queries.
+J1 Insights enables you to build reporting dashboards using J1QL queries. You can either import prebuilt Insights dashboards or create a custom one of your own.
 
 You can configure each dashboard either as a team dashboard that you share with other account users or a personal dashboard for a single user. 
 
-The layout of each dashboard is individually saved per user, including the layout for team boards, so that  users can configure layouts according to their own preferences without impacting others. Administrators can save a team board layout as a default for other users.
-
-You can build your own custom dashboards or utilize any of the existing boards that have already been built.
+The layout of each dashboard is individually saved per user, including the layout for team boards, so that you can configure layouts according to your own preferences without impacting others. Administrators can save a team board layout as a default for other users.
 
 Here are a few example boards and their configurations: [https://github.com/JupiterOne/insights-dashboards](https://github.com/JupiterOne/insights-dashboards).
 
 ## Import Prebuilt Insights Dashboards (from GitHub)
 
-1. Navigate to the specific prebuilt dashboard you’d like to import into your JupiterOne account:
+1. Navigate to the specific prebuilt dashboard you want to import into your JupiterOne account:
 
    <https://github.com/JupiterOne/insights-dashboards>.
 
@@ -27,11 +20,11 @@ Here are a few example boards and their configurations: [https://github.com/Jupi
 
 4. Right-click **Raw** -> **Save File**.
 
-   ​
+   
 
    ![save-dashboard](../assets/save-dashboard.gif)
 
-   ​
+   
 
 5. Navigate within JupiterOne to **Apps** -> **Insights** to add a board.
    ​
@@ -47,7 +40,7 @@ Here are a few example boards and their configurations: [https://github.com/Jupi
 
    ![import-dashboard](../assets/import-dashboard.gif)
 
-   ​
+   
 
    For more information about J1 standard Insights dashboards, [watch this video](https://try.jupiterone.com/blog/video-how-to-modify-out-of-the-box-dashboards).
 
@@ -60,7 +53,7 @@ You can build your own custom dashboard with customized individual charts. Each 
 
    ![insights](../assets/insights.png)
 
-   ​
+   
 
 2. Expand the left sidebar by clicking the ‘>’ carrot .
 
@@ -91,21 +84,21 @@ For more information about custom Insights dashboards, [watch this video](https:
 
   ![clone-delete-rename](../assets/clone-delete-rename.png)
 
-  ​
+  
 
 - Download board schema, share boards (create public links), save or reset board layout, add charts:
   ​
 
   ![share-download-add-layout](../assets/share-download-add-layout.png)
 
-  ​
+  
 
 - Delete charts:
   ​
 
   ![delete-widget](../assets/delete-widget.png)
 
-  ​
+  
 
 - Reorder either charts within a specific board, or the board within the side panel by dragging the chart or board to the desired spot:
   ​
