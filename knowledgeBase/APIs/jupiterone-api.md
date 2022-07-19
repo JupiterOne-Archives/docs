@@ -1635,6 +1635,88 @@ Variables:
 
 **Endpoint:** `/rules/graphql`
 
+### List alert rules
+
+```graphql
+  query ListAlertInstances(
+    $alertStatus: AlertStatus
+    $limit: Int
+    $cursor: String
+  ) {
+    listAlertInstances(
+      alertStatus: $alertStatus
+      limit: $limit
+      cursor: $cursor
+    ) {
+      instances {
+        id
+        accountId
+        ruleId
+        level
+        status
+        lastUpdatedOn
+        lastEvaluationBeginOn
+        lastEvaluationEndOn
+        createdOn
+        dismissedOn
+        lastEvaluationResult {
+          rawDataDescriptors {
+            recordCount
+          }
+        }
+        questionRuleInstance {
+          id
+          name
+          description
+          question {
+            queries {
+              query
+              name
+            }
+          }
+        }
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+    }
+  }
+```
+variables:
+
+Filtering for `ACTIVE` Alerts
+```json
+{
+  "alertStatus": "ACTIVE",
+}
+```
+
+Filtering for `INACTIVE` Alerts
+```json
+{
+  "alertStatus": "INACTIVE",
+}
+```
+
+Filtering for `DISMISSED` Alerts
+```json
+{
+  "alertStatus": "DISMISSED",
+}
+```
+
+To apply a limit to the number of results returned, pass a `limit` variable.
+```json
+{
+  "limit": 10
+}
+```
+
+To paginate through the results, pass the `endCursor` received in the response
+as the `cursor` variable in the request. If `endCursor` is `null` then there are
+no more results to retrieve.
+
 ### Create an inline alert rule from J1QL
 
 This operation was formerly named `createQuestionRuleInstance`. That name is
