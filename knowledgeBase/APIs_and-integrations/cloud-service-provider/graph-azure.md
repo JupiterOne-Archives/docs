@@ -1,4 +1,4 @@
-# Azure Integration with JupiterOne
+# Azure
 
 ## Azure + JupiterOne Integration Benefits
 
@@ -31,8 +31,9 @@
 
 ## Support
 
-If you need help with this integration, please contact [JupiterOne Support](https://support.jupiterone.io).
-See also the [Troubleshooting section](#troubleshooting) in this article.
+If you need help with this integration, please contact
+[JupiterOne Support](https://support.jupiterone.io). Also, see the
+[Troubleshooting section](#troubleshooting) in this article.
 
 ## Integration Walkthrough
 
@@ -85,13 +86,13 @@ information:
 
 1.  Navigate to the correct scope for your integration.
 
-    *If configuring a single Azure Subscription:* navigate to **Subscriptions**,
-    choose the subscription from which you want to ingest resources.
+    *   *(RECOMMENDED) If configuring all subscriptions for a tenant:* navigate to
+        **Management Groups**, then to the
+        [Tenant Root Group](https://docs.microsoft.com/en-us/azure/governance/management-groups/overview#root-management-group-for-each-directory).
 
-    *If configuring all subscriptions for a tenant (using the
-    `Configure Subscription Instances` flag in JupiterOne):* navigate to
-    **Management Groups**, then to the
-    [Tenant Root Group](https://docs.microsoft.com/en-us/azure/governance/management-groups/overview#root-management-group-for-each-directory).
+    *   *If configuring a single Azure Subscription:* navigate to
+        **Subscriptions**, choose the subscription from which you want to ingest
+        resources.
 
 2.  Create custom role "JupiterOne Reader"
     1.  Navigate to **Access control (IAM)** -> **Add** -> **Add custom role**
@@ -114,7 +115,8 @@ information:
 Please note that listing Key Vault keys and secrets (`rm-keyvault-keys` and
 `rm-keyvault-secrets` steps) require JupiterOne users to grant the following
 permissions to the JupiterOne security principal *for each Key Vault in their
-account*:
+account*. See Azure documentation for more information on
+[Assign a Key Vault access policy](https://go.microsoft.com/fwlink/?linkid=2125287).
 
 *   Key Permissions
     *   Key Management Operations
@@ -123,36 +125,60 @@ account*:
     *   Secret Management Operations
         *   List
 
-The steps necessary for that are outlined on this page:
-[Assign a Key Vault access policy](https://go.microsoft.com/fwlink/?linkid=2125287).
-
 ### In JupiterOne
 
 1.  From the configuration **Gear Icon**, select **Integrations**.
+
 2.  Scroll to the **Azure** integration tile and click it.
+
 3.  Click the **Add Configuration** button and configure the following settings:
 
-*   Enter the **Account Name** by which you'd like to identify this Azure account
-    in JupiterOne. Ingested entities will have this value stored in
-    `tag.AccountName` when **Tag with Account Name** is checked.
-*   Enter a **Description** that will further assist your team when identifying
-    the integration instance.
-*   Select a **Polling Interval** that you feel is sufficient for your monitoring
-    needs. You may leave this as `DISABLED` and manually execute the integration.
-*   Enter the **Directory (tenant) ID** of the Active Directory to target in Azure
-    API requests.
-*   Enter the **Application (client) ID** created for JupiterOne, used to
-    authenticate with Azure.
-*   Enter the **Application (client) Secret** associated with the application ID,
-    used to authenticate with Azure.
-*   Select the option **Ingest Active Directory** to ingest Directory information.
-    This should only be enabled in one integration instance per Directory.
+    1.  Enter the **Account Name** by which you'd like to identify this Azure
+        account in JupiterOne. Ingested entities will have this value stored in
+        `tag.AccountName` when **Tag with Account Name** is checked.
+
+    2.  Enter a **Description** that will further assist your team when
+        identifying the integration instance.
+
+    3.  Select a **Polling Interval** that you feel is sufficient for your
+        monitoring needs. You may leave this as `DISABLED` and manually execute
+        the integration.
+
+    4.  Enter the **Directory (tenant) ID** of the Active Directory to target in
+        Azure API requests.
+
+    5.  Enter the **Application (client) ID** created for JupiterOne, used to
+        authenticate with Azure.
+
+    6.  Enter the **Application (client) Secret** associated with the
+        application ID, used to authenticate with Azure.
+
+    7.  Select the option **Ingest Active Directory** to ingest Directory
+        information. This should only be enabled in one integration instance per
+        Directory.
+
+        *NOTE:* The **Ingest Active Directory** flag enables the ingestion of
+        `azure_user`, `azure_user_group`, and `azure_service_principal`
+        entities.
+
+    8.  Configure the correct scope for your integration:
+
+        *   *(RECOMMENDED) If configuring all subscriptions for a tenant:* Select
+            the option **Configure Subscription Instances** to automatically
+            provision new JupiterOne integration instances for each Azure
+            Subscription in this tenant
+
+            *NOTE:* The **Configure Subscription Instances** flag also enables the
+            ingestion of `azure_management_group` entities.
+
+        *   *If configuring a single Azure Subscription:* Enter the **Subscription
+            ID** for the subscription you wish to ingest data from.
 
 4.  Click **Create Configuration** once all values are provided.
 
-### Troubleshooting
+## Troubleshooting
 
-#### Authentication Errors
+#### Authentication
 
 If the Azure integration does not complete, and you encounter a message like
 `[validation_failure] Error occurred while validating integration configuration`
@@ -450,10 +476,11 @@ The following relationships are created:
 
 The following mapped relationships are created:
 
-| Source Entity `_type`   | Relationship `_class` | Target Entity `_type` | Direction |
-| ----------------------- | --------------------- | --------------------- | --------- |
-| `azure_network_watcher` | **HAS**               | `*azure_location*`    | REVERSE   |
-| `azure_subscription`    | **USES**              | `*azure_location*`    | FORWARD   |
+| Source Entity `_type`    | Relationship `_class` | Target Entity `_type`  | Direction |
+| ------------------------ | --------------------- | ---------------------- | --------- |
+| `azure_network_watcher`  | **HAS**               | `*azure_location*`     | REVERSE   |
+| `azure_management_group` | **HAS**               | `*azure_subscription*` | FORWARD   |
+| `azure_subscription`     | **USES**              | `*azure_location*`     | FORWARD   |
 
 <!--
 ********************************************************************************
@@ -521,4 +548,4 @@ END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 
 [3]: https://docs.microsoft.com/en-us/graph/api/organization-get
  
-<!--  jupiterOneDocVersion=5-39-0 -->
+<!--  jupiterOneDocVersion=5-39-1 -->
