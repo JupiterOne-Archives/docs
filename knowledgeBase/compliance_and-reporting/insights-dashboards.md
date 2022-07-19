@@ -30,7 +30,7 @@ Here are a few example boards and their configurations: [https://github.com/Jupi
    ![insights](../assets/insights.png)
     
    
-6. Expand the left sidebar by clicking the **>** carrot .
+6. Click the ‘>’ carrot to expand the left sidebar.
 
 7. Click **Add** ![](C:\Users\lynch\OneDrive\Documents\GitHub\docs\knowledgeBase\assets\icons\insight-add.png) and choose whether you want to add a personal or team board.
 
@@ -44,36 +44,39 @@ Here are a few example boards and their configurations: [https://github.com/Jupi
    Alternatively, you can just click the tile for a starter configuration. 
    
    
-   
    ![](../assets/insights-starters.png) 
    
    
    
    For more information about J1 standard Insights dashboards, [watch this video](https://try.jupiterone.com/blog/video-how-to-modify-out-of-the-box-dashboards).
 
-## Creating a Custom Insights Dashboard with Custom Charts Based on Queries
+## Creating a Custom Insights Dashboard with Custom Charts
 
-You can build your own custom dashboard with customized individual charts. Each chart is powered by one or more J1QL queries.
+You can build your own custom dashboard with customized, individual charts. Each chart is powered by one or more J1QL queries.
 
-1. Navigate within JupiterOne to **Apps** -> **Insights** to add a board.
+1. Go to **J1** **Insights**.
    ​
 
    ![insights](../assets/insights.png)
 
    
 
-2. Expand the left sidebar by clicking the ‘>’ carrot .
+2. Click the ‘>’ carrot to expand the left sidebar.
 
-3. Hit the **Add** button’ + choose whether you want a personal or team board.
+3. Click **Add** ![](C:\Users\lynch\OneDrive\Documents\GitHub\docs\knowledgeBase\assets\icons\insight-add.png) and choose whether you want to add a personal or team board.
 
-4. Click **Start Adding Charts**. This will open up the **Add Chart** workflow where you can customize the details of your query/chart, which include, but aren't limited to:
+4. Click **Start Adding Charts** and in the **Add Chart** workflow.
 
-   - type of visual chart, such as number, pie, line, bar.
-   - the chart’s query or queries
-   - formatting options 
+5. Enter the details of your query/chart, which include information such as:
+
+   - Type of visual chart, such as number, pie, line, bar.
+
+   - The chart query or queries.
+
+   - Formatting options 
      ​
 
-     ![custom-board](../assets/custom-board.gif)
+     ![custom-board](../assets/custom-board.gif) 
 
 For more information about custom Insights dashboards, [watch this video](https://try.jupiterone.com/blog/how-to-create-customized-dashboards).
 
