@@ -8,17 +8,15 @@ The layout of each dashboard is individually saved per user, including the layou
 
 Here are a few example boards and their configurations: [https://github.com/JupiterOne/insights-dashboards](https://github.com/JupiterOne/insights-dashboards).
 
-## Import Prebuilt Insights Dashboards (from GitHub)
+## Import Prebuilt Insights Dashboards
 
-1. Navigate to the specific prebuilt dashboard you want to import into your JupiterOne account:
+1. Go to https://github.com/JupiterOne/insights-dashboards to see the list of prebuilt dashboards available for you to import into your JupiterOne account
 
-   <https://github.com/JupiterOne/insights-dashboards>.
+2. Select a prebuilt dashboard.
 
-2. Pick the specific board, for example, "AWS Accounts".
+3. Click `board.json`.
 
-3. Click into ‘board.json’.
-
-4. Right-click **Raw** -> **Save File**.
+4. Right-click **Raw** -> **Save link as...**.
 
    
 
@@ -26,22 +24,31 @@ Here are a few example boards and their configurations: [https://github.com/Jupi
 
    
 
-5. Navigate within JupiterOne to **Apps** -> **Insights** to add a board.
-   ​
+5. Navigate to J1 **Insights** to add a board.
+   
 
    ![insights](../assets/insights.png)
-
+    
+   
 6. Expand the left sidebar by clicking the **>** carrot .
 
-7. Click **Add** and choose whether you want a personal or team board.
+7. Click **Add** ![](C:\Users\lynch\OneDrive\Documents\GitHub\docs\knowledgeBase\assets\icons\insight-add.png) and choose whether you want to add a personal or team board.
 
-8. Click **Upload From JSON Schema** + select the file you previously saved.
+8. Click **Upload From JSON Schema** and navigate to the `board.json` file you previously saved.
    ​
 
-   ![import-dashboard](../assets/import-dashboard.gif)
+   ![import-dashboard](../assets/import-dashboard.gif) 
 
    
 
+   Alternatively, you can just click the tile for a starter configuration. 
+   
+   
+   
+   ![](../assets/insights-starters.png) 
+   
+   
+   
    For more information about J1 standard Insights dashboards, [watch this video](https://try.jupiterone.com/blog/video-how-to-modify-out-of-the-box-dashboards).
 
 ## Creating a Custom Insights Dashboard with Custom Charts Based on Queries
