@@ -1,4 +1,4 @@
-# Splunk Add-On and App
+# Splunk
 
 ## Splunk + JupiterOne Integration Benefits
 
