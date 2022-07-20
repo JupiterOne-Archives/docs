@@ -1,10 +1,12 @@
-# Splunk Integration with JupiterOne
+# Splunk Add-On and App
 
 ## Splunk + JupiterOne Integration Benefits
 
 - Import JupiterOne alert data to your Splunk account.
 - View alerts on a Splunk dashboard.
 - Link back to alerts in JupiterOne for easy access to additional information.
+- Use J1QL queries in your Splunk searches 
+- Trigger a search in JupiterOne for any data field in Splunkn from your Splunk instance.
 
 ## How it Works
 
@@ -15,7 +17,7 @@
 ## Requirements
 
 - A JupiterOne API key and your JupiterOne account ID.
-- Splunk Enterprise 8.0, 8.1 or 8.2
+- Splunk Enterprise 8.0, 8.1, 8.2 or Splunk Cloud
 - Permission to install new add-ons and apps in Splunk.
 
 ## Support
