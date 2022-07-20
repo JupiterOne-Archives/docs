@@ -8,6 +8,8 @@ The layout of each dashboard is individually saved per user, including the layou
 
 Here are a few example boards and their configurations: [https://github.com/JupiterOne/insights-dashboards](https://github.com/JupiterOne/insights-dashboards).
 
+To learn more about how to use the dashboards, see [General Insights Dashboard Functionality](../insights-dashboards-general.md).
+
 ## Import Prebuilt Insights Dashboards
 
 1. Go to https://github.com/JupiterOne/insights-dashboards to see the list of prebuilt dashboards available for you to import into your JupiterOne account
@@ -41,14 +43,14 @@ Here are a few example boards and their configurations: [https://github.com/Jupi
 
    
 
-   Alternatively, you can just click the tile for a starter configuration. 
+   Alternatively, you can just click the tile to quickly add a starter configuration for that dashboard. 
    
    
    ![](../assets/insights-starters.png) 
    
    
    
-   For more information about J1 standard Insights dashboards, [watch this video](https://try.jupiterone.com/blog/video-how-to-modify-out-of-the-box-dashboards).
+   For more information about J1 standard Insights dashboards, [watch this video](https://try.jupiterone.com/blog/video-how-to-modify-out-of-the-box-dashboards), and read more [here](./insights-dashboards-starters.md).
 
 ## Creating a Custom Insights Dashboard with Custom Charts
 
@@ -80,42 +82,10 @@ You can build your own custom dashboard with customized, individual charts. Each
 
 For more information about custom Insights dashboards, [watch this video](https://try.jupiterone.com/blog/how-to-create-customized-dashboards).
 
-### Additional support documentation/resources for writing queries:
+#### Additional support documentation/resources for writing queries:
 
-[J1QL query tutorial](../jupiterOne-query-language_(J1QL)/tutorial-j1ql.md)
-[Search quickstart](../getting-started_and-admin/quickstart-search.md)
-[J1QL language specs](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md)
-[All questions + queries](https://ask.us.jupiterone.io/filter?tagFilter=all)
-
-## General Insights Dashboard Functionality 
-
-- Rename, clone, or delete boards:
-  ​
-
-  ![clone-delete-rename](../assets/clone-delete-rename.png)
-
-  
-
-- Download board schema, share boards (create public links), save or reset board layout, add charts:
-  ​
-
-  ![share-download-add-layout](../assets/share-download-add-layout.png)
-
-  
-
-- Delete charts:
-  ​
-
-  ![delete-widget](../assets/delete-widget.png)
-
-  
-
-- Reorder either charts within a specific board, or the board within the side panel by dragging the chart or board to the desired spot:
-  ​
-
-  ![reorder](../assets/reorder.gif)
-
-
-
-To see more examples of editing charts and graphs in an Insights dashboard, [watch this video](https://try.jupiterone.com/blog/how-to-use-charts-and-graphs-widgets).
+- [J1QL query tutorial](../jupiterOne-query-language_(J1QL)/tutorial-j1ql.md)
+- [Search quickstart](../getting-started_and-admin/quickstart-search.md)
+- [J1QL language specs](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md)
+- [All questions and queries](https://ask.us.jupiterone.io/filter?tagFilter=all)
 
