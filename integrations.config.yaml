@@ -22,8 +22,6 @@ integrations:
     knowledgeCategoriesPaths: APIs_and-integrations/application-security
   - projectName: graph-cbdefense
     displayName: CbDefense
-  - projectName: graph-cisco-amp
-    displayName: Cisco Amp
   - projectName: graph-cisco-meraki
     displayName: Cisco Meraki
     knowledgeCategoriesPaths: APIs_and-integrations/device-management
@@ -222,9 +220,6 @@ integrations:
   - projectName: graph-alibaba-cloud
     displayName: Alibaba Cloud
     knowledgeCategoriesPaths: APIs_and-integrations/cloud-service-provider
-  - projectName: graph-alibaba-cloud
-    displayName: Alibaba Cloud
-    knowledgeCategoriesPaths: APIs_and-integrations/cloud-service-provider
   - projectName: graph-cisco-secure-endpoint
     displayName: Cisco Secure Endpoint
     knowledgeCategoriesPaths: APIs_and-integrations/EDR
@@ -249,3 +244,24 @@ integrations:
   - projectName: graph-terraform-cloud
     displayName: Terraform Cloud
     knowledgeCategoriesPaths: APIs_and-integrations/application-security
+  - projectName: graph-panoptica
+    displayName: Cisco Panoptica
+    knowledgeCategoriesPaths: APIs_and-integrations/application-security
+  - projectName: graph-cycognito
+    displayName: CyCognito
+    knowledgeCategoriesPaths: APIs_and-integrations/other
+  - projectName: graph-datastax
+    displayName: DataStax
+    knowledgeCategoriesPaths: APIs_and-integrations/cloud-service-provider
+  - projectName: graph-esper
+    displayName: Esper
+    knowledgeCategoriesPaths: APIs_and-integrations/code
+  - projectName: graph-microsoft-teams
+    displayName: Microsoft Teams
+    knowledgeCategoriesPaths: APIs_and-integrations/workflow
+  - projectName: graph-simplemdm
+    displayName: SimpleMDM
+    knowledgeCategoriesPaths: APIs_and-integrations/device-management
+  - projectName: graph-freshservice
+    displayName: Freshservice
+    knowledgeCategoriesPaths: APIs_and-integrations/IT-service-management
