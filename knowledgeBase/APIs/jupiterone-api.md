@@ -14,7 +14,57 @@ The JupiterOne platform exposes a number of public GraphQL endpoints.
 - Freemium: 30/min, no burst
 - Enterprise: 30-60/min with burst
 
-A `429` HTTP response code indicates the limit has been reached. The API does not currently return any rate limit headers.
+A `429` HTTP response code indicates the limit has been reached. 
+
+The rate-limited APIs return the following headers to control request back-off and throttling: 
+
+- **RateLimit-Limit**: The quota of the currently most-limited bucket, such as the maximum quota of the bucket with the fewest remaining, concatenated with the quota and time window (in seconds) of each applicable bucket. For example, 1000, 10000; window=60, 1000; window=60.
+
+- **RateLimit-Remaining**: Whichever bucket is the closest to being full. This is the maximum number of invocations minus the number that are currently counted against the limit. For example, it is the largest amount of further invocations that could be executed without being rejected by rate-limiting at the moment of the request.
+- **RateLimit-Reset**: If no further invocations were made against any limits, this is the number of seconds remaining until **all** buckets that apply against the invocation would be entirely emptied. For example, it is the greatest amount among all times-to-empty for applicable limits.
+- **RateLimit-Requested**: This is a custom header specified because of the concurrency model of GraphQL and the way J1 counts multiple invocations from a single GraphQL request. This response header is an integer that returns the number of invocations that were counted in the request, regardless of whether the request was served or dropped due to quotas.
+
+**Example**:
+In this use case:
+
+- An account is permitted 10,000 invocations per 60 seconds.
+- In the last 60 seconds, there have been 9,900 invocations in the account.
+- A token is permitted 1,000 invocations per 60 seconds.
+- In the last 60 seconds, there have been 800 invocations using the token.
+- A new request using the token that would be counted as 50 invocations is now being processed.
+
+The number of tentative invocations to be counted is added as RateLimit-Requested:
+RateLimit-Requested: 50
+
+The request should be permitted, since pre-request the account limit has 100 remaining and the token limit has 200 remaining. After the request, the account limit has 50 remaining and the token limit has 150 remaining. Since the account limit is closer, it is used for RateLimit-Remaining and RateLimit-Limit headers.
+
+RateLimit-Remaining: 50
+RateLimit-Limit: 10000, 1000;window=60, 10000;window=60
+
+Supposing no other requests come in, it will take 9950/(10000/60) == 59.7 seconds for the account limit to clear, and it will take the token limit 800/(1000/60) == 48 seconds to clear. J1 returns the greater number, rounded strictly *up*, i.e. Math.ceil (see IETF proposal – sub-second precision is disallowed).
+
+RateLimit-Reset: 60
+
+**Example**
+
+In this use case:
+
+- An account is permitted 10,000 invocations per 60 seconds.
+- In the last 60 seconds, there have been 9,900 invocations in the account.
+- A token is permitted 1,000 invocations per 60 seconds.
+- In the last 60 seconds, there have been 995 invocations using the token.
+- A new request using the token that would be counted as 50 invocations is now being processed.
+
+The number of tentative invocations to be counted is added as RateLimit-Requested:
+RateLimit-Requested: 50
+
+Because the token bucket has insufficient remaining invocations, the request should be dropped. Since the entire request is dropped, J1 does not count these invocations against the quota and, therefore, J1 uses the pre-request numbers for the Remaining and Limit headers. The currently limiting bucket is the token bucket, which has 5 invocations remaining. The consumer can see that their request received 429 because 50 > 5:
+RateLimit-Remaining: 5
+RateLimit-Limit: 1000, 1000;window=60, 10000;window=60
+
+Supposing no other requests come in, it will take 9900/(10000/60) == 59.4 seconds for the account limit to clear, and it will take the token limit 995/(1000/60) == 59.7 seconds to clear. J1 returns the greater number, rounded strictly *up*, i.e. Math.ceil (see IETF proposal – sub-second precision is disallowed).
+
+RateLimit-Reset: 60
 
 **Authentication**: The JupiterOne APIs use a Bearer Token to authenticate. Include the API key in the header as a Bearer Token. You also need to include `JupiterOne-Account` as a header parameter. You can find the `Jupiterone-Account` value in your account by running the following J1QL query:
 
@@ -1457,7 +1507,7 @@ Last, finalize the job.
 POST /persister/synchronization/jobs/<jobId>/finalize
 ```
 
-!!! note
+Note:
 
     - When you delete an entity, all of the associated relationships will also be
       deleted. You do not need to call out both unless you are deleting unrelated
@@ -1634,6 +1684,88 @@ Variables:
 ## Alert and Rules Operations
 
 **Endpoint:** `/rules/graphql`
+
+### List alert rules
+
+```graphql
+  query ListAlertInstances(
+    $alertStatus: AlertStatus
+    $limit: Int
+    $cursor: String
+  ) {
+    listAlertInstances(
+      alertStatus: $alertStatus
+      limit: $limit
+      cursor: $cursor
+    ) {
+      instances {
+        id
+        accountId
+        ruleId
+        level
+        status
+        lastUpdatedOn
+        lastEvaluationBeginOn
+        lastEvaluationEndOn
+        createdOn
+        dismissedOn
+        lastEvaluationResult {
+          rawDataDescriptors {
+            recordCount
+          }
+        }
+        questionRuleInstance {
+          id
+          name
+          description
+          question {
+            queries {
+              query
+              name
+            }
+          }
+        }
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+    }
+  }
+```
+variables:
+
+Filtering for `ACTIVE` Alerts
+```json
+{
+  "alertStatus": "ACTIVE",
+}
+```
+
+Filtering for `INACTIVE` Alerts
+```json
+{
+  "alertStatus": "INACTIVE",
+}
+```
+
+Filtering for `DISMISSED` Alerts
+```json
+{
+  "alertStatus": "DISMISSED",
+}
+```
+
+To apply a limit to the number of results returned, pass a `limit` variable.
+```json
+{
+  "limit": 10
+}
+```
+
+To paginate through the results, pass the `endCursor` received in the response
+as the `cursor` variable in the request. If `endCursor` is `null` then there are
+no more results to retrieve.
 
 ### Create an inline alert rule from J1QL
 
@@ -2483,10 +2615,10 @@ const relationship = await j1Client.mutate({
 });
 ```
 
-## IAM Operations (beta)
+## IAM Operations
 
 **Note:**
-The IAM API is in beta and only works for accounts configured with SSO. Email support@jupiterone.com to enable access to these APIs because we will need to verify your company's domain name.
+The IAM API only works for accounts configured with SSO. Email support@jupiterone.com to enable access to these APIs because J1 must verify your company domain name.
 
 **Note:**
 `accessAdmin` permission is required for all IAM operations.
@@ -2764,9 +2896,15 @@ type JSON = {
 }
 ```
 
+queryPolicy
+
+
+
+
+
 **abacPermissions**
 
-Description: ABAC permissions define application access for members of a perticular group. Setting this property via the IAM API will **overwrite** any existing permissions for the given group. If updating this property, _always_ define the full list of `permissions` that should be granted.
+ABAC permissions define application access for members of a perticular group. Setting this property via the IAM API will **overwrite** any existing permissions for the given group. If updating this property, _always_ define the full list of `permissions` that should be granted.
 
 Type: list of valid `permission` strings (see table below).
 
@@ -2777,38 +2915,38 @@ type permission = string // must be a valid permission string
 
 **Permission Strings: READ-ONLY**
 
-| DISPLAY NAME (J1 APP)    | ACCESS |                 PERMISSION |
-| :----------------------- | :----: | -------------------------: |
-| _All Apps And Resources_ |  READ  |           `fullReadAccess` |
-| _Shared: Questions_      |  READ  |            `readQuestions` |
-| _GraphData_              |  READ  |                `readGraph` |
-| _Landing_                |  READ  |            `accessLanding` |
-| _Assets_                 |  READ  |             `accessAssets` |
-| _Policies_               |  READ  |           `accessPolicies` |
-| _Compliance_             |  READ  |         `accessCompliance` |
-| _Alerts_                 |  READ  |              `accessRules` |
-| _GraphViewer_            |  READ  |             `accessGalaxy` |
-| _Insights_               |  READ  |           `accessInsights` |
-| _Integrations_           |  READ  |       `accessIntegrations` |
+| DISPLAY NAME (J1 APP)    | ACCESS | PERMISSION                 |
+| :----------------------- | :----: | :------------------------- |
+| _All Apps And Resources_ |  READ  | `fullReadAccess`           |
+| _Shared: Questions_      |  READ  | `readQuestions`            |
+| _GraphData_              |  READ  | `readGraph`                |
+| _Landing_                |  READ  | `accessLanding`            |
+| _Assets_                 |  READ  | `accessAssets`             |
+| _Policies_               |  READ  | `accessPolicies`           |
+| _Compliance_             |  READ  | `accessCompliance`         |
+| _Alerts_                 |  READ  | `accessRules`              |
+| _GraphViewer_            |  READ  | `accessGalaxy`             |
+| _Insights_               |  READ  | `accessInsights`           |
+| _Integrations_           |  READ  | `accessIntegrations`       |
 | _Endpoint Compliance_    |  READ  | `accessEndpointCompliance` |
 
 **Permission Strings: ADMIN**
 
-| DISPLAY NAME (J1 APP)    | ACCESS |                PERMISSION |
-| :----------------------- | :----: | ------------------------: |
-| _All Apps And Resources_ | ADMIN  |             `accessAdmin` |
-| _Shared: Questions_      | ADMIN  |          `writeQuestions` |
-| _GraphData_              | ADMIN  |              `writeGraph` |
-| _Landing_                | ADMIN  |            `adminLanding` |
-| _Assets_                 | ADMIN  |             `adminAssets` |
-| _Policies_               | ADMIN  |           `adminPolicies` |
-| _Compliance_             | ADMIN  |         `adminCompliance` |
-| _Alerts_                 | ADMIN  |              `adminRules` |
-| _GraphViewer_            | ADMIN  |             `adminGalaxy` |
-| _Insights_               | ADMIN  |           `adminInsights` |
-| _Integrations_           | ADMIN  |       `adminIntegrations` |
+| DISPLAY NAME (J1 APP)    | ACCESS | PERMISSION                |
+| :----------------------- | :----: | :------------------------ |
+| _All Apps And Resources_ | ADMIN  | `accessAdmin`             |
+| _Shared: Questions_      | ADMIN  | `writeQuestions`          |
+| _GraphData_              | ADMIN  | `writeGraph`              |
+| _Landing_                | ADMIN  | `adminLanding`            |
+| _Assets_                 | ADMIN  | `adminAssets`             |
+| _Policies_               | ADMIN  | `adminPolicies`           |
+| _Compliance_             | ADMIN  | `adminCompliance`         |
+| _Alerts_                 | ADMIN  | `adminRules`              |
+| _GraphViewer_            | ADMIN  | `adminGalaxy`             |
+| _Insights_               | ADMIN  | `adminInsights`           |
+| _Integrations_           | ADMIN  | `adminIntegrations`       |
 | _Endpoint Compliance_    | ADMIN  | `adminEndpointCompliance` |
-| _ENABLE API KEY ACCESS_  |   \*   |              `apiKeyUser` |
+| _ENABLE API KEY ACCESS_  |   \*   | `apiKeyUser`              |
 
 **API Samples**
 
@@ -2921,6 +3059,12 @@ Sample (S4): `createIamGroup`
   }
 }
 ```
+
+**Access All Actions and Resources**
+
+You can use an API token to access all actions and resources 
+
+
 
 ### Update IAM Group
 
