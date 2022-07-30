@@ -1,10 +1,10 @@
-import updateCommunityDocs from "../packages/docs/src/index";
+import updateCommunityDocs from '../packages/docs/src/index';
 
 /* istanbul ignore file
  *
  * Only used for development and testing the app code
  */
-require("require-self-ref");
+require('require-self-ref');
 // const context = getAppContext();
 // const logger = createlogger(module);
 

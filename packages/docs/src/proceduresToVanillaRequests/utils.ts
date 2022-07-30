@@ -1,10 +1,10 @@
-import HttpClient from "../httpClient";
+import HttpClient from '../httpClient';
 import {
   getMarkdownImageSrcs,
   isSupportedMediaType,
   modifyBodyLinkForImage,
-} from "../linksAndMediaHandlers";
-import { logger } from "../loggingUtil";
+} from '../linksAndMediaHandlers';
+import { logger } from '../loggingUtil';
 import {
   createDisplayName,
   isArticleType,
@@ -12,11 +12,11 @@ import {
   SHOULD_REALLY_UPLOAD_IMAGES,
   VanillaArticle,
   VanillaKnowledgeCategory,
-} from "../utils";
+} from '../utils';
 import {
   createKnowledgeCategory,
   uploadImageAndReturnUrl,
-} from "../VanillaAPI";
+} from '../VanillaAPI';
 
 export type hasKnowledgeCategoryBeenMovedProps = {
   proceduresWithVanillaInfo: (VanillaKnowledgeCategory | VanillaArticle)[];
@@ -35,7 +35,7 @@ export const hasKnowledgeCategoryBeenMoved = ({
   if (parentID && parentID <= 5) {
     return parentID;
   }
-  const splitProcedurePath = path?.split("/");
+  const splitProcedurePath = path?.split('/');
   let parentKnowledgeCategroyName: string | undefined = undefined;
   if (splitProcedurePath?.length) {
     if (splitProcedurePath.length === 1) {
@@ -89,7 +89,7 @@ export const uploadImagesAndAddToMarkdown = async (
 
 export const addImagesToArticleMarkdown = async (markdownAsString: string) => {
   if (!markdownAsString || !markdownAsString.length) {
-    return "";
+    return '';
   }
   const alteredMarkdown = markdownAsString;
   const imageSrcArray = getMarkdownImageSrcs(alteredMarkdown);
@@ -108,8 +108,8 @@ export const kCategoriesByPathSize = (
   }
 
   return deletedKCategories.sort((a, b) => {
-    const aPath = a.path?.split("/");
-    const bPath = b.path?.split("/");
+    const aPath = a.path?.split('/');
+    const bPath = b.path?.split('/');
     if (!aPath) {
       return 0;
     }
@@ -136,7 +136,7 @@ export const getPreviousKnowledgeID = (
       ? [...existingknowledgeCategoryInfo]
       : [];
 
-  const pathSplit = procedureBeingWorkedOn?.path?.split("/");
+  const pathSplit = procedureBeingWorkedOn?.path?.split('/');
 
   if (pathSplit && procedureBeingWorkedOn?.fileName) {
     const indexInPath = pathSplit?.indexOf(procedureBeingWorkedOn?.fileName);
@@ -223,7 +223,7 @@ export const handleKnowledgeCategoryChangedParentCreate = async ({
   const procedureWorkedOn = { ...procedure };
   if (
     procedureWorkedOn.path &&
-    procedureWorkedOn.path.toLowerCase().indexOf("release-notes") !== -1
+    procedureWorkedOn.path.toLowerCase().indexOf('release-notes') !== -1
   ) {
     isReleaseNotes = true;
   }

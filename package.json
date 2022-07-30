@@ -16,6 +16,7 @@
     "test:unit": "chmod u+r+x ./bin/run-tests.unit.sh && ./bin/run-tests.unit.sh",
     "bundle": "cd packages/docs; yarn compile",
     "deploy": "yarn bundle && yarn jupiterone-manual-deploy -t jupiterone-dev",
+    "format": "prettier --write '**/*.{ts,js,json,css,yml,yaml}'",
     "updateIntegrations": "cd packages/integrations-handling; yarn getIntegrations",
     "start": "cd packages/docs; yarn publishDiffs $TOKEN $targetVanillaEnv",
     "replaceIntegrationDocs": "cd packages/docs; yarn replaceIntegrationDocs $TOKEN $targetVanillaEnv",

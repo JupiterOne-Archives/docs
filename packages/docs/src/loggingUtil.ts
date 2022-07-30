@@ -4,16 +4,16 @@ export const logger: {
   error: (message: string) => void;
 } = {
   info: (msg) => {
-    const message = "\n" + msg + "\n";
+    const message = '\n' + msg + '\n';
 
-    if (process.env.RUNNING_TESTS !== "true") {
+    if (process.env.RUNNING_TESTS !== 'true') {
       console.log(message);
     }
   },
 
   error: (msg) => {
-    const message = " : " + "\n" + msg + "\n";
-    if (process.env.RUNNING_TESTS !== "true") {
+    const message = ' : ' + '\n' + msg + '\n';
+    if (process.env.RUNNING_TESTS !== 'true') {
       console.log(message);
     }
   },

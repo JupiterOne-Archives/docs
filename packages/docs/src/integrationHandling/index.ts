@@ -1,15 +1,15 @@
-import axios from "axios";
-import fs from "fs";
-import * as yaml from "js-yaml";
-import path from "path";
-import HttpClient from "../httpClient";
-import { logger } from "../loggingUtil";
+import axios from 'axios';
+import fs from 'fs';
+import * as yaml from 'js-yaml';
+import path from 'path';
+import HttpClient from '../httpClient';
+import { logger } from '../loggingUtil';
 import {
   isArticleType,
   VanillaArticle,
   VanillaKnowledgeCategory,
-} from "../utils";
-import { editArticle } from "../VanillaAPI";
+} from '../utils';
+import { editArticle } from '../VanillaAPI';
 
 export interface IntegrationsConfigProps {
   integrations: {
@@ -23,11 +23,11 @@ export interface IntegrationsConfigProps {
 export const readDocsConfig = async (): Promise<IntegrationsConfigProps> => {
   const pathOfDocsConfig = path.join(
     __dirname,
-    "../../../../integrations.config.yaml"
+    '../../../../integrations.config.yaml'
   );
 
   const fileContents = await fs.promises.readFile(pathOfDocsConfig, {
-    encoding: "utf-8",
+    encoding: 'utf-8',
   });
 
   try {
@@ -43,7 +43,7 @@ export const readDocsConfig = async (): Promise<IntegrationsConfigProps> => {
 export const createDifsFromConfig = async (): Promise<string[]> => {
   const docsConfig = await readDocsConfig();
   const proceduresPaths = docsConfig.integrations.map((i) =>
-    i.ignoreUpdates ? "" : `${i.knowledgeCategoriesPaths}/${i.projectName}.md`
+    i.ignoreUpdates ? '' : `${i.knowledgeCategoriesPaths}/${i.projectName}.md`
   );
   return proceduresPaths;
 };
@@ -103,8 +103,8 @@ export const replaceArticleBodyWithIntegration = async ({
 
             if (articleBody) {
               const bodyWithremovedFirstTitle = articleBody.replace(
-                "# Integration with JupiterOne",
-                ""
+                '# Integration with JupiterOne',
+                ''
               );
               procedure.body = bodyWithremovedFirstTitle;
               alteredProcedures[p] = procedure;

@@ -1,10 +1,9 @@
 import {
   PATH_OF_DIRECTORY_TO_WATCH,
   SUPPORTED_FILE_TYPE_EXTENTIONS,
-} from "../utils/constants";
+} from '../utils/constants';
 
 export const filterDiffs = (gitDiffArray: string[]) => {
-
   const filteredArray = gitDiffArray
     .filter((diff) => diff.startsWith(PATH_OF_DIRECTORY_TO_WATCH))
 
@@ -19,7 +18,7 @@ export const filterDiffs = (gitDiffArray: string[]) => {
     })
     .map((diff) => diff.substring(`${PATH_OF_DIRECTORY_TO_WATCH}/`.length));
 
-  filteredArray.sort((a, b) => a.split("/").length - b.split("/").length);
+  filteredArray.sort((a, b) => a.split('/').length - b.split('/').length);
 
   return filteredArray;
 };

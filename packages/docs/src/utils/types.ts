@@ -3,7 +3,7 @@ export interface KnowledgeBase {
   viewType: string; // guide or help
   name: string;
   description: string;
-  sortArticles: "manual" | "name" | "dateInserted" | "dateInsertedDesc";
+  sortArticles: 'manual' | 'name' | 'dateInserted' | 'dateInsertedDesc';
 }
 // response from vanilla
 export interface KnowledgeCategory {
@@ -16,13 +16,13 @@ export interface KnowledgeCategory {
   description: string;
   sort?: number | null;
   url?: string | null;
-  sortChildren?: null | "name" | "dateInserted" | "dateInsertedDesc" | "manual";
+  sortChildren?: null | 'name' | 'dateInserted' | 'dateInsertedDesc' | 'manual';
   foreignID?: null | string; // to link to external srcs
 }
 
 export enum ProcedureTypeEnum {
-  Category = "Category",
-  Article = "Article",
+  Category = 'Category',
+  Article = 'Article',
 }
 
 export interface VanillaKnowledgeCategory {
@@ -64,13 +64,13 @@ export interface VanillaArticlePatch {
   locale: string; //'en'
   name: string | null;
   format:
-    | "text"
-    | "textex"
-    | "markdown"
-    | "wysiwyg"
-    | "html"
-    | "bbcode"
-    | "rich";
+    | 'text'
+    | 'textex'
+    | 'markdown'
+    | 'wysiwyg'
+    | 'html'
+    | 'bbcode'
+    | 'rich';
   outline: {
     level: number;
     ref: string; //Heading blot reference id. Ex: #title
@@ -106,18 +106,18 @@ export interface VanillaArticle {
     text: string; // heading text line
   };
   format:
-    | "text"
-    | "textex"
-    | "markdown"
-    | "wysiwyg"
-    | "html"
-    | "bbcode"
-    | "rich";
+    | 'text'
+    | 'textex'
+    | 'markdown'
+    | 'wysiwyg'
+    | 'html'
+    | 'bbcode'
+    | 'rich';
   score?: number;
   seoDescription?: string | null;
   slug?: string;
-  status?: "undeleted" | "deleted" | "published";
-  translationStatus?: "up-to-date" | "out-of-date" | "not-translated"; // from schema.. but also can see 'published'.. what else is missing?
+  status?: 'undeleted' | 'deleted' | 'published';
+  translationStatus?: 'up-to-date' | 'out-of-date' | 'not-translated'; // from schema.. but also can see 'published'.. what else is missing?
   updateUserID?: number;
   featured?: boolean;
   dateFeatured?: string;
