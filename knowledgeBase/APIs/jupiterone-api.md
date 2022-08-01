@@ -20,8 +20,8 @@ The rate-limited APIs return the following headers to control request back-off a
 
 - **RateLimit-Limit**: The quota of the currently most-limited bucket, such as the maximum quota of the bucket with the fewest remaining, concatenated with the quota and time window (in seconds) of each applicable bucket. For example, 1000, 10000; window=60, 1000; window=60.
 
-- **RateLimit-Remaining**: Whichever bucket is the closest to being full. This is the maximum number of invocations minus the number that are currently counted against the limit. For example, it is the largest amount of further invocations that could be executed without being rejected by rate-limiting at the moment of the request.
-- **RateLimit-Reset**: If no further invocations were made against any limits, this is the number of seconds remaining until **all** buckets that apply against the invocation would be entirely emptied. For example, it is the greatest amount among all times-to-empty for applicable limits.
+- **RateLimit-Remaining**: Whichever bucket is the closest to being full. This is the maximum number of invocations minus the number that are currently counted against the limit. This means it is the largest amount of further invocations that could be executed without being rejected by rate-limiting at the moment of the request.
+- **RateLimit-Reset**: If no further invocations were made against any limits, this is the number of seconds remaining until **all** buckets that apply against the invocation would be entirely emptied. This means it is the greatest amount among all times-to-empty for applicable limits.
 - **RateLimit-Requested**: This is a custom header specified because of the concurrency model of GraphQL and the way J1 counts multiple invocations from a single GraphQL request. This response header is an integer that returns the number of invocations that were counted in the request, regardless of whether the request was served or dropped due to quotas.
 
 **Example**:
