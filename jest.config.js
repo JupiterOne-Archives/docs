@@ -7,5 +7,5 @@ module.exports = {
   // All packages use the same jest.setup.ts file
   setupFilesAfterEnv: ['./jest.setup.ts'],
   globalSetup: './jest.globalSetup.ts',
-  modulePathIgnorePatterns: ["integrations-handling"]
+  modulePathIgnorePatterns: ['integrations-handling'],
 };

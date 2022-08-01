@@ -1,12 +1,12 @@
 import {
   getArticleNameFromReference,
   modifyBodyLinkForImageForReturnedArticles,
-} from "../linksAndMediaHandlers";
+} from '../linksAndMediaHandlers';
 import {
   isArticleType,
   VanillaArticle,
   VanillaKnowledgeCategory,
-} from "../utils";
+} from '../utils';
 
 export const updateArticleInternalMarkdownLinks = async (
   processedProcedures: (VanillaArticle | VanillaKnowledgeCategory)[],
@@ -17,7 +17,7 @@ export const updateArticleInternalMarkdownLinks = async (
   const articleProcedures: VanillaArticle[] = processedProcedures
     .filter(isArticleType)
     .filter((a) => a.referencesNeedingUpdatesInMarkdown?.length)
-    .filter((a) => a.status !== "deleted");
+    .filter((a) => a.status !== 'deleted');
 
   const proceduresWithUpdatedBodies: VanillaArticle[] = [];
   for (let i = 0; i < articleProcedures.length; i++) {
@@ -41,15 +41,15 @@ export const updateArticleInternalMarkdownLinks = async (
             .filter((article) => {
               return article.name === articleName;
             })
-            .filter((a) => a.status !== "deleted");
+            .filter((a) => a.status !== 'deleted');
 
           const articleUrl: string =
-            existingArticleMatches[0]?.url || "doesNotExist";
+            existingArticleMatches[0]?.url || 'doesNotExist';
 
           if (articleUndergoingChanges.body !== null && articleUrl) {
             const { bodyAlterations } =
               modifyBodyLinkForImageForReturnedArticles(
-                articleUndergoingChanges.body || "",
+                articleUndergoingChanges.body || '',
                 references[r],
                 articleUrl
               );

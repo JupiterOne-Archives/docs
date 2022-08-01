@@ -1,37 +1,37 @@
-import axios, { AxiosRequestConfig, AxiosRequestHeaders } from "axios";
-import FormData from "form-data";
-import { logger } from "./loggingUtil";
-import { KnowledgeCategory, VanillaArticle } from "./utils";
+import axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
+import FormData from 'form-data';
+import { logger } from './loggingUtil';
+import { KnowledgeCategory, VanillaArticle } from './utils';
 import {
   Authorization,
   DEV_URL,
   PROD_URL,
   REQUEST_DELAY,
-} from "./utils/constants";
+} from './utils/constants';
 enum RESTTypes {
-  POST = "post",
-  PUT = "put",
-  GET = "get",
-  PATCH = "patch",
-  DELETE = "delete",
+  POST = 'post',
+  PUT = 'put',
+  GET = 'get',
+  PATCH = 'patch',
+  DELETE = 'delete',
 }
 
 export default class HttpClient {
-  baseUrl = "";
+  baseUrl = '';
   headers: AxiosRequestHeaders = {};
   constructor(baseUrl = DEV_URL) {
-    this.baseUrl = process.env.targetVanillaEnv === "prod" ? PROD_URL : DEV_URL;
+    this.baseUrl = process.env.targetVanillaEnv === 'prod' ? PROD_URL : DEV_URL;
   }
 
   buildUrl(relativeUrl: string) {
-    return relativeUrl.startsWith("/")
+    return relativeUrl.startsWith('/')
       ? this.baseUrl + relativeUrl
       : `${this.baseUrl}/${relativeUrl}`;
   }
 
   buildHeaders(
     headers: AxiosRequestHeaders = {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     }
   ): AxiosRequestHeaders {
     this.headers.Authorization = Authorization;
@@ -52,10 +52,10 @@ export default class HttpClient {
     const headers = {
       ...data.getHeaders(),
     };
-    return axios.post(this.buildUrl("media"), data, {
+    return axios.post(this.buildUrl('media'), data, {
       headers,
       params: {
-        access_token: Authorization.split(" ")[1],
+        access_token: Authorization.split(' ')[1],
       },
     });
   }
@@ -134,12 +134,12 @@ export default class HttpClient {
       logger.info(`------------ MAKING ${method} REQUEST ------------`);
       logger.info(`REQUEST URL: ${requestBody.url}`);
       logger.info(`REQUEST DATA ${JSON.stringify(requestBody.data)}`);
-      logger.info("------------ END REQUEST DATA ------------");
+      logger.info('------------ END REQUEST DATA ------------');
 
       return this.debounceRequests(
         axios.request(requestBody).catch((e) => {
           if (e?.response?.status === 403) {
-            logger.error("Error from Vanilla Auth! Check the TOKEN");
+            logger.error('Error from Vanilla Auth! Check the TOKEN');
             return Promise.reject(e);
           } else {
             logger.error(`Error from axios.request: ${JSON.stringify(e)}`);
@@ -148,7 +148,7 @@ export default class HttpClient {
         })
       );
     } catch (e) {
-      logger.info("Error message in HTTPClient catch");
+      logger.info('Error message in HTTPClient catch');
       logger.error(JSON.stringify(e));
       return e;
     }

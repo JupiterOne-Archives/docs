@@ -1,5 +1,5 @@
-import { updateCommunityDocs } from ".";
-import { logger } from "./loggingUtil";
+import { updateCommunityDocs } from '.';
+import { logger } from './loggingUtil';
 
 const updateCommunityDocsByMergeChanges = async () => {
   try {
