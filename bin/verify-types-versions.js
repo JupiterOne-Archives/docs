@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const TYPES_PACKAGE_NAME = 'community-docs-types'
+const TYPES_PACKAGE_NAME = 'community-docs-types';
 
 const fs = require('fs').promises;
 const path = require('path');

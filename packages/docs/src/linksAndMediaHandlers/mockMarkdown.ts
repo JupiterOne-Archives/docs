@@ -22,9 +22,9 @@ the most important and, therefore, the most at risk but an administrator can edi
 
 Click to edit the critical asset definition default values. You can use classes, properties, and values 
 to define what is critical.`;
-export const criticalAsset = "../assets/asset-critical.png";
-export const gearImage = "../assets/icons/gear.png";
-export const assetDefinition = "../assets/asset-definition.png";
+export const criticalAsset = '../assets/asset-critical.png';
+export const gearImage = '../assets/icons/gear.png';
+export const assetDefinition = '../assets/asset-definition.png';
 
 export const markdownAsStringWithInternalLinks = `
 Depending on the size of the uploaded file, the entities and relationships may not

@@ -1,21 +1,21 @@
-import path from "path";
-import { diffToProcedures } from "./diffToProcedures";
-import { getDiffFromHead } from "./gitDifference";
-import HttpClient from "./httpClient";
-import { createDifsFromConfig } from "./integrationHandling";
-import { logger } from "./loggingUtil";
-import { proceduresToVanillaRequests } from "./proceduresToVanillaRequests";
+import path from 'path';
+import { diffToProcedures } from './diffToProcedures';
+import { getDiffFromHead } from './gitDifference';
+import HttpClient from './httpClient';
+import { createDifsFromConfig } from './integrationHandling';
+import { logger } from './loggingUtil';
+import { proceduresToVanillaRequests } from './proceduresToVanillaRequests';
 import {
   directoryPromise,
   getAllSubChanges,
   PATH_OF_DIRECTORY_TO_WATCH,
-} from "./utils";
+} from './utils';
 import {
   deleteArticle,
   deleteKnowledgeCategory,
   getAllArticles,
   getKnowedgeCategories,
-} from "./VanillaAPI";
+} from './VanillaAPI';
 
 // Main function to be used to use changes to markdown files merged to github to be converted
 // to procedures that alter Vanillia forums
@@ -25,7 +25,7 @@ export const updateCommunityDocs = async () => {
   logger.info(`Diffs: ${diff}`);
 
   if (diff && diff.length) {
-    const diffChanges = diff.trim().split("\n");
+    const diffChanges = diff.trim().split('\n');
     const nested: string[] = [];
 
     for (let i = 0; i < diffChanges.length; i++) {
@@ -39,9 +39,9 @@ export const updateCommunityDocs = async () => {
     }
     const nestedMergedWithOriginal = [...diffChanges, ...nested];
     // Add of article to staging for the changes that have occured
-    if (process.env.targetVanillaEnv === "staging") {
-      if (nestedMergedWithOriginal.indexOf("changes-from-update.md") === -1) {
-        nestedMergedWithOriginal.push("changes-from-update.md");
+    if (process.env.targetVanillaEnv === 'staging') {
+      if (nestedMergedWithOriginal.indexOf('changes-from-update.md') === -1) {
+        nestedMergedWithOriginal.push('changes-from-update.md');
       }
     }
     const nestedWithRemovedPath = nestedMergedWithOriginal.map((path) =>
@@ -49,7 +49,7 @@ export const updateCommunityDocs = async () => {
     );
     const procedures = await diffToProcedures(nestedWithRemovedPath);
     logger.info(
-      `Procedures Count: ${JSON.stringify(procedures?.length, null, " ")}`
+      `Procedures Count: ${JSON.stringify(procedures?.length, null, ' ')}`
     );
     if (procedures && procedures.length > 0) {
       const completedProcedures = await proceduresToVanillaRequests({
@@ -67,9 +67,9 @@ export const updateCommunityDocs = async () => {
 export const updateIntegrationArticles = async () => {
   const pathsArray = await createDifsFromConfig();
 
-  if (process.env.targetVanillaEnv === "staging") {
-    if (pathsArray.indexOf("changes-from-update.md") === -1) {
-      pathsArray.push("changes-from-update.md");
+  if (process.env.targetVanillaEnv === 'staging') {
+    if (pathsArray.indexOf('changes-from-update.md') === -1) {
+      pathsArray.push('changes-from-update.md');
     }
   }
   const filterPaths = pathsArray
@@ -99,9 +99,9 @@ export const getAllItemsAsDiff = async () => {
     const trimmedDirectories = fullArrayOfAllItems.map((result) =>
       result.substring(result.indexOf(PATH_OF_DIRECTORY_TO_WATCH))
     );
-    if (process.env.targetVanillaEnv === "staging") {
-      if (trimmedDirectories.indexOf("changes-from-update.md") === -1) {
-        trimmedDirectories.push("changes-from-update.md");
+    if (process.env.targetVanillaEnv === 'staging') {
+      if (trimmedDirectories.indexOf('changes-from-update.md') === -1) {
+        trimmedDirectories.push('changes-from-update.md');
       }
     }
     return trimmedDirectories;

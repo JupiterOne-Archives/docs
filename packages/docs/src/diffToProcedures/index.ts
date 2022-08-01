@@ -1,4 +1,4 @@
-import { logger } from "../loggingUtil";
+import { logger } from '../loggingUtil';
 import {
   checkBodyForTitleToUseForArticle,
   createDisplayName,
@@ -8,8 +8,8 @@ import {
   TITLE_FROM_MARKDOWN_REGEX,
   VanillaArticle,
   VanillaKnowledgeCategory,
-} from "../utils";
-import { filterDiffs } from "./utils";
+} from '../utils';
+import { filterDiffs } from './utils';
 
 export interface CreateArticleChangeProps {
   articleChanges: string; // diff string of a file
@@ -19,8 +19,8 @@ export const createArticleChange = async ({
   articleChanges,
   path,
 }: CreateArticleChangeProps): Promise<VanillaArticle> => {
-  let displayName = "";
-  let articleBody = "";
+  let displayName = '';
+  let articleBody = '';
 
   try {
     articleBody = await markdownToString(path);
@@ -34,12 +34,12 @@ export const createArticleChange = async ({
   );
 
   if (!titleFromBody) {
-    if (articleChanges.startsWith("index")) {
-      const pathSplit = path.split("/");
+    if (articleChanges.startsWith('index')) {
+      const pathSplit = path.split('/');
       const replacementName = pathSplit[pathSplit.length - 2];
       displayName = createDisplayName(replacementName);
     } else {
-      const splitOnExtention = articleChanges.split(".")[0];
+      const splitOnExtention = articleChanges.split('.')[0];
       displayName = createDisplayName(splitOnExtention);
     }
   } else {
@@ -55,10 +55,10 @@ export const createArticleChange = async ({
     articleID: null,
     fileName: articleChanges,
     name: displayName.trim(),
-    body: articleBody ? articleBody : "",
+    body: articleBody ? articleBody : '',
     path: path,
-    format: "markdown",
-    locale: "en",
+    format: 'markdown',
+    locale: 'en',
     procedureType: ProcedureTypeEnum.Article,
   };
 
@@ -101,14 +101,14 @@ export const handleNestedKnowledgeCategoryChanges = async (
     };
   }
 
-  const directorySplitBySlash = target.split("/");
+  const directorySplitBySlash = target.split('/');
 
   const identifierForDirectoryOrFile = directorySplitBySlash.shift();
 
   const createAnotherIterationForDirectory = directorySplitBySlash.length >= 1;
 
   if (createAnotherIterationForDirectory) {
-    tempNestedCategoryChanges.unshift(directorySplitBySlash.join("/"));
+    tempNestedCategoryChanges.unshift(directorySplitBySlash.join('/'));
   }
 
   if (
@@ -116,7 +116,7 @@ export const handleNestedKnowledgeCategoryChanges = async (
     !tempHandled.includes(identifierForDirectoryOrFile)
   ) {
     tempHandled.push(identifierForDirectoryOrFile);
-    if (identifierForDirectoryOrFile.endsWith(".md")) {
+    if (identifierForDirectoryOrFile.endsWith('.md')) {
       const markDownFileToKnowledgeArticle = await createArticleChange({
         articleChanges: target,
         path: input.originalChangesArray[tempParentIndex],
@@ -136,7 +136,7 @@ export const handleNestedKnowledgeCategoryChanges = async (
         knowledgeBaseID: 1, //will need to get it for nested. the docs knowledge base is 1 so for non nested we can use that
         name: displayName,
         fileName: identifierForDirectoryOrFile,
-        description: "",
+        description: '',
         knowledgeCategoryID: null,
         path: pathOfCategory,
         childrenPath: path,

@@ -1,11 +1,11 @@
-import FormData from "form-data";
-import { logger } from "./loggingUtil";
+import FormData from 'form-data';
+import { logger } from './loggingUtil';
 import {
   FLAG_FOR_DELETE,
   ProcedureTypeEnum,
   VanillaArticle,
   VanillaKnowledgeCategory,
-} from "./utils";
+} from './utils';
 import {
   createArticle,
   createKnowledgeCategory,
@@ -22,14 +22,14 @@ import {
   makeRequestsToChangeMarkdownReferences,
   postImage,
   uploadImageAndReturnUrl,
-} from "./VanillaAPI";
+} from './VanillaAPI';
 
-describe("VanillaAPI", () => {
-  const errorLog = jest.spyOn(logger, "error");
+describe('VanillaAPI', () => {
+  const errorLog = jest.spyOn(logger, 'error');
 
-  describe("getKnowedgeCategories", () => {
-    it("handles Errors", async () => {
-      const getMock = jest.fn().mockRejectedValue({ error: "error" });
+  describe('getKnowedgeCategories', () => {
+    it('handles Errors', async () => {
+      const getMock = jest.fn().mockRejectedValue({ error: 'error' });
       const httpClient = {
         get: getMock,
       } as any;
@@ -39,9 +39,9 @@ describe("VanillaAPI", () => {
     });
   });
 
-  describe("getArticles", () => {
-    it("handles error", async () => {
-      const getMock = jest.fn().mockRejectedValue({ error: "error" });
+  describe('getArticles', () => {
+    it('handles error', async () => {
+      const getMock = jest.fn().mockRejectedValue({ error: 'error' });
       const httpClient = {
         get: getMock,
       } as any;
@@ -49,27 +49,27 @@ describe("VanillaAPI", () => {
       await getArticles(httpClient, 1);
       expect(errorLog).toHaveBeenCalledTimes(1);
     });
-    it("handles success", async () => {
+    it('handles success', async () => {
       const getMock = jest
         .fn()
-        .mockResolvedValue({ data: [{ name: "article" }] });
+        .mockResolvedValue({ data: [{ name: 'article' }] });
       const httpClient = {
         get: getMock,
       } as any;
       const expected = [
         {
-          name: "article",
-          procedureType: "Article",
+          name: 'article',
+          procedureType: 'Article',
           referencesNeedingUpdatesInMarkdown: [],
         } as any,
       ] as VanillaArticle[];
       const actual = await getArticles(httpClient, 1);
       expect(actual).toEqual(expected);
     });
-    it("handles null categoryId", async () => {
+    it('handles null categoryId', async () => {
       const getMock = jest
         .fn()
-        .mockResolvedValue({ data: [{ name: "article" }] });
+        .mockResolvedValue({ data: [{ name: 'article' }] });
       const httpClient = {
         get: getMock,
       } as any;
@@ -79,19 +79,19 @@ describe("VanillaAPI", () => {
     });
   });
 
-  describe("getAllArticles", () => {
+  describe('getAllArticles', () => {
     const categories = [
       {
         knowledgeCategoryID: 22,
-        path: "one/two/three.md",
+        path: 'one/two/three.md',
       },
       {
         knowledgeCategoryID: 282,
-        path: "one/two.md",
+        path: 'one/two.md',
       },
     ] as VanillaKnowledgeCategory[];
-    it("handles error", async () => {
-      const getMock = jest.fn().mockRejectedValue({ error: "error" });
+    it('handles error', async () => {
+      const getMock = jest.fn().mockRejectedValue({ error: 'error' });
       const httpClient = {
         get: getMock,
       } as any;
@@ -99,23 +99,23 @@ describe("VanillaAPI", () => {
       await getAllArticles(httpClient, categories);
       expect(errorLog).toHaveBeenCalledTimes(2);
     });
-    it("handles success", async () => {
+    it('handles success', async () => {
       const getMock = jest
         .fn()
-        .mockResolvedValueOnce({ data: [{ name: "article" }] })
-        .mockResolvedValueOnce({ data: [{ name: "articleTwo" }] });
+        .mockResolvedValueOnce({ data: [{ name: 'article' }] })
+        .mockResolvedValueOnce({ data: [{ name: 'articleTwo' }] });
       const httpClient = {
         get: getMock,
       } as any;
       const expected = [
         {
-          name: "article",
-          procedureType: "Article",
+          name: 'article',
+          procedureType: 'Article',
           referencesNeedingUpdatesInMarkdown: [],
         } as any,
         {
-          name: "articleTwo",
-          procedureType: "Article",
+          name: 'articleTwo',
+          procedureType: 'Article',
           referencesNeedingUpdatesInMarkdown: [],
         } as any,
       ] as VanillaArticle[];
@@ -125,9 +125,9 @@ describe("VanillaAPI", () => {
     });
   });
 
-  describe("createKnowledgeCategory", () => {
-    it("handles error", async () => {
-      const postMock = jest.fn().mockRejectedValue({ error: "error" });
+  describe('createKnowledgeCategory', () => {
+    it('handles error', async () => {
+      const postMock = jest.fn().mockRejectedValue({ error: 'error' });
       const httpClient = {
         post: postMock,
       } as any;
@@ -135,10 +135,10 @@ describe("VanillaAPI", () => {
       await createKnowledgeCategory(httpClient, {});
       expect(errorLog).toHaveBeenCalledTimes(1);
     });
-    it("handles release notes success", async () => {
+    it('handles release notes success', async () => {
       const created = {
-        name: "category",
-        path: "release-notes",
+        name: 'category',
+        path: 'release-notes',
         procedureType: ProcedureTypeEnum.Category,
       };
       const postMock = jest.fn().mockResolvedValue({ data: created });
@@ -150,10 +150,10 @@ describe("VanillaAPI", () => {
 
       expect(actual).toEqual(created);
     });
-    it("handles non release notes success", async () => {
+    it('handles non release notes success', async () => {
       const created = {
-        name: "category",
-        path: "integrations",
+        name: 'category',
+        path: 'integrations',
         procedureType: ProcedureTypeEnum.Category,
       };
       const postMock = jest.fn().mockResolvedValue({ data: created });
@@ -167,9 +167,9 @@ describe("VanillaAPI", () => {
     });
   });
 
-  describe("editKnowledgeCategory", () => {
-    it("handles error", async () => {
-      const patchMock = jest.fn().mockRejectedValue({ error: "error" });
+  describe('editKnowledgeCategory', () => {
+    it('handles error', async () => {
+      const patchMock = jest.fn().mockRejectedValue({ error: 'error' });
       const httpClient = {
         patch: patchMock,
       } as any;
@@ -177,7 +177,7 @@ describe("VanillaAPI", () => {
       await editKnowledgeCategory(httpClient, 1, {});
       expect(errorLog).toHaveBeenCalledTimes(1);
     });
-    it("handles success", async () => {
+    it('handles success', async () => {
       const created = {};
       const patchMock = jest.fn().mockResolvedValue({ data: created });
       const httpClient = {
@@ -192,21 +192,21 @@ describe("VanillaAPI", () => {
     });
   });
 
-  describe("deleteKnowledgeCategory", () => {
-    it("handles error", async () => {
-      const deleteMock = jest.fn().mockRejectedValue({ error: "error" });
+  describe('deleteKnowledgeCategory', () => {
+    it('handles error', async () => {
+      const deleteMock = jest.fn().mockRejectedValue({ error: 'error' });
       const httpClient = {
         delete: deleteMock,
       } as any;
       const category = {
-        name: "category",
-        path: "integrations",
+        name: 'category',
+        path: 'integrations',
         procedureType: ProcedureTypeEnum.Category,
       } as VanillaKnowledgeCategory;
       await deleteKnowledgeCategory(httpClient, category);
       expect(errorLog).toHaveBeenCalledTimes(1);
     });
-    it("handles success", async () => {
+    it('handles success', async () => {
       const deleted = { knowledgeCategoryID: 22 } as VanillaKnowledgeCategory;
       const deleteMock = jest.fn().mockResolvedValue(deleted);
       const httpClient = {
@@ -215,19 +215,19 @@ describe("VanillaAPI", () => {
 
       const actual = await deleteKnowledgeCategory(httpClient, deleted);
       expect(actual).toEqual({
-        description: "been deleted",
+        description: 'been deleted',
         knowledgeCategoryID: 22,
       });
     });
   });
-  describe("deleteEmptyCategories", () => {
-    it("handles error", async () => {
+  describe('deleteEmptyCategories', () => {
+    it('handles error', async () => {
       const category = {
-        name: "category",
-        path: "integrations",
+        name: 'category',
+        path: 'integrations',
         procedureType: ProcedureTypeEnum.Category,
       } as VanillaKnowledgeCategory;
-      const deleteMock = jest.fn().mockRejectedValue({ error: "error" });
+      const deleteMock = jest.fn().mockRejectedValue({ error: 'error' });
       const getMock = jest.fn().mockResolvedValue([category]);
 
       const httpClient = {
@@ -240,21 +240,21 @@ describe("VanillaAPI", () => {
     });
   });
 
-  describe("deleteAllFlaggedCategories", () => {
+  describe('deleteAllFlaggedCategories', () => {
     const categories = [
       {
         knowledgeCategoryID: 22,
         description: FLAG_FOR_DELETE,
-        path: "one/two/three.md",
+        path: 'one/two/three.md',
       },
       {
         knowledgeCategoryID: 282,
         description: FLAG_FOR_DELETE,
-        path: "one/two.md",
+        path: 'one/two.md',
       },
     ] as VanillaKnowledgeCategory[];
-    it("handles error", async () => {
-      const deleteMock = jest.fn().mockRejectedValue({ error: "error" });
+    it('handles error', async () => {
+      const deleteMock = jest.fn().mockRejectedValue({ error: 'error' });
       const httpClient = {
         delete: deleteMock,
       } as any;
@@ -262,7 +262,7 @@ describe("VanillaAPI", () => {
       await deleteAllFlaggedCategories(httpClient, categories);
       expect(errorLog).toHaveBeenCalledTimes(2);
     });
-    it("handles success", async () => {
+    it('handles success', async () => {
       const deleted = { knowledgeCategoryID: 22 } as VanillaKnowledgeCategory;
       const deleteMock = jest.fn().mockResolvedValue(deleted);
       const httpClient = {
@@ -273,15 +273,15 @@ describe("VanillaAPI", () => {
       expect(actual).toEqual(
         categories.map((c) => ({
           ...c,
-          description: "been deleted",
+          description: 'been deleted',
         }))
       );
     });
   });
 
-  describe("createArticle", () => {
-    it("handles error", async () => {
-      const createArticleMock = jest.fn().mockRejectedValue({ error: "error" });
+  describe('createArticle', () => {
+    it('handles error', async () => {
+      const createArticleMock = jest.fn().mockRejectedValue({ error: 'error' });
       const httpClient = {
         post: createArticleMock,
       } as any;
@@ -289,7 +289,7 @@ describe("VanillaAPI", () => {
       await createArticle(httpClient, {});
       expect(errorLog).toHaveBeenCalledTimes(1);
     });
-    it("handles success", async () => {
+    it('handles success', async () => {
       const article = {} as VanillaArticle;
       const createArticleMock = jest.fn().mockResolvedValue({ data: article });
       const httpClient = {
@@ -304,9 +304,9 @@ describe("VanillaAPI", () => {
     });
   });
 
-  describe("deleteArticle", () => {
-    it("handles error", async () => {
-      const deleteArticleMock = jest.fn().mockRejectedValue({ error: "error" });
+  describe('deleteArticle', () => {
+    it('handles error', async () => {
+      const deleteArticleMock = jest.fn().mockRejectedValue({ error: 'error' });
       const httpClient = {
         patch: deleteArticleMock,
       } as any;
@@ -315,7 +315,7 @@ describe("VanillaAPI", () => {
       expect(errorLog).toHaveBeenCalledTimes(1);
     });
 
-    it("handles success", async () => {
+    it('handles success', async () => {
       const article = {};
       const deleteArticleMock = jest.fn().mockResolvedValue({ data: article });
       const httpClient = {
@@ -330,9 +330,9 @@ describe("VanillaAPI", () => {
     });
   });
 
-  describe("deleteAllArticles", () => {
-    it("handles error", async () => {
-      const deleteArticleMock = jest.fn().mockRejectedValue({ error: "error" });
+  describe('deleteAllArticles', () => {
+    it('handles error', async () => {
+      const deleteArticleMock = jest.fn().mockRejectedValue({ error: 'error' });
       const httpClient = {
         patch: deleteArticleMock,
       } as any;
@@ -343,10 +343,10 @@ describe("VanillaAPI", () => {
       expect(errorLog).toHaveBeenCalledTimes(1);
     });
 
-    it("handles success", async () => {
+    it('handles success', async () => {
       const deleteArticleMock = jest
         .fn()
-        .mockResolvedValue({ name: "article" });
+        .mockResolvedValue({ name: 'article' });
       const httpClient = {
         patch: deleteArticleMock,
       } as any;
@@ -354,13 +354,13 @@ describe("VanillaAPI", () => {
 
       const actual = await deleteAllArticles(httpClient, articles);
       expect(deleteArticleMock).toHaveBeenCalledTimes(1);
-      expect(actual).toEqual([{ procedureType: "Article" }]);
+      expect(actual).toEqual([{ procedureType: 'Article' }]);
     });
   });
 
-  describe("editArticle", () => {
-    it("handles error", async () => {
-      const editArticleMock = jest.fn().mockRejectedValue({ error: "error" });
+  describe('editArticle', () => {
+    it('handles error', async () => {
+      const editArticleMock = jest.fn().mockRejectedValue({ error: 'error' });
       const httpClient = {
         patch: editArticleMock,
       } as any;
@@ -368,12 +368,12 @@ describe("VanillaAPI", () => {
       await editArticle(httpClient, 2, {});
       expect(errorLog).toHaveBeenCalledTimes(1);
     });
-    it("handles success", async () => {
+    it('handles success', async () => {
       const article = {
-        body: "",
+        body: '',
       };
 
-      jest.doMock("./linksAndMediaHandlers", () => ({
+      jest.doMock('./linksAndMediaHandlers', () => ({
         getFullMarkdownReferencePathMatches: jest.fn().mockResolvedValue([]),
       }));
 
@@ -383,13 +383,13 @@ describe("VanillaAPI", () => {
       } as any;
 
       const actual = await editArticle(httpClient, 2, {});
-      expect(actual).toEqual({ body: "", procedureType: "Article" });
+      expect(actual).toEqual({ body: '', procedureType: 'Article' });
     });
   });
 
-  describe("postImage", () => {
-    it("handles error", async () => {
-      const postImageMock = jest.fn().mockRejectedValue({ error: "error" });
+  describe('postImage', () => {
+    it('handles error', async () => {
+      const postImageMock = jest.fn().mockRejectedValue({ error: 'error' });
       const httpClient = {
         uploadMedia: postImageMock,
       } as any;
@@ -397,7 +397,7 @@ describe("VanillaAPI", () => {
       await postImage(httpClient, formData);
       expect(errorLog).toHaveBeenCalledTimes(1);
     });
-    it("handles success", async () => {
+    it('handles success', async () => {
       const postImageMock = jest.fn().mockResolvedValue({ data: {} });
       const httpClient = {
         uploadMedia: postImageMock,
@@ -408,34 +408,34 @@ describe("VanillaAPI", () => {
     });
   });
 
-  describe("uploadImageAndReturnUrl", () => {
-    it("handles failure", async () => {
+  describe('uploadImageAndReturnUrl', () => {
+    it('handles failure', async () => {
       const postImageMock = jest.fn().mockResolvedValue({ data: {} });
 
-      await uploadImageAndReturnUrl("./path");
+      await uploadImageAndReturnUrl('./path');
       expect(postImageMock).toHaveBeenCalledTimes(0);
       expect(errorLog).toHaveBeenCalledTimes(1);
     });
   });
 
-  describe("makeRequestsToChangeMarkdownReferences", () => {
+  describe('makeRequestsToChangeMarkdownReferences', () => {
     const articles = [
       {
-        name: "article",
-        procedureType: "Article",
+        name: 'article',
+        procedureType: 'Article',
         referencesNeedingUpdatesInMarkdown: [],
-        body: "body",
+        body: 'body',
         articleID: 87,
       } as any,
       {
-        name: "articleTwo",
-        procedureType: "Article",
+        name: 'articleTwo',
+        procedureType: 'Article',
         referencesNeedingUpdatesInMarkdown: [],
-        body: "body",
+        body: 'body',
         articleID: 88,
       } as any,
     ] as VanillaArticle[];
-    it("handles success", async () => {
+    it('handles success', async () => {
       const patchMock = jest.fn().mockResolvedValue({ data: {} });
       const httpClient = {
         patch: patchMock,
@@ -448,11 +448,11 @@ describe("VanillaAPI", () => {
       expect(patchMock).toHaveBeenCalledTimes(2);
       expect(actual).toEqual(articles);
     });
-    it("handles failure", async () => {
+    it('handles failure', async () => {
       const patchMock = jest
         .fn()
         .mockResolvedValue({ data: {} })
-        .mockRejectedValue({ error: "secondfailed" });
+        .mockRejectedValue({ error: 'secondfailed' });
       const httpClient = {
         patch: patchMock,
       } as any;

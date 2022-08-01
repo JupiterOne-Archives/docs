@@ -1,35 +1,35 @@
-import HttpClient from "../httpClient";
-import { replaceArticleBodyWithIntegration } from "../integrationHandling";
-import { logger } from "../loggingUtil";
-import { updateArticleInternalMarkdownLinks } from "../updateArticleInternalMarkdownLinks";
+import HttpClient from '../httpClient';
+import { replaceArticleBodyWithIntegration } from '../integrationHandling';
+import { logger } from '../loggingUtil';
+import { updateArticleInternalMarkdownLinks } from '../updateArticleInternalMarkdownLinks';
 import {
   FLAG_FOR_DELETE,
   isArticleType,
   isKnowledgeCategoryType,
   VanillaArticle,
   VanillaKnowledgeCategory,
-} from "../utils";
+} from '../utils';
 import {
   deleteEmptyCategories,
   getAllArticles,
   getKnowedgeCategories,
   makeRequestsToChangeMarkdownReferences,
-} from "../VanillaAPI";
+} from '../VanillaAPI';
 import {
   addVanillaArticlesToProcedures,
   addVanillaCategoryToProcedure,
-} from "./actions/addMeta";
+} from './actions/addMeta';
 import {
   procedureToArticle,
   procedureToKnowledgeCategory,
   removeDeletedCategories,
-} from "./actions/conversion";
-import { createChangesContentForStaging } from "./actions/stagingUpdateArticle";
+} from './actions/conversion';
+import { createChangesContentForStaging } from './actions/stagingUpdateArticle';
 import {
   getPreviousKnowledgeID,
   handleKnowledgeCategoryChangedParentCreate,
   hasKnowledgeCategoryBeenMoved,
-} from "./utils";
+} from './utils';
 
 export const useProceduresForVanillaRequests = async (
   procedures: (VanillaArticle | VanillaKnowledgeCategory)[],
@@ -37,7 +37,7 @@ export const useProceduresForVanillaRequests = async (
   existingknowledgeCategoryInfo: VanillaKnowledgeCategory[],
   completedProcedures?: (VanillaArticle | VanillaKnowledgeCategory)[]
 ): Promise<(VanillaArticle | VanillaKnowledgeCategory)[]> => {
-  logger.info("useProceduresForVanillaRequests");
+  logger.info('useProceduresForVanillaRequests');
   const httpClient = httpHandling;
   const tempCompletedProcedures = completedProcedures
     ? [...completedProcedures]
@@ -67,7 +67,7 @@ export const useProceduresForVanillaRequests = async (
       procedure: procedureWorkedOn,
     });
 
-    if (typeof hasChangedParent === "string") {
+    if (typeof hasChangedParent === 'string') {
       const parentCreation = await handleKnowledgeCategoryChangedParentCreate({
         procedure: procedureWorkedOn,
         newName: hasChangedParent,
@@ -84,7 +84,7 @@ export const useProceduresForVanillaRequests = async (
       }
     }
 
-    if (typeof hasChangedParent === "number") {
+    if (typeof hasChangedParent === 'number') {
       procedureWorkedOn = await procedureToKnowledgeCategory(
         httpClient,
         procedureWorkedOn,
@@ -178,7 +178,7 @@ export const proceduresToVanillaRequests = async ({
         `processedProcedures: ${JSON.stringify(processedProcedures, null, 2)}`
       );
     } catch (e) {
-      logger.info("useProceduresForVanillaRequests error");
+      logger.info('useProceduresForVanillaRequests error');
       logger.error(e);
     }
 

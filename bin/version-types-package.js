@@ -6,7 +6,7 @@
  * that version.
  */
 
-const TYPES_PACKAGE_NAME = 'community-docs-types'
+const TYPES_PACKAGE_NAME = 'community-docs-types';
 
 const fs = require('fs').promises;
 const path = require('path');
@@ -136,7 +136,13 @@ async function run(versionAction) {
     );
 
     console.log(
-      `${nonTypesPackage.packageManifest.dependencies[`@jupiterone/${TYPES_PACKAGE_NAME}`]}: New @jupiterone/${TYPES_PACKAGE_NAME} version in ${nonTypesPackage.dirName}`
+      `${
+        nonTypesPackage.packageManifest.dependencies[
+          `@jupiterone/${TYPES_PACKAGE_NAME}`
+        ]
+      }: New @jupiterone/${TYPES_PACKAGE_NAME} version in ${
+        nonTypesPackage.dirName
+      }`
     );
 
     console.log('');
