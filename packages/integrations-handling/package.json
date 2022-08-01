@@ -8,7 +8,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "getIntegrations": "yarn node ./src/index.js"
+    "getIntegrations": "yarn node src/index.js"
   },
   "dependencies": {
     "@types/glob": "^7.2.0",

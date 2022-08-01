@@ -12,7 +12,7 @@ import remarkSqueezeParagraphs from 'remark-squeeze-paragraphs';
  * @param {String} contents
  * @returns {String}
  */
-async function formatIntegrationFileContents(contents) {
+export async function formatIntegrationFileContents(contents) {
   const formatted = await remark()
     .use(remarkSqueezeParagraphs)
     .use(remarkPresetLintRecommended)
@@ -23,4 +23,19 @@ async function formatIntegrationFileContents(contents) {
   return formatted.toString();
 }
 
-export { formatIntegrationFileContents };
+/**
+ *
+ * @param {string} body - the body of the integration documentation
+ * @param {string} name - the name of the title
+ * @returns
+ */
+export const addTitleToIntegrationDoc = (body, name) => {
+  const target = '# Integration with JupiterOne';
+  const matchTitleRegex = new RegExp(target, 'gi');
+
+  return body.replace(matchTitleRegex, `# ${name} Integration with JupiterOne`);
+};
+
+export const addVersionToIntegrationDoc = (body, version) => {
+  return `${body} \n<!--  jupiterOneDocVersion=${version} -->`;
+};
