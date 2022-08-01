@@ -7,10 +7,8 @@
     "work/",
     "coverage/",
     "bak/",
-    "index.js",
-    "format.js",
     "tools/",
-    "packages/*/*.js"
+    "packages/**/*.js"
   ],
   "parserOptions": {
     "project": "./tsconfig.json",

@@ -11,7 +11,7 @@
     "packages/*"
   ],
   "scripts": {
-    "lint": "eslint --ext .ts,.js .",
+    "lint": "eslint --cache --fix --ext .ts,.js .",
     "test": "chmod u+r+x ./bin/run-tests.local.sh && ./bin/run-tests.local.sh",
     "test:unit": "chmod u+r+x ./bin/run-tests.unit.sh && ./bin/run-tests.unit.sh",
     "bundle": "cd packages/docs; yarn compile",
