@@ -1,14 +1,14 @@
-import { getAllItemsAsDiff } from "..";
-import { diffToProcedures } from "../diffToProcedures";
-import HttpClient from "../httpClient";
-import { readDocsConfig } from "../integrationHandling";
-import { logger } from "../loggingUtil";
-import { ProcedureTypeEnum } from "../utils";
+import { getAllItemsAsDiff } from '..';
+import { diffToProcedures } from '../diffToProcedures';
+import HttpClient from '../httpClient';
+import { readDocsConfig } from '../integrationHandling';
+import { logger } from '../loggingUtil';
+import { ProcedureTypeEnum } from '../utils';
 import {
   deleteArticle,
   getAllArticles,
   getKnowedgeCategories,
-} from "../VanillaAPI";
+} from '../VanillaAPI';
 
 export type RemoveDeletedArticlesProps = {
   httpClient: HttpClient;
@@ -27,12 +27,12 @@ export const removeDeletedArticles = async ({
       );
     }
   } catch (e) {
-    logger.error("error reading integration config");
+    logger.error('error reading integration config');
   }
 
   const allKnowledgeBaseAsADiff = await getAllItemsAsDiff();
   if (!allKnowledgeBaseAsADiff.length) {
-    throw new Error("Fail in getting local resources");
+    throw new Error('Fail in getting local resources');
   }
   const existingknowledgeCategoryInfo = await getKnowedgeCategories(httpClient);
   const articles = await getAllArticles(
@@ -42,7 +42,7 @@ export const removeDeletedArticles = async ({
 
   const procedures = await diffToProcedures(allKnowledgeBaseAsADiff);
   if (!procedures) {
-    throw new Error("Fail in getting local resources");
+    throw new Error('Fail in getting local resources');
   }
   const onlyProceduresThatAreArticles = procedures
     ? procedures.filter((p) => p.procedureType === ProcedureTypeEnum.Article)

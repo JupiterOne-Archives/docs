@@ -1,14 +1,14 @@
-import axios from "axios";
-import { promises as fs } from "fs";
-import * as yaml from "js-yaml";
-import path from "path";
-import { formatIntegrationFileContents } from "./format.js";
+import axios from 'axios';
+import { promises as fs } from 'fs';
+import * as yaml from 'js-yaml';
+import path from 'path';
+import { formatIntegrationFileContents } from './format.js';
 
 const addTitleToIntegrationDoc = (body, name) => {
   let bodyAlterations = `${body}`;
-  const target = "# Integration with JupiterOne";
+  const target = '# Integration with JupiterOne';
 
-  const markdownAssetRegularExpression = new RegExp(target, "gi");
+  const markdownAssetRegularExpression = new RegExp(target, 'gi');
 
   bodyAlterations = bodyAlterations.replace(
     markdownAssetRegularExpression,
@@ -49,9 +49,9 @@ const getRepoVersion = async (projectName) => {
   const { data } = result;
 
   if (data) {
-    return data.version.replace(/\./g, "-");
+    return data.version.replace(/\./g, '-');
   } else {
-    return "not-found";
+    return 'not-found';
   }
 };
 
@@ -75,11 +75,11 @@ const createDirIfNotExist = async (dirPath) => {
 const createFileIfNotExist = async (docFilePath, githubFileContents) => {
   try {
     await fs.writeFile(docFilePath, githubFileContents, {
-      encoding: "utf-8",
+      encoding: 'utf-8',
     });
     return true;
   } catch (e) {
-    console.log(e, "WRITE Error", docFilePath);
+    console.log(e, 'WRITE Error', docFilePath);
     return false;
   }
 };
@@ -98,7 +98,7 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
     try {
       version = await getRepoVersion(projectName);
     } catch (e) {
-      console.log("VERSION FETCH ERROR:", projectName);
+      console.log('VERSION FETCH ERROR:', projectName);
     }
 
     try {
@@ -110,7 +110,7 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
 
       let docContents = {
         projectName,
-        githubFileContents: "",
+        githubFileContents: '',
         version,
         knowledgeCategoriesPaths,
         displayName,
@@ -134,7 +134,7 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
             version
           );
         } catch (e) {
-          console.log(e, "Markdown cleaning error");
+          console.log(e, 'Markdown cleaning error');
         }
       }
 
@@ -142,7 +142,7 @@ async function generateRenderableIntegrationConfigs(integrationConfigs) {
     } catch (e) {
       completedRequests.push({
         projectName,
-        githubFileContents: "not-found",
+        githubFileContents: 'not-found',
         version,
         knowledgeCategoriesPaths,
         displayName,
@@ -170,12 +170,12 @@ const createAllIntegrationProjectDocFilesFromConfig = async (
     } = renderableConfigs[r];
     console.log(
       projectName,
-      "knowledgeCategoriesPaths",
+      'knowledgeCategoriesPaths',
       knowledgeCategoriesPaths
     );
     if (
-      githubFileContents !== "" &&
-      version !== "not-found" &&
+      githubFileContents !== '' &&
+      version !== 'not-found' &&
       projectName &&
       knowledgeCategoriesPaths
     ) {
@@ -189,7 +189,7 @@ const createAllIntegrationProjectDocFilesFromConfig = async (
       await createDirIfNotExist(docDirPath);
       const docFilePath = path.join(
         docDirPath,
-        `${markdownName.replace(/\s/g, "-")}.md`
+        `${markdownName.replace(/\s/g, '-')}.md`
       );
 
       await createFileIfNotExist(docFilePath, githubFileContents);
@@ -202,7 +202,7 @@ const createAllIntegrationProjectDocFilesFromConfig = async (
 
 async function readDocsConfig(docsConfigFilePath) {
   const fileContents = await fs.readFile(docsConfigFilePath, {
-    encoding: "utf-8",
+    encoding: 'utf-8',
   });
 
   try {
@@ -217,18 +217,18 @@ async function readDocsConfig(docsConfigFilePath) {
 
 (async () => {
   const docsConfig = await readDocsConfig(
-    path.join(path.resolve(), "../../integrations.config.yaml")
+    path.join(path.resolve(), '../../integrations.config.yaml')
   );
 
   const successes = await createAllIntegrationProjectDocFilesFromConfig(
     docsConfig.integrations
   );
   const changesNeededForPR = successes.changes.map((c) => c.projectName);
-  console.log("Integrations added:", changesNeededForPR);
+  console.log('Integrations added:', changesNeededForPR);
   console.log(
-    "Integrations NOT Added:",
+    'Integrations NOT Added:',
     successes.existing.map((c) => c.projectName)
   );
 })().catch((err) => {
-  console.error("Error generating integration docs: ", err);
+  console.error('Error generating integration docs: ', err);
 });

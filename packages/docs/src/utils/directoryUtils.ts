@@ -1,7 +1,7 @@
-import { default as fsSync } from "fs";
-import glob from "glob";
-import path from "path";
-import { PATH_OF_DIRECTORY_TO_WATCH } from ".";
+import { default as fsSync } from 'fs';
+import glob from 'glob';
+import path from 'path';
+import { PATH_OF_DIRECTORY_TO_WATCH } from '.';
 
 export const directoryPromise = (directoryLocation: string) =>
   new Promise<string[]>((resolve, reject) => {
@@ -18,11 +18,11 @@ export const getDirectories = (
   src: string,
   cb: (err: any, res: any) => any
 ) => {
-  glob(src + "/**/*", cb);
+  glob(src + '/**/*', cb);
 };
 
 export const getAllSubChanges = async (gitChange: string) => {
-  if (gitChange.indexOf(".") != -1) {
+  if (gitChange.indexOf('.') != -1) {
     return [gitChange];
   }
   const directoryLocation = path.join(__dirname, `../../../`, gitChange);

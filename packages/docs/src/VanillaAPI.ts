@@ -1,16 +1,16 @@
-import FormData from "form-data";
-import fs from "fs";
-import path from "path";
-import HttpClient from "./httpClient";
-import { getFullMarkdownReferencePathMatches } from "./linksAndMediaHandlers";
-import { logger } from "./loggingUtil";
-import { kCategoriesByPathSize } from "./proceduresToVanillaRequests/utils";
-import { FLAG_FOR_DELETE, PATH_OF_DIRECTORY_TO_WATCH } from "./utils/constants";
+import FormData from 'form-data';
+import fs from 'fs';
+import path from 'path';
+import HttpClient from './httpClient';
+import { getFullMarkdownReferencePathMatches } from './linksAndMediaHandlers';
+import { logger } from './loggingUtil';
+import { kCategoriesByPathSize } from './proceduresToVanillaRequests/utils';
+import { FLAG_FOR_DELETE, PATH_OF_DIRECTORY_TO_WATCH } from './utils/constants';
 import {
   ProcedureTypeEnum,
   VanillaArticle,
   VanillaKnowledgeCategory,
-} from "./utils/types";
+} from './utils/types';
 
 interface ErrorType {
   message: string;
@@ -44,7 +44,7 @@ export const getArticles = async (
     if (!knowledgeCategoryID) {
       return [];
     }
-    const articles = (await client.get("/articles", {
+    const articles = (await client.get('/articles', {
       params: {
         limit: 500,
         knowledgeCategoryID, // docs dont say it.. but this is required
@@ -77,7 +77,7 @@ export const deleteAllArticles = async (
     existingVanillaArticles ? [...existingVanillaArticles] : [];
   const filteredExistingknowledgeArticleInfo: VanillaArticle[] =
     tempExistingknowledgeArticleInfo.filter(
-      (ek) => typeof ek.articleID === "number"
+      (ek) => typeof ek.articleID === 'number'
     );
   const resolved: VanillaArticle[] = [];
   for (
@@ -155,12 +155,12 @@ export const createKnowledgeCategory = async (
 ): Promise<VanillaKnowledgeCategory | undefined> => {
   const { path } = bodyOfRequest;
   let isReleaseNotes = false;
-  if (path && path.toLowerCase().indexOf("release-notes") !== -1) {
+  if (path && path.toLowerCase().indexOf('release-notes') !== -1) {
     isReleaseNotes = true;
   }
 
   try {
-    const category = (await client.post("/knowledge-categories", {
+    const category = (await client.post('/knowledge-categories', {
       ...bodyOfRequest,
       parentID: bodyOfRequest.parentID === -1 ? 1 : bodyOfRequest.parentID,
       knowledgeBaseID: isReleaseNotes ? 2 : 1,
@@ -221,7 +221,7 @@ export const deleteKnowledgeCategory = async (
     await client.delete(
       `knowledge-categories/${knowledgeCategory.knowledgeCategoryID}`
     );
-    tempKnowledgeCategory.description = "been deleted";
+    tempKnowledgeCategory.description = 'been deleted';
   } catch (e) {
     logger.error(
       `deleteKnowledgeCategory error: ${JSON.stringify(
@@ -301,7 +301,7 @@ export const createArticle = async (
   bodyOfRequest: Partial<VanillaArticle>
 ): Promise<VanillaArticle | undefined> => {
   try {
-    const article = (await client.post("/articles", bodyOfRequest)) as {
+    const article = (await client.post('/articles', bodyOfRequest)) as {
       data: VanillaArticle | ErrorType;
     };
 
@@ -342,7 +342,7 @@ export const deleteArticle = async (
   try {
     const article = (await client.patch(`/articles/${articleID}/status`, {
       articleID,
-      status: "deleted",
+      status: 'deleted',
     })) as {
       data: VanillaArticle | ErrorType;
     };
@@ -364,7 +364,7 @@ export const editArticle = async (
 ): Promise<VanillaArticle | undefined> => {
   try {
     const article = (await client.patch(`/articles/${articleID}`, {
-      format: "markdown",
+      format: 'markdown',
       ...edits,
     })) as {
       data: VanillaArticle | ErrorType;
@@ -373,7 +373,7 @@ export const editArticle = async (
     if (!isErrorType(article.data)) {
       if (article?.data?.body !== null) {
         logger.info(
-          "article.data.body is not null. checking for referencesNeedingUpdatesInMarkdown"
+          'article.data.body is not null. checking for referencesNeedingUpdatesInMarkdown'
         );
 
         const referencesNeedingUpdatesInMarkdown =
@@ -389,7 +389,7 @@ export const editArticle = async (
           referencesNeedingUpdatesInMarkdown &&
           referencesNeedingUpdatesInMarkdown.length
         ) {
-          logger.info("returning with referencesNeedingUpdatesInMarkdown...");
+          logger.info('returning with referencesNeedingUpdatesInMarkdown...');
 
           return {
             ...edits,
@@ -459,8 +459,8 @@ export const uploadImageAndReturnUrl = async (
 ): Promise<string> => {
   const httpClient = new HttpClient();
   const form = new FormData();
-  const mediaLocation = imagePath.replace(/((\.\.\/){1,})/g, "");
-  const mediaLocationChopped = imagePath.split("/");
+  const mediaLocation = imagePath.replace(/((\.\.\/){1,})/g, '');
+  const mediaLocationChopped = imagePath.split('/');
   const imageName = mediaLocationChopped[mediaLocationChopped.length - 1];
   const fileLocation = path.join(
     __dirname,
@@ -470,7 +470,7 @@ export const uploadImageAndReturnUrl = async (
 
   try {
     const imageFile = await fs.promises.readFile(fileLocation);
-    form.append("file", imageFile, imageName);
+    form.append('file', imageFile, imageName);
     const postImageResponse = await postImage(httpClient, form);
 
     if (postImageResponse && postImageResponse?.url) {

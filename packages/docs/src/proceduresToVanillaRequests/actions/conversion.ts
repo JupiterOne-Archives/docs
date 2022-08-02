@@ -1,5 +1,5 @@
-import HttpClient from "../../httpClient";
-import { logger } from "../../loggingUtil";
+import HttpClient from '../../httpClient';
+import { logger } from '../../loggingUtil';
 import {
   directoryExists,
   FLAG_FOR_DELETE,
@@ -7,7 +7,7 @@ import {
   KNOWN_CATEGORY_BEEN_DELETED,
   VanillaArticle,
   VanillaKnowledgeCategory,
-} from "../../utils";
+} from '../../utils';
 import {
   createArticle,
   createKnowledgeCategory,
@@ -15,8 +15,8 @@ import {
   deleteArticle,
   editArticle,
   editKnowledgeCategory,
-} from "../../VanillaAPI";
-import { addImagesToArticleMarkdown } from "../utils";
+} from '../../VanillaAPI';
+import { addImagesToArticleMarkdown } from '../utils';
 
 export const procedureToKnowledgeCategory = async (
   httpClient: HttpClient,
@@ -28,7 +28,7 @@ export const procedureToKnowledgeCategory = async (
 
   if (
     procedureWorkedOn.path &&
-    procedureWorkedOn.path.toLowerCase().indexOf("release-notes") !== -1
+    procedureWorkedOn.path.toLowerCase().indexOf('release-notes') !== -1
   ) {
     isReleaseNotes = true;
   }
@@ -162,9 +162,9 @@ export const procedureToArticle = async (
       const articleRequest: Partial<VanillaArticle> = {
         body: tempProcedureWorkedOn.body,
         path: tempProcedureWorkedOn.path,
-        format: "markdown",
+        format: 'markdown',
         knowledgeCategoryID: previousknowledgeCategoryID,
-        locale: "en",
+        locale: 'en',
         name: tempProcedureWorkedOn.name,
         sort: 0,
       };
@@ -188,9 +188,9 @@ export const procedureToArticle = async (
     ) {
       const articleRequest: Partial<VanillaArticle> = {
         body: tempProcedureWorkedOn.body,
-        format: "markdown",
+        format: 'markdown',
         knowledgeCategoryID: previousknowledgeCategoryID,
-        locale: "en",
+        locale: 'en',
         name: tempProcedureWorkedOn.name?.trim(),
         sort: 0,
         path: tempProcedureWorkedOn.path,

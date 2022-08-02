@@ -1,36 +1,36 @@
-import { default as fs } from "fs";
-import path from "path";
+import { default as fs } from 'fs';
+import path from 'path';
 import {
   FLAG_FOR_DELETE,
   PATH_OF_DIRECTORY_TO_WATCH,
   SUPPORTED_FILE_TYPE_EXTENTIONS,
   VanillaArticle,
   VanillaKnowledgeCategory,
-} from ".";
-import { logger } from "../loggingUtil";
+} from '.';
+import { logger } from '../loggingUtil';
 
 export const isKnowledgeCategoryType = (
   procedure: VanillaArticle | VanillaKnowledgeCategory
 ): procedure is VanillaKnowledgeCategory => {
   return Boolean(
-    (procedure as VanillaKnowledgeCategory).procedureType === "Category"
+    (procedure as VanillaKnowledgeCategory).procedureType === 'Category'
   );
 };
 
 export const isArticleType = (
   procedure: VanillaArticle | VanillaKnowledgeCategory
 ): procedure is VanillaArticle => {
-  return Boolean((procedure as VanillaArticle).procedureType === "Article");
+  return Boolean((procedure as VanillaArticle).procedureType === 'Article');
 };
 
 export const createDisplayName = (name: string) => {
   return name
     .split(/_/g)
     .map((item) => `${item[0]}${item.substring(1)}`)
-    .join(" ")
+    .join(' ')
     .split(/-/g)
     .map((item) => `${item[0].toUpperCase()}${item.substring(1)}`)
-    .join(" ");
+    .join(' ');
 };
 
 export const markdownToString = async (filePath?: string): Promise<string> => {
@@ -53,7 +53,7 @@ export const markdownToString = async (filePath?: string): Promise<string> => {
 
   try {
     const blockingReadOfFile = await fs.promises.readFile(fileLocation, {
-      encoding: "utf8",
+      encoding: 'utf8',
     });
     if (blockingReadOfFile) {
       return blockingReadOfFile.toString();
@@ -75,7 +75,7 @@ export const getMarkdownAsStringFromPath = async (
 
   try {
     const blockingReadOfFile = await fs.promises.readFile(fileLocation, {
-      encoding: "utf8",
+      encoding: 'utf8',
     });
     if (blockingReadOfFile) {
       return blockingReadOfFile.toString();
@@ -89,7 +89,7 @@ export const checkBodyForTitleToUseForArticle = (
   markdownAsString: string,
   targetRegex: RegExp
 ) => {
-  const markdownTitleRegularExpression = new RegExp(targetRegex, "gi");
+  const markdownTitleRegularExpression = new RegExp(targetRegex, 'gi');
   const matches = markdownAsString.match(markdownTitleRegularExpression);
 
   if (matches && matches[0]) {
@@ -108,7 +108,7 @@ export const removeTitleFromArticleBody = (
   const matches = markdownAsString.match(markdownTitleRegularExpression);
 
   if (matches && matches[0]) {
-    bodyAlterations = bodyAlterations.replace(matches[0], "");
+    bodyAlterations = bodyAlterations.replace(matches[0], '');
   }
 
   return bodyAlterations.trim();

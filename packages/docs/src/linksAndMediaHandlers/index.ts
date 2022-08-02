@@ -6,7 +6,7 @@ import {
   MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK_V2,
   SUPPORTED_MEDIA_TYPES,
   TITLE_FROM_MARKDOWN_REGEX,
-} from "../utils";
+} from '../utils';
 
 export const isSupportedMediaType = (imagePath: string): string | boolean => {
   let supportedTypeOfFile = false;
@@ -24,10 +24,10 @@ export const modifyBodyLinkForImage = (
   replacement: string
 ): string => {
   let bodyAlterations = `${body}`;
-  const matchToBeReplacedSanitized = matchToBeReplaced.replace("/", "\\/");
+  const matchToBeReplacedSanitized = matchToBeReplaced.replace('/', '\\/');
   const markdownAssetRegularExpression = new RegExp(
     matchToBeReplacedSanitized,
-    "gi"
+    'gi'
   );
 
   bodyAlterations = bodyAlterations.replace(
@@ -46,14 +46,14 @@ export const modifyBodyLinkForImageForReturnedArticles = (
   replacement: string
 ): modifyBodyLinkForImageForReturnedArticlesReturn => {
   const bodyAlterations = `${body}`;
-  const slashRegex = new RegExp("/", "gi");
+  const slashRegex = new RegExp('/', 'gi');
   const matchToBeReplacedSanitized = matchToBeReplaced
-    .replace(slashRegex, "\\/")
-    .replace("(", "\\(")
-    .replace(")", "\\)");
+    .replace(slashRegex, '\\/')
+    .replace('(', '\\(')
+    .replace(')', '\\)');
   const markdownAssetRegularExpression = new RegExp(
     matchToBeReplacedSanitized,
-    "gi"
+    'gi'
   );
 
   const replacedBody = bodyAlterations.replace(
@@ -67,7 +67,7 @@ export const modifyBodyLinkForImageForReturnedArticles = (
 };
 
 export const getMarkdownImageSrcs = (markdownAsString: string): string[] => {
-  const markdownAssetRegularExpression = new RegExp(MARKDOWN_IMAGE_REGEX, "gi");
+  const markdownAssetRegularExpression = new RegExp(MARKDOWN_IMAGE_REGEX, 'gi');
   const matches = [];
   let array1;
 
@@ -85,7 +85,7 @@ export const getFullMarkdownReferencePathMatches = (
 ): string[] => {
   const markdownAssetRegularExpression = new RegExp(
     MARKDOWN_VANILLA_RETURN_MARKDOWN_LINK_V2,
-    "gi"
+    'gi'
   );
 
   const matches = [];
@@ -105,7 +105,7 @@ export const getFullMarkdownReferencePathMatches = (
     return matchEdit;
   });
 
-  return editedMatches.filter((m: string) => m[0] === ".");
+  return editedMatches.filter((m: string) => m[0] === '.');
 };
 
 export const getArticleNameFromReference = async (
@@ -113,14 +113,14 @@ export const getArticleNameFromReference = async (
   currentArticlePath: string | undefined
 ): Promise<string | false> => {
   if (currentArticlePath) {
-    const directoryArticleResidesSplit = currentArticlePath.split("/");
+    const directoryArticleResidesSplit = currentArticlePath.split('/');
     const pathForMissing: string[] = [];
     directoryArticleResidesSplit.forEach((p) => {
-      if (p.indexOf(".md") == -1) {
+      if (p.indexOf('.md') == -1) {
         pathForMissing.push(p);
       }
     });
-    const newPath = pathForMissing.join("/");
+    const newPath = pathForMissing.join('/');
     const createdPathFromReferencingArticle = `${newPath}/${pathOfReference}`;
 
     const articleBody = await markdownToString(
