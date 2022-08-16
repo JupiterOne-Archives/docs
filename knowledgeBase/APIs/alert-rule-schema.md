@@ -341,13 +341,18 @@ the JupiterOne Slack bot must be a member of that private channel.
 
 > Sends an HTTP request to a given endpoint.
 
-| Property   | Type     | Description                              |
-| ---------- | -------- | ---------------------------------------- |
-| `type`     | `string` | Rule operation action type: `WEBHOOK`    |
-| `endpoint` | `string` | Webhook endpoint to send the request to. |
-| `method`   | `string` | HTTP method to use when making the request Allowed values: `POST`, `PUT`, `GET`, `HEAD`, `PATCH`, `DELETE`. |
-| `body?`    | `object` | Body data to include in the request. Can only be used with `POST`, `PUT`, and `PATCH`. |
-| `headers?` | `object` | HTTP headers to include in the request.  |
+| Property               | Type     | Description                                                  |
+| ---------------------- | -------- | ------------------------------------------------------------ |
+| `type`                 | `string` | Rule operation action type: `WEBHOOK`                        |
+| `endpoint`             | `string` | Webhook endpoint to send the request to.                     |
+| `method`               | `string` | HTTP method to use when making the request Allowed values: `POST`, `PUT`, `GET`, `HEAD`, `PATCH`, `DELETE`. |
+| `body?`                | `object` | Body data to include in the request. Can only be used with `POST`, `PUT`, and `PATCH`. |
+| `headers?`             | `object` | HTTP headers to include in the request.                      |
+| `alertLevel`           | `string` | Level of severity of the rule.                               |
+| `alertRuleName`        | `string` | Name of the alert rule.                                      |
+| `alertRuleId`          | `string` | ID number of the alert rule.                                 |
+| `alertRuleDescription` | `string` | Description that describes what the rule does and how.       |
+| `alertWebLink`         | `string` | Link to the alert in JupiterOne.                             |
 
 Example:
 
