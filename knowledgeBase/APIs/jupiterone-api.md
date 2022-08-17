@@ -102,6 +102,10 @@ Optionally, additional parameters can be provided:
 - `cursor`: A token that can be exchanged to fetch the next page of information.
 - `includeDeleted`: When set to `true`, recently deleted information will be included in the results.
 - `deferredResponse`: This option allows for a deferred response to be returned. When a deferred response is returned, a `url` pointing the state of the query is provided. API consumers should poll the status of the deferred query by requesting the given `url` until the `status` property of the returned JSON document has a value of `COMPLETED` (see example below). Upon completion of the query, the `url` will provide a link to the query results. The results contain the same `type`, `data`, and `cursor` fields that the non-deferred GraphQL response would contain. Allowed values are `DISABLED` and `FORCE`.
+- `flags`:
+  - `computedProperties`: When set to `true`, vertices will be tagged with additional information to signal if there are noteworthy traits that are worth surfacing.
+  - `rowMetadata`: When set to `true`, table results will return back metadata about the requested objects under a `_meta` property.
+- `scopeFilters`: An array of `JSON` map of filters that define the desired vertex. They have precedence over filters supplied in the query.
 
 **Note:**
 When paging through data, it is _highly_ recommended that cursors are leveraged instead of adding `limit` and `skip` clauses to queries.
@@ -115,8 +119,8 @@ Queries that may take longer than 30 seconds should use the `FORCE` option for `
 **Example GraphQL query:**
 
 ```graphql
-query J1QL($query: String!, $variables: JSON, $cursor: String) {
-  queryV1(query: $query, variables: $variables, cursor: $cursor) {
+query J1QL($query: String!, $variables: JSON, $cursor: String, $scopeFilters: [JSON!], $flags: QueryV1Flags) {
+  queryV1(query: $query, variables: $variables, cursor: $cursor, scopeFilters: $scopeFilters, flags: $flags) {
     type
     data
     cursor
@@ -132,7 +136,15 @@ query J1QL($query: String!, $variables: JSON, $cursor: String) {
   "variables": {
     "type": "employee"
   },
-  "cursor": "eyJjYWNoZUtleSI6IjFlNDg3MT..."
+  "cursor": "eyJjYWNoZUtleSI6IjFlNDg3MT...",
+  "scopeFilters": [
+    {
+      "org": "engineering"
+    }
+  ],
+  "flags": {
+    "computedProperties": true
+  }
 }
 ```
 
