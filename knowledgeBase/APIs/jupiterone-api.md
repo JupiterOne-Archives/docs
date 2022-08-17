@@ -103,8 +103,8 @@ Optionally, additional parameters can be provided:
 - `includeDeleted`: When set to `true`, recently deleted information will be included in the results.
 - `deferredResponse`: This option allows for a deferred response to be returned. When a deferred response is returned, a `url` pointing the state of the query is provided. API consumers should poll the status of the deferred query by requesting the given `url` until the `status` property of the returned JSON document has a value of `COMPLETED` (see example below). Upon completion of the query, the `url` will provide a link to the query results. The results contain the same `type`, `data`, and `cursor` fields that the non-deferred GraphQL response would contain. Allowed values are `DISABLED` and `FORCE`.
 - `flags`:
-  - `computedProperties`: When set to `true`, vertices will be tagged with additional information to signal if there are noteworthy traits that are worth surfacing.
-  - `rowMetadata`: When set to `true`, table results will return back metadata about the requested objects under a `_meta` property.
+  - `computedProperties`: When set to `true`, vertices will be tagged with additional information to indicate if there are noteworthy traits that are worth surfacing.
+  - `rowMetadata`: When set to `true`, table results will return metadata about the requested objects under a `_meta` property.
 - `scopeFilters`: An array of `JSON` map of filters that define the desired vertex. They have precedence over filters supplied in the query.
 
 **Note:**
