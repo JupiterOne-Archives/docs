@@ -42,8 +42,6 @@ If you need help with this integration, please contact
 
 4. Click the Add consumer button.
 
-![BitBucket OAuth Example Config](../../assets/integration-bitbucket-oauth-consumer-settings.png)
-
 Pull requests read permission is needed to ingest PRs. The PR entities serve as
 code review records for security and compliance.
 
