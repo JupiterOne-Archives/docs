@@ -2,12 +2,6 @@
 
 Critical assets is a class of asset for which you can create queries and alerts to quickly access the most crucial data. By default, JupiterOne determines which criteria defines an asset as the most important and, therefore, the most at risk but an administrator can edit this definition.
 
-
-
-
-
-
-
 ## Quick Filtering the Critical Assets
 
 In J1 Assets, there are two tabs: All Assets and Critical Assets. Click the **Critical Assets** tab at the top of the page to go directly to the most important of your assets.
@@ -28,13 +22,13 @@ Add asset classes and properties that your organization considers a critical ass
 To know which critical assets related to compliance gaps may need remediation, you can run queries such as:  `find #CriticalAsset that has jupiterone_compliance_gap` as shown in this example:
 
 
-![](C:\Users\lynch\OneDrive\Documents\GitHub\docs\knowledgeBase\assets\problems-query.png)
+![0o](C:\Users\lynch\OneDrive\Documents\GitHub\docs\knowledgeBase\assets\problems-query.png)
 
 
 
-## JupiterOne application smart classes
+## Mapping the Critical Assets Definition
 
-Currently, the only supported instance is `#CriticalAsset`, which maps  to the configured definition of critical assets in the Assets app.
+J1 uses [smart classes](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md#smart-classes-beta) as a mechanism for applying a set of asset filters with a shorthand syntax. The J1 application smart class has an instance called `#CriticalAsset`. You can use this instance to map to the configured definition of critical assets in J1 Assets:
 
 ```j1ql
 FIND #CriticalAsset that has Finding
@@ -54,10 +48,6 @@ and the following attributes:
 - tag.Production = 'true'
 - classification = 'critical'
 
-Administrators define critical assets in the Assets app by clicking the gear icon in the Assets title bar.
-
-
-
 ## Critical Asset Tag
 
-Tag Entities: The tag name and tag value, including multiple tag names and values, as well as the option to add the critical asset tag.
+When [creating alerts](../security-operations/manage-alerts.md), you can use the critical asset tag when you want the alert to include critical asset findings. 
