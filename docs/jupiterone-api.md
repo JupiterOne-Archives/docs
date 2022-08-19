@@ -43,6 +43,16 @@ Upon completion of the query, the `url` will provide a link to the query results
 The results contain the same `type`, `data`, and `cursor` fields that the non-deferred
 GraphQL response would contain.
 Allowed values are `DISABLED` and `FORCE`.
+- `variableResultSize`: When set to `true` the API will return the largest result 
+size possible. Without this flag, the result size will be capped at 250 rows. This 
+flag is recommended for use in cases where a larger result size is preferable and 
+an indeterminate/variable number of return results is acceptable.    
+
+!!! note
+    `variableResultSize` can increase the rate of any pagination flow because
+    the API will return a larger number of rows. The number of rows returned
+    will not always be the same, but will be larger than the default -- hence 
+    the name, _variable_ result size.  
 
 !!! note
     When paging through data, it is _highly_ recommended that cursors
