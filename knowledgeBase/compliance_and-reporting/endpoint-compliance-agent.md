@@ -54,7 +54,7 @@ Technically the Stethoscope agent installation and JupiterOne integration proces
 
    ```bash
    # macOS example:
-   j1-endpoint-agent-darwin activate --email <your.email> --account <your J1 account name> --code <one-time-use activation code>
+   /opt/j1endpointagent/bin/j1-endpoint-agent-darwin activate --email {YOUR-EMAIL} --account {YOUR-J1-ACCOUNT} --code {YOUR-ACTIVATION-CODE}
    ```
 
    Ordinarily, these account codes are generated at email-send time, using the send email feature of the administrative Endpoint Compliance Power Up UI. Contact JupiterOne Support to pre-generate a CSV of activation codes for a list of your email addresses. This activation step registers each particular endpoint device with JupiterOne, sending along the device-specific UUID along with the activation information provided at the command line, and generates an API token used to retrieve the Stethoscope policy and upload scan results to J1.
