@@ -109,7 +109,7 @@ Optionally, additional parameters can be provided:
 - `variableResultSize`: When set to `true` the API will return the largest result size possible. Without this flag, the result size will be capped at 250 rows. This flag is recommended for use in cases where a larger result size is preferable and an indeterminate/variable number of return results is acceptable.    
 
 **Note:**
-`variableResultSize` can increase the rate of your pagination flow because the API will return a larger number of rows per request. The exact number of rows returned will not always be the same, but will be larger than the default -- hence the name, _variable_ result size.
+`variableResultSize` can increase the rate of your pagination flow because the API will return the largest number of rows possible per request. The exact number of rows returned will not always be the same, but will be larger than the default -- hence the name, _variable_ result size.
 
 **Note:**
 When paging through data, it is _highly_ recommended that cursors are leveraged instead of adding `limit` and `skip` clauses to queries.
