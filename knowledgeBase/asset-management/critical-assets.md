@@ -7,13 +7,13 @@ Critical assets is a class of asset for which you can create queries and alerts 
 In J1 Assets, there are two tabs: All Assets and Critical Assets. Click the **Critical Assets** tab at the top of the page to go directly to the most important of your assets.
 
 
-![](C:\Users\lynch\OneDrive\Documents\GitHub\docs\knowledgeBase\assets\assets-landing.png)
+![](../assets/assets-landing.png)
 
 
 
 Click ![](C:\Users\lynch\OneDrive\Documents\GitHub\docs\knowledgeBase\assets\icons\gear.png) to edit the critical asset definition default values. You can use classes, properties, and values to define what is critical.
 
-![](C:\Users\lynch\OneDrive\Documents\GitHub\docs\knowledgeBase\assets\asset-definition.png) 
+![](../assets/asset-definition.png) 
 
 Add asset classes and properties that your organization considers a critical asset, and click **Update Definition**. Default critical asset classes include `Application`, `CodeRepo`, `Datastore`, `Function`, `Host`, and `Logs`.
 
@@ -22,7 +22,7 @@ Add asset classes and properties that your organization considers a critical ass
 To know which critical assets related to compliance gaps may need remediation, you can run queries such as:  `find #CriticalAsset that has jupiterone_compliance_gap` as shown in this example:
 
 
-![0o](C:\Users\lynch\OneDrive\Documents\GitHub\docs\knowledgeBase\assets\problems-query.png)
+![0o](../assets/problems-query.png)
 
 
 
