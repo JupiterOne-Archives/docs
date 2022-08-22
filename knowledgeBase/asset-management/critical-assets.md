@@ -22,7 +22,7 @@ Add asset classes and properties that your organization considers a critical ass
 To know which critical assets related to compliance gaps may need remediation, you can run queries such as:  `find #CriticalAsset that has jupiterone_compliance_gap` as shown in this example:
 
 
-![0o](../assets/problems-query.png)
+![](../assets/problems-query.png)
 
 
 
