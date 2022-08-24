@@ -143,7 +143,7 @@ find aws_s3_bucket that publishes to aws_s3_bucket return tree
     There are additional properties captured on the edge in each case, which can be used for additional filtering (see screenshots). 
 
     For example:
-
+    
     ​```j1ql
     find aws_s3_bucket 
     that sends aws_cloudtrail 
@@ -164,3 +164,9 @@ Jupiter1 automatically ingests all sub-accounts from the Organization the next t
 ## How can I omit certain sub-accounts when auto-configuring my AWS Organization?
 
 To omit specific sub-accounts when auto-configuring J1 AWS integrations from an Organizations master account, add the optional `j1-integration: SKIP` tag to the sub-account in your infrastructure-as-code or from the AWS Organizations web console.
+
+## Why do some of my `aws_account` entities only show `accountId` and `displayName` properties?
+
+These properties are very likely discovered `aws_account` entities that JupiterOne has identified as having relationships to your owned resources. You can confirm this by checking [the metadata](../../jupiterOne-data-model/metadata.md). The `_source` property should be `system-mapper` for these entities instead of `integration-managed`. Because it is not an integrated `aws_account`, there are limited properties on the entity, but JupiterOne has identified that this foreign `aws_account` has access to resources you do own (typically via trust relationships in your environment).
+
+For example, if an AWS account ID is referenced in an IAM policy or S3 bucket policy and that account ID does not match an account integrated with JupiterOne, a mapped entity is created to represent that AWS account with limited metadata. 

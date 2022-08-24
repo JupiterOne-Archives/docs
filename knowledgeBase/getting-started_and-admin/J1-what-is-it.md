@@ -28,13 +28,11 @@ From the Search page, you can enter questions in the search bar. By default, J1 
 
 The first step in using J1 is to bring your data into J1. There are numerous ready-made integrations that are easy to install and use to achieve end-to-end cyber asset visibility, context, and automation across every dimension of your digital universe. J1 provides [instructions](../getting-started_and-admin/configure-integrations.md) on how to import the data to J1 and understand the data model and mapping.
 
-## J1 Apps
+## J1 Navigation Bar
 
-JupiterOne has separate apps that assist you in all the major components of security management. Click ![](../assets/icons/apps.png) to view the apps.
+All of the J1 products that assist you in all the major components of security management are available from the top navigation bar.
 
-
-
-![](../assets/jl-apps.png)
+![](../assets/top-nav-bar.png)
 
 ### Assets
 

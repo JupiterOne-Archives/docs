@@ -358,7 +358,7 @@ The query language supports [parameters](../jupiterOne-data-model/parameters.md)
 ```j1ql
 FIND Application WITH loginUrl = ${ param.loginUrl }
 ```
-Currently, there is no support for referencing parameters that contain arrays, even though the rules and alerts do allow this functionality. Future iterations of the J1QL may contain array-traversing operators that immediately work with parameters.
+There is support for referencing [parameters](../jupiterOne-data-model/parameters.md) that contain arrays.
 
 ## Date Comparisons
 
