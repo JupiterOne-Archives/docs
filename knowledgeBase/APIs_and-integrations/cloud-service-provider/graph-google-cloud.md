@@ -117,7 +117,8 @@ to enable all services that the JupiterOne integration supports:
       iam.googleapis.com \
       container.googleapis.com \
       serviceusage.googleapis.com \
-      monitoring.googleapis.com
+      monitoring.googleapis.com \
+      secretmanager.googleapis.com
 
 #### Creating Google Cloud project service account
 
@@ -131,10 +132,10 @@ Google Cloud:
 *   [`Security Reviewer`](https://cloud.google.com/iam/docs/understanding-roles#iam.securityReviewer)
 *   [`Organization Role Viewer`](https://cloud.google.com/iam/docs/understanding-roles#iam.organizationRoleViewer)
 *   [`BigQuery Metadata Viewer`](https://cloud.google.com/bigquery/docs/access-control#bigquery.metadataViewer)
-*   [`Secret Manager Secret Accessor`]([https://cloud.google.com/secret-manager/docs/creating-and-accessing-secrets#access)
+*   [`Secret Manager Secret Accessor`](https://cloud.google.com/secret-manager/docs/creating-and-accessing-secrets#access)
 
 Some additional data may be optionally ingested by the JupiterOne Google Cloud
-integration by configuring a custom role with the following permissions: 
+integration by configuring a custom role with the following permissions:
 
     appengine.applications.get
     binaryauthorization.policy.get
@@ -248,7 +249,7 @@ on the JupiterOne Google Cloud integration list page.
 *   Enter a **Description** that will further assist your team when identifying
     the integration instance.
 *   Select a **Polling Interval** that you feel is sufficient for your monitoring
-    needs. You can leave this as `DISABLED` and manually execute the integration.
+    needs. You may leave this as `DISABLED` and manually execute the integration.
 *   Enter the **Servce Account Key File** contents of the Google Cloud service
     account.
 
