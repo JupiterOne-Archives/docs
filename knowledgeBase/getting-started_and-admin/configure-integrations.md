@@ -26,7 +26,8 @@ Additional options are also available for each integration. Common options inclu
 
 * `Tag with Account` - if you want to tag the data from this integration with the `Account Name` of this configuration.
 
-* `Tag as Production` - adds a tag indicating this is production data.
+* `Tag as Production` - enable this option to add a tag indicating this is production data. Integration production tags have priority over CSP tags entitled "Production".
+
 
 Depending on the integration, there may be other choices in the additional options section.
 
