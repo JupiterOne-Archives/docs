@@ -31,11 +31,11 @@ Additional options are also available for each integration. Common options inclu
 
 Depending on the integration, there may be other choices in the additional options section.
 
-This video shows an example of how to configure an AWS integration.
+This video shows an example of how to configure an AWS integration.  
 
 
 
-![configure-video](../assets/integrations-configuring.gif)
+![configure-video](../assets/integrations-configuring.gif) 
 
 
 For details on other integrations, see the respective documentation under **Managed Integrations**.
