@@ -26,15 +26,16 @@ Additional options are also available for each integration. Common options inclu
 
 * `Tag with Account` - if you want to tag the data from this integration with the `Account Name` of this configuration.
 
-* `Tag as Production` - adds a tag indicating this is production data.
+* `Tag as Production` - enable this option to add a tag indicating this is production data. Integration production tags have priority over CSP tags titled "Production".
+
 
 Depending on the integration, there may be other choices in the additional options section.
 
-This video shows an example of how to configure an AWS integration.
+This video shows an example of how to configure an AWS integration.  
 
 
 
-![configure-video](../assets/integrations-configuring.gif)
+![configure-video](../assets/integrations-configuring.gif) 
 
 
 For details on other integrations, see the respective documentation under **Managed Integrations**.
