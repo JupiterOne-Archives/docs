@@ -44,12 +44,12 @@ If you see the ![](../assets/compliance-scoped.png)symbol next to a framework, i
 
 If there are compliance gaps in the results of any of the queries in linked questions, these gaps also have color-coded statuses.
 
-| Symbol                                   | Meaning                                  |
-| ---------------------------------------- | ---------------------------------------- |
-| ![](../assets/../assets/compliance-attention-white-small.png) | You may potentially have items to remediate. |
-| ![](../assets/icons/compliance-gap-grey.png) | You must remove these gaps in your compliance. |
+| Symbol                                           | Meaning                                              |
+| ------------------------------------------------ | ---------------------------------------------------- |
+| ![](../assets/icons/compliance-attention.png)    | You may potentially have items to remediate.         |
+| ![](../assets/icons/compliance-gap-grey.png)     | You must remove these gaps in your compliance.       |
 | ![](../assets/compliance-tested-white-small.png) | All controls are in place and being monitored by J1. |
-| ![](../assets/icons/compliance-unknown-grey.png) | Manual review of a compliance issue is necessary. |
+| ![](../assets/icons/compliance-unknown-grey.png) | Manual review of a compliance issue is necessary.    |
 
 
 You can also use J1QL to query each framework requirement or control, which return similar statuses:
@@ -74,7 +74,7 @@ You can also use J1QL to query each framework requirement or control, which retu
 
 The status is determined by the presence and output of the named queries in the mapped questions, as shown in this matrix:
 
-![](../assets/compliance-query-gap-analysis-status-2.png)
+![](../assets/compliance-query-gap-analysis-status-2.png) 
 
 **Note**: A single query in a question without the `resultsAre` property set is implicitly interpreted as a `GOOD` query.
 
