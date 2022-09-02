@@ -1,4 +1,4 @@
-# Google Cloud Integration with JupiterOne
+# Google Cloud
 
 ## Google Cloud + JupiterOne Integration Benefits
 
@@ -33,16 +33,12 @@ If you need help with this integration, please contact
 
 ## Integration Walkthrough
 
-Customers authorize access by creating a
-[Google Cloud service account](https://cloud.google.com/iam/docs/creating-managing-service-accounts)
-and providing the service account key to JupiterOne.
+Customers authorize access by creating a [Google Cloud service account](https://cloud.google.com/iam/docs/creating-managing-service-accounts) and providing the 
+service account key to JupiterOne.
 
 ### In Google Cloud
 
-A
-[Google Cloud service account](https://cloud.google.com/iam/docs/creating-managing-service-accounts)
-and a
-[Google Cloud service account key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
+A [Google Cloud service account](https://cloud.google.com/iam/docs/creating-managing-service-accounts) and a [Google Cloud service account key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
 must be created in order to run the integration. The service account key is used
 to authenticate on behalf of the integration's Google Cloud project and ingest
 data into JupiterOne.
@@ -89,13 +85,11 @@ Google Cloud service APIs can be enabled using one of the following methods:
 
 #### Enabling Google Cloud Service API from `gcloud` CLI
 
-Instructions on how to setup the
-[`gcloud` CLI](https://cloud.google.com/sdk/gcloud) can be found in the
+Instructions on how to set up the[`gcloud` CLI](https://cloud.google.com/sdk/gcloud) can be found in the
 [JupiterOne Google Cloud integration developer documentation](https://github.com/JupiterOne/graph-google-cloud/blob/master/docs/development.md).
 
-After setting up the [`gcloud` CLI](https://cloud.google.com/sdk/gcloud), you
-can run the following command to enable all services that the JupiterOne
-integration supports:
+After setting up the [`gcloud` CLI](https://cloud.google.com/sdk/gcloud), you can run the following command 
+to enable all services that the JupiterOne integration supports:
 
 **NOTE** You can only enable 20 services at a time
 
@@ -123,22 +117,22 @@ integration supports:
       iam.googleapis.com \
       container.googleapis.com \
       serviceusage.googleapis.com \
-      monitoring.googleapis.com
+      monitoring.googleapis.com \
+      secretmanager.googleapis.com
 
 #### Creating Google Cloud project service account
 
-*   See the
-    [Google Cloud service account documentation](https://cloud.google.com/iam/docs/creating-managing-service-accounts#creating)
-    for more information on how to create a service account in the project that
-    you would like to ingest data from.
+*   See the [Google Cloud service account documentation](https://cloud.google.com/iam/docs/creating-managing-service-accounts#creating) for more information on how to create a 
+    service account in the project that you would like to ingest data from.
 
 We must assign the correct permissions to the newly created service account for
 the integration to be run. We recommend using the following roles managed by
-Google Cloud:
+Google Cloud: 
 
-*   [`roles/iam.securityReviewer`](https://cloud.google.com/iam/docs/understanding-roles#iam.securityReviewer)
-*   [`roles/iam.organizationRoleViewer`](https://cloud.google.com/iam/docs/understanding-roles#iam.organizationRoleViewer)
-*   [`roles/bigquery.metadataViewer`](https://cloud.google.com/bigquery/docs/access-control#bigquery.metadataViewer)
+*   [`Security Reviewer`](https://cloud.google.com/iam/docs/understanding-roles#iam.securityReviewer)
+*   [`Organization Role Viewer`](https://cloud.google.com/iam/docs/understanding-roles#iam.organizationRoleViewer)
+*   [`BigQuery Metadata Viewer`](https://cloud.google.com/bigquery/docs/access-control#bigquery.metadataViewer)
+*   [`Secret Manager Secret Accessor`](https://cloud.google.com/secret-manager/docs/creating-and-accessing-secrets#access)
 
 Some additional data may be optionally ingested by the JupiterOne Google Cloud
 integration by configuring a custom role with the following permissions:
@@ -156,9 +150,7 @@ BigQuery datasets, models, and tables respectively:
     bigquery.models.getMetadata
     bigquery.tables.get
 
-See the
-[Google Cloud custom role documentation](https://cloud.google.com/iam/docs/creating-custom-roles#creating_a_custom_role)
-for additional information on how custom roles can be configured and assigned.
+See the [Google Cloud custom role documentation](https://cloud.google.com/iam/docs/creating-custom-roles#creating_a_custom_role) for additional information on how custom roles can be configured and assigned.
 
 NOTE: You may also create a service account using the
 [`gcloud` CLI](https://cloud.google.com/sdk/gcloud). There is documentation on
@@ -167,8 +159,7 @@ how to leverage the CLI in the
 
 #### Generate a service account key
 
-*   See the
-    [Google Cloud service account key documentation](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys)
+*   See the [Google Cloud service account key documentation](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys) 
     for more information on how to create a service account key for the service
     account that you would like to ingest data using.
 
@@ -248,7 +239,7 @@ on the JupiterOne Google Cloud integration list page.
 
 ### In JupiterOne
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
+1.  From the top navigation of the J1 Search homepage, select **Integrations**.
 2.  Scroll to the **Google Cloud** integration tile and click it.
 3.  Click the **Add Configuration** button and configure the following settings:
 
@@ -266,7 +257,7 @@ on the JupiterOne Google Cloud integration list page.
 
 ## How to Uninstall
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
+1.  From the top navigation of the J1 Search homepage, select **Integrations**.
 2.  Scroll to the **Google Cloud** integration tile and click it.
 3.  Identify and click the **integration to delete**.
 4.  Click the **trash can** icon.
@@ -511,5 +502,5 @@ END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 -->
 
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
- 
+
 <!--  jupiterOneDocVersion=2-15-2-beta-4 -->
