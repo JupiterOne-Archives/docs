@@ -43,6 +43,24 @@ To generate a new API key or manage existing API keys:
 To revoke an API key, in the User API Keys page, go to the key you want to revoke and click the trash
 icon ![trash](../assets/icons/trash.png).
 
+## API Key Permissions Policy
+
+You must set a permission policy in JSON for account-level API keys, similar to an IAM policy in AWS. The following is an example of a full administrator policy:
+
+```
+{
+  "permissions": [
+    {
+      "effect": "ALLOW",
+      "actions": ["*"],
+      "resources": ["*"]
+    }
+  ]
+}
+```
+
+
+
 ## Create Integration API Keys
 
 You must have administrator permissions to be able to create keys and the selected integration must have at least one
