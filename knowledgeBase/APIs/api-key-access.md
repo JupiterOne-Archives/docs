@@ -44,7 +44,7 @@ To revoke an API key, in the User API Keys page, go to the key you want to revok
 
 ## API Key Permissions Policy
 
-You must set a permission policy in JSON for account-level API keys, similar to an IAM policy in AWS. The following is an example of a full administrator policy:
+You must set a permission policy in JSON for account-level API keys, similar to an IAM policy in AWS. The following is an example of a full control policy:
 
 ```
 {
