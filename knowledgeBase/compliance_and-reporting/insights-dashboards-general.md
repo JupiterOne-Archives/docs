@@ -1,5 +1,11 @@
 # General Insights Dashboard Functionality 
 
+- Click a pie or bar chart to open a detailed table of the selected data point:
+  
+  ![](../assets/drilldown-insights.gif)
+  
+   
+  
 - Rename, clone, or delete boards:
   ​
 
