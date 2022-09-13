@@ -28,6 +28,22 @@ Or ask a question like:
 - What is connected to the Internet?
 - Who has access to ...?
 
+## Edit Questions
+
+You can edit any of the questions in the J1 Questions Library to customize the question to your specific requirements. Click the pencil icon.
+
+![](../assets/questions-edit.png) 
+
+Edit any of the fields, add tags, or modify the query. In addition, you can edit the compliance mappings. When you map a framework and compliance requirement to a question, the next time that framework is imported, the question is added to the requirement
+
+By default, J1 adds [compliance frameworks](../compliance_and-reporting/compliance-import.md) to which your question is mapped. 
+
+![](../assets/questions-edit-compliance.png) 
+
+
+
+For each of the mapped frameworks, you can add compliance requirement and control mappings. Click the **Propagate changes to existing compliance frameworks** checkbox if you want to apply your edits to existing frameworks. 
+
 ## Full-Text Search
 
 Put your keywords in quotations (for example, "keyword") to start a full text search. Or simply enter your keywords and click **Enter**. For example:
