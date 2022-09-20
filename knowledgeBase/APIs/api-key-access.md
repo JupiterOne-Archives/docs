@@ -174,7 +174,7 @@ Supported resources include:
 "*" // All resources
 ```
 
-The action `query:ReadGraphData` may be constrained by a condition. For the policy to allow access to a graph object, that graph object must have the properties specified in the condition and those properties must have the values specified in the condition.  These J1QL Query Policies must include `effect: "ALLOW"`; `actions: ["ReadGraphData"]` (or `actions: ["*"]`); and `resources: ["*"]`.  In addition, their `conditions` block must contain an object of the `stringEquals` comparison.  For example, this policy only allows its user to query for graph objects that have the property `_type` equal to `github_repo`:
+The action `query:ReadGraphData` may be constrained by a condition. For the policy to allow access to a graph object, that graph object must have the properties specified in the condition and those properties must have the values specified in the condition. These J1QL Query Policies must include `effect: "ALLOW"`; `actions: ["ReadGraphData"]` (or `actions: ["*"]`); and `resources: ["*"]`. In addition, their `conditions` block must contain an object of the `stringEquals` comparison.  For example, this policy only allows its user to query for graph objects that have the property `_type` equal to `github_repo`:
 
 ```
 {
