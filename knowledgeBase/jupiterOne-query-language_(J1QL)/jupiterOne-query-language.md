@@ -358,7 +358,7 @@ The query language supports [parameters](../jupiterOne-data-model/parameters.md)
 ```j1ql
 FIND Application WITH loginUrl = ${ param.loginUrl }
 ```
-Currently, there is no support for referencing parameters that contain arrays, even though the rules and alerts do allow this functionality. Future iterations of the J1QL may contain array-traversing operators that immediately work with parameters.
+There is support for referencing [parameters](../jupiterOne-data-model/parameters.md) that contain arrays.
 
 ## Date Comparisons
 
@@ -829,6 +829,37 @@ return acct._type, acct.displayName, count(user)
 #### Aggregations Examples
 
 ##### The Simple Case
+
+`count` always returns the number of distinct entities or atrributes requested.
+
+With this data:
+| id | class | name | lead |
+|----|-------|------|------|
+| 1 | bitbucket_team | team1 | alice |
+| 2 | bitbucket_team | team2 | bob |
+| 3 | bitbucket_team | team3 | alice |
+
+and this query:
+
+```j1ql
+find
+  bitbucket_team as team
+return
+  count(team.lead)
+```
+
+the result will be:
+
+```json
+{
+  "type": "table",
+  "data": [
+    { "count(team.lead)": 2 },
+  ]
+}
+```
+
+##### Single grouping key
 
 For example, with the following query,
 

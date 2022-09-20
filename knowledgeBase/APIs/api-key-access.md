@@ -8,18 +8,20 @@ You must have the Administrator permission to enable API key access.
 
 To enable API key access for a group of users:
 
-1. Go to **Settings ![gear](../../assets/icons/gear.png) > Users & Access** ![users](../../assets/icons/users.png).
+1. Go to **Settings ![](../assets/icons/gear.png) > Users & Access** ![users](../assets/icons/users.png).
 2. Select the group for whom you want to enable API access.
 3. Select **Enable API key access for users in this group**.
    ​
 
-![](../../assets/api-key-access-group-enable.png)
+![](../assets/api-key-access-group-enable.png)
+
 
 
 An API key icon appears in the My Profile view for each user in the group that has API key access. 
 
 
-![my-profile](../../assets/my-profile-key.png) 
+
+![my-profile](../assets/my-profile-key.png) 
 
 
 
@@ -30,16 +32,33 @@ You can manage user-level keys in the Account Management page. You must have adm
 To generate a new API key or manage existing API keys:
 
 1. Log in to the account you want to manage.
-2. Go to **Settings** ![gear](../../assets/icons/gear.png) **>** **Account Management**.
+2. Go to **Settings** ![](../assets/icons/gear.png) **>** **Account Management**.
 3. In the left panel, click the key icon.
    ​
-   ![api_key_acct-mgmt](../../assets/api_key_acct-mgmt.png) 
+   ![api_key_acct-mgmt](../assets/api_key_acct-mgmt.png) 
    ​
-4. In the User API Keys page, click **Add** ![api-keys-plus](../../assets/icons/api-keys-plus.png).
+4. In the User API Keys page, click **Add** ![](../assets/icons/api-keys-plus.png).
 5. In the API Keys modal, enter the name of the key and the number of days before it expires, and click **Create**.
 
-To revoke an API key, in the User API Keys page, go to the key you want to revoke and click the trash
-icon ![trash](../../assets/icons/trash.png).
+To revoke an API key, in the User API Keys page, go to the key you want to revoke and click the trash icon ![trash](../assets/icons/trash.png).
+
+## API Key Permissions Policy
+
+You must set a permission policy in JSON for account-level API keys, similar to an IAM policy in AWS. The following is an example of a full control policy:
+
+```
+{
+  "permissions": [
+    {
+      "effect": "ALLOW",
+      "actions": ["*"],
+      "resources": ["*"]
+    }
+  ]
+}
+```
+
+
 
 ## Create Integration API Keys
 
@@ -48,7 +67,7 @@ configuration.
 
 To create API keys that you can use with your J1 integration:
 
-1. Go to **Settings ![gear](../../assets/icons/gear.png) > Integrations**.
+1. Go to **Settings ![gear](../assets/icons/gear.png) > Integrations**.
 2. Select the integration for which you want to create an API key.
 3. Select the configuration you want to edit.
 4. Scroll down to Integration API Keys and click **Create**.
@@ -57,7 +76,7 @@ To create API keys that you can use with your J1 integration:
 The key is now available for you to use to synchronize data in this integrations.
 
 
-![api-integration-create-key](../../assets/api-integration-create-key.png)
+![](../assets/api-integration-create-key.png) 
 
 
 To delete the API key at any time, click **Revoke**.
@@ -155,7 +174,7 @@ Supported resources include:
 "*" // All resources
 ```
 
-The action `query:ReadGraphData` cannot be applied to resources other than the wildcard resource (`*`). However, it may be constrained by a condition. For the policy to allow access to a graph object, that graph object must have the properties specified in the condition and those properties must have the values specified in the condition. For example, this policy only allows its user to query for graph objects that have the property `_type` equal to `github_repo`:
+The action `query:ReadGraphData` may be constrained by a condition. For the policy to allow access to a graph object, that graph object must have the properties specified in the condition and those properties must have the values specified in the condition. These J1QL Query Policies must include `effect: "ALLOW"`; `actions: ["ReadGraphData"]` (or `actions: ["*"]`); and `resources: ["*"]`. In addition, their `conditions` block must contain an object of the `stringEquals` comparison.  For example, this policy only allows its user to query for graph objects that have the property `_type` equal to `github_repo`:
 
 ```
 {
@@ -173,8 +192,6 @@ The action `query:ReadGraphData` cannot be applied to resources other than the w
   ]
 }
 ```
-
-Currently, only the `/j1ql` REST route supports the `query:ReadGraphData` permission. The GraphQL API (`queryV1`) does not.
 
 ### Revoke Account-Level API Keys
 
