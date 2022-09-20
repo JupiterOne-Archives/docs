@@ -254,6 +254,24 @@ FIND User THAT CONTRIBUTES CodeRepo
 
 **REMINDER**  J1QL keywords are not case-sensitive.
 
+## Mathematical Expressions
+
+J1QL supports some mathematical expressions as functions. 
+
+| Function  | Description                                                  | Example Query                                                |
+| --------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| exponents | A quantity representing the power to which a given number or expression is to be raised, usually expressed as a raised symbol beside the number or expression (e.g. 3 in 23 = 2 × 2 × 2). | `FIND Risk as r RETURN r.probability ^ 2`                    |
+| abs       | Absolute value, the magnitude of a real number without regard to its sign. | `FIND Risk as r RETURN ABS(r.impact - 5) / r.probability`    |
+| sqrt      | Square root, a number which produces a specified quantity when multiplied by itself. | `FIND *  as any THAT HAS Risk as r RETURN any.displayName, any._class, sqrt((5 - r.impact)^2 + (5 - r.probability)^2)) as score ORDER BY score ASC` |
+| ceil      | Round up to the next closest whole number.                   | `FIND Risk as r RETURN CEIL(ABS(r.impact - 5) / r.probability)` |
+| floor     | Round down to next closes whole number.                      | `FIND Risk as r RETURN FLOOR(ABS(r.impact - 5) / r.probability)` |
+| round     | Round up or down to the next closes whole number.            | `FIND Risk as r RETURN ROUND(ABS(r.impact - 5) / r.probability)` |
+| coalesce  | Use the first found value. Provide a list of values and the first value to not be undefined/null will be used. | `FIND (aws_s3_bucket|aws_dynamodb_table) as store RETURN store._type, store.displayName, coalesce(store.backupSizeBytes, store.bucketSizeBytes, 0)/1000 as bytes` |
+| concat    | Allows math expressions.                                     | `FIND (aws_s3_bucket |aws_dynamodb_table) as store RETURN store._type, store.displayName, concat(coalesce(store.backupSizeBytes, store.bucketSizeBytes, 0)/1000, 'mb') as size` |
+
+
+
+
 ## Filtering Behavior
 
 JupiterOne aligns its query language with De Morgan's Law. This standard mathematical theory is two sets of rules or laws developed from Boolean expressions for AND, OR, and NOT gates, using two input variables, A and B. These two rules or theorems allow the input variables to be negated and converted from one form of a Boolean function into an opposite form. J1QL uses this law in filtering the results of queries.
