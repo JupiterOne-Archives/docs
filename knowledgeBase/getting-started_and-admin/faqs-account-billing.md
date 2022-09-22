@@ -149,22 +149,23 @@ return
 
 JupiterOne Community Edition is FREE for non-commercial use, non-profit companies, or small teams. It comes with the following features and limitations:
 
-- Configure up to *five* integration instances
+- Configure up to *10* integration instances
 - Integrations are limited to WEEKLY scheduled polling or on-demand runs
 - Up to 1,000 entities
-- Up to 10 users
-- Full featured access to Asset Inventory / CMDB, search, query and 
+- One user
+- Full, featured access to J1 Assets Inventory / CMDB, search, query and 
   graph visualization from query results
-- Access to Policies app and full templates library
-- Alerts and notifications (email, Jira, Slack)
-- Reporting charts and dashboards
-- Compliance management, evidence collection with continuous assessment
-- Full policy management (build/edit/export policies and procedures) and compliance mapping
+- Access to J1 Policies and full templates library
+- API access
+- One J1 Insights dashboard
 
 A paid subscription is required for the following capabilities:
 
 - Daily and hourly data polling and analysis
-- Full API access
+- Alerts and notifications (email, Jira, Slack)
+- Reporting charts and dashboards
+- Compliance management, evidence collection with continuous assessment
+- Full policy management (build/edit/export policies and procedures) and compliance mapping
 - SAML Single Sign-On
 
 **Note:**
