@@ -156,14 +156,14 @@ JupiterOne Community Edition is FREE for non-commercial use, non-profit companie
 - Full featured access to Asset Inventory / CMDB, search, query and 
   graph visualization from query results
 - Access to Policies app and full templates library
-
-A paid subscription is required for the following capabilities:
-
-- Daily and hourly data polling and analysis
 - Alerts and notifications (email, Jira, Slack)
 - Reporting charts and dashboards
 - Compliance management, evidence collection with continuous assessment
 - Full policy management (build/edit/export policies and procedures) and compliance mapping
+
+A paid subscription is required for the following capabilities:
+
+- Daily and hourly data polling and analysis
 - Full API access
 - SAML Single Sign-On
 
