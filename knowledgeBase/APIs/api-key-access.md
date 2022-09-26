@@ -58,6 +58,67 @@ You must set a permission policy in JSON for account-level API keys, similar to 
 }
 ```
 
+J1 supports the creation of * policies that permit all actions or resources:
+
+```
+{
+  "permissions": [ 
+    {
+      "effect": "ALLOW", 
+      "actions": [
+        "*"
+       ],
+      "resources": [
+         "*"
+      ]
+    } 
+  ] 
+} 
+```
+
+```
+{
+  "permissions": [ 
+    {
+      "effect": "ALLOW", 
+      "actions": [
+        "query:ReadGraphData"
+       ],
+      "resources": [
+         "*"
+      ]
+    } 
+  ] 
+} 
+```
+
+```
+{
+  "permissions": [ 
+    {
+      "effect": "ALLOW", 
+      "actions": [
+        "*"
+       ],
+      "resources": [
+         "*"
+      ]
+    },
+    {
+      "effect": "DENY", /// Deny only ReadGraphData
+      "actions": [
+        "query:ReadGraphData"
+      ],
+      "resources": [
+        "*"
+      ]
+    }
+  ] 
+} 
+```
+
+
+
 
 
 ## Create Integration API Keys
