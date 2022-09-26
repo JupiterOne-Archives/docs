@@ -2,29 +2,29 @@
 
 ## Google Cloud + JupiterOne Integration Benefits
 
-*   Visualize Google Cloud resources in the JupiterOne graph.
-*   Map Google users to employees in your JupiterOne account.
-*   Monitor visibility and governance of your Google Cloud environment by
-    leveraging hundreds of out of the box queries.
-*   Monitor compliance against the Google Cloud CIS Framework and other security
-    benchmarks using the JupiterOne compliance app.
-*   Monitor changes to your Google Cloud resources using multiple JupiterOne alert
-    rule packs specific to Google Cloud.
+- Visualize Google Cloud resources in the JupiterOne graph.
+- Map Google users to employees in your JupiterOne account.
+- Monitor visibility and governance of your Google Cloud environment by
+  leveraging hundreds of out of the box queries.
+- Monitor compliance against the Google Cloud CIS Framework and other security
+  benchmarks using the JupiterOne compliance app.
+- Monitor changes to your Google Cloud resources using multiple JupiterOne alert
+  rule packs specific to Google Cloud.
 
 ## How it Works
 
-*   JupiterOne periodically fetches users and cloud resources from Google Cloud to
-    update the graph.
-*   Write JupiterOne queries to review and monitor updates to the graph, or
-    leverage existing queries.
-*   Configure alerts to take action when the JupiterOne graph changes, or leverage
-    existing alerts.
+- JupiterOne periodically fetches users and cloud resources from Google Cloud to
+  update the graph.
+- Write JupiterOne queries to review and monitor updates to the graph, or
+  leverage existing queries.
+- Configure alerts to take action when the JupiterOne graph changes, or leverage
+  existing alerts.
 
 ## Requirements
 
-*   JupiterOne requires the contents of a Google Cloud service account key file
-    with the correct API services enabled (see the **Integration Walkthrough**).
-*   You must have permission in JupiterOne to install new integrations.
+- JupiterOne requires the contents of a Google Cloud service account key file
+  with the correct API services enabled (see the **Integration Walkthrough**).
+- You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
@@ -33,12 +33,16 @@ If you need help with this integration, please contact
 
 ## Integration Walkthrough
 
-Customers authorize access by creating a [Google Cloud service account](https://cloud.google.com/iam/docs/creating-managing-service-accounts) and providing the 
-service account key to JupiterOne.
+Customers authorize access by creating a
+[Google Cloud service account](https://cloud.google.com/iam/docs/creating-managing-service-accounts)
+and providing the service account key to JupiterOne.
 
 ### In Google Cloud
 
-A [Google Cloud service account](https://cloud.google.com/iam/docs/creating-managing-service-accounts) and a [Google Cloud service account key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
+A
+[Google Cloud service account](https://cloud.google.com/iam/docs/creating-managing-service-accounts)
+and a
+[Google Cloud service account key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
 must be created in order to run the integration. The service account key is used
 to authenticate on behalf of the integration's Google Cloud project and ingest
 data into JupiterOne.
@@ -74,24 +78,29 @@ all of the supported data into JupiterOne:
 | [Kubernetes Engine](https://console.developers.google.com/apis/library/container.googleapis.com)                 | container.googleapis.com            |
 | [Service Usage](https://console.developers.google.com/apis/library/serviceusage.googleapis.com)                  | serviceusage.googleapis.com         |
 | [Stackdriver Monitoring](https://console.developers.google.com/apis/library/monitoring.googleapis.com)           | monitoring.googleapis.com           |
+| [Secret Manager](https://console.cloud.google.com/apis/library/secretmanager.googleapis.com)                     | secretmanager.googleapis.com        |
+| [Cloud Source Repositories](https://console.cloud.google.com/apis/library/sourcerepo.googleapis.com)             | sourcerepo.googleapis.com           |
 
 Google Cloud service APIs can be enabled using one of the following methods:
 
 #### Enabling Google Cloud Service API from Google Cloud Console
 
-1.  Click on the service name link that you'd like to enable from the table above
+1.  Click on the service name link that you'd like to enable from the table
+    above
 2.  Select your Google Cloud project from the project dropdown menu
 3.  Click the "Enable" button
 
 #### Enabling Google Cloud Service API from `gcloud` CLI
 
-Instructions on how to set up the[`gcloud` CLI](https://cloud.google.com/sdk/gcloud) can be found in the
+Instructions on how to set up
+the[`gcloud` CLI](https://cloud.google.com/sdk/gcloud) can be found in the
 [JupiterOne Google Cloud integration developer documentation](https://github.com/JupiterOne/graph-google-cloud/blob/master/docs/development.md).
 
-After setting up the [`gcloud` CLI](https://cloud.google.com/sdk/gcloud), you can run the following command 
-to enable all services that the JupiterOne integration supports:
+After setting up the [`gcloud` CLI](https://cloud.google.com/sdk/gcloud), you
+can run the following command to enable all services that the JupiterOne
+integration supports:
 
-**NOTE** You can only enable 20 services at a time
+**NOTE**: You can only enable 20 services at a time.
 
     gcloud services enable \
       accesscontextmanager.googleapis.com \
@@ -118,21 +127,24 @@ to enable all services that the JupiterOne integration supports:
       container.googleapis.com \
       serviceusage.googleapis.com \
       monitoring.googleapis.com \
-      secretmanager.googleapis.com
+      secretmanager.googleapis.com \
+      sourcerepo.googleapis.com
 
 #### Creating Google Cloud project service account
 
-*   See the [Google Cloud service account documentation](https://cloud.google.com/iam/docs/creating-managing-service-accounts#creating) for more information on how to create a 
-    service account in the project that you would like to ingest data from.
+- See the
+  [Google Cloud service account documentation](https://cloud.google.com/iam/docs/creating-managing-service-accounts#creating)
+  for more information on how to create a service account in the project that
+  you would like to ingest data from.
 
 We must assign the correct permissions to the newly created service account for
 the integration to be run. We recommend using the following roles managed by
-Google Cloud: 
+Google Cloud:
 
-*   [`Security Reviewer`](https://cloud.google.com/iam/docs/understanding-roles#iam.securityReviewer)
-*   [`Organization Role Viewer`](https://cloud.google.com/iam/docs/understanding-roles#iam.organizationRoleViewer)
-*   [`BigQuery Metadata Viewer`](https://cloud.google.com/bigquery/docs/access-control#bigquery.metadataViewer)
-*   [`Secret Manager Secret Accessor`](https://cloud.google.com/secret-manager/docs/creating-and-accessing-secrets#access)
+- [`Security Reviewer`](https://cloud.google.com/iam/docs/understanding-roles#iam.securityReviewer)
+- [`Organization Role Viewer`](https://cloud.google.com/iam/docs/understanding-roles#iam.organizationRoleViewer)
+- [`BigQuery Metadata Viewer`](https://cloud.google.com/bigquery/docs/access-control#bigquery.metadataViewer)
+- [`Secret Manager Secret Accessor`](https://cloud.google.com/secret-manager/docs/creating-and-accessing-secrets#access)
 
 Some additional data may be optionally ingested by the JupiterOne Google Cloud
 integration by configuring a custom role with the following permissions:
@@ -143,25 +155,27 @@ integration by configuring a custom role with the following permissions:
     compute.projects.get
     orgpolicy.policy.get
 
-For BigQuery, the following *additional* permissions are needed to ingest
+For BigQuery, the following _additional_ permissions are needed to ingest
 BigQuery datasets, models, and tables respectively:
 
     bigquery.datasets.get
     bigquery.models.getMetadata
     bigquery.tables.get
 
-See the [Google Cloud custom role documentation](https://cloud.google.com/iam/docs/creating-custom-roles#creating_a_custom_role) for additional information on how custom roles can be configured and assigned.
+See the
+[Google Cloud custom role documentation](https://cloud.google.com/iam/docs/creating-custom-roles#creating_a_custom_role)
+for additional information on how custom roles can be configured and assigned.
 
-NOTE: You may also create a service account using the
-[`gcloud` CLI](https://cloud.google.com/sdk/gcloud). There is documentation on
+NOTE: You may also create a service account using the [`gcloud` CLI](https://cloud.google.com/sdk/gcloud). There is documentation on 
 how to leverage the CLI in the
 [JupiterOne Google Cloud integration developer documentation](https://github.com/JupiterOne/graph-google-cloud/blob/master/docs/development.md).
 
 #### Generate a service account key
 
-*   See the [Google Cloud service account key documentation](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys) 
-    for more information on how to create a service account key for the service
-    account that you would like to ingest data using.
+- See the
+  [Google Cloud service account key documentation](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys)
+  for more information on how to create a service account key for the service
+  account that you would like to ingest data using.
 
 NOTE: You may also create a service account key using the
 [`gcloud` CLI](https://cloud.google.com/sdk/gcloud). There is documentation on
@@ -179,13 +193,14 @@ integration instances for each of the projects.
 1.  Select one Google Cloud project to configure a service account for
     JupiterOne.
 2.  Create the service account without a role. Copy the email address of the new
-    service account (e.g. `my-sa@my-j1-project.iam.gserviceaccount.com`)
-3.  Generate and copy a new service account key
+    service account (e.g. `my-sa@my-j1-project.iam.gserviceaccount.com`).
+3.  Generate and copy a new service account key.
 4.  Enable all service APIs in the "main" project and each "child" project that
     you'd like JupiterOne to access. Documentation for enabling service APIs is
     described in an earlier section of this document.
-    *   **NOTE**: The "Cloud Asset" and "Identity and Access Management (IAM)" APIs
-        only need to be enabled in the "main" project.
+    
+    **NOTE**: The "Cloud Asset" and "Identity and Access Management (IAM)"
+    APIs only need to be enabled in the "main" project.
 5.  Switch to the organization that you'd like to create individual integration
     instances for each project
 6.  [Create a new custom role](https://cloud.google.com/iam/docs/creating-custom-roles)
@@ -211,9 +226,9 @@ included in the custom role above:
 
 1.  Navigate to the Cloud Resource Manager for that organization and
     [add a new member to the organization](https://cloud.google.com/resource-manager/docs/access-control-org#grant-access).
-    The new member email address is the email address of the service account that
-    was created earlier. Select the new organization role that was created above,
-    as well as the Google Cloud managed role "Security Reviewer"
+    The new member email address is the email address of the service account
+    that was created earlier. Select the new organization role that was created
+    above, as well as the Google Cloud managed role "Security Reviewer"
     (`roles/iam.securityReviewer`) or an alternative JupiterOne custom role that
     you've created.
 
@@ -224,13 +239,13 @@ Use the generated service account key as the value for the "Service Account Key
 File" field.
 
 **NOTE**: The "Polling Interval" that is selected for the "main" integration
-instances, will be the same polling interval that is used for each of the child
+instances will be the same polling interval that is used for each of the child
 integration instances.
 
-1.  Check the "Configure Organization Projects" checkbox
+1.  Select the "Configure Organization Projects" checkbox.
 2.  Place the numerical value of the Google Cloud organization into the
-    "Organization ID" text field (e.g. "1234567890")
-3.  Click the `CREATE CONFIGURATION` button
+    "Organization ID" text field (e.g. "1234567890").
+3.  Click `CREATE CONFIGURATION`.
 
 **NOTE**: Depending on how many projects exist under a Google Cloud
 organization, the auto-configuration process may take a few minutes to complete.
@@ -239,21 +254,32 @@ on the JupiterOne Google Cloud integration list page.
 
 ### In JupiterOne
 
-1.  From the top navigation of the J1 Search homepage, select **Integrations**.
-2.  Scroll to the **Google Cloud** integration tile and click it.
-3.  Click the **Add Configuration** button and configure the following settings:
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
+2. Scroll to the **Google Cloud** integration tile and click it.
+3. Click the **Add Configuration** button and configure the following settings:
 
-*   Enter the **Account Name** by which you'd like to identify this Google Cloud
-    account in JupiterOne. Ingested entities will have this value stored in
-    `tag.AccountName` when **Tag with Account Name** is checked.
-*   Enter a **Description** that will further assist your team when identifying
-    the integration instance.
-*   Select a **Polling Interval** that you feel is sufficient for your monitoring
-    needs. You may leave this as `DISABLED` and manually execute the integration.
-*   Enter the **Servce Account Key File** contents of the Google Cloud service
-    account.
+   - Enter the **Account Name** by which you'd like to identify this Google Cloud
+     account in JupiterOne. Ingested entities will have this value stored in
+     `tag.AccountName` when **Add AccountName Tag** is enabled.
 
-4.  Click **Create Configuration** once all values are provided.
+   - Enter a **Description** that will assist your team to identify
+     the integration instance.
+
+   - Select a **Polling Interval** that you feel is sufficient for your monitoring
+     needs. You can leave this as `DISABLED` and manually execute the integration.
+
+   - Enter the **Service Account Key File** contents of the Google Cloud service
+     account.
+
+   - Add any tags you want to use to simplify data management and queries.
+
+4. Optionally, enter a project ID to target for data ingestion. The default is the project ID specified in the service account key file. 
+
+5. Select **Configure Organization Projects** if you want J1 to auto-configure all projects in your organization. J1 applies the configuration to all other projects that do not have optional `j1-integration: SKIP` tag applied to the project in your infrastructure-as-code. Do not use the optional project ID if you want to use this feature. 
+
+6. Optionally, enter a numerical folder ID if you want to specify that J1 is to only ingest projects in a specific folder and any of its subfolders. If you have enabled **Configure Organization Projects**, J1 only auto-configures projects in this specified folder.
+
+4.  Click **Create** after you have provided all the configuration values.
 
 ## How to Uninstall
 
@@ -264,7 +290,6 @@ on the JupiterOne Google Cloud integration list page.
 5.  Click the **Remove** button to delete the integration.
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
-
 <!--
 ********************************************************************************
 NOTE: ALL OF THE FOLLOWING DOCUMENTATION IS GENERATED USING THE
@@ -310,10 +335,17 @@ The following entities are created:
 | Billing Budget                                           | `google_billing_budget`                                           | `Ruleset`                          |
 | Binary Authorization Policy                              | `google_binary_authorization_policy`                              | `AccessPolicy`                     |
 | Cloud API Service                                        | `google_cloud_api_service`                                        | `Service`                          |
+| Cloud Build                                              | `google_cloud_build`                                              | `Workflow`                         |
+| Cloud Build BitBucket Server Config                      | `google_cloud_bitbucket_server_config`                            | `Configuration`                    |
+| Cloud Build BitBucket Server Repo                        | `google_cloud_bitbucket_server_repo`                              | `CodeRepo`                         |
+| Cloud Build GitHub Enterprise Config                     | `google_cloud_github_enterprise_config`                           | `Configuration`                    |
+| Cloud Build Trigger                                      | `google_cloud_build_trigger`                                      | `Rule`                             |
+| Cloud Build Worker Pool                                  | `google_cloud_build_worker_pool`                                  | `Cluster`                          |
 | Cloud Function                                           | `google_cloud_function`                                           | `Function`                         |
 | Cloud Run Configuration                                  | `google_cloud_run_configuration`                                  | `Configuration`                    |
 | Cloud Run Route                                          | `google_cloud_run_route`                                          | `Configuration`                    |
 | Cloud Run Service                                        | `google_cloud_run_service`                                        | `Service`                          |
+| Cloud Source Repository                                  | `google_cloud_source_repository`                                  | `CodeRepo`                         |
 | Cloud Storage Bucket                                     | `google_storage_bucket`                                           | `DataStore`                        |
 | Compute Address                                          | `google_compute_address`                                          | `IpAddress`                        |
 | Compute Backend Bucket                                   | `google_compute_backend_bucket`                                   | `Gateway`                          |
@@ -364,6 +396,8 @@ The following entities are created:
 | SQL Admin MySQL Instance                                 | `google_sql_mysql_instance`                                       | `Database`                         |
 | SQL Admin Postgres Instance                              | `google_sql_postgres_instance`                                    | `Database`                         |
 | SQL Admin SQL Server Instance                            | `google_sql_sql_server_instance`                                  | `Database`                         |
+| Secret                                                   | `google_secret_manager_secret`                                    | `Group`                            |
+| Secret Version                                           | `google_secret_manager_secret_version`                            | `Secret`                           |
 | Spanner Instance                                         | `google_spanner_instance`                                         | `Database`, `Cluster`              |
 | Spanner Instance Config                                  | `google_spanner_instance_config`                                  | `Configuration`                    |
 | Spanner Instance Database                                | `google_spanner_database`                                         | `Database`                         |
@@ -407,6 +441,10 @@ The following relationships are created:
 | `google_cloud_audit_config`                                      | **ALLOWS**            | `google_group`                                                    |
 | `google_cloud_audit_config`                                      | **ALLOWS**            | `google_iam_service_account`                                      |
 | `google_cloud_audit_config`                                      | **ALLOWS**            | `google_user`                                                     |
+| `google_cloud_bitbucket_server_config`                           | **HAS**               | `google_cloud_bitbucket_server_repo`                              |
+| `google_cloud_build_trigger`                                     | **TRIGGERS**          | `google_cloud_build`                                              |
+| `google_cloud_build`                                             | **USES**              | `google_cloud_source_repository`                                  |
+| `google_cloud_build`                                             | **USES**              | `google_storage_bucket`                                           |
 | `internet`                                                       | **ALLOWS**            | `google_compute_firewall`                                         |
 | `google_cloud_folder`                                            | **HAS**               | `google_cloud_folder`                                             |
 | `google_cloud_function`                                          | **USES**              | `google_iam_service_account`                                      |
@@ -487,6 +525,7 @@ The following relationships are created:
 | `google_pubsub_subscription`                                     | **USES**              | `google_pubsub_topic`                                             |
 | `google_pubsub_topic`                                            | **USES**              | `google_kms_crypto_key`                                           |
 | `google_redis_instance`                                          | **USES**              | `google_compute_network`                                          |
+| `google_secret_manager_secret`                                   | **HAS**               | `google_secret_manager_secret_version`                            |
 | `google_spanner_database`                                        | **USES**              | `google_kms_crypto_key`                                           |
 | `google_spanner_instance`                                        | **HAS**               | `google_spanner_database`                                         |
 | `google_spanner_instance`                                        | **USES**              | `google_spanner_instance_config`                                  |
@@ -495,12 +534,19 @@ The following relationships are created:
 | `google_sql_sql_server_instance`                                 | **USES**              | `google_kms_crypto_key`                                           |
 | `google_user`                                                    | **CREATED**           | `google_app_engine_version`                                       |
 
+### Mapped Relationships
+
+The following mapped relationships are created:
+
+| Source Entity `_type`        | Relationship `_class` | Target Entity `_type` | Direction |
+| ---------------------------- | --------------------- | --------------------- | --------- |
+| `google_cloud_build_trigger` | **USES**              | `*github_repo*`       | FORWARD   |
+
 <!--
 ********************************************************************************
 END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 ********************************************************************************
 -->
-
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
 
 <!--  jupiterOneDocVersion=2-15-2-beta-4 -->
