@@ -51,8 +51,12 @@ You must set a permission policy in JSON for account-level API keys, similar to 
   "permissions": [
     {
       "effect": "ALLOW",
-      "actions": ["*"],
-      "resources": ["*"]
+      "actions": [
+        "*"
+       ],
+      "resources": [
+         "*"
+      ]
     }
   ]
 }
