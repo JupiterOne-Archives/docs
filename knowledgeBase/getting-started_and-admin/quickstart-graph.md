@@ -6,18 +6,19 @@ JupiterOne Query Language (J1QL) is designed to traverse this graph and return a
 
 This documentation focuses on interacting with the graph component. For more details on J1QL, read the [J1QL tutorial](../jupiterOne-query-language_(J1QL)/tutorial-j1ql.md) and [technical doc](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md).
 
-This is an example result graph from a query in the Search for Anything app:
+This is an example result graph from a query in J1 Search:
 
 ![](../assets/j1ql-tutorial-root-accounts-graph.png)
 
 The first set of controls in the upper-right corner comprises:
 
-|                 Control                  | Function                                 |
-| :--------------------------------------: | :--------------------------------------- |
-| ![query-eye](../assets/icons/query-eye.png) | Switch views between `Table`, `Graph`, `Raw JSON`, and `Pretty JSON`. |
+|                     Control                     | Function                                                     |
+| :---------------------------------------------: | :----------------------------------------------------------- |
+|   ![query-eye](../assets/icons/query-eye.png)   | Switch views between `Table`, `Graph`, `Raw JSON`, and `Pretty JSON`. |
 | ![query-share](../assets/icons/query-share.png) | Export and share the query by sharing a link or downloading as a CSV or JSON file. |
-| ![query-copy](../assets/icons/query-copy.png) | Copy the query to the clipboard to reuse. |
-| ![query-save](../assets/icons/query-save.png) | Save the query shows a modal popup where you can provide a title, description, and, optionally, some tags to save it to your own query library. |
+|  ![query-copy](../assets/icons/query-copy.png)  | Copy the query to the clipboard to reuse.                    |
+|     ![](../assets/icons/graph-insights.png)     | Save the query shows a modal popup where you can provide a title, description, and, optionally, some tags to save it to your own query library. |
+|   ![](../assets/icons/query-create-alert.png)   | Create an alert for this query.                              |
 | ![query-close](../assets/icons/query-close.png) | Close and remove the results for this specific query/question from the page view. |
 
 Selecting any node on the graph displays a set of controls directly on top of it that allows you to interact with the node. The controls provide the following functions:
@@ -32,17 +33,17 @@ Selecting any node on the graph displays a set of controls directly on top of it
 
 The last set of controls are at the bottom-left of the graph, and they provide the following functions:
 
-|                 Control                  | Function                                 |
-| :--------------------------------------: | ---------------------------------------- |
-| ![query-filter](../assets/icons/query-filter.png) | Open the filter panel to show or hide assets on the graph by account and/or type. |
-| ![query-lock](../assets/icons/query-lock.png) | Lock the movement of connected assets.   |
-| ![query-layout1](../assets/icons/query-layout1.png) ![query-layout2](../assets/icons/query-layout2.png)![query-layout3](../assets/icons/query-layout3.png) | Toggle the layout between these three types. |
-| ![query-fullscreen](../assets/icons/query-fullscreen.png) | Maximize the graph in full-screen mode.  |
-| ![query-drag](../assets/icons/query-exit-full.png) | Exit full-screen mode.                   |
-| ![query-camera](../assets/icons/query-camera.png) | Download the image.                      |
-| ![query-center](../assets/icons/query-center.png) | Center the graph.                        |
-| ![query-undo](../assets/icons/query-undo.png) | Undo the action.                         |
-| ![query-eye](../assets/icons/query-eye.png) | Unhide hidden asset nodes. This control icon only displays when there are hidden nodes on the graph. |
+|                           Control                            | Function                                                     |
+| :----------------------------------------------------------: | ------------------------------------------------------------ |
+|      ![query-filter](../assets/icons/query-filter.png)       | Open the filter panel to show or hide assets on the graph by account and/or type. |
+|        ![query-lock](../assets/icons/query-lock.png)         | Lock the movement of connected assets.                       |
+| ![query-layout1](../assets/icons/query-layout1.png) ![query-layout2](../assets/icons/query-layout2.png)![query-layout3](../assets/icons/query-layout3.png) | Toggle the layout between these three types.                 |
+|  ![query-fullscreen](../assets/icons/query-fullscreen.png)   | Maximize the graph in full-screen mode.                      |
+|      ![query-drag](../assets/icons/query-exit-full.png)      | Exit full-screen mode.                                       |
+|      ![query-camera](../assets/icons/query-camera.png)       | Download the image.                                          |
+|      ![query-center](../assets/icons/query-center.png)       | Center the graph.                                            |
+|        ![query-undo](../assets/icons/query-undo.png)         | Undo the action.                                             |
+|         ![query-eye](../assets/icons/query-eye.png)          | Unhide hidden asset nodes. This control icon only displays when there are hidden nodes on the graph. |
 
 Here's a screenshot of a graph with the side property panel and filter panel open:
 
@@ -50,11 +51,10 @@ Here's a screenshot of a graph with the side property panel and filter panel ope
 
 **Zoom and Move**
 
-|                 Control                  | Function                                 |
-| :--------------------------------------: | ---------------------------------------- |
-| ![query-zoom-in](../assets/icons/query-zoom-in.png) ![query-zoom-out](../assets/icons/query-zoom-out.png) | Scroll using your mouse/touchpad to zoom in/out on the graph. |
-| ![query-drag](../assets/icons/query-drag.png) | Click and drag on a blank spot on the graph using your mouse/touchpad to move the graph. Click and drag on a selected asset node to move that particular node. |
+You can move the graph in all directions with the directional arrows in the circle located in the bottom-right of the graph. Use the pointer/hand icon to toggle between your cursor type. Use the  The +/-  slider zooms in and out of the graph.
 
-The Graph Viewer app uses the same sets of controls.
+![](../assets/graph-new-move.png)
+
+J1 Graph Viewer uses the same sets of controls.
 
 To learn more about queries and graphs, read the [J1QL tutorial](../jupiterOne-query-language_(J1QL)/tutorial-j1ql.md).
