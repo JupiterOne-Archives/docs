@@ -1,4 +1,4 @@
-# Microsoft 365 Integration with JupiterOne
+# Microsoft 365
 
 JupiterOne provides a managed integration for Microsoft 365. The integration
 connects directly to Microsoft Graph APIs to obtain metadata about the target
@@ -6,26 +6,26 @@ organization and analyze resource relationships.
 
 ## Microsoft 365 + JupiterOne Integration Benefits
 
-*   Visualize Microsoft 365 services, groups, and users in the JupiterOne graph.
-*   Map Microsoft 365 users to employees in your JupiterOne account.
-*   Monitor changes to Microsoft 365 users using JupiterOne alerts.
+- Visualize Microsoft 365 services, groups, and users in the JupiterOne graph.
+- Map Microsoft 365 users to employees in your JupiterOne account.
+- Monitor changes to Microsoft 365 users using JupiterOne alerts.
 
 ## How it Works
 
-*   JupiterOne periodically fetches account information, users, groups, and group
-    members from Microsoft 365 to update the graph.
-*   You write JupiterOne queries to review and monitor updates to the graph.
-*   You configure alerts to take action when JupiterOne graph changes.
+- JupiterOne periodically fetches account information, users, groups, and group
+  members from Microsoft 365 to update the graph.
+- You write JupiterOne queries to review and monitor updates to the graph.
+- You configure alerts to take action when JupiterOne graph changes.
 
 ## Requirements
 
-*   An organizational Active Directory tenant to target for ingestion. The
-    integration does not support the use of other tenant types.
-*   An account in the tenant you want to target for ingestion that has global
-    administrator access. You will login with this account to grant the JupiterOne
-    application API permissions that can read data across all users (admin
-    consent).
-*   You must have permission in JupiterOne to install new integrations.
+- An organizational Active Directory tenant to target for ingestion. The
+  integration does not support the use of other tenant types.
+- An account in the tenant you want to target for ingestion that has global
+  administrator access. You will login with this account to grant the JupiterOne
+  application API permissions that can read data across all users (admin
+  consent).
+- You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
@@ -36,102 +36,98 @@ If you need help with this integration, please contact
 
 ### In JupiterOne
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
 
-    ![jupiterone-landing-page](../../assets/integrations/microsoft-365/LandingPage.png)
+   ![Landing Page](images/LandingPage.png)
 
-2.  Scroll to the **Microsoft-365** integration tile and click it.
+2. Scroll to the **Microsoft-365** integration tile and click it.
 
-    ![jupiterone-definitions-page](../../assets/integrations/microsoft-365/DefinitionsPage.png)
+   ![Definitions Page](images/DefinitionsPage.png)
 
-3.  Click the **Add Configuration** button.
+3. Click the **Add Configuration** button.
 
-    ![jupiterone-integration-instances-page](../../assets/integrations/microsoft-365/InstancesPage.png)
+   ![Instances Page](images/InstancesPage.png)
 
-4.  Enter the **Account Name** by which you'd like to identify this Microsoft 365
-    account in JupiterOne. Ingested entities will have this value stored in
-    `tag.AccountName` when **Tag with Account Name** is checked.
+4. Enter the **Account Name** by which you'd like to identify this Microsoft 365
+   account in JupiterOne. Ingested entities will have this value stored in
+   `tag.AccountName` when **Tag with Account Name** is checked.
+5. Enter a **Description** that will further assist your team when identifying
+   the integration instance.
+6. Select a **Polling Interval** that you feel is sufficient for your monitoring
+   needs. You may leave this as `DISABLED` and manually execute the integration.
+7. Click **Create Configuration** once all values are provided.
 
-5.  Enter a **Description** that will further assist your team when identifying
-    the integration instance.
+   ![Complete Configuration](images/CompleteConfiguration.png)
+   ![Integration Created](images/IntegrationCreatedDialog.png)
 
-6.  Select a **Polling Interval** that you feel is sufficient for your monitoring
-    needs. You may leave this as `DISABLED` and manually execute the integration.
+8. When prompted, click "Complete Offsite" in the dialog.
 
-7.  Click **Create Configuration** once all values are provided.
+   ![Offsite Dialog](images/OffsiteDialog.png)
 
-    ![jupiterone-integration-complete-configuration-page](../../assets/integrations/microsoft-365/CompleteConfiguration.png)
-    ![jupiterone-integration-page-created-dialog](../../assets/integrations/microsoft-365/IntegrationCreatedDialog.png)
+9. You will be directed to Microsoft's identity platform where you must login in
+   as a global administrator of the organizational Active Directory tenant you
+   intend to integrate with.
 
-8.  When prompted, click "Complete Offsite" in the dialog.
+   ![Pick an account](images/PickAnAccount.png)
 
-    ![microsoft-365-offsite-dialog](../../assets/integrations/microsoft-365/OffsiteDialog.png)
+   NOTE: You must select an account belonging to an organizational tenant. When
+   you are already logged into an account, the badge icons indicate the nature
+   of the tenant the account belongs to.
 
-9.  You will be directed to Microsoft's identity platform where you must login in
-    as a global administrator of the organizational Active Directory tenant you
-    intend to integrate with.
+   Selecting a personal account produces the following error message.
 
-    ![microsoft-365-pick-account](../../assets/integrations/microsoft-365/PickAnAccount.png)
-
-    NOTE: You must select an account belonging to an organizational tenant. When
-    you are already logged into an account, the badge icons indicate the nature
-    of the tenant the account belongs to.
-
-    Selecting a personal account produces the following error message.
-
-    ![microsoft-365-personal-account-error](../../assets/integrations/microsoft-365/PersonalAccountError.png)
+   ![Account Error](images/PersonalAccountError.png)
 
 10. Review requested permissions (which are described below) and grant consent.
 
-      <img src="./images/PickAnAccount.png" alt="drawing" width="200"/>
+    ![pick an account](images/PickAnAccount.png)
 
 ## Permissions
 
-1.  `DeviceManagementApps.Read.All`
-    1.  Read Microsoft Intune apps
-    2.  Needed for creating `Application` entities
-2.  `DeviceManagementConfiguration.Read.All`
-    1.  Read Microsoft Intune device configuration and policies
-    2.  Needed for creating `Configuration` and `ControlPolicy` entities
-3.  `DeviceManagementManagedDevices.Read.All`
-    1.  Read Microsoft Intune devices
-    2.  Needed for creating `Device` and `HostAgent` entities
-4.  `Organization.Read.All`
-    1.  Read organization information
-    2.  Needed for creating the `Account` entity
-5.  `APIConnectors.Read.All`
-    1.  Read API connectors for authentication flows
-    2.  Needed for enriching the `Account` entity with Intune subscription
-        infomation
-6.  `DeviceManagementServiceConfig.Read.All`
-    1.  Read Microsoft Intune configuration
-    2.  Also needed for enriching the `Account` entity with Intune subscription
-        infomation
-7.  `Directory.Read.All`
-    1.  Read directory data
-    2.  Needed for creating `User`, `Group`, and `GroupUser` entities
+1. `DeviceManagementApps.Read.All`
+   1. Read Microsoft Intune apps
+   1. Needed for creating `Application` entities
+1. `DeviceManagementConfiguration.Read.All`
+   1. Read Microsoft Intune device configuration and policies
+   1. Needed for creating `Configuration` and `ControlPolicy` entities
+1. `DeviceManagementManagedDevices.Read.All`
+   1. Read Microsoft Intune devices
+   1. Needed for creating `Device` and `HostAgent` entities
+1. `Organization.Read.All`
+   1. Read organization information
+   1. Needed for creating the `Account` entity
+1. `APIConnectors.Read.All`
+   1. Read API connectors for authentication flows
+   1. Needed for enriching the `Account` entity with Intune subscription
+      infomation
+1. `DeviceManagementServiceConfig.Read.All`
+   1. Read Microsoft Intune configuration
+   1. Also needed for enriching the `Account` entity with Intune subscription
+      infomation
+1. `Directory.Read.All`
+   1. Read directory data
+   1. Needed for creating `User`, `Group`, and `GroupUser` entities
 
-# How to Uninstall
+## How to Uninstall
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **Microsoft 365** integration tile and click it.
-3.  Identify and click the **integration to delete**.
-4.  Click the **trash can** icon.
-5.  Click the **Remove** button to delete the integration.
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
+2. Scroll to the **Microsoft 365** integration tile and click it.
+3. Identify and click the **integration to delete**.
+4. Click the **trash can** icon.
+5. Click the **Remove** button to delete the integration.
 
 ## Setup
 
 Authorize access to JupiterOne:
 
-1.  Log in to JupiterOne as a user with permission to set up an integration
-2.  Add a Microsoft 365 integration instance
-3.  Once you have finished configuring your new instance, you will be directed to
-    Microsoft's identity platform, where you must login in as an administrator in
-    the organization you intend to integrate
-4.  Review requested permissions and grant consent
+1. Log in to JupiterOne as a user with permission to set up an integration
+1. Add a Microsoft 365 integration instance
+1. Once you have finished configuring your new instance, you will be directed to
+   Microsoft's identity platform, where you must login in as an administrator in
+   the organization you intend to integrate
+1. Review requested permissions and grant consent
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
-
 <!--
 ********************************************************************************
 NOTE: ALL OF THE FOLLOWING DOCUMENTATION IS GENERATED USING THE
@@ -163,10 +159,10 @@ The following entities are created:
 | Managed Device        | `server`                       | `Device`, `Host`                 |
 | Managed Device        | `smartphone`                   | `Device`, `Host`                 |
 | Noncompliance Finding | `intune_noncompliance_finding` | `Finding`                        |
-| \[AD] Account         | `microsoft_365_account`        | `Account`                        |
-| \[AD] Group           | `azure_user_group`             | `UserGroup`                      |
-| \[AD] Group Member    | `azure_group_member`           | `User`                           |
-| \[AD] User            | `azure_user`                   | `User`                           |
+| [AD] Account          | `microsoft_365_account`        | `Account`                        |
+| [AD] Group            | `azure_user_group`             | `UserGroup`                      |
+| [AD] Group Member     | `azure_group_member`           | `User`                           |
+| [AD] User             | `azure_user`                   | `User`                           |
 
 ### Relationships
 
@@ -184,6 +180,13 @@ The following relationships are created:
 | `azure_user`                  | **HAS**               | `smartphone`                   |
 | `azure_user`                  | **HAS**               | `user_endpoint`                |
 | `azure_user`                  | **HAS**               | `workstation`                  |
+| `azure_user`                  | **USES**              | `computer`                     |
+| `azure_user`                  | **USES**              | `desktop`                      |
+| `azure_user`                  | **USES**              | `laptop`                       |
+| `azure_user`                  | **USES**              | `server`                       |
+| `azure_user`                  | **USES**              | `smartphone`                   |
+| `azure_user`                  | **USES**              | `user_endpoint`                |
+| `azure_user`                  | **USES**              | `workstation`                  |
 | `computer`                    | **ASSIGNED**          | `intune_managed_application`   |
 | `computer`                    | **HAS**               | `intune_noncompliance_finding` |
 | `computer`                    | **INSTALLED**         | `intune_detected_application`  |
@@ -224,7 +227,4 @@ The following relationships are created:
 END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 ********************************************************************************
 -->
-
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
- 
-<!--  jupiterOneDocVersion=4-0-1 -->
