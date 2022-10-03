@@ -40,78 +40,87 @@ If you need help with this integration, please contact
 
    ![Landing Page](images/LandingPage.png)
 
-2. Scroll to the **Microsoft-365** integration tile and click it.
+   
+   
+
+2. Select the **Microsoft-365** integration tile.
+
+   
 
    ![Definitions Page](images/DefinitionsPage.png)
 
-3. Click the **Add Configuration** button.
+3. Click **New Instance**.
 
    ![Instances Page](images/InstancesPage.png)
 
-4. Enter the **Account Name** by which you'd like to identify this Microsoft 365
-   account in JupiterOne. Ingested entities will have this value stored in
-   `tag.AccountName` when **Tag with Account Name** is checked.
-5. Enter a **Description** that will further assist your team when identifying
+   
+
+4. Enter the **Account Name** by which to identify this Microsoft 365
+   account in J1. Ingested entities will have this value stored in
+   `tag.AccountName` when **Tag with Account Name** is selected.
+
+5. Enter a **Description** that assists your team to identify
    the integration instance.
+
 6. Select a **Polling Interval** that you feel is sufficient for your monitoring
-   needs. You may leave this as `DISABLED` and manually execute the integration.
-7. Click **Create Configuration** once all values are provided.
+   needs. You can leave this as `DISABLED` and manually execute the integration.
 
-   ![Complete Configuration](images/CompleteConfiguration.png)
-   ![Integration Created](images/IntegrationCreatedDialog.png)
+7. Click **Create Configuration** after you have provided all the values.
 
-8. When prompted, click "Complete Offsite" in the dialog.
+8. When prompted, click **Begin Authorization**. 
 
-   ![Offsite Dialog](images/OffsiteDialog.png)
+   ![Offsite Dialog](images/OffsiteDialog.png) 
 
-9. You will be directed to Microsoft's identity platform where you must login in
+    
+
+9. You are then directed to the Microsoft identity platform where you must log in
    as a global administrator of the organizational Active Directory tenant you
    intend to integrate with.
 
-   ![Pick an account](images/PickAnAccount.png)
-
-   NOTE: You must select an account belonging to an organizational tenant. When
+   You must select an account belonging to an organizational tenant. When
    you are already logged into an account, the badge icons indicate the nature
    of the tenant the account belongs to.
 
-   Selecting a personal account produces the following error message.
+   Selecting a personal account produces the following error message: 
 
-   ![Account Error](images/PersonalAccountError.png)
+   ![Account Error](images/PersonalAccountError.png) 
+
+    
 
 10. Review requested permissions (which are described below) and grant consent.
 
-    ![pick an account](images/PickAnAccount.png)
+   ![pick an account](images/PickAnAccount.png) 
 
 ## Permissions
 
 1. `DeviceManagementApps.Read.All`
-   1. Read Microsoft Intune apps
-   1. Needed for creating `Application` entities
+   - Read Microsoft Intune apps
+   - Needed for creating `Application` entities
 1. `DeviceManagementConfiguration.Read.All`
-   1. Read Microsoft Intune device configuration and policies
-   1. Needed for creating `Configuration` and `ControlPolicy` entities
+   - Read Microsoft Intune device configuration and policies
+   - Needed for creating `Configuration` and `ControlPolicy` entities
 1. `DeviceManagementManagedDevices.Read.All`
-   1. Read Microsoft Intune devices
-   1. Needed for creating `Device` and `HostAgent` entities
+   - Read Microsoft Intune devices
+   - Needed for creating `Device` and `HostAgent` entities
 1. `Organization.Read.All`
-   1. Read organization information
-   1. Needed for creating the `Account` entity
+   - Read organization information
+   - Needed for creating the `Account` entity
 1. `APIConnectors.Read.All`
-   1. Read API connectors for authentication flows
-   1. Needed for enriching the `Account` entity with Intune subscription
+   - Read API connectors for authentication flows
+   - Needed for enriching the `Account` entity with Intune subscription
       infomation
 1. `DeviceManagementServiceConfig.Read.All`
-   1. Read Microsoft Intune configuration
-   1. Also needed for enriching the `Account` entity with Intune subscription
-      infomation
+   - Read Microsoft Intune configuration
+   - Also needed for enriching the `Account` entity with Intune subscription
+      information
 1. `Directory.Read.All`
-   1. Read directory data
-   1. Needed for creating `User`, `Group`, and `GroupUser` entities
+   - Read directory data
+   - Needed for creating `User`, `Group`, and `GroupUser` entities
 
 ## How to Uninstall
 
 1. From the top navigation of the J1 Search homepage, select **Integrations**.
-2. Scroll to the **Microsoft 365** integration tile and click it.
+2. Select the **Microsoft 365** integration tile.
 3. Identify and click the **integration to delete**.
 4. Click the **trash can** icon.
 5. Click the **Remove** button to delete the integration.
@@ -120,12 +129,12 @@ If you need help with this integration, please contact
 
 Authorize access to JupiterOne:
 
-1. Log in to JupiterOne as a user with permission to set up an integration
-1. Add a Microsoft 365 integration instance
+1. Log in to JupiterOne as a user with permission to set up an integration.
+1. Add a Microsoft 365 integration instance.
 1. Once you have finished configuring your new instance, you will be directed to
    Microsoft's identity platform, where you must login in as an administrator in
-   the organization you intend to integrate
-1. Review requested permissions and grant consent
+   the organization you intend to integrate.
+1. Review requested permissions and grant consent.
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
 <!--
