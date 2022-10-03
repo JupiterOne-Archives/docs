@@ -38,20 +38,19 @@ If you need help with this integration, please contact
 
 1. From the top navigation of the J1 Search homepage, select **Integrations**.
 
-   ![Landing Page](images/LandingPage.png)
+   ![Landing Page](../assets/LandingPage.png)
 
    
    
-
 2. Select the **Microsoft-365** integration tile.
 
    
 
-   ![Definitions Page](images/DefinitionsPage.png)
+   ![Definitions Page](../assets/DefinitionsPage.png)
 
 3. Click **New Instance**.
 
-   ![Instances Page](images/InstancesPage.png)
+   ![Instances Page](../assets/InstancesPage.png)
 
    
 
@@ -69,7 +68,7 @@ If you need help with this integration, please contact
 
 8. When prompted, click **Begin Authorization**. 
 
-   ![Offsite Dialog](images/OffsiteDialog.png) 
+   ![Offsite Dialog](../assets/OffsiteDialog.png) 
 
     
 
@@ -83,13 +82,13 @@ If you need help with this integration, please contact
 
    Selecting a personal account produces the following error message: 
 
-   ![Account Error](images/PersonalAccountError.png) 
+   ![Account Error](../assets/PersonalAccountError.png) 
 
     
 
 10. Review requested permissions (which are described below) and grant consent.
 
-   ![pick an account](images/PickAnAccount.png) 
+   ![pick an account](../assets/PickAnAccount.png) 
 
 ## Permissions
 
