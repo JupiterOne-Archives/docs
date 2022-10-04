@@ -43,7 +43,7 @@ If you need help with this integration, please contact
    
    
 
-2. Select the **Microsoft-365** integration tile.
+2. Select the **Microsoft-365** integration tile. 
 
     
 
@@ -59,7 +59,7 @@ If you need help with this integration, please contact
 
 4. Enter the **Account Name** by which to identify this Microsoft 365
    account in J1. Ingested entities will have this value stored in
-   `tag.AccountName` when **Tag with Account Name** is selected.
+   `tag.AccountName` when **Tag with Account Name** is selected. 
 
 5. Enter a **Description** that assists your team to identify
    the integration instance.
