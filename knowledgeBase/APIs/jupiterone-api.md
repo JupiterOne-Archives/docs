@@ -701,7 +701,7 @@ This mutation deletes an existing entity. This mutation requires one parameter (
 - `entityId`: A string specific to the entity that finds the entity.
 - Optional Parameters:
   - `timestamp`
-  - `hardDelete` - this flag completely removes all information related to the relationship and is not recoverable.
+  - `hardDelete` - this flag completely removes all information related to the entity and is not recoverable.
 
 ```graphql
 mutation DeleteEntity (
@@ -844,23 +844,25 @@ Variables:
 ### Delete Relationship
 
 ```graphql
-mutation DeleteEntity (
-  $entityId: String!
+mutation DeleteRelationship (
+  $relationshipId: String!
   $timestamp: Long
   $hardDelete: Boolean
 ) {
-  deleteEntity (
-    entityId: $entityId,
+  deleteRelationship (
+    relationshipId: $relationshipId,
     timestamp: $timestamp,
     hardDelete: $hardDelete,
   ) {
-    entity {
+    relationship {
       _id
       ...
     }
-    vertex {
+    edge {
       id,
-      entity {
+      toVertexId,
+      fromVertexID
+      relationship {
         _id
         ...
       }
@@ -879,6 +881,10 @@ Variables:
   "hardDelete": true
 }
 ```
+
+`hardDelete` is a flag that completely removes all information related to the relationship in a way that is not recoverable.
+
+
 
 ## Entity and Relationship Synchronization (Bulk Upload)
 
