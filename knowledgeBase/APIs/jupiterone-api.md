@@ -534,7 +534,7 @@ If `OR` is specified as the filter type, any entity that has any class in the fi
 
 ```graphql
 query testQuery($filters: VertexFilters, $filterType: FilterType, $after: String) {
-  listVertices(filters: $filters, filterType: $filterType, after: $after) {
+  listVerticesV2(filters: $filters, filterType: $filterType, after: $after) {
     vertices {
       id
       entity {
@@ -700,7 +700,8 @@ This mutation deletes an existing entity. This mutation requires one parameter (
 
 - `entityId`: A string specific to the entity that finds the entity.
 - Optional Parameters:
-  - `timestamp`:
+  - `timestamp`
+  - `hardDelete` - this flag completely removes all information related to the entity and is not recoverable.
 
 ```graphql
 mutation DeleteEntity (
@@ -846,19 +847,21 @@ Variables:
 mutation DeleteRelationship (
   $relationshipId: String!
   $timestamp: Long
+  $hardDelete: Boolean
 ) {
   deleteRelationship (
     relationshipId: $relationshipId,
     timestamp: $timestamp,
+    hardDelete: $hardDelete,
   ) {
     relationship {
       _id
       ...
     }
     edge {
-      id
-      toVertexId
-      fromVertexId
+      id,
+      toVertexId,
+      fromVertexID
       relationship {
         _id
         ...
@@ -873,10 +876,15 @@ Variables:
 
 ```json
 {
-  "relationshipId": "<a relationship Id (relationship._id)>",
-  "timestamp": 1529329792552
+  "entityId": "<an entity Id (entity._id)>",
+  "timestamp": 1529329792552,
+  "hardDelete": true
 }
 ```
+
+`hardDelete` is a flag that completely removes all information related to the relationship in a way that is not recoverable.
+
+
 
 ## Entity and Relationship Synchronization (Bulk Upload)
 
