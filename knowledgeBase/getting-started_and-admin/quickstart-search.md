@@ -10,6 +10,12 @@ You can toggle results in four different display modes: **Table**, **Graph**, **
 
 **Note**: For performance reasons, search results are limited to return a maximum 250 items. If you believe something is missing from a large result set, try fine-tuning the query to generate more precise results.
 
+
+
+![](../assets/search-home.png)
+
+
+
 ## Ask Questions
 
 Enter any keyword or combination of keywords such as these (without quotations):
