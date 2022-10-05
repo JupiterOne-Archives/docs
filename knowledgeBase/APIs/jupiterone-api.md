@@ -534,7 +534,7 @@ If `OR` is specified as the filter type, any entity that has any class in the fi
 
 ```graphql
 query testQuery($filters: VertexFilters, $filterType: FilterType, $after: String) {
-  listVertices(filters: $filters, filterType: $filterType, after: $after) {
+  listVerticesV2(filters: $filters, filterType: $filterType, after: $after) {
     vertices {
       id
       entity {
