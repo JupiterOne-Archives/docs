@@ -1,6 +1,6 @@
 # CloudTrail Event Streaming with the AWS Integration
 
-The AWS integration can continuously update the graph using CloudTrail events streamed over EventBridge. This feature is currently in beta and only supports a subset of CloudTrail events.
+The AWS integration can continuously update the graph using CloudTrail events streamed over EventBridge. 
 
 To enable this feature, first contact the JupiterOne development team either via the community Slack or by creating a support ticket. Provide the AWS account ID of the account from which you'd like to stream events to JupiterOne and the region of the CloudTrail that will be producing the events. The JupiterOne
 development team will add your AWS account to the list of those permitted to send events to the AWS integration's event bus.
