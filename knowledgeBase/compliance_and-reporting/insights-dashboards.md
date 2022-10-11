@@ -10,49 +10,15 @@ Here are a few example boards and their configurations: [https://github.com/Jupi
 
 To learn more about how to use the dashboards, see [General Insights Dashboard Functionality](../insights-dashboards-general.md).
 
-## Import Prebuilt Insights Dashboards
+There are three ways to create a new Insights dashboard:
 
-1. Go to https://github.com/JupiterOne/insights-dashboards to see the list of prebuilt dashboards available for you to import into your JupiterOne account
+- Create a customized dashboard based on your queries
+- Import a J1 prebuilt dashboard template that you can edit
+- Upload the schema of a previously created dashboard
 
-2. Select a prebuilt dashboard.
 
-3. Click `board.json`.
 
-4. Right-click **Raw** -> **Save link as...**.
-
-   
-
-   ![save-dashboard](../assets/save-dashboard.gif)
-
-   
-
-5. Navigate to J1 **Insights** to add a board.
-   
-
-   ![insights](../assets/insights.png)
-    
-   
-6. Click the ‘>’ carrot to expand the left sidebar.
-
-7. Click **Add** ![](C:\Users\lynch\OneDrive\Documents\GitHub\docs\knowledgeBase\assets\icons\insight-add.png) and choose whether you want to add a personal or team board.
-
-8. Click **Upload From JSON Schema** and navigate to the `board.json` file you previously saved.
-   ​
-
-   ![import-dashboard](../assets/import-dashboard.gif) 
-
-   
-
-   Alternatively, you can just click the tile to quickly add a starter configuration for that dashboard. 
-   
-   
-   ![](../assets/insights-starters.png) 
-   
-   
-   
-   For more information about J1 standard Insights dashboards, [watch this video](https://try.jupiterone.com/blog/video-how-to-modify-out-of-the-box-dashboards), and read more [here](./insights-dashboards-starters.md).
-
-## Creating a Custom Insights Dashboard with Custom Charts
+## Create a Custom Insights Dashboard with Custom Charts
 
 You can build your own custom dashboard with customized, individual charts. Each chart is powered by one or more J1QL queries.
 
@@ -63,24 +29,51 @@ You can build your own custom dashboard with customized, individual charts. Each
 
    
 
-2. Click the ‘>’ carrot to expand the left sidebar.
+2. At the top of the left navigation pane, click **Add**![](../assets/icons/add-chart.png)and choose whether you want to add a personal or team board.
 
-3. Click **Add** ![](C:\Users\lynch\OneDrive\Documents\GitHub\docs\knowledgeBase\assets\icons\insight-add.png) and choose whether you want to add a personal or team board.
+3. In the left column, select the type of visual chart, such as number, pie, line, bar that you want to create.
 
-4. Click **Start Adding Charts** and in the **Add Chart** workflow.
+4. Enter the details of your chart, which include information such as:
 
-5. Enter the details of your query/chart, which include information such as:
+   - Title and description
 
-   - Type of visual chart, such as number, pie, line, bar.
+   - Chart query or queries
 
-   - The chart query or queries.
-
-   - Formatting options 
-     ​
+   - Chart colors and other formatting
+     ​ 
 
      ![custom-board](../assets/custom-board.gif) 
 
 For more information about custom Insights dashboards, [watch this video](https://try.jupiterone.com/blog/how-to-create-customized-dashboards).
+
+## Import Prebuilt Insights Dashboards
+
+1. Navigate to J1 **Insights** to add a board.
+
+2. At the top of the left navigation pane, click **Add**![](../assets/icons/add-chart.png)and choose whether you want to add a personal or team board.
+
+3. In the **Start with a JupiterOne dashboard template** section, select the template you want to use. Dependent on which template you choose, you may have to provide more information.
+
+   
+
+   ![import-dashboard](../assets/insights-starters.gif)
+    
+
+   ## Upload a Dashboard Schema
+
+   If there is a dashboard schema you want to use that you or someone else in your team previously created, you can upload it your Insights.
+    
+
+
+   ![](../assets/import-dashboard.gif) 
+
+   
+
+
+   For more information about J1 standard Insights dashboards, [watch this video](https://try.jupiterone.com/blog/video-how-to-modify-out-of-the-box-dashboards), and read more [here](./insights-dashboards-starters.md).
+
+
+
 
 #### Additional support documentation/resources for writing queries:
 

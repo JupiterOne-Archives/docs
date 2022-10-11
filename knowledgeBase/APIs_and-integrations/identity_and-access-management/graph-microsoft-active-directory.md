@@ -9,6 +9,10 @@
 ## How it Works
 
 - JupiterOne periodically fetches users, groups, and devices from Microsoft
+  Active Directory to update the graph. JupiterOne periodically fetches users, groups, and devices from Microsoft
+  Active Directory to update the graph. JupiterOne periodically fetches users, groups, and devices from Microsoft
+  Active Directory to update the graph.  Active Directory to update the graph. JupiterOne periodically fetches users, groups, and devices from Microsoft
+  Active Directory to update the graph. JupiterOne periodically fetches users, groups, and devices from Microsoft
   Active Directory to update the graph.
 - Write JupiterOne queries to review and monitor updates to the graph, or
   leverage existing queries.
