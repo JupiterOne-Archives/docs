@@ -6,7 +6,7 @@
   
    
   
-- Rename, clone, or delete boards:
+- Duplicate or delete boards:
   ​
 
   ![clone-delete-rename](../assets/clone-delete-rename.png)
@@ -23,7 +23,7 @@
   When you create public links, anyone using a link is able to see the entire Insights dashboard but cannot make any changes. If you want to restrict access, you can list a range of IP addresses that you want to allow access to the dashboard, blocking any users from IP addresses outside of that range. To use this setting, you must unshare the link and then regenerate one, using the option to restrict access to an IP address range.
   
 
-  ![](../assets/insights-ip-address.png)  
+  ![](../assets/insights-ip-address.png)   
 
   
 
