@@ -24,15 +24,15 @@ The J1 Compliance UI uses status symbols to help you quickly scan your complianc
 
 Compliance is measured by requirements and evidence that you have met those requirements. The different statuses indicate where action and attention is needed.
 
-| Symbol                                   | Meaning                                  |
-| ---------------------------------------- | ---------------------------------------- |
+| Symbol                                        | Meaning                                                      |
+| --------------------------------------------- | ------------------------------------------------------------ |
 | ![](../assets/compliance-attention-white.png) | Potential remediation is needed because J1 has detected a potential gap in compliance. |
-| ![](../assets/compliance-evidences-grey2.png) | Linked evidence files provide proof of compliance. |
-| ![](../assets/compliance-evidences-grey.png) | No linked evidence files to prove compliance. |
-| ![](../assets/compliance-unknown-grey.png) | A manual review of a compliance issue is necessary. |
-| ![](../assets/compliance-gap-white.png)  | There are [gaps in your compliance](../compliance-gap-table.md) that you must remove. |
-| ![](../assets/compliance-tested-grey.png) | The framework requirement is complete and being monitoring. |
-| ![](../assets/compliance-unknown.png)    | A manual review of a compliance issue is necessary. |
+| ![](../assets/compliance-evidences-grey2.png) | Linked evidence files provide proof of compliance.           |
+| ![](../assets/compliance-evidences-grey.png)  | No linked evidence files to prove compliance.                |
+| ![](../assets/compliance-unknown-grey.png)    | A manual review of a compliance issue is necessary.          |
+| ![](../assets/compliance-gap-white.png)       | There are [gaps in your compliance](./compliance-gap-table.md) that you must remove. |
+| ![](../assets/compliance-tested-grey.png)     | The framework requirement is complete and being monitoring.  |
+| ![](../assets/compliance-unknown.png)         | A manual review of a compliance issue is necessary.          |
 
 Click any of these symbols from the frameworks view to see more details about the status.
 
