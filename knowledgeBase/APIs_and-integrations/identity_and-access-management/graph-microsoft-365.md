@@ -38,64 +38,59 @@ If you need help with this integration, please contact
 
 1. From the top navigation of the J1 Search homepage, select **Integrations**.
 
-   
-![Landing Page](../../assets/LandingPage.png)
-   
+   ​	![Landing Page](images/LandingPage.png)
    
 
-2. Select the **Microsoft-365** integration tile. 
+2. Select the **Microsoft-365** integration tile.
+   
 
-    
-
-   ![Definitions Page](../../assets/DefinitionsPage.png)
+   ![Definitions Page](images/DefinitionsPage.png)
 
 3. Click **New Instance**.
-
-   ![Instances Page](../../assets/InstancesPage.png)
-
    
 
+   ![Instances Page](images/InstancesPage.png)
    
 
-4. Enter the **Account Name** by which to identify this Microsoft 365
-   account in J1. Ingested entities will have this value stored in
-   `tag.AccountName` when **Tag with Account Name** is selected. 
+4. Enter the **Account Name** by which to identify this Microsoft 365 account in
+   J1. Ingested entities will have this value stored in `tag.AccountName` when
+   **Tag with Account Name** is selected.
 
-5. Enter a **Description** that assists your team to identify
-   the integration instance.
+5. Enter a **Description** that assists your team to identify the integration
+   instance.
 
 6. Select a **Polling Interval** that you feel is sufficient for your monitoring
    needs. You can leave this as `DISABLED` and manually execute the integration.
 
-   ![](../../assets/CompleteConfiguration.png)
-   
-   
-   
+   ![](images/CompleteConfiguration.png)
+
 7. Click **Create** after you have provided all the values.
 
-8. When prompted, click **Begin Authorization**. 
+8. When prompted, click **Begin Authorization**.
+   
 
-   ![Offsite Dialog](../../assets/OffsiteDialog.png) 
-
+   ![Offsite Dialog](images/OffsiteDialog.png)
     
 
-9. You are then directed to the Microsoft identity platform where you must log in
-   as a global administrator of the organizational Active Directory tenant you
-   intend to integrate with.
+9. You are then directed to the Microsoft identity platform where you must log
+   in as a global administrator of the organizational Active Directory tenant
+   you intend to integrate with.
 
-   You must select an account belonging to an organizational tenant. When
-   you are already logged into an account, the badge icons indicate the nature
-   of the tenant the account belongs to.
+   You must select an account belonging to an organizational tenant. When you
+   are already logged into an account, the badge icons indicate the nature of
+   the tenant the account belongs to.
 
-   Selecting a personal account produces the following error message: 
-
-   ![Account Error](../../assets/PersonalAccountError.png)  
-
+   Selecting a personal account produces the following error message:
+   
+   
+   ![Account Error](images/PersonalAccountError.png)
     
-
+   
 10. Review requested permissions (which are described below) and grant consent.
+   
 
-   ![pick an account](../../assets/PickAnAccount.png)  
+   ![pick an account](images/PickAnAccount.png)
+    
 
 ## Permissions
 
@@ -114,11 +109,11 @@ If you need help with this integration, please contact
 1. `APIConnectors.Read.All`
    - Read API connectors for authentication flows
    - Needed for enriching the `Account` entity with Intune subscription
-      infomation
+     infomation
 1. `DeviceManagementServiceConfig.Read.All`
    - Read Microsoft Intune configuration
    - Also needed for enriching the `Account` entity with Intune subscription
-      information
+     information
 1. `Directory.Read.All`
    - Read directory data
    - Needed for creating `User`, `Group`, and `GroupUser` entities
@@ -137,9 +132,9 @@ Authorize access to JupiterOne:
 
 1. Log in to JupiterOne as a user with permission to set up an integration.
 1. Add a Microsoft 365 integration instance.
-1. Once you have finished configuring your new instance, you will be directed to
-   Microsoft's identity platform, where you must login in as an administrator in
-   the organization you intend to integrate.
+1. After you have finished configuring your new instance, you will be directed
+   to Microsoft's identity platform, where you must login in as an administrator
+   in the organization you intend to integrate.
 1. Review requested permissions and grant consent.
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
