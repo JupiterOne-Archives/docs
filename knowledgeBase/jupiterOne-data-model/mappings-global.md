@@ -7,14 +7,14 @@
 ## `(Service|Control|Team) -IMPLEMENTS-> security_procedure`
 
 > **Source Filters**
-
->   * `function = !null`
->   * `inUse = !false`
->   * `active = !false`
+>
+> * `function = !null`
+> * `inUse = !false`
+> * `active = !false`
 
 > **Target Filters**
-
->   * `function = source.function`
+>
+> * `function = source.function`
 
 ## `employee <-EMPLOYS- <ROOT>`
 
@@ -23,567 +23,697 @@
 ## `Organization -HAS-> Person`
 
 > **Target Filters**
-> &nbsp;
->   * `email = source.members`
+>
+> * `email = source.members`
 
 ## `Team -HAS-> Person`
 
 > **Target Filters**
-> &nbsp;
->   * `email = source.members`
+>
+> * `email = source.members`
 
 ## `Team <-MANAGES- Person`
 
 > **Target Filters**
-> &nbsp;
->   * `email = source.supervisor`
+>
+> * `email = source.supervisor`
 
 ## `Team <-HAS- Organization`
 
 > **Source Filters**
-> &nbsp;
->   * `organization = !null`
+>
+> * `organization = !null`
 
 > **Target Filters**
-> &nbsp;
->   * `_key = source.organization`
+>
+> * `_key = source.organization`
 
 ## `Team <-HAS- <ROOT>`
 
 > **Source Filters**
-> &nbsp;
->   * `organization = null`
+>
+> * `organization = null`
 
 ## `Document <-APPROVED- Person`
 
 > **Target Filters**
-> &nbsp;
->   * `email = source.approvedBy`
+>
+> * `email = source.approvedBy`
 
 ## `Document <-CREATED- Person`
 
 > **Target Filters**
-> &nbsp;
->   * `email = source.createdBy`
+>
+> * `email = source.createdBy`
 
 ## `Document <-UPDATED- Person`
 
 > **Target Filters**
-> &nbsp;
->   * `email = source.updatedBy`
+>
+> * `email = source.updatedBy`
 
-## `(Account|Application|DataStore|Host|Product) <-MANAGES- (Person|Team|UserGroup)`
-
-> **Target Filters**
-
->   * `_key = source.owner`
-
-## `(Account|Application|DataStore|Host|Product) <-MANAGES- (Person|Team|UserGroup)`
+## `(Account|Application|Channel|Cluster|CodeRepo|Configuration|DataStore|Domain|Firewall|Function|Gateway|Host|Network|Organization|Product|Repository|Service) <-MANAGES- (Person|Team|UserGroup)`
 
 > **Target Filters**
-> &nbsp;
->   * `email = [toLowerCase(source.owner),toLowerCase(source.email)]`
+>
+> * `_key = [source.owner,source.tag.Owner]`
+
+## `(Account|Application|Channel|Cluster|CodeRepo|Configuration|DataStore|Domain|Firewall|Function|Gateway|Host|Network|Organization|Product|Repository|Service) <-MANAGES- (Person|Team|UserGroup)`
+
+> **Target Filters**
+>
+> * `email = [toLowerCase(source.email),toLowerCase(source.owner),toLowerCase(source.tag.Owner)]`
 
 ## `Domain <-HAS- Organization`
 
 > **Target Filters**
-> &nbsp;
->   * `domains = source.name`
+>
+> * `domains = source.name`
 
 ## `Domain <-MANAGES- Person`
 
 > **Target Filters**
-> &nbsp;
->   * `email = source.contactEmails`
+>
+> * `email = source.contactEmails`
 
 ## `DomainRecord -CONNECTS-> (Host|IpAddress|NetworkInterface|Gateway|Cluster)`
 
 > **Source Filters**
-> &nbsp;
->   * `type = (A|AAAA|CNAME)`
+>
+> * `type = (A|AAAA|CNAME)`
 
 > **Target Filters**
-> &nbsp;
->   * `publicIpAddress = source.value`
+>
+> * `publicIpAddress = source.value`
 
 ## `DomainRecord -CONNECTS-> (Gateway|Host|Cluster)`
 
 > **Source Filters**
-> &nbsp;
->   * `type = (A|AAAA|CNAME)`
+>
+> * `type = (A|AAAA|CNAME)`
 
 > **Target Filters**
-> &nbsp;
->   * `dnsName = source.value`
+>
+> * `dnsName = source.value`
 
 ## `DomainRecord -CONNECTS-> (Gateway|Host|Cluster)`
 
 > **Source Filters**
-> &nbsp;
->   * `type = (A|AAAA|CNAME)`
+>
+> * `type = (A|AAAA|CNAME)`
 
 > **Target Filters**
-> &nbsp;
->   * `domainName = source.value`
+>
+> * `domainName = source.value`
 
 ## `DomainRecord -CONNECTS-> (Gateway|Host|Cluster)`
 
 > **Source Filters**
-> &nbsp;
->   * `type = (A|AAAA|CNAME)`
+>
+> * `type = (A|AAAA|CNAME)`
 
 > **Target Filters**
-> &nbsp;
->   * `aliases = source.value`
+>
+> * `aliases = source.value`
 
 ## `DomainRecord -CONNECTS-> (Gateway|Host|Cluster)`
 
 > **Source Filters**
-> &nbsp;
->   * `type = (A|AAAA|CNAME)`
+>
+> * `type = (A|AAAA|CNAME)`
 
 > **Target Filters**
-> &nbsp;
->   * `fqdn = source.value`
+>
+> * `fqdn = source.value`
 
 ## `DomainRecord -CONNECTS-> DomainRecord`
 
 > **Source Filters**
-> &nbsp;
->   * `type = CNAME`
+>
+> * `type = CNAME`
 
 > **Target Filters**
-> &nbsp;
->   * `name = source.value`
+>
+> * `name = source.value`
 
 ## `DomainZone <-HAS- Domain`
 
 > **Target Filters**
-> &nbsp;
->   * `name = source.parentDomain`
+>
+> * `name = source.parentDomain`
 
-## `Certificate <-HAS- (Domain|DomainZone)`
+## `Application -USES-> DomainZone`
 
 > **Target Filters**
-> &nbsp;
->   * `name = [source.domainName,source.alternativeNames]`
+>
+> * `domainName = source.name`
+
+## `ApplicationEndpoint -USES-> DomainRecord`
+
+> **Target Filters**
+>
+> * `type = ("A"|"AAAA"|"CNAME")`
+> * `name = source.address`
+
+## `Certificate <-HAS- (Domain|DomainZone|DomainRecord)`
+
+> **Target Filters**
+>
+> * `name = [source.domainName,source.alternativeNames]`
 
 ## `User -IS-> Person`
 
 > **Target Filters**
-> &nbsp;
->   * `email = toLowerCase(source.email)`
+>
+> * `email = toLowerCase(source.email)`
 
 ## `User -IS-> Person`
 
 > **Target Filters**
-> &nbsp;
->   * `username = toLowerCase(source.username)`
+>
+> * `username = toLowerCase(source.username)`
 
 ## `User -IS-> Person`
 
 > **Target Filters**
-> &nbsp;
->   * `aliases = toLowerCase(source.email)`
+>
+> * `aliases = toLowerCase(source.email)`
 
 ## `User -IS-> Person`
 
+> **Source Filters**
+>
+> * `_accountId = !(********-****-****-****-************|********-****-****-****-************)`
+
 > **Target Filters**
-> &nbsp;
->   * `name = source.name`
+>
+> * `name = source.name`
 
 ## `User -IS-> Person`
 
+> **Source Filters**
+>
+> * `_accountId = !(********-****-****-****-************|********-****-****-****-************)`
+
 > **Target Filters**
-> &nbsp;
->   * `displayName = source.displayName`
+>
+> * `displayName = source.displayName`
 
 ## `Person <-IS- User`
 
 > **Target Filters**
-> &nbsp;
->   * `email = source.email`
+>
+> * `email = source.email`
 
 ## `Person <-IS- User`
 
 > **Target Filters**
-> &nbsp;
->   * `username = source.email`
+>
+> * `username = source.email`
 
 ## `Person <-MANAGES- Person`
 
 > **Target Filters**
-> &nbsp;
->   * `employeeId = [toLowerCase(source.managerId),toLowerCase(source.manager)]`
+>
+> * `employeeId = [toLowerCase(source.managerId),toLowerCase(source.manager)]`
 
 ## `Person <-MANAGES- Person`
 
 ## `Person <-MANAGES- Person`
 
 > **Target Filters**
-> &nbsp;
->   * `email = [toLowerCase(source.managerEmail),toLowerCase(source.manager)]`
+>
+> * `email = [toLowerCase(source.managerEmail),toLowerCase(source.manager)]`
 
 ## `Person <-MANAGES- Person`
 
 > **Target Filters**
-> &nbsp;
->   * `name = source.manager`
+>
+> * `name = source.manager`
 
 ## `Person <-MANAGES- Person`
 
 > **Target Filters**
-> &nbsp;
->   * `displayName = source.manager`
+>
+> * `displayName = source.manager`
 
 ## `(Finding|Vulnerability) <-HAS- Host`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
->   * `open = true`
+>
+> * `_integrationType = !qualys`
+> * `open = true`
 
 > **Target Filters**
-> &nbsp;
->   * `id = source.targets`
+>
+> * `id = source.targets`
 
 ## `(Finding|Vulnerability) <-HAS- Host`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
->   * `open = true`
+>
+> * `_integrationType = !qualys`
+> * `open = true`
 
 > **Target Filters**
-> &nbsp;
->   * `name = source.targets`
+>
+> * `name = source.targets`
 
 ## `(Finding|Vulnerability) <-HAS- Host`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
->   * `open = true`
+>
+> * `_integrationType = !qualys`
+> * `open = true`
 
 > **Target Filters**
-> &nbsp;
->   * `fqdn = source.targets`
+>
+> * `fqdn = source.targets`
 
 ## `(Finding|Vulnerability) <-HAS- Host`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
->   * `open = true`
+>
+> * `_integrationType = !qualys`
+> * `open = true`
 
 > **Target Filters**
-> &nbsp;
->   * `hostname = source.targets`
+>
+> * `hostname = source.targets`
 
 ## `(Finding|Vulnerability) <-HAS- Host`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
->   * `open = true`
+>
+> * `_integrationType = !qualys`
+> * `open = true`
 
 > **Target Filters**
-> &nbsp;
->   * `address = source.targets`
+>
+> * `address = source.targets`
 
 ## `(Finding|Vulnerability) <-HAS- Host`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
->   * `open = true`
+>
+> * `_integrationType = !qualys`
+> * `open = true`
 
 > **Target Filters**
-> &nbsp;
->   * `ipAddress = source.targets`
+>
+> * `ipAddress = source.targets`
 
 ## `(Finding|Vulnerability) <-HAS- Host`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
->   * `open = true`
+>
+> * `_integrationType = !qualys`
+> * `open = true`
 
 > **Target Filters**
-> &nbsp;
->   * `publicIpAddress = source.targets`
+>
+> * `publicIpAddress = source.targets`
 
 ## `(Finding|Vulnerability) <-HAS- Host`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
->   * `open = true`
+>
+> * `_integrationType = !qualys`
+> * `open = true`
 
 > **Target Filters**
-> &nbsp;
->   * `privateIpAddress = source.targets`
+>
+> * `privateIpAddress = source.targets`
 
 ## `(Finding|Vulnerability) <-HAD- Host`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
->   * `open = false`
+>
+> * `_integrationType = !qualys`
+> * `open = false`
 
 > **Target Filters**
-> &nbsp;
->   * `id = source.targets`
+>
+> * `id = source.targets`
 
 ## `(Finding|Vulnerability) <-HAD- Host`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
->   * `open = false`
+>
+> * `_integrationType = !qualys`
+> * `open = false`
 
 > **Target Filters**
-> &nbsp;
->   * `name = source.targets`
+>
+> * `name = source.targets`
 
 ## `(Finding|Vulnerability) <-HAD- Host`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
->   * `open = false`
+>
+> * `_integrationType = !qualys`
+> * `open = false`
 
 > **Target Filters**
-> &nbsp;
->   * `fqdn = source.targets`
+>
+> * `fqdn = source.targets`
 
 ## `(Finding|Vulnerability) <-HAD- Host`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
->   * `open = false`
+>
+> * `_integrationType = !qualys`
+> * `open = false`
 
 > **Target Filters**
-> &nbsp;
->   * `hostname = source.targets`
+>
+> * `hostname = source.targets`
 
 ## `(Finding|Vulnerability) <-HAD- Host`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
->   * `open = false`
+>
+> * `_integrationType = !qualys`
+> * `open = false`
 
 > **Target Filters**
-> &nbsp;
->   * `address = source.targets`
+>
+> * `address = source.targets`
 
 ## `(Finding|Vulnerability) <-HAD- Host`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
->   * `open = false`
+>
+> * `_integrationType = !qualys`
+> * `open = false`
 
 > **Target Filters**
-> &nbsp;
->   * `ipAddress = source.targets`
+>
+> * `ipAddress = source.targets`
 
 ## `(Finding|Vulnerability) <-HAD- Host`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
->   * `open = false`
+>
+> * `_integrationType = !qualys`
+> * `open = false`
 
 > **Target Filters**
-> &nbsp;
->   * `publicIpAddress = source.targets`
+>
+> * `publicIpAddress = source.targets`
 
 ## `(Finding|Vulnerability) <-HAD- Host`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
->   * `open = false`
+>
+> * `_integrationType = !qualys`
+> * `open = false`
 
 > **Target Filters**
-> &nbsp;
->   * `privateIpAddress = source.targets`
+>
+> * `privateIpAddress = source.targets`
 
 ## `(Finding|Vulnerability) <-HAS- (CodeRepo|Project|Application)`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
->   * `open = true`
+>
+> * `_integrationType = !qualys`
+> * `open = true`
 
 > **Target Filters**
-> &nbsp;
->   * `name = source.targets`
+>
+> * `name = source.targets`
 
 ## `Finding <-HAS- (Application)`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
+>
+> * `_integrationType = !qualys`
 
 > **Target Filters**
-> &nbsp;
->   * `id = source.targets`
+>
+> * `id = source.targets`
 
 ## `(Finding|Vulnerability) <-HAD- (CodeRepo|Project|Application)`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
->   * `open = false`
+>
+> * `_integrationType = !qualys`
+> * `open = false`
 
 > **Target Filters**
-> &nbsp;
->   * `name = source.targets`
+>
+> * `name = source.targets`
 
 ## `(Finding|Vulnerability) <-HAS- CodeRepo`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
->   * `open = true`
+>
+> * `_integrationType = !qualys`
+> * `open = true`
 
 > **Target Filters**
-> &nbsp;
->   * `fullName = source.targets`
+>
+> * `fullName = source.targets`
 
 ## `(Finding|Vulnerability) <-HAD- CodeRepo`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !qualys`
->   * `open = false`
+>
+> * `_integrationType = !qualys`
+> * `open = false`
 
 > **Target Filters**
-> &nbsp;
->   * `fullName = source.targets`
+>
+> * `fullName = source.targets`
 
 ## `(Finding|Risk|Vulnerability) <-IDENTIFIED- Assessment`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !(azure|qualys)`
+>
+> * `_integrationType = !(azure|qualys)`
 
 > **Target Filters**
-> &nbsp;
->   * `name = source.assessment`
+>
+> * `name = source.assessment`
 
 ## `(Finding|Risk|Vulnerability) <-IDENTIFIED- Assessment`
 
 > **Source Filters**
-> &nbsp;
->   * `_integrationType = !(azure|qualys)`
+>
+> * `_integrationType = !(azure|qualys)`
 
 > **Target Filters**
-> &nbsp;
->   * `_key = source.assessment`
-
-## `ThreatIntel <-HAS- Finding`
-
-> **Target Filters**
-> &nbsp;
->   * `qid = source.qid`
+>
+> * `_key = source.assessment`
 
 ## `ThreatIntel <-HAS- Vulnerability`
 
 > **Target Filters**
-> &nbsp;
->   * `qid = source.qid`
+>
+> * `qid = source.qid`
 
 ## `Assessment <-PERFORMED- Person`
 
 > **Target Filters**
-> &nbsp;
->   * `email = [source.assessor,source.assessors]`
+>
+> * `email = [source.assessor,source.assessors]`
 
 ## `Assessment -TARGETS-> Vendor`
 
 > **Target Filters**
-> &nbsp;
->   * `name = source.vendor`
+>
+> * `name = source.vendor`
 
 ## `Device <-OWNS- Person`
 
 > **Target Filters**
-> &nbsp;
->   * `email = [toLowerCase(source.owner),toLowerCase(source.email),toLowerCase(source.username)]`
+>
+> * `email = [toLowerCase(source.owner),toLowerCase(source.email),toLowerCase(source.username)]`
 
 ## `Device <-OWNS- Person`
 
 > **Target Filters**
-> &nbsp;
->   * `userId = [toLowerCase(source.username),toLowerCase(source.userId)]`
+>
+> * `userId = [toLowerCase(source.username),toLowerCase(source.userId)]`
 
 ## `Device <-HAS- Person`
 
 ## `Device <-HAS- Person`
 
 > **Target Filters**
-> &nbsp;
->   * `email = toLowerCase(source.users)`
+>
+> * `email = toLowerCase(source.users)`
 
 ## `Vendor <-MANAGES- Person`
 
 > **Target Filters**
-> &nbsp;
->   * `email = [source.owner,source.owners,source.admins]`
+>
+> * `email = [source.owner,source.owners,source.admins]`
 
 ## `Vendor <-APPROVES- PR`
 
 > **Target Filters**
-> &nbsp;
->   * `webLink = source.approvalPRLink`
+>
+> * `webLink = source.approvalPRLink`
 
 ## `Vendor <-APPROVES- PR`
 
 > **Target Filters**
-> &nbsp;
->   * `displayName = source.approvalPRName`
+>
+> * `displayName = source.approvalPRName`
 
 ## `Account <-HOSTS- Vendor`
 
 > **Target Filters**
-> &nbsp;
->   * `name = source.vendor`
+>
+> * `name = source.vendor`
 
 > **Transferred Properties**
-> &nbsp;
->   * `_type = toLowerCase(source.vendor)`
->   * `name = source.vendor`
->   * `displayName = source.vendor`
+>
+> * `_type = toLowerCase(source.vendor)`
+> * `name = source.vendor`
+> * `displayName = source.vendor`
 
 ## `CodeRepo <-HAS- Application`
 
 > **Target Filters**
-> &nbsp;
->   * `name = source.application`
+>
+> * `name = source.application`
 
 > **Transferred Properties**
-> &nbsp;
->   * `name = source.application`
+>
+> * `name = source.application`
 
 ## `CodeRepo -DEFINES-> Function`
 
 > **Target Filters**
-> &nbsp;
->   * `name = [source.name,source.functions]`
+>
+> * `name = [source.name,source.functions]`
 
 ## `Product -HAS-> Project`
 
 > **Target Filters**
-> &nbsp;
->   * `key = source.projectKey`
+>
+> * `key = source.projectKey`
 
 ## `Module -REQUIRES-> Module`
 
 > **Target Filters**
-> &nbsp;
->   * `id = source.requires`
+>
+> * `id = source.requires`
+
+## `Domain -HAS-> User`
+
+> **Source Filters**
+>
+> * `domainName = !null`
+
+## `custom_mapping_rule_load_test_custom_device -IS-> custom_mapping_rule_load_test_integration_device`
+
+> **Source Filters**
+>
+> * `_accountId = ********-****-****-****-************`
+> * `integrationLinkId = !null`
+
+> **Target Filters**
+>
+> * `linkId = source.integrationLinkId`
+
+## `user_endpoint <-MANAGES- crowdstrike_sensor`
+
+> **Source Filters**
+>
+> * `_accountId = ********-****-****-****-************`
+> * `serialNumber = !null`
+
+> **Target Filters**
+>
+> * `serialNumber = source.serialNumber`
+
+## `* <-HAS- *`
+
+> **Source Filters**
+>
+> * `_accountId = ********-****-****-****-************`
+> * `tag.app = !null`
+
+> **Target Filters**
+>
+> * `displayName = toLowerCase(source.tag.app)`
+
+## `Project -HAS-> *`
+
+> **Source Filters**
+>
+> * `_accountId = ********-****-****-****-************`
+
+> **Target Filters**
+>
+> * `tag.app = toLowerCase(source.displayName)`
+
+## `User -IS-> Person`
+
+> **Target Filters**
+>
+> * `userId = toLowerCase(source.email)`
+
+## `User -IS-> Person`
+
+> **Target Filters**
+>
+> * `username = toLowerCase(source.email)`
+
+## `Device <-PROTECTS- HostAgent`
+
+> **Target Filters**
+>
+> * `macAddress = source.macAddress`
+
+## `Device <-PROTECTS- HostAgent`
+
+> **Target Filters**
+>
+> * `serialNumber = source.serial`
+
+## `Device <-PROTECTS- HostAgent`
+
+> **Target Filters**
+>
+> * `hostname = source.deviceId`
+
+## `Device <-PROTECTS- HostAgent`
+
+> **Target Filters**
+>
+> * `serialNumber = source._key`
+
+## `Device <-PROTECTS- HostAgent`
+
+> **Target Filters**
+>
+> * `macAddress = source.altMacAddress`
+
+## `(Application|Product|Software) <-SUPPLIES- Vendor`
+
+> **Target Filters**
+>
+> * `_key = source.vendor`
+
+## `(Application|Product|Software) <-SUPPLIES- Vendor`
+
+> **Target Filters**
+>
+> * `name = source.vendor`
+
+## `Document <-HAS- (Application|Product|Software)`
+
+> **Target Filters**
+>
+> * `_key = source.product`
+
+## `Document <-HAS- (Application|Product|Software)`
+
+> **Target Filters**
+>
+> * `name = source.product`
