@@ -38,18 +38,18 @@ If you need help with this integration, please contact
 
 1. From the top navigation of the J1 Search homepage, select **Integrations**.
 
-   ​	![Landing Page](images/LandingPage.png)
+   ​	![Landing Page](../../assets/LandingPage.png)
    
 
 2. Select the **Microsoft-365** integration tile.
    
 
-   ![Definitions Page](images/DefinitionsPage.png)
+   ![Definitions Page](../../assets/DefinitionsPage.png)
 
 3. Click **New Instance**.
    
 
-   ![Instances Page](images/InstancesPage.png)
+   ![Instances Page](../../assets/InstancesPage.png)
    
 
 4. Enter the **Account Name** by which to identify this Microsoft 365 account in
@@ -62,14 +62,14 @@ If you need help with this integration, please contact
 6. Select a **Polling Interval** that you feel is sufficient for your monitoring
    needs. You can leave this as `DISABLED` and manually execute the integration.
 
-   ![](images/CompleteConfiguration.png)
+   ![](../../assets/CompleteConfiguration.png)
 
 7. Click **Create** after you have provided all the values.
 
 8. When prompted, click **Begin Authorization**.
    
 
-   ![Offsite Dialog](images/OffsiteDialog.png)
+   ![Offsite Dialog](../../assets/OffsiteDialog.png)
     
 
 9. You are then directed to the Microsoft identity platform where you must log
@@ -83,13 +83,13 @@ If you need help with this integration, please contact
    Selecting a personal account produces the following error message:
    
    
-   ![Account Error](images/PersonalAccountError.png)
+   ![Account Error](../../assets/PersonalAccountError.png)
     
    
 10. Review requested permissions (which are described below) and grant consent.
    
 
-   ![pick an account](images/PickAnAccount.png)
+   ![pick an account](../../assets/PickAnAccount.png)
     
 
 ## Permissions
