@@ -50,6 +50,16 @@ By default, J1 adds [compliance frameworks](../compliance_and-reporting/complian
 
 For each of the mapped frameworks, you can add compliance requirement and control mappings. Click the **Propagate changes to existing compliance frameworks** checkbox if you want to apply your edits to existing frameworks. 
 
+You can edit any question to enable daily polling on this question and see a trend chart in the results the next time you run the question. 
+
+![](../assets/polling-data.png) 
+
+
+
+![](../assets/time-trend-chart.png)
+
+**Note**: If you are editing the query, do not use `count()`because the daily polling counts the number of results (rows). Using `count()` results in a single count of 1.
+
 ## Full-Text Search
 
 Put your keywords in quotations (for example, "keyword") to start a full text search. Or simply enter your keywords and click **Enter**. For example:
