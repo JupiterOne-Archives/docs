@@ -105,8 +105,8 @@ FIND jupiterone_account as a return a._accountId
     }",
   "variables": { "query": "find Domain" }
 }
-```EOF
-
+EOF
+```
 An experimental [node.js client and CLI](https://github.com/JupiterOne/jupiterone-client-nodejs) is available on Github.
 
 
