@@ -74,14 +74,39 @@ FIND jupiterone_account as a return a._accountId
 
 **Example cURL command with authentication**
 
-```curl
-curl --location --request POST 'https://api.us.jupiterone.io/graphql' \
---header 'JupiterOne-Account: accountId' \
---header 'Authorization: Bearer 123456abcdef' \
+```curl --location --request POST 'https://api.us.jupiterone.io/graphql' \
 --header 'Content-Type: application/json' \
---data-raw '{"query":...}
+--header 'Authorization: Bearer apiToken' \
+--header 'Jupiterone-Account: accountId' \
+--data-raw @- << EOF
+{
+  "query": 
+    "query J1QL(
+      $query: String!
+      $cursor: String
+      $variables: JSON
+      $dryRun: Boolean
+      $remember: Boolean
+      $includeDeleted: Boolean
+      $flags: QueryV1Flags\n  ) {
+      queryV1(
+        query: $query
+        variables: $variables
+        dryRun: $dryRun
+        remember: $remember
+        includeDeleted: $includeDeleted
+        flags: $flags
+        cursor: $cursor
+      ) {
+        type
+        data
+        cursor
+      }
+    }",
+  "variables": { "query": "find Domain" }
+}
+EOF
 ```
-
 An experimental [node.js client and CLI](https://github.com/JupiterOne/jupiterone-client-nodejs) is available on Github.
 
 
