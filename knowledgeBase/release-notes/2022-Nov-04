@@ -1,8 +1,10 @@
 # JupiterOne 4 November 2022 Release
 
 ## New Features and Improvements
--   
--  
+-  J1 Query results can now visualize multiple relationships between two nodes in the graph viewer to help drive context and declutter your views.
+-  Graph widgets in Insights will now size up or size down depending on your widget size to declutter your views to keep you focused on what matters.
+-  The Graph Widget navigational UI can now be toggled on/off directly from the widget more actions button. 
+-  Dive into your complex Table Widgets with the expansion of our drill down capabilities for Insights. 
 
 ## Integrations
 ### General
@@ -11,11 +13,13 @@
 
 
 ## Bug Fixes
-- 
+-  Small issues in the datatable were resolved. 
+-  Unnecessary refresh on the J1 Query results Entity Drawer was resolved.
 
 ## Coming Soon
 - J1 Alerts is getting a design refresh! We are continuing our look-and-feel updates over J1 Alerts. 
 - Leverage JupiterOne's knowledge in Insights with the J1 managed dashboards for security use cases that help you solve real problems. We are putting our knowledge front and center in the J1 Library. 
 - Your J1 Query results will become more effective with upgrades to the table visualization and a new expandable entity drawer to help you dive into entities without leaving your J1 Query results tables or your graph view. The expanded entity drawer will provide J1 curated graph visualizations.
+- Insights will be upgraded with the ability download J1 dashboards as well as individual widgets to help you share your visualizations with ease. 
 - No more silent failures for your alert rules: get notified when rules are not working, including an error log to help you triage and manage. 
 - In the coming months, we will be updating the Questions Library, Homepage, and KPIs to make finding the right information and questions even easier.
