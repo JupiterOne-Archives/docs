@@ -13,8 +13,12 @@
 
 
 ## Bug Fixes
--  Small issues in the datatable were resolved. 
--  Unnecessary refresh on the J1 Query results Entity Drawer was resolved.
+- Small issues in the datatable were resolved. 
+- Unnecessary refresh on the J1 Query results Entity Drawer was resolved.
+- Small SSO issues for those based outside of the US were resolved. 
+- Unexpected behavior related to toggling the query sidebar on/off was resolved. 
+
+
 
 ## Coming Soon
 - J1 Alerts is getting a design refresh! We are continuing our look-and-feel updates over J1 Alerts. 
