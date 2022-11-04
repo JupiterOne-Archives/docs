@@ -9,7 +9,7 @@ platform. Custom integrations are perfect for:
 Custom integrations can be created with the help of the
 [open source SDK](https://github.com/JupiterOne/sdk). For more information on
 creating integrations see the
-[README](https://github.com/JupiterOne/sdk/blob/main/README.md) for the SDK.
+[SDK README](https://github.com/JupiterOne/sdk/blob/main/README.md) and the [integration-template repository](https://github.com/JupiterOne/integration-template).
 
 ## Configuring a custom integration in JupiterOne
 
