@@ -1,9 +1,10 @@
 # Custom Integration
 
 Custom integrations provide a way to add bespoke data to the JupiterOne
-platform. Custom integrations are perfect: - Integrating with a provider that
-does not have an integration with JupiterOne - Integrations that need access to
-local systems or data - Executing integrations in your own environment
+platform. Custom integrations are perfect for: 
+  - Integrating with a provider that does not have an integration with JupiterOne 
+  - Integrations that need access to local systems or data 
+  - Executing integrations in your own environment
 
 Custom integrations can be created with the help of the
 [open source SDK](https://github.com/JupiterOne/sdk). For more information on
