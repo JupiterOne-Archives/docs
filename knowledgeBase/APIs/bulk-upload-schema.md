@@ -1,27 +1,27 @@
 # JupiterOne Bulk Upload Schema
 
-> IMPORTANT: Bulk upload triggers a data synchronization process that automatically **updates** or **deletes** entities/relationships as needed. Previously existing entities/relationships within the same `scope` that no longer exist in the latest upload will be marked for deletion.
+IMPORTANT: Bulk upload triggers a data synchronization process that automatically **updates** or **deletes** entities/relationships as needed. Previously existing entities/relationships within the same `scope` that no longer exist in the latest upload will be marked for deletion.
 
-> Therefore, the upload file should always include the **complete** set of entities or relationships within the defined `scope` to avoid unintended data deletion.
+Therefore, the upload file should always include the **complete** set of entities or relationships within the defined `scope` to avoid unintended data deletion.
 
-> In the UI, users are prompted to select/enter a `scope` when uploading a file. In the API, `scope` is provided when starting a synchronization job.
-
-
-> **For example:**
-
-> ```text
-> POST /persister/synchronization/jobs
-> ```
-
-> ```json
-> {
->   "source": "api",
->   "scope": "my-sync-job"
-> }
-> ```
+In the UI, users are prompted to select/enter a `scope` when uploading a file. In the API, `scope` is provided when starting a synchronization job.
 
 
-> See the [API documentation](./jupiterone-api.md) for more details.
+**For example:**
+
+```text
+POST /persister/synchronization/jobs
+```
+
+```json
+ {
+   "source": "api",
+   "scope": "my-sync-job"
+ }
+```
+
+
+See the [API documentation](./jupiterone-api.md) for more details.
 
 
 To successfully upload entity and relationship data, follow the schema outlined below:
@@ -79,7 +79,7 @@ To successfully upload entity and relationship data, follow the schema outlined 
 | `owner`  | `string`               | Identifier for the person/thing responsible for this entity.                  |
 
 
-> Properties with `_` prefix are reserved as JupiterOne system internal metadata properties. Other than `_key`, `_type`, `_class` as listed above, any other property beginning with `_` will be ignored when processing the upload.
+Properties with `_` prefix are reserved as JupiterOne system internal metadata properties. Other than `_key`, `_type`, `_class` as listed above, any other property beginning with `_` will be ignored when processing the upload.
 
 ## Relationship Properties
 
@@ -92,5 +92,6 @@ To successfully upload entity and relationship data, follow the schema outlined 
 | `_fromEntityKey` | `string` | The unique key for the entity on the "from" side of this relationship.                                                        |
 | `_toEntityKey`   | `string` | The unique key for the entity on the "to" side of this relationship.                                                          |
 
-> Properties with `_` prefix are reserved as JupiterOne system internal metadata properties. Other than `_key`, `_type`, `_class`, `_fromEntityKey`, and `_toEntityKey` as listed above, any other property beginning with `_` will be ignored when processing the upload.
+Properties with `_` prefix are reserved as JupiterOne system internal metadata properties. Other than `_key`, `_type`, `_class`, `_fromEntityKey`, and `_toEntityKey` as listed above, any other property beginning with `_` will be ignored when processing the upload.
 
+Read more about [creating relationships between entities](../jupiterOne-query-language_(J1QL)/creating-relationships-between-entities-you-own-and-entities-you-do-not.md).
