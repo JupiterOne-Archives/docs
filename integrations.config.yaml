@@ -271,7 +271,7 @@ integrations:
     knowledgeCategoriesPaths: APIs_and-integrations/IT-service-management
   - projectName: graph-cycognito
     displayName: Cycognito
-    knowledgeCategoriesPaths: APIs_and-integrations/attach-surface-management
+    knowledgeCategoriesPaths: APIs_and-integrations/attack-surface-management
   - projectName: graph-databricks
     displayName: Databricks
     knowledgeCategoriesPaths: APIs_and-integrations/cloud-infrastructure
