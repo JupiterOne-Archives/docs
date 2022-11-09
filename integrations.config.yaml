@@ -316,7 +316,7 @@ integrations:
     knowledgeCategoriesPaths: APIs_and-integrations/cloud-infrastructure
   - projectName: graph-atspoke
     displayName: atSpoke
-    knowledgeCategoriesPaths: APIs_and-integrations/it-service-management
+    knowledgeCategoriesPaths: APIs_and-integrations/IT-service-management
   - projectName: graph-bitbucket
     displayName: Bitbucket
     knowledgeCategoriesPaths: APIs_and-integrations/code-management
