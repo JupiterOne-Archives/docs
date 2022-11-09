@@ -1,4 +1,4 @@
-# Sonarqube Integration with JupiterOne
+# Sonarqube
 
 ## Sonarqube + JupiterOne Integration Benefits
 
@@ -8,7 +8,8 @@
 
 ## How it Works
 
-- JupiterOne periodically fetches projects, teams, and users from Sonarqube to update the graph.
+- JupiterOne periodically fetches projects, teams, and users from Sonarqube to
+  update the graph.
 - Write JupiterOne queries to review and monitor updates to the graph, or
   leverage existing queries.
 - Configure alerts to take action when JupiterOne graph changes, or leverage
@@ -27,7 +28,7 @@
 ## Support
 
 If you need help with this integration, please contact
-[JupiterOne Support](https://community.askj1.com).
+[JupiterOne Support](https://support.jupiterone.io).
 
 ## Integration Walkthrough
 
@@ -37,7 +38,7 @@ If you need help with this integration, please contact
 
 ### In JupiterOne
 
-1. From the configuration **Gear Icon**, select **Integrations**.
+1. From the top navigation of the J1 Search homepage, select **Integrations**
 2. Scroll to the **Sonarqube** integration tile and click it.
 3. Click the **Add Configuration** button and configure the following settings:
 
@@ -59,7 +60,7 @@ TODO: List specific actions that must be taken to uninstall the integration.
 Many of the following steps will be reusable; take care to be sure they remain
 accurate.
 
-1. From the configuration **Gear Icon**, select **Integrations**.
+1. From the top navigation of the J1 Search homepage, select **Integrations**
 2. Scroll to the **Sonarqube** integration tile and click it.
 3. Identify and click the **integration to delete**.
 4. Click the **trash can** icon.
@@ -72,7 +73,7 @@ NOTE: ALL OF THE FOLLOWING DOCUMENTATION IS GENERATED USING THE
 "j1-integration document" COMMAND. DO NOT EDIT BY HAND! PLEASE SEE THE DEVELOPER
 DOCUMENTATION FOR USAGE INFORMATION:
 
-https://github.com/JupiterOne/sdk/blob/master/docs/integrations/development.md
+https://github.com/JupiterOne/sdk/blob/main/docs/integrations/development.md
 ********************************************************************************
 -->
 
@@ -90,7 +91,7 @@ The following entities are created:
 
 ### Relationships
 
-The following relationships are created/mapped:
+The following relationships are created:
 
 | Source Entity `_type`  | Relationship `_class` | Target Entity `_type` |
 | ---------------------- | --------------------- | --------------------- |

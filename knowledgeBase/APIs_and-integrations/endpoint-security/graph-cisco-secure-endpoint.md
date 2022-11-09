@@ -4,8 +4,7 @@
 
 *   Visualize Cisco Secure Endpoint agents and the devices they protect in the
     JupiterOne graph.
-*   Map Cisco Secure Endpoint agents to devices and devices to the employee who is
-    the owner.
+*   Map Cisco Secure Endpoint agents to devices and devices to the employee who is the owner.
 *   Monitor changes to Cisco Secure Endpoint endpoints using JupiterOne alerts.
 
 ## How it Works
@@ -126,5 +125,5 @@ END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 -->
 
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
- 
+
 <!--  jupiterOneDocVersion=2-0-0 -->
