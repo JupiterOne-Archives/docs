@@ -4,9 +4,10 @@ The JupiterOne platform exposes a number of public GraphQL endpoints.
 
 **Base URL**: `https://api.us.jupiterone.io`
 
-**Endpoint for query and graph operations**: `/graphql`
+**Endpoint**: `/graphql`
 
-**Endpoint for alert and rules operations**: `/rules/graphql`
+- For query and graph operations
+- For alerts and rules operations
 
 **Rate Limits**: Rate limiting is enforced based on your account tier: 
 
@@ -629,7 +630,7 @@ This mutation creates a JupiterOne entity with the given specifications. This mu
 mutation CreateEntity (
   $entityKey: String!
   $entityType: String!
-  $entityClass: String!
+  $entityClass: [String!]!
   $timestamp: Long
   $properties: JSON
 ) {
@@ -1733,7 +1734,7 @@ Variables:
 
 ## Alert and Rules Operations
 
-**Endpoint:** `/rules/graphql`
+**Endpoint:** `/graphql`
 
 ### List alert rules
 
@@ -2593,7 +2594,7 @@ const CREATE_ENTITY = gql`
   mutation createEntity (
     $entityKey: String!
     $entityType: String!
-    $entityClass: String!
+    $entityClass: [String!]!
     $timestamp: Long
     $properties: JSON
   ) {
