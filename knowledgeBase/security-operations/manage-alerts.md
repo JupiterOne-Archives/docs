@@ -1,10 +1,10 @@
 # Alerts and Alert Rules
 
-JupiterOne allows you to configure alert rules using any J1QL query for continuous auditing and threat monitoring. You do this in J1 **Alerts**.
+JupiterOne allows you to configure rules using any J1QL query for continuous auditing and threat monitoring. You do this in J1 **Alerts**.
 
 ## Import Alert Rules from Rule Pack
 
-You must have at least one active alert rule to trigger any alert. The easiest way to add some rules is to import rule packs.
+You must have at least one active rule to trigger any alert. The easiest way to add some rules is to import rule packs.
 
 1. From the top navigation of the J1 Search homepage, select **Alerts**.
 
@@ -30,7 +30,7 @@ You must have at least one active alert rule to trigger any alert. The easiest w
 
 ## Create Custom Alert Rules
 
-To create your own custom alert rule:
+To create your own custom rule:
 
 1. From the top navigation of the J1 Search homepage, select **Alerts**.
 
@@ -74,7 +74,7 @@ You can also use templates when adding rules. The template goes inside any prope
 
 ## Managing Alerts
 
-J1 evaluates the alert rules you create each day, or at the custom interval of every 30 or 60 minutes, if specified.
+J1 evaluates the rules you create each day, or at the custom interval of every 30 or 60 minutes, if specified.
 
 To see a list of the active alerts that match the evaluation criteria of the alert rules, go to **Alerts**/Manage Rules.
 
