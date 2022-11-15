@@ -1,6 +1,6 @@
 # Asset Properties
 
-When you select any of the assets in the filtered results table, its detailed properties side panel opens on the right.
+When you select any of the assets anywhere in J1, its detailed properties side panel opens on the right.
 
 ![](../assets/asset-selected-entity-properties.png)
 
