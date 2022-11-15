@@ -15,12 +15,12 @@ You must have at least one active rule to trigger any alert. The easiest way to 
    
 
 3. Click **Import Rules**.
-   
-   
+  
+  
    ![alerts-import-pack](../assets/alerts-import-pack.png)
    ​
    
-4. From the Import Rules window, select the rule packs or individual rules within a rule pack, and click **Import**.
+4. From the Import Rules window, select the rule packs or individual rules within a rule pack, and click **Import**. 
 
    
 
