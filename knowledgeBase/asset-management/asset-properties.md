@@ -1,10 +1,10 @@
-Asset Properties
+# Asset Properties
 
+When you select any of the assets in the filtered results table, its detailed properties side panel opens on the right.
 
+![](../assets/asset-selected-entity-properties.png)
 
-## Asset Properties
-
-In the detailed properties panel that opens on the right, click the three-dot icon  ![](C:\Users\lynch\OneDrive\Documents\GitHub\docs\knowledgeBase\assets\icons\assets-more.png)  to the right of the tabs to see more options and to edit any of the asset properties.
+Click the three-dot icon  ![](C:\Users\lynch\OneDrive\Documents\GitHub\docs\knowledgeBase\assets\icons\assets-more.png)  to the right of the tabs to see more options and to edit any of the asset properties.
 
 
 ![](C:\Users\lynch\OneDrive\Documents\GitHub\docs\knowledgeBase\assets\asset-property-filter-select.png) 
