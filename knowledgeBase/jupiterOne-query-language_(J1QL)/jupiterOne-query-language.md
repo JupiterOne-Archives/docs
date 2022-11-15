@@ -252,7 +252,11 @@ FIND User THAT CONTRIBUTES TO CodeRepo
 FIND User THAT CONTRIBUTES CodeRepo
 ```
 
-**REMINDER**  J1QL keywords are not case-sensitive.
+**Note**:  J1QL keywords are not case-sensitive.
+
+#### Commenting
+
+J1QL supports comments using the format `/* comment this */`. 
 
 ## Mathematical Expressions
 
