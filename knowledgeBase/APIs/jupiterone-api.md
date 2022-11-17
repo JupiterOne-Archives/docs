@@ -630,7 +630,7 @@ This mutation creates a JupiterOne entity with the given specifications. This mu
 mutation CreateEntity (
   $entityKey: String!
   $entityType: String!
-  $entityClass: String!
+  $entityClass: [String!]!
   $timestamp: Long
   $properties: JSON
 ) {
@@ -2594,7 +2594,7 @@ const CREATE_ENTITY = gql`
   mutation createEntity (
     $entityKey: String!
     $entityType: String!
-    $entityClass: String!
+    $entityClass: [String!]!
     $timestamp: Long
     $properties: JSON
   ) {
