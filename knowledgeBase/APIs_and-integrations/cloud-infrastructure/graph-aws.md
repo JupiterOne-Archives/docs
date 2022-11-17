@@ -234,6 +234,8 @@ ingested when the integration runs:
 | Kinesis         | Kinesis Stream             | `aws_kinesis_stream` : `DataCollection`, `Queue`                         |
 | KMS             | KMS Key                    | `aws_kms_key` : `CryptoKey`                                              |
 | Lambda          | Lambda Function            | `aws_lambda_function` : `Function`                                       |
+| Macie           | Macie Service              | `aws_macie` : `Service`                                                  |
+|                 | Macie Finding              | `aws_macie_finding` : `Finding`                                          |
 | RedShift        | Redshift Cluster           | `aws_redshift_cluster` : `DataStore`, `Database`, `Cluster`              |
 | RDS             | RDS DB Cluster             | `aws_rds_cluster` : `DataStore`, `Database`, `Cluster`                   |
 |                 | RDS DB Instance            | `aws_db_instance` : `DataStore`, `Database`, `Host`                      |
@@ -310,6 +312,7 @@ The following relationships are created/mapped:
 | `aws_instance` **USES** `aws_ebs_volume`                                   |
 | `aws_instance` **USES** `aws_eip`                                          |
 | `aws_instance` **USES** `aws_eni`                                          |
+| `aws_instance` **USES** `aws_ami`                                          |
 | `aws_ebs_volume` **HAS** `aws_ebs_snapshot`                                |
 | `aws_ebs_volume` **USES** `aws_ebs_snapshot`                               |
 | `aws_ebs_volume` **USES** `aws_kms_key`                                    |
@@ -398,6 +401,7 @@ The following relationships are created/mapped:
 | `aws_s3` **HAS** `aws_s3_bucket`                                           |
 | `aws_s3_bucket` **USES** `aws_kms_key`                                     |
 | `aws_s3_bucket` **HAS** `aws_s3_bucket_policy`                             |
+| `aws_s3_bucket` **HAS** `aws_macie_finding`                                |
 | `aws_security_group` **PROTECTS** `resource`                               |
 | `aws_ec2` **HAS** `aws_security_group`                                     |
 | `aws_efs_mount_target` **HAS** `aws_security_group`                        |
