@@ -1,6 +1,6 @@
 # Using Filters in JupiterOne Assets
 
-To see all the digital assets (entities) you have, in JupiterOne, go to **Apps ![](../assets/icons/apps.png) > Assets**. There are several ways to filter the large list of entities displayed in Assets:
+To see all the digital assets (entities) you have, in JupiterOne, in the top J1 navigation bar, click **Assets**. There are several ways to filter the large list of entities displayed in Assets:
 
 - Quick filter the critical assets
 - Additional filters by class and/or type
@@ -56,10 +56,3 @@ You can also filter your assets by property by clicking the double arrows at the
 When you select any of the assets in the filtered results table, its detailed properties side panel opens on the right.
 
 ![](../assets/asset-selected-entity-properties.png)
-
-## Asset Properties
-
-In the detailed properties pane opens on the right, click the three-dot icon  ![](../assets/icons/assets-more.png)  in the top-right corner to see more options and to edit any of the asset properties.
-
-
-![](../assets/asset-property-filter-select.png) 
