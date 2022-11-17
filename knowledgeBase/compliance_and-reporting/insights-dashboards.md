@@ -8,7 +8,16 @@ The layout of each dashboard is individually saved per user, including the layou
 
 Here are a few example boards and their configurations: [https://github.com/JupiterOne/insights-dashboards](https://github.com/JupiterOne/insights-dashboards).
 
+J1 provides premade dashboards called J1 Managed Dashboards. You can duplicate/clone them so you can edit and customize the dashboards. Click the bookmark icon ![](../assets/icons/bookmark.png) to save a dashboard as a favorite. You must select which subcategory you want to save it in. 
+
+
+![](../assets/insights-mgnd-boards.png) 
+
+
+
 To learn more about how to use the dashboards, see [General Insights Dashboard Functionality](../insights-dashboards-general.md).
+
+## Creating Insights Dashboards
 
 There are three ways to create a new Insights dashboard:
 
@@ -16,9 +25,7 @@ There are three ways to create a new Insights dashboard:
 - Import a J1 prebuilt dashboard template that you can edit
 - Upload the schema of a previously created dashboard
 
-
-
-## Create a Custom Insights Dashboard with Custom Charts
+### Create a Custom Insights Dashboard with Custom Charts
 
 You can build your own custom dashboard with customized, individual charts. Each chart is powered by one or more J1QL queries.
 
@@ -42,11 +49,11 @@ You can build your own custom dashboard with customized, individual charts. Each
    - Chart colors and other formatting
      ​ 
 
-     ![custom-board](../assets/custom-board.gif) 
+     ![custom-board](../assets/custom-board.gif)  
 
 For more information about custom Insights dashboards, [watch this video](https://try.jupiterone.com/blog/how-to-create-customized-dashboards).
 
-## Import Prebuilt Insights Dashboards
+### Import Prebuilt Insights Dashboards
 
 1. Navigate to J1 **Insights** to add a board.
 
@@ -57,12 +64,12 @@ For more information about custom Insights dashboards, [watch this video](https:
    
 
    ![import-dashboard](../assets/insights-starters.gif)
-    
+   
 
    ## Upload a Dashboard Schema
 
    If there is a dashboard schema you want to use that you or someone else in your team previously created, you can upload it your Insights.
-    
+   
 
 
    ![](../assets/import-dashboard.gif) 
