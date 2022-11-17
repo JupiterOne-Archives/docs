@@ -591,3 +591,34 @@
 
 > **Target Filters**
 > * `name = source.product`
+
+## `flexera_device <-IS- tenable_asset`
+
+> **Target Filters**
+> * `biosUuid = source.serial`
+
+## `* <-DEFINES- CodeRepo`
+
+> **Source Filters**
+> * `tag.CodeRepoName = !null`
+
+> **Target Filters**
+> * `displayName = source.tag.CodeRepoName`
+
+## `CodeRepo -DEFINES-> *`
+
+> **Target Filters**
+> * `tag.CodeRepoName = source.displayName`
+
+## `* <-DEFINES- CodeRepo`
+
+> **Source Filters**
+> * `tag.CodeRepoName = !null`
+
+> **Target Filters**
+> * `fullName = source.tag.CodeRepoName`
+
+## `CodeRepo -DEFINES-> *`
+
+> **Target Filters**
+> * `tag.CodeRepoName = source.fullName`
