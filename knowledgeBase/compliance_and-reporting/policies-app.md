@@ -1,17 +1,20 @@
 # Managing Policies and Procedures on JupiterOne
 
-JupiterOne provides a **Policies** app that allows users to generate and manage corporate security policies and procedures. It has the following capabilities:
+J1 Policies enables you to generate and manage corporate security policies and procedures. It has the following capabilities:
 
 - Generating policies and procedures from templates
-- Managing policies and procedures online via the webapp
+- Managing policies and procedures online
 - Mapping controls/procedures to compliance requirements
-- Policy Builder CLI
+- Using the Policy Builder CLI
 
 ## Generating Policies and Procedures from Templates
 
-JupiterOne's Policies app provides a set of over 120 policy and procedure templates to help your organization build your security program and operations from scratch. These templates are derived from our own internal policies and procedures, and have been through several rounds of compliance assessments.
+J1 Policies provides a set of over 120 policy and procedure templates to help your organization build your security program and operations from zero. These templates are derived from the J1 internal policies and procedures, and have been through several iterations of compliance assessments.
 
-To get started, simply navigate to the **Policies** app, fill in the following three sections of information in the web form:
+To create a policy from a template:
+
+1. Click **Policies** at the top of the J1 navigation bar.
+2. Click![](../assets/icons/add-policy.png), and provide the following three sections of information:
 
 - Company information
 - Key personnel information (such as your Security and Privacy Officer)
@@ -19,14 +22,13 @@ To get started, simply navigate to the **Policies** app, fill in the following t
 
 It may take a few minutes for the policy and procedure documents to be generated for the first time.
 
-## Managing Policies and Procedures Online via the Web App
+## Managing Policies and Procedures Online
 
-Similar to the concept of "micro-services", the policies and procedures are written as "micro-docs".  Each policy and procedure document is written in its own individual file, in Markdown format, and linked together via configuration.
+Similar to the concept of micro-services, the policies and procedures are written as micro-docs.  Each policy and procedure document is written in its own individual file, in Markdown format, and linked together via configuration.
 
-The templates are open source and you can check out more details in this repo:
-<https://github.com/JupiterOne/security-policy-templates>
+The templates are open source and you can [see more details here](https://github.com/JupiterOne/security-policy-templates).
 
-The web app allows you to edit a policy or procedure directly online. Simply click **Edit** button in the upper corner of a policy or procedure document to bring up the Markdown editor.
+J1 Policies allows you to edit a policy or procedure directly online. Click **Edit** button in the upper-corner of a policy or procedure document to bring up the Markdown editor.
 
 You need to have Administrator access to your JupiterOne account to edit or export policies.
 
@@ -54,15 +56,14 @@ The "Export / Download Zip" button at the upper right corner of the screen will 
 
 ## Policy Builder CLI
 
-JupiterOne provides an offline CLI that allows you to manage your policies and procedures offline (for example, as code in a git repo), and publish to your JupiterOne account as needed.
+JupiterOne provides an offline CLI that enables you to manage your policies and procedures offline (for example, as code in a Git repo), and publish to your JupiterOne account, as needed.
 
-Detailed usage can be found in the `jupiter-policy-builder` repo and README: <https://github.com/JupiterOne/jupiter-policy-builder>
+Detailed usage can be found in the `jupiter-policy-builder` repo and README: <https://github.com/JupiterOne/jupiter-policy-builder>.
 
 ### Using Your Own Existing Policies
 
-The J1 Policies app is an optional component of the platform. It is not a prerequisite for the rest of the platform. The JupiterOne Compliance app is the only app that depends on it for proper mapping to compliance framework requirements and controls.
+J1 Policies is an optional component of the J1 platform. It is not a prerequisite for the rest of the platform. J1 Compliance is the only app that depends on J1 Policies for appropriate mappings to compliance framework requirements and controls.
 
-You are not required to use JupiterOne provided policy/procedure templates. If your organization already has written documents for security policies and procedures, and you would like to take advantage of JupiterOne Compliance app and its mapping capabilities, you can transform your existing policies and
-publish them to JupiterOne.
+You are not required to use the J1-provided policy/procedure templates. If your organization already has written documents for security policies and procedures, and you would like to take advantage of J1 Compliance and its mapping capabilities, you can transform your existing policies and publish them to JupiterOne.
 
 The structure is defined here: <https://github.com/JupiterOne/security-policy-templates>
