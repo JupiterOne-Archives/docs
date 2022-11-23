@@ -259,7 +259,9 @@ FIND User THAT CONTRIBUTES CodeRepo
 J1QL supports commenting in queries anywhere in J1using the format `/* comment this */`.  
 For example: 
 
-`Find aws_security_group /*Security Group*/ with displayName ~='elb' /*ELB Security Group*/ or displayName ~='lambda' /*Lambda Security Group*/`
+```j1ql
+Find aws_security_group /*Security Group*/ with displayName ~='elb' /*ELB Security Group*/ or displayName ~='lambda' /*Lambda Security Group*/
+```
 
 ## Mathematical Expressions
 
