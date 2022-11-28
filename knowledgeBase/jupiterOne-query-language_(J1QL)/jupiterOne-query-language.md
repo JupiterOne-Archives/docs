@@ -256,7 +256,7 @@ FIND User THAT CONTRIBUTES CodeRepo
 
 #### Commenting
 
-J1QL supports commenting in queries anywhere in J1using the format `/* comment this */`.  
+J1QL supports commenting in queries anywhere in J1 using the format `/* comment this */`.  
 For example: 
 
 ```j1ql
