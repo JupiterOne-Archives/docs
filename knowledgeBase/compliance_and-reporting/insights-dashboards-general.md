@@ -2,10 +2,18 @@
 
 - Click a pie or bar chart to open a detailed table of the selected data point:
   
+  
   ![](../assets/drilldown-insights.gif)
   
    
   
+- Click any row in a dashboard table to see more detailed information about the entity in that row. 
+  
+
+  ![](../assets/insights-drill-down-table-row.gif) 
+
+  
+
 - Duplicate or delete boards:
   ​
 
