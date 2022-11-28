@@ -603,22 +603,35 @@
 > * `tag.CodeRepoName = !null`
 
 > **Target Filters**
-> * `displayName = source.tag.CodeRepoName`
+> * `name = source.tag.CodeRepoName`
 
 ## `CodeRepo -DEFINES-> *`
 
 > **Target Filters**
-> * `tag.CodeRepoName = source.displayName`
+> * `tag.CodeRepoName = source.name`
 
 ## `* <-DEFINES- CodeRepo`
 
 > **Source Filters**
-> * `tag.CodeRepoName = !null`
+> * `tag.CodeRepoFullName = !null`
 
 > **Target Filters**
-> * `fullName = source.tag.CodeRepoName`
+> * `fullName = source.tag.CodeRepoFullName`
 
 ## `CodeRepo -DEFINES-> *`
 
 > **Target Filters**
-> * `tag.CodeRepoName = source.fullName`
+> * `tag.CodeRepoFullName = source.fullName`
+
+## `* <-DEFINES- PR`
+
+> **Source Filters**
+> * `tag.PRName = !null`
+
+> **Target Filters**
+> * `displayName = source.tag.PRName`
+
+## `CodeRepo -DEFINES-> *`
+
+> **Target Filters**
+> * `tag.PRName = source.displayName`
