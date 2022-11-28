@@ -252,7 +252,16 @@ FIND User THAT CONTRIBUTES TO CodeRepo
 FIND User THAT CONTRIBUTES CodeRepo
 ```
 
-**REMINDER**  J1QL keywords are not case-sensitive.
+**Note**:  J1QL keywords are not case-sensitive.
+
+#### Commenting
+
+J1QL supports commenting in queries anywhere in J1 using the format `/* comment this */`.  
+For example: 
+
+```j1ql
+Find aws_security_group /*Security Group*/ with displayName ~='elb' /*ELB Security Group*/ or displayName ~='lambda' /*Lambda Security Group*/
+```
 
 ## Mathematical Expressions
 
