@@ -26,8 +26,7 @@ To create a policy from a template:
 
    
 
-It may take a few minutes for the policy and procedure documents to be generated for the first time. After you create documents, someone in your team must review and accept them. The reviewer must have the Person entity class with an associated email address. 
-
+It may take a few minutes for the policy and procedure documents to be generated for the first time. After you create documents, someone in your team must review and accept them. The reviewer must have the Person entity class with an associated email address. If the reviewer does not that the Person entity, [you can add it from J1 Assets](../getting-started_and-admin/person-team-relationship.md). 
 
 ![](../assets/policies-accept.png) 
 
