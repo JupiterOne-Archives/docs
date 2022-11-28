@@ -58,8 +58,8 @@ The custom rule you have added is evaluated daily, hourly, or with streaming eva
 J1 provides the ability to trigger the following actions when the query evaluation returns at least one match:
 
 - Email: You provide the email addresses to alert and what you want in the email message.
-- Slack: You must configure the Slack integration for JupiterOne by [following these instructions](../APIs_and-integrations/workflow/graph-slack.md). Ensure that you specify the channel in the format `#channel`.
-- JIRA: You must configure the JIRA integration for JupiterOne by [following these instructions](../APIs_and-integrations/workflow/graph-jira.md). When you create a rule that triggers the creation of a Jira ticket, you provide the following:
+- Slack: You must configure the Slack integration for JupiterOne by [following these instructions](../APIs_and-integrations/business-tools/graph-slack.md). Ensure that you specify the channel in the format `#channel`.
+- JIRA: You must configure the JIRA integration for JupiterOne by [following these instructions](../APIs_and-integrations/ticketing/graph-jira.md). When you create a rule that triggers the creation of a Jira ticket, you provide the following:
   - Summary: title of the Jira ticket
   - Description: J1 automatically lists the affected entities and the associated query, but you can edit this field to contain other information.
   - Project: ID of the Jira project to which you want to assign the ticket.
@@ -68,6 +68,8 @@ J1 provides the ability to trigger the following actions when the query evaluati
   - Integrations Instance: select the Jira instance from the dropdown menu.
   - Additional Fields: you can add any other of the Jira ticket fields if you want to return that information. 
 
+  Read more about the [J1 alert rule schema](../APIs/alert-rule-schema.md).
+  
 - ServiceNow: Select the integration instance from the dropdown menu and enter the content for the request body. The message body is sent to the `/api/now/table` incident endpoint. Go to the REST API Explorer page in your ServiceNow deployment to learn about additional fields. The request automatically assigns the number property to be `j1:{rule-instance-id}`.
 - SNS: The AWS account you want to send to must be configured as an AWS Integration, and the J1 IAM role for the AWS account you want to publish to must have the `SNS:Publish` permission.
 - SQS: The AWS account you want to send to must be configured as an AWS Integration, and the J1 IAM role for the AWS account you want to publish to must have the `SQS:SendMessage` permission.
