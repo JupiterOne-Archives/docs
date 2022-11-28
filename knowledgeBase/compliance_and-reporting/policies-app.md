@@ -14,23 +14,29 @@ J1 Policies provides a set of over 120 policy and procedure templates to help yo
 To create a policy from a template:
 
 1. Click **Policies** at the top of the J1 navigation bar.
-2. Click![](../assets/icons/add-policy.png), and provide the following three sections of information:
 
-- Company information
-- Key personnel information (such as your Security and Privacy Officer)
-- Security and DevOps tooling information
+2. Select in the left column the policy template you want to use and customize.
 
-It may take a few minutes for the policy and procedure documents to be generated for the first time.
+3. From the three-dot menu in the upper-corner of a policy, click **Edit Policy**. You can also edit  controls and procedures by selecting the edit option for the respective menu.
 
-## Managing Policies and Procedures Online
+   You must have Administrator access to your JupiterOne account to edit or export policies.
+   
 
-Similar to the concept of micro-services, the policies and procedures are written as micro-docs.  Each policy and procedure document is written in its own individual file, in Markdown format, and linked together via configuration.
+   ![](../assets/policies-edit.png) 
+
+   
+
+It may take a few minutes for the policy and procedure documents to be generated for the first time. After you create documents, someone in your team must review and accept them. The reviewer must have the Person entity class with an associated email address. 
+
+
+![](../assets/policies-accept.png) 
+
+
+## Managing Policies and Procedures
+
+Similar to the concept of micro-services, the policies and procedures are written as micro-docs.  Each policy and procedure document is written in its own individual file, in Markdown format, and linked together via a configuration.
 
 The templates are open source and you can [see more details here](https://github.com/JupiterOne/security-policy-templates).
-
-J1 Policies allows you to edit a policy or procedure directly online. Click **Edit** button in the upper-corner of a policy or procedure document to bring up the Markdown editor.
-
-You need to have Administrator access to your JupiterOne account to edit or export policies.
 
 ### Variables
 
@@ -42,13 +48,13 @@ The procedure editor also presents you a short summary guidance description. Add
 
 ### Versioning
 
-Edits to policies and procedure documents are automatically versioned upon save. The `{{defaultRevision}}` variable will be populated with the date the document was last edited.
+Edits to policies and procedure documents are automatically versioned upon save. The `{{defaultRevision}}` variable is populated with the date the document was last edited.
 
 Currently the web app does not have a UI to view previous versions of documents.
 
-### Download / export policy and procedure documents
+### Download/Export Policy and Procedure Documents
 
-The "Export / Download Zip" button at the upper right corner of the screen will generate a zip file containing the following three sets of files:
+The Export / Download Zip button at the upper right corner of the screen will generate a zip file containing the following three sets of files:
 
 - templates in Markdown format
 - final policies and procedures in Markdown format
