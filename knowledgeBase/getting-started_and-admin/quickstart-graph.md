@@ -49,6 +49,13 @@ Here's a screenshot of a graph with the side property panel and filter panel ope
 
 ![](../assets/aws-inspector-guardduty-findings-graph.png)
 
+If two assets have more than one relationship, click the arrow between the assets to open the details side panel that lists the relationships.
+
+
+![](../assets/graph-relations.gif)
+
+
+
 **Zoom and Move**
 
 You can move the graph in all directions with the directional arrows in the circle located in the bottom-right of the graph. Use the pointer/hand icon to toggle between your cursor type. Use the  The +/-  slider zooms in and out of the graph.
