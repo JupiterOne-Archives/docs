@@ -4,7 +4,8 @@
 # doesn't need to match the target lambda environment
 # Node.js version since we still use `babel` to transpile
 # to the correct target runtime.
-FROM public.ecr.aws/bitnami/node:12-prod as builder
+FROM node:14-bullseye-slim as builder
+RUN apt-get update && apt-get install -y unzip
 
 ENV BUILD_DIR=/opt/jupiterone/build
 
