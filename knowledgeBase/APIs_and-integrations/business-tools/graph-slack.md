@@ -1,4 +1,4 @@
-# Slack Integration with JupiterOne
+# JupiterOne integration for Slack
 
 ## Slack + JupiterOne Integration Benefits
 
@@ -38,7 +38,7 @@ ingesting relevant information and send notifications via the
 
 ### In Slack
 
-1.  First navigate to the JupiterOne Slack integration configuration page (see
+1.  First navigate to the JupiterOne integration for Slack configuration page (see
     detailed steps in the **In JupiterOne** section below)
 2.  Fill out relavant integration instance form information and OAuth scopes that
     you'd like the Slack app to request. All read scopes are used to ingest data
@@ -90,7 +90,7 @@ Additionally, see the
 for technical details on alert rule/action properties.
 
 JupiterOne can deliver Slack messages directly to any channel or to specific
-users in a Slack Channel once the JupiterOne Slack integration has been
+users in a Slack Channel once the JupiterOne integration for Slack has been
 configured via the JupiterOne web app. This will prompt the JupiterOne Slack app
 to be installed in your Workspace.
 
