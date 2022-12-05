@@ -23,7 +23,6 @@ pipeline {
 
         securityScan()
 
-        sh 'jupiterone-build'
       }
     }
 
@@ -45,7 +44,6 @@ pipeline {
         sh 'yarn lint'
         sh 'yarn test:unit'
         sh 'yarn bundle'
-        sh 'jupiterone-build'
 
         withCredentials([
           string(credentialsId: 'VANILLA_PROD_ENV_TOKEN', variable: 'TOKEN')
@@ -86,7 +84,6 @@ pipeline {
         sh 'yarn lint'
         sh 'yarn test:unit'
         sh 'yarn bundle'
-        sh 'jupiterone-build'
 
         withCredentials([
           string(credentialsId: 'VANILLA_STAGING_ENV_TOKEN', variable: 'TOKEN')
@@ -118,7 +115,6 @@ pipeline {
         sh 'yarn lint'
         sh 'yarn test:unit'
         sh 'yarn bundle'
-        sh 'jupiterone-build'
 
         withCredentials([
           string(credentialsId: 'VANILLA_STAGING_ENV_TOKEN', variable: 'TOKEN')
@@ -149,7 +145,6 @@ pipeline {
         sh 'yarn lint'
         sh 'yarn test:unit'
         sh 'yarn bundle'
-        sh 'jupiterone-build'
 
         withCredentials([
           string(credentialsId: 'VANILLA_PROD_ENV_TOKEN', variable: 'TOKEN')
