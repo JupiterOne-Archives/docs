@@ -1,4 +1,4 @@
-# JupiterOne integration for Slack
+# Slack
 
 ## Slack + JupiterOne Integration Benefits
 
@@ -64,7 +64,7 @@ recommended that an Administrator or Owner install the application.
 
 ### In JupiterOne
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
+1.  From the top navigation of the J1 Search homepage, select **Integrations**.
 2.  Scroll to the **Slack** integration tile and click it.
 3.  Click the **Add Configuration** button and configure the following settings:
 
