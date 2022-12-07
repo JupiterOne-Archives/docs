@@ -32,7 +32,7 @@
 - Configure alerts to take action when the JupiterOne graph changes, or leverage
   existing alerts.
 
-!!! note
+Note:
 
     Information is ingested from all AWS regions that do not require additional
     contractual arrangements with AWS. Please submit a JupiterOne support request if
@@ -97,31 +97,46 @@ permissions missing from the AWS managed policy. The exact policy and permission
 statements can be found in the public [JupiterOne AWS CloudFormation][1] project
 on Github.
 
-See the [AWS data model map][3] for more information about the IAM access and trusts. 
+See the [AWS data model map][3] for more information about the IAM access and
+trusts.
 
 [2]:
   https://console.aws.amazon.com/iam/home#policies/arn:aws:iam::aws:policy/SecurityAudit
-
 [3]:
   https://community.askj1.com/kb/articles/845-jupiterone-data-model-for-aws-iam-access-and-trusts
 
 ### Manage Sub-Accounts
 
-After you have configured your AWS Organization master account in JupiterOne, and have attached specific policies and are using a specific external trust ID. When adding or configuring sub-accounts, remember to note the IAM role name, policies, and external trust ID that you have used for the master account. 
+After you have configured your AWS Organization master account in JupiterOne,
+and have attached specific policies and are using a specific external trust ID.
+When adding or configuring sub-accounts, remember to note the IAM role name,
+policies, and external trust ID that you have used for the master account.
 
-Use your preferred infrastructure-as-code method to systematically generate an identical J1 IAM role in each of your sub-accounts. Ensure you name the IAM Role identically, attach the same policies, and use the same external trust ID as you used with the master account configuration.
+Use your preferred infrastructure-as-code method to systematically generate an
+identical J1 IAM role in each of your sub-accounts. Ensure you name the IAM Role
+identically, attach the same policies, and use the same external trust ID as you
+used with the master account configuration.
 
-In the J1 Integrations UI, select a polling interval and the **Auto-configure additional integrations...** option in your master account configuration.
+In the J1 Integrations UI, select a polling interval and the **Auto-configure
+additional integrations...** option in your master account configuration.
 
-Jupiter1 automatically ingests all sub-accounts from the Organization the next time it polls your environment.
+Jupiter1 automatically ingests all sub-accounts from the Organization the next
+time it polls your environment.
 
-To omit specific sub-accounts when auto-configuring J1 AWS integrations from an Organizations master account, add the optional `j1-integration: SKIP` tag to the sub-account in your infrastructure-as-code or from the AWS Organizations web console.
+To omit specific sub-accounts when auto-configuring J1 AWS integrations from an
+Organizations master account, add the optional `j1-integration: SKIP` tag to the
+sub-account in your infrastructure-as-code or from the AWS Organizations web
+console.
 
 ### Service Control Provider Issues
 
-Errors may occur after configuring one or many AWS integrations if there is a Service Control Policy (SCP) blocking specified services or regions. Any AWS Services that JupiterOne cannot ingest are listed in logs of the *Integration Jobs* found in **Integrations > Configurations > Settings > Jobs**.
+Errors may occur after configuring one or many AWS integrations if there is a
+Service Control Policy (SCP) blocking specified services or regions. Any AWS
+Services that JupiterOne cannot ingest are listed in logs of the _Integration
+Jobs_ found in **Integrations > Configurations > Settings > Jobs**.
 
-For each SCP that is blocking JupiterOne ingestion, add the following condition element to your SCP JSON:
+For each SCP that is blocking JupiterOne ingestion, add the following condition
+element to your SCP JSON:
 
 ```
 "Condition": {
@@ -133,9 +148,12 @@ For each SCP that is blocking JupiterOne ingestion, add the following condition 
 }
 ```
 
-Ensure this ARN matches the IAM Role ARN you used to configure your JupiterOne AWS integration.
+Ensure this ARN matches the IAM Role ARN you used to configure your JupiterOne
+AWS integration.
 
-See the [AWS Service control policies documentation](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html) for the latest information.
+See the
+[AWS Service control policies documentation](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html)
+for the latest information.
 
 ## How to Uninstall
 
@@ -178,7 +196,8 @@ ingested when the integration runs:
 |                 | EC2 Instance               | `aws_instance` : `Host`                                                  |
 |                 | EC2 Key Pair               | `aws_key_pair` : `AccessKey`                                             |
 |                 | EBS Volume                 | `aws_ebs_volume` : `DataStore`, `Disk`                                   |
-|                 | EBS Volume Snapshot        | `aws_ebs_snapshot` : `DataStore`, `Disk`, `Image`                        |
+|                 | EBS Volume Snapshot*       | `aws_ebs_snapshot` : `DataStore`, `Disk`, `Image`                       |
+|                 |                            |* To prevent API rate limits and slowing ingestion speed, accounts with >1000 `aws_ebs_snapshot` entities do not include the `public`, `shared`, `sharedWithAccounts`, and `restorableByUserIds` properties
 |                 | Elastic IP                 | `aws_eip` : `IpAddress`                                                  |
 |                 | Internet Gateway           | `aws_internet_gateway` : `Gateway`                                       |
 |                 | Launch Template            | `aws_launch_template` : `Configuration`                                  |
@@ -454,7 +473,7 @@ The following relationships are created/mapped:
     1. This is mapped automatically only when the IAM user has an `Email`
        tag, or the `username` of the IAM User is an email that matches that of a
        `Person` entity in the graph.
-    
+
     2. `Domain` entities include domains registered on AWS Route53 (i.e.
        `aws_route53_domain`) and those registered outside of AWS and added into
        JupiterOne separately (e.g. a domain registered on GoDaddy).
@@ -477,9 +496,9 @@ assume role trust policies to determine the following mapping:
     `aws_iam_user_policy`, `aws_iam_group_policy` and `aws_iam_role_policy`) -- to
     other AWS entities based on the actions and resources specified by the policy
     document.
-    
+
     **TIP** Use `AccessPolicy` class in a query to easily include all types of IAM policies.
-    
+
     **TIP** The `actions` property on the permissions relationships/edges are normalized to 
     all lowercase and stored in `normalizedActions` property. Use this property for case
     insensitive querying of IAM permissions.
@@ -535,6 +554,12 @@ visibility, especially to discover resources in an unauthorized region.
 - `ap-south-1` Mumbai
 - `ap-southeast-1` Singapore
 - `ap-southeast-2` Sydney
+- `ap-northeast-3` Osaka-Local
+
+**GovCloud:**
+
+- `us-gov-east-1`
+- `us-gov-west-1`
 
 ### Unsupported Regions
 
@@ -548,16 +573,16 @@ All AWS regions are supported except for the following:
 > _Customers who wish to use the China Regions are required to sign up for a
 > separate set of account credentials unique to China services._
 
-**GovCloud:**
+**Opt-In Regions:**
 
-- `us-gov-east-1`
-- `us-gov-west-1`
+- `eu-south-1` Milan
+- `af-south-1` Cape Town
+- `ap-east-1` Hong Kong
+- `ap-southeast-3` Jakarta
+- `me-south-1` Bahrain
+- `me-central-1` UAE
 
-> _We do not run in the cloud of government yet._
-
-**Other:**
-
-- `ap-northeast-3` Osaka-Local
-- `me-south-1` Bahrain (Middle East)
-
-> _Separate subscription or access token/client needed for these regions._
+> Because of complications with `aws-sdk` v2 we do not support these regions for
+> data ingestion done within this project. Opt-in regions are supported for data
+> ingestion handled by the `graph-aws` project. Migration to the `graph-aws`
+> project is currently in progress.
