@@ -12,6 +12,8 @@ Open J1 Compliance from the top J1 navigation bar.  To add a framework:
    ​
    ​
    ![](../assets/compliance-frmwk-overview.png)
+   
+   
 2. Choose one of the templates that J1 provides, or click **Import JSON/CSV** and paste your compliance framework file in JSON or CSV format. 
    ​
    J1 provides [community example files](https://github.com/JupiterOne/security-policy-templates/tree/main/templates/standards) for you to use as references.
@@ -47,6 +49,7 @@ To set the scope of a framework:
 1. In J1 Compliance, select the framework you want to scope.
 
 2. Click **Set Scope Filters**.
+   
 
    ![](../assets/compliance-scope-filters.png)
 
