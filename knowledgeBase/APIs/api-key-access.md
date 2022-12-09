@@ -10,10 +10,10 @@ To enable API key access for a group of users:
 
 1. Go to **Settings ![](../assets/icons/gear.png) > Users & Access** ![users](../assets/icons/users.png).
 2. Select the group for whom you want to enable API access.
-3. Select **Enable API key access for users in this group**.
+3. Select **API Key Management**.
    ​
 
-![](../assets/api-key-access-group-enable.png)
+![](../assets/api-key-access-group-enable1.png)
 
 
 
