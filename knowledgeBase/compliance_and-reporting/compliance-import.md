@@ -6,12 +6,14 @@ The first step in compliance management is to select the frameworks with which y
 
 **Note:** You must have the adminCompliance permission to be able to import frameworks.
 
-Open the J1 Compliance app by clicking ![](../assets/icons/apps.png) and select Compliance.  To add a framework:
+Open J1 Compliance from the top J1 navigation bar.  To add a framework:
 
 1. Select **Frameworks** from the left navigation panel and click **Add Framework**.
    ​
    ​
    ![](../assets/compliance-frmwk-overview.png)
+   
+   
 2. Choose one of the templates that J1 provides, or click **Import JSON/CSV** and paste your compliance framework file in JSON or CSV format. 
    ​
    J1 provides [community example files](https://github.com/JupiterOne/security-policy-templates/tree/main/templates/standards) for you to use as references.
@@ -32,23 +34,61 @@ If you want to import a compliance standard specification from a CSV file, the C
 
 ## Filter on Scope
 
-When you select the frameworks with which you want to be compliant, you can narrow the scope by using filters. You can determine what J1 monitors for compliance to save time and resources.
+Scoping frameworks allows you to control against which assets you want to evaluate your framework within your environment, giving you control over the level of detail you see. At its most basic level, setting the scope means filtering a framework to only look and evaluate against the things you want it to, saving time and resources. Some examples of scoping include specific integration instances, `_tags`, `_class`, and other filters. 
 
-![](../assets/compliance-scope-filters.png)
+#### Before You Begin
+
+- You must have Administrator privileges to J1 Compliance.
+- Depending on your filter value, you must know the `_tag` value as this is not automatically populated.
+- You can set levels of filters. Be aware that the filters are hierarchical, and all other filters are inherent in the values of the first set of filters. 
+
+Scoping a framework does limit the chain of relationships between entities. A scoped framework only looks at the root entity, not at relationships. For example, if a framework were scoped to `-tag = red`, then it only returns values with that tag. The value of scoping frameworks is the limitations it places on the filtering value, allowing you to point frameworks only to evaluate specific CPS instances or a group of integrations. 
+
+To set the scope of a framework:
+
+1. In J1 Compliance, select the framework you want to scope.
+
+2. Click **Set Scope Filters**.
+   
+
+   ![](../assets/compliance-scope-filters.png)
+
+    
+
+3. In the Set scope filters dialog, click the blue + icon.
+   
+
+   ![](../assets/compliance-add-scope.png)
+    
+
+4. To select permission filters, in the scope filter set dialog, click the Permission tab. From the dropdown menu, select a permission filter.
+
+
+   You can filter on the following:
+
+   - `_type`:  Type of asset, such as datastore or persons
+
+   - `_class`:  Class of asset, such as requirement or image
+
+   - `_integrationClass`:  Category of integration, such as Data Loss Prevention or App Hosting
+
+   - `_integrationType`:  Type of integration, such as Jira or GovCloud
+
+   - `integrationInstanceId`:  Your integration account ID
+
+   - A custom filter of your own
+     ​
+
+​			![](../assets/compliance-add-filters.png)  
 
 
 
-You can filter on:
+​			You can also set scope filters using `_tag` values, giving you the ability to filter frameworks to assets
+​	   	 with that tag. This feature is useful if you are using critical assets or tags to manage your 
+​			integrations. Enter the name of the tag you want to use and the values that pertain to the tag you
+​			are using.
 
-- `_type`:  Type of asset, such as datastore or persons
-- `_class`:  Class of asset, such as____________
-- `_integrationClass`:  Category of integration, such as Data Loss Prevention or App Hosting
-- `_integrationType`:  Type of integration, such as ____________
-- `integrationInstanceId`:  Your integration account ID
-- A custom filter of your own
-  ​
-
-![](../assets/compliance-add-filters.png) 
+​			![](../assets/compliance-add-tag-filter.png) 
 
 
 
