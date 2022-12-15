@@ -76,7 +76,7 @@ J1 provides the ability to trigger the following actions when the query evaluati
 
 To trigger any of these workflows, when creating a custom rule, scroll down to the Additional Alerts section. Select the one you want and provide the required information.
 
-![](../assets/alerts-additional-options-1.png) 
+![](../assets/alerts-additional-options-1.png)  
 
 You can also use templates when adding rules. The template goes inside any property under the operations property for a rule. Templates can contain JavaScript-like syntax that have input variables automatically inserted for usage. See the [alert rule schema](../APIs/alert-rule-schema.md) for more information about the templates property.
 
