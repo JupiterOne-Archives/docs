@@ -20,6 +20,18 @@ For each integration you configure you must provide:
   * `ONE_DAY`
   * `ONE_WEEK`
 
+​			If you select the one-week interval, you can then optionally select the polling day and hour when you
+​			want the ingestion to run. If you select the one-day interval, you can then optionally select the
+​			polling hour when you want the ingestion to run. 
+
+
+
+![](../assets/integrations-polling-settings.png) 
+
+
+
+
+
 Each integration has a slightly different mechanism for authentication as required by the provider. For example, the AWS integration uses an IAM role and assume role trust policies for access. Other integrations may use an API key/token, OAuth, or Basic Auth.
 
 Additional options are also available for each integration. Common options include:
