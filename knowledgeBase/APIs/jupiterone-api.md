@@ -1096,6 +1096,8 @@ GET /persister/synchronization/jobs/f445397d-8491-4a12-806a-04792839abe3
 }
 ```
 
+Note:  If you see "numRelationshipCreateErrors" in your response, it is probably due to the number of relationships that cannot be created due to a soft-deleted entity.
+
 ### Upload batch of entities and relationships
 
 Batch upload accepts the formats: `json`, `csv`, and `yaml` sent as text in the
