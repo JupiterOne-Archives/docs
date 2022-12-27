@@ -1055,7 +1055,7 @@ GET /persister/synchronization/jobs/f445397d-8491-4a12-806a-04792839abe3
 }
 ```
 
-Note: "numRelationshipCreateErrors" indicates the number of relationships that could not be created when one or both entities are not found or have been soft deleted.
+Note: `numRelationshipCreateErrors` indicates the number of relationships that could not be created when one or both entities are not found or have been soft deleted.
 
 ### Upload batch of entities and relationships
 
