@@ -349,6 +349,38 @@ the JupiterOne Slack bot must be a member of that private channel.
 | `body?`    | `object` | Body data to include in the request. Can only be used with `POST`, `PUT`, and `PATCH`. |
 | `headers?` | `object` | HTTP headers to include in the request.                      |
 
+#### **Action: Tines Trigger**
+
+If you opt to use a Tines alert action when you create a rule, J1 creates a webhook with the Tines URL you provided and pushes the data to that endpoint. 
+
+Tines configuration options:
+
+- `path` - a path for the webhook URL, in plain text.
+- `secret` - a token that the host will provide for authentication.
+- `verbs` - (optional) comma-separated list of HTTP verbs your action should accept.
+- `response` - (optional) the response message to the request. Defaults to Ok.
+- `response_code` - (optional) the HTTP response code to the request. Defaults to `201`.
+- `response_headers` - (optional) an object with any custom response headers. (example: `{"Access-Control-Allow-Origin": "*"}`)
+- `include_headers` - true by default, include headers from the request in a `headers` key while the body of the request is nested under a `body` key.
+
+Example:
+
+```json
+{
+  "type": "WEBHOOK",
+  "endpoint": "https://<tenant-id>.tines.com/api/v1/agents",
+  "method": "POST",
+  "body": {},
+  "headers": {
+    "content-type": "application/json",
+    "x-user-email": "<email-address>",
+    "x-user-token": "<api-token>"
+  }
+}
+```
+
+
+
 #### Webhook Reference Variables
 
 You can reference the following variables via a template pattern (such as *{{alertLevel}}*) inside the webhook action:
@@ -360,20 +392,7 @@ You can reference the following variables via a template pattern (such as *{{ale
 | `alertRuleId`          | `string` | Identifier for the alert in the J1 platform. |
 | `alertRuleDescription` | `string` | Description saved in the rule.               |
 
-Example:
 
-```json
-{
-  "type": "WEBHOOK",
-  "method": "POST",
-  "body": {
-    "myApiPayload": " {{alertLevel}} alert has been triggered: {{alertRuleName}} "
-  },
-  "headers": {
-    "Authorization": "Bearer abc123"
-  }
-}
-```
 
 ---
 
