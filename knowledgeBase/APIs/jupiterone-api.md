@@ -109,6 +109,47 @@ curl --location --request POST 'https://api.us.jupiterone.io/graphql' \
 }
 EOF
 ```
+**Example cURL command using Bash**
+
+````bash
+curl --location --request POST 'https://api.us.jupiterone.io/graphql' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer {{api_token}}' \
+--header 'Jupiterone-Account: j1dev' \
+--data-raw '{"query":"query J1QL(
+{
+  "query": 
+    "query J1QL(
+      $query: String!
+      $cursor: String
+      $variables: JSON
+      $dryRun: Boolean
+      $remember: Boolean
+      $includeDeleted: Boolean
+      $flags: QueryV1Flags\n  ) {
+      queryV1(
+        query: $query
+        variables: $variables
+        dryRun: $dryRun
+        remember: $remember
+        includeDeleted: $includeDeleted
+        flags: $flags
+        cursor: $cursor
+      ) {
+        type
+        data
+        cursor
+      }
+    }",
+  "variables": { "query": "aws_security_group with groupId='\''sg-xxxxxxxxxx'\''"
+}
+```
+````
+
+
+
+
+
 An experimental [node.js client and CLI](https://github.com/JupiterOne/jupiterone-client-nodejs) is available on Github.
 
 
