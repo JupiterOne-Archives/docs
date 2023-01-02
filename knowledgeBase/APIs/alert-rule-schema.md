@@ -270,23 +270,16 @@ Example:
 | `webhookUrl`            | `string` | Webhook URL for the account/channel that this message should be delivered to. |
 | `severity`              | `string` | Optional severity of this alert that determined the color of the message shown in Slack. |
 
-**NOTE**: By default, the color of the alert in Slack is derived from the 
-value of the `alertLevel` that is created in a `SET_PROPERTY` action. 
-You can override the color of the alert using the `severity` property.
+**NOTE**: By default, the color of the alert in Slack is derived from the value of the `alertLevel` that is created in a `SET_PROPERTY` action. You can override the color of the alert using the `severity` property.
 
 Example:
 
-After you have configured the integration, copy the integration ID from the
-integration instance page, which looks similar to `d1549f40-b9fd-447a-bec5-4360c9ca7e8c`.
+After you have configured the integration, copy the integration ID from the integration instance page, which looks similar to `d1549f40-b9fd-447a-bec5-4360c9ca7e8c`.
 
 
-1. Configure a rule with the `SEND_SLACK_MESSAGE` action and specify the
-   `integrationInstanceId` with the unique identifier of the integration and `channels`
-   denoting the destinations. The following is an example alert rule configuration with the
-   `SEND_SLACK_MESSAGE` action:
+1. Configure a rule with the `SEND_SLACK_MESSAGE` action and specify the `integrationInstanceId` with the unique identifier of the integration and `channels`denoting the destinations. The following is an example alert rule configuration with the `SEND_SLACK_MESSAGE` action:
 
-**NOTE**: For the JupiterOne Slack bot to deliver messages to a private Slack channel, 
-the JupiterOne Slack bot must be a member of that private channel.
+**NOTE**: For the JupiterOne Slack bot to deliver messages to a private Slack channel, the JupiterOne Slack bot must be a member of that private channel.
 
 ```json
 {
@@ -352,6 +345,12 @@ the JupiterOne Slack bot must be a member of that private channel.
 ##### **Tines Trigger**
 
 If you opt to use a Tines alert action when you create a rule, J1 creates a webhook with the Tines URL you provided and pushes the data to that endpoint. 
+
+
+
+![](../assets/tines_webhook.gif)
+
+
 
 Tines configuration options:
 
