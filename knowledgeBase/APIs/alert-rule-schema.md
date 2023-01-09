@@ -90,8 +90,7 @@ You can also configure rules to include deleted data in the results. For example
 
 ### Type: PollingInterval
 
-Enumeration of the scheduled frequencies on which rules can 
-automatically be evaluated. Possible values:
+Enumeration of the scheduled frequencies on which rules can automatically be evaluated. Possible values:
 
 ```
 ONE_DAY
@@ -102,8 +101,7 @@ DISABLED
 
 ### Type: RuleOperation
 
-A `RuleOperation` is a single `condition` and series of `action`s that are 
-executed when the `condition` is met.
+A `RuleOperation` is a single `condition` and series of `action`s that are executed when the `condition` is met.
 
 | Property  | Type                                     | Description                              |
 | --------- | ---------------------------------------- | ---------------------------------------- |
@@ -112,8 +110,7 @@ executed when the `condition` is met.
 
 ### Type: Question
 
-A Question contains a collection of named queries that should be executed 
-during the rule evaluation process and whose responses can be used in any `RuleOperation`.
+A Question contains a collection of named queries that should be executed during the rule evaluation process and whose responses can be used in any `RuleOperation`.
 
 | Property  | Type              | Description                              |
 | --------- | ----------------- | ---------------------------------------- |
@@ -121,8 +118,7 @@ during the rule evaluation process and whose responses can be used in any `RuleO
 
 ### Type: QuestionQuery
 
-A named query that should be executed during the rule evaluation process and 
-whose responses can be used in any `RuleOperation`.
+A named query that should be executed during the rule evaluation process and whose responses can be used in any `RuleOperation`.
 
 | Property         | Type      | Description                              |
 | ---------------- | --------- | ---------------------------------------- |
@@ -133,8 +129,7 @@ whose responses can be used in any `RuleOperation`.
 
 ### Type: RuleOperationCondition
 
-The condition that determines whether the associated actions should be executed. 
-The type of `RuleOperationCondition` is determined using the `type` property.
+The condition that determines whether the associated actions should be executed. The type of `RuleOperationCondition` is determined using the `type` property.
 
 #### Type: FilterRuleOperationCondition
 
@@ -145,8 +140,7 @@ The type of `RuleOperationCondition` is determined using the `type` property.
 
 ### Type: RuleOperationAction
 
-Action that is executed when a corresponding condition is met. 
-The type of `RuleOperationAction` is determined using the `type` property.
+Action that is executed when a corresponding condition is met. The type of `RuleOperationAction` is determined using the `type` property.
 
 ---
 
@@ -174,7 +168,7 @@ Example:
 
 #### Action: `CREATE_ALERT`
 
-> Creates a JupiterOne alert that is visible on the alerts app.
+> Creates a JupiterOne alert that is visible in J1 Alerts.
 
 | Property | Type     | Description                              |
 | -------- | -------- | ---------------------------------------- |
@@ -192,8 +186,7 @@ Example:
 
 #### Action: `SEND_EMAIL`
 
-> Sends an email to a list of recipients with details related to alerts that are
->  created during the rule evaluation.
+> Sends an email to a list of recipients with details related to alerts that are created during the rule evaluation.
 
 | Property     | Type       | Description                              |
 | ------------ | ---------- | ---------------------------------------- |
@@ -209,6 +202,80 @@ Example:
   "recipients": ["no-reply@jupiterone.io"]
 }
 ```
+
+If your query returns multiple results, you can run a second query using the results of the first query to send an alert email for each item in the first query results. You do this by [editing the advanced JSON of the alert rule](##configuring-a-rule) to use the `FOR_EACH_ITEM` action type. It is not recommended that you use this action type if your results sizes are very large. 
+
+For example:
+
+```
+{
+  "name": "",
+  "description": "",
+  "specVersion": 1,
+  "pollingInterval": "ONE_DAY",
+  "outputs": [
+    "alertLevel"
+  ],
+  "question": {
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find UNIQUE jupiterone_user with displayName~='ramirez' as j return j.email as email",
+        "version": "v1",
+        "includeDeleted": false
+      }
+    ]
+  },
+  "operations": [
+    {
+      "when": {
+        "type": "FILTER",
+        "specVersion": 1,
+        "condition": [
+          "AND",
+          [
+            "queries.query0.total",
+            ">",
+            0
+          ]
+        ]
+      },
+      "actions": [
+        {
+            "type": "SET_PROPERTY",
+            "targetValue": "CRITICAL",
+            "targetProperty": "alertLevel"
+          },
+          {
+            "type": "CREATE_ALERT"
+          },
+          {
+            "itemRef": "obj",
+            "type": "FOR_EACH_ITEM",
+            "items": "{{queries.query0.data}}",
+            "actions": [
+                {
+                "type": "JUPITERONE_QUERY",
+                "name": "userAccounts",
+                "query": "find User with email='{{obj.email}}'"
+                },
+                {
+                    "type": "SEND_EMAIL",
+                    "body": "Affected Items: <br><br>* {{queries.userAccounts.data|mapProperty('displayName')|join('<br>* ')}}",
+                    "recipients": [
+                      "{{obj.email}}"
+                    ]
+                }
+            ]
+        }
+      ]
+    }
+  ],
+  "tags": []
+}
+```
+
+
 
 ---
 
@@ -255,6 +322,103 @@ Example:
   }
 }
 ```
+
+If your query returns multiple results, you can run a second query using the results of the first query to create a Jira ticket for each item in the first query results. You do this by [editing the advanced JSON of the alert rule](##configuring-a-rule) to use the `FOR_EACH_ITEM` action type. It is not recommended that you use this action type if your results sizes are very large. 
+
+For example:
+
+```json
+{
+   "name":"TEST-rh-foreach-jira-Template",
+   "description":"Code Repos with Findings Jira Ticket Generator",
+   "specVersion":1,
+   "pollingInterval":"ONE_DAY",
+   "templates":{
+      "tempMap":"Project: {{item.Project}}, CVSS: {{item.CVSS}}, Title: {{item.Title}}, Description: {{item.Description}}, Package: {{item.Package}}, Installed: {{item.Installed}}, Fixed: {{item.Fixed}}, Container: {{item.Container}}"
+   },
+   "outputs":[
+      "alertLevel"
+   ],
+   "question":{
+      "queries":[
+         {
+            "name":"query0",
+            "query":"FIND Unique code_project AS a\n(THAT HAS archetype_application)?\n(That uses container_image)?\nTHAT HAS (trivy_finding)\nWITH (displayName ~= \"og4j\"\nOR cve ~= 'CVE-2021-44228'\nOR vuln_desc ~= 'og4j')\nAND severity = (\"critical\" OR \"high\") as b\nRETURN\na.displayName as Name",
+            "version":"v1",
+            "includeDeleted":false
+         }
+      ]
+   },
+   "operations":[
+      {
+         "when":{
+            "type":"FILTER",
+            "specVersion":1,
+            "condition":[
+               "AND",
+               [
+                  "queries.query0.total",
+                  ">",
+                  0
+               ]
+            ]
+         },
+         "actions":[
+            {
+               "type":"SET_PROPERTY",
+               "targetValue":"INFO",
+               "targetProperty":"alertLevel"
+            },
+            {
+               "type":"CREATE_ALERT"
+            },
+            {
+               "itemRef":"obj",
+               "type":"FOR_EACH_ITEM",
+               "items":"{{queries.query0.data}}",
+               "actions":[
+                  {
+                     "type":"JUPITERONE_QUERY",
+                     "name":"query1",
+                     "query":"FIND code_project\nWITH displayName = '{{obj.Name}}' AS a\n(THAT HAS archetype_application)?\n(That uses container_image)? as ci\nTHAT HAS (trivy_finding)\nWITH displayName ~= \"log4j\"\nAND severity = (\"critical\" OR \"high\") as b\nRETURN\na.displayName as Project,\nb.[cvss3_score] as CVSS,\nb.vuln_title as Title,\nb.vuln_desc as Description,\nb.package as Package,\nb.installed_version as Installed,\nb.fixed_version as Fixed,\nb._beginOn as Found,\nci.displayName as Container\nORDER BY\nCVSS DESC"
+                  },
+                  {
+                     "summary":"Testing Template Body for: {{obj.Name}} ",
+                     "issueType":"Vulnerability",
+                     "entityClass":"Vulnerability",
+                     "integrationInstanceId":"3cb31afc-95a3-4099-xxxx-xxxx",
+                     "additionalFields":{
+                        "description":{
+                           "type":"doc",
+                           "version":1,
+                           "content":[
+                              {
+                                 "type":"paragraph",
+                                 "content":[
+                                    {
+                                       "type":"text",
+                                       "text":"JupiterOne Alert is reporting critical/high severity Trivy Findings related to Log4J in event-logging.\n {{alertWebLink}}\n\n**See below for more info \n Affected Items:{{obj.Name}}:\n\n* {{queries.query1.data|mapTemplate('tempMap')|join('\n* ')}}"
+                                    }
+                                 ]
+                              }
+                           ]
+                        }
+                     },
+                     "project":"VULNS",
+                     "type":"CREATE_JIRA_TICKET"
+                  }
+               ]
+            }
+         ]
+      }
+   ],
+   "tags":[
+      
+   ]
+}
+```
+
+
 
 ---
 
