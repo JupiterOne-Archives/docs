@@ -209,8 +209,8 @@ For example:
 
 ```
 {
-  "name": "",
-  "description": "",
+  "name": "j1-foreach-email",
+  "description": "ForEach with Email",
   "specVersion": 1,
   "pollingInterval": "ONE_DAY",
   "outputs": [
@@ -220,7 +220,7 @@ For example:
     "queries": [
       {
         "name": "query0",
-        "query": "Find UNIQUE jupiterone_user with displayName~='ramirez' as j return j.email as email",
+        "query": "find unique jupiterone_user with displayName~='ramirez' as j return j.email as email",
         "version": "v1",
         "includeDeleted": false
       }
@@ -243,7 +243,7 @@ For example:
       "actions": [
         {
             "type": "SET_PROPERTY",
-            "targetValue": "CRITICAL",
+            "targetValue": "INFO",
             "targetProperty": "alertLevel"
           },
           {
@@ -329,92 +329,82 @@ For example:
 
 ```json
 {
-   "name":"TEST-rh-foreach-jira-Template",
-   "description":"Code Repos with Findings Jira Ticket Generator",
-   "specVersion":1,
-   "pollingInterval":"ONE_DAY",
-   "templates":{
-      "tempMap":"Project: {{item.Project}}, CVSS: {{item.CVSS}}, Title: {{item.Title}}, Description: {{item.Description}}, Package: {{item.Package}}, Installed: {{item.Installed}}, Fixed: {{item.Fixed}}, Container: {{item.Container}}"
-   },
-   "outputs":[
-      "alertLevel"
-   ],
-   "question":{
-      "queries":[
-         {
-            "name":"query0",
-            "query":"FIND Unique code_project AS a\n(THAT HAS archetype_application)?\n(That uses container_image)?\nTHAT HAS (trivy_finding)\nWITH (displayName ~= \"og4j\"\nOR cve ~= 'CVE-2021-44228'\nOR vuln_desc ~= 'og4j')\nAND severity = (\"critical\" OR \"high\") as b\nRETURN\na.displayName as Name",
-            "version":"v1",
-            "includeDeleted":false
-         }
-      ]
-   },
-   "operations":[
+  "name": "",
+  "description": "",
+  "specVersion": 1,
+  "pollingInterval": "ONE_WEEK",
+  "question": {
+    "queries": [
       {
-         "when":{
-            "type":"FILTER",
-            "specVersion":1,
-            "condition":[
-               "AND",
-               [
-                  "queries.query0.total",
-                  ">",
-                  0
-               ]
-            ]
-         },
-         "actions":[
-            {
-               "type":"SET_PROPERTY",
-               "targetValue":"INFO",
-               "targetProperty":"alertLevel"
-            },
-            {
-               "type":"CREATE_ALERT"
-            },
-            {
-               "itemRef":"obj",
-               "type":"FOR_EACH_ITEM",
-               "items":"{{queries.query0.data}}",
-               "actions":[
-                  {
-                     "type":"JUPITERONE_QUERY",
-                     "name":"query1",
-                     "query":"FIND code_project\nWITH displayName = '{{obj.Name}}' AS a\n(THAT HAS archetype_application)?\n(That uses container_image)? as ci\nTHAT HAS (trivy_finding)\nWITH displayName ~= \"log4j\"\nAND severity = (\"critical\" OR \"high\") as b\nRETURN\na.displayName as Project,\nb.[cvss3_score] as CVSS,\nb.vuln_title as Title,\nb.vuln_desc as Description,\nb.package as Package,\nb.installed_version as Installed,\nb.fixed_version as Fixed,\nb._beginOn as Found,\nci.displayName as Container\nORDER BY\nCVSS DESC"
-                  },
-                  {
-                     "summary":"Testing Template Body for: {{obj.Name}} ",
-                     "issueType":"Vulnerability",
-                     "entityClass":"Vulnerability",
-                     "integrationInstanceId":"3cb31afc-95a3-4099-xxxx-xxxx",
-                     "additionalFields":{
-                        "description":{
-                           "type":"doc",
-                           "version":1,
-                           "content":[
-                              {
-                                 "type":"paragraph",
-                                 "content":[
-                                    {
-                                       "type":"text",
-                                       "text":"JupiterOne Alert is reporting critical/high severity Trivy Findings related to Log4J in event-logging.\n {{alertWebLink}}\n\n**See below for more info \n Affected Items:{{obj.Name}}:\n\n* {{queries.query1.data|mapTemplate('tempMap')|join('\n* ')}}"
-                                    }
-                                 ]
-                              }
-                           ]
-                        }
-                     },
-                     "project":"VULNS",
-                     "type":"CREATE_JIRA_TICKET"
-                  }
-               ]
-            }
-         ]
+        "name": "query0",
+        "query": "Find DataStore with classification='critical' and encrypted=false",
+        "version": "v1",
+        "includeDeleted": false
       }
-   ],
-   "tags":[
-      
-   ]
+    ]
+  },
+  "operations": [
+    {
+      "when": {
+        "type": "FILTER",
+        "specVersion": 1,
+        "condition": [
+          "AND",
+          [
+            "queries.query0.total",
+            ">",
+            0
+          ]
+        ]
+      },
+      "actions": [
+        {
+          "type": "SET_PROPERTY",
+          "targetValue": "CRITICAL",
+          "targetProperty": "alertLevel"
+        },
+        {
+          "type": "CREATE_ALERT"
+        },
+        {
+          "itemRef": "obj",
+          "type": "FOR_EACH_ITEM",
+          "items": "{{queries.query0.data}}",
+          "actions": [
+            {
+                "type": "CREATE_JIRA_TICKET",
+                "summary": "{{alertRuleDescription}}",
+                "issueType": "",
+                "entityClass": "{{ obj.entity._type | join(',') }}",
+                "integrationInstanceId": "{{ obj.entity._integrationInstanceId }}",
+                "additionalFields": {
+                  "description": {
+                    "type": "doc",
+                    "version": 1,
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "{{alertWebLink}}\n\n**Affected Items:**\n\n* {{obj.properties.webLink}}"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "project": "{{param.MySpecialProject}}"
+              }
+          ]
+        }
+      ]
+    }
+  ],
+  "outputs": [
+    "alertLevel"
+  ],
+  "templates": {}
 }
 ```
 
