@@ -90,8 +90,7 @@ You can also configure rules to include deleted data in the results. For example
 
 ### Type: PollingInterval
 
-Enumeration of the scheduled frequencies on which rules can 
-automatically be evaluated. Possible values:
+Enumeration of the scheduled frequencies on which rules can automatically be evaluated. Possible values:
 
 ```
 ONE_DAY
@@ -102,8 +101,7 @@ DISABLED
 
 ### Type: RuleOperation
 
-A `RuleOperation` is a single `condition` and series of `action`s that are 
-executed when the `condition` is met.
+A `RuleOperation` is a single `condition` and series of `action`s that are executed when the `condition` is met.
 
 | Property  | Type                                     | Description                              |
 | --------- | ---------------------------------------- | ---------------------------------------- |
@@ -112,8 +110,7 @@ executed when the `condition` is met.
 
 ### Type: Question
 
-A Question contains a collection of named queries that should be executed 
-during the rule evaluation process and whose responses can be used in any `RuleOperation`.
+A Question contains a collection of named queries that should be executed during the rule evaluation process and whose responses can be used in any `RuleOperation`.
 
 | Property  | Type              | Description                              |
 | --------- | ----------------- | ---------------------------------------- |
@@ -121,8 +118,7 @@ during the rule evaluation process and whose responses can be used in any `RuleO
 
 ### Type: QuestionQuery
 
-A named query that should be executed during the rule evaluation process and 
-whose responses can be used in any `RuleOperation`.
+A named query that should be executed during the rule evaluation process and whose responses can be used in any `RuleOperation`.
 
 | Property         | Type      | Description                              |
 | ---------------- | --------- | ---------------------------------------- |
@@ -133,8 +129,7 @@ whose responses can be used in any `RuleOperation`.
 
 ### Type: RuleOperationCondition
 
-The condition that determines whether the associated actions should be executed. 
-The type of `RuleOperationCondition` is determined using the `type` property.
+The condition that determines whether the associated actions should be executed. The type of `RuleOperationCondition` is determined using the `type` property.
 
 #### Type: FilterRuleOperationCondition
 
@@ -145,8 +140,7 @@ The type of `RuleOperationCondition` is determined using the `type` property.
 
 ### Type: RuleOperationAction
 
-Action that is executed when a corresponding condition is met. 
-The type of `RuleOperationAction` is determined using the `type` property.
+Action that is executed when a corresponding condition is met. The type of `RuleOperationAction` is determined using the `type` property.
 
 ---
 
@@ -174,7 +168,7 @@ Example:
 
 #### Action: `CREATE_ALERT`
 
-> Creates a JupiterOne alert that is visible on the alerts app.
+> Creates a JupiterOne alert that is visible in J1 Alerts.
 
 | Property | Type     | Description                              |
 | -------- | -------- | ---------------------------------------- |
@@ -192,8 +186,7 @@ Example:
 
 #### Action: `SEND_EMAIL`
 
-> Sends an email to a list of recipients with details related to alerts that are
->  created during the rule evaluation.
+> Sends an email to a list of recipients with details related to alerts that are created during the rule evaluation.
 
 | Property     | Type       | Description                              |
 | ------------ | ---------- | ---------------------------------------- |
@@ -209,6 +202,8 @@ Example:
   "recipients": ["no-reply@jupiterone.io"]
 }
 ```
+
+
 
 ---
 
@@ -255,6 +250,93 @@ Example:
   }
 }
 ```
+
+If your query returns multiple results, you can run a second query using the results of the first query to create a Jira ticket for each item in the first query results. You do this by [editing the advanced JSON of the alert rule](##configuring-a-rule) to use the `FOR_EACH_ITEM` action type. It is not recommended that you use this action type if your results sizes are very large. 
+
+For example:
+
+```json
+{
+  "name": "",
+  "description": "",
+  "specVersion": 1,
+  "pollingInterval": "ONE_WEEK",
+  "question": {
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find DataStore with classification='critical' and encrypted=false",
+        "version": "v1",
+        "includeDeleted": false
+      }
+    ]
+  },
+  "operations": [
+    {
+      "when": {
+        "type": "FILTER",
+        "specVersion": 1,
+        "condition": [
+          "AND",
+          [
+            "queries.query0.total",
+            ">",
+            0
+          ]
+        ]
+      },
+      "actions": [
+        {
+          "type": "SET_PROPERTY",
+          "targetValue": "CRITICAL",
+          "targetProperty": "alertLevel"
+        },
+        {
+          "type": "CREATE_ALERT"
+        },
+        {
+          "itemRef": "obj",
+          "type": "FOR_EACH_ITEM",
+          "items": "{{queries.query0.data}}",
+          "actions": [
+            {
+                "type": "CREATE_JIRA_TICKET",
+                "summary": "{{alertRuleDescription}}",
+                "issueType": "",
+                "entityClass": "{{ obj.entity._type | join(',') }}",
+                "integrationInstanceId": "{{ obj.entity._integrationInstanceId }}",
+                "additionalFields": {
+                  "description": {
+                    "type": "doc",
+                    "version": 1,
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "{{alertWebLink}}\n\n**Affected Items:**\n\n* {{obj.properties.webLink}}"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "project": "{{param.MySpecialProject}}"
+              }
+          ]
+        }
+      ]
+    }
+  ],
+  "outputs": [
+    "alertLevel"
+  ],
+  "templates": {}
+}
+```
+
+
 
 ---
 
