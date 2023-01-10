@@ -459,7 +459,7 @@ Example:
 
 ##### Tines Trigger
 
-If you opt to use a Tines alert action when you create a rule, J1 creates a webhook with the Tines URL you provided and pushes the data to that endpoint. You can to use any of the [Tines APIs](https://www.tines.com/api/actions/create) to configure the webhook action
+If you opt to use a Tines alert action when you create a rule, J1 creates a webhook with the Tines URL you provided and pushes the data to that endpoint. You can use any of the [Tines APIs](https://www.tines.com/api/actions/create) to configure the webhook action.
 
 
 ![](../assets/tines_webhook.gif) 
