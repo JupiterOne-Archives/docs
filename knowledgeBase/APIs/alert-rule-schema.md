@@ -352,16 +352,23 @@ For example:
 | `webhookUrl`            | `string` | Webhook URL for the account/channel that this message should be delivered to. |
 | `severity`              | `string` | Optional severity of this alert that determined the color of the message shown in Slack. |
 
-**NOTE**: By default, the color of the alert in Slack is derived from the value of the `alertLevel` that is created in a `SET_PROPERTY` action. You can override the color of the alert using the `severity` property.
+**NOTE**: By default, the color of the alert in Slack is derived from the 
+value of the `alertLevel` that is created in a `SET_PROPERTY` action. 
+You can override the color of the alert using the `severity` property.
 
 Example:
 
-After you have configured the integration, copy the integration ID from the integration instance page, which looks similar to `d1549f40-b9fd-447a-bec5-4360c9ca7e8c`.
+After you have configured the integration, copy the integration ID from the
+integration instance page, which looks similar to `d1549f40-b9fd-447a-bec5-4360c9ca7e8c`.
 
 
-1. Configure a rule with the `SEND_SLACK_MESSAGE` action and specify the `integrationInstanceId` with the unique identifier of the integration and `channels`denoting the destinations. The following is an example alert rule configuration with the `SEND_SLACK_MESSAGE` action:
+1. Configure a rule with the `SEND_SLACK_MESSAGE` action and specify the
+   `integrationInstanceId` with the unique identifier of the integration and `channels`
+   denoting the destinations. The following is an example alert rule configuration with the
+   `SEND_SLACK_MESSAGE` action:
 
-**NOTE**: For the JupiterOne Slack bot to deliver messages to a private Slack channel, the JupiterOne Slack bot must be a member of that private channel.
+**NOTE**: For the JupiterOne Slack bot to deliver messages to a private Slack channel, 
+the JupiterOne Slack bot must be a member of that private channel.
 
 ```json
 {
@@ -424,44 +431,6 @@ After you have configured the integration, copy the integration ID from the inte
 | `body?`    | `object` | Body data to include in the request. Can only be used with `POST`, `PUT`, and `PATCH`. |
 | `headers?` | `object` | HTTP headers to include in the request.                      |
 
-##### **Tines Trigger**
-
-If you opt to use a Tines alert action when you create a rule, J1 creates a webhook with the Tines URL you provided and pushes the data to that endpoint. 
-
-
-
-![](../assets/tines_webhook.gif)
-
-
-
-Tines configuration options:
-
-- `path` - a path for the webhook URL, in plain text.
-- `secret` - a token that the host will provide for authentication.
-- `verbs` - (optional) comma-separated list of HTTP verbs your action should accept.
-- `response` - (optional) the response message to the request. Defaults to Ok.
-- `response_code` - (optional) the HTTP response code to the request. Defaults to `201`.
-- `response_headers` - (optional) an object with any custom response headers. (example: `{"Access-Control-Allow-Origin": "*"}`)
-- `include_headers` - true by default, include headers from the request in a `headers` key while the body of the request is nested under a `body` key.
-
-Example:
-
-```json
-{
-  "type": "WEBHOOK",
-  "endpoint": "https://<tenant-id>.tines.com/api/v1/agents",
-  "method": "POST",
-  "body": {},
-  "headers": {
-    "content-type": "application/json",
-    "x-user-email": "<email-address>",
-    "x-user-token": "<api-token>"
-  }
-}
-```
-
-
-
 #### Webhook Reference Variables
 
 You can reference the following variables via a template pattern (such as *{{alertLevel}}*) inside the webhook action:
@@ -473,7 +442,27 @@ You can reference the following variables via a template pattern (such as *{{ale
 | `alertRuleId`          | `string` | Identifier for the alert in the J1 platform. |
 | `alertRuleDescription` | `string` | Description saved in the rule.               |
 
+Example:
 
+```json
+{
+  "type": "WEBHOOK",
+  "method": "POST",
+  "body": {
+    "myApiPayload": " {{alertLevel}} alert has been triggered: {{alertRuleName}} "
+  },
+  "headers": {
+    "Authorization": "Bearer abc123"
+  }
+}
+```
+
+##### Tines Trigger
+
+If you opt to use a Tines alert action when you create a rule, J1 creates a webhook with the Tines URL you provided and pushes the data to that endpoint. You can to use any of the [Tines APIs](https://www.tines.com/api/actions/create) to configure the webhook action
+
+
+![](../assets/tines_webhook.gif) 
 
 ---
 
