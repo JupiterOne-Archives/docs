@@ -4,12 +4,6 @@ JupiterOne (J1) is a cloud-native security platform that connects across your si
 
 ## Sign In and Search
 
-When you first sign in to J1, you land on the Search page, the center of all your activities. In the To-Do tab, you see the status of your onboarding items and any other actions that J1 recommends that you complete, such as enabling the playground or configuring your compliance frameworks. 
-
-
-
-![](../assets/home-todo.png)
-
 Over time, J1 collects key performance indicator (KPI) information for your organization and displays it in a dashboard. Your dashboard enables you to quickly see what has changed in your security program, the status of your environment, and where your compliance gaps are.
 
 
@@ -32,7 +26,7 @@ The first step in using J1 is to bring your data into J1. There are numerous rea
 
 All of the J1 products that assist you in all the major components of security management are available from the top navigation bar.
 
-![](../assets/top-nav-bar.png)
+![](../assets/search-home.png)
 
 ### Assets
 
