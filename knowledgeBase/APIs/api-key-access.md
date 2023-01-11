@@ -153,7 +153,7 @@ You can use GraphQL queries to create account-level API keys.
 To create an account-level API key, enter:
 
 ```
-POST `https://j1dev.apps.dev.jupiterone.io/api/graphql`
+POST `https://graphql.us.jupiterone.io/`
 ```
 
 ```
@@ -263,7 +263,7 @@ The action `query:ReadGraphData` may be constrained by a condition. For the poli
 To revoke an account-level key, enter:
 
 ```
-POST `https://j1dev.apps.dev.jupiterone.io/api/graphql`
+POST `https://graphql.us.jupiterone.io/`
 ```
 
 ```
