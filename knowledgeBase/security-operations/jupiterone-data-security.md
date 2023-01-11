@@ -111,7 +111,7 @@ Access policies defined in JupiterOne are associated with a **User Group** and *
 
 ### API Access
 
-JupiterOne API is available at: https://api.us.jupiterone.io/
+JupiterOne GraphQL API is available at: https://graphql.us.jupiterone.io/
 
 We use [OAuth 2.0](https://oauth.net/2/) for authorization, which means that to access data a user must authenticate and the requesting app must be authorized. Implicit grant, authorization code, and client credentials flows are
 supported. Authorization code is recommended for web apps, which involves utilizing both the authorize and token API resources. When using the authorization code grant flow, it is also recommended to use Proof Key for Code Exchange (PCKE) to mitigate authorization code intercept attacks. Contact us if

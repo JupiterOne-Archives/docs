@@ -2,9 +2,7 @@
 
 The JupiterOne platform exposes a number of public GraphQL endpoints. 
 
-**Base URL**: `https://api.us.jupiterone.io`
-
-**Endpoint**: `/graphql`
+**Base URL**: `https://graphql.us.jupiterone.io`
 
 - For query and graph operations
 - For alerts and rules operations
@@ -76,7 +74,7 @@ FIND jupiterone_account as a return a._accountId
 **Example cURL command with authentication**
 
 ```sh
-curl --location --request POST 'https://api.us.jupiterone.io/graphql' \
+curl --location --request POST 'https://graphql.us.jupiterone.io' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer apiToken' \
 --header 'Jupiterone-Account: accountId' \
@@ -112,7 +110,7 @@ EOF
 **Example cURL command using Bash**
 
 ````bash
-curl --location --request POST 'https://api.us.jupiterone.io/graphql' \
+curl --location --request POST 'https://graphql.us.jupiterone.io' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer {{api_token}}' \
 --header 'Jupiterone-Account: j1dev' \
@@ -155,8 +153,6 @@ An experimental [node.js client and CLI](https://github.com/JupiterOne/jupiteron
 
 
 ## Entity and Relationship Queries
-
-**Endpoint:** `/graphql`
 
 ### Querying the graph with J1QL
 
@@ -654,8 +650,6 @@ Example result
 
 ## Entity Mutations
 
-**Endpoint:** `/graphql`
-
 ### Create Entity
 
 This mutation creates a JupiterOne entity with the given specifications. This mutation requires three parameters (with two optional parameters):
@@ -806,8 +800,6 @@ Variables:
 ```
 
 ## Relationship Mutations
-
-**Endpoint:** `/graphql`
 
 ### Create Relationship
 
@@ -1742,7 +1734,6 @@ GET https://api.us.jupiterone.io/entities/${ENTITY_ID}/raw-data/${ENTRY_NAME}/ve
 
 ## Building CSV Report
 
-**Endpoint:** `/graphql`
 
 ```graphql
 mutation BuildCsv(
@@ -1777,7 +1768,6 @@ Variables:
 
 ## Alert and Rules Operations
 
-**Endpoint:** `/graphql`
 
 ### List alert rules
 
@@ -2206,7 +2196,6 @@ variables:
 
 ## Question Operations
 
-**Endpoint:** `/graphql`
 
 ### Create a Question
 
@@ -2554,7 +2543,7 @@ The following values are required in order to trigger an integration job via API
 Endpoint:
 
 ```text
-POST https://api.us.jupiterone.io/graphql
+POST https://graphql.us.jupiterone.io
 ```
 
 Headers:
@@ -2589,7 +2578,7 @@ User events in your JupiterOne account are logged and can be accessed via API.
 Endpoint:
 
 ```text
-POST https://api.us.jupiterone.io/graphql
+POST https://graphql.us.jupiterone.io
 ```
 
 Headers:
@@ -2720,7 +2709,7 @@ The IAM API only works for accounts configured with SSO. Email support@jupiteron
 **Endpoint:**
 
 ```text
-POST https://api.us.jupiterone.io/iam/graphql
+POST https://graphql.us.jupiterone.io/
 ```
 
 **Headers:**
