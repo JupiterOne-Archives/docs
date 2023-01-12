@@ -6,8 +6,6 @@ You can quickly search and get insight across your entire digital environment in
 - **Full-text search** - an easy way to search across all assets based on their property values.
 - **JupiterOne query language (J1QL)** is best for detailed querying of assets and relationships. 
 
-You can toggle results in four different display modes: **Table**, **Graph**, **Raw JSON**, or **Pretty JSON**.
-
 **Note**: For performance reasons, search results are limited to return a maximum 250 items. If you believe something is missing from a large result set, try fine-tuning the query to generate more precise results.
 
 
@@ -36,7 +34,7 @@ Or ask a question like:
 
 ## Question Results
 
-After asking your question, a data table displays with the results. Click any of the assets in the _displayName column to open the detailed properties side panel.
+After entering your question, a data table displays with the results. Click any of the assets in the _displayName column to open the detailed properties side panel. You can toggle results in four different display modes: **Table**, **Graph**, **Raw JSON**, or **Pretty JSON**.
 
 
 ![](../assets/questions-data-table.png) 
