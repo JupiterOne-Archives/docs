@@ -71,7 +71,7 @@ You can build your own custom dashboards or utilize any of the existing boards t
 
 ## J1 Questions Library
 
-JupiterOne has hundreds of prebuilt and categorized questions for assessing the current state of your cyber assets. You can filter the questions on a specific category or tag, duplicate existing questions to create custom questions of your own, and save frequent searches for easy future reference. Click Questions at the top of the J1 home page to access the J1 questions library.
+JupiterOne has hundreds of prebuilt, categorized, and managed questions for assessing the current state of your cyber assets. You can filter the questions on a specific category or tag, duplicate existing questions to create custom questions of your own, and save frequent searches for easy future reference. Click Questions at the top of the J1 home page to access the J1 questions library.
 
  ![](../assets/j1-query-library.png)
 
