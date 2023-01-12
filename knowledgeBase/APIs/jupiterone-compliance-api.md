@@ -9,11 +9,9 @@ See the [JupiterOne Platform API](./jupiterone-api.md) for an introduction to th
 - Most of the compliance-related data is exposed in one large GraphQL graph. The sections in this document break down the API by object, but you can access them at the same GraphQL resolver.
 - To see the full GraphQL graph, perform [introspection](https://graphql.org/learn/introspection/) on the public API.
 
-**Base URL**: `https://api.us.jupiterone.io`
+**Base URL**: `https://graphql.us.jupiterone.io`
 
 **Method**: `POST`
-
-**Endpoint for compliance operations**: `/graphql`
 
 **Rate Limits**: Rate limiting is enforced based on your account tier: 
 
