@@ -6,15 +6,18 @@ JupiterOne (J1) is a cloud-native security platform that connects across your si
 
 Over time, J1 collects key performance indicator (KPI) information for your organization and displays it in a dashboard. Your dashboard enables you to quickly see what has changed in your security program, the status of your environment, and where your compliance gaps are.
 
+From the J1 Dashboard, you can [enter questions in the search bar](./quickstart-search.md). By default, J1 autocompletes the text and lists any questions related to your keywords.
 
 
 ![](../assets/dashboard-home.png) 
 
-From the Search page, you can enter questions in the search bar. By default, J1 autocompletes the text and lists any questions related to your keywords. 
+
+
+ J1 keeps a history of the questions you ask which is helpful when wanting the run the same questions or create questions based on past searches. The most recent questions display when you start typing in the search bar, and to see a list of all the history, click ![](../assets/icons/questions-history-icon.png) at the right in the search bar. Click ![](../assets/icons/questions-settings.png)to opt to include recently deleted entities in the question/search or to enable autocomplete for [J1QL](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md) queries.
 
 
 
-![](../assets/search-query.png)
+![](../assets/questions-history.png) 
 
 
 
