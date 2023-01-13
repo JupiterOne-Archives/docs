@@ -1,4 +1,4 @@
-# Get Started with Search
+# Get Started with the J1 Dashboard
 
 You can quickly search and get insight across your entire digital environment integrated with JupiterOne, from the J1 Dashboard. There are three modes of search:
 

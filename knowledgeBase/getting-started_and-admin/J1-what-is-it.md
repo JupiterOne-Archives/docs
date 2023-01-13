@@ -27,7 +27,7 @@ The first step in using J1 is to bring your data into J1. There are numerous rea
 
 ## J1 Navigation Bar
 
-All of the J1 products that assist you in all the major components of security management are available from the top navigation bar.
+All of the J1 products that assist you in all the major components of security management are available from the top navigation bar. You can use your browser buttons to go back or forward between pages, or copy the URL of a page to share with others. 
 
 ![](../assets/search-home.png)
 
