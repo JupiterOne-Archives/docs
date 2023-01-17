@@ -16,7 +16,7 @@ To create a query in Query Builder:
 
 3. Click **Add Filter** to filter by a specific property, tag, or metadata. Add an operator and specific value you want to query on, if applicable. You can also filter your assets by filter group [don't understand this]. You can as many filters as you want.
 
-4. Click **RELATES TO** to select from the dropdown menu the specific relationship verbs you want to use in your query. You can add as many relationships as you want.
+4. Click **RELATES TO** to select from the dropdown menu the [specific relationship verbs](./jupiterOne-query-language.md##basic-keywords) you want to use in your query. You can add as many relationships as you want.
 
 5. Click Table or Graph to choose how you want to return the results. You can toggle between the options by clicking **Run Query** after you make your selection.
 
