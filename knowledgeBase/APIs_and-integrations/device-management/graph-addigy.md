@@ -1,27 +1,27 @@
-# Addigy Integration with JupiterOne
+# Addigy
 
 ## Addigy + JupiterOne Integration Benefits
 
-*   Visualize Addigy users, policies, and device agents in the JupiterOne graph.
-*   Map Addigy users to employees in your JupiterOne account.
-*   Monitor changes to Addigy device agents using JupiterOne alerts.
+- Visualize Addigy users, policies, and device agents in the JupiterOne graph.
+- Map Addigy users to employees in your JupiterOne account.
+- Monitor changes to Addigy device agents using JupiterOne alerts.
 
 ## How it Works
 
-*   JupiterOne periodically fetches services, teams, and users from Addigy to
-    update the graph.
-*   Write JupiterOne queries to review and monitor updates to the graph, or
-    leverage existing queries.
-*   Configure alerts to take action when JupiterOne graph changes, or leverage
-    existing alerts.
+- JupiterOne periodically fetches services, teams, and users from Addigy to
+  update the graph.
+- Write JupiterOne queries to review and monitor updates to the graph, or
+  leverage existing queries.
+- Configure alerts to take action when JupiterOne graph changes, or leverage
+  existing alerts.
 
 ## Requirements
 
-*   JupiterOne requires an API `client_id` and `client_secret`. You need
-    permission to create a user in Addigy that will be used to obtain the id and
-    secret. Jupiterone also needs `username` and `password` of an admin user to
-    retrieve user information from the Addigy internal API.
-*   You must have permission in JupiterOne to install new integrations.
+- JupiterOne requires an API `client_id` and `client_secret`. You need
+  permission to create a user in Addigy that will be used to obtain the id and
+  secret. Jupiterone also needs `username` and `password` of an admin user to
+  retrieve user information from the Addigy internal API.
+- You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
@@ -32,36 +32,35 @@ If you need help with this integration, please contact
 
 ### In Addigy
 
-1.  [Generate a API client\_id and client\_secret](https://support.addigy.com/hc/en-us/articles/4403542544275)
+1. [Generate a API client_id and client_secret](https://support.addigy.com/hc/en-us/articles/4403542544275)
 
 ### In JupiterOne
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **Addigy** integration tile and click it.
-3.  Click the **Add Configuration** button and configure the following settings:
+1. From the top navigation of the J1 Search homepage, select **Integrations**
+2. Scroll to the **Addigy** integration tile and click it.
+3. Click the **Add Configuration** button and configure the following settings:
 
-*   Enter the **Account Name** by which you'd like to identify this {{provider}}
-    account in JupiterOne. Ingested entities will have this value stored in
-    `tag.AccountName` when **Tag with Account Name** is checked.
-*   Enter a **Description** that will further assist your team when identifying
-    the integration instance.
-*   Select a **Polling Interval** that you feel is sufficient for your monitoring
-    needs. You may leave this as `DISABLED` and manually execute the integration.
-*   Enter the **Username** and **Password** used to authenticate with Addigy.
-*   Enter the **client\_id** and **client\_secret** generated in previous steps.
+- Enter the **Account Name** by which you'd like to identify this {{provider}}
+  account in JupiterOne. Ingested entities will have this value stored in
+  `tag.AccountName` when **Tag with Account Name** is checked.
+- Enter a **Description** that will further assist your team when identifying
+  the integration instance.
+- Select a **Polling Interval** that you feel is sufficient for your monitoring
+  needs. You may leave this as `DISABLED` and manually execute the integration.
+- Enter the **Username** and **Password** used to authenticate with Addigy.
+- Enter the **client_id** and **client_secret** generated in previous steps.
 
-4.  Click **Create Configuration** once all values are provided.
+4. Click **Create Configuration** once all values are provided.
 
 # How to Uninstall
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **Addigy** integration tile and click it.
-3.  Identify and click the **integration to delete**.
-4.  Click the **trash can** icon.
-5.  Click the **Remove** button to delete the integration.
+1. From the top navigation of the J1 Search homepage, select **Integrations**
+2. Scroll to the **Addigy** integration tile and click it.
+3. Identify and click the **integration to delete**.
+4. Click the **trash can** icon.
+5. Click the **Remove** button to delete the integration.
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
-
 <!--
 ********************************************************************************
 NOTE: ALL OF THE FOLLOWING DOCUMENTATION IS GENERATED USING THE
@@ -107,7 +106,4 @@ The following mapped relationships are created:
 END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 ********************************************************************************
 -->
-
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
- 
-<!--  jupiterOneDocVersion=1-0-2 -->
