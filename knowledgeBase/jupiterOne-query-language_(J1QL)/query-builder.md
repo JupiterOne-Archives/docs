@@ -4,7 +4,7 @@ J1 Query Builder is a tool that provides a visual way to build a query in [J1QL]
 
 
 
-![](../assets/query-builder-home.png)
+![](../assets/query-builder-home.png) 
 
 
 
@@ -23,6 +23,10 @@ To create a query in Query Builder:
 6. Click **Run Query** in the box on the right of the page. 
 
    
+
+![](../assets/query-builder.gif)
+
+
 
 Using the icons in the box at the top right of the page, you can:
 
