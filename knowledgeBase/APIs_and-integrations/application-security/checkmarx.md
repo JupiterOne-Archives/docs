@@ -1,12 +1,17 @@
-# Checkmarx Integration with JupiterOne
+# Checkmarx
 
 ## Checkmarx + JupiterOne Integration Benefits
 
-- Visualize Checkmarx scan assessments and findings on projects in the JupiterOne graph.
+- Visualize Checkmarx scan assessments and findings on projects in the
+  JupiterOne graph.
 - Visualize Checkmarx teams in the JupiterOne graph.
 - Map a Checkmarx team to connected users in JupiterOne.
 - Monitor Checkmarx findings within the alerts app.
 - Monitor changes to Checkmarx projects using JupiterOne alerts.
+
+**NOTE**: The Checkmarx integration currently ingests the _latest_ project scan
+information. If the _latest_ project scan has status "Failed," then the
+integration will also fetch the last _successful_ Checkmarx project scan.
 
 ## How it Works
 
@@ -24,7 +29,7 @@
 ## Support
 
 If you need help with this integration, please contact
-[JupiterOne Support](https://community.askj1.com).
+[JupiterOne Support](https://support.jupiterone.io).
 
 ## Integration Walkthrough
 
@@ -33,12 +38,12 @@ The integration connects directly to Checkmarx SAST API.
 ### In Checkmarx
 
 1. Capture the **Hostname** of the Checkmarx instance.
-2. Create a new service account user or leverage an existing user that has
-   read access to your Checkmarx account.
+2. Create a new service account user or leverage an existing user that has read
+   access to your Checkmarx account.
 
 ### In JupiterOne
 
-1. From the configuration **Gear Icon**, select **Integrations**.
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
 2. Scroll to the **Checkmarx** integration tile and click it.
 3. Click the **Add Configuration** button and configure the following settings:
 
@@ -57,7 +62,7 @@ The integration connects directly to Checkmarx SAST API.
 
 ## How to Uninstall
 
-1. From the configuration **Gear Icon**, select **Integrations**.
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
 2. Scroll to the **Checkmarx** integration tile and click it.
 3. Identify and click the **integration to delete**.
 4. Click the **trash can** icon.
@@ -66,11 +71,11 @@ The integration connects directly to Checkmarx SAST API.
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
 <!--
 ********************************************************************************
-NOTE: ALL OF THE FOLLOWING DOCUMENTATION IS GENERATED USING THE "j1-integration
-document" COMMAND. DO NOT EDIT BY HAND! PLEASE SEE THE DEVELOPER DOCUMENTATION
-FOR USAGE INFORMATION:
+NOTE: ALL OF THE FOLLOWING DOCUMENTATION IS GENERATED USING THE
+"j1-integration document" COMMAND. DO NOT EDIT BY HAND! PLEASE SEE THE DEVELOPER
+DOCUMENTATION FOR USAGE INFORMATION:
 
-https://github.com/JupiterOne/sdk/blob/master/docs/integrations/development.md
+https://github.com/JupiterOne/sdk/blob/main/docs/integrations/development.md
 ********************************************************************************
 -->
 
@@ -91,7 +96,7 @@ The following entities are created:
 
 ### Relationships
 
-The following relationships are created/mapped:
+The following relationships are created:
 
 | Source Entity `_type`    | Relationship `_class` | Target Entity `_type`    |
 | ------------------------ | --------------------- | ------------------------ |
@@ -101,6 +106,14 @@ The following relationships are created/mapped:
 | `checkmarx_project`      | **HAS**               | `checkmarx_scan`         |
 | `checkmarx_scan`         | **IDENTIFIED**        | `checkmarx_finding`      |
 | `checkmarx_team`         | **HAS**               | `checkmarx_project`      |
+
+### Mapped Relationships
+
+The following mapped relationships are created:
+
+| Source Entity `_type` | Relationship `_class` | Target Entity `_type` | Direction |
+| --------------------- | --------------------- | --------------------- | --------- |
+| `checkmarx_project`   | **SCANS**             | `*CodeRepo*`          | FORWARD   |
 
 <!--
 ********************************************************************************
