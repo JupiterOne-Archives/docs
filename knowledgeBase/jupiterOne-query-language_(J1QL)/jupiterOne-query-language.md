@@ -578,9 +578,7 @@ Return
   sum(snapshot.allocatedStorage) * 0.02 as EstimatedCost
 ```
 
-## Optional traversals (Beta)
-
-**Note:** Optional traversals is a beta feature and the syntax for describing optional traversals may change in the future to help improve clarity. Any changes made to the language will be backwards compatible.
+## Optional traversals
 
 In situations where it is useful to optionally find related entities and include them in the results, J1QL allows for portions of a query to be wrapped with a `(` and `)?` to mark that section of the query as an optional
 traversal. This allows for related entities from a graph traversal to be combined and for additional constraints to be applied to the set of entities.
