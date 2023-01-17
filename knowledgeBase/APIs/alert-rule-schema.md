@@ -203,6 +203,184 @@ Example:
 }
 ```
 
+###### Multiple Queries in a Rule
+
+You can pass multiple queries into an alert rule that allows each query to output its results into the same, single alert. 
+
+This example shows multiple queries sending out an email alert to multiple recipients: 
+
+```
+{
+  "id": "2c5de5c6-592c-4e97-baba-f1cca04bb9c9",
+  "name": "ChrisLarson-Test5",
+  "description": "Test5",
+  "version": 28,
+  "specVersion": 1,
+  "pollingInterval": "ONE_WEEK",
+  "templates": {
+    "tempMap": "Project: {{item.Project}}, ProjectFindings: {{item.ProjectFindings}}, RepoFindings: {{item.RepoFindings}}"
+  },
+  "outputs": [
+    "alertLevel"
+  ],
+  "question": {
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find CodeRepo THAT RELATES TO Project with repoName!=undefined as p THAT HAS Finding as f RETURN p.repoName as Project, count(f) as ProjectFindings",
+        "version": "v1",
+        "includeDeleted": false
+      },
+      {
+        "name": "query1",
+        "query": "Find Project with repoName!=undefined THAT RELATES TO CodeRepo as p THAT HAS Finding as f RETURN p.displayName as Project, count(f) as RepoFindings",
+        "version": "v1",
+        "includeDeleted": false
+      }
+    ]
+  },
+  "operations": [
+    {
+      "when": {
+        "type": "FILTER",
+        "specVersion": 1,
+        "condition": [
+          "OR",
+          [
+            "queries.query0.total",
+            ">",
+            0
+          ],
+          [
+            "queries.query1.total",
+            ">",
+            0
+          ]
+        ]
+      },
+      "actions": [
+        {
+          "targetValue": "INFO",
+          "id": "23c3a81a-0de9-41e9-9ec4-200a28a67dd1",
+          "type": "SET_PROPERTY",
+          "targetProperty": "alertLevel"
+        },
+        {
+          "type": "CREATE_ALERT",
+          "id": "f733cd50-6172-4dad-9f2d-0cba236915af"
+        },
+        {
+          "id": "62a4dbcd-5061-4f2e-a166-1a5ed88131a5",
+          "type": "SEND_EMAIL",
+          "body": "Affected Items: <br><br>* {{queries.query0.data|mapTemplate('tempMap')|join('<br>* ')}} / <br>* {{queries.query1.data|mapTemplate('tempMap')|join('<br>* ')}}",
+          "recipients": [
+            "christopher.larson@jupiterone.com",
+            "erica.nagle@jupiterone.com",
+            "akash.ganapathi@jupiterone.com"
+          ]
+        }
+      ]
+    }
+  ],
+  "tags": []
+}
+```
+
+This example shows multiple queries sending results to Jira to create a single Jira issue:
+
+```
+{
+  "id": "34c8d517-d0ad-4ca9-93c4-21232300d9f2",
+  "name": "ChrisLarson-Jira-Test",
+  "description": "Test to see if multiple queries can be alerted into a Jira Alert",
+  "version": 8,
+  "specVersion": 1,
+  "pollingInterval": "ONE_DAY",
+  "templates": {
+    "tempMap": "Project: {{item.Project}}, ProjectFindings: {{item.ProjectFindings}}, RepoFindings: {{item.RepoFindings}}"
+  },
+  "outputs": [
+    "alertLevel"
+  ],
+  "question": {
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find CodeRepo THAT RELATES TO Project with repoName!=undefined as p THAT HAS Finding as f RETURN p.repoName as Project, count(f) as ProjectFindings",
+        "version": "v1",
+        "includeDeleted": false
+      },
+      {
+        "name": "query1",
+        "query": "Find Project with repoName!=undefined THAT RELATES TO CodeRepo as p THAT HAS Finding as f RETURN p.displayName as Project, count(f) as RepoFindings",
+        "version": "v1",
+        "includeDeleted": false
+      }
+    ]
+  },
+  "operations": [
+    {
+      "when": {
+        "type": "FILTER",
+        "specVersion": 1,
+        "condition": [
+          "OR",
+          [
+            "queries.query0.total",
+            ">",
+            0
+          ],
+          [
+            "queries.query1.total",
+            ">",
+            0
+          ]
+        ]
+      },
+      "actions": [
+        {
+          "targetValue": "INFO",
+          "id": "71d336c0-0d3a-4a99-93e1-1707e3e260d6",
+          "type": "SET_PROPERTY",
+          "targetProperty": "alertLevel"
+        },
+        {
+          "type": "CREATE_ALERT",
+          "id": "2a9b5494-8596-49f1-a2e0-56beff27d08f"
+        },
+        {
+          "summary": "Test5 - 2 Queries, mapTemplate",
+          "issueType": "Task",
+          "entityClass": "Finding",
+          "integrationInstanceId": "53a99eaa-18a5-45ef-b748-2de39d642a91",
+          "additionalFields": {
+            "description": {
+              "type": "doc",
+              "version": 1,
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "{{alertWebLink}}\n\n**Affected Items:**\n\n* {{queries.query0.data|mapTemplate('tempMap')|join('\n* ')}} \n\n***************\n\n {{queries.query1.data|mapTemplate('tempMap')|join('\n* ')}}"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "project": "CT",
+          "id": "f1d85470-41a5-4670-8a70-4c0622f0f1f2",
+          "type": "CREATE_JIRA_TICKET"
+        }
+      ]
+    }
+  ],
+  "tags": []
+}
+```
+
 
 
 ---
