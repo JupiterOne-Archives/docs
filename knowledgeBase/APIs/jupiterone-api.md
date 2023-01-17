@@ -74,74 +74,62 @@ FIND jupiterone_account as a return a._accountId
 **Example cURL command with authentication**
 
 ```sh
-curl --location --request POST 'https://graphql.us.jupiterone.io' \
+curl --location --request POST 'https://api.us.jupiterone.io/graphql' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer apiToken' \
---header 'Jupiterone-Account: accountId' \
---data-raw @- << EOF
+--header 'Jupiterone-Account: j1dev' \
+--data-binary @- << EOF
 {
-  "query": 
-    "query J1QL(
-      $query: String!
-      $cursor: String
-      $variables: JSON
-      $dryRun: Boolean
-      $remember: Boolean
-      $includeDeleted: Boolean
-      $flags: QueryV1Flags\n  ) {
-      queryV1(
-        query: $query
-        variables: $variables
-        dryRun: $dryRun
-        remember: $remember
-        includeDeleted: $includeDeleted
-        flags: $flags
-        cursor: $cursor
-      ) {
-        type
-        data
-        cursor
-      }
-    }",
-  "variables": { "query": "find Domain" }
+  "query": "query J1QL(\$query: String!, \$cursor: String) {queryV1(query: \$query, cursor: \$cursor) { type data cursor } }",
+  "variables": {
+    "query": "find Domain"
+  }
 }
 EOF
 ```
 **Example cURL command using Bash**
 
 ````bash
-curl --location --request POST 'https://graphql.us.jupiterone.io' \
+#!/bin/bash
+
+GRAPHQL_QUERY='
+  query J1QL(
+    $query: String!
+    $cursor: String
+    $variables: JSON
+    $remember: Boolean
+    $includeDeleted: Boolean
+    $flags: QueryV1Flags
+  ) {
+    queryV1(
+      query: $query
+      variables: $variables
+      remember: $remember
+      includeDeleted: $includeDeleted
+      flags: $flags
+      cursor: $cursor
+    ) {
+      type
+      data
+      cursor
+    }
+  }
+'
+
+FLATTENED_GRAPHQL_QUERY=$(echo ${GRAPHQL_QUERY} | tr -d '\n')
+
+curl --location --request POST 'https://api.us.jupiterone.io/graphql' \
 --header 'Content-Type: application/json' \
---header 'Authorization: Bearer {{api_token}}' \
+--header 'Authorization: Bearer apiToken' \
 --header 'Jupiterone-Account: j1dev' \
---data-raw '{"query":"query J1QL(
+--data-binary @- << EOF
 {
-  "query": 
-    "query J1QL(
-      $query: String!
-      $cursor: String
-      $variables: JSON
-      $dryRun: Boolean
-      $remember: Boolean
-      $includeDeleted: Boolean
-      $flags: QueryV1Flags\n  ) {
-      queryV1(
-        query: $query
-        variables: $variables
-        dryRun: $dryRun
-        remember: $remember
-        includeDeleted: $includeDeleted
-        flags: $flags
-        cursor: $cursor
-      ) {
-        type
-        data
-        cursor
-      }
-    }",
-  "variables": { "query": "aws_security_group with groupId='\''sg-xxxxxxxxxx'\''"
+  "query": "${FLATTENED_GRAPHQL_QUERY}",
+  "variables": {
+    "query": "find Domain"
+  }
 }
-```
+EOF
 ````
 
 
