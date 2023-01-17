@@ -13,7 +13,7 @@ From the J1 Dashboard, you can [enter questions in the search bar](./quickstart-
 
 
 
- J1 keeps a history of the questions you ask which is helpful when wanting the run the same questions or create questions based on past searches. The most recent questions display when you start typing in the search bar, and to see a list of all the history, click ![](../assets/icons/questions-history-icon.png) at the right in the search bar. Click ![](../assets/icons/questions-settings.png)to opt to include recently deleted entities in the question/search or to enable autocomplete for [J1QL](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md) queries.
+ J1 keeps a history of the questions you ask which is helpful when wanting the run the same questions or create questions based on past searches. The most recent questions display when you start typing in the search bar, and to see a list of all the history, click ![](../assets/icons/questions-history-icon.png) at the right in the search bar. Click ![](../assets/icons/questions-settings.png) to opt to include recently deleted entities in the question/search or to enable autocomplete for [J1QL](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md) queries.
 
 
 
@@ -71,7 +71,7 @@ You can build your own custom dashboards or utilize any of the existing boards t
 
 ## J1 Questions Library
 
-JupiterOne has hundreds of prebuilt, categorized, and managed questions for assessing the current state of your cyber assets. You can filter the questions on a specific category or tag, duplicate existing questions to create custom questions of your own, and save frequent searches for easy future reference. Click Questions at the top of the J1 home page to access the J1 questions library.
+JupiterOne has hundreds of prebuilt, categorized, and managed questions for assessing the current state of your cyber assets. Questions are a great way to learn more about your environment and how J1QL works without extensive knowledge. The Questions Library also allows you to leverage the knowledge of JupiterOne and explore what JupiterOne can do. You can filter the questions on a specific category or tag, duplicate existing questions to create custom questions of your own, and save frequent searches for easy future reference. Click Questions at the top of the J1 home page to access the J1 questions library. Use the categories and `tags` to filter and refine your search or explore further. 
 
  ![](../assets/j1-query-library.png)
 
