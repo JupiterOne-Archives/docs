@@ -1,22 +1,22 @@
-# Bugcrowd Integration with JupiterOne
+# Bugcrowd
 
 ## Bugcrowd + JupiterOne Integration Benefits
 
-*   Visualize Bugcrowd bounty programs and submitted findings in the JupiterOne
-    graph.
-*   Monitor Bugcrowd findings within the alerts app.
-*   Monitor changes to Bugcrowd bounty programs using JupiterOne alerts.
+- Visualize Bugcrowd bounty programs and submitted findings in the JupiterOne
+  graph.
+- Monitor Bugcrowd findings within the alerts app.
+- Monitor changes to Bugcrowd bounty programs using JupiterOne alerts.
 
 ## How it Works
 
-*   JupiterOne periodically fetches changes to programs and new findings from
-    Bugcrowd to update the graph.
-*   Configure alerts to reduce the noise of submitted findings.
+- JupiterOne periodically fetches changes to programs and new findings from
+  Bugcrowd to update the graph.
+- Configure alerts to reduce the noise of submitted findings.
 
 ## Requirements
 
-*   JupiterOne requires a Bugcrowd API Token to interact with the API.
-*   You must have permission in JupiterOne to install new integrations.
+- JupiterOne requires a Bugcrowd API Token to interact with the API.
+- You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
@@ -27,41 +27,40 @@ If you need help with this integration, please contact
 
 ### In Bugcrowd
 
-1.  To provision API access credentials, follow Bugcrowd's
-    [API getting started guide](https://docs.bugcrowd.com/api/getting-started/)
+1. To provision API access credentials, follow Bugcrowd's
+   [API getting started guide](https://docs.bugcrowd.com/api/getting-started/)
 
-2.  On the API credentials page, select "**Legacy**" in the "Default version"
-    dropdown. The JupiterOne Bugcrowd integration currently only supports the
-    legacy v3 Bugcrowd APIs.
+2. On the API credentials page, select "**Legacy**" in the "Default version"
+   dropdown. The JupiterOne Bugcrowd integration currently only supports the
+   legacy v3 Bugcrowd APIs.
 
 ### In JupiterOne
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **Bugcrowd** integration tile and click it.
-3.  Click the **Add Configuration** button and configure the following settings:
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
+2. Scroll to the **Bugcrowd** integration tile and click it.
+3. Click the **Add Configuration** button and configure the following settings:
 
-*   Enter the **Account Name** by which you'd like to identify this Bugcrowd
-    account in JupiterOne. Ingested entities will have this value stored in
-    `tag.AccountName` when **Tag with Account Name** is checked.
-*   Enter a **Description** that will further assist your team when identifying
-    the integration instance.
-*   Select a **Polling Interval** that you feel is sufficient for your monitoring
-    needs. You may leave this as `DISABLED` and manually execute the integration.
-*   Enter the **API Token** token generated from your Bugcrowd account, configured
-    for read access.
+- Enter the **Account Name** by which you'd like to identify this Bugcrowd
+  account in JupiterOne. Ingested entities will have this value stored in
+  `tag.AccountName` when **Tag with Account Name** is checked.
+- Enter a **Description** that will further assist your team when identifying
+  the integration instance.
+- Select a **Polling Interval** that you feel is sufficient for your monitoring
+  needs. You may leave this as `DISABLED` and manually execute the integration.
+- Enter the **API Token** token generated from your Bugcrowd account, configured
+  for read access.
 
-4.  Click **Create Configuration** once all values are provided.
+4. Click **Create Configuration** once all values are provided.
 
 ## How to Uninstall
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **Bugcrowd** integration tile and click it.
-3.  Identify and click the **integration to delete**.
-4.  Click the **trash can** icon.
-5.  Click the **Remove** button to delete the integration.
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
+2. Scroll to the **Bugcrowd** integration tile and click it.
+3. Identify and click the **integration to delete**.
+4. Click the **trash can** icon.
+5. Click the **Remove** button to delete the integration.
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
-
 <!--
 ********************************************************************************
 NOTE: ALL OF THE FOLLOWING DOCUMENTATION IS GENERATED USING THE
@@ -101,7 +100,4 @@ The following relationships are created/mapped:
 END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 ********************************************************************************
 -->
-
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
- 
-<!--  jupiterOneDocVersion=1-0-0 -->
