@@ -1,9 +1,9 @@
 # Getting Started with JupiterOne
 
-The JupiterOne (J1) Search for anything is the home page that gets you started as a new user or is the landing page for all other functions if you are a frequent user. 
+The JupiterOne (J1) Dashboard is the home page that gets you started as a new user and is the landing page for all other functions. 
 
 
-![homepage](../assets/landing-signin.png)
+![homepage](../assets/dashboard-home.png) 
 
 
 
