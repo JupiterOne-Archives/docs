@@ -1,4 +1,4 @@
-# J1 Query Builder
+# J1 Query Builder (beta)
 
 J1 Query Builder is a tool that provides a visual way to build a query in [J1QL](./jupiterOne-query-language.md) without having to know the language. 
 
