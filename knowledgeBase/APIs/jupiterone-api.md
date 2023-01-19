@@ -77,7 +77,7 @@ FIND jupiterone_account as a return a._accountId
 curl --location --request POST 'https://api.us.jupiterone.io/graphql' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer apiToken' \
---header 'Jupiterone-Account: j1dev' \
+--header 'Jupiterone-Account: accountID' \
 --data-binary @- << EOF
 {
   "query": 
@@ -134,7 +134,7 @@ FLATTENED_GRAPHQL_QUERY=$(echo ${GRAPHQL_QUERY} | tr -d '\n')
 curl --location --request POST 'https://api.us.jupiterone.io/graphql' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer apiToken' \
---header 'Jupiterone-Account: j1dev' \
+--header 'Jupiterone-Account: accountID' \
 --data-binary @- << EOF
 {
   "query": "${FLATTENED_GRAPHQL_QUERY}",
