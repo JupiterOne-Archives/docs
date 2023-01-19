@@ -74,7 +74,7 @@ FIND jupiterone_account as a return a._accountId
 **Example cURL command with authentication**
 
 ```sh
-curl --location --request POST 'https://api.us.jupiterone.io/graphql' \
+curl --location --request POST 'https://graphql.us.jupiterone.io' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer apiToken' \
 --header 'Jupiterone-Account: accountID' \
@@ -131,7 +131,7 @@ GRAPHQL_QUERY='
 
 FLATTENED_GRAPHQL_QUERY=$(echo ${GRAPHQL_QUERY} | tr -d '\n')
 
-curl --location --request POST 'https://api.us.jupiterone.io/graphql' \
+curl --location --request POST 'https://graphql.api.us.jupiterone.io' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer apiToken' \
 --header 'Jupiterone-Account: accountID' \
