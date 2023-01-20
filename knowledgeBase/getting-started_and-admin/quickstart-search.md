@@ -1,12 +1,10 @@
-# Get Started with Search
+# Get Started with the J1 Dashboard
 
-You can quickly search and get insight across your entire digital environment integrated with JupiterOne, from the Search for Anything landing page. There are three modes of search:
+You can quickly search and get insight across your entire digital environment integrated with JupiterOne, from the J1 Dashboard. There are three modes of search:
 
 - **Ask questions** - you can enter any keywords to search across all packaged and saved questions. 
 - **Full-text search** - an easy way to search across all assets based on their property values.
 - **JupiterOne query language (J1QL)** is best for detailed querying of assets and relationships. 
-
-You can toggle results in four different display modes: **Table**, **Graph**, **Raw JSON**, or **Pretty JSON**.
 
 **Note**: For performance reasons, search results are limited to return a maximum 250 items. If you believe something is missing from a large result set, try fine-tuning the query to generate more precise results.
 
@@ -34,17 +32,31 @@ Or ask a question like:
 - What is connected to the Internet?
 - Who has access to ...?
 
-## Edit Questions
+## Question Results
 
-You can edit any of the questions in the J1 Questions Library to customize the question to your specific requirements. Click the pencil icon.
+After entering your question, a data table displays with the results. Click any of the assets in the _displayName column to open the detailed properties side panel. You can toggle results in four different display modes: **Table**, **Graph**, **Raw JSON**, or **Pretty JSON**.
 
-![](../assets/questions-edit.png) 
 
-Edit any of the fields, add tags, or modify the query. In addition, you can edit the compliance mappings. When you map a framework and compliance requirement to a question, the next time that framework is imported, the question is added to the requirement
+![](../assets/questions-data-table.png) 
+
+
+
+Use the icons in the top right of the data table to save the question, add the results to a [J1 Insights dashboard](../compliance_and-reporting/insights-dashboards.md), create an alert based on the results, share the results, copy the query to the clipboard, and download the results.
+
+## J1 Questions Library
+
+The J1 Questions Library contains managed, prebuilt questions. You can duplicate any of these questions to customize it to your specific requirements. Click on any question and the detailed properties side panel open. Click the ![](../assets/icons/assets-more.png) menu and select **Duplicate**.
+
+
+![](../assets/questions-library-duplicate.png)  
+
+
+
+In the Duplicate Question window, edit any of the fields, add tags, or modify the query. In addition, you can edit the compliance mappings. When you map a framework and compliance requirement to a question, the next time that framework is imported, the question is added to the requirement
 
 By default, J1 adds [compliance frameworks](../compliance_and-reporting/compliance-import.md) to which your question is mapped. 
 
-![](../assets/questions-edit-compliance.png) 
+![](../assets/questions-duplicate.png) 
 
 
 
@@ -52,11 +64,10 @@ For each of the mapped frameworks, you can add compliance requirement and contro
 
 You can edit any question to enable daily polling on this question and see a trend chart in the results the next time you run the question. 
 
-![](../assets/polling-data.png) 
-
 
 
 ![](../assets/time-trend-chart.png)
+
 
 **Note**: If you are editing the query, do not use `count()`because the daily polling counts the number of results (rows). Using `count()` results in a single count of 1.
 
