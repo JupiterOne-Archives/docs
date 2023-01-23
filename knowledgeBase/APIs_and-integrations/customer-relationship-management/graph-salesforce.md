@@ -57,7 +57,7 @@ If you need help with this integration, please contact
 
 # How to Uninstall
 
-1. From the configuration **Gear Icon**, select **Integrations**.
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
 2. Scroll to the **Salesforce** integration tile and click it.
 3. Identify and click the **integration to delete**.
 4. Click the **trash can** icon.
