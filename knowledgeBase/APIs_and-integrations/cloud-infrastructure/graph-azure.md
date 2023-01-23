@@ -56,14 +56,14 @@ To create the App Registration:
 2. Select **App registrations**.
   
 
-   ![](./azure-app-registration.png)
+   ![](../../assets/azure-app-registration.png) 
    
 3. Click **New registration**.
 4. Create a new App registration, using the **Name** "JupiterOne", selecting
    **Accounts in this organizational directory only**, with **no** "Redirect
    URI".
 
-   ![](./azure-new-registration.png) 
+   ![](../../assets/azure-new-registration.png)  
 
 5. Click **Register**.
 
@@ -74,7 +74,7 @@ After registering a new application, you can find the application (client) ID an
 1. Navigate to the Overview page of the new app.
   
 
-   ![](./azure-app-ID.png) 
+   ![](../../assets/azure-app-ID.png)  
    
 2. Copy the Application (client) ID.
 3. Copy the Directory (tenant) ID.
@@ -89,7 +89,7 @@ The following steps are required for the DICOM service, but optional for the FHI
 1. Go to the **API permissions** menu option for the new app.
   
 
-   ![](./azure-add-permission.png) 
+   ![](../../assets/azure-add-permission.png)  
    
 2. Click **Add a permission**.
 3. Click **Add permissions** and grant the following permissions to the app:
@@ -116,7 +116,7 @@ information:
 2. Click **Management Groups**.
 3. Click **+ Add management group**.
 
-   ![](./azure-add management-group.png) 
+   ![](../../assets/azure-add management-group.png)  
 
 4. Create the custom role "JupiterOne Reader".
 
@@ -140,13 +140,13 @@ information:
 Listing key vault keys and secrets (`rm-keyvault-keys` and `rm-keyvault-secrets` steps) require you to grant the following permissions to the J1 security principal  for each key vault in your account. See the Azure documentation for more information on [assigning a key vault access policy](https://go.microsoft.com/fwlink/?linkid=2125287).
 
 1. Click Access policies, and then click **+Create**.  
-   
+  
 
-   ![](./azure-access-policies.png) 
+   ![](../../assets/azure-access-policies.png)  
 
 2. Under Key permissions, Secret permissions, and Certificate permissions, select the permissions you want. 
 
-   ![](./azure-create-policy.png) 
+   ![](../../assets/azure-create-policy.png)  
 
    
 
