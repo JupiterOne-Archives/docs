@@ -62,7 +62,7 @@ By default, J1 adds [compliance frameworks](../compliance_and-reporting/complian
 
 For each of the mapped frameworks, you can add compliance requirement and control mappings. Click the **Propagate changes to existing compliance frameworks** checkbox if you want to apply your edits to existing frameworks. 
 
-You can edit any question to enable daily polling on this question and see a trend chart in the results the next time you run the question. 
+You can edit any question to enable daily polling on this question and see a trend chart in the results the next time you run the question. If you duplicate a question that has the option selected to enable daily trend collection, the historical data that populated the existing question is not removed. However, going forward, all the new data is populated by the new or modified query.
 
 
 
