@@ -66,7 +66,8 @@ You can edit any question to enable daily polling on this question and see a tre
 
 
 
-![](../assets/time-trend-chart.png)
+![](../assets/time-trend-chart.png) 
+
 
 
 **Note**: If you are editing the query, do not use `count()`because the daily polling counts the number of results (rows). Using `count()` results in a single count of 1.
