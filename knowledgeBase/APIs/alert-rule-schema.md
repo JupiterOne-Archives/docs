@@ -889,7 +889,7 @@ Grouping operations with parentheses:
 
 ## Custom Templating Transforms
 
-Some custom transforms are exposed in the rule templating language.  These are
+Some custom transforms are exposed in the rule templating language. These are
 functions that perform actions on an input, and can be chained together to accomplish
 some powerful actions.
 
@@ -997,7 +997,7 @@ This is an example accessing `entity` data using `mapProperty` and the above dat
 #### `merge(...data: array)` Custom Transform
 
 Allows for merging 1 or more arrays together to create a new array of
-the combined results.  This transform does not perform any deduplication; all elements
+the combined results. This transform does not perform any deduplication; all elements
 of the input arrays are present in the output. This is usually used to combine the
 results of two or more J1QL queries into a common set of query results.
 
@@ -1064,7 +1064,7 @@ Example of default if no `separator` is passed to `join`:
 
 #### `uniquePropertyValues(propertyName: string)` Custom Transform
 
-Creates a set of unique values for the given property name.  The transform
+Creates a set of unique values for the given property name. The transform
 will pull all properties from the `entity` and `properties` sub-properties to
 the top level to try to access the passed in `propertyName`.
 
