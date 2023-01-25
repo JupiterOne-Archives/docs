@@ -887,9 +887,11 @@ Grouping operations with parentheses:
 | `(83 + 1) / 2`              | 42     |
 | `1 < 3 && (4 > 2 || 2 > 4)` | true   |
 
-### Custom Transforms
+## Custom Templating Transforms
 
-Some custom transforms are exposed in the rule templating language.
+Some custom transforms are exposed in the rule templating language. These are
+functions that perform actions on an input, and can be chained together to accomplish
+some powerful actions.
 
 #### `mapTemplate(templateName: string)` Custom Transform
 
@@ -992,6 +994,45 @@ This is an example accessing `entity` data using `mapProperty` and the above dat
 }
 ```
 
+#### `merge(...data: array)` Custom Transform
+
+Allows for merging 1 or more arrays together to create a new array of
+the combined results. This transform does not perform any deduplication; all elements
+of the input arrays are present in the output. This is usually used to combine the
+results of two or more J1QL queries into a common set of query results.
+
+Example query configuration:
+
+```js
+{
+  "queries": [
+    {
+      "query": "Find User with name ~=\"first.last\" as a RETURN a.displayName as DisplayName",
+      "name": "query0",
+      "version": "v1",
+      "includeDeleted": false
+    },
+    {
+      "query": "Find User with name ~=\"firstLast\" as b RETURN b.displayName as DisplayName",
+      "name": "query1",
+      "version": "v1",
+      "includeDeleted": false
+    }
+  ]
+}
+```
+
+This is an example of merging the results of these two queries together, and getting
+the number of total results.
+
+```js
+{
+  "type": "SEND_EMAIL",
+  "body": "{{queries.query0.data|merge(queries.query1.data)|length}}",
+  "recipients": ["no-reply@jupiterone.io"]
+}
+```
+
 #### `join(separator?: string)` Custom Transform
 
 This function is similar to the `Array.prototype.join` function in JavaScript. 
@@ -1020,6 +1061,122 @@ Example of default if no `separator` is passed to `join`:
   "recipients": ["no-reply@jupiterone.io"]
 }
 ```
+
+#### `uniquePropertyValues(propertyName: string)` Custom Transform
+
+Creates a set of unique values for the given property name. The transform
+will pull all properties from the `entity` and `properties` sub-properties to
+the top level to try to access the passed in `propertyName`.
+
+Example query data:
+
+```js
+{
+  "query": "FIND Person",
+  "data": [
+    {
+      "id": "1",
+      "entity": {
+        "_createdOn": 1234
+        // ...
+      },
+      "properties": {
+        "firstName": "Jon"
+        // ...
+      }
+    },
+    {
+      "id": "2",
+      "entity": {
+        "_createdOn": 12345
+        // ...
+      },
+      "properties": {
+        "firstName": "Jane"
+        // ...
+      }
+    },
+    {
+      "id": "3",
+      "entity": {
+        "_createdOn": 5555
+        // ...
+      },
+      "properties": {
+        "firstName": "Jon"
+        // ...
+      }
+    },
+  ]
+}
+```
+
+This is an example of accessing deduplicating a property of an array of entities:
+
+```js
+{
+  "type": "SEND_EMAIL",
+  // This would return: ["Jon","Jane"]
+  "body": "{{queries.query0.data|uniquePropertyValues('firstName')}}",
+  "recipients": ["no-reply@jupiterone.io"]
+}
+```
+
+
+
+### Common Templating Examples
+
+Merging multiple query results to generate a unique set of values for a given property printed on a new line
+```js
+"{{queries.query0.data|merge(queries.query1.data)| uniquePropertyValues('firstName')|join('\n')}}"
+
+// Will display something like:
+//
+// firstName1
+// firstName2
+// ...
+```
+
+Using a template to display multiple properties from a set of query results
+```js
+// In the templates definition
+myTemplateName: "Property1: {{item.propertyName1}} - Property2: {{item.propertyName2}}"
+
+// In your rule action
+"{{queries.query0.data|mapProperty('propertyName1', 'propertyName2')|mapTemplate('myTemplateName')|join('\n')}}"
+
+// Will display something like:
+
+// Property1: value1 - Property2 - value2
+// Property1: value3 - Property2 - value4
+// ...
+```
+
+## Filtering Collections
+Collections, or arrays of objects, can be filtered by including a filter expression in brackets. Properties of each collection can be referenced by prefixing them with a leading dot. The result will be an array of the objects for which the filter expression resulted in a truthy value.
+
+Example context:
+
+```js
+{
+  employees: [
+    {first: 'Sterling', last: 'Archer', age: 36},
+    {first: 'Malory', last: 'Archer', age: 75},
+    {first: 'Lana', last: 'Kane', age: 33},
+    {first: 'Cyril', last: 'Figgis', age: 45},
+    {first: 'Cheryl', last: 'Tunt', age: 28}
+  ],
+  retireAge: 62
+}
+```
+
+|Expression                             |	Result                                       |
+|:--------------------------------------|:---------------------------------------------|
+|employees[.first == 'Sterling']        |	[{first: 'Sterling', last: 'Archer', age: 36}]
+|employees[.last == 'Tu' + 'nt'].first	| Cheryl
+|employees[.age >= 30 && .age < 40]	    | [{first: 'Sterling', last: 'Archer', age: 36},{first: 'Lana', last: 'Kane', age: 33}]
+|employees[.age >= 30 && .age < 40][.age < 35] |	[{first: 'Lana', last: 'Kane', age: 33}]
+| employees[.age >= retireAge].first    |	Malory
 
 ## Parameters in Rules
 
