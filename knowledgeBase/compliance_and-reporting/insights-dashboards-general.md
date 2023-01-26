@@ -26,10 +26,8 @@
 
 - Download any widget on any board to either a PNG, CSV, or format.
 
-  
 
-
-  ![](../assets/insights-downloads.png) 
+    ![](../assets/insights-downloads.png) 
 
 ​	
 
@@ -48,7 +46,7 @@
 
 
 
-- Download a board schema, share boards, or duplicate board, as well as edit the board layout, including adding charts:
+- Download a board as a PDF or JSON schema, share boards, or duplicate boards, as well as edit the board layout, including adding charts:
 
   
 
@@ -58,7 +56,7 @@
 
   
 
-  If you have the J1 Admin permission, you see a Share button that enables you to give access to your Insights board to specific internal users or groups. When determining the public access, you have the option of creating a public link you can share or list a range of IP addresses that you want to allow access to the dashboard, blocking any users from IP addresses outside of that range. 
+  If you have the J1 Admin permission, you see a Share button that enables you to control access to your Insights board to specific internal users or groups. When determining the public access, you have the option of creating a public link you can share or list a range of IP addresses that you want to allow access to the dashboard, blocking any users from IP addresses outside of that range. 
 
    
 
