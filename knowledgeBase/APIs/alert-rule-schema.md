@@ -433,13 +433,15 @@ Please use the
 [Official Jira Rest API](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-fields/)
 for more information.
 
-| Field Type      | Input Format                     | Example                                             |
-| --------------- | -------------------------------- | --------------------------------------------------- |
-| Text            | String value                     | `"Value of Field"`                                  |
-| Number          | Number value                     | `2`                                                 |
-| Select          | Object with value key            | `{ "value": "Select Option Label"}`                 |
-| MultiSelect     | Array of string values           | `["Option 1", "Option 2"]`                          |
-| MultiCheckBoxes | Array of Objects with value keys | `[{ "value": "Option 1" }, { "value": "Option 2"}]` |
+| Field Type Label | Schema Type     | Input Format                         | Example                                                                   |
+| ---------------- | --------------- | ------------------------------------ | ------------------------------------------------------------------------- |
+| Text             | textfield       | String value                         | `"Value of Field"`                                                        |
+| Number           | number          | Number value                         | `2`                                                                       |
+| Select           | select          | Object with value key                | `{ "value": "Select Option Label"}`                                       |
+| MultiSelect      | multiselect     | Array of string values               | `["Option 1", "Option 2"]`                                                |
+| MultiCheckBoxes  | multicheckboxes | Array of Objects with value keys     | `[{ "value": "Option 1" }, { "value": "Option 2"}]`                       |
+| UserPicker       | userpicker      | Object with accountId                | `{ "accountId": "userInternalId" }`                                       |
+| MultiUserPicker  | multiuserpicker | Array of Objects with accountId keys | `[{ "accountId": "user1InternalId" }, { "accountId": "user2InternalId"}]` |
 
 Example:
 
@@ -452,6 +454,31 @@ Example:
   "summary": "Ticket summary",
   "issueType": "Task",
   "additionalFields": {
+    "custom_text": "field_value",
+    "custom_number": 2,
+    "custom_select": {
+      "value": "Select Option Label"
+    },
+    "custom_multi_select": ["Option 1", "Option 2"],
+    "custom_multi_checkboxes": [
+      {
+        "value": "Option 1"
+      },
+      {
+        "value": "Option 2"
+      }
+    ],
+    "custom_user_picker": {
+      "accountId": "usersInternalId"
+    },
+    "custom_multi_user_picker": [
+      {
+        "accountId": "user1InternalId"
+      },
+      {
+        "accountId": "user2InternalId"
+      }
+    ],
     "description": {
       "type": "doc",
       "version": 1,
@@ -461,7 +488,7 @@ Example:
           "content": [
             {
               "type": "text",
-              "text": "Jira description here!"
+              "text": "Jira description here! **Full Markdown Supported Text**"
             }
           ]
         }
