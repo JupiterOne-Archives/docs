@@ -4,11 +4,11 @@ J1QL queries executed via the [J1 public API](./jupiterone-api.md) are rate-limi
 
 #### **Account Rate Limit for J1QL Queries**
 
-The default rate of J1QL queries is`120 tokens per 1-minute period`.
+The default rate of J1QL queries is`120 tokens per 2-minute period`.
 
 - At any time, there are a maximum of 120 tokens available for J1QL queries.
 - JupiterOne declines queries when the rate exceeds 120 tokens per 1-minute period.
-- **Average rate allowed:** 2 J1QL queries per second.
+- **Average rate allowed:**  One J1QL query per second.
 - **Configurable:** JupiterOne can adjust this rate limit on your behalf. Contact your J1 administrator.
 
 
