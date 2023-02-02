@@ -1,6 +1,6 @@
 # J1QL Query Rate Limiting
 
-J1QL queries executed via the [J1 public API](./jupiterone-api.md) are rate-limited separately from [GraphQL API invocations](./rate-limiting.md). Each J1QL query uses one token. All queries executed via the J1 public API count towards the rate limit. This count includes user-initiated application queries (such as search and J1 Insights) and queries via the J1 public API.
+J1QL queries executed via the [J1 public API](./jupiterone-api.md) are rate-limited separately from [GraphQL API invocations](./rate-limiting.md). Each J1QL query consumes one request token. All queries executed via the J1 public API count towards the rate limit. This count includes user-initiated application queries (such as search and J1 Insights) and queries via the J1 public API.
 
 #### **Account Rate Limit for J1QL Queries**
 
