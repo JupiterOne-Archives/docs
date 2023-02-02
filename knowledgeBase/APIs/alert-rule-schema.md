@@ -1223,6 +1223,23 @@ myTemplateName: 'Property1: {{item.propertyName1}} - Property2: {{item.propertyN
 // ...
 ```
 
+Filtering a set of query results to a specific name and using a template for extra propoerties
+
+```js
+// In the templates definition
+myTemplateName: 'Property1: {{item.name}} - Property2: {{item.id}}';
+
+// In your rule action
+("{{queries.query0.data[.name == 'repository1']|mapProperty('name', 'id')|mapTemplate('myTemplateName')|join('\n')}}");
+
+// Will display something like:
+
+// repository1 - anIdForEntity1
+// repository1 - anIdForEntity2
+// repository1 - anIdForEntity3
+// ...
+```
+
 ## Filtering Collections
 
 Collections, or arrays of objects, can be filtered by including a filter
