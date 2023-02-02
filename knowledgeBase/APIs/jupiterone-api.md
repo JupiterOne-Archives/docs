@@ -80,20 +80,7 @@ curl --location --request POST 'https://graphql.us.jupiterone.io' \
 --header 'Jupiterone-Account: accountID' \
 --data-binary @- << EOF
 {
-  "query": 
-  	"query J1QL(
-  		$query: String!
-  		$cursor: String
-  		){
-        queryV1(
-        	query: $query
-			cursor: $cursor
-			) { 
-				type
-				data
-				cursor 
-			} 
-		}",
+  "query": "query J1QL(\$query: String!, \$cursor: String) {queryV1(query: \$query, cursor: \$cursor) { type data cursor } }",
   "variables": {
     "query": "find Domain"
   }
