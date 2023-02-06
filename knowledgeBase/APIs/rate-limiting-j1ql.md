@@ -6,7 +6,7 @@ J1QL queries executed via the [J1 public API](./jupiterone-api.md) are rate-limi
 
 - Default limit: 120 tokens/120 seconds
 - Enterprise limit (available on request): 60 tokens/60 seconds
-- Enterprise customers are eligible for a rate limit increase up to 120 tokens/60 seconds, subject to usage analysis and approval.  Contact your J1 TSE to request an increase.
+- Enterprise customers are eligible for a rate limit increase up to 120 tokens/60 seconds, subject to usage analysis and approval. Contact your J1 TSE to request an increase.
 
 
 
