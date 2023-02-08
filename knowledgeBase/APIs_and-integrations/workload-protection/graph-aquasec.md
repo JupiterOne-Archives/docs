@@ -1,29 +1,29 @@
-# Aqua Security Integration with JupiterOne
+# Aqua Security
 
 ## Aqua Security + JupiterOne Integration Benefits
 
-*   Visualize Aqua Security accounts, groups, users, and API keys in the JupiterOne
-    graph.
-*   Map Aqua Security users to employees in your JupiterOne account.
-*   Monitor changes to Aqua Security users using JupiterOne alerts.
+- Visualize Aqua Security accounts, groups, users, and API keys in the JupiterOne
+  graph.
+- Map Aqua Security users to employees in your JupiterOne account.
+- Monitor changes to Aqua Security users using JupiterOne alerts.
 
 ## How it Works
 
-*   JupiterOne periodically fetches account, group, API key, and user data from
-    Aqua Security to update the graph.
-*   Write JupiterOne queries to review and monitor updates to the graph, or
-    leverage existing queries.
-*   Configure alerts to take action when JupiterOne graph changes, or leverage
-    existing alerts.
+- JupiterOne periodically fetches account, group, API key, and user data from
+  Aqua Security to update the graph.
+- Write JupiterOne queries to review and monitor updates to the graph, or
+  leverage existing queries.
+- Configure alerts to take action when JupiterOne graph changes, or leverage
+  existing alerts.
 
 ## Requirements
 
-*   Aqua Security uses generated API keys that consist of a key and secret value to
-    authenticate calls to their API.
-*   JupiterOne requires an API key, secret, and the Account ID in order to make
-    the necessary API calls. You must have a user with sufficient permissions in
-    Aqua Security to generate an API key to get this information.
-*   You must have permission in JupiterOne to install new integrations.
+- Aqua Security uses generated API keys that consist of a key and secret value to
+  authenticate calls to their API.
+- JupiterOne requires an API key, secret, and the Account ID in order to make
+  the necessary API calls. You must have a user with sufficient permissions in
+  Aqua Security to generate an API key to get this information.
+- You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
@@ -34,26 +34,26 @@ If you need help with this integration, please contact
 
 ### In Aqua Security
 
-1.  [Generate an API Key](https://cloud.aquasec.com/cspm/#/apikeys) Be sure to
-    make note of the secret as it will only be displayed once during generation.
+1. [Generate an API Key](https://cloud.aquasec.com/cspm/#/apikeys) Be sure to
+   make note of the secret as it will only be displayed once during generation.
 
 ### In JupiterOne
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **Aquasec** integration tile and click it.
-3.  Click the **Add Configuration** button and configure the following settings:
+1. From the top navigation of the J1 Search homepage, select **Integrations**. 
+2. Scroll to the **Aquasec** integration tile and click it.
+3. Click the **Add Configuration** button and configure the following settings:
 
-*   Enter the **Account Name** by which you'd like to identify this Aqua Security
-    account in JupiterOne. Ingested entities will have this value stored in
-    `tag.AccountName` when **Tag with Account Name** is checked.
-*   Enter a **Description** that will further assist your team when identifying
-    the integration instance.
-*   Select a **Polling Interval** that you feel is sufficient for your monitoring
-    needs. You may leave this as `DISABLED` and manually execute the integration.
-*   Enter the **API Key** and **API Secret** generated for use by JupiterOne.
-*   Enter the **Account ID** for your Aqua Security account.
+- Enter the **Account Name** by which you'd like to identify this Aqua Security
+  account in JupiterOne. Ingested entities will have this value stored in
+  `tag.AccountName` when **Tag with Account Name** is checked.
+- Enter a **Description** that will further assist your team when identifying
+  the integration instance.
+- Select a **Polling Interval** that you feel is sufficient for your monitoring
+  needs. You may leave this as `DISABLED` and manually execute the integration.
+- Enter the **API Key** and **API Secret** generated for use by JupiterOne.
+- Enter the **Account ID** for your Aqua Security account.
 
-4.  Click **Create Configuration** once all values are provided.
+4. Click **Create Configuration** once all values are provided.
 
 # How to Uninstall
 
@@ -61,14 +61,13 @@ TODO: List specific actions that must be taken to uninstall the integration.
 Many of the following steps will be reusable; take care to be sure they remain
 accurate.
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **Aquasec** integration tile and click it.
-3.  Identify and click the **integration to delete**.
-4.  Click the **trash can** icon.
-5.  Click the **Remove** button to delete the integration.
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
+2. Scroll to the **Aquasec** integration tile and click it.
+3. Identify and click the **integration to delete**.
+4. Click the **trash can** icon.
+5. Click the **Remove** button to delete the integration.
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
-
 <!--
 ********************************************************************************
 NOTE: ALL OF THE FOLLOWING DOCUMENTATION IS GENERATED USING THE
@@ -108,7 +107,4 @@ The following relationships are created:
 END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 ********************************************************************************
 -->
-
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
- 
-<!--  jupiterOneDocVersion=1-0-1 -->
