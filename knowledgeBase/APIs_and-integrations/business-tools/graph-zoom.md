@@ -46,7 +46,7 @@ If you need help with this integration, please contact
 
 ### In JupiterOne
 
-1. Select **Integrations** on the top navigation bar.
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
 2. Scroll to the **Zoom** integration tile and click it.
 3. Click the **Add Configuration** button and configure the following settings:
    - Enter the **Account Name** by which you'd like to identify this Zoom
@@ -63,7 +63,7 @@ If you need help with this integration, please contact
 
 # How to Uninstall
 
-1. From the top navigation of the J1 Search homepage, select **Integrations**
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
 2. Scroll to the **Zoom** integration tile and click it.
 3. Identify and click the **integration to delete**.
 4. Click the **trash can** icon.
