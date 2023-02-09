@@ -32,17 +32,16 @@ If you need help with this integration, please contact
 
 1. In the Zoom App Marketplace, go to the Develop dropdown menu in the 
    top-right corner and select [Build App](https://marketplace.zoom.us/develop/create).
-2. Click 'Create' under the Server-to-Server OAuth app type.
-3. Enter an app name to begin creation.
-4. Take note of your `Account ID`, `Client ID`, and `Client secret` and supply
-   it to the .env file.
-5. Supply the required information for each section. Zoom will prompt you if any
+2. In the Choose Your App window, click **Create** under the OAuth app type.
+3. Enter an app name and app type to begin creation.
+   Your app configuration page opens for the new app.
+4. Take note of your `Account ID`, `Client ID`, and `Client secret` and enter them in the .env file.
+5. Enter the required information for the app credentials, information, feature, scopes sections and so on. Zoom promptd you if any
    required fields are omitted.
-6. On scopes, add `group:read:admin`, `role:read:admin`, `user:read:admin`, and
+6. In the Scopes section, add `group:read:admin`, `role:read:admin`, `user:read:admin`, and
    `account:read:admin`. If you cannot or choose not to provide all the listed
-   scopes the steps requiring the missing scopes will be disabled.
-7. On the final screen once all required information has been provided, an
-   `Activate your app` button will appear. Click it to complete app creation.
+   scopes, the steps requiring the missing scopes is disabled.
+7. On the final screen after you have provided all the required information has been provided, click`Activate your app` to complete the app creation.
 
 ### In JupiterOne
 
