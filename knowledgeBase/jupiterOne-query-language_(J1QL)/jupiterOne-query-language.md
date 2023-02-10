@@ -491,7 +491,7 @@ There are plans to support the following aggregations:
 
 - `count(*)` - for determining the count of all other entities related to a given entity.
 
-## Scalar Functions: `CONCAT`
+## Scalar Functions
 
 The ability to format and/or to perform calculations on row level columns can be accomplished through **Scalar Functions**.
 
@@ -508,16 +508,32 @@ Note: If this function receives a number or boolean value, the `concat` intuitiv
 - Number values: e.g. `123`
 - Boolean values: e.g. `true`
 
-A few examples:
+Example: 
 
-```j1ql
+```
 FIND
   aws_s3_bucket as s3
 RETURN
   CONCAT(s3.bucketSizeBytes, ' bytes') as size
 ```
 
-## De-duplicate results with `UNIQUE` and `RETURN`
+### `MERGE`
+
+The scalar function `MERGE()` allows you to merge multiple properties into a single property list. You can now combine multiple (defined) properties into a single property without having to choose to return one property or another.
+
+
+
+Example:
+
+```
+FIND UNIQUE User as u
+THAT IS Person as p
+RETURN p.displayName, merge(p.email, u.email, u.publicEmail) as “Email List” (edited) 
+```
+
+
+
+## De-duplicate results with `UNIQUE`, `RETURN`, and `MERGE`
 
 Sometimes a query may generate duplicate results. This duplication occurs if there are multiple paths of traversals (such as relationships) between the vertices (such as assets) referenced in a specific query.
 
@@ -529,6 +545,8 @@ Find aws_eni with publicIpAddress != undefined as nic
 where nic.securityGroupIds = sg.groupId
 ```
 This query attempts to find network interfaces that are associated with a security group that allows public facing AWS EC2 instances. In this case, there could be multiple security group rules allowing access to/from the Internet, which may result in duplicate data in the query result because each individual traversal is a successful match to the query.
+
+### `UNIQUE` and `RETURN`
 
 You can use a combination of `UNIQUE` and `RETURN` keywords to filter out the duplicates. The query above can be modified as:
 
@@ -545,6 +563,20 @@ RETURN
   nic.tag.AccountName, nic.webLink
 ```
 _Limitation: `UNIQUE` keyword **must** be used together with `RETURN`._
+
+### `MERGE`
+
+The function `MERGE()` allows you to merge multiple properties into a single property list. You can now combine multiple (defined) properties into a single property without having to choose to return one property or another.
+
+Example:
+
+```
+FIND UNIQUE User as u
+THAT IS Person as p
+RETURN p.displayName, merge(p.email, u.email, u.publicEmail) as “Email List” (edited) 
+```
+
+
 
 ## Math Operations
 
