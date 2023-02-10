@@ -32,8 +32,15 @@ If you need help with this integration, please contact
 
 1. In the Zoom App Marketplace, go to the Develop dropdown menu in the 
    top-right corner and select [Build App](https://marketplace.zoom.us/develop/create).
+<<<<<<< Updated upstream
 2. In the Choose Your App window, click **Create** under the OAuth app type.
 3. Enter an app name and app type to begin creation.
+=======
+2. In the Choose Your App window, click **Create** under the Server-to-Server OAuth type.
+   If you do not see this OAuth type, contact your Zoom administrator to be given permission
+   for the Server-to-Server OAuth type.
+3. Enter an app name and app type to begin creation. 
+>>>>>>> Stashed changes
    Your app configuration page opens for the new app.
 4. Take note of your `Account ID`, `Client ID`, and `Client secret` and enter them in the .env file.
 5. Enter the required information for the app credentials, information, feature, scopes sections and so on. Zoom promptd you if any
