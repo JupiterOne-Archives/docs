@@ -542,19 +542,35 @@ visibility, especially to discover resources in an unauthorized region.
 **Europe:**
 
 - `eu-central-1` Frankfurt
+- `eu-central-2` Zurich
 - `eu-north-1` Stockholm
 - `eu-west-1` Ireland
 - `eu-west-2` London
 - `eu-west-3` Paris
+- `eu-south-1` Milan
+- `eu-south-2` Spain
 
 **Asia Pacific:**
 
 - `ap-northeast-1` Tokyo
 - `ap-northeast-2` Seoul
+- `ap-northeast-3` Osaka
 - `ap-south-1` Mumbai
+- `ap-south-2` Hyderabad
 - `ap-southeast-1` Singapore
 - `ap-southeast-2` Sydney
-- `ap-northeast-3` Osaka-Local
+- `ap-southeast-3` Jakarta
+- `ap-southeast-4` Melbourne
+- `ap-east-1` Hong Kong
+
+**Africa:**
+
+- `af-south-1` Cape Town
+
+**Middle East**
+
+- `me-south-1` Bahrain
+- `me-central-1` UAE
 
 **GovCloud:**
 
@@ -572,17 +588,3 @@ All AWS regions are supported except for the following:
 
 > _Customers who wish to use the China Regions are required to sign up for a
 > separate set of account credentials unique to China services._
-
-**Opt-In Regions:**
-
-- `eu-south-1` Milan
-- `af-south-1` Cape Town
-- `ap-east-1` Hong Kong
-- `ap-southeast-3` Jakarta
-- `me-south-1` Bahrain
-- `me-central-1` UAE
-
-> Because of complications with `aws-sdk` v2 we do not support these regions for
-> data ingestion done within this project. Opt-in regions are supported for data
-> ingestion handled by the `graph-aws` project. Migration to the `graph-aws`
-> project is currently in progress.
