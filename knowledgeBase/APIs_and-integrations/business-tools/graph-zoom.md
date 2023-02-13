@@ -1,25 +1,25 @@
-# Zoom Integration with JupiterOne
+# Zoom
 
 ## Zoom + JupiterOne Integration Benefits
 
-*   Visualize Zoom user, user settings, roles, and groups in the JupiterOne graph.
-*   Map Zoom users to employees in your JupiterOne account.
-*   Monitor changes to ingested Zoom resources using JupiterOne alerts.
+- Visualize Zoom user, user settings, roles, and groups in the JupiterOne graph.
+- Map Zoom users to employees in your JupiterOne account.
+- Monitor changes to ingested Zoom resources using JupiterOne alerts.
 
 ## How it Works
 
-*   JupiterOne periodically fetches user, user settings, roles, and groups from
-    Zoom to update the graph.
-*   Write JupiterOne queries to review and monitor updates to the graph, or
-    leverage existing queries.
-*   Configure alerts to take action when JupiterOne graph changes, or leverage
-    existing alerts.
+- JupiterOne periodically fetches user, user settings, roles, and groups from
+  Zoom to update the graph.
+- Write JupiterOne queries to review and monitor updates to the graph, or
+  leverage existing queries.
+- Configure alerts to take action when JupiterOne graph changes, or leverage
+  existing alerts.
 
 ## Requirements
 
-*   Zoom supports the OAuth2 Client Credential flow. A Zoom pro account is
-    optional but is highly recommended.
-*   You must have permission in JupiterOne to install new integrations.
+- Zoom supports the Server-to-Server OAuth2 Client Credential flow. A Zoom pro
+  account is optional but is highly recommended.
+- You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
@@ -30,45 +30,47 @@ If you need help with this integration, please contact
 
 ### In Zoom
 
-1.  Go to [Create App](https://marketplace.zoom.us/develop/create) page on Zoom
-    Marketplace and click 'Create' under the OAuth app type.
-2.  Enter an app name and choose the 'Account-level app' option. The publish app
-    option will depend on your needs.
-3.  Take note of your `Client ID` and your `Client secret` and supply it to the
-    [oauth-server's .env](../oauth-server/README.md).
-4.  Enter '<http://localhost:5000/redirect>' to the Redirect URL for OAuth.
-5.  Add '<http://localhost:5000/redirect>' to the OAuth allow list.
-6.  Supply the required information.
-7.  On scopes, add `group:read:admin`, `role:read:admin`, and `user:read:admin`.
-8.  The app is now ready. Proceed to authentication to generate your
-    `ZOOM_ACCESS_TOKEN`.
+1. In the Zoom App Marketplace, go to the Develop dropdown menu in the 
+   top-right corner and select [Build App](https://marketplace.zoom.us/develop/create).
+2. In the Choose Your App window, click **Create** under the Server-to-Server OAuth type.
+   If you do not see this OAuth type, contact your Zoom administrator to be given permission
+   for the Server-to-Server OAuth type.
+3. Enter an app name and app type to begin creation. 
+   Your app configuration page opens for the new app.
+4. Take note of your `Account ID`, `Client ID`, and `Client secret` and enter them in the .env file.
+5. Enter the required information for the app credentials, information, feature, scopes sections 
+   and so on. Zoom prompts you if any required fields are omitted.
+6. In the Scopes section, add `group:read:admin`, `role:read:admin`, `user:read:admin`, and
+   `account:read:admin`. If you cannot or choose not to provide all the listed
+   scopes, the steps requiring the missing scopes is disabled.
+7. On the final screen after you have provided all the required information has been provided, click `Activate your app` to complete the app creation.
 
 ### In JupiterOne
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **Zoom** integration tile and click it.
-3.  Click the **Add Configuration** button and configure the following settings:
-    *   Enter the **Account Name** by which you'd like to identify this Zoom
-        account in JupiterOne. Ingested entities will have this value stored in
-        `tag.AccountName` when **Tag with Account Name** is checked.
-    *   Enter a **Description** that will further assist your team when identifying
-        the integration instance.
-    *   Select a **Polling Interval** that you feel is sufficient for your
-        monitoring needs. You may leave this as `DISABLED` and manually execute the
-        integration.
-    *   Enter the **Zoom API Key** generated for use by JupiterOne.
-4.  Click **Create Configuration** once all values are provided.
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
+2. Scroll to the **Zoom** integration tile and click it.
+3. Click the **Add Configuration** button and configure the following settings:
+   - Enter the **Account Name** by which you'd like to identify this Zoom
+     account in JupiterOne. Ingested entities will have this value stored in
+     `tag.AccountName` when **Tag with Account Name** is checked.
+   - Enter a **Description** that will further assist your team when identifying
+     the integration instance.
+   - Select a **Polling Interval** that you feel is sufficient for your
+     monitoring needs. You may leave this as `DISABLED` and manually execute the
+     integration.
+   - Enter the **Account ID**, **Client ID**, **Client Secret**, and **Scoopes**
+     generated for use by JupiterOne.
+4. Click **Create Configuration** once all values are provided.
 
 # How to Uninstall
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **Zoom** integration tile and click it.
-3.  Identify and click the **integration to delete**.
-4.  Click the **trash can** icon.
-5.  Click the **Remove** button to delete the integration.
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
+2. Scroll to the **Zoom** integration tile and click it.
+3. Identify and click the **integration to delete**.
+4. Click the **trash can** icon.
+5. Click the **Remove** button to delete the integration.
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
-
 <!--
 ********************************************************************************
 NOTE: ALL OF THE FOLLOWING DOCUMENTATION IS GENERATED USING THE
@@ -109,7 +111,4 @@ The following relationships are created:
 END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 ********************************************************************************
 -->
-
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
- 
-<!--  jupiterOneDocVersion=1-3-1 -->
