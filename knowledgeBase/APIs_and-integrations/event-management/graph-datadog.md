@@ -37,7 +37,7 @@ If you need help with this integration, please contact
 3. Create an application key by going to
    https://app.datadoghq.com/organization-settings/application-keys. (click on
    'New Key' at the top right corner). An account with any role can generate
-   application key.
+   application key. Leave the key as Not Scoped.
 4. Take note of these credentials and supply them to the integration's
    [.env file](../env.example).
 
