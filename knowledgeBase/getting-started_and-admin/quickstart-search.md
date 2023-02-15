@@ -66,17 +66,17 @@ You can edit any question to enable daily polling on this question and see a tre
 
 
 
-![](../assets/time-trend-chart.png) 
+![](../assets/time-trend-chart.png)  
 
 
 
-**Note**: If you are editing the query, do not use `count()`because the daily polling counts the number of results (rows). Using `count()` results in a single count of 1. 
+**Note**: If you are editing the query, do not use `count()`because the daily polling counts the number of results (rows). Using `count()` results in a single count of 1.  
 
 ## Full-Text Search
 
 Put your keywords in quotations (for example, "keyword") to start a full text search. Or simply enter your keywords and click **Enter**. For example:
 
-- "sg-123ab45c" finds an AWS EC2 security group with that group ID.
+- "sg-123ab45c" finds an AWS EC2 security group with that group ID. 
 - "Charlie" finds a person and/or user with that first name, and potentially other resources related to that person/user.
 - "jupiterone database" finds database entities with property values that include the keyword jupiterone".
 

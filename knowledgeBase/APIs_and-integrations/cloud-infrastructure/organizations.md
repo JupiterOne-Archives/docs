@@ -26,7 +26,7 @@ Select one of the four options for obtaining the role ARN that is most suitable 
 
 To use CloudFormation:
 
-1. Go to the CloudFormation [Quick create stack page](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=jupiterone-integration&templateURL=https%3A%2F%2Fs3.amazonaws.com%2Fjupiterone-prod-us-jupiter-aws-integration%2Fiam-cloudformation.json).
+1. Go to the CloudFormation [Quick create stack page](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=jupiterone-integration&templateURL=https%3A%2F%2Fs3.amazonaws.com%2Fjupiterone-prod-us-aws-cloudformation-templates%2Fcloudformation.json).
 
 2. Enter a name for the stack.
 
