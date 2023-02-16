@@ -40,7 +40,7 @@ Sometimes it is also interesting to find unencrypted data that is non-public:
 Find DataStore with encrypted!=true and classification!='Public'
 ```
 
-## Math Aggregation
+## Aggregating Math Functions in the RETURN Clause
 
 This query feature allows you to combine and deduplicate multiple scalar values into a single listing for a column/alias. You can combine multiple (defined) properties into a single property without having to choose to return one property or another.
 
