@@ -282,7 +282,7 @@ J1QL supports some mathematical expressions as functions.
 
 ## Downloading Results
 
-Click the download icon ![](../assets/icons/download.png) to download all assets or a selected asset as a CSV file. You are notified in the Notifications ![](../assets/icons/bell.png) panel in the top-right of the top navigation bar when your download is in progress or ready for you to click to download.
+Click the download icon ![](../assets/icons/download.png) to download all assets or a selected asset as a CSV file. You are notified in the Notifications ![](../assets/icons/bell.png) panel in the top-right of the top navigation bar when your download is complete and ready for you to download.
 
 
 ![](../assets/query-download.png) 
