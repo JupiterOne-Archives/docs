@@ -280,6 +280,13 @@ J1QL supports some mathematical expressions as functions.
 | coalesce  | Use the first found value. Provide a list of values and the first value to not be undefined/null will be used. | `FIND (aws_s3_bucket|aws_dynamodb_table) as store RETURN store._type, store.displayName, coalesce(store.backupSizeBytes, store.bucketSizeBytes, 0)/1000 as bytes` |
 | concat    | Allows math expressions.                                     | `FIND (aws_s3_bucket |aws_dynamodb_table) as store RETURN store._type, store.displayName, concat(coalesce(store.backupSizeBytes, store.bucketSizeBytes, 0)/1000, 'mb') as size` |
 
+## Downloading Results
+
+Click the download icon ![](../assets/icons/download.png) to download all assets or a selected asset as a CSV file. You are notified in the Notifications ![](../assets/icons/bell.png) panel in the top-right of the top navigation bar when your download is in progress or ready for you to click to download.
+
+
+![](../assets/query-download.png) 
+
 
 
 
