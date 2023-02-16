@@ -6,7 +6,7 @@
 - View alerts on a Splunk dashboard.
 - Link back to alerts in JupiterOne for easy access to additional information.
 - Use J1QL queries in your Splunk searches 
-- Trigger a search in JupiterOne for any data field in Splunkn from your Splunk instance.
+- Trigger a search in JupiterOne for any data field in Splunk from your Splunk instance.
 
 ## How it Works
 

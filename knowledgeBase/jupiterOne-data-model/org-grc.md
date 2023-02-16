@@ -84,4 +84,5 @@ Examples of vendors include:
 
 > **Policies** are _implemented_ by **procedures**; **controls** _implement_ **procedures**. A **control Policy** or **configuration** _enforces_ or _manages_ a **control**.
 
-> **Policies** are _implemented_ by **procedures**; **controls** _implement procedures**. **Vendors** _provide_ **controls**. 
+> **Policies** are _implemented_ by **procedures**; **controls** _implement_ **procedures**. **Vendors** _provide_ **controls**. 
+
