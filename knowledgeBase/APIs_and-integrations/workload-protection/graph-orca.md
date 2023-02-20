@@ -50,22 +50,21 @@ for them.
 
 1. From the top navigation of the J1 Search homepage, select **Integrations**.
 2. Scroll to the **Orca Security** integration tile and click it.
-3. Click the **Add Configuration** button and configure the following settings:
+3. Click the **Add Instance** button and configure the following settings:
 
-    - Enter the **Account Name** by which you'd like to identify this Orca
-      Security account in JupiterOne. Ingested entities will have this value
-      stored in `tag.AccountName` when **Tag with Account Name** is checked.
-    - Enter a **Description** that will further assist your team when identifying
-      the integration instance.
-    - Select a **Polling Interval** that you feel is sufficient for your
-      monitoring needs. You may leave this as `DISABLED` and manually execute the
-      integration.
-    - Enter the **Orca Security Account Email** with the email address of the
-      account used to generate the above API token.
-    - Enter the **Orca Security API Key/Token** generated for use by JupiterOne.
-    - Enter the **Orca API Base URL** for your Orca account.
+   - Enter the **Account Name** by which you'd like to identify this Orca Security
+     account in JupiterOne. Ingested entities will have this value stored in
+     `tag.AccountName` when **Add AccountName Tag** is enabled.
+   - Enter a **Description** that will further assist your team when identifying
+     the integration instance.
+   - Select a **Polling Interval** that you feel is sufficient for your monitoring
+     needs. You may leave this as `DISABLED` and manually execute the integration.
+   - Enter the **Orca Security Account Email** with the email address of the
+     account used to generate the above API token.
+   - Enter the **Orca Security API Key/Token** generated for use by JupiterOne.
+   - Enter the **Orca API Base URL** for your Orca account.
 
-4. Click **Create Configuration** once all values are provided.
+4. Click **Create** once all values are provided.
 
 # How to Uninstall
 
