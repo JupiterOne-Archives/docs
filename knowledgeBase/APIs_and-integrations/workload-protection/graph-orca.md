@@ -17,8 +17,7 @@
 
 ## Requirements
 
-- JupiterOne requires a REST API key. You need permission to create a user in
-  Orca Security that will be used to obtain the API key.
+- An Orca user that has permissions to create API Tokens.
 - You must have permission in JupiterOne to install new integrations.
 
 ## Support
@@ -30,15 +29,22 @@ If you need help with this integration, please contact
 
 ### In Orca Security
 
-1. Log in to [Orca dashboard](https://app.orcasecurity.io) and navigate to
-   [integrations](https://app.orcasecurity.io/integrations).
-2. Click the **Manage Keys** button to create a new Orca API token.
-3. Click "Create API Token".
-4. In order to ingest all data, provide the Administrator role. If a lesser role
-   is provided, the integration will attempt to run as many steps as it is able
-   to.
-5. Copy the token value which appears to a safe location. It will not be
-   available after closing this screen.
+1. Log into [Orca dashboard](https://app.orcasecurity.io) and navigate to
+   [Settings / Modules / Integrations](https://app.orcasecurity.io/integrations)
+2. Scroll down to the `SIEM/SOAR` section
+3. Find the JupiterOne tile and press `CONFIGURE`
+4. Enter a `Name` and `Description` (optional)
+5. Select the `Internal Viewer` role. If a lesser role is provided, the
+   integration will attempt to run as many steps as it is able to.
+6. Select the desired unit `Scope`. To ingest all data from all units, select
+   `All Cloud Accounts`
+7. Press `CREATE TOKEN`
+8. Copy the token value which appears to a safe location. It will be required in
+   the next section. The token value will not be available after closing this
+   screen.
+
+NOTE: Legacy API Keys will continue to be supported until Orca removes support
+for them.
 
 ### In JupiterOne
 
@@ -46,17 +52,17 @@ If you need help with this integration, please contact
 2. Scroll to the **Orca Security** integration tile and click it.
 3. Click the **Add Instance** button and configure the following settings:
 
-- Enter the **Account Name** by which you'd like to identify this Orca Security
-  account in JupiterOne. Ingested entities will have this value stored in
-  `tag.AccountName` when **Add AccountName Tag** is enabled.
-- Enter a **Description** that will further assist your team when identifying
-  the integration instance.
-- Select a **Polling Interval** that you feel is sufficient for your monitoring
-  needs. You may leave this as `DISABLED` and manually execute the integration.
-- Enter the **Orca Security Account Email** with the email address of the
-  account used to generate the above API token.
-- Enter the **Orca Security API Key/Token** generated for use by JupiterOne.
-- Enter the **Orca API Base URL** for your Orca account.
+   - Enter the **Account Name** by which you'd like to identify this Orca Security
+     account in JupiterOne. Ingested entities will have this value stored in
+     `tag.AccountName` when **Add AccountName Tag** is enabled.
+   - Enter a **Description** that will further assist your team when identifying
+     the integration instance.
+   - Select a **Polling Interval** that you feel is sufficient for your monitoring
+     needs. You may leave this as `DISABLED` and manually execute the integration.
+   - Enter the **Orca Security Account Email** with the email address of the
+     account used to generate the above API token.
+   - Enter the **Orca Security API Key/Token** generated for use by JupiterOne.
+   - Enter the **Orca API Base URL** for your Orca account.
 
 4. Click **Create** once all values are provided.
 
