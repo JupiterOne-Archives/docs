@@ -48,7 +48,7 @@ for them.
 
 ### In JupiterOne
 
-1. From the configuration **Gear Icon**, select **Integrations**.
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
 2. Scroll to the **Orca Security** integration tile and click it.
 3. Click the **Add Configuration** button and configure the following settings:
 
