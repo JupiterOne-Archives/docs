@@ -18,7 +18,8 @@ Critical assets is a class of asset for which you can create queries and alerts 
 
 Click ![](../assets/icons/gear.png) to edit the critical asset definition default values. You can use classes, properties, and values to define what is critical.
 
-![](../assets/asset-definition.png)
+
+![](../assets/asset-definition.png) 
 
 Add asset classes and properties that your organization considers a critical asset, and click **Update Definition**. Default critical asset classes include `Application`, `CodeRepo`, `Datastore`, `Function`, `Host`, and `Logs`.
 
@@ -49,6 +50,7 @@ In addition, you can click the double arrows next to Type to further filter the 
 
 You can also filter your assets by property by clicking the double arrows at the bottom of the pane. Drop down the options for each property to set it. If you select more than one value for the same property, the filtering algorithm uses OR.
 
+
 ![](../assets/assets-filter-property.png) 
 
 
@@ -56,3 +58,11 @@ You can also filter your assets by property by clicking the double arrows at the
 When you select any of the assets in the filtered results table, its detailed properties side panel opens on the right.
 
 ![](../assets/asset-selected-entity-properties.png)
+
+
+
+Click the download icon ![](../assets/icons/download.png) to download all assets or a selected asset as a CSV file. You are notified in the Notifications ![](../assets/icons/bell.png) panel in the top-right of the top navigation bar when your download is complete and ready for you to download.
+
+
+
+![](../assets/download-csv.gif) 
