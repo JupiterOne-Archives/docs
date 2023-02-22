@@ -9,15 +9,14 @@ workflow execution.
 ## Configuring a Rule
 
 1. Navigate to the JupiterOne alert rule configuration page
-   (https://apps.us.jupiterone.io/alerts/edit)
+   (https://apps.us.jupiterone.io/alerts/rules)
 2. Click **Create Rule**
-3. Click **Show Advanced** to open the advanced rule editor.
+3. Click **Advanced Editor (JSON)** to open the advanced rule editor.
 
 JSON Example:
 
 ```json
 {
-  "id": "552b2f27-67e2-4351-97f3-083a040350c1",
   "name": "unencrypted-critical-data-stores",
   "description": "Unencrypted data store with classification label of 'critical' or 'sensitive' or 'confidential' or 'restricted'",
   "version": 1,
@@ -52,9 +51,8 @@ JSON Example:
 You can also configure rules to include deleted data in the results. For
 example:
 
-```
-{
-  "id": "...",
+```json
+  // ...
   "question": {
     "queries": [
       {
@@ -76,36 +74,31 @@ example:
       }
     ]
   },
-  ...
+  // ...
 }
 ```
 
 ## Rule Properties
 
-| Property           | Type              | Description                                                                                                                                                                              |
-| ------------------ | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`               | `string`          | Auto-generated, globally unique ID of each rule.                                                                                                                                         |
-| `version`          | `number`          | Current version of the rule. Incremented each time the rule is updated.                                                                                                                  |
-| `name`             | `string`          | Name of the rule, which is unique to each account.                                                                                                                                       |
-| `description?`     | `string`          | A description of the rule.                                                                                                                                                               |
-| `specVersion`      | `number`          | Rule evaluation version in the case of breaking changes.                                                                                                                                 |
-| `pollingInterval?` | `PollingInterval` | Frequency of automated rule evaluation. Options are `DISABLED`, `THIRTY_MINUTES`, `ONE_HOUR`, `FOUR_HOURS`, `EIGHT_HOURS`, `TWELVE_HOURS`, `ONE_DAY`, `ONE_WEEK`. Defaults to `ONE_DAY`. |
-| `question`         | `Question`        | Contains properties related to queries used in the rule evaluation.                                                                                                                      |
-| `operations`       | `RuleOperation[]` | Actions that are executed when a corresponding condition is met.                                                                                                                         |
-| `templates?`       | `object`          | Optional key/value pairs of template name to template.                                                                                                                                   |
-| `outputs`          | `string[]`        | Names of properties that can be used throughout the rule evaluation process and will be included in each record of a rule evaluation (for example, `queries.query0.total`).              |
+| Property           | Type              | Description                                                                                                                                                                 |
+| ------------------ | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`               | `string`          | Auto-generated, globally unique ID of each rule.                                                                                                                            |
+| `version`          | `number`          | Current version of the rule. Incremented each time the rule is updated.                                                                                                     |
+| `name`             | `string`          | Name of the rule, which is unique to each account.                                                                                                                          |
+| `description`      | `string`          | Optional description of the rule.                                                                                                                                           |
+| `specVersion`      | `number`          | Rule evaluation version in the case of breaking changes.                                                                                                                    |
+| `pollingInterval`  | `PollingInterval` | Optional frequency of automated rule evaluation. Defaults to `ONE_DAY`.                                                                                                     |
+| `question`         | `Question`        | Contains properties related to queries used in the rule evaluation.                                                                                                         |
+| `questionId`       | `string`          | A known unique ID for a question in the question library.                                                                                                                   |
+| `operations`       | `RuleOperation[]` | Actions that are executed when a corresponding condition is met.                                                                                                            |
+| `templates`        | `object`          | Optional key/value pairs of template name to template.                                                                                                                      |
+| `outputs`          | `string[]`        | Names of properties that can be used throughout the rule evaluation process and will be included in each record of a rule evaluation (for example, `queries.query0.total`). |
+<!-- TODO: insert notifyOnFailure boolean flag when feature is GA -->
 
 ### Type: PollingInterval
 
-Enumeration of the scheduled frequencies on which rules can automatically be
-evaluated. Possible values:
-
-```
-ONE_DAY
-ONE_HOUR
-THIRTY_MINUTES
-DISABLED
-```
+Enumeration of the scheduled frequencies on which rules will automatically be evaluated.
+Possible values are `DISABLED`, `THIRTY_MINUTES`, `ONE_HOUR`, `FOUR_HOURS`, `EIGHT_HOURS`, `TWELVE_HOURS`, `ONE_DAY`, and `ONE_WEEK`.
 
 ### Type: RuleOperation
 
@@ -114,7 +107,7 @@ executed when the `condition` is met.
 
 | Property  | Type                                               | Description                                                                              |
 | --------- | -------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `when?`   | `RuleOperationCondition\|RuleOperationCondition[]` | Type of conditional used to determine whether the associated actions should be executed. |
+| `when`    | `RuleOperationCondition\|RuleOperationCondition[]` | Type of conditional used to determine whether the associated actions should be executed. |
 | `actions` | `RuleOperationAction[]`                            | Actions that should be executed when the `when` conditions have been met.                |
 
 ### Type: Question
@@ -134,7 +127,7 @@ whose responses can be used in any `RuleOperation`.
 
 | Property         | Type      | Description                                                                                                                                                                                                                                 |
 | ---------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `name?`          | `string`  | Optional name to assign the query that will be used when referencing query data in `RuleOperation`s. If not provided, the query name is automatically assigned based on the index in the `queries` array (for example, `query0`, `query1`). |
+| `name`           | `string`  | Optional name to assign the query that will be used when referencing query data in `RuleOperation`s. If not provided, the query name is automatically assigned based on the index in the `queries` array (for example, `query0`, `query1`). |
 | `query`          | `string`  | JupiterOne query to execute.                                                                                                                                                                                                                |
 | `version`        | `string`  | JupiterOne query language execution version (for example, `v1`).                                                                                                                                                                            |
 | `includeDeleted` | `boolean` | Whether deleted data should be considered for the specific query (defaults to `false`).                                                                                                                                                     |
@@ -164,8 +157,8 @@ Action that is executed when a corresponding condition is met. The type of
 
 | Property         | Type     | Description                                  |
 | ---------------- | -------- | -------------------------------------------- | -------- | -------------------------------------------- |
-| `type`           | `string` | Rule operation action type: `SET_PROPERTY.`  |
-| `targetProperty` | `string` | Property to include in the evaluation input. |
+| `type`           | `string` | Rule operation action type: `SET_PROPERTY.`  |          |                                              |
+| `targetProperty` | `string` | Property to include in the evaluation input. |          |                                              |
 | `targetValue`    | `number  | string                                       | boolean` | Property to include in the evaluation input. |
 
 Example:
@@ -207,31 +200,31 @@ Example:
 | ------------ | ---------- | -------------------------------------------------- |
 | `type`       | `string`   | Rule operation action type: `SEND_EMAIL`.          |
 | `recipients` | `string[]` | Email addresses of the recipients of this alert.   |
-| `body?`      | `string`   | Optional additional body information of the email. |
+| `body`       | `string`   | Optional additional body information of the email. |
 
 Example:
 
 ```json
 {
   "type": "SEND_EMAIL",
-  "recipients": ["no-reply@jupiterone.io"]
+  "body": "Number of items above threshold: {{queries.query0.total}}",
+  "recipients": ["recipient@example.com"]
 }
 ```
 
 ###### Multiple Queries in a Rule
 
-You can pass multiple queries into an alert rule that allows each query to
-output its results into the same, single alert.
+You can pass multiple queries into an alert rule that allows each query to output its results into the same, single alert.
 
-This example shows multiple queries sending out an email alert to multiple
-recipients:
+> Note the `when` condition in the example below will invoke actions if either query returns results.
 
-```
+This example shows multiple queries sending out an email alert to multiple recipients:
+
+```json
 {
-  "id": "2c5de5c6-592c-4e97-baba-f1cca04bb9c9",
-  "name": "ChrisLarson-Test5",
-  "description": "Test5",
-  "version": 28,
+  "name": "Multiple Queries in a Rule",
+  "description": "",
+  "version": 1,
   "specVersion": 1,
   "pollingInterval": "ONE_WEEK",
   "templates": {
@@ -278,119 +271,20 @@ recipients:
       "actions": [
         {
           "targetValue": "INFO",
-          "id": "23c3a81a-0de9-41e9-9ec4-200a28a67dd1",
           "type": "SET_PROPERTY",
           "targetProperty": "alertLevel"
         },
         {
-          "type": "CREATE_ALERT",
-          "id": "f733cd50-6172-4dad-9f2d-0cba236915af"
+          "type": "CREATE_ALERT"
         },
         {
-          "id": "62a4dbcd-5061-4f2e-a166-1a5ed88131a5",
           "type": "SEND_EMAIL",
-          "body": "Affected Items: <br><br>* {{queries.query0.data|mapTemplate('tempMap')|join('<br>* ')}} / <br>* {{queries.query1.data|mapTemplate('tempMap')|join('<br>* ')}}",
+          "body": "Affected Items: <br><br>* {{ queries.query0.data  | mapTemplate('tempMap') | join('<br>* ') }} / <br>* {{ queries.query1.data | mapTemplate('tempMap') | join('<br>* ') }}",
           "recipients": [
-            "christopher.larson@jupiterone.com",
-            "erica.nagle@jupiterone.com",
-            "akash.ganapathi@jupiterone.com"
+            "person1@example.com",
+            "person2@example.com",
+            "person3@example.com"
           ]
-        }
-      ]
-    }
-  ],
-  "tags": []
-}
-```
-
-This example shows multiple queries sending results to Jira to create a single
-Jira issue:
-
-```
-{
-  "id": "34c8d517-d0ad-4ca9-93c4-21232300d9f2",
-  "name": "ChrisLarson-Jira-Test",
-  "description": "Test to see if multiple queries can be alerted into a Jira Alert",
-  "version": 8,
-  "specVersion": 1,
-  "pollingInterval": "ONE_DAY",
-  "templates": {
-    "tempMap": "Project: {{item.Project}}, ProjectFindings: {{item.ProjectFindings}}, RepoFindings: {{item.RepoFindings}}"
-  },
-  "outputs": [
-    "alertLevel"
-  ],
-  "question": {
-    "queries": [
-      {
-        "name": "query0",
-        "query": "Find CodeRepo THAT RELATES TO Project with repoName!=undefined as p THAT HAS Finding as f RETURN p.repoName as Project, count(f) as ProjectFindings",
-        "version": "v1",
-        "includeDeleted": false
-      },
-      {
-        "name": "query1",
-        "query": "Find Project with repoName!=undefined THAT RELATES TO CodeRepo as p THAT HAS Finding as f RETURN p.displayName as Project, count(f) as RepoFindings",
-        "version": "v1",
-        "includeDeleted": false
-      }
-    ]
-  },
-  "operations": [
-    {
-      "when": {
-        "type": "FILTER",
-        "specVersion": 1,
-        "condition": [
-          "OR",
-          [
-            "queries.query0.total",
-            ">",
-            0
-          ],
-          [
-            "queries.query1.total",
-            ">",
-            0
-          ]
-        ]
-      },
-      "actions": [
-        {
-          "targetValue": "INFO",
-          "id": "71d336c0-0d3a-4a99-93e1-1707e3e260d6",
-          "type": "SET_PROPERTY",
-          "targetProperty": "alertLevel"
-        },
-        {
-          "type": "CREATE_ALERT",
-          "id": "2a9b5494-8596-49f1-a2e0-56beff27d08f"
-        },
-        {
-          "summary": "Test5 - 2 Queries, mapTemplate",
-          "issueType": "Task",
-          "entityClass": "Finding",
-          "integrationInstanceId": "53a99eaa-18a5-45ef-b748-2de39d642a91",
-          "additionalFields": {
-            "description": {
-              "type": "doc",
-              "version": 1,
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    {
-                      "type": "text",
-                      "text": "{{alertWebLink}}\n\n**Affected Items:**\n\n* {{queries.query0.data|mapTemplate('tempMap')|join('\n* ')}} \n\n***************\n\n {{queries.query1.data|mapTemplate('tempMap')|join('\n* ')}}"
-                    }
-                  ]
-                }
-              ]
-            }
-          },
-          "project": "CT",
-          "id": "f1d85470-41a5-4670-8a70-4c0622f0f1f2",
-          "type": "CREATE_JIRA_TICKET"
         }
       ]
     }
@@ -414,20 +308,20 @@ Jira issue:
 | `project`               | `string` | The unique Jira project ID that the ticket is created in.                                                |
 | `summary`               | `string` | Summary of the Jira ticket. Used as the ticket title.                                                    |
 | `issueType`             | `string` | The Jira issue type (for example, `Task`).                                                               |
-| `additionalFields?`     | `object` | Optional additional fields that are passed directly to the Jira API. (see table below for details)       |
+| `additionalFields`      | `object` | Optional additional fields that are passed directly to the Jira API. (see table below for details)       |
 
 #### Jira Description Field
 
 The `description` field can have a raw string value or be passed as depicted in
 these examples as Jira
-[ADF](https://developer.atlassian.com/cloud/jira/platform/apis/document/structure/).  
+[ADF](https://developer.atlassian.com/cloud/jira/platform/apis/document/structure/).
 **NOTE**: string in either the `text` or `description` keys supports markdown
 syntax.
 
 #### Other/custom Additional Fields
 
 Fields passed into `additionalFields` will be passed directly to the Jira API
-and as such should match the required input format of each field type.  
+and as such should match the required input format of each field type.
 This table outlines some of the common field types and their value formats.
 Please use the
 [Official Jira Rest API](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-fields/)
@@ -448,7 +342,7 @@ Example:
 ```json
 {
   "type": "CREATE_JIRA_TICKET",
-  "integrationInstanceId": "b59cfa95-2201-4173-bea4-be9b26661553",
+  "integrationInstanceId": "<JIRA_INTEGRATION_INSTANCE_ID>",
   "entityClass": "Vulnerability",
   "project": "81198",
   "summary": "Ticket summary",
@@ -498,18 +392,112 @@ Example:
 }
 ```
 
+This example shows multiple queries sending results to Jira to create a single
+Jira issue:
+
+```json
+{
+  "name": "Multiple Queries in a Rule to Jira Example",
+  "description": "Multiple queries can be composed into a Jira Alert",
+  "version": 1,
+  "specVersion": 1,
+  "pollingInterval": "ONE_DAY",
+  "templates": {
+    "projectInfo": "Project: {{item.Project}}, ProjectFindings: {{item.ProjectFindings}}, RepoFindings: {{item.RepoFindings}}"
+  },
+  "outputs": [
+    "alertLevel"
+  ],
+  "question": {
+    "queries": [
+      {
+        "name": "query0",
+        "query": "Find CodeRepo THAT RELATES TO Project with repoName!=undefined as p THAT HAS Finding as f RETURN p.repoName as Project, count(f) as ProjectFindings",
+        "version": "v1",
+        "includeDeleted": false
+      },
+      {
+        "name": "query1",
+        "query": "Find Project with repoName!=undefined THAT RELATES TO CodeRepo as p THAT HAS Finding as f RETURN p.displayName as Project, count(f) as RepoFindings",
+        "version": "v1",
+        "includeDeleted": false
+      }
+    ]
+  },
+  "operations": [
+    {
+      "when": {
+        "type": "FILTER",
+        "specVersion": 1,
+        "condition": [
+          "OR",
+          [
+            "queries.query0.total",
+            ">",
+            0
+          ],
+          [
+            "queries.query1.total",
+            ">",
+            0
+          ]
+        ]
+      },
+      "actions": [
+        {
+          "targetValue": "INFO",
+          "type": "SET_PROPERTY",
+          "targetProperty": "alertLevel"
+        },
+        {
+          "type": "CREATE_ALERT",
+        },
+        {
+          "summary": ": {{queries.query0.total}}",
+          "issueType": "Task",
+          "entityClass": "Finding",
+          "integrationInstanceId": "<JIRA_INTEGRATION_INSTANCE_ID>",
+          "additionalFields": {
+            "description": {
+              "type": "doc",
+              "version": 1,
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "{{alertWebLink}}\n\n**Affected Items:**\n\n* {{ queries.query0.data | mapTemplate('projectInfo') | join('\n* ') }} \n\n***************\n\n {{ queries.query1.data | mapTemplate('projectInfo') | join('\n* ') }}"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "project": "CT",
+          "type": "CREATE_JIRA_TICKET"
+        }
+      ]
+    }
+  ],
+  "tags": []
+}
+```
+
 If your query returns multiple results, you can run a second query using the
 results of the first query to create a Jira ticket for each item in the first
 query results. You do this by
 [editing the advanced JSON of the alert rule](##configuring-a-rule) to use the
-`FOR_EACH_ITEM` action type. It is not recommended that you use this action type
-if your results sizes are very large.
+`FOR_EACH_ITEM` action type.
+
+It is not recommended that you use this action type if your results sizes are very large.
+This example limits the number of possible Jira tickets created to a maximum of 100, and sends an email when the limit is exceeded.
 
 For example:
 
 ```json
 {
-  "name": "",
+  "name": "Unencrypted critical data stores",
   "description": "",
   "specVersion": 1,
   "pollingInterval": "ONE_WEEK",
@@ -528,7 +516,7 @@ For example:
       "when": {
         "type": "FILTER",
         "specVersion": 1,
-        "condition": ["AND", ["queries.query0.total", ">", 0]]
+        "condition": ["AND", ["queries.query0.total", ">", 0], ["queries.query0.total", "<=", 100]]
       },
       "actions": [
         {
@@ -572,11 +560,112 @@ For example:
           ]
         }
       ]
+    }, {
+      "when": {
+        "type": "FILTER",
+        "specVersion": 1,
+        "condition": ["queries.query0.total", ">", 100]
+      },
+      "actions": [
+        {
+          "type": "SET_PROPERTY",
+          "targetValue": "CRITICAL",
+          "targetProperty": "alertLevel"
+        },
+        {
+          "type": "CREATE_ALERT"
+        },
+        {
+          "type": "SEND_EMAIL",
+          "body": "The alert rule {{alertRuleName}} has {{queries.query0.total}} results. Please review the results in the JupiterOne app: {{alertWebLink}}.",
+          "recipients": ["emergency@example.com"],
+        }
+      ]
     }
   ],
   "outputs": ["alertLevel"],
   "templates": {}
 }
+```
+
+---
+
+#### Action: `FOR_EACH_ITEM`
+
+> Runs a set of actions for each item in a list. This list can be query results, or a composed list of items.
+
+| Property                | Type     | Description                                                                     |
+| ----------------------- | -------- | ------------------------------------------------------------------------------- |
+| `type`                  | `string` | Rule operation action type: `FOR_EACH_ITEM`.                                    |
+| `itemRef`               | `string` | Optional name of the item reference to use in the templates. Defaults to `item` |
+| `items`                 | `string` | The list of items to iterate over. Can be a template (see example).             |
+| `actions`               | `array`  | The actions to run for each item.                                               |
+
+Examples:
+
+```json
+// will call POST https://example.com with the body { "name": "John Doe", "webLink": "https://apps.<region>.jupiterone.io/asset/reference/link" }
+// for each user in the query results, e.g. `Find User`
+{
+  "type": "FOR_EACH_ITEM",
+  "itemRef": "user",
+  "items": "{{queries.query0.data}}",
+  "actions": [
+    {
+      "type": "WEBHOOK",
+      "method": "POST",
+      "url": "https://example.com",
+      "body": {
+        "name": "{{user.properties.name}}",
+        "webLink": "{{user.properties.webLink}}"
+      },
+    }
+  ]
+}
+```
+
+---
+
+#### Action: `JUPITERONE_QUERY`
+
+> Runs a JupiterOne query and stores the results on the `queries` template parameter with a given `name`.
+> It is recommended that you only use this action within a `FOR_EACH_ITEM` action.
+> Including it in normal `operations` actions is not recommended, as you can retrieve results you want with the normal `question` queries.
+
+| Property                | Type     | Description                                                                 |
+| ----------------------- | -------- | --------------------------------------------------------------------------- |
+| `type`                  | `string` | Rule operation action type: `JUPITERONE_QUERY`.                             |
+| `query`                 | `string` | The JupiterOne query to run.                                                |
+| `name`                  | `string` | The name of the query result to store.                                      |
+
+Example:
+
+```json
+//
+{
+  "type": "FOR_EACH_ITEM",
+  "itemRef": "user",
+  "items": "{{queries.query0.data}}",
+  "actions": [
+    // JUPITERONE_QUERY actions always run first in order to enable the use of the results in the templates
+    // of other actions in a FOR_EACH_ITEM action
+    {
+      "type": "JUPITERONE_QUERY",
+      "query": "Find Account with email='{{user.properties.email}}'",
+      "name": "accountsOwnedByUserQuery"
+    },
+    {
+      "type": "WEBHOOK",
+      "method": "POST",
+      "url": "https://example.com",
+      "body": {
+        "name": "{{user.properties.displayName}}",
+        "accounts": "{{queries.accountsOwnedByUserQuery.data | mapProperty('displayName')}}"
+      }
+    }
+  ]
+}
+
 ```
 
 ---
@@ -613,8 +702,8 @@ channel, the JupiterOne Slack bot must be a member of that private channel.
 
 ```json
 {
-  "name": "slack-alert-test",
-  "description": "Testing Slack Messages",
+  "name": "Critical Data Stores Not Encrypted",
+  "description": "Sends a alert to Slack when a critical data store that is not encrypted is found.",
   "specVersion": 1,
   "pollingInterval": "ONE_DAY",
   "templates": {
@@ -646,10 +735,10 @@ channel, the JupiterOne Slack bot must be a member of that private channel.
           "type": "CREATE_ALERT"
         },
         {
-          "integrationInstanceId": "d1549f40-b9fd-447a-bec5-4360c9ca7e8c",
+          "integrationInstanceId": "<SLACK_INTEGRATION_INSTANCE_ID>",
           "channels": ["#random"],
           "type": "SEND_SLACK_MESSAGE",
-          "body": "{{queries.query0.data|mapTemplate('slackBody')|join(' ')}}"
+          "body": "{{ queries.query0.data | mapTemplate('slackBody') | join(' ') }}"
         }
       ]
     }
@@ -669,8 +758,8 @@ channel, the JupiterOne Slack bot must be a member of that private channel.
 | `type`     | `string` | Rule operation action type: `WEBHOOK`                                                                       |
 | `endpoint` | `string` | Webhook endpoint to send the request to.                                                                    |
 | `method`   | `string` | HTTP method to use when making the request Allowed values: `POST`, `PUT`, `GET`, `HEAD`, `PATCH`, `DELETE`. |
-| `body?`    | `object` | Body data to include in the request. Can only be used with `POST`, `PUT`, and `PATCH`.                      |
-| `headers?` | `object` | HTTP headers to include in the request.                                                                     |
+| `body`     | `object` | Optional body data to include in the request. Can only be used with `POST`, `PUT`, and `PATCH`.             |
+| `headers`  | `object` | Optional HTTP headers to include in the request.                                                            |
 
 #### Webhook Reference Variables
 
@@ -726,7 +815,7 @@ Example:
 ```json
 {
   "type": "PUBLISH_SNS_MESSAGE",
-  "integrationInstanceId": "...",
+  "integrationInstanceId": "<AWS_INTEGRATION_INSTANCE_ID>",
   "topicArn": "arn:aws:sns:<REGION>:arn:aws:sns:<ACCOUNT_ID>:<SNS_TOPIC_NAME>",
   "data": {
     "query0Data": "{{queries.query0.data}}",
@@ -767,7 +856,7 @@ Example:
 ```json
 {
   "type": "SEND_SQS_MESSAGE",
-  "integrationInstanceId": "...",
+  "integrationInstanceId": "<AWS_INTEGRATION_INSTANCE_ID>",
   "queueUrl": "https://sqs.<REGION>.amazonaws.com/<ACCOUNT_ID>/<SQS_QUEUE_NAME>",
   "data": {
     "query0Data": "{{queries.query0.data}}",
@@ -830,8 +919,7 @@ You can use data from query results inside of rule operations by referencing the
     "queries": [
       {
         "name": "query0",
-        "query": "Find aws_lambda_function with runtime='nodejs6.10' as f return f.name
-        as functionName, f.version as version, f.tag.AccountName as account, f.tag.Project as project order by account",
+        "query": "Find aws_lambda_function with runtime='nodejs6.10' as f return f.name as functionName, f.version as version, f.tag.AccountName as account, f.tag.Project as project order by account",
         "version": "v1"
       }
     ]
@@ -855,8 +943,8 @@ You can use data from query results inside of rule operations by referencing the
         {
           "type": "SEND_EMAIL",
           // Reference the `query0` data and include it in a template
-          "body": "Affected Functions: <br><br>{{queries.query0.data|mapTemplate('emailBody')|join(' ')}}",
-          "recipients": ["no-reply@jupiterone.io"]
+          "body": "Affected Functions: <br><br>{{ queries.query0.data | mapTemplate('emailBody') | join(' ') }}",
+          "recipients": ["person1@example.com"]
         }
       ]
     }
@@ -949,10 +1037,10 @@ My name is {{param.myFirstName}} and I am {{age}}
 
 Grouping operations with parentheses:
 
-| Expression       | Result |
-| ---------------- | :----- | ------- | ---- |
-| `(83 + 1) / 2`   | 42     |
-| `1 < 3 && (4 > 2 |        | 2 > 4)` | true |
+| Expression                  | Result |
+| ----------------------------| ------ |
+| `(83 + 1) / 2`              | 42     |
+| `1 < 3 && (4 > 2 || 2 > 4)` | true   |
 
 ## Custom Templating Transforms
 
@@ -980,18 +1068,18 @@ schema for an entity.
 
 Example operation:
 
-```js
+```json
 {
   "type": "SEND_EMAIL",
   // Reference the `query0` data and include it in a template
-  "body": "{{queries.query0.data|mapTemplate('emailBody')|join(' ')}}",
-  "recipients": ["no-reply@jupiterone.io"]
+  "body": "{{ queries.query0.data | mapTemplate('emailBody') | join(' ') }}",
+  "recipients": ["person1@example.com"]
 }
 ```
 
 Example `templates`:
 
-```js
+```json
 {
   "emailBody": "({{itemIndex+1}} of {{itemCount}}) [{{item.account}}] Function Name: {{item.somePropertyOnItem}}<br>"
 }
@@ -1008,7 +1096,7 @@ to `mapProperty` from the entity properties.
 
 Example query data:
 
-```js
+```json
 {
   "query": "FIND Person",
   "data": [
@@ -1041,24 +1129,24 @@ Example query data:
 This is an example of accessing `properties` data using `mapProperty` and the
 above data:
 
-```js
+```json
 {
   "type": "SEND_EMAIL",
   // This would return: `Jon,Jane`
-  "body": "{{queries.query0.data|mapProperty('firstName')|join}}",
-  "recipients": ["no-reply@jupiterone.io"]
+  "body": "{{ queries.query0.data | mapProperty('firstName') | join}}",
+  "recipients": ["person1@example.com"]
 }
 ```
 
 This is an example accessing `entity` data using `mapProperty` and the above
 data:
 
-```js
+```json
 {
   "type": "SEND_EMAIL",
   // This would return: `1234,12345`
-  "body": "{{queries.query0.data|mapProperty('_createdOn')|join}}",
-  "recipients": ["no-reply@jupiterone.io"]
+  "body": "{{ queries.query0.data | mapProperty('_createdOn') | join}}",
+  "recipients": ["person1@example.com"]
 }
 ```
 
@@ -1072,7 +1160,7 @@ results.
 
 Example query configuration:
 
-```js
+```json
 {
   "queries": [
     {
@@ -1092,13 +1180,13 @@ Example query configuration:
 ```
 
 This is an example of merging the results of these two queries together, and
-getting the number of total results.
+getting the number of deduplicated total results.
 
-```js
+```json
 {
   "type": "SEND_EMAIL",
-  "body": "{{queries.query0.data|merge(queries.query1.data)|length}}",
-  "recipients": ["no-reply@jupiterone.io"]
+  "body": "Total Query Results: {{ queries.query0.data | merge(queries.query1.data) | uniquePropertyValues('displayName') | length}}",
+  "recipients": ["person1@example.com"]
 }
 ```
 
@@ -1116,8 +1204,8 @@ Example:
 ```json
 {
   "type": "SEND_EMAIL",
-  "body": "{{queries.query0.data|mapTemplate('emailBody')|join(' ')}}",
-  "recipients": ["no-reply@jupiterone.io"]
+  "body": "{{ queries.query0.data | mapTemplate('emailBody') | join(' ') }}",
+  "recipients": ["person1@example.com"]
 }
 ```
 
@@ -1126,8 +1214,8 @@ Example of default if no `separator` is passed to `join`:
 ```json
 {
   "type": "SEND_EMAIL",
-  "body": "{{queries.query0.data|mapTemplate('emailBody')|join}}",
-  "recipients": ["no-reply@jupiterone.io"]
+  "body": "{{ queries.query0.data | mapTemplate('emailBody') | join }}",
+  "recipients": ["person1@example.com"]
 }
 ```
 
@@ -1139,7 +1227,7 @@ level to try to access the passed in `propertyName`.
 
 Example query data:
 
-```js
+```json
 {
   "query": "FIND Person",
   "data": [
@@ -1183,12 +1271,12 @@ Example query data:
 This is an example of accessing deduplicating a property of an array of
 entities:
 
-```js
+```json
 {
   "type": "SEND_EMAIL",
   // This would return: ["Jon","Jane"]
-  "body": "{{queries.query0.data|uniquePropertyValues('firstName')}}",
-  "recipients": ["no-reply@jupiterone.io"]
+  "body": "{{ queries.query0.data | uniquePropertyValues('firstName') }}",
+  "recipients": ["person1@example.com"]
 }
 ```
 
@@ -1198,7 +1286,7 @@ Merging multiple query results to generate a unique set of values for a given
 property printed on a new line
 
 ```js
-"{{queries.query0.data|merge(queries.query1.data)| uniquePropertyValues('firstName')|join('\n')}}";
+{{ queries.query0.data | merge(queries.query1.data) | uniquePropertyValues('firstName') | join('\n') }}
 
 // Will display something like:
 //
@@ -1211,10 +1299,12 @@ Using a template to display multiple properties from a set of query results
 
 ```js
 // In the templates definition
-myTemplateName: 'Property1: {{item.propertyName1}} - Property2: {{item.propertyName2}}';
+{
+  "myTemplateName": "Property1: {{item.propertyName1}} - Property2: {{item.propertyName2}}"
+}
 
 // In your rule action
-("{{queries.query0.data|mapProperty('propertyName1', 'propertyName2')|mapTemplate('myTemplateName')|join('\n')}}");
+{{ queries.query0.data | mapProperty('propertyName1', 'propertyName2') | mapTemplate('myTemplateName') | join('\n') }}
 
 // Will display something like:
 
@@ -1227,10 +1317,12 @@ Filtering a set of query results to a specific name and using a template for ext
 
 ```js
 // In the templates definition
-myTemplateName: 'Property1: {{item.name}} - Property2: {{item.id}}';
+{
+  "myTemplateName": "Property1: {{item.name}} - Property2: {{item.id}}"
+}
 
 // In your rule action
-("{{queries.query0.data[.name == 'repository1']|mapProperty('name', 'id')|mapTemplate('myTemplateName')|join('\n')}}");
+{{ queries.query0.data[.name == 'repository1'] | mapProperty('name', 'id') | mapTemplate('myTemplateName') | join('\n') }}
 
 // Will display something like:
 
@@ -1262,13 +1354,13 @@ Example context:
 }
 ```
 
-| Expression                                    | Result                                                                                |
-| :-------------------------------------------- | :------------------------------------------------------------------------------------ |
-| employees[.first == 'Sterling']               | [{first: 'Sterling', last: 'Archer', age: 36}]                                        |
-| employees[.last == 'Tu' + 'nt'].first         | Cheryl                                                                                |
-| employees[.age >= 30 && .age < 40]            | [{first: 'Sterling', last: 'Archer', age: 36},{first: 'Lana', last: 'Kane', age: 33}] |
-| employees[.age >= 30 && .age < 40][.age < 35] | [{first: 'Lana', last: 'Kane', age: 33}]                                              |
-| employees[.age >= retireAge].first            | Malory                                                                                |
+| Expression                                     | Result                                                                                |
+| :--------------------------------------------- | :------------------------------------------------------------------------------------ |
+| employees[.first == 'Sterling']                | [{first: 'Sterling', last: 'Archer', age: 36}]                                        |
+| employees[.last == 'Tu' + 'nt'].first          | Cheryl                                                                                |
+| employees[.age >= 30 && .age < 40]             | [{first: 'Sterling', last: 'Archer', age: 36},{first: 'Lana', last: 'Kane', age: 33}] |
+| employees\[.age >= 30 && .age < 40][.age < 35] | [{first: 'Lana', last: 'Kane', age: 33}]                                              |
+| employees[.age >= retireAge].first             | Malory                                                                                |
 
 ## Parameters in Rules
 
@@ -1308,10 +1400,10 @@ types, and template expressions can invoke parameter lists similarly to examples
 above. For example, [using the email example](#actionsend_email), we can
 parameterize the recipient list:
 
-```js
+```json
 {
   "type": "SEND_EMAIL",
-  "body": "{{queries.query0.data|mapTemplate('emailBody')|join(' ')}}",
+  "body": "{{ queries.query0.data | mapTemplate('emailBody') | join(' ') }}",
   // a stored list of email strings:
   "recipients": "{{param.alertEmailRecipientList}}"
 }
