@@ -1,8 +1,9 @@
-# Cobalt Integration with JupiterOne
+# Cobalt
 
 ## Cobalt + JupiterOne Integration Benefits
 
-- Visualize Cobalt penetration tests, findings, and the assets tested in the JupiterOne graph.
+- Visualize Cobalt pentests, findings, and the assets tested in the JupiterOne
+  graph.
 - Monitor changes to Cobalt pentests and findings using JupiterOne alerts.
 - Correlate pentests with other logged security events.
 
@@ -21,7 +22,7 @@
 ## Support
 
 If you need help with this integration, please contact
-[JupiterOne Support](https://community.askj1.com).
+[JupiterOne Support](https://support.jupiterone.io).
 
 ## Integration Walkthrough
 
@@ -35,7 +36,7 @@ If you need help with this integration, please contact
 
 ### In JupiterOne
 
-1. From the configuration **Gear Icon**, select **Integrations**.
+1. From the top navigation of the J1 Search homepage, select **Integrations**
 2. Scroll to the **Cobalt** integration tile and click it.
 3. Click the **Add Configuration** button.
 4. Enter the **Account Name** by which you'd like to identify this Cobalt
@@ -50,7 +51,7 @@ If you need help with this integration, please contact
 
 # How to Uninstall
 
-1. From the configuration **Gear Icon**, select **Integrations**.
+1. From the top navigation of the J1 Search homepage, select **Integrations**
 2. Scroll to the **Cobalt** integration tile and click it.
 3. Identify and click the **integration to delete**.
 4. Click the **trash can** icon.
@@ -63,7 +64,7 @@ NOTE: ALL OF THE FOLLOWING DOCUMENTATION IS GENERATED USING THE
 "j1-integration document" COMMAND. DO NOT EDIT BY HAND! PLEASE SEE THE DEVELOPER
 DOCUMENTATION FOR USAGE INFORMATION:
 
-https://github.com/JupiterOne/sdk/blob/master/docs/integrations/development.md
+https://github.com/JupiterOne/sdk/blob/main/docs/integrations/development.md
 ********************************************************************************
 -->
 
@@ -84,7 +85,7 @@ The following entities are created:
 
 ### Relationships
 
-The following relationships are created/mapped:
+The following relationships are created:
 
 | Source Entity `_type` | Relationship `_class` | Target Entity `_type` |
 | --------------------- | --------------------- | --------------------- |
