@@ -1,25 +1,25 @@
-# CyCognito Integration with JupiterOne
+# CyCognito
 
 ## CyCognito + JupiterOne Integration Benefits
 
-*   Visualize CyCognito ip, domain, certificate, web app, ip range assets and
-    CyCognito issues in the JupiterOne graph.
-*   Monitor changes to CyCognito assets and issues using JupiterOne alerts.
+- Visualize CyCognito ip, domain, certificate, web app, ip range assets and
+  CyCognito issues in the JupiterOne graph.
+- Monitor changes to CyCognito assets and issues using JupiterOne alerts.
 
 ## How it Works
 
-*   JupiterOne periodically fetches assets and issues from CyCognito to update the
-    graph.
-*   Write JupiterOne queries to review and monitor updates to the graph, or
-    leverage existing queries.
-*   Configure alerts to take action when JupiterOne graph changes, or leverage
-    existing alerts.
+- JupiterOne periodically fetches assets and issues from CyCognito to update the
+  graph.
+- Write JupiterOne queries to review and monitor updates to the graph, or
+  leverage existing queries.
+- Configure alerts to take action when JupiterOne graph changes, or leverage
+  existing alerts.
 
 ## Requirements
 
-*   JupiterOne requires a Access Token. You can request this from the admin if you
-    already have an account.
-*   You must have permission in JupiterOne to install new integrations.
+- JupiterOne requires a Access Token. You can request this from the admin if you
+  already have an account.
+- You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
@@ -30,35 +30,34 @@ If you need help with this integration, please contact
 
 ### In CyCognito
 
-1.  [Request an Access Token](https://example.com/docs/generating-api-keys)
+1. [Request an Access Token](https://example.com/docs/generating-api-keys)
 
 ### In JupiterOne
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **CyCognito** integration tile and click it.
-3.  Click the **Add Configuration** button and configure the following settings:
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
+2. Scroll to the **CyCognito** integration tile and click it.
+3. Click the **Add Configuration** button and configure the following settings:
 
-*   Enter the **Account Name** by which you'd like to identify this CyCognito
-    account in JupiterOne. Ingested entities will have this value stored in
-    `tag.AccountName` when **Tag with Account Name** is checked.
-*   Enter a **Description** that will further assist your team when identifying
-    the integration instance.
-*   Select a **Polling Interval** that you feel is sufficient for your monitoring
-    needs. You may leave this as `DISABLED` and manually execute the integration.
-*   Enter the **CyCognito Access Token** generated for use by JupiterOne.
+- Enter the **Account Name** by which you'd like to identify this CyCognito
+  account in JupiterOne. Ingested entities will have this value stored in
+  `tag.AccountName` when **Tag with Account Name** is checked.
+- Enter a **Description** that will further assist your team when identifying
+  the integration instance.
+- Select a **Polling Interval** that you feel is sufficient for your monitoring
+  needs. You may leave this as `DISABLED` and manually execute the integration.
+- Enter the **CyCognito Access Token** generated for use by JupiterOne.
 
-1.  Click **Create Configuration** once all values are provided.
+1. Click **Create Configuration** once all values are provided.
 
 # How to Uninstall
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **CyCognito** integration tile and click it.
-3.  Identify and click the **integration to delete**.
-4.  Click the **trash can** icon.
-5.  Click the **Remove** button to delete the integration.
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
+2. Scroll to the **CyCognito** integration tile and click it.
+3. Identify and click the **integration to delete**.
+4. Click the **trash can** icon.
+5. Click the **Remove** button to delete the integration.
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
-
 <!--
 ********************************************************************************
 NOTE: ALL OF THE FOLLOWING DOCUMENTATION IS GENERATED USING THE
@@ -112,7 +111,4 @@ The following relationships are created:
 END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 ********************************************************************************
 -->
-
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
- 
-<!--  jupiterOneDocVersion=1-0-3 -->
