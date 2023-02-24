@@ -128,7 +128,8 @@ integration supports:
       serviceusage.googleapis.com \
       monitoring.googleapis.com \
       secretmanager.googleapis.com \
-      sourcerepo.googleapis.com
+      sourcerepo.googleapis.com \
+      websecurityscanner.googleapis.com
 
 #### Creating Google Cloud project service account
 
@@ -166,7 +167,8 @@ See the
 [Google Cloud custom role documentation](https://cloud.google.com/iam/docs/creating-custom-roles#creating_a_custom_role)
 for additional information on how custom roles can be configured and assigned.
 
-NOTE: You may also create a service account using the [`gcloud` CLI](https://cloud.google.com/sdk/gcloud). There is documentation on 
+NOTE: You may also create a service account using the
+[`gcloud` CLI](https://cloud.google.com/sdk/gcloud). There is documentation on
 how to leverage the CLI in the
 [JupiterOne Google Cloud integration developer documentation](https://github.com/JupiterOne/graph-google-cloud/blob/master/docs/development.md).
 
@@ -198,9 +200,10 @@ integration instances for each of the projects.
 4.  Enable all service APIs in the "main" project and each "child" project that
     you'd like JupiterOne to access. Documentation for enabling service APIs is
     described in an earlier section of this document.
-    
-    **NOTE**: The "Cloud Asset" and "Identity and Access Management (IAM)"
-    APIs only need to be enabled in the "main" project.
+
+    **NOTE**: The "Cloud Asset" and "Identity and Access Management (IAM)" APIs
+    only need to be enabled in the "main" project.
+
 5.  Switch to the organization that you'd like to create individual integration
     instances for each project
 6.  [Create a new custom role](https://cloud.google.com/iam/docs/creating-custom-roles)
@@ -258,28 +261,37 @@ on the JupiterOne Google Cloud integration list page.
 2. Scroll to the **Google Cloud** integration tile and click it.
 3. Click the **Add Configuration** button and configure the following settings:
 
-   - Enter the **Account Name** by which you'd like to identify this Google Cloud
-     account in JupiterOne. Ingested entities will have this value stored in
-     `tag.AccountName` when **Add AccountName Tag** is enabled.
+   - Enter the **Account Name** by which you'd like to identify this Google
+     Cloud account in JupiterOne. Ingested entities will have this value stored
+     in `tag.AccountName` when **Add AccountName Tag** is enabled.
 
-   - Enter a **Description** that will assist your team to identify
-     the integration instance.
+   - Enter a **Description** that will assist your team to identify the
+     integration instance.
 
-   - Select a **Polling Interval** that you feel is sufficient for your monitoring
-     needs. You can leave this as `DISABLED` and manually execute the integration.
+   - Select a **Polling Interval** that you feel is sufficient for your
+     monitoring needs. You can leave this as `DISABLED` and manually execute the
+     integration.
 
    - Enter the **Service Account Key File** contents of the Google Cloud service
      account.
 
    - Add any tags you want to use to simplify data management and queries.
 
-4. Optionally, enter a project ID to target for data ingestion. The default is the project ID specified in the service account key file. 
+4. Optionally, enter a project ID to target for data ingestion. The default is
+   the project ID specified in the service account key file.
 
-5. Select **Configure Organization Projects** if you want J1 to auto-configure all projects in your organization. J1 applies the configuration to all other projects that do not have optional `j1-integration: SKIP` tag applied to the project in your infrastructure-as-code. Do not use the optional project ID if you want to use this feature. 
+5. Select **Configure Organization Projects** if you want J1 to auto-configure
+   all projects in your organization. J1 applies the configuration to all other
+   projects that do not have optional `j1-integration: SKIP` tag applied to the
+   project in your infrastructure-as-code. Do not use the optional project ID if
+   you want to use this feature.
 
-6. Optionally, enter a numerical folder ID if you want to specify that J1 is to only ingest projects in a specific folder and any of its subfolders. If you have enabled **Configure Organization Projects**, J1 only auto-configures projects in this specified folder.
+6. Optionally, enter a numerical folder ID if you want to specify that J1 is to
+   only ingest projects in a specific folder and any of its subfolders. If you
+   have enabled **Configure Organization Projects**, J1 only auto-configures
+   projects in this specified folder.
 
-4.  Click **Create** after you have provided all the configuration values.
+7. Click **Create** after you have provided all the configuration values.
 
 ## How to Uninstall
 
@@ -396,6 +408,8 @@ The following entities are created:
 | SQL Admin MySQL Instance                                 | `google_sql_mysql_instance`                                       | `Database`                         |
 | SQL Admin Postgres Instance                              | `google_sql_postgres_instance`                                    | `Database`                         |
 | SQL Admin SQL Server Instance                            | `google_sql_sql_server_instance`                                  | `Database`                         |
+| Scan Config                                              | `google_cloud_scan_config`                                        | `Configuration`                    |
+| Scan Run                                                 | `google_cloud_scan_run`                                           | `Process`, `Task`                  |
 | Secret                                                   | `google_secret_manager_secret`                                    | `Group`                            |
 | Secret Version                                           | `google_secret_manager_secret_version`                            | `Secret`                           |
 | Spanner Instance                                         | `google_spanner_instance`                                         | `Database`, `Cluster`              |
@@ -448,12 +462,15 @@ The following relationships are created:
 | `internet`                                                       | **ALLOWS**            | `google_compute_firewall`                                         |
 | `google_cloud_folder`                                            | **HAS**               | `google_cloud_folder`                                             |
 | `google_cloud_function`                                          | **USES**              | `google_iam_service_account`                                      |
+| `google_cloud_function`                                          | **USES**              | `google_cloud_source_repository`                                  |
+| `google_cloud_function`                                          | **USES**              | `google_storage_bucket`                                           |
 | `google_cloud_organization`                                      | **HAS**               | `google_cloud_folder`                                             |
 | `google_cloud_project`                                           | **HAS**               | `google_cloud_api_service`                                        |
 | `google_cloud_project`                                           | **HAS**               | `google_billing_budget`                                           |
 | `google_cloud_project`                                           | **HAS**               | `google_binary_authorization_policy`                              |
 | `google_cloud_run_service`                                       | **MANAGES**           | `google_cloud_run_configuration`                                  |
 | `google_cloud_run_service`                                       | **MANAGES**           | `google_cloud_run_route`                                          |
+| `google_cloud_scan_config`                                       | **PERFORMED**         | `google_cloud_scan_run`                                           |
 | `google_compute_backend_bucket`                                  | **HAS**               | `google_storage_bucket`                                           |
 | `google_compute_backend_service`                                 | **HAS**               | `google_compute_health_check`                                     |
 | `google_compute_backend_service`                                 | **HAS**               | `google_compute_instance_group`                                   |
@@ -550,3 +567,121 @@ END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
 
 <!--  jupiterOneDocVersion=2-15-2-beta-4 -->
+
+#### Google Cloud Specific Permissions List
+
+If you prefer not to use Google managed roles, the following list of specific
+permissions can be used to provision only the required ones:
+
+<!-- {J1_PERMISSIONS_DOCUMENTATION_MARKER_START} -->
+| Permissions List (108)                                  |
+| ------------------------------------------------------- |
+| `accesscontextmanager.accessLevels.list`                |
+| `accesscontextmanager.accessPolicies.list`              |
+| `accesscontextmanager.servicePerimeters.list`           |
+| `apigateway.apiconfigs.getIamPolicy`                    |
+| `apigateway.apiconfigs.list`                            |
+| `apigateway.apis.getIamPolicy`                          |
+| `apigateway.apis.list`                                  |
+| `apigateway.gateways.getIamPolicy`                      |
+| `apigateway.gateways.list`                              |
+| `appengine.applications.get`                            |
+| `appengine.instances.list`                              |
+| `appengine.services.list`                               |
+| `appengine.versions.list`                               |
+| `bigquery.datasets.get`                                 |
+| `bigquery.models.getData`                               |
+| `bigquery.models.getMetadata`                           |
+| `bigquery.models.list`                                  |
+| `bigquery.tables.get`                                   |
+| `bigquery.tables.getIamPolicy`                          |
+| `bigquery.tables.list`                                  |
+| `bigtable.appProfiles.list`                             |
+| `bigtable.backups.list`                                 |
+| `bigtable.clusters.list`                                |
+| `bigtable.instances.list`                               |
+| `bigtable.tables.list`                                  |
+| `billing.budgets.list`                                  |
+| `binaryauthorization.policy.get`                        |
+| `cloudasset.assets.listCloudbillingBillingAccounts`     |
+| `cloudasset.assets.listCloudbillingProjectBillingInfos` |
+| `cloudasset.assets.searchAllIamPolicies`                |
+| `cloudbuild.builds.get`                                 |
+| `cloudbuild.builds.list`                                |
+| `cloudbuild.integrations.get`                           |
+| `cloudbuild.integrations.list`                          |
+| `cloudbuild.repositories.get`                           |
+| `cloudbuild.repositories.list`                          |
+| `cloudbuild.workerpools.list`                           |
+| `cloudfunctions.functions.list`                         |
+| `cloudkms.cryptoKeys.getIamPolicy`                      |
+| `cloudkms.cryptoKeys.list`                              |
+| `cloudkms.keyRings.list`                                |
+| `cloudsql.instances.list`                               |
+| `compute.addresses.list`                                |
+| `compute.backendBuckets.list`                           |
+| `compute.backendServices.list`                          |
+| `compute.disks.list`                                    |
+| `compute.firewalls.list`                                |
+| `compute.forwardingRules.list`                          |
+| `compute.globalAddresses.list`                          |
+| `compute.globalForwardingRules.list`                    |
+| `compute.healthChecks.list`                             |
+| `compute.images.get`                                    |
+| `compute.images.getIamPolicy`                           |
+| `compute.images.list`                                   |
+| `compute.instanceGroups.list`                           |
+| `compute.instances.list`                                |
+| `compute.networks.list`                                 |
+| `compute.projects.get`                                  |
+| `compute.regionBackendServices.list`                    |
+| `compute.regionHealthChecks.list`                       |
+| `compute.regionTargetHttpProxies.list`                  |
+| `compute.regionTargetHttpsProxies.list`                 |
+| `compute.regionUrlMaps.list`                            |
+| `compute.snapshots.list`                                |
+| `compute.sslPolicies.list`                              |
+| `compute.subnetworks.list`                              |
+| `compute.targetHttpProxies.list`                        |
+| `compute.targetHttpsProxies.list`                       |
+| `compute.targetSslProxies.list`                         |
+| `compute.urlMaps.list`                                  |
+| `container.clusters.list`                               |
+| `dataproc.clusters.list`                                |
+| `dns.managedZones.list`                                 |
+| `dns.policies.list`                                     |
+| `iam.roles.list`                                        |
+| `iam.serviceAccountKeys.list`                           |
+| `iam.serviceAccounts.list`                              |
+| `logging.logMetrics.list`                               |
+| `logging.sinks.list`                                    |
+| `memcache.instances.list`                               |
+| `monitoring.alertPolicies.list`                         |
+| `orgpolicy.policies.list`                               |
+| `orgpolicy.policy.get`                                  |
+| `privateca.certificateAuthorities.getIamPolicy`         |
+| `privateca.certificateAuthorities.list`                 |
+| `privateca.certificates.list`                           |
+| `pubsub.subscriptions.list`                             |
+| `pubsub.topics.getIamPolicy`                            |
+| `pubsub.topics.list`                                    |
+| `redis.instances.list`                                  |
+| `resourcemanager.folders.list`                          |
+| `resourcemanager.organizations.get`                     |
+| `resourcemanager.projects.get`                          |
+| `resourcemanager.projects.getIamPolicy`                 |
+| `resourcemanager.projects.list`                         |
+| `run.configurations.list`                               |
+| `run.routes.list`                                       |
+| `run.services.list`                                     |
+| `secretmanager.secrets.list`                            |
+| `secretmanager.versions.list`                           |
+| `serviceusage.services.list`                            |
+| `source.repos.list`                                     |
+| `spanner.databases.getIamPolicy`                        |
+| `spanner.databases.list`                                |
+| `spanner.instanceConfigs.list`                          |
+| `spanner.instances.list`                                |
+| `storage.buckets.getIamPolicy`                          |
+| `storage.buckets.list`                                  |
+<!-- {J1_PERMISSIONS_DOCUMENTATION_MARKER_END} -->

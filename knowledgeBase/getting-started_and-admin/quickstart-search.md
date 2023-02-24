@@ -4,9 +4,9 @@ You can quickly search and get insight across your entire digital environment in
 
 - **Ask questions** - you can enter any keywords to search across all packaged and saved questions. 
 - **Full-text search** - an easy way to search across all assets based on their property values.
-- **JupiterOne query language (J1QL)** is best for detailed querying of assets and relationships. 
+- **JupiterOne query language (J1QL)** is best for detailed querying of assets and relationships.  
 
-**Note**: For performance reasons, search results are limited to return a maximum 250 items. If you believe something is missing from a large result set, try fine-tuning the query to generate more precise results.
+**Note**: For performance reasons, search results are limited to return a maximum 250 items. If you believe something is missing from a large result set, try fine-tuning the query to generate more precise results. 
 
 
 
@@ -48,6 +48,7 @@ Use the icons in the top right of the data table to save the question, add the r
 The J1 Questions Library contains managed, prebuilt questions. You can duplicate any of these questions to customize it to your specific requirements. Click on any question and the detailed properties side panel open. Click the ![](../assets/icons/assets-more.png) menu and select **Duplicate**.
 
 
+
 ![](../assets/questions-library-duplicate.png)  
 
 
@@ -56,7 +57,7 @@ In the Duplicate Question window, edit any of the fields, add tags, or modify th
 
 By default, J1 adds [compliance frameworks](../compliance_and-reporting/compliance-import.md) to which your question is mapped. 
 
-![](../assets/questions-duplicate.png) 
+![](../assets/questions-duplicate.png)  
 
 
 
