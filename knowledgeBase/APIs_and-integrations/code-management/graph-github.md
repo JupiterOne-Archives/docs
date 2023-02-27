@@ -9,7 +9,7 @@
   environments, and environmental secrets in the JupiterOne graph.
 - Map GitHub users to employees in your JupiterOne account.
 - Map GitHub users to development/security trainings.
-- Monitor Github software development activities within repositories including
+- Monitor GitHub software development activities within repositories including
   changes, reviews and approvals.
 - Monitor changes to GitHub user teams, users, code repositories, and pull
   requests using JupiterOne alerts.
@@ -35,7 +35,7 @@ graph.
 ## Requirements
 
 - JupiterOne requires the JupiterOne GitHub app with read-only permissions be
-  installed in your Github Organization account.
+  installed in your GitHub Organization account.
 - You must have permission in JupiterOne to install new integrations.
 - If setting up for GitHub Enterprise Server, the URL to your instance is
   required.
@@ -75,6 +75,7 @@ read-only permissions to support ingestion of
 - Administration: Read-only
 - Members: Read-only
 - [Secrets](#secrets-caveat): Read-only
+- Events: Read-only
 
 #### User Permissions
 
@@ -85,7 +86,7 @@ read-only permissions to support ingestion of
 Note that the Secrets API does not reveal the values of Secrets - only their
 names and creation dates.
 
-Github References:
+GitHub References:
 
 - <https://developer.github.com/apps/building-github-apps/setting-permissions-for-github-apps/>
 - <https://developer.github.com/v3/apps/permissions/#metadata-permissions>
@@ -156,10 +157,12 @@ The following entities are created:
 | CVE                            | `cve`                           | `Vulnerability` |
 | CWE                            | `cwe`                           | `Weakness`      |
 | GitHub Branch Protection Rules | `github_branch_protection_rule` | `Rule`          |
+| GitHub Code Scanning Alerts    | `github_code_scanning_finding`  | `Finding`       |
 | GitHub Env Secret              | `github_env_secret`             | `Secret`        |
 | GitHub Environment             | `github_environment`            | `Configuration` |
 | GitHub Issue                   | `github_issue`                  | `Issue`         |
 | GitHub Org Secret              | `github_org_secret`             | `Secret`        |
+| GitHub Outside Collaborator    | `github_user`                   | `User`          |
 | GitHub Pull Request            | `github_pullrequest`            | `PR`            |
 | GitHub Repo Secret             | `github_repo_secret`            | `Secret`        |
 | GitHub Team                    | `github_team`                   | `UserGroup`     |
@@ -188,7 +191,9 @@ The following relationships are created:
 | `github_pullrequest`  | **CONTAINS**          | `github_pullrequest`            |
 | `github_repo`         | **ALLOWS**            | `github_team`                   |
 | `github_repo`         | **ALLOWS**            | `github_user`                   |
+| `github_repo`         | **ALLOWS**            | `github_user`                   |
 | `github_repo`         | **HAS**               | `github_branch_protection_rule` |
+| `github_repo`         | **HAS**               | `github_code_scanning_finding`  |
 | `github_repo`         | **HAS**               | `github_environment`            |
 | `github_repo`         | **HAS**               | `github_finding`                |
 | `github_repo`         | **HAS**               | `github_issue`                  |

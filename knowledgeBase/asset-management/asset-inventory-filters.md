@@ -63,6 +63,6 @@ When you select any of the assets in the filtered results table, its detailed pr
 
 Click the download icon ![](../assets/icons/download.png) to download all assets or a selected asset as a CSV file. You are notified in the Notifications ![](../assets/icons/bell.png) panel in the top-right of the top navigation bar when your download is complete and ready for you to download.
 
-
+ 
 
 ![](../assets/download-csv.gif) 
