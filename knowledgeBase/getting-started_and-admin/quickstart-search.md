@@ -4,7 +4,7 @@ You can quickly search and get insight across your entire digital environment in
 
 - **Ask questions** - you can enter any keywords to search across all packaged and saved questions. 
 - **Full-text search** - an easy way to search across all assets based on their property values.
-- **JupiterOne query language (J1QL)** is best for detailed querying of assets and relationships.  
+- **JupiterOne query language (J1QL)** is best for detailed querying of assets and relationships. 
 
 **Note**: For performance reasons, search results are limited to return a maximum 250 items. If you believe something is missing from a large result set, try fine-tuning the query to generate more precise results. 
 
@@ -53,7 +53,9 @@ The J1 Questions Library contains managed, prebuilt questions. You can duplicate
 
 
 
-In the Duplicate Question window, edit any of the fields, add tags, or modify the query. In addition, you can edit the compliance mappings. When you map a framework and compliance requirement to a question, the next time that framework is imported, the question is added to the requirement
+In the Duplicate Question window, edit any of the fields, add tags, or modify the query. 
+
+In addition, you can edit the compliance mappings. When you map a framework and compliance requirement to a question, the next time that framework is imported, the question is added to the requirement
 
 By default, J1 adds [compliance frameworks](../compliance_and-reporting/compliance-import.md) to which your question is mapped. 
 
@@ -63,15 +65,19 @@ By default, J1 adds [compliance frameworks](../compliance_and-reporting/complian
 
 For each of the mapped frameworks, you can add compliance requirement and control mappings. Click the **Propagate changes to existing compliance frameworks** checkbox if you want to apply your edits to existing frameworks. 
 
-You can edit any question to enable daily polling on this question and see a trend chart in the results the next time you run the question. If you duplicate a question that has the option selected to enable daily trend collection, the historical data that populated the existing question is not removed. However, going forward, all the new data is populated by the new or modified query. 
+You can edit any question to enable daily polling on this question and see a trend chart in the results the next time you run the question. 
+
+**Note**: If you are editing a query in a question, do not use `count()`because the daily polling counts the number of results (rows). Using `count()` results in a single count of 1.  
+
+If you duplicate a question that has the option selected to enable daily trend collection, the historical data that populated the existing question is not removed. However, going forward, all the new data is populated by the new or modified query.
+
+Question queries for daily trends run in the evening. The trend charts are updated daily, usually overnight. 
 
 
 
 ![](../assets/time-trend-chart.png)  
 
 
-
-**Note**: If you are editing the query, do not use `count()`because the daily polling counts the number of results (rows). Using `count()` results in a single count of 1.  
 
 ## Full-Text Search
 
