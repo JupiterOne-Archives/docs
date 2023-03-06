@@ -11,7 +11,7 @@
 
 ## How it Works
 
-- JupiterOne periodically fetches Tenable.io users, scans, findings, and
+- JupiterOne periodically fetches Tenable.io users, scans, findings, agents, and
   vulnerabilities to update the graph.
 - Write JupiterOne queries to review and monitor updates to the graph.
 - Configure alerts to reduce the noise of findings.
@@ -21,8 +21,8 @@
 
 - JupiterOne requires an access key and secret key used to authenticate with
   Tenable.io.
-- You must have the Tenable Administrator role to use the J1 integration.
-- You must have permission in J1 to install new integrations.
+- You must have the Tenable Administrator role for a successful integration.
+- You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
@@ -33,8 +33,14 @@ If you need help with this integration, please contact
 
 ### In Tenable.io
 
-See the [Tenable Developer Portal](https://developer.tenable.com/) for details
-on how to configure an API access key and secret.
+1. Make sure the account you use to integrate has the **Administrator** role.
+2. Click the hamburger icon in the top left corner to open the left pane.
+3. Navigate to **Settings**
+4. Click **My Account**
+5. On the left side, click **API Keys**
+6. In the bottom right corner click **Generate**
+7. Copy your Access Key and Secret Key into the respective fields in the
+   JupiterOne Tenable.io integration setup.
 
 ### In JupiterOne
 
@@ -82,6 +88,7 @@ The following entities are created:
 | Resources                  | Entity `_type`                       | Entity `_class` |
 | -------------------------- | ------------------------------------ | --------------- |
 | Account                    | `tenable_account`                    | `Account`       |
+| Agent                      | `tenable_agent`                      | `HostAgent`     |
 | Asset                      | `tenable_asset`                      | `Record`        |
 | Container Finding          | `tenable_container_finding`          | `Finding`       |
 | Container Image            | `tenable_container_image`            | `Image`         |
@@ -99,6 +106,7 @@ The following relationships are created:
 
 | Source Entity `_type`          | Relationship `_class` | Target Entity `_type`                |
 | ------------------------------ | --------------------- | ------------------------------------ |
+| `tenable_account`              | **HAS**               | `tenable_agent`                      |
 | `tenable_account`              | **HAS**               | `tenable_asset`                      |
 | `tenable_account`              | **HAS**               | `tenable_container_image`            |
 | `tenable_account`              | **HAS**               | `tenable_container_repository`       |
@@ -119,11 +127,15 @@ The following relationships are created:
 
 The following mapped relationships are created:
 
-| Source Entity `_type`           | Relationship `_class` | Target Entity `_type` | Direction |
-| ------------------------------- | --------------------- | --------------------- | --------- |
-| `tenable_vulnerability_finding` | **HAS**               | `*host*`              | REVERSE   |
-| `tenable_asset`                 | **IS**                | `*host*`              | FORWARD   |
-| `tenable_vulnerability_finding` | **IS**                | `*cve*`               | FORWARD   |
+| Source Entity `_type`           | Relationship `_class` | Target Entity `_type`       | Direction |
+| ------------------------------- | --------------------- | --------------------------- | --------- |
+| `tenable_asset`                 | **IS**                | `*aws_instance*`            | FORWARD   |
+| `tenable_asset`                 | **IS**                | `*azure_vm*`                | FORWARD   |
+| `tenable_asset`                 | **IS**                | `*google_compute_instance*` | FORWARD   |
+| `tenable_vulnerability_finding` | **HAS**               | `*aws_instance*`            | REVERSE   |
+| `tenable_vulnerability_finding` | **HAS**               | `*azure_vm*`                | REVERSE   |
+| `tenable_vulnerability_finding` | **HAS**               | `*google_compute_instance*` | REVERSE   |
+| `tenable_vulnerability_finding` | **IS**                | `*cve*`                     | FORWARD   |
 
 <!--
 ********************************************************************************
