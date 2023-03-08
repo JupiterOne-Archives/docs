@@ -80,14 +80,14 @@ generate-sbom "Find CodeModule THAT USES CodeRepo WITH tag.Component='<insert ta
 
 To generate an SBOM:
 
-1. In J1, go to **Apps ![](../assets/icons/apps.png) > Assets**.
+1. In J1, at the top of the navigation bar, click **Assets**.
 
-2. In the top-right corner, click **Generate SBOM**.
+2. In the top-right of the Assets window, click **Generate SBOM**.
    ​
 
-   ![](../assets/sbom.png)
+   ![](../assets/assets-landing.png)
 
-   ​
+   
 
 3. If you have met the prerequisite criteria above, then you can click **Generate Download**, and J1 downloads the SBOM in the form of a JSON file.
 
@@ -95,10 +95,10 @@ If you do not meet any of the prerequisite criteria, you see a red X next to the
 
 
 
-![](../assets/sbom_errors.png)
+![](../assets/sbom_errors.png) 
 
 
 Follow the corrective instructions in the error message, and try to generate your SBOM again.
 
 
-![](../assets/sbom_code_repo_error.png)
+![](../assets/sbom_code_repo_error.png) 
