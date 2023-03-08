@@ -1,16 +1,12 @@
 # JupiterOne Alert Rule Schema
 
 A rule uses the results of one or more queries to execute one or more actions.
-The basic alert workflows are described here:
-[JupiterOne Alert Rule configuration documentation](https://support.jupiterone.io/hc/en-us/articles/360022720474-6-9-Alerts-and-Alert-Rules).
-You can also directly edit the JSON that defines a rule for more advanced
-workflow execution.
+The basic alert workflows are described here: [JupiterOne Alert Rule configuration documentation](https://support.jupiterone.io/hc/en-us/articles/360022720474-6-9-Alerts-and-Alert-Rules). You can also directly edit the JSON that defines a rule for more advanced workflow execution.
 
 ## Configuring a Rule
 
-1. Navigate to the JupiterOne alert rule configuration page
-   (https://apps.us.jupiterone.io/alerts/rules)
-2. Click **Create Rule**
+1. Navigate to the JupiterOne alert rule configuration page (https://apps.us.jupiterone.io/alerts/rules).
+2. Click **Create Rule**.
 3. Click **Advanced Editor (JSON)** to open the advanced rule editor.
 
 JSON Example:
@@ -48,8 +44,7 @@ JSON Example:
 }
 ```
 
-You can also configure rules to include deleted data in the results. For
-example:
+You can also configure rules to include deleted data in the results. For example:
 
 ```json
   // ...
@@ -80,30 +75,29 @@ example:
 
 ## Rule Properties
 
-| Property           | Type              | Description                                                                                                                                                                 |
-| ------------------ | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`               | `string`          | Auto-generated, globally unique ID of each rule.                                                                                                                            |
-| `version`          | `number`          | Current version of the rule. Incremented each time the rule is updated.                                                                                                     |
-| `name`             | `string`          | Name of the rule, which is unique to each account.                                                                                                                          |
-| `description`      | `string`          | Optional description of the rule.                                                                                                                                           |
-| `specVersion`      | `number`          | Rule evaluation version in the case of breaking changes.                                                                                                                    |
-| `pollingInterval`  | `PollingInterval` | Optional frequency of automated rule evaluation. Defaults to `ONE_DAY`.                                                                                                     |
-| `question`         | `Question`        | Contains properties related to queries used in the rule evaluation.                                                                                                         |
-| `questionId`       | `string`          | A known unique ID for a question in the question library.                                                                                                                   |
-| `operations`       | `RuleOperation[]` | Actions that are executed when a corresponding condition is met.                                                                                                            |
-| `templates`        | `object`          | Optional key/value pairs of template name to template.                                                                                                                      |
-| `outputs`          | `string[]`        | Names of properties that can be used throughout the rule evaluation process and will be included in each record of a rule evaluation (for example, `queries.query0.total`). |
+| Property          | Type              | Description                                                  |
+| ----------------- | ----------------- | ------------------------------------------------------------ |
+| `id`              | `string`          | Auto-generated, globally unique ID of each rule.             |
+| `version`         | `number`          | Current version of the rule. Incremented each time the rule is updated. |
+| `name`            | `string`          | Name of the rule, which is unique to each account.           |
+| `description`     | `string`          | Optional description of the rule.                            |
+| `specVersion`     | `number`          | Rule evaluation version in the case of breaking changes.     |
+| `pollingInterval` | `PollingInterval` | Optional frequency of automated rule evaluation. Defaults to `ONE_DAY`. |
+| `question`        | `Question`        | Contains properties related to queries used in the rule evaluation. |
+| `questionId`      | `string`          | A known unique ID for a question in the question library.    |
+| `operations`      | `RuleOperation[]` | Actions that are executed when a corresponding condition is met. |
+| `templates`       | `object`          | Optional key/value pairs of template name to template.       |
+| `outputs`         | `string[]`        | Names of properties that can be used throughout the rule evaluation process and will be included in each record of a rule evaluation (for example, `queries.query0.total`). |
+
 <!-- TODO: insert notifyOnFailure boolean flag when feature is GA -->
 
 ### Type: PollingInterval
 
-Enumeration of the scheduled frequencies on which rules will automatically be evaluated.
-Possible values are `DISABLED`, `THIRTY_MINUTES`, `ONE_HOUR`, `FOUR_HOURS`, `EIGHT_HOURS`, `TWELVE_HOURS`, `ONE_DAY`, and `ONE_WEEK`.
+Enumeration of the scheduled frequencies on which rules will automatically be evaluated. Possible values are `DISABLED`, `THIRTY_MINUTES`, `ONE_HOUR`, `FOUR_HOURS`, `EIGHT_HOURS`, `TWELVE_HOURS`, `ONE_DAY`, and `ONE_WEEK`.
 
 ### Type: RuleOperation
 
-A `RuleOperation` is a single `condition` and series of `action`s that are
-executed when the `condition` is met.
+A `RuleOperation` is a single `condition` and series of `action`s that are executed when the `condition` is met.
 
 | Property  | Type                                               | Description                                                                              |
 | --------- | -------------------------------------------------- | ---------------------------------------------------------------------------------------- |
@@ -112,9 +106,7 @@ executed when the `condition` is met.
 
 ### Type: Question
 
-A Question contains a collection of named queries that should be executed during
-the rule evaluation process and whose responses can be used in any
-`RuleOperation`.
+A Question contains a collection of named queries that should be executed during the rule evaluation process and whose responses can be used in any `RuleOperation`.
 
 | Property  | Type              | Description                                                         |
 | --------- | ----------------- | ------------------------------------------------------------------- |
@@ -122,8 +114,7 @@ the rule evaluation process and whose responses can be used in any
 
 ### Type: QuestionQuery
 
-A named query that should be executed during the rule evaluation process and
-whose responses can be used in any `RuleOperation`.
+A named query that should be executed during the rule evaluation process and whose responses can be used in any `RuleOperation`.
 
 | Property         | Type      | Description                                                                                                                                                                                                                                 |
 | ---------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -134,8 +125,7 @@ whose responses can be used in any `RuleOperation`.
 
 ### Type: RuleOperationCondition
 
-The condition that determines whether the associated actions should be executed.
-The type of `RuleOperationCondition` is determined using the `type` property.
+The condition that determines whether the associated actions should be executed. The type of `RuleOperationCondition` is determined using the `type` property.
 
 #### Type: FilterRuleOperationCondition
 
@@ -146,14 +136,13 @@ The type of `RuleOperationCondition` is determined using the `type` property.
 
 ### Type: RuleOperationAction
 
-Action that is executed when a corresponding condition is met. The type of
-`RuleOperationAction` is determined using the `type` property.
+Action that is executed when a corresponding condition is met. The type of `RuleOperationAction` is determined using the `type` property.
 
 ---
 
 #### Action: `SET_PROPERTY`
 
-> Includes a property that can be used in rule evaluation input.
+Includes a property that can be used in rule evaluation input.
 
 | Property         | Type     | Description                                  |
 | ---------------- | -------- | -------------------------------------------- | -------- | -------------------------------------------- |
@@ -175,7 +164,7 @@ Example:
 
 #### Action: `CREATE_ALERT`
 
-> Creates a JupiterOne alert that is visible in J1 Alerts.
+Creates a JupiterOne alert that is visible in J1 Alerts.
 
 | Property | Type     | Description                                |
 | -------- | -------- | ------------------------------------------ |
@@ -193,8 +182,7 @@ Example:
 
 #### Action: `SEND_EMAIL`
 
-> Sends an email to a list of recipients with details related to alerts that are
-> created during the rule evaluation.
+Sends an email to a list of recipients with details related to alerts that are created during the rule evaluation.
 
 | Property     | Type       | Description                                        |
 | ------------ | ---------- | -------------------------------------------------- |
@@ -216,7 +204,7 @@ Example:
 
 You can pass multiple queries into an alert rule that allows each query to output its results into the same, single alert.
 
-> Note the `when` condition in the example below will invoke actions if either query returns results.
+Note the `when` condition in the example below will invoke actions if either query returns results.
 
 This example shows multiple queries sending out an email alert to multiple recipients:
 
@@ -297,8 +285,7 @@ This example shows multiple queries sending out an email alert to multiple recip
 
 #### Action `CREATE_JIRA_TICKET`
 
-> Creates a Jira ticket using a specific JupiterOne Jira integration
-> configuration.
+Creates a Jira ticket using a specific JupiterOne Jira integration configuration.
 
 | Property                | Type     | Description                                                                                              |
 | ----------------------- | -------- | -------------------------------------------------------------------------------------------------------- |
@@ -312,20 +299,13 @@ This example shows multiple queries sending out an email alert to multiple recip
 
 #### Jira Description Field
 
-The `description` field can have a raw string value or be passed as depicted in
-these examples as Jira
-[ADF](https://developer.atlassian.com/cloud/jira/platform/apis/document/structure/).
-**NOTE**: string in either the `text` or `description` keys supports markdown
-syntax.
+The `description` field can have a raw string value or be passed as depicted in these examples as Jira
+[ADF](https://developer.atlassian.com/cloud/jira/platform/apis/document/structure/). **Note**: string in either the `text` or `description` keys supports markdown syntax.
 
 #### Other/custom Additional Fields
 
-Fields passed into `additionalFields` will be passed directly to the Jira API
-and as such should match the required input format of each field type.
-This table outlines some of the common field types and their value formats.
-Please use the
-[Official Jira Rest API](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-fields/)
-for more information.
+Fields passed into `additionalFields` will be passed directly to the Jira API and as such should match the required input format of each field type. This table outlines some of the common field types and their value formats. Please use the
+[Official Jira Rest API](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-fields/) for more information.
 
 | Field Type Label | Schema Type     | Input Format                         | Example                                                                   |
 | ---------------- | --------------- | ------------------------------------ | ------------------------------------------------------------------------- |
@@ -392,8 +372,7 @@ Example:
 }
 ```
 
-This example shows multiple queries sending results to Jira to create a single
-Jira issue:
+This example shows multiple queries sending results to Jira to create a single Jira issue:
 
 ```json
 {
@@ -484,14 +463,13 @@ Jira issue:
 }
 ```
 
-If your query returns multiple results, you can run a second query using the
-results of the first query to create a Jira ticket for each item in the first
-query results. You do this by
-[editing the advanced JSON of the alert rule](##configuring-a-rule) to use the
-`FOR_EACH_ITEM` action type.
+If your query returns multiple results, you can run a second query using the results of the first query to create a Jira ticket for each item in the first query results. You do this by [editing the advanced JSON of the alert rule](##configuring-a-rule) to use the `FOR_EACH_ITEM` action type.
 
-It is not recommended that you use this action type if your results sizes are very large.
-This example limits the number of possible Jira tickets created to a maximum of 100, and sends an email when the limit is exceeded.
+- Scale limitations in the results set. 
+
+You can only tag entities in an array and not a single entity. 
+
+It is not recommended that you use this action type if your results sizes are very large. This example limits the number of possible Jira tickets created to a maximum of 100, and sends an email when the limit is exceeded.
 
 For example:
 
@@ -592,7 +570,7 @@ For example:
 
 #### Action: `FOR_EACH_ITEM`
 
-> Runs a set of actions for each item in a list. This list can be query results, or a composed list of items.
+Runs a set of actions for each item in a list. This list can be query results, or a composed list of items.
 
 | Property                | Type     | Description                                                                     |
 | ----------------------- | -------- | ------------------------------------------------------------------------------- |
@@ -628,9 +606,9 @@ Examples:
 
 #### Action: `JUPITERONE_QUERY`
 
-> Runs a JupiterOne query and stores the results on the `queries` template parameter with a given `name`.
-> It is recommended that you only use this action within a `FOR_EACH_ITEM` action.
-> Including it in normal `operations` actions is not recommended, as you can retrieve results you want with the normal `question` queries.
+Runs a JupiterOne query and stores the results on the `queries` template parameter with a given `name`.
+It is recommended that you only use this action within a `FOR_EACH_ITEM` action.
+Including it in normal `operations` actions is not recommended, as you can retrieve results you want with the normal `question` queries.
 
 | Property                | Type     | Description                                                                 |
 | ----------------------- | -------- | --------------------------------------------------------------------------- |
@@ -672,7 +650,7 @@ Example:
 
 #### Action: `SEND_SLACK_MESSAGE`
 
-> Sends a Slack message to a given Slack webhook URL.
+Sends a Slack message to a given Slack webhook URL.
 
 | Property                | Type     | Description                                                                              |
 | ----------------------- | -------- | ---------------------------------------------------------------------------------------- |
@@ -751,7 +729,7 @@ channel, the JupiterOne Slack bot must be a member of that private channel.
 
 #### Action: `WEBHOOK`
 
-> Sends an HTTP request to a given endpoint.
+Sends an HTTP request to a given endpoint.
 
 | Property   | Type     | Description                                                                                                 |
 | ---------- | -------- | ----------------------------------------------------------------------------------------------------------- |
@@ -801,7 +779,7 @@ configure the webhook action.
 
 #### Action: `PUBLISH_SNS_MESSAGE`
 
-> Publishes a message to the specified SNS topic.
+Publishes a message to the specified SNS topic.
 
 | Property                | Type     | Description                                                                                                                        |
 | ----------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------- |
@@ -825,7 +803,7 @@ Example:
 ```
 
 ```
-!!! Note:
+Note:
 ```
 
 `data` is stringified in the payload. For example:
@@ -842,7 +820,7 @@ Example:
 
 #### Action: `SEND_SQS_MESSAGE`
 
-> Publishes a message to the specified SQS queue.
+Publishes a message to the specified SQS queue.
 
 | Property                | Type     | Description                                                                                                                        |
 | ----------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------- |
@@ -1062,7 +1040,7 @@ The `mapTemplate` transform exposes additional input variable to the template:
 | `itemCount` | `number` | The total count of items in the array.       |
 | `itemIndex` | `number` | The index of the current `item` in the array |
 
-!!! note The properties that are accessible on the `item` property are pulled
+**Note**: The properties that are accessible on the `item` property are pulled
 from the `properties` object and the `entity` object if the `item` matches the
 schema for an entity.
 
