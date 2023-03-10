@@ -102,60 +102,146 @@ The following steps are required for the DICOM service, but optional for the FHI
 
 #### IAM Roles (Azure Management Groups /Subscriptions)
 
-Grant the `Reader` RBAC subscription role to read Azure Resource Manager
+Grant the `JupiterOne Reader` RBAC subscription role to read Azure Resource Manager
 information:
 
-1. Go to **All services** > **Management + governance**.
+1. Navigate to the correct scope for your integration.
 
-   - If configuring all subscriptions for a tenant: navigate to 
-     **Management Groups > [Tenant Root Group](https://docs.microsoft.com/en-us/azure/governance/management-groups/overview#root-management-group-for-each-directory)**.
-     
-   - If configuring a single Azure Subscription: navigate to
-     **Subscriptions** and choose the subscription from which you want to ingest resources.
+   - _(RECOMMENDED) If configuring all subscriptions for a tenant:_ navigate to
+     **Management Groups**, then to the
+     [Tenant Root Group](https://docs.microsoft.com/en-us/azure/governance/management-groups/overview#root-management-group-for-each-directory).
 
-2. Click **Management Groups**.
-3. Click **+ Add management group**.
+   - _If configuring a single Azure Subscription:_ navigate to
+     **Subscriptions**, choose the subscription from which you want to ingest
+     resources.
 
-   ![](../../assets/azure-add management-group.png)  
+2. Create custom role "JupiterOne Reader"
 
-4. Create the custom role "JupiterOne Reader".
+   1. Navigate to **Access control (IAM)** -> **Add** -> **Add custom role**
+   2. Complete the name of the custom role
+   3. Navigate to the JSON tab. Then select **Edit** and add the following _actions_:
+   ```
+   "Microsoft.Advisor/recommendations/read",
+   "Microsoft.ApiManagement/service/apis/read",
+   "Microsoft.ApiManagement/service/read",
+   "Microsoft.Authorization/classicAdministrators/read",
+   "Microsoft.Authorization/locks/read",
+   "Microsoft.Authorization/policyAssignments/read",
+   "Microsoft.Authorization/policyDefinitions/read",
+   "Microsoft.Authorization/policySetDefinitions/read",
+   "Microsoft.Authorization/roleAssignments/read",
+   "Microsoft.Authorization/roleDefinitions/read",
+   "Microsoft.Batch/batchAccounts/applications/read",
+   "Microsoft.Batch/batchAccounts/certificates/read",
+   "Microsoft.Batch/batchAccounts/pools/read",
+   "Microsoft.Batch/batchAccounts/read",
+   "Microsoft.Cache/redis/firewallRules/read",
+   "Microsoft.Cache/redis/linkedServers/read",
+   "Microsoft.Cache/redis/read",
+   "Microsoft.Cdn/profiles/endpoints/read",
+   "Microsoft.Cdn/profiles/read",
+   "Microsoft.Compute/disks/read",
+   "Microsoft.Compute/galleries/images/read",
+   "Microsoft.Compute/galleries/images/versions/read",
+   "Microsoft.Compute/galleries/read",
+   "Microsoft.Compute/images/read",
+   "Microsoft.Compute/virtualMachines/extensions/read",
+   "Microsoft.Compute/virtualMachines/read",
+   "Microsoft.ContainerInstance/containerGroups/read",
+   "Microsoft.ContainerRegistry/registries/read",
+   "Microsoft.ContainerRegistry/registries/webhooks/read",
+   "Microsoft.ContainerService/managedClusters/read",
+   "Microsoft.DBforMariaDB/servers/databases/read",
+   "Microsoft.DBforMariaDB/servers/read",
+   "Microsoft.DBforMySQL/servers/databases/read",
+   "Microsoft.DBforMySQL/servers/read",
+   "Microsoft.DBforPostgreSQL/servers/databases/read",
+   "Microsoft.DBforPostgreSQL/servers/firewallRules/read",
+   "Microsoft.DBforPostgreSQL/servers/read",
+   "Microsoft.DocumentDB/databaseAccounts/read",
+   "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/read",
+   "Microsoft.EventGrid/domains/read",
+   "Microsoft.EventGrid/domains/topics/eventSubscriptions/read",
+   "Microsoft.EventGrid/domains/topics/read",
+   "Microsoft.EventGrid/topics/eventSubscriptions/read",
+   "Microsoft.EventGrid/topics/read",
+   "Microsoft.Insights/ActivityLogAlerts/Read",
+   "Microsoft.Insights/DiagnosticSettings/Read",
+   "Microsoft.Insights/LogProfiles/Read",
+   "Microsoft.KeyVault/vaults/keys/read",
+   "Microsoft.KeyVault/vaults/read",
+   "Microsoft.KeyVault/vaults/secrets/read",
+   "Microsoft.Management/managementGroups/read",
+   "Microsoft.Network/azurefirewalls/read",
+   "Microsoft.Network/dnszones/read",
+   "Microsoft.Network/dnszones/recordsets/read",
+   "Microsoft.Network/frontDoors/read",
+   "Microsoft.Network/loadBalancers/read",
+   "Microsoft.Network/networkInterfaces/read",
+   "Microsoft.Network/networkSecurityGroups/read",
+   "Microsoft.Network/networkWatchers/flowLogs/read",
+   "Microsoft.Network/networkWatchers/read",
+   "Microsoft.Network/privateDnsZones/read",
+   "Microsoft.Network/privateDnsZones/recordsets/read",
+   "Microsoft.Network/privateEndpoints/read",
+   "Microsoft.Network/publicIPAddresses/read",
+   "Microsoft.Network/virtualNetworks/read",
+   "Microsoft.PolicyInsights/policyStates/queryResults/read",
+   "Microsoft.Resources/subscriptions/locations/read",
+   "Microsoft.Resources/subscriptions/read",
+   "Microsoft.Resources/subscriptions/resourceGroups/read",
+   "Microsoft.Security/assessments/read",
+   "Microsoft.Security/autoProvisioningSettings/read",
+   "Microsoft.Security/pricings/read",
+   "Microsoft.Security/securityContacts/read",
+   "Microsoft.Security/settings/read",
+   "Microsoft.ServiceBus/namespaces/queues/read",
+   "Microsoft.ServiceBus/namespaces/read",
+   "Microsoft.ServiceBus/namespaces/topics/read",
+   "Microsoft.ServiceBus/namespaces/topics/subscriptions/read",
+   "Microsoft.Sql/servers/administrators/read",
+   "Microsoft.Sql/servers/databases/read",
+   "Microsoft.Sql/servers/firewallRules/read",
+   "Microsoft.Sql/servers/read",
+   "Microsoft.Storage/storageAccounts/blobServices/containers/read",
+   "Microsoft.Storage/storageAccounts/blobServices/read",
+   "Microsoft.Storage/storageAccounts/fileServices/shares/read",
+   "Microsoft.Storage/storageAccounts/queueServices/read",
+   "Microsoft.Storage/storageAccounts/read",
+   "Microsoft.Storage/storageAccounts/tableServices/read",
+   "Microsoft.Storage/storageAccounts/tableServices/tables/read",
+   "Microsoft.Web/serverfarms/Read",
+   "Microsoft.Web/sites/config/list/action",
+   "Microsoft.Web/sites/config/Read",
+   "Microsoft.Web/sites/Read",
+   "Microsoft.KeyVault/vaults/providers/Microsoft.Insights/diagnosticSettings/Read",
+   "Microsoft.Management/managementGroups/subscriptions/read"
+   ```
+   4. Click on **Save** -> **Review+Create** -> **Create**.
+3. Assign Roles to "JupiterOne" App
+   1. Navigate to **Access control (IAM)** -> **Add** -> **Add role assignment**
+   2. Assign the *JupiterOne Reader* role to the "JupiterOne" member.
 
-   - Navigate to **Access control (IAM)** -> **Add** -> **Add custom role**
-   - Create a custom role called "JupiterOne Reader" with the following
-      permissions:
-      - `Microsoft.PolicyInsights/policyStates/queryResults/action`
-      - `Microsoft.Web/sites/config/list/Action`
-5. Assign roles to the "JupiterOne" App.
-
-   - Navigate to **Access control (IAM)** -> **Add** -> **Add role assignment**
-   - Assign each of the three roles to the "JupiterOne" member:
-      - JupiterOne Reader
-      - Reader
-      - Key Vault Reader
-      - Management Group Reader (If using `Configure Subscription Instances`
-         flag in JupiterOne)
-
-### Key Vault Access Policy
+   ### Key Vault Access Policy
 
 Listing key vault keys and secrets (`rm-keyvault-keys` and `rm-keyvault-secrets` steps) require you to grant the following permissions to the J1 security principal  for each key vault in your account. See the Azure documentation for more information on [assigning a key vault access policy](https://go.microsoft.com/fwlink/?linkid=2125287).
 
-1. Click Access policies, and then click **+Create**.  
+1. Navigate to _Key Vaults_ and select the one you want to ingest.
+2. Click Access policies, and then click **+Create**.  
   
-
    ![](../../assets/azure-access-policies.png)  
-
-2. Under Key permissions, Secret permissions, and Certificate permissions, select the permissions you want. 
+3. On the permissions tab, under Key permissions, and Secret permissions, select the permissions. 
 
    ![](../../assets/azure-create-policy.png)  
-
-   
-
 - Key Permissions
   - Key Management Operations
     - List
 - Secret Permissions
   - Secret Management Operations
     - List
+
+4. On the Principal tab, assign them to the "JupiterOne" app.
+5. Navigate to the on **Review + Create** tab -> Click **Create**
 
 ### In JupiterOne
 
