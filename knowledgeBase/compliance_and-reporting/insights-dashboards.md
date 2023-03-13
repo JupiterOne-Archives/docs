@@ -99,11 +99,12 @@ The specified user or users in a specified group receive a notification in the t
 
 
 
-From your J1 home page, you can quickly see all the Insights dashboards have published to your home page. On the left, click **Dashboard: Overview** to toggle between all the dashboards are available to you. 
+From your J1 home page, you can quickly see all the Insights dashboards published to your home page. On the left, click **Dashboard: Overview** to toggle between all the dashboards are available to you. You can just to pin a dashboard and it displays as a default dashboard on your J1 home page.
 
 
 
 ![](../assets/insights-toggle.gif) 
+
 
 
 
