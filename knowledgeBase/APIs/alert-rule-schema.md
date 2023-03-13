@@ -300,9 +300,9 @@ Creates a Jira ticket using a specific JupiterOne Jira integration configuration
 #### Jira Description Field
 
 The `description` field can have a raw string value or be passed as depicted in these examples as Jira
-[ADF](https://developer.atlassian.com/cloud/jira/platform/apis/document/structure/). **Note**: string in either the `text` or `description` keys supports markdown syntax.
+[ADF](https://developer.atlassian.com/cloud/jira/platform/apis/document/structure/). **Note**: strings in either the `text` or `description` keys supports markdown syntax.
 
-#### Other/custom Additional Fields
+#### Other/Custom Additional Fields
 
 Fields passed into `additionalFields` will be passed directly to the Jira API and as such should match the required input format of each field type. This table outlines some of the common field types and their value formats. Please use the
 [Official Jira Rest API](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-fields/) for more information.
@@ -465,9 +465,7 @@ This example shows multiple queries sending results to Jira to create a single J
 
 If your query returns multiple results, you can run a second query using the results of the first query to create a Jira ticket for each item in the first query results. You do this by [editing the advanced JSON of the alert rule](##configuring-a-rule) to use the `FOR_EACH_ITEM` action type.
 
-- Scale limitations in the results set. 
-
-You can only tag entities in an array and not a single entity. 
+It is recommended that you scope the query as specifically as possible as success is not guaranteed for large data sets. This scaling constraint is particularly relevant with actions like `CREATE_JIRA_TICKET` and `TAG_ENTITIES`, although it can occur with any action. Note that you can only tag entities in an array and not a single entity. 
 
 It is not recommended that you use this action type if your results sizes are very large. This example limits the number of possible Jira tickets created to a maximum of 100, and sends an email when the limit is exceeded.
 
