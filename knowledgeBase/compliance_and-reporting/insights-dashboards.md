@@ -83,7 +83,7 @@ For more information about custom Insights dashboards, [watch this video](https:
 
 ### Publishing J1 Insights Dashboards
 
-If you have the J1 Admin role, you can publish J1 Insights dashboards to the landing page of a user or a group. At the top-right of the Insights landing page, click the ![](../assets/icons/insights-send-to-home.png) icon. In the Show on Home dialog, select the user or group to whom you want to push the dashboard, and click **Save**. Ensure the users you select have permission to view the dashboard.
+If you have the J1 Admin role, you can publish J1 Insights dashboards to the landing page of a user or a group. At the top-right of the Insights landing page, click the ![](../assets/icons/insights-send-to-home.png) icon. In the Show on Home dialog, select the user or group to whom you want to push the dashboard, and click **Save**. Ensure the users you select have the access settings to view the dashboard.
 
 
 
@@ -94,6 +94,14 @@ The specified user or users in a specified group receive a notification in the t
   
 
 ![](../assets/insights-publish.gif)
+
+
+
+From your J1 home page, you can quickly see all the Insights dashboards have published to your home page. On the left, click **Dashboard: Overview** to toggle between all the dashboards are available to you. 
+
+
+
+![](../assets/insights-toggle.gif) 
 
 
 
