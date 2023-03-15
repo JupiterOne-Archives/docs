@@ -1,28 +1,28 @@
-# Fastly Integration with JupiterOne
+# Fastly
 
 ## Fastly + JupiterOne Integration Benefits
 
-*   Visualize Fastly users, API tokens, services, and service backends in the
-    JupiterOne graph.
-*   Map Fastly users to employees in your JupiterOne account.
-*   Monitor changes to Fastly users and API tokens using JupiterOne alerts.
-*   Monitor changes to Fastly services and service backends using JupiterOne
-    alerts.
+- Visualize Fastly users, API tokens, services, and service backends in the
+  JupiterOne graph.
+- Map Fastly users to employees in your JupiterOne account.
+- Monitor changes to Fastly users and API tokens using JupiterOne alerts.
+- Monitor changes to Fastly services and service backends using JupiterOne
+  alerts.
 
 ## How it Works
 
-*   JupiterOne periodically fetches users, tokens, and services from Fastly to
-    update the graph.
-*   Write JupiterOne queries to review and monitor updates to the graph, or
-    leverage existing queries.
-*   Configure alerts to take action when the JupiterOne graph changes, or leverage
-    existing alerts.
+- JupiterOne periodically fetches users, tokens, and services from Fastly to
+  update the graph.
+- Write JupiterOne queries to review and monitor updates to the graph, or
+  leverage existing queries.
+- Configure alerts to take action when the JupiterOne graph changes, or leverage
+  existing alerts.
 
 ## Requirements
 
-*   JupiterOne requires a Fastly customer ID and API token to interact with the
-    API.
-*   You must have permission in JupiterOne to install new integrations.
+- JupiterOne requires a Fastly customer ID and API token to interact with the
+  API.
+- You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
@@ -37,42 +37,41 @@ To conigure this integration you should have an account in Fastly and create an
 **API Token** with Read-only access (`global:read`). You will also need the
 **Customer ID** from the settings page of your Fastly account.
 
-*   The **Customer ID** can be obtained from
-    <https://manage.fastly.com/account/company>
+- The **Customer ID** can be obtained from
+  https://manage.fastly.com/account/company
 
-*   The **API Token** can be created from
-    <https://manage.fastly.com/account/personal/tokens>
+- The **API Token** can be created from
+  https://manage.fastly.com/account/personal/tokens
 
 ### In JupiterOne
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **Fastly** integration tile and click it.
-3.  Click the **Add Configuration** button and configure the following settings:
+1. From the top navigation of the J1 Search homepage, select **Integrations**
+2. Scroll to the **Fastly** integration tile and click it.
+3. Click the **Add Configuration** button and configure the following settings:
 
-*   Enter the **Account Name** by which you'd like to identify this Fastly account
-    in JupiterOne. Ingested entities will have this value stored in
-    `tag.AccountName` when **Tag with Account Name** is checked.
-*   Enter a **Description** that will further assist your team when identifying
-    the integration instance.
-*   Select a **Polling Interval** that you feel is sufficient for your monitoring
-    needs. You may leave this as `DISABLED` and manually execute the integration.
-*   Enter the **Customer ID** associated with your Fastly account.
-*   Enter the **API Token** generated from your Fastly account (by a superuser so
-    it is associated with the organization, not the user) with global read
-    permissions.
+- Enter the **Account Name** by which you'd like to identify this Fastly account
+  in JupiterOne. Ingested entities will have this value stored in
+  `tag.AccountName` when **Tag with Account Name** is checked.
+- Enter a **Description** that will further assist your team when identifying
+  the integration instance.
+- Select a **Polling Interval** that you feel is sufficient for your monitoring
+  needs. You may leave this as `DISABLED` and manually execute the integration.
+- Enter the **Customer ID** associated with your Fastly account.
+- Enter the **API Token** generated from your Fastly account (by a superuser so
+  it is associated with the organization, not the user) with global read
+  permissions.
 
-4.  Click **Create Configuration** once all values are provided.
+4. Click **Create Configuration** once all values are provided.
 
 ## How to Uninstall
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **Fastly** integration tile and click it.
-3.  Identify and click the **integration to delete**.
-4.  Click the **trash can** icon.
-5.  Click the **Remove** button to delete the integration.
+1. From the top navigation of the J1 Search homepage, select **Integrations**
+2. Scroll to the **Fastly** integration tile and click it.
+3. Identify and click the **integration to delete**.
+4. Click the **trash can** icon.
+5. Click the **Remove** button to delete the integration.
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
-
 <!--
 ********************************************************************************
 NOTE: ALL OF THE FOLLOWING DOCUMENTATION IS GENERATED USING THE
@@ -116,7 +115,4 @@ The following relationships are created:
 END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 ********************************************************************************
 -->
-
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
- 
-<!--  jupiterOneDocVersion=1-0-0 -->
