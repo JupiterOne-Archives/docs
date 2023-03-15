@@ -1,6 +1,32 @@
 # Account and Billing-Related FAQs
 
-## What are entities? And how are they counted for usage/billing?
+### What is the asset operations licensing model versus the billable entities licensing model?
+
+Prior to 2023, JupiterOne used the billable entities licensing model. This model is now deprecated and the asset operations model applies going forward. You cannot use the two models at the same time. An account is either asset operations **or** billable entities. 
+
+For accounts using the asset operations model, all entity changes count towards an asset operation, regardless if the entity was considered “non-billable” under the billable entities licensing model.
+
+### What are asset operations? What functions make up asset operations?
+
+Asset operations for the JupiterOne security platform is defined as the cumulative count over a month of the changes to the J1 graph: create, delete, and update operations for entities and relationships. 
+
+The following is the full list of asset operation functions that count towards the asset operations total:
+
+- create_entity
+- update_entity
+- delete_entity
+- remap_enity
+- create_relationship
+- update_relationship
+- create_mapped_relationship
+- delete_relationship
+- delete_integration
+
+### What is the billable entities licensing model? What are entities? And how are they counted for usage/billing?
+
+Prior to 2023, JupiterOne used the billable entities licensing model. This model is now deprecated and the asset operations model applies going forward. 
+
+The billable entities model counted the number of entities under management in the JupiterOne account. 
 
 An `entity` is a `node` stored in the JupiterOne graph database. Entities typically come from an integration. They can also be added via the Asset Inventory web app or API (custom scripts).
 
@@ -145,36 +171,7 @@ return
 </details>
 <!--END Entity Billing Reference table-->
 
-## What are the limitations of the Community Edition of JupiterOne? 
-
-JupiterOne Community Edition is FREE for non-commercial use, non-profit companies, or small teams. It comes with the following features and limitations:
-
-- Configure up to *10* integration instances
-- Integrations are limited to WEEKLY scheduled polling or on-demand runs
-- Up to 1,000 entities
-- One user
-- Full, featured access to J1 Assets Inventory / CMDB, search, query and 
-  graph visualization from query results
-- Access to J1 Policies and full templates library
-- API access
-- One J1 Insights dashboard
-
-A paid subscription is required for the following capabilities:
-
-- Daily and hourly data polling and analysis
-- Alerts and notifications (email, Jira, Slack)
-- Reporting charts and dashboards
-- Compliance management, evidence collection with continuous assessment
-- Full policy management (build/edit/export policies and procedures) and compliance mapping
-- SAML Single Sign-On
-
-**Note:**
-
-    - Account in active trial have access to all paid subscription features.
-    - Trial accounts are automatically converted into `COMMUNITY` edition after trial expires.
-    - The entity limit for a paid premium/enterprise account depends on the subscription tier.
-
-## I see a user named "Callisto" on my account. Who is that?
+### I see a user named "Callisto" on my account. Who is that?
 
 "Callisto" \<callisto@jupiterone.io\> is the account for JupiterOne Support. The Support User is by default added to a new account during free trial, proof-of-concept evaluation, or initial account onboarding. This is to facilitate better support and training on using the platform.
 

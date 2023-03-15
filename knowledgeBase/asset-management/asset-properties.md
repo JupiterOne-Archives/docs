@@ -6,7 +6,7 @@ When you select any of the assets anywhere in J1, its detailed properties side p
 
 
 
-Click the three-dot icon  ![](C:\Users\lynch\OneDrive\Documents\GitHub\docs\knowledgeBase\assets\icons\assets-more.png)  to the right of the tabs to see more options and to edit any of the asset properties.
+Click the three-dot icon  ![](C:\Users\lynch\OneDrive\Documents\GitHub\docs\knowledgeBase\assets\icons\assets-more.png)  to the right of the tabs in the detailed properties side panel to see more options and to edit any of the asset properties.
 
 
 
