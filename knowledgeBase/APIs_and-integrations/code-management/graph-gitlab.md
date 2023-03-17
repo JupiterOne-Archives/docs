@@ -1,67 +1,67 @@
-# HackerOne
+# GitLab
 
-## Integration Benefits
+## GitLab + JupiterOne Integration Benefits
 
-- Visualize HackerOne programs and findings in the JupiterOne graph.
-- Map findings to CVE or CWE
+- Visualize GitLab users, groups, code repositories, and merge requests in the
+  JupiterOne graph.
+- Map GitLab users to employees in your JupiterOne account.
+- Map GitLab users to development/security trainings.
+- Monitor GitLab software development activities within repositories including
+  changes and approvals.
+- Monitor changes to GitLab user groups, users, code repositories, and merge
+  requests using JupiterOne alerts.
 
 ## How it Works
 
-- JupiterOne periodically fetches findings from HackerOne to update the graph.
-- Write JupiterOne queries to review and monitor updates to the graph, or
-  leverage existing queries.
-- Configure alerts to take action when JupiterOne graph changes, or leverage
-  existing alerts.
+- JupiterOne periodically fetches GitLab users, code repositories, and pull
+  requests in those repositories to update the graph.
+- Write JupiterOne queries to review and monitor updates to the graph.
+- Configure alerts to take action when the JupiterOne graph changes.
 
-## Prerequisites
+## Requirements
 
-- HackerOne requires an API Key that can be found within the HackerOne UI.
+- JupiterOne requires a personal access token configured with read access and
+  the API base URL, such as https://gitlab.com.
 - You must have permission in JupiterOne to install new integrations.
 
-## Support
+## ## Support
 
 If you need help with this integration, contact
 [JupiterOne Support](https://support.jupiterone.io).
 
-## How to Use This Integration
+## Integration Walkthrough
 
-### In HackerOne
+### In GitLab
 
-1. Once logged in, head to `Organization Settings` by clicking on the top nav.
-2. Next, click `API Tokens` on the left hand side
-3. Click the `Create API token`
-4. Enter an identifier. This will be your `API Key Name`.
-5. Check the program you want to grant access to.
-6. Select `Standard` group permission.
-7. Click `Create API token`.
-8. Copy API Token, store in safe place in accordance with best practices.
-9. Navigate to `Program Settings` via the top header
-10. Take note of the program `Handle` found in the `Information` form.
+See GitLab's documentation for
+[Creating a personal access token](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html#creating-a-personal-access-token).
 
 ### In JupiterOne
 
 1. From the top navigation of the J1 Search homepage, select **Integrations**.
-2. Scroll down to **HackerOne** and click it.
-3. Click **Add Configuration** and configure the following settings:
-   - Enter the account name by which you want to identify this HackerOne account
-     in JupiterOne. Select **Tag with Account Name** to store this value in
-     `tag.AccountName` of the ingested assets.
-   - Enter a description to help your team identify the integration.
-   - Select a polling interval that is sufficient for your monitoring
-     requirements. You can leave this as `DISABLED` and manually execute the
-     integration.
-   - Enter the HackerOne API Token Name generated for use in JupiterOne
-   - Enter the HackerOne API Token generated for use in JupiterOne.
-   - Enter the Program Handle found in previous section.
-4. Click **Create Configuration** after you have entered all the values.
+2. Scroll to the **GitLab** integration tile and click it.
+3. Click the **Add Configuration** button and configure the following settings:
+
+- Enter the **Account Name** by which you'd like to identify this GitLab account
+  in JupiterOne. Ingested entities will have this value stored in
+  `tag.AccountName` when **Tag with Account Name** is checked.
+- Enter a **Description** that will further assist your team when identifying
+  the integration instance.
+- Select a **Polling Interval** that you feel is sufficient for your monitoring
+  needs. You may leave this as `DISABLED` and manually execute the integration.
+- Enter the **Personal Access Token** configured for read access in GitLab.
+- Enter the **API Base URL** (such as https://gitlab.com) of your self-managed
+  GitLab instance.
+
+4. Click **Create Configuration** once all values are provided.
 
 ## How to Uninstall
 
 1. From the top navigation of the J1 Search homepage, select **Integrations**.
-2. Scroll down to **HackerOne** and click it.
+2. Scroll to the **GitLab** integration tile and click it.
 3. Identify and click the **integration to delete**.
-4. Click the trash can icon.
-5. Click **Remove** to delete the integration.
+4. Click the **trash can** icon.
+5. Click the **Remove** button to delete the integration.
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
 <!--
@@ -80,27 +80,31 @@ https://github.com/JupiterOne/sdk/blob/main/docs/integrations/development.md
 
 The following entities are created:
 
-| Resources | Entity `_type`      | Entity `_class`         |
-| --------- | ------------------- | ----------------------- |
-| Finding   | `hackerone_report`  | `Finding`               |
-| Service   | `hackerone_program` | `Service`, `Assessment` |
+| Resources     | Entity `_type`         | Entity `_class`       |
+| ------------- | ---------------------- | --------------------- |
+| Account       | `gitlab_account`       | `Account`             |
+| Commit        | `gitlab_commit`        | `CodeCommit`          |
+| Group         | `gitlab_group`         | `Group`               |
+| Merge Request | `gitlab_merge_request` | `CodeReview`, `PR`    |
+| Project       | `gitlab_project`       | `CodeRepo`, `Project` |
+| User          | `gitlab_user`          | `User`                |
 
 ### Relationships
 
 The following relationships are created:
 
-| Source Entity `_type` | Relationship `_class` | Target Entity `_type` |
-| --------------------- | --------------------- | --------------------- |
-| `hackerone_program`   | **HAS**               | `hackerone_report`    |
-
-### Mapped Relationships
-
-The following mapped relationships are created:
-
-| Source Entity `_type` | Relationship `_class` | Target Entity `_type` | Direction |
-| --------------------- | --------------------- | --------------------- | --------- |
-| `hackerone_report`    | **HAS**               | `*cwe*`               | FORWARD   |
-| `hackerone_report`    | **HAS**               | `*cve*`               | FORWARD   |
+| Source Entity `_type`  | Relationship `_class` | Target Entity `_type`  |
+| ---------------------- | --------------------- | ---------------------- |
+| `gitlab_account`       | **HAS**               | `gitlab_group`         |
+| `gitlab_account`       | **HAS**               | `gitlab_project`       |
+| `gitlab_group`         | **HAS**               | `gitlab_group`         |
+| `gitlab_group`         | **HAS**               | `gitlab_project`       |
+| `gitlab_group`         | **HAS**               | `gitlab_user`          |
+| `gitlab_merge_request` | **HAS**               | `gitlab_commit`        |
+| `gitlab_project`       | **HAS**               | `gitlab_merge_request` |
+| `gitlab_project`       | **HAS**               | `gitlab_user`          |
+| `gitlab_user`          | **APPROVED**          | `gitlab_merge_request` |
+| `gitlab_user`          | **OPENED**            | `gitlab_merge_request` |
 
 <!--
 ********************************************************************************

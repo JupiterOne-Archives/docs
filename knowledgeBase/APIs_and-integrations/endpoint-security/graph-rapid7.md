@@ -1,4 +1,4 @@
-# Rapid7 Integration with JupiterOne
+# Rapid7
 
 ## Rapid7 + JupiterOne Integration Benefits
 
@@ -43,7 +43,7 @@ Jupiterone requires the following information to complete authentication:
 
 ### In JupiterOne
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
+1.  From the top navigation of the J1 Search homepage, select **Integrations**.
 2.  Scroll to the **Rapid7** integration tile and click it.
 3.  Click the **Add Configuration** button and configure the following settings:
 
@@ -63,7 +63,7 @@ Jupiterone requires the following information to complete authentication:
 
 ## How to Uninstall
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
+1.  From the top navigation of the J1 Search homepage, select **Integrations**.
 2.  Scroll to the **Rapid7** integration tile and click it.
 3.  Identify and click the **integration to delete**.
 4.  Click the **trash can** icon.
