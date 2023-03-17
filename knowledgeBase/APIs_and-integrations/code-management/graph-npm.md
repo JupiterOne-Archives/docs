@@ -1,4 +1,4 @@
-# NPM Integration with JupiterOne
+# NPM
 
 ## NPM + JupiterOne Integration Benefits
 
@@ -35,7 +35,7 @@ To create an NPM token with **Read Only** access, follow the instructions in the
 
 ### In JupiterOne
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
+1.  From the top navigation of the J1 Search homepage, select **Integrations**.
 2.  Scroll to the **NPM** integration tile and click it.
 3.  Click the **Add Configuration** button and configure the following settings:
 
@@ -54,7 +54,7 @@ To create an NPM token with **Read Only** access, follow the instructions in the
 
 ## How to Uninstall
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
+1.  From the top navigation of the J1 Search homepage, select **Integrations**.
 2.  Scroll to the **NPM** integration tile and click it.
 3.  Identify and click the **integration to delete**.
 4.  Click the **trash can** icon.
