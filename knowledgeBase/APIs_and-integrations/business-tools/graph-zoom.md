@@ -19,6 +19,7 @@
 
 - Zoom supports the Server-to-Server OAuth2 Client Credential flow. A Zoom pro
   account is optional but is highly recommended.
+- You must have the Zoom owner role to install the integration.
 - You must have permission in JupiterOne to install new integrations.
 
 ## Support
@@ -30,20 +31,24 @@ If you need help with this integration, please contact
 
 ### In Zoom
 
-1. In the Zoom App Marketplace, go to the Develop dropdown menu in the 
-   top-right corner and select [Build App](https://marketplace.zoom.us/develop/create).
-2. In the Choose Your App window, click **Create** under the Server-to-Server OAuth type.
-   If you do not see this OAuth type, contact your Zoom administrator to be given permission
-   for the Server-to-Server OAuth type.
-3. Enter an app name and app type to begin creation. 
-   Your app configuration page opens for the new app.
-4. Take note of your `Account ID`, `Client ID`, and `Client secret` and enter them in the .env file.
-5. Enter the required information for the app credentials, information, feature, scopes sections 
-   and so on. Zoom prompts you if any required fields are omitted.
-6. In the Scopes section, add `group:read:admin`, `role:read:admin`, `user:read:admin`, and
-   `account:read:admin`. If you cannot or choose not to provide all the listed
-   scopes, the steps requiring the missing scopes is disabled.
-7. On the final screen after you have provided all the required information has been provided, click `Activate your app` to complete the app creation.
+1. In the Zoom App Marketplace, go to the Develop dropdown menu in the top-right
+   corner and select [Build App](https://marketplace.zoom.us/develop/create).
+2. In the Choose Your App window, click **Create** under the Server-to-Server
+   OAuth type. If you do not see this OAuth type, contact your Zoom
+   administrator to be given permission for the Server-to-Server OAuth type.
+3. Enter an app name and app type to begin creation. Your app configuration page
+   opens for the new app.
+4. Take note of your `Account ID`, `Client ID`, and `Client secret` and enter
+   them in the .env file.
+5. Enter the required information for the app credentials, information, feature,
+   scopes sections and so on. Zoom promptd you if any required fields are
+   omitted.
+6. In the Scopes section, add `group:read:admin`, `role:read:admin`,
+   `user:read:admin`, and `account:read:admin`. If you cannot or choose not to
+   provide all the listed scopes, the steps requiring the missing scopes is
+   disabled.
+7. On the final screen after you have provided all the required information has
+   been provided, click`Activate your app` to complete the app creation.
 
 ### In JupiterOne
 
