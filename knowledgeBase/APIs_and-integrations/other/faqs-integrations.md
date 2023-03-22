@@ -26,3 +26,7 @@ For **Okta**, you can set the `userType` property for the user to one of the fol
 - `generic`
 - `service`
 - `system`
+
+## WHy can I only see integration jobs for the past 30 days?
+
+JupiterOne uses a Time to Live (TTL) of 30 days for all integration jobs. Jobs older than 30 days are no longer available for review in JupiterOne.
