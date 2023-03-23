@@ -1,4 +1,4 @@
-# KnownBe4
+# KnowBe4
 
 ## KnowBe4 + JupiterOne Integration Benefits
 
