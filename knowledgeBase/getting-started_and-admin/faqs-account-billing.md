@@ -2,7 +2,7 @@
 
 ### What is the asset operations licensing model versus the billable entities licensing model?
 
-Prior to 2023, JupiterOne used the billable entities licensing model. This model is now deprecated and the asset operations model applies going forward. You cannot use the two models at the same time. An account is either asset operations **or** billable entities. 
+The Billable Entities licensing model is being deprecated. For customers on the new Asset Operations model, please refer to the information below.
 
 For accounts using the asset operations model, all entity changes count towards an asset operation, regardless if the entity was considered “non-billable” under the billable entities licensing model.
 
