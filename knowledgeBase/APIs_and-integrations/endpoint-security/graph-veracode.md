@@ -1,4 +1,4 @@
-# Veracode Integration with JupiterOne
+# Veracode
 
 ## Veracode + JupiterOne Integration Benefits
 
@@ -71,7 +71,7 @@ least-privledged access manner, do the following:
 
 ### In JupiterOne
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
+1.  From the top navigation of the J1 Search homepage, select **Integrations**.
 2.  Scroll to and click the **Veracode** integration tile.
 3.  Click **Add Configuration** and configure the following settings:
 
@@ -90,7 +90,7 @@ least-privledged access manner, do the following:
 
 # How to Uninstall
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
+1.  From the top navigation of the J1 Search homepage, select **Integrations**.
 2.  Scroll to and click the **{{provider}}** integration.
 3.  Identify and click the **integration to delete**.
 4.  Click the **trash can** icon.
