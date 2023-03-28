@@ -191,6 +191,31 @@ Example:
 
 ---
 
+#### Action: `TAG_ENTITIES`
+
+> Adds queryable tag values to result entities.
+
+| Property     | Type       | Description                                        |
+| ------------ | ---------- | -------------------------------------------------- |
+| `type`       | `string`   | Rule operation action type: `TAG_ENTITIES `.          |
+| `entities` | `obj[]` | Array of result entities with J1 metadata. Generally a direct reference to a query result set, e.g. `{{queries.query0.data}}`  |
+| `tags`       | `obj[]`   | Array of objects containing `name` and `value` properties specifying tags to add. The `value` can be any JSON primitive. |
+
+Note:
+> Depending on result count, tags may take up to 10 minutes after rule evaluation completes to be available for query.
+
+Example:
+
+```json
+{
+  "type": "TAG_ENTITIES",
+  "entities": "{{queries.query0.data}}",
+  "tags": [ { "name": "myTag", "value":"tag-value" } ]
+}
+```
+
+---
+
 #### Action: `SEND_EMAIL`
 
 > Sends an email to a list of recipients with details related to alerts that are
