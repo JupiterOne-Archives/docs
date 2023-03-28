@@ -17,9 +17,26 @@
 
 ## Requirements
 
-- JupiterOne requires a vSphere vCenter username and password. You need to have
-  VMware vSphere configured.
+- JupiterOne requires the username and password for an account configured to
+  access VMware vSphere. The integration will attempt to run all steps and will
+  complete as many as possible based on the account's access. It is recommended
+  that the account is provided with global readonly permissions to all inventory
+  hierarchies.
 - You must have permission in JupiterOne to install new integrations.
+- This integration currently supports vSphere versions 6.5 - 8.0 with the
+  following steps only available in certain versions:
+
+  #### Namespace Ingestion
+
+  - Only supported on versions 7.0.0 and newer
+
+  #### Distributed Switch Ingestion
+
+  - Only supported on versions 7.0.0 and newer
+
+  #### VM Guest Identity
+
+  - Only supported on versions 6.7.0 and newer
 
 ## Support
 
@@ -37,12 +54,15 @@ variables:
 
 - JUPITERONE_API_KEY: api-key for integration instance you would like to sync
   with
-- JUPITERONE_ACCOUNT: account id
+- JUPITERONE_ACCOUNT_ID: account id
 - INTEGRATION_INSTANCE_ID: id of the integration instance you would like to sync
   with
 - DOMAIN: your vCenter path in the vSphere Client
 - LOGIN: login for vSphere
 - PASSWORD: password for vSphere
+
+This can be added as an environment file (e.g `docker.env`) and passed using the
+`--env-file` option when performing the `docker run` command.
 
 ## Integration Walkthrough
 
