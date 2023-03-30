@@ -222,7 +222,7 @@ FIND User AS u THAT IS Person AS p
 RETURN u.username, p.firstName, p.lastName, p.email
 ```
 
-**Note**: When the `RETURN` statement is used with specified properties, the J1QL engine will pick out the requested attributes from each path traversed.
+**Note**: When the `RETURN` statement is used with specified properties, the J1QL engine will pick out the properties from each path traversed.
 Sometimes, the path to the end of the query can fork since there are multiple ways assets can relate to each other.
 This means that a `Person` having multiple `IS` relationships to `User` entities will have their `p.firstName`, `p.lastName`, and `p.email` values
 returned in each path through the graph that leads to a `User`.
@@ -235,7 +235,21 @@ returned in each path through the graph that leads to a `User`.
 
 If a property name contains special characters (e.g. `-` or `:`), you can wrap the property name in `[]`.
 
-For example: `RETURN p.[special-name]`
+For example:
+
+```
+FIND User AS u THAT IS Person AS p
+RETURN u.username, p.firstName, p.lastName, p.email, p.[special-name]
+```
+
+```
+| u.username | p.firstName | p.lastName | p.email                        | p.special-name |
+|------------|-------------|------------|--------------------------------|----------------|
+| spiderman  | Peter       | Parker     | not.spiderman@example.com      | Spiderman      |
+| batman     | Bruce       | Wayne      | totally.not.batman@example.com | Batman         |
+| bwayne     | Bruce       | Wayne      | totally.not.batman@example.com | Batman         |
+
+```
 
 Wildcard can be used to return all properties for multiple entities in a flattened table. For example:
 
@@ -292,7 +306,10 @@ in the query.
 }
 ```
 
-Please note that returning row metadata is not supported when `UNIQUE` keyword is used or an aggregation is performed.
+
+Please note that when row metadata is requested via API, usage of
+the `UNIQUE` keyword or aggregations will cause the `_meta` property to be
+stripped from rows.
 
 #### TO
 
@@ -559,7 +576,7 @@ There are plans to support the following aggregations:
 
 - `count(*)` - for determining the count of all other entities related to a given entity.
 
-Please note that performing aggregations will cause the `_meta` property
+Please note that when row metadata is requested via API, performing aggregations will cause the `_meta` property
 returned for each row of data to be stripped out.
 
 ## Scalar Functions
@@ -597,9 +614,9 @@ The scalar function `MERGE()` allows you to merge multiple properties into a sin
 Example:
 
 ```
-FIND UNIQUE User as u
-THAT IS Person as p
-RETURN p.displayName, merge(p.email, u.email, u.publicEmail) as “Email List” (edited)
+FIND UNIQUE User AS u
+THAT IS Person AS p
+RETURN p.displayName, merge(p.email, u.email, u.publicEmail) AS “Email List” (edited)
 ```
 
 
@@ -610,10 +627,10 @@ Sometimes a query may generate duplicate results. This duplication occurs if the
 
 In this example:
 ```j1ql
-Find aws_eni with publicIpAddress != undefined as nic
-  that relates to aws_instance
-  that relates to aws_security_group as sg that allows Internet
-where nic.securityGroupIds = sg.groupId
+FIND aws_eni WITH publicIpAddress != undefined AS nic
+  THAT RELATES TO aws_instance
+  THAT RELATES TO aws_security_group AS sg THAT allows Internet
+WHERE nic.securityGroupIds = sg.groupId
 ```
 This query attempts to find network interfaces that are associated with a security group that allows public facing AWS EC2 instances. In this case, there could be multiple security group rules allowing access to/from the Internet, which may result in duplicate data in the query result because each individual traversal is a successful match to the query.
 
@@ -622,10 +639,10 @@ This query attempts to find network interfaces that are associated with a securi
 You can use a combination of `UNIQUE` and `RETURN` keywords to filter out the duplicates. The query above can be modified as:
 
 ```j1ql
-Find UNIQUE aws_eni with publicIpAddress != undefined as nic
-  that relates to aws_instance
-  that relates to aws_security_group as sg that allows Internet
-where
+FIND UNIQUE aws_eni WITH publicIpAddress != undefined AS nic
+  THAT RELATES TO aws_instance
+  THAT RELATES TO aws_security_group AS sg THAT ALLOWS Internet
+WHERE
   nic.securityGroupIds = sg.groupId
 RETURN
   nic.id, nic.subnetId, nic.attachmentId,
@@ -636,7 +653,7 @@ RETURN
 _Limitation: `UNIQUE` keyword **must** be used together with `RETURN`._
 
 For example, the following query may return multiple rows containing the same
-values. In the below example, Peter Parker may use the same username
+values. In the below example, Peter Parker is using the same username
 across different applications.
 
 ```j1ql
