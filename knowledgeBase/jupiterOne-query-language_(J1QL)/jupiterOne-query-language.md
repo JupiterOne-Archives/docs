@@ -692,9 +692,9 @@ The function `MERGE()` allows you to merge multiple properties into a single pro
 Example:
 
 ```
-FIND UNIQUE User as u
-THAT IS Person as p
-RETURN p.displayName, merge(p.email, u.email, u.publicEmail) as “Email List” (edited)
+FIND UNIQUE User AS u
+THAT IS Person AS p
+RETURN p.displayName, merge(p.email, u.email, u.publicEmail) AS “Email List” (edited)
 ```
 
 ## Math Operations
