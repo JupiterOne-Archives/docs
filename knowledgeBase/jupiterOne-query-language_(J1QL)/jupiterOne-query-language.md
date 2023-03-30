@@ -636,8 +636,8 @@ RETURN
 _Limitation: `UNIQUE` keyword **must** be used together with `RETURN`._
 
 For example, the following query may return multiple rows containing the same
-values. In the below example, Peter Parker may using the same username
-across with different applications.
+values. In the below example, Peter Parker may use the same username
+across different applications.
 
 ```j1ql
 FIND User AS u THAT IS Person AS p
