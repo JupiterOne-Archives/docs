@@ -46,10 +46,10 @@ Supported operators include:
 - `>` or `<` for **Number** or **Date** comparison.
 
 Note:
-- The property names and values are _case sensitive_. 
+- The property names and values are _case sensitive_.
 - **String** values must be wrapped in either single or double quotes - `"value"` or `'value'`.
 - **Boolean**, **Number**, and **Date** values must _not_ be wrapped in quotes.
-- The `undefined` keyword can be used to filter on the absence of a property. 
+- The `undefined` keyword can be used to filter on the absence of a property.
   For example: `FIND DataStore with encrypted=undefined`
 - If a property name contains special characters (e.g. `-` or `:`), you can wrap the property name in `[]`.  For example: `[tag.special-name]='something'`
 
@@ -218,20 +218,81 @@ By default, the entities and their properties found from the start of the traver
 To return properties from both the `User` and `Person` entities, define a selector for each and use them in the `RETURN` clause:
 
 ```j1ql
-FIND User as u that IS Person as p
+FIND User AS u THAT IS Person AS p
 RETURN u.username, p.firstName, p.lastName, p.email
 ```
 
+**Note**: When the `RETURN` statement is used with specified properties, the J1QL engine will pick out the requested attributes from each path traversed.
+Sometimes, the path to the end of the query can fork since there are multiple ways assets can relate to each other.
+This means that a `Person` having multiple `IS` relationships to `User` entities will have their `p.firstName`, `p.lastName`, and `p.email` values
+returned in each path through the graph that leads to a `User`.
+
+| u.username | p.firstName | p.lastName | p.email                        |
+|------------|-------------|------------|--------------------------------|
+| spiderman  | Peter       | Parker     | not.spiderman@example.com      |
+| batman     | Bruce       | Wayne      | totally.not.batman@example.com |
+| bwayne     | Bruce       | Wayne      | totally.not.batman@example.com |
+
 If a property name contains special characters (e.g. `-` or `:`), you can wrap the property name in `[]`.
 
-For example: `RETURN p.[special-name]='something'`
+For example: `RETURN p.[special-name]`
 
-Wildcard can be used to return all properties. For example:
+Wildcard can be used to return all properties for multiple entities in a flattened table. For example:
+
 ```j1ql
-FIND User as u that IS Person as p
+FIND User AS u THAT IS Person AS p
 RETURN u.*, p.*
 ```
+
 Using a wildcard to return all properties also returns all metadata properties associated with the selected entities. This feature is useful when you want to perform an analysis that involves metadata.
+
+##### Entity and Relationship References
+
+Using the `RETURN` clause, the J1QL query engine returns back only the requested information.
+Results would typically be returned like this via the API:
+
+```json
+{
+  "type": "table",
+  "data": [
+    { "User._type": "jupiterone_user", "Person.name": "Mochi" }
+  ]
+}
+```
+
+When executing queries via the application, additional metadata is returned back for each row with references
+to the entities and relationships traversed via the paths. This resides under a `_meta` property that is attached to each row
+in the query.
+
+```json
+{
+  "type": "table",
+  "data": [
+    {
+      "User._type": "jupiterone_user",
+      "Person.name": "Mochi",
+      "_meta": {
+        "byAlias": {
+          "User": {
+            "id": "f4b7cfbb-8532-dbcb-b244-e2864423fccd",
+            "entity": {
+              "_id": "4147b2bc-3b65-42a8-be50-164a45c4864d"
+            }
+          },
+          "Person": {
+            "id": "952f0d8c-19dc-4dde-a3bf-e6ce0cda85a7",
+            "entity": {
+              "_id": "cdbceb28-e066-4006-9456-225ddb358d16"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+Please note that returning row metadata is not supported when `UNIQUE` keyword is used or an aggregation is performed.
 
 #### TO
 
@@ -256,18 +317,18 @@ FIND User THAT CONTRIBUTES CodeRepo
 
 #### Commenting
 
-J1QL supports commenting in queries anywhere in J1 using the format `/* insert comment here */`.  
-For example: 
+J1QL supports commenting in queries anywhere in J1 using the format `/* insert comment here */`.
+For example:
 
 ```j1ql
-FIND aws_security_group 
-	WITH displayName ~='elb' /*ELB Security Group*/ 
+FIND aws_security_group
+	WITH displayName ~='elb' /*ELB Security Group*/
 	OR displayName ~='lambda' /*Lambda Security Group*/
 ```
 
 ## Mathematical Expressions
 
-J1QL supports some mathematical expressions as functions. 
+J1QL supports some mathematical expressions as functions.
 
 | Function  | Description                                                  | Example Query                                                |
 | --------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -285,7 +346,7 @@ J1QL supports some mathematical expressions as functions.
 Click the download icon ![](../assets/icons/download.png) to download all assets or a selected asset as a CSV file. You are notified in the Notifications ![](../assets/icons/bell.png) panel in the top-right of the top navigation bar when your download is complete and ready for you to download.
 
 
-![](../assets/query-download.png) 
+![](../assets/query-download.png)
 
 
 
@@ -498,6 +559,9 @@ There are plans to support the following aggregations:
 
 - `count(*)` - for determining the count of all other entities related to a given entity.
 
+Please note that performing aggregations will cause the `_meta` property
+returned for each row of data to be stripped out.
+
 ## Scalar Functions
 
 The ability to format and/or to perform calculations on row level columns can be accomplished through **Scalar Functions**.
@@ -515,7 +579,7 @@ Note: If this function receives a number or boolean value, the `concat` intuitiv
 - Number values: e.g. `123`
 - Boolean values: e.g. `true`
 
-Example: 
+Example:
 
 ```
 FIND
@@ -535,7 +599,7 @@ Example:
 ```
 FIND UNIQUE User as u
 THAT IS Person as p
-RETURN p.displayName, merge(p.email, u.email, u.publicEmail) as “Email List” (edited) 
+RETURN p.displayName, merge(p.email, u.email, u.publicEmail) as “Email List” (edited)
 ```
 
 
@@ -571,6 +635,39 @@ RETURN
 ```
 _Limitation: `UNIQUE` keyword **must** be used together with `RETURN`._
 
+For example, the following query may return multiple rows containing the same
+values. In the below example, Peter Parker may using the same username
+across with different applications.
+
+```j1ql
+FIND User AS u THAT IS Person AS p
+RETURN u.username, p.firstName, p.lastName, p.email
+```
+
+| u.username | p.firstName | p.lastName | p.email                        |
+|------------|-------------|------------|--------------------------------|
+| spiderman  | Peter       | Parker     | not.spiderman@example.com      |
+| spiderman  | Peter       | Parker     | not.spiderman@example.com      |
+| batman     | Bruce       | Wayne      | totally.not.batman@example.com |
+| bwayne     | Bruce       | Wayne      | totally.not.batman@example.com |
+
+Modifying the query to leverage the `UNIQUE` keyword will make the
+J1QL engine deduplicate rows.
+
+```j1ql
+FIND UNIQUE User AS u THAT IS Person AS p
+RETURN u.username, p.firstName, p.lastName, p.email
+```
+
+| u.username | p.firstName | p.lastName | p.email                        |
+|------------|-------------|------------|--------------------------------|
+| spiderman  | Peter       | Parker     | not.spiderman@example.com      |
+| batman     | Bruce       | Wayne      | totally.not.batman@example.com |
+| bwayne     | Bruce       | Wayne      | totally.not.batman@example.com |
+
+Please note that deduplicating rows using the `UNIQUE` keyword will cause the
+`_meta` property returned for each row of data to be stripped out.
+
 ### `MERGE`
 
 The function `MERGE()` allows you to merge multiple properties into a single property list. You can now combine multiple (defined) properties into a single property without having to choose to return one property or another.
@@ -580,10 +677,8 @@ Example:
 ```
 FIND UNIQUE User as u
 THAT IS Person as p
-RETURN p.displayName, merge(p.email, u.email, u.publicEmail) as “Email List” (edited) 
+RETURN p.displayName, merge(p.email, u.email, u.publicEmail) as “Email List” (edited)
 ```
-
-
 
 ## Math Operations
 
