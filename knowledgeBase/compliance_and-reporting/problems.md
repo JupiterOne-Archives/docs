@@ -1,8 +1,9 @@
 # Working with Problems
 
-JupiterOne groups [compliance gaps](./compliance-gap-analysis.md) and non-informational [rule alerts](../security-operations/manage-alerts.md) in a class called Problems. This concept enables you to see all your issues grouped together, making it easier to focus on what problems you must resolve in your environment. 
+JupiterOne groups [compliance gaps](./compliance-gap-analysis.md) and non-informational [rule alerts](../security-operations/manage-alerts.md) in a class called Problems. This concept enables you to see all your issues grouped together, making it easier to focus on what problems you must resolve in your environment.
 
-When a problem is detected, J1 automatically builds a relationship between the  `Problem`  asset, and the assets that have contributed to the detection of the problem. Assets in the J1 graph have a red dot next to them if a relationship to a problem exists. 
+When a problem is detected, J1 automatically builds a relationship between the  `Problem`  asset, and the assets that have contributed to the detection of the problem. Assets in the J1 graph have a red dot next to them if a relationship to a problem exists.
+This behavior is only supported when queries executed to detect problems are capable of returning references to affected entities (queries that do not use the `UNIQUE` keyword to receive deduplicated rows or perform aggregations).
 
   ![](../assets/graph-problems.png)
 
