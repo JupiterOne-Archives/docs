@@ -49,7 +49,7 @@ To create your own custom rule:
    - Query (any J1QL query)
      ​
    
-   ![](../assets/alerts-create-rule.png) 
+   ![](../assets/newruleeditor.png) 
 
 
 Rules are evaluated based on the following options:
