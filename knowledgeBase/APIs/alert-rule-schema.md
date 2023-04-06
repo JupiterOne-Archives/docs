@@ -80,20 +80,21 @@ example:
 
 ## Rule Properties
 
-| Property           | Type              | Description                                                                                                                                                                 |
-| ------------------ | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`               | `string`          | Auto-generated, globally unique ID of each rule.                                                                                                                            |
-| `version`          | `number`          | Current version of the rule. Incremented each time the rule is updated.                                                                                                     |
-| `name`             | `string`          | Name of the rule, which is unique to each account.                                                                                                                          |
-| `description`      | `string`          | Optional description of the rule.                                                                                                                                           |
-| `specVersion`      | `number`          | Rule evaluation version in the case of breaking changes.                                                                                                                    |
-| `pollingInterval`  | `PollingInterval` | Optional frequency of automated rule evaluation. Defaults to `ONE_DAY`.                                                                                                     |
-| `question`         | `Question`        | Contains properties related to queries used in the rule evaluation.                                                                                                         |
-| `questionId`       | `string`          | A known unique ID for a question in the question library.                                                                                                                   |
-| `operations`       | `RuleOperation[]` | Actions that are executed when a corresponding condition is met.                                                                                                            |
-| `templates`        | `object`          | Optional key/value pairs of template name to template.                                                                                                                      |
-| `outputs`          | `string[]`        | Names of properties that can be used throughout the rule evaluation process and will be included in each record of a rule evaluation (for example, `queries.query0.total`). |
-<!-- TODO: insert notifyOnFailure boolean flag when feature is GA -->
+| Property                          | Type              | Description                                                                                                                                                                 |
+| --------------------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                              | `string`          | Auto-generated, globally unique ID of each rule.                                                                                                                            |
+| `version`                         | `number`          | Current version of the rule. Incremented each time the rule is updated.                                                                                                     |
+| `name`                            | `string`          | Name of the rule, which is unique to each account.                                                                                                                          |
+| `description`                     | `string`          | Optional description of the rule.                                                                                                                                           |
+| `specVersion`                     | `number`          | Rule evaluation version in the case of breaking changes. This should always be `1`.                                                                                         |
+| `pollingInterval`                 | `PollingInterval` | Optional frequency of automated rule evaluation. Defaults to `ONE_DAY`.                                                                                                     |
+| `question`                        | `Question`        | Contains properties related to queries used in the rule evaluation.                                                                                                         |
+| `questionId`                      | `string`          | A known unique ID for a question in the question library.                                                                                                                   |
+| `operations`                      | `RuleOperation[]` | Actions that are executed when a corresponding condition is met.                                                                                                            |
+| `templates`                       | `object`          | Optional key/value pairs of template name to template.                                                                                                                      |
+| `outputs`                         | `string[]`        | Names of properties that can be used throughout the rule evaluation process and will be included in each record of a rule evaluation (for example, `queries.query0.total`). |
+| `notifyOnFailure`                 | `boolean`         | Will send a notification to stakeholders (account admins, assigned users) if the rule query or any of its actions does not succeed.                                         |
+| `triggerActionsOnNewEntitiesOnly` | `boolean`         | Will only trigger actions to be run when entities that did not exist during the previous rule evaluation appear in the question results.                                    |
 
 ### Type: PollingInterval
 
