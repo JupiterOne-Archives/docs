@@ -61,6 +61,7 @@ Rules are evaluated based on the following options:
 - 12 hour intervals. 
 - Daily.
 - Weekly. 
+
 If the query you have specified in the rule returns at least one match, it triggers an alert. You can check the when the rule fired in the Alert Modal once the rule is created and evaulated. 
 
 #### Alert Owners
