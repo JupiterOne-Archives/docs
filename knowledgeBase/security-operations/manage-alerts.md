@@ -43,15 +43,30 @@ To create your own custom rule:
    - Name
    - Description
    - Severity
-   - Polling interval
+   - Evaluation Interval
    - Tags
+   - Users (the user or users that should receive the alert)
    - Query (any J1QL query)
      ​
    
-   ![](../assets/alerts-create-rule.png) 
+   ![](../assets/newruleeditor.png) 
 
 
-The custom rule you have added is evaluated daily, hourly, or with streaming evaluation for Enterprise customers. If the query you have specified in the rule returns at least one match, it triggers an alert.
+Rules are evaluated based on the following options:
+
+- 30 minute intervals.
+- Hourly intervals.
+- 4 hour intervals.
+- 8 hour intervals. 
+- 12 hour intervals. 
+- Daily.
+- Weekly. 
+
+If the query you have specified in the rule returns at least one match, it triggers an alert. You can check the when the rule fired in the Alert Modal once the rule is created and evaulated. 
+
+#### Alert Owners
+
+You can set the rule to notify yourself, or other users within J1. This enables you to set reminders for others, based on the things they own or need to know about. Alert owners are notified based on the action type selected. You can also filter by `users` in the Alerts page to find owners. 
 
 ## Additional Alert Options
 
