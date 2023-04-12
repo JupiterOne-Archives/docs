@@ -18,6 +18,8 @@ See the article ["Sending and Receiving Events Between AWS Accounts"](https://do
 - S3 
 - EC2
 - AutoScaling
+- RDS
+- Redshift
 
 The full list of supported API calls can be found in the [AWS integration's CloudFormation project on](https://github.com/JupiterOne/jupiterone-aws-cloudformation#supported-events)
 GitHub.
