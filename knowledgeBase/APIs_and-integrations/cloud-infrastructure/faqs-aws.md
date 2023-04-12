@@ -173,6 +173,6 @@ For example, if an AWS account ID is referenced in an IAM policy or S3 bucket po
 
 ## How does JupiterOne handle rate limiting in the AWS integration?
 
-AWS APIs do not provide proactive rate limit headers. Instead, the JupiterOne AWS Integration tracks the number of API calls made during each integration execution, and attempts to avoid throttling using a Token Bucket (similar to the AWS implementation for rate limiting, described here: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/throttling.html). 
+AWS APIs do not provide proactive rate limit headers. Instead, the JupiterOne AWS Integration tracks the number of API calls made during each integration execution, and attempts to avoid throttling using a Token Bucket ([similar to the AWS implementation for rate limiting](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/throttling.html)). 
 
-If users are still experiencing throttling on their AWS APIs, JupiterOne can further tune the amount of requests per second that the JupiterOne AWS Integration is allowed to make.
+If users are still experiencing throttling on their AWS APIs, please reach out to your respective Technical Account Manager or via email at support@jupiterone.com.
