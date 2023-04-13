@@ -74,20 +74,25 @@ You can build your own custom dashboard with customized, individual charts. Each
 
    
 
-2. At the top of the left navigation pane, click **Add**![](../assets/icons/add-chart.png)and choose whether you want to add a personal or team board.
+2. At the top of the left navigation pane, click **Add**![](../assets/icons/add-policy.png)and choose whether you want to add a personal or team board.
 
-3. In the left column, select the type of visual chart, such as number, pie, line, bar that you want to create.
+3. In the New Dashboard window, under the **Start with custom charts** option, click **New Chart**.
 
-4. Enter the details of your chart, which include information such as:
+4. Select the type of visual chart, such as number, pie, line, bar that you want to create.
 
-   - Title and description
+5. Enter the chart query or queries and click **Run**.
 
-   - Chart query or queries
+6. Edit the chart colors and other formatting, if required.
 
-   - Chart colors and other formatting
-     ​ 
+7. Click **Preview It** to visualize the chart before you save it, which publishes it to your Insights.
 
-     ![custom-board](../assets/custom-board.gif)  
+8. Add the chart title and optional description.
+
+9. Click **Save**. 
+   
+   
+   ![custom-board](../assets/insights-chart-preview.gif) 
+
 
 For more information about custom Insights dashboards, [watch this video](https://try.jupiterone.com/blog/how-to-create-customized-dashboards).
 
@@ -95,7 +100,7 @@ For more information about custom Insights dashboards, [watch this video](https:
 
 1. Navigate to J1 **Insights** to add a board.
 
-2. At the top of the left navigation pane, click **Add**![](../assets/icons/add-chart.png)and choose whether you want to add a personal or team board.
+2. At the top of the left navigation pane, click **Add**![](../assets/icons/add-policy.png)and choose whether you want to add a personal or team board.
 
 3. In the **Start with a JupiterOne dashboard template** section, select the template you want to use. Dependent on which template you choose, you may have to provide more information.
 
