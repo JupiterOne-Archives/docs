@@ -38,8 +38,8 @@ Jupiterone requires the following information to complete authentication:
     *   The publicly-accessible socket (host:port) of your InsightVM Security
         Console. e.g. <hostname>:3780.
 2.  An InsightVM Username and Password
-    *   Use an existing user or create a user that has at least the
-        [Security Manager and Site Owner Role](https://docs.rapid7.com/insightvm/managing-users-and-authentication/#security-manager-and-site-owner)
+    *   Use an existing user or create a user that has the
+        [Global Administrator Role](https://docs.rapid7.com/insightvm/managing-users-and-authentication/#global-administrator)
 
 ### In JupiterOne
 
