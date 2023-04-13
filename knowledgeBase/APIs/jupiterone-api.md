@@ -2,7 +2,6 @@
 
 You can use Postman with the JupiterOne API to [import and export data](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/). [Examples of requests](./api-postman.md) you can make after you have exported your J1 data such as saved queries to Postman are available.
 
-
 The JupiterOne platform exposes a number of public GraphQL endpoints. 
 
 **Base URL**: `https://graphql.us.jupiterone.io`
