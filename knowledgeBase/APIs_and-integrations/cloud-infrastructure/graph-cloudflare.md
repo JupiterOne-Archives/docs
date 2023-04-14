@@ -34,14 +34,12 @@ If you need help with this integration, please contact
 The integration connects directly to [Cloudflare v4 REST API][1] to obtain DNS
 related configuration information.
 
-Configure the integration by providing an API Token with read-only permissions.
-
-- `organization:read` to list accounts, members, and roles
-- `zone:read` to list zones
-- `dns_records:read` to list records in a zone
-
-Obtain an API token from the bottom of the ["API Tokens" page][2] in your
+Configure the integration by providing an API Token. Obtain an API token from the ["API Tokens" page][2] in your
 Cloudflare account.
+
+Make sure to grant the *Account:Account settings, Zone:Zone and Zone:DNS:* **Read** permissions to the token.
+
+![](../../assets/cloudflare-permissions.png) 
 
 ### In JupiterOne
 
