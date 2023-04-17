@@ -170,3 +170,9 @@ To omit specific sub-accounts when auto-configuring J1 AWS integrations from an 
 These properties are very likely discovered `aws_account` entities that JupiterOne has identified as having relationships to your owned resources. You can confirm this by checking [the metadata](../../jupiterOne-data-model/metadata.md). The `_source` property should be `system-mapper` for these entities instead of `integration-managed`. Because it is not an integrated `aws_account`, there are limited properties on the entity, but JupiterOne has identified that this foreign `aws_account` has access to resources you do own (typically via trust relationships in your environment).
 
 For example, if an AWS account ID is referenced in an IAM policy or S3 bucket policy and that account ID does not match an account integrated with JupiterOne, a mapped entity is created to represent that AWS account with limited metadata. 
+
+## How does JupiterOne handle rate limiting in the AWS integration?
+
+AWS APIs do not provide proactive rate limit headers. Instead, the JupiterOne AWS Integration tracks the number of API calls made during each integration execution, and attempts to avoid throttling using a Token Bucket ([similar to the AWS implementation for rate limiting](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/throttling.html)). 
+
+If users are still experiencing throttling on their AWS APIs, please reach out to your respective Technical Account Manager or via email at support@jupiterone.com.
