@@ -41,7 +41,7 @@ The JupiterOne Policies app enables you to articulate your organization policies
 
 Each policy and procedure document is written in its own individual Markdown file, and you can configure each policy file to link to other files. The templates are open-source that you can edit directly online using the Policies app.
 
-To help you get started, JupiterOne provides 120+ [policy and procedure templates](../compliance_and-reportingmanage-policies/policies-app.md) to help your organization build your security program and operations. These templates derive from JupiterOne company internal policies and procedures, and have been through several rounds of compliance assessments.
+To help you get started, JupiterOne provides 120+ [policy and procedure templates](https://github.com/JupiterOne/security-policy-templates) to help your organization build your security program and operations. These templates derive from JupiterOne company internal policies and procedures, and have been through several rounds of compliance assessments.
 
 ### Alerts
 
