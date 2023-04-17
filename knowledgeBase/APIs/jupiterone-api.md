@@ -1,19 +1,21 @@
 # JupiterOne API
 
-The JupiterOne platform exposes a number of public GraphQL endpoints.
+You can use Postman with the JupiterOne API to [import and export data](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/). [Examples of requests](./api-postman.md) you can make after you have exported your J1 data such as saved queries to Postman are available.
+
+The JupiterOne platform exposes a number of public GraphQL endpoints. 
 
 **Base URL**: `https://graphql.us.jupiterone.io`
 
 - For query and graph operations
 - For alerts and rules operations
 
-**Rate Limits**: Rate limiting is enforced based on your account tier:
+**Rate Limits**: Rate limiting is enforced based on your account tier: 
 
 - Free: 10/min, no burst
 - Freemium: 30/min, no burst
 - Enterprise: 30-60/min with burst
 
-A `429` HTTP response code indicates the limit has been reached.
+A `429` HTTP response code indicates the limit has been reached. 
 
 **Authentication**: The JupiterOne APIs use a Bearer Token to authenticate. Include the API key in the header as a Bearer Token. You also need to include `JupiterOne-Account` as a header parameter. You can find the `Jupiterone-Account` value in your account by running the following J1QL query:
 
@@ -106,9 +108,9 @@ Optionally, additional parameters can be provided:
 - `deferredResponse`: This option allows for a deferred response to be returned. When a deferred response is returned, a `url` pointing the state of the query is provided. API consumers should poll the status of the deferred query by requesting the given `url` until the `status` property of the returned JSON document has a value of `COMPLETED` (see example below). Upon completion of the query, the `url` will provide a link to the query results. The results contain the same `type`, `data`, and `cursor` fields that the non-deferred GraphQL response would contain. Allowed values are `DISABLED` and `FORCE`.
 - `flags`:
   - `computedProperties`: When set to `true`, vertices will be tagged with additional information to indicate if there are noteworthy traits that are worth surfacing.
-  - `rowMetadata`: When set to `true`, table results will return metadata about the requested objects under a `_meta` property. Queries using the the `UNIQUE` keyword to deduplicate rows sets or aggregations (such as the `count` function) will not return a `_meta` property on each row.
-  - `variableResultSize`: When set to `true` the API will return the largest result size possible. Without this flag, the result size will be limited to 250 rows. This flag is recommended for use in cases where a larger result size is preferable and an indeterminate/variable number of return results is acceptable.
-- `scopeFilters`: An array of `JSON` map of filters that define the desired vertex. They have precedence over filters supplied in the query.
+  - `rowMetadata`: When set to `true`, table results will return metadata about the requested objects under a `_meta` property.
+  - `variableResultSize`: When set to `true` the API will return the largest result size possible. Without this flag, the result size will be limited to 250 rows. This flag is recommended for use in cases where a larger result size is preferable and an indeterminate/variable number of return results is acceptable. 
+- `scopeFilters`: An array of `JSON` map of filters that define the desired vertex. They have precedence over filters supplied in the query.   
 
 **Note:**
 `variableResultSize` can increase the rate of your pagination flow because the API will return the largest number of rows possible per request. The exact number of rows returned will not always be the same, but will be larger than the default -- hence the name, _variable_ result size.
@@ -149,7 +151,6 @@ query J1QL($query: String!, $variables: JSON, $cursor: String, $scopeFilters: [J
     }
   ],
   "flags": {
-    "rowMetadata": true,
     "computedProperties": true
   }
 }
@@ -160,26 +161,7 @@ query J1QL($query: String!, $variables: JSON, $cursor: String, $scopeFilters: [J
 ```json
 {
   "type": "table",
-  "data": [
-    {
-      "Person.name": "Mochi",
-      "_meta": {
-        "byAlias": {
-          "Person": {
-            "id": "952f0d8c-19dc-4dde-a3bf-e6ce0cda85a7",
-            "entity": {
-              "_id": "cdbceb28-e066-4006-9456-225ddb358d16"
-            },
-            "computed": {
-              "tags": [
-                "HasProblem"
-              ]
-            }
-          }
-        }
-      }
-    }
-  ],
+  "data": [{ "Person.name": "Mochi" }],
   "cursor": "eyJjYWNoZUtleSI6IjFlNDg3MT..."
 }
 ```
@@ -2571,7 +2553,6 @@ Body:
     }"
 }
 ```
-
 ## Additional API Examples
 
 **Creating entities and a relationship between them**
@@ -3103,7 +3084,7 @@ Sample (S4): `createIamGroup`
 
 **Access All Actions and Resources**
 
-You can use an API token to access all actions and resources
+You can use an API token to access all actions and resources 
 
 
 
@@ -3184,7 +3165,7 @@ type permission = string; // must be a valid permission string
 | _Integrations_           |  READ  |       `accessIntegrations` |
 | _Endpoint Compliance_    |  READ  | `accessEndpointCompliance` |
 
-**Permission Strings: ADMIN**
+**Permission Strings: ADMIN** 
 
 | DISPLAY NAME (J1 APP)    | ACCESS |                PERMISSION |
 | :----------------------- | :----: | ------------------------: |
