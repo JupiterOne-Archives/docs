@@ -91,7 +91,7 @@ You can build your own custom dashboard with customized, individual charts. Each
 9. Click **Save**. 
    
    
-   ![custom-board](../assets/insights-chart-preview.gif) 
+   ![custom-board](../assets/custom-board.gif) 
 
 
 For more information about custom Insights dashboards, [watch this video](https://try.jupiterone.com/blog/how-to-create-customized-dashboards).
