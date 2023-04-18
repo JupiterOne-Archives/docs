@@ -9,7 +9,7 @@ Here is [a catalog of the packaged questions](../getting-started_and-admin/catal
 ## Question/Query Categories
 
 - [AWS Permissions and Trusts](./common-qq-aws-permissions.md)
-- [Hardware/software inventory and configuration](./common-qq-inventory-config.md)
+- [Hardware and software inventory and configuration](./common-qq-inventory-config.md)
 - [Running applications and processes](./common-qq-apps-processes.md)
 - [Secrets and key management](./common-qq-key-mgmt.md)
 - [Network connections & zones](./common-qq-network.md)
