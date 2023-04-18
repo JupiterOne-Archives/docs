@@ -179,6 +179,7 @@ ingested when the integration runs:
 |                 | Route                      | `aws_api_gateway_v2_route` : `ApplicationEndpoint`                       |
 |                 | Authorizer                 | `aws_api_gateway_v2_integration` : `Configuration`                       |
 |                 | Integration                | `aws_api_gateway_v2_authorizer` : `Configuration`                        |
+| AWS Organizational Unit|                     | `aws_organizational_unit` : `Organization`, `Group`                      | 
 | Batch           | Batch Compute Environment  | `aws_batch_compute_environment` : `Configuration`                        |
 |                 | Batch Job                  | `aws_batch_job` : `Process`, `Task`                                      |
 |                 | Batch Job Definition       | `aws_batch_job_definition` : `Configuration`, `Function`                 |
