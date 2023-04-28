@@ -7,8 +7,12 @@
   
   
   
+  
+  
   ![](../assets/drilldown-insights.gif)
   
+
+
 
 
 
@@ -81,10 +85,41 @@
 
   ![reorder](../assets/reorder.gif)
 
+
+
+
+- Create new charts (widgets) in your dashboard
+
+
+  ![](../assets/insights-chart-new-number.gif)
+
   
+
+
+- Use variable placeholders in queries within a chart
+
+​		You can use one or more variable placeholders in J1 Insights  to prompt a user for a specific value(s) to
+​		be input into an Insights Chart . Variable placeholders can be leveraged in saved J1QL queries using the
+​		double curly bracket syntax, such as `{{variable-placeholder-name}}`.
+
+​		For example, the following query is saved as an insights chart. The query searches for a
+​		`macAddress or hostname or email or ipAddress` associated with a device to evaluate the blast
+​		radius.
+
+​		![](../assets/insights-chart-variables.png) 
+
+
+
+​		Running the above query in an Insights chart displays a modal that prompts the user to enter a value.
+​		The query will show no results until you enter a value and click **Save**.
+
+
+
+		![](../assets/insights-chart-variables2.png) 
 
 - Hide UI controls in a graph:
 
+  
   
 
   ![](../assets/insights-hide-ui.gif) 

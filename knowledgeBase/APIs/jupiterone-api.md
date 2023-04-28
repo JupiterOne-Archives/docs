@@ -2296,6 +2296,50 @@ variables:
   "id": "slj3098s03j-i2ojd0j2-sjkkdjf"
 }
 ```
+### Search for questions
+
+
+query:
+
+```graphql
+query GetQuestions($searchQuery: String) {
+	questions (searchQuery: $searchQuery) {
+		questions {
+			id
+			name
+			description
+		}
+	}
+}
+ ```
+
+variables:
+
+```json
+{
+  "searchQuery": "encrypted"
+}
+```
+ 
+### Evaluate a question:
+
+query:
+
+```graphql
+query EvaluateQuestion($id: ID!) {
+	evaluateQuestion (id: $id) {
+		answerText
+		outputs {name, value}
+	}
+}
+```
+variables:
+
+```json
+{
+  "id": <some string>
+}
+```
 
 ## Integration Operations
 
