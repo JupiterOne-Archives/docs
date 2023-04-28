@@ -91,7 +91,7 @@
 - Create new charts (widgets) in your dashboard
 
 
-  ![](../assets/insights-chart-new.gif)
+  ![](../assets/insights-chart-new-number.gif)
 
   
 
