@@ -7,8 +7,12 @@
   
   
   
+  
+  
   ![](../assets/drilldown-insights.gif)
   
+
+
 
 
 
@@ -81,7 +85,16 @@
 
   ![reorder](../assets/reorder.gif)
 
+
+
+
+- Create new charts (widgets) in your dashboard
+
+
+  ![](../assets/insights-chart-new-number.gif)
+
   
+
 
 - Use variable placeholders in queries within a chart
 
@@ -106,6 +119,7 @@
 
 - Hide UI controls in a graph:
 
+  
   
 
   ![](../assets/insights-hide-ui.gif) 
