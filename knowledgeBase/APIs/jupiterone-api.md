@@ -2510,6 +2510,53 @@ query testQuery {
 }
 ```
 
+### List Integration Jobs
+
+This query returns a list of Integration Jobs for a given Integration Instance.
+
+```graphql
+query testQuery (
+  $integrationInstanceId: String!
+  $cursor: String
+  $size: Int
+) {
+  integrationJobs(
+    integrationInstanceId: $integrationInstanceId
+    cursor: $cursor
+    size: $size
+  ) {
+    jobs {
+      id
+      createDate
+      integrationInstanceId
+      status
+      errorsOccurred
+      endDate
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}
+```
+
+### Integration Job Health
+
+The `status` and `errorsOccurred` properties indicate the result of the job.
+
+#### job.status
+| Status                | Definition                                                                                                                     |
+|-----------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| IN_PROGRESS           | The job is currently ingesting and processing the data retrieved from the source.                                              |
+| COMPLETED             | The job completed ingestion and processing without any known errors.                                                           |
+| COMPLETED_WITH_ERRORS | The job completed ingestion and processing with known errors. The successfully collected data will be available in JupiterOne. |
+| FAILED                | The job failed to ingest and/or process the data. No changes were made to the data within JupiterOne.                          |
+
+#### job.errorsOccurred
+During the execution of a job, if an error level job event is logged, the `errorsOccurred` boolean is set to true. A job with status `FAILED` or `COMPLETED_WITH_ERRORS` will always have `errorsOccurred` set to true.
+
+
 ## Trigger an Integration Job via API
 
 The following values are required in order to trigger an integration job via API: `API_KEY` - An API Key must be configured before leveraging the JupiterOne API. Review [Enable API Key Access](./api-key-access.md) for a guide in creating a JupiterOne API Key.
