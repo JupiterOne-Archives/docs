@@ -158,11 +158,11 @@ Action that is executed when a corresponding condition is met. The type of
 
 > Includes a property that can be used in rule evaluation input.
 
-| Property         | Type     | Description                                  |
-| ---------------- | -------- | -------------------------------------------- | -------- | -------------------------------------------- |
-| `type`           | `string` | Rule operation action type: `SET_PROPERTY.`  |          |                                              |
-| `targetProperty` | `string` | Property to include in the evaluation input. |          |                                              |
-| `targetValue`    | `number  | string                                       | boolean` | Property to include in the evaluation input. |
+| Property         | Type     | Description                                                 |
+| ---------------- | -------- | ----------------------------------------------------------- |
+| `type`           | `string` | Rule operation action type: `SET_PROPERTY.                  |
+| `targetProperty` | `string` | Property to include in the evaluation input.                |
+| `targetValue`    | `number|string|boolean` | Property to include in the evaluation input. |
 
 Example:
 
@@ -720,13 +720,9 @@ After you have configured the integration, copy the integration ID from the
 integration instance page, which looks similar to
 `d1549f40-b9fd-447a-bec5-4360c9ca7e8c`.
 
-1. Configure a rule with the `SEND_SLACK_MESSAGE` action and specify the
-   `integrationInstanceId` with the unique identifier of the integration and
-   `channels` denoting the destinations. The following is an example alert rule
-   configuration with the `SEND_SLACK_MESSAGE` action:
+Configure a rule with the `SEND_SLACK_MESSAGE` action and specify the `integrationInstanceId` with the unique identifier of the integration and `channels` denoting the destinations. The following is an example alert rule configuration with the `SEND_SLACK_MESSAGE` action:
 
-**NOTE**: For the JupiterOne Slack bot to deliver messages to a private Slack
-channel, the JupiterOne Slack bot must be a member of that private channel.
+**NOTE**: For the JupiterOne Slack bot to deliver messages to a private Slack channel, the JupiterOne Slack bot must be a member of that private channel.
 
 ```json
 {
