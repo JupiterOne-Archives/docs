@@ -76,11 +76,11 @@
         },
         {
           "title": "J1 Queries for AWS Vulnerability Findings and Threat Monitoring",
-          "markdownUrl": "knowledgeBase/APIs_and-integrations/cloud-service-provider/j1-aws-threat-monitoring.md"
+          "markdownUrl": "knowledgeBase/APIs_and-integrations/cloud-infrastructure/j1-aws-threat-monitoring.md"
         },
         {
           "title": "J1 Queries for AWS Config",
-          "markdownUrl": "knowledgeBase/APIs_and-integrations/cloud-service-provider/j1-queries-for-aws-config.md"
+          "markdownUrl": "knowledgeBase/APIs_and-integrations/cloud-infrastructure/j1-queries-for-aws-config.md"
         }
       ]
     },

@@ -1,26 +1,26 @@
-# DataStax Astra Integration with JupiterOne
+# DataStax Astra
 
 ## DataStax Astra + JupiterOne Integration Benefits
 
-*   Visualize DataStax Astra organization, users, roles, databases, and access
-    lists in the JupiterOne graph.
-*   Map DataStax Astra users to employees in your JupiterOne account.
-*   Monitor changes to DataStax Astra databases and users using JupiterOne alerts.
+- Visualize DataStax Astra organization, users, roles, databases, and access
+  lists in the JupiterOne graph.
+- Map DataStax Astra users to employees in your JupiterOne account.
+- Monitor changes to DataStax Astra databases and users using JupiterOne alerts.
 
 ## How it Works
 
-*   JupiterOne periodically fetches users, roles, databases, and access lists from
-    DataStax Astra to update the graph.
-*   Write JupiterOne queries to review and monitor updates to the graph, or
-    leverage existing queries.
-*   Configure alerts to take action when JupiterOne graph changes, or leverage
-    existing alerts.
+- JupiterOne periodically fetches users, roles, databases, and access lists from
+  DataStax Astra to update the graph.
+- Write JupiterOne queries to review and monitor updates to the graph, or
+  leverage existing queries.
+- Configure alerts to take action when JupiterOne graph changes, or leverage
+  existing alerts.
 
 ## Requirements
 
-*   DataStax Astra supports token authorization.
-*   JupiterOne requires a TOKEN key.
-*   You must have permission in JupiterOne to install new integrations.
+- DataStax Astra supports token authorization.
+- JupiterOne requires a TOKEN key.
+- You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
@@ -31,58 +31,50 @@ If you need help with this integration, please contact
 
 ### In DataStax Astra
 
-1.  In the dashboard, click on Current Organization > Organization Settings
+1. In the dashboard, click on Current Organization > Organization Settings
+2. Go to Role Management > Add Custom Role and create a role
+3. Set the name of the custom role
+4. Check the following roles:
 
-2.  Go to Role Management > Add Custom Role and create a role
+   - View DB
+   - Read IP Access List
+   - Read User
+   - Read Organization
+   - Read Custom Role
 
-3.  Set the name of the custom role
-
-4.  Check the following roles:
-
-    *   View DB
-    *   Read IP Access List
-    *   Read User
-    *   Read Organization
-    *   Read Custom Role
-
-5.  Enable "Apply permissions to all databases in this organization"
-
-6.  Click Create Role
-
-7.  Go to Token Management
-
-8.  Under Select Role, click the role you created
-
-9.  Save the details.
+5. Enable "Apply permissions to all databases in this organization"
+6. Click Create Role
+7. Go to Token Management
+8. Under Select Role, click the role you created
+9. Save the details.
 
 ### In JupiterOne
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **DataStax Astra** integration tile and click it.
-3.  Click the **Add Configuration** button and configure the following settings:
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
+2. Scroll to the **DataStax Astra** integration tile and click it.
+3. Click the **Add Configuration** button and configure the following settings:
 
-*   Enter the **Account Name** by which you'd like to identify this DataStax Astra
-    account in JupiterOne. Ingested entities will have this value stored in
-    `tag.AccountName` when **Tag with Account Name** is checked.
-*   Enter a **Description** that will further assist your team when identifying
-    the integration instance.
-*   Select a **Polling Interval** that you feel is sufficient for your monitoring
-    needs. You may leave this as `DISABLED` and manually execute the integration.
-*   {{additional provider-specific settings}} Enter the **DataStax Astra API Key**
-    generated for use by JupiterOne.
+- Enter the **Account Name** by which you'd like to identify this DataStax Astra
+  account in JupiterOne. Ingested entities will have this value stored in
+  `tag.AccountName` when **Tag with Account Name** is checked.
+- Enter a **Description** that will further assist your team when identifying
+  the integration instance.
+- Select a **Polling Interval** that you feel is sufficient for your monitoring
+  needs. You may leave this as `DISABLED` and manually execute the integration.
+- {{additional provider-specific settings}} Enter the **DataStax Astra API Key**
+  generated for use by JupiterOne.
 
-4.  Click **Create Configuration** once all values are provided.
+4. Click **Create Configuration** once all values are provided.
 
 # How to Uninstall
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **DataStax Astra** integration tile and click it.
-3.  Identify and click the **integration to delete**.
-4.  Click the **trash can** icon.
-5.  Click the **Remove** button to delete the integration.
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
+2. Scroll to the **DataStax Astra** integration tile and click it.
+3. Identify and click the **integration to delete**.
+4. Click the **trash can** icon.
+5. Click the **Remove** button to delete the integration.
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
-
 <!--
 ********************************************************************************
 NOTE: ALL OF THE FOLLOWING DOCUMENTATION IS GENERATED USING THE
@@ -127,7 +119,4 @@ The following relationships are created:
 END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 ********************************************************************************
 -->
-
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
- 
-<!--  jupiterOneDocVersion=1-0-0 -->

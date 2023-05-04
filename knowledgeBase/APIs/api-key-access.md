@@ -10,10 +10,10 @@ To enable API key access for a group of users:
 
 1. Go to **Settings ![](../assets/icons/gear.png) > Users & Access** ![users](../assets/icons/users.png).
 2. Select the group for whom you want to enable API access.
-3. Select **Enable API key access for users in this group**.
+3. Select **API Key Management**.
    ​
 
-![](../assets/api-key-access-group-enable.png)
+![](../assets/api-key-access-group-enable1.png)
 
 
 
@@ -127,16 +127,18 @@ J1 supports the creation of * policies that permit all actions or resources:
 
 ## Create Integration API Keys
 
+Integration API keys can only be used to synchronize data in this integration's scope and cannot be used to read the graph or 
+perform any other action in the system. This can be useful for local development and running the integration in your own infrastructure.
+
 You must have administrator permissions to be able to create keys and the selected integration must have at least one
 configuration.
 
-To create API keys that you can use with your J1 integration:
+To create an Integration API key:
 
-1. Go to **Settings ![gear](../assets/icons/gear.png) > Integrations**.
-2. Select the integration for which you want to create an API key.
-3. Select the configuration you want to edit.
-4. Scroll down to Integration API Keys and click **Create**.
-5. When prompted, click **Create** again to confirm your action.
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
+2. Select the integration and then the instance for which you want to create an API key.
+3. Select the **API Keys** tab and then click **New API Key**.
+4. When prompted, click **Create** again to confirm your action.
 
 The key is now available for you to use to synchronize data in this integrations.
 
@@ -153,7 +155,7 @@ You can use GraphQL queries to create account-level API keys.
 To create an account-level API key, enter:
 
 ```
-POST `https://j1dev.apps.dev.jupiterone.io/api/graphql`
+POST `https://graphql.us.jupiterone.io/`
 ```
 
 ```
@@ -263,7 +265,7 @@ The action `query:ReadGraphData` may be constrained by a condition. For the poli
 To revoke an account-level key, enter:
 
 ```
-POST `https://j1dev.apps.dev.jupiterone.io/api/graphql`
+POST `https://graphql.us.jupiterone.io/`
 ```
 
 ```

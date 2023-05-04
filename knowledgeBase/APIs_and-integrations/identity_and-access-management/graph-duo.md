@@ -1,27 +1,27 @@
-# Duo Integration with JupiterOne
+# Duo
 
 ## Duo + JupiterOne Integration Benefits
 
-*   Visualize Duo users, groups, devices, applications, and access keys in the
-    JupiterOne graph.
-*   Map Duo users to employees in your JupiterOne account.
-*   Monitor changes to Duo users, groups, and access management data using
-    JupiterOne alerts.
-*   Create an employee entity that is used to map users across your organization
-    to an employee via a matching email property.
+- Visualize Duo users, groups, devices, applications, and access keys in the
+  JupiterOne graph.
+- Map Duo users to employees in your JupiterOne account.
+- Monitor changes to Duo users, groups, and access management data using
+  JupiterOne alerts.
+- Create an employee entity that is used to map users across your organization
+  to an employee via a matching email property.
 
 ## How it Works
 
-*   JupiterOne periodically fetches Duo users, groups, and access management data
-    to update the graph.
-*   Write JupiterOne queries to review and monitor updates to the graph.
-*   Configure alerts to take action when the JupiterOne graph changes.
+- JupiterOne periodically fetches Duo users, groups, and access management data
+  to update the graph.
+- Write JupiterOne queries to review and monitor updates to the graph.
+- Configure alerts to take action when the JupiterOne graph changes.
 
 ## Requirements
 
-*   JupiterOne requires the Duo API hostname. JupiterOne also requires the API
-    integration key and API secret key that have been configured for read access.
-*   You must have permission in JupiterOne to install new integrations.
+- JupiterOne requires the Duo API hostname. JupiterOne also requires the API
+  integration key and API secret key that have been configured for read access.
+- You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
@@ -40,41 +40,40 @@ up-to-date instructions in [Duo Support Docs][1].
 
 JupiterOne requires at a minimum the following API permissions be enabled:
 
-*   Grant administrators
-*   Grant settings
-*   Grant read resource
+- Grant administrators
+- Grant settings
+- Grant read resource
 
 ### In JupiterOne
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **Duo** integration tile and click it.
-3.  Click the **Add Configuration** button and configure the following settings:
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
+2. Scroll to the **Duo** integration tile and click it.
+3. Click the **Add Configuration** button and configure the following settings:
 
-*   Enter the **Account Name** by which you'd like to identify this Duo account in
-    JupiterOne. Ingested entities will have this value stored in `tag.AccountName`
-    when **Tag with Account Name** is checked.
-*   Enter a **Description** that will further assist your team when identifying
-    the integration instance.
-*   Select a **Polling Interval** that you feel is sufficient for your monitoring
-    needs. You may leave this as `DISABLED` and manually execute the integration.
-*   Enter the **API Hostname** of your Duo account.
-*   Enter the **API Integration Key** configured with read access in Duo.
-*   Enter the **Secret Key** configured with read access in Duo.
+- Enter the **Account Name** by which you'd like to identify this Duo account in
+  JupiterOne. Ingested entities will have this value stored in `tag.AccountName`
+  when **Tag with Account Name** is checked.
+- Enter a **Description** that will further assist your team when identifying
+  the integration instance.
+- Select a **Polling Interval** that you feel is sufficient for your monitoring
+  needs. You may leave this as `DISABLED` and manually execute the integration.
+- Enter the **API Hostname** of your Duo account.
+- Enter the **API Integration Key** configured with read access in Duo.
+- Enter the **Secret Key** configured with read access in Duo.
 
-4.  Click **Create Configuration** once all values are provided.
+4. Click **Create Configuration** once all values are provided.
 
 ## How to Uninstall
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
-2.  Scroll to the **Duo** integration tile and click it.
-3.  Identify and click the **integration to delete**.
-4.  Click the **trash can** icon.
-5.  Click the **Remove** button to delete the integration.
+1. From the top navigation of the J1 Search homepage, select **Integrations**.
+2. Scroll to the **Duo** integration tile and click it.
+3. Identify and click the **integration to delete**.
+4. Click the **trash can** icon.
+5. Click the **Remove** button to delete the integration.
 
 [1]: https://duo.com/docs/adminapi
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
-
 <!--
 ********************************************************************************
 NOTE: ALL OF THE FOLLOWING DOCUMENTATION IS GENERATED USING THE
@@ -120,7 +119,4 @@ The following relationships are created:
 END OF GENERATED DOCUMENTATION AFTER BELOW MARKER
 ********************************************************************************
 -->
-
 <!-- {J1_DOCUMENTATION_MARKER_END} -->
- 
-<!--  jupiterOneDocVersion=4-1-2 -->

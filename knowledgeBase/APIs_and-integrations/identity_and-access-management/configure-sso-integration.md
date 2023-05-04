@@ -62,12 +62,6 @@ You must be a member of the Administrators group to perform configurations.
 
 7. Go back to the JupiterOne single sign-on page, and paste the identity provider metadata link in the SAML Metadata File field.
 
-8. Enter a client name, such as Okta.
-
-9. Under Allowed OAuth Flows, select the **Authorization code grant** and **Implicit Grant** checkboxes.
-   ​
-
-   ![allowed-oauth-flows](../../assets/j1-sso-client-oauth-flows.png) 
 
    ​
    Save your settings to complete the configuration. Next time you access your JupiterOne account using your organization custom URL (for example, https://your_company.apps.us.jupiterone.io), you are redirected to your SAML IdP for authentication.

@@ -24,7 +24,7 @@ Find (Host|Database) with tag.AccountName='{accountName}'
 
 ### What are my production resources?
 
-Filter using production tag:
+Filter using production tag: 
 
 ```j1ql
 Find (Application|CodeRepo|Workload|Function|Task|Host|Device|Database|DataStore)

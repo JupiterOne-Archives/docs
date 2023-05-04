@@ -1,4 +1,4 @@
-# TravisCI Integration with JupiterOne
+# TravisCI
 
 ## Travis CI + JupiterOne Integration Benefits
 
@@ -40,7 +40,7 @@ If you need help with this integration, please contact
 TODO: List specific actions that must be taken in JupiterOne. Many of the
 following steps will be reusable; take care to be sure they remain accurate.
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
+1.  From the top navigation of the J1 Search homepage, select **Integrations**.
 2.  Scroll to the **Travis CI** integration tile and click it.
 3.  Click the **Add Configuration** button and configure the following settings:
 
@@ -61,7 +61,7 @@ TODO: List specific actions that must be taken to uninstall the integration.
 Many of the following steps will be reusable; take care to be sure they remain
 accurate.
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
+1.  From the top navigation of the J1 Search homepage, select **Integrations**.
 2.  Scroll to the **Travis CI** integration tile and click it.
 3.  Identify and click the **integration to delete**.
 4.  Click the **trash can** icon.

@@ -1,4 +1,4 @@
-# Qualys Integration with JupiterOne
+# Qualys
 
 ## Qualys + JupiterOne Integration Benefits
 
@@ -42,7 +42,7 @@ below, if you would like to issue granular permissions to J1.
 
 ### In JupiterOne
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
+1.  From the top navigation of the J1 Search homepage, select **Integrations**.
 2.  Scroll to the **Qualys** integration tile and click it.
 3.  Click the **Add Configuration** button and configure the following settings:
 
@@ -61,7 +61,7 @@ below, if you would like to issue granular permissions to J1.
 
 ## How to Uninstall
 
-1.  From the configuration **Gear Icon**, select **Integrations**.
+1.  From the top navigation of the J1 Search homepage, select **Integrations**.
 2.  Scroll to the **Qualys** integration tile and click it.
 3.  Identify and click the **integration to delete**.
 4.  Click the **trash can** icon.

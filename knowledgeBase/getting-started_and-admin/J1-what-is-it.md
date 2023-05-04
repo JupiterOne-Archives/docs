@@ -4,23 +4,20 @@ JupiterOne (J1) is a cloud-native security platform that connects across your si
 
 ## Sign In and Search
 
-When you first sign in to J1, you land on the Search page, the center of all your activities. In the To-Do tab, you see the status of your onboarding items and any other actions that J1 recommends that you complete, such as enabling the playground or configuring your compliance frameworks. 
-
-
-
-![](../assets/home-todo.png)
-
 Over time, J1 collects key performance indicator (KPI) information for your organization and displays it in a dashboard. Your dashboard enables you to quickly see what has changed in your security program, the status of your environment, and where your compliance gaps are.
 
+From the J1 Dashboard, you can [enter questions in the search bar](./quickstart-search.md). By default, J1 autocompletes the text and lists any questions related to your keywords.
 
 
 ![](../assets/dashboard-home.png) 
 
-From the Search page, you can enter questions in the search bar. By default, J1 autocompletes the text and lists any questions related to your keywords. 
+
+
+ J1 keeps a history of the questions you ask which is helpful when wanting the run the same questions or create questions based on past searches. The most recent questions display when you start typing in the search bar, and to see a list of all the history, click ![](../assets/icons/questions-history-icon.png) at the right in the search bar. Click ![](../assets/icons/questions-settings.png) to opt to include recently deleted entities in the question/search or to enable autocomplete for [J1QL](../jupiterOne-query-language_(J1QL)/jupiterOne-query-language.md) queries.
 
 
 
-![](../assets/search-query.png)
+![](../assets/questions-history.png) 
 
 
 
@@ -30,9 +27,9 @@ The first step in using J1 is to bring your data into J1. There are numerous rea
 
 ## J1 Navigation Bar
 
-All of the J1 products that assist you in all the major components of security management are available from the top navigation bar.
+All of the J1 products that assist you in all the major components of security management are available from the top navigation bar. You can use your browser buttons to go back or forward between pages, or copy the URL of a page to share with others. 
 
-![](../assets/top-nav-bar.png)
+![](../assets/search-home.png)
 
 ### Assets
 
@@ -44,7 +41,7 @@ The JupiterOne Policies app enables you to articulate your organization policies
 
 Each policy and procedure document is written in its own individual Markdown file, and you can configure each policy file to link to other files. The templates are open-source that you can edit directly online using the Policies app.
 
-To help you get started, JupiterOne provides 120+ [policy and procedure templates](../compliance_and-reportingmanage-policies/policies-app.md) to help your organization build your security program and operations. These templates derive from JupiterOne company internal policies and procedures, and have been through several rounds of compliance assessments.
+To help you get started, JupiterOne provides 120+ [policy and procedure templates](https://github.com/JupiterOne/security-policy-templates) to help your organization build your security program and operations. These templates derive from JupiterOne company internal policies and procedures, and have been through several rounds of compliance assessments.
 
 ### Alerts
 
@@ -72,9 +69,9 @@ You can configure each dashboard as either a team board that is shared with othe
 
 You can build your own custom dashboards or utilize any of the existing boards that JupiterOne has already built.
 
-## Query Library
+## J1 Questions Library
 
-JupiterOne has hundreds of prebuilt and categorized queries for assessing the current state of your cyber assets. You can filter the queries on a specific topic, clone existing queries to create custom queries of your own, and save frequent searches for easy future reference. Click ![](../assets/icons/query-library.png)on the J1 landing page to access the J1 query library.
+JupiterOne has hundreds of prebuilt, categorized, and managed questions for assessing the current state of your cyber assets. Questions are a great way to learn more about your environment and how J1QL works without extensive knowledge. The Questions Library also allows you to leverage the knowledge of JupiterOne and explore what JupiterOne can do. You can filter the questions on a specific category or tag, duplicate existing questions to create custom questions of your own, and save frequent searches for easy future reference. Click Questions at the top of the J1 home page to access the J1 questions library. Use the categories and `tags` to filter and refine your search or explore further. 
 
  ![](../assets/j1-query-library.png)
 

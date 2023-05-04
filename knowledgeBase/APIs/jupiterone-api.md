@@ -1,10 +1,10 @@
 # JupiterOne API
 
+You can use Postman with the JupiterOne API to [import and export data](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/). [Examples of requests](./api-postman.md) you can make after you have exported your J1 data such as saved queries to Postman are available.
+
 The JupiterOne platform exposes a number of public GraphQL endpoints. 
 
-**Base URL**: `https://api.us.jupiterone.io`
-
-**Endpoint**: `/graphql`
+**Base URL**: `https://graphql.us.jupiterone.io`
 
 - For query and graph operations
 - For alerts and rules operations
@@ -17,56 +17,6 @@ The JupiterOne platform exposes a number of public GraphQL endpoints.
 
 A `429` HTTP response code indicates the limit has been reached. 
 
-The rate-limited APIs return the following headers to control request back-off and throttling: 
-
-- **RateLimit-Limit**: The quota of the currently most-limited bucket, such as the maximum quota of the bucket with the fewest remaining, concatenated with the quota and time window (in seconds) of each applicable bucket. For example, 1000, 10000; window=60, 1000; window=60.
-
-- **RateLimit-Remaining**: Whichever bucket is the closest to being full. This is the maximum number of invocations minus the number that are currently counted against the limit. This means it is the largest amount of further invocations that could be executed without being rejected by rate-limiting at the moment of the request.
-- **RateLimit-Reset**: If no further invocations were made against any limits, this is the number of seconds remaining until **all** buckets that apply against the invocation would be entirely emptied. This means it is the greatest amount among all times-to-empty for applicable limits.
-- **RateLimit-Requested**: This is a custom header specified because of the concurrency model of GraphQL and the way J1 counts multiple invocations from a single GraphQL request. This response header is an integer that returns the number of invocations that were counted in the request, regardless of whether the request was served or dropped due to quotas.
-
-**Example**:
-In this use case:
-
-- An account is permitted 10,000 invocations per 60 seconds.
-- In the last 60 seconds, there have been 9,900 invocations in the account.
-- A token is permitted 1,000 invocations per 60 seconds.
-- In the last 60 seconds, there have been 800 invocations using the token.
-- A new request using the token that would be counted as 50 invocations is now being processed.
-
-The number of tentative invocations to be counted is added as RateLimit-Requested:
-RateLimit-Requested: 50
-
-The request should be permitted, since pre-request the account limit has 100 remaining and the token limit has 200 remaining. After the request, the account limit has 50 remaining and the token limit has 150 remaining. Since the account limit is closer, it is used for RateLimit-Remaining and RateLimit-Limit headers.
-
-RateLimit-Remaining: 50
-RateLimit-Limit: 10000, 1000;window=60, 10000;window=60
-
-Supposing no other requests come in, it will take 9950/(10000/60) == 59.7 seconds for the account limit to clear, and it will take the token limit 800/(1000/60) == 48 seconds to clear. J1 returns the greater number, rounded strictly *up*, i.e. Math.ceil (see IETF proposal – sub-second precision is disallowed).
-
-RateLimit-Reset: 60
-
-**Example**
-
-In this use case:
-
-- An account is permitted 10,000 invocations per 60 seconds.
-- In the last 60 seconds, there have been 9,900 invocations in the account.
-- A token is permitted 1,000 invocations per 60 seconds.
-- In the last 60 seconds, there have been 995 invocations using the token.
-- A new request using the token that would be counted as 50 invocations is now being processed.
-
-The number of tentative invocations to be counted is added as RateLimit-Requested:
-RateLimit-Requested: 50
-
-Because the token bucket has insufficient remaining invocations, the request should be dropped. Since the entire request is dropped, J1 does not count these invocations against the quota and, therefore, J1 uses the pre-request numbers for the Remaining and Limit headers. The currently limiting bucket is the token bucket, which has 5 invocations remaining. The consumer can see that their request received 429 because 50 > 5:
-RateLimit-Remaining: 5
-RateLimit-Limit: 1000, 1000;window=60, 10000;window=60
-
-Supposing no other requests come in, it will take 9900/(10000/60) == 59.4 seconds for the account limit to clear, and it will take the token limit 995/(1000/60) == 59.7 seconds to clear. J1 returns the greater number, rounded strictly *up*, i.e. Math.ceil (see IETF proposal – sub-second precision is disallowed).
-
-RateLimit-Reset: 60
-
 **Authentication**: The JupiterOne APIs use a Bearer Token to authenticate. Include the API key in the header as a Bearer Token. You also need to include `JupiterOne-Account` as a header parameter. You can find the `Jupiterone-Account` value in your account by running the following J1QL query:
 
 ```j1ql
@@ -76,46 +26,73 @@ FIND jupiterone_account as a return a._accountId
 **Example cURL command with authentication**
 
 ```sh
-curl --location --request POST 'https://api.us.jupiterone.io/graphql' \
+curl --location --request POST 'https://graphql.us.jupiterone.io' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer apiToken' \
---header 'Jupiterone-Account: accountId' \
---data-raw @- << EOF
+--header 'Jupiterone-Account: accountID' \
+--data-binary @- << EOF
 {
-  "query": 
-    "query J1QL(
-      $query: String!
-      $cursor: String
-      $variables: JSON
-      $dryRun: Boolean
-      $remember: Boolean
-      $includeDeleted: Boolean
-      $flags: QueryV1Flags\n  ) {
-      queryV1(
-        query: $query
-        variables: $variables
-        dryRun: $dryRun
-        remember: $remember
-        includeDeleted: $includeDeleted
-        flags: $flags
-        cursor: $cursor
-      ) {
-        type
-        data
-        cursor
-      }
-    }",
-  "variables": { "query": "find Domain" }
+  "query": "query J1QL(\$query: String!, \$cursor: String) {queryV1(query: \$query, cursor: \$cursor) { type data cursor } }",
+  "variables": {
+    "query": "find Domain"
+  }
 }
 EOF
 ```
+**Example cURL command using Bash**
+
+````bash
+#!/bin/bash
+
+GRAPHQL_QUERY='
+  query J1QL(
+    $query: String!
+    $cursor: String
+    $variables: JSON
+    $remember: Boolean
+    $includeDeleted: Boolean
+    $flags: QueryV1Flags
+  ) {
+    queryV1(
+      query: $query
+      variables: $variables
+      remember: $remember
+      includeDeleted: $includeDeleted
+      flags: $flags
+      cursor: $cursor
+    ) {
+      type
+      data
+      cursor
+    }
+  }
+'
+
+FLATTENED_GRAPHQL_QUERY=$(echo ${GRAPHQL_QUERY} | tr -d '\n')
+
+curl --location --request POST 'https://graphql.api.us.jupiterone.io' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer apiToken' \
+--header 'Jupiterone-Account: accountID' \
+--data-binary @- << EOF
+{
+  "query": "${FLATTENED_GRAPHQL_QUERY}",
+  "variables": {
+    "query": "find Domain"
+  }
+}
+EOF
+````
+
+
+
+
+
 An experimental [node.js client and CLI](https://github.com/JupiterOne/jupiterone-client-nodejs) is available on Github.
 
 
 
 ## Entity and Relationship Queries
-
-**Endpoint:** `/graphql`
 
 ### Querying the graph with J1QL
 
@@ -613,8 +590,6 @@ Example result
 
 ## Entity Mutations
 
-**Endpoint:** `/graphql`
-
 ### Create Entity
 
 This mutation creates a JupiterOne entity with the given specifications. This mutation requires three parameters (with two optional parameters):
@@ -765,8 +740,6 @@ Variables:
 ```
 
 ## Relationship Mutations
-
-**Endpoint:** `/graphql`
 
 ### Create Relationship
 
@@ -1054,6 +1027,8 @@ GET /persister/synchronization/jobs/f445397d-8491-4a12-806a-04792839abe3
   }
 }
 ```
+
+Note: `numRelationshipCreateErrors` indicates the number of relationships that could not be created when one or both entities are not found or have been soft deleted.
 
 ### Upload batch of entities and relationships
 
@@ -1699,7 +1674,6 @@ GET https://api.us.jupiterone.io/entities/${ENTITY_ID}/raw-data/${ENTRY_NAME}/ve
 
 ## Building CSV Report
 
-**Endpoint:** `/graphql`
 
 ```graphql
 mutation BuildCsv(
@@ -1734,7 +1708,6 @@ Variables:
 
 ## Alert and Rules Operations
 
-**Endpoint:** `/graphql`
 
 ### List alert rules
 
@@ -2163,7 +2136,6 @@ variables:
 
 ## Question Operations
 
-**Endpoint:** `/graphql`
 
 ### Create a Question
 
@@ -2322,6 +2294,50 @@ variables:
 ```json
 {
   "id": "slj3098s03j-i2ojd0j2-sjkkdjf"
+}
+```
+### Search for questions
+
+
+query:
+
+```graphql
+query GetQuestions($searchQuery: String) {
+	questions (searchQuery: $searchQuery) {
+		questions {
+			id
+			name
+			description
+		}
+	}
+}
+ ```
+
+variables:
+
+```json
+{
+  "searchQuery": "encrypted"
+}
+```
+ 
+### Evaluate a question:
+
+query:
+
+```graphql
+query EvaluateQuestion($id: ID!) {
+	evaluateQuestion (id: $id) {
+		answerText
+		outputs {name, value}
+	}
+}
+```
+variables:
+
+```json
+{
+  "id": <some string>
 }
 ```
 
@@ -2494,6 +2510,53 @@ query testQuery {
 }
 ```
 
+### List Integration Jobs
+
+This query returns a list of Integration Jobs for a given Integration Instance.
+
+```graphql
+query testQuery (
+  $integrationInstanceId: String!
+  $cursor: String
+  $size: Int
+) {
+  integrationJobs(
+    integrationInstanceId: $integrationInstanceId
+    cursor: $cursor
+    size: $size
+  ) {
+    jobs {
+      id
+      createDate
+      integrationInstanceId
+      status
+      errorsOccurred
+      endDate
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}
+```
+
+### Integration Job Health
+
+The `status` and `errorsOccurred` properties indicate the result of the job.
+
+#### job.status
+| Status                | Definition                                                                                                                     |
+|-----------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| IN_PROGRESS           | The job is currently ingesting and processing the data retrieved from the source.                                              |
+| COMPLETED             | The job completed ingestion and processing without any known errors.                                                           |
+| COMPLETED_WITH_ERRORS | The job completed ingestion and processing with known errors. The successfully collected data will be available in JupiterOne. |
+| FAILED                | The job failed to ingest and/or process the data. No changes were made to the data within JupiterOne.                          |
+
+#### job.errorsOccurred
+During the execution of a job, if an error level job event is logged, the `errorsOccurred` boolean is set to true. A job with status `FAILED` or `COMPLETED_WITH_ERRORS` will always have `errorsOccurred` set to true.
+
+
 ## Trigger an Integration Job via API
 
 The following values are required in order to trigger an integration job via API: `API_KEY` - An API Key must be configured before leveraging the JupiterOne API. Review [Enable API Key Access](./api-key-access.md) for a guide in creating a JupiterOne API Key.
@@ -2511,7 +2574,7 @@ The following values are required in order to trigger an integration job via API
 Endpoint:
 
 ```text
-POST https://api.us.jupiterone.io/graphql
+POST https://graphql.us.jupiterone.io
 ```
 
 Headers:
@@ -2546,7 +2609,7 @@ User events in your JupiterOne account are logged and can be accessed via API.
 Endpoint:
 
 ```text
-POST https://api.us.jupiterone.io/graphql
+POST https://graphql.us.jupiterone.io
 ```
 
 Headers:
@@ -2581,7 +2644,6 @@ Body:
     }"
 }
 ```
-
 ## Additional API Examples
 
 **Creating entities and a relationship between them**
@@ -2677,7 +2739,7 @@ The IAM API only works for accounts configured with SSO. Email support@jupiteron
 **Endpoint:**
 
 ```text
-POST https://api.us.jupiterone.io/iam/graphql
+POST https://graphql.us.jupiterone.io/
 ```
 
 **Headers:**
