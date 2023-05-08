@@ -1,3 +1,5 @@
+
+
 # JupiterOne Alert Rule Schema
 
 A rule uses the results of one or more queries to execute one or more actions.
@@ -156,11 +158,11 @@ Action that is executed when a corresponding condition is met. The type of
 
 > Includes a property that can be used in rule evaluation input.
 
-| Property         | Type     | Description                                  |
-| ---------------- | -------- | -------------------------------------------- | -------- | -------------------------------------------- |
-| `type`           | `string` | Rule operation action type: `SET_PROPERTY.`  |          |                                              |
-| `targetProperty` | `string` | Property to include in the evaluation input. |          |                                              |
-| `targetValue`    | `number  | string                                       | boolean` | Property to include in the evaluation input. |
+| Property         | Type     | Description                                                 |
+| ---------------- | -------- | ----------------------------------------------------------- |
+| `type`           | `string` | Rule operation action type: `SET_PROPERTY.                  |
+| `targetProperty` | `string` | Property to include in the evaluation input.                |
+| `targetValue`    | `number|string|boolean` | Property to include in the evaluation input. |
 
 Example:
 
@@ -718,60 +720,79 @@ After you have configured the integration, copy the integration ID from the
 integration instance page, which looks similar to
 `d1549f40-b9fd-447a-bec5-4360c9ca7e8c`.
 
-1. Configure a rule with the `SEND_SLACK_MESSAGE` action and specify the
-   `integrationInstanceId` with the unique identifier of the integration and
-   `channels` denoting the destinations. The following is an example alert rule
-   configuration with the `SEND_SLACK_MESSAGE` action:
+Configure a rule with the `SEND_SLACK_MESSAGE` action and specify the `integrationInstanceId` with the unique identifier of the integration and `channels` denoting the destinations. The following is an example alert rule configuration with the `SEND_SLACK_MESSAGE` action:
 
-**NOTE**: For the JupiterOne Slack bot to deliver messages to a private Slack
-channel, the JupiterOne Slack bot must be a member of that private channel.
+**NOTE**: For the JupiterOne Slack bot to deliver messages to a private Slack channel, the JupiterOne Slack bot must be a member of that private channel.
 
 ```json
 {
-  "name": "Critical Data Stores Not Encrypted",
-  "description": "Sends a alert to Slack when a critical data store that is not encrypted is found.",
+  "id": "83136d41-23d0-415c-8726-84363d5a8a30",
+  "name": "acm-cert-expiry",
+  "description": null,
+  "version": 1,
   "specVersion": 1,
+  "notifyOnFailure": null,
+  "triggerActionsOnNewEntitiesOnly": null,
   "pollingInterval": "ONE_DAY",
-  "templates": {
-    "slackBody": "JupiterOne Account: {{item.displayName}}\n\n"
-  },
+  "templates": {},
+  "outputs": [
+    "alertLevel"
+  ],
   "question": {
     "queries": [
       {
+        "query": "Find aws_acm_certificate with inUse = true and expiresOn > date.now and expiresOn < date.now + 30days",
         "name": "query0",
-        "query": "Find DataStore with classification=('critical' or 'sensitive' or 'confidential' or 'restricted') and encrypted!=true",
-        "version": "v1"
+        "version": "v1",
+        "includeDeleted": false
       }
     ]
   },
+  "questionId": null,
   "operations": [
     {
       "when": {
         "type": "FILTER",
         "specVersion": 1,
-        "condition": "{{queries.query0.total > 0}}"
+        "condition": [
+          "AND",
+          [
+            "queries.query0.total",
+            ">",
+            0
+          ]
+        ]
       },
       "actions": [
         {
-          "targetValue": "HIGH",
+          "targetValue": "CRITICAL",
+          "id": "e1d40781-831f-43bf-b813-b28b6f2218ef",
           "type": "SET_PROPERTY",
           "targetProperty": "alertLevel"
         },
         {
-          "type": "CREATE_ALERT"
+          "type": "CREATE_ALERT",
+          "id": "a3a32646-db5c-4c18-89be-c02798cd84c4"
         },
         {
-          "integrationInstanceId": "<SLACK_INTEGRATION_INSTANCE_ID>",
-          "channels": ["#random"],
+          "integrationInstanceId": "8d677b84-c32e-45d3-9b46-902912a00304",
+          "id": "c1a3a9bc-7c4f-4eba-afff-528f9cbd2ff1",
           "type": "SEND_SLACK_MESSAGE",
-          "body": "{{ queries.query0.data | mapTemplate('slackBody') | join(' ') }}"
+          "body": "*Affected Items:* \n\n- {{queries.query0.data|mapProperty('displayName')|join('\n- ')}}",
+          "channels": []
         }
       ]
     }
   ],
-  "outputs": ["queries.query0.total", "alertLevel"]
-}
+  "state": null,
+  "tags": []
 ```
+
+This example shows how to use a template in a Slack message.
+
+
+
+
 
 ---
 
