@@ -1,7 +1,3 @@
----
-title: April 2023
-description: JupiterOne release notes for April 2023.
----
 # JupiterOne April 2023 Release
 
 ## New Features and Improvements
