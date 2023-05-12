@@ -2,30 +2,24 @@
 
 ## Integration Benefits
 
-- Visualize Cisco Umbrella networks, domains, destinations, users, and
-  discovered applications in the JupiterOne graph.
+- Visualize Cisco Umbrella networks, domains, destinations, users, and discovered applications in the JupiterOne graph.
 - Map Cisco Umbrella users to employees in your JupiterOne account.
 - Monitor changes to Cisco Umbrella entities using JupiterOne alerts.
 
 ## How it Works
 
-- JupiterOne periodically ingests networks, domains, destinations, users, and
-  discovered applications from Cisco Umbrella to update the graph.
-- Write JupiterOne queries to review and monitor updates to the graph, or
-  leverage existing queries.
-- Configure alerts to take action when JupiterOne graph changes, or leverage
-  existing alerts.
+- JupiterOne periodically ingests networks, domains, destinations, users, and discovered applications from Cisco Umbrella to update the graph.
+- Write JupiterOne queries to review and monitor updates to the graph, or leverage existing queries.
+- Configure alerts to take action when JupiterOne graph changes, or leverage existing alerts.
 
 ## Prerequisites
 
-- Cisco Umbrella supports the use of API keys to authenticate API requests. You
-  need access to an account that has permissions to create a new API key.
+- Cisco Umbrella supports the use of API keys to authenticate API requests. You need access to an account that has permissions to create a new API key.
 - You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
-If you need help with this integration, contact
-[JupiterOne Support](https://support.jupiterone.io).
+If you need help with this integration, contact [JupiterOne Support](https://support.jupiterone.io).
 
 ## How to Use This Integration
 
@@ -51,14 +45,10 @@ If you need help with this integration, contact
 2. Scroll down to **Cisco Umbrella** and click it.
 3. Click **Add Configuration** and configure the following settings:
 
-- Enter the account name by which you want to identify this Cisco Umbrella
-  account in JupiterOne. Select **Tag with Account Name** to store this value in
-  `tag.AccountName` of the ingested assets.
+- Enter the account name by which you want to identify this Cisco Umbrella account in JupiterOne. Select **Tag with Account Name** to store this value in `tag.AccountName` of the ingested assets.
 - Enter a description to help your team identify the integration.
-- Select a polling interval that is sufficient for your monitoring requirements.
-  You can leave this as `DISABLED` and manually execute the integration.
-- Enter the Cisco Umbrella API key and Key Secret generated for use by
-  JupiterOne.
+- Select a polling interval that is sufficient for your monitoring requirements. You can leave this as `DISABLED` and manually execute the integration.
+- Enter the Cisco Umbrella API key and Key Secret generated for use by JupiterOne.
 
 4. Click **Create Configuration** after you have entered all the values.
 
