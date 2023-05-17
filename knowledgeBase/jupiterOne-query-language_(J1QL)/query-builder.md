@@ -38,5 +38,7 @@ Using the icons in the box at the top right of the page, you can:
 - Copy the query to the clipboard
 - Download the query
 
+Query Builder enables you to use relationship directionality to add to the granularity of your queries. You can also use optional relationship traversals for more exploratory queries. When relating an entity, the builder shows only the possible entities that could be mapped according to the J1 data catalog.
 
+![](../assets/query-builder-traversals.gif)
 

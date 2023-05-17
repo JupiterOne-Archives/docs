@@ -2,48 +2,32 @@
 
 ## Salesforce + JupiterOne Integration Benefits
 
-- Visualize Salesforce users, roles, groups, policies, and permissions in the
-  JupiterOne graph.
+- Visualize Salesforce users, roles, groups, policies, and permissions in the JupiterOne graph.
 - Map Salesforce users to employees in your JupiterOne account.
 - Monitor changes to Salesforce users using JupiterOne alerts.
 
 ## How it Works
 
-- JupiterOne periodically fetches users, roles, groups, policies, and
-  permissions from Salesforce to update the graph.
-- Write JupiterOne queries to review and monitor updates to the graph, or
-  leverage existing queries.
-- Configure alerts to take action when JupiterOne graph changes, or leverage
-  existing alerts.
+- JupiterOne periodically fetches users, roles, groups, policies, and  permissions from Salesforce to update the graph.
+- Write JupiterOne queries to review and monitor updates to the graph, or leverage existing queries.
+- Configure alerts to take action when JupiterOne graph changes, or leverage existing alerts.
 
 ## Requirements
 
-- JupiterOne is a Salesforce Connected App that will require a user authorized
-  to grant access to your Salesforce org’s data.
+- JupiterOne is a Salesforce Connected App that will require a user authorized to grant access to your Salesforce org’s data.
 - You must have permission in JupiterOne to install new integrations.
 
 ## Support
 
-If you need help with this integration, please contact
-[JupiterOne Support](https://support.jupiterone.io).
+If you need help with this integration, please contact [JupiterOne Support](https://support.jupiterone.io).
 
 ## Integration Walkthrough
-
-### In Salesforce
-
-1. First navigate to the Salesforce developer account creation page or go to this webpage https://developer.salesforce.com/signup.
-
-2. After the relevant form information has been filled out, submitting the form
-   will redirect the user to Salesforce to authorize the requested scopes.
-
-3. Review the request, click "Allow", and then you will be redirected back to
-   JupiterOne.
 
 ### In JupiterOne
 
 1. From the top navigation of the J1 Search homepage, select **Integrations**.
 2. Scroll to the **Salesforce** integration tile and click it.
-3. Click the **Add Configuration** button and configure the following settings:
+3. Click **Add Instance** and configure the following settings:
 
 - Enter the **Account Name** by which you'd like to identify this Salesforce
   account in JupiterOne. Ingested entities will have this value stored in
@@ -53,7 +37,9 @@ If you need help with this integration, please contact
 - Select a **Polling Interval** that you feel is sufficient for your monitoring
   needs. You may leave this as `DISABLED` and manually execute the integration.
 
-4. Click **Create Configuration** once all values are provided.
+4. Click **Create** once all values are provided.
+
+You are then redirected to Salesforce to log in and authorize J1 to access your Salesforce organization data based on the user identity you log in with.
 
 # How to Uninstall
 

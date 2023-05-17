@@ -17,14 +17,13 @@ Standard access control is similar to the **Top Level Permissions** in Granular 
 
 ## Granular Access Control
 
-**Granular access control** is available to all PLUS and ENTERPRISE tier accounts. It allows more fine grain access configuration at each user group level to achieve role-based access control (RBAC).
+**Granular access control** is available to all PLUS and ENTERPRISE tier accounts. It allows more detailed access configuration at each user group level to achieve role-based access control (RBAC).
 
 When enabled, to configure access permissions:
 
-1. Go to **Settings** ![settings](../assets/icons/gear.png) and select **Users & Access** ![users](../assets/icons/users.png).
-2. Find the user group you want to edit and click **Settings** ![settings](../assets/icons/gear.png). 
-3. Click  the **Access Control** ![shield](../assets/icons/shield.png) tab.
-
+1. Go to **Settings** ![settings](../assets/icons/gear.png) and select **User Groups**.
+2. Select the user group you want to edit. 
+3. In the Permissions section, edit or add permissions for the group. 
   ![app-permissions](../assets/app-permissions.png)
 
 ### Query Permissions
@@ -39,10 +38,9 @@ Enterprise customers can set query permissions for a user group if you are in th
 
 You can add as many filters as you want to the permission set. To configure query permissions:
 
-1. Go to **Settings** ![settings](../assets/icons/gear.png) **>** **Users & Access**.
-2. Select the user group you want to edit and click ![shieldicon](../assets/icons/shield.png). 
-3. In the permission set modal, select and add the type and values for each 
-   filter you want in the set. 
+1. Go to **Settings** ![settings](../assets/icons/gear.png) **>** **User Groups**.
+2. Select the user group you want to edit. 
+3. In the Query Policy section, select and add the query type and values for each filter and click **Add**. 
 
 J1 enables queries on data that meet ALL of the filters in the permission set. In this example, J1 enables queries on data that is in GitHub AND in Jira issues AND linked to digital certificate users. 
 
@@ -85,7 +83,7 @@ Some of these permissions are needed for an app to function fully. For example, 
 
 ### App Level Permissions
 
-**App level permissions** such as Alerts Read or Alerts Admin apply to the application pages shown primarily on the app switcher. However, a few other categories have been added including Integrations and Endpoint Compliance Agent despite that they are not strictly apps, they function as one and it was easy to group their responsibilities together.
+**App level permissions** such as for J1 Alerts and J1 Assets apply to the application pages shown primarily on the app switcher. However, a few other categories have been added including Integrations and Endpoint Compliance Agent despite their not strictly be apps, they function as one and it is easy to group their responsibilities together.
 
 Admin permissions for each app allows certain administrative actions unique to each app. For example, add a new standard / questionnaire in Compliance app; save board layout as default in Insights app; etc. Certain actions also require shared permissions to global resources to be enabled.
 
@@ -100,7 +98,7 @@ The full list of the apps is here, along with shared permissions that may be use
 
   > Shared permissions used by this app: **Read / Write Questions** and **Read Graph Data** for access to Questions Library and running J1QL queries respectively. Optionally **Write Graph Data** for editing entities from query results.
 
-- Assets Inventory (URL ending with `/inventory`)
+- Assets (URL ending with `/inventory`)
 
   > Shared permissions used by this app: **Read / Write Graph Data** (app is unusable without Read Graph Data, Write Graph Data used for editing entities).
 
