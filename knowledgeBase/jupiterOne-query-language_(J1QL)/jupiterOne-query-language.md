@@ -61,7 +61,9 @@ For example:
 
 ```j1ql
 FIND DataStore WITH encrypted = false AND (tag.Production = true and classification = 'critical')
+```
 
+```j1ql
 FIND user_endpoint WITH platform = 'darwin' OR platform = 'linux'
 ```
 
