@@ -76,7 +76,7 @@ JupiterOne supports the following SAML attribute mappings:
 - `name`: User display name
 - `group_names`: Dynamically assigns the user to the specified groups within JupiterOne.
 
-J1 highly recommends that if you are a large organization, you should use the [J1 API](../../jupiterone-api.md) to create group names and then use the `group_names` attribute to more easily synchronize all username data with J1 on a regular basis.  You can use the `group_names` attribute to equate to a filtered list of groups that match the names of the J1 groups (case-sensitive). For example, create a group name to contain all the users who have administrative privileges in J1.
+J1 highly recommends that if you are a large organization, you should use the [J1 API](../../APIs/jupiterone-api.md) to create group names and then use the `group_names` attribute to more easily synchronize all username data with J1 on a regular basis.  You can use the `group_names` attribute to equate to a filtered list of groups that match the names of the J1 groups (case-sensitive). For example, create a group name to contain all the users who have administrative privileges in J1.
 
 **NOTE:**  Users without `group_names` mapping are assigned to the **Users** group within your J1 account, by default.
 
