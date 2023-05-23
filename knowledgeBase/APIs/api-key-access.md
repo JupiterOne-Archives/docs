@@ -18,7 +18,8 @@ To enable API key access for a group of users:
 
 ## API Key Permissions Policy
 
-You must set a permission policy in JSON for account-level API keys, similar to an IAM policy in AWS. The following is an example of a full control policy:
+You must set a permission policy in JSON for account-level API keys, similar to an IAM policy in AWS. 
+Currently we support `*` actions and `*` resources, this grants the account API key administrative access to the account.
 
 ```
 {
@@ -35,69 +36,6 @@ You must set a permission policy in JSON for account-level API keys, similar to 
   ]
 }
 ```
-
-J1 supports the creation of * policies that permit all actions or resources:
-
-```
-{
-  "permissions": [ 
-    {
-      "effect": "ALLOW", 
-      "actions": [
-        "*"
-       ],
-      "resources": [
-         "*"
-      ]
-    } 
-  ] 
-} 
-```
-
-```
-{
-  "permissions": [ 
-    {
-      "effect": "ALLOW", 
-      "actions": [
-        "query:ReadGraphData"
-       ],
-      "resources": [
-         "*"
-      ]
-    } 
-  ] 
-} 
-```
-
-```
-{
-  "permissions": [ 
-    {
-      "effect": "ALLOW", 
-      "actions": [
-        "*"
-       ],
-      "resources": [
-         "*"
-      ]
-    },
-    {
-      "effect": "DENY", /// Deny only ReadGraphData
-      "actions": [
-        "query:ReadGraphData"
-      ],
-      "resources": [
-        "*"
-      ]
-    }
-  ] 
-} 
-```
-
-
-
-
 
 ## Create Integration API Keys
 
@@ -135,7 +73,7 @@ POST `https://graphql.us.jupiterone.io/`
 ```
 mutation CreateToken($token: TokenInput!) {
   createToken(token: $token) {
-    token
+    secret
     id
     name
     category
@@ -154,80 +92,25 @@ mutation CreateToken($token: TokenInput!) {
     "token": {
       "name": "Token Name",
       "category": "tags",
-      "policy": "{\n\t\"permissions\": [{\n\t\t\"effect\":\"ALLOW\",\n\t\t\"actions\":[\"dashboard:View\" ],\n\t\t\"resources\": [ \"dashboard:123456\" ]\n\t}]\n}"
+      "policy": "{\n\t\"permissions\": [{\n\t\t\"effect\":\"ALLOW\",\n\t\t\"actions\":[\"*\" ],\n\t\t\"resources\": [ \"*\" ]\n\t}]\n}"
     }
   }
 }
 ```
 
-**Note**: Wildcards are not supported for account-level API tokens. 
-
-
-
-The `policy` variable is a JSON object formatted as follows:
+It is also possible to constrain the account tokens through a conditions block `queryFilters` condition.  The `queryFilters` work the same as a group query policy.
 
 ```
 {
   "permissions": [
     {
       "effect": "ALLOW",
-      "actions": ["dashboard:View"],
-      "resources": ["dashboard:123456"]
-    }
-  ]
-}
-```
-
-The effect parameter is ether `ALLOW` or `DENY` and is case-sensitive. Currently, J1 only supports fully-qualified actions and resources or the wildcard `*`.
-
-Supported actions include:
-
-```
-"compliance:GetStandard",
-"compliance:GetSummary",
-"dashboard:View",
-"persister:GetEntityRawData",
-"persister:Synchronize",
-"query:GetAccountEntity",
-"query:ReadGraphData",
-"settings:GetSettings",
-"parameters:GetParameter",
-"parameters:GetParameterList",
-"parameters:SetParameter",
-"parameters:DeleteParameter"
-
-"*" // All actions
-```
-
-Supported resources include:
-
-```
-"account:<resourceId>",
-"api:<resourceId>",
-"compliance-standard:<resourceId>",
-"dashboard:<resourceId>",
-"entity:<resourceId>",
-"integration:<resourceId>",
-"powerup:<resourceId>",
-"settings-category:<resourceId>",
-"parameter:<resourceId>"
-
-"*" // All resources
-```
-
-The action `query:ReadGraphData` may be constrained by a condition. For the policy to allow access to a graph object, that graph object must have the properties specified in the condition and those properties must have the values specified in the condition. These J1QL Query Policies must include `effect: "ALLOW"`; `actions: ["ReadGraphData"]` (or `actions: ["*"]`); and `resources: ["*"]`. In addition, their `conditions` block must contain an object of the `stringEquals` comparison.  For example, this policy only allows its user to query for graph objects that have the property `_type` equal to `github_repo`:
-
-```
-{
-  "permissions": [
-    {
-      "effect": "ALLOW",
-      "actions": ["query:ReadGraphData"],
+      "actions": ["*"],
       "resources": ["*"],
       "condition": {
-        "stringEquals": {
-          "_type": "github_repo"
-        }
+        "queryFilters": [{
+          "_type": ["github_repo"]
+        }]
       }
     }
   ]
@@ -245,7 +128,6 @@ POST `https://graphql.us.jupiterone.io/`
 ```
 mutation RevokeToken($id: String!) {
   revokeToken(id: $id) {
-    token
     id
     name
     category
