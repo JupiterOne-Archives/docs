@@ -2,6 +2,8 @@
 
 Tagging is highly recommended for resources in cloud environments such as AWS, Azure, and GCP. For example, it is common to use tags to track `cost-center` or `project`. It is recommended that you assign `classification` tag to all databases and data stores, such as buckets, blobs, disks.
 
+Tags you apply in JupiterOne remain within JupiterOne and do not apply back to the source resources.
+
 ## Query Resources with Tags
 
 Use this example query:
