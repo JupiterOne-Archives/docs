@@ -8,39 +8,13 @@ You must have the Administrator permission to enable API key access.
 
 To enable API key access for a group of users:
 
-1. Go to **Settings ![](../assets/icons/gear.png) > Users & Access** ![users](../assets/icons/users.png).
+1. Go to **Settings ![](../assets/icons/gear.png) > User Groups**.
 2. Select the group for whom you want to enable API access.
-3. Select **API Key Management**.
+3. Scroll to the Permissions section and select **API Key Management**.
    ​
 
-![](../assets/api-key-access-group-enable1.png)
+![](../assets/api-permission.png)
 
-
-
-An API key icon appears in the My Profile view for each user in the group that has API key access. 
-
-
-
-![my-profile](../assets/my-profile-key.png) 
-
-
-
-## Create Account-Level API Keys
-
-You can manage user-level keys in the Account Management page. You must have administrator permissions to make changes to account-level API keys.
-
-To generate a new API key or manage existing API keys:
-
-1. Log in to the account you want to manage.
-2. Go to **Settings** ![](../assets/icons/gear.png) **>** **Account Management**.
-3. In the left panel, click the key icon.
-   ​
-   ![api_key_acct-mgmt](../assets/api_key_acct-mgmt.png) 
-   ​
-4. In the User API Keys page, click **Add** ![](../assets/icons/api-keys-plus.png).
-5. In the API Keys modal, enter the name of the key and the number of days before it expires, and click **Create**.
-
-To revoke an API key, in the User API Keys page, go to the key you want to revoke and click the trash icon ![trash](../assets/icons/trash.png).
 
 ## API Key Permissions Policy
 
