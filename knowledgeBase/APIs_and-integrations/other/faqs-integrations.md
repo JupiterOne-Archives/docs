@@ -12,6 +12,16 @@ The Person entities are “mapped” from `User` entities. They are considered "
 
 The `Person` entities represent actual individuals in the organizations, whereas the `User` entities are the logical user accounts within each digital environment/account (i.e. from an integration).
 
+## What is the difference between JupiterOne tags and source tags?
+
+When configuring a JupiterOne integration, you can add tags to simplify data management and queries. The two default tags you can add are `Production` and `AccountName`, and if you select one or both tags, they are added to all entities of the integration instance during ingestion. 
+
+![](../../assets/integrations-tags.png)
+
+You can also ![manually add or edit entity tags](../../asset-management/asset-properties.md) in the JupiterOne Assets UI or by using the ![JupiterOne API](../../APIs/jupiterone-api.md).
+
+These tags exist in JupiterOne only and are not applied back to the source resources. You can query them just like tags from the source within JupiterOne.
+
 ## How are `Person` entities (i.e. `employees`) created?
 
 A `Person` entity is created by the "mapper" process -- when a `User` entity is ingested/updated from an identity provider integration (e.g. Okta, OneLogin, Google), a `Person` entity is "mapped" with the user's information (first and last name, email address, etc.).
