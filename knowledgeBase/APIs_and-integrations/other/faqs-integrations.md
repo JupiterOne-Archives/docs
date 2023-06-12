@@ -18,7 +18,7 @@ When configuring a JupiterOne integration, you can add tags to simplify data man
 
 ![](../../assets/integrations-tags.png)
 
-You can also ![manually add or edit entity tags](../../asset-management/asset-properties.md) in the JupiterOne Assets UI or by using the ![JupiterOne API](../../APIs/jupiterone-api.md).
+You can also [manually add or edit entity tags](../../asset-management/asset-properties.md) in the JupiterOne Assets UI or by using the [JupiterOne API](../../APIs/jupiterone-api.md).
 
 These tags exist in JupiterOne only and are not applied back to the source resources. You can query them just like tags from the source within JupiterOne.
 
