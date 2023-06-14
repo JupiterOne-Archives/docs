@@ -67,9 +67,9 @@ Most Entities will have the following common properties:
 
 #### Findings Severity Data Normalization
 
-When JupiterOne ingests data from an integration, it uses the property `j1_severity` to normalize most of the severity ratings of findings that are present in the ingested data. Normalizing the data simplifies searches and queries that apply to vendors with properties or values that are semantically equivalent but with different names and values. For example, vendor1_severity and vendor2_severity properties would be normalized to be j1_severity. Not all findings data has a severity rating. In that case, JupiterOne does not provide the `j1_severity`for those findings.
+When JupiterOne ingests data from an integration or an API, it uses the property `j1_severity` to normalize most of the severity ratings of findings that are present in the ingested data. Normalizing the data simplifies searches and queries that apply to vendors with properties or values that are semantically equivalent but with different names and values. For example, vendor1_severity and vendor2_severity properties would be normalized to be j1_severity. Not all findings data has a severity rating. In that case, JupiterOne does not provide the `j1_severity`for those findings.
 
-Example queries:
+**Example queries**:
 
 `find Finding with [j1_severity] = "high"` 
 This query returns a list of all findings with a normalized severity of “high”.
