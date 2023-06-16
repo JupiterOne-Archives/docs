@@ -2,17 +2,11 @@
 
 Ask J1 AI is an application powered by ChatGPT to answer your questions about the JupiterOne platform that lives within your JupiterOne workspace. With Ask J1 AI, you can quickly find relevant information and get answers to your questions without having to search through lengthy documentation.
 
+> **Note** this feature is currently in beta. If you'd like access to this feature, please contact your Customer Success representative. 
+
 ## Data usage disclosure
 
 Ask J1 AI only uses information from JupiterOne’s app documentation and blogs combined with general knowledge from OpenAI’s ChatGPT model to answer questions. **It does not have access to any sensitive or customer-specific data.**
-
-## Accessing the interface
-
-The Ask J1 search bar can be found under the **Resources** section (the question icon) of the JupiterOne dashboard in the upper right-hand corner, and select **Ask J1 AI**.
-
-![](../assets/askj1-ai-resource-icon.png)
-
-A new window will appear with a search bar for you to provide questions directly to Ask J1 AI. 
 
 ## Using Ask J1 AI
 
