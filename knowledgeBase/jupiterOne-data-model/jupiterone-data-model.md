@@ -65,6 +65,18 @@ Most Entities will have the following common properties:
 </details>
 <!--END Common Entity Properties table-->
 
+#### Findings Severity Data Normalization
+
+When JupiterOne ingests data from an integration or an API, it uses the property `j1_severity` to normalize most of the severity ratings of findings that are present in the ingested data. Normalizing the data simplifies searches and queries that apply to vendors with properties or values that are semantically equivalent but with different names and values. For example, vendor1_severity and vendor2_severity properties would be normalized to be j1_severity. Not all findings data has a severity rating. In that case, JupiterOne does not provide the `j1_severity`for those findings.
+
+**Example queries**:
+
+`find Finding with [j1_severity] = "high"` 
+This query returns a list of all findings with a normalized severity of “high”.
+
+`find Finding with [j1_severity] != undefined as f RETURN f.[j1_severity], count (f)` 
+This query returns a count of all findings in JupiterOne grouped by `j1_severity`.
+
 ### Class Specific Entity Properties
 
 Each specific class of Entity also has its own defined properties. For example, a `Person` entity will have properties including `firstName` and `lastName`, while a `Device` entity may have properties such as `hardwareVendor`, `hardwareModel`, and `hardwareSerial`.
