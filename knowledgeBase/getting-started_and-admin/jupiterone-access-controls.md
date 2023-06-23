@@ -53,7 +53,7 @@ Some of these permissions are needed for an app to function fully. For example, 
 
 ### App Level Permissions
 
-**App level permissions** such as for J1 Alerts and J1 Assets apply to the application pages shown primarily on the app switcher. However, a few other categories have been added including Integrations and Endpoint Compliance Agent despite their not strictly be apps, they function as one and it is easy to group their responsibilities together.
+**App level permissions** such as for JupiterOne Alerts and JupiterOne Assets apply to the application pages. However, a few other categories have been added including Integrations and Endpoint Compliance Agent despite their not strictly be apps, they function as one and it is easy to group their responsibilities together.
 
 Admin permissions for each app allows certain administrative actions unique to each app. For example, add a new standard/questionnaire in JupiterOne Compliance, and save a board layout as default in JupiterOne Insights. Certain actions also require shared permissions to global resources to be enabled.
 
