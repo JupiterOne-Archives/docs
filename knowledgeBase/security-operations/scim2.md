@@ -15,7 +15,7 @@ With SCIM 2.0 support, you can keep JupiterOne in sync with your identity provid
 ## Setting Up SCIM with Okta in JupiterOne
 First, confirm that your IdP supports SCIM 2.0 protocol. JupiterOne does not support SCIM 1.0. 
 
-[SAML SSO](knowledgeBase/APIs_and-integrations/identity_and-access-management/configure-sso-integration.md) is required before setting up SCIM. Follow these steps to enable SP-initiated SSO.
+[SAML SSO](knowledgeBase/APIs_and-integrations/identity_and-access-management/configure-sso-integration.md) is required before setting up SCIM.
 
 JupiterOne SCIM supports authentication via API bearer token. J1 does not support basic auth or OAuth with SCIM. 
  
@@ -23,14 +23,13 @@ JupiterOne SCIM supports authentication via API bearer token. J1 does not suppor
 Login to JupiterOne as an administrator and [generate an Account API token](knowledgeBase/APIs/api-key-access.md) with Administrator privileges. 
 
 > Note: the max Time To Live for an API token is 365 days
+
 The endpoint URL for JupiterOne SCIM is: `https://api.us.jupiterone.io/iam/scim/v2`.
 
 #### In the Identity Provider
 Once confirming support of SCIM 2.0 by your IdP, follow their SCIM setup instructions. 
 
-:::note
-NOTE: JupiterOne’s support of SCIM allows for Create/Read/Update/Delete actions from the Identity Provider (IdP) to JupiterOne. JuptierOne’s support of SCIM does not permit the reverse action of Create/Read/Update/Delete from JupiterOne to the Identity Provider.
-:::
+> Note: JupiterOne’s support of SCIM allows for Create/Read/Update/Delete actions from the Identity Provider (IdP) to JupiterOne. JuptierOne’s support of SCIM does not permit the reverse action of Create/Read/Update/Delete from JupiterOne to the Identity Provider.
 
 ### Example: JupiterOne SCIM support through Okta
 
