@@ -29,7 +29,7 @@ The endpoint URL for JupiterOne SCIM is: `https://api.us.jupiterone.io/iam/scim/
 #### In the Identity Provider
 Once confirming support of SCIM 2.0 by your IdP, follow their SCIM setup instructions. 
 
-> Note: JupiterOne’s support of SCIM allows for Create/Read/Update/Delete actions from the Identity Provider (IdP) to JupiterOne. JuptierOne’s support of SCIM does not permit the reverse action of Create/Read/Update/Delete from JupiterOne to the Identity Provider.
+> Note: JupiterOne’s support of SCIM allows for Create/Read/Update/Delete actions from the Identity Provider (IdP) to JupiterOne. JupiterOne’s support of SCIM does not permit the reverse action of Create/Read/Update/Delete from JupiterOne to the Identity Provider.
 
 ### Example: JupiterOne SCIM support through Okta
 

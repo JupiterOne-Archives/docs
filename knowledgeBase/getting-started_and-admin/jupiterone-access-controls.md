@@ -48,8 +48,6 @@ J1 enables queries on data that meet ALL of the filters in the permission set. I
 
 
 
-
-
 If you want to set up queries based on sets of filters that you want to then link by OR logic, create separate permission sets.
 
 ### App Permissions
@@ -151,3 +149,48 @@ For a group of users focused on compliance and audit processes, the integrations
 For a group where configuration of integrated services is necessary, the recommended **App Permissions** for this group include Admin access to _Integrations_. In cases were _Endpoint Compliance_ is used, _Admin_ access is necessary for this **App Permission** as well. The minimum **Query Permission Set**, `_class`:`Root`, is recommended for this group, but may be necessary to expand in special cases.
 
 It may be necessary to expand access for this group in cases where SAML and SSO configuration must be configured.
+
+### Creating custom groups
+
+In addition to the preset groups provided by JupiterOne, JupiterOne admins have the ability to create additional groups within the JupiterOne workspace. This provides the ability to configure groups with granular permissions as desired.
+
+![Create and edit user groups within JupiterOne](../../knowledgeBase/assets/group-create-edit.png)
+
+You can view and edit user groups from the User Groups setting
+
+**To create a custom group**: 
+1. Navigate to the **Settings** menu (the cog icon next to notifications).
+2. Click on **User Groups** in the **Admin** section. 
+3. From the new window select **New Group**.
+4. Enter the desired **Group Name** and **Group Description**, and click **Create Group**.
+5. You will be navigated to the Group's **Details** page. From here, you can customize the following:
+  - **Query Policies** for the User Group
+  - User Group **Permissions**
+  6. Lastly, to add users to the group, navigate to the Group Members tab and select **Add Member**.
+
+#### Editing User Groups
+
+Existing user groups can also be edited, and you can make changes to any of the options found under the Details tab and you can also add/remove members from the Group Members tab."
+
+**To edit a user group**:
+1. Navigate to **Settings > User Groups**.
+2. Select the user group from the menu that you wish to edit. 
+3. Make your desired changes in the Details and/or Group Members sections. Press **Save**. 
+
+> **NOTE**: Changes made to members are saved immediately, only changes made to the user group's details section will need to be manually saved with the Save button. You can also revert accidental changes to a user group by pressing **Reset**.
+
+#### Delete a User Group
+
+You can also delete an existing user group by navigating to that user group and selecting **Delete** at the top right of the window.
+
+### Switching User Group views
+
+With the ability to create custom user groups, it is possible for a user to be in more than one group at a time. You are able to switch between each group and their respective views/permissions.
+
+![Choosing user permission group in JupiterOne](../../knowledgeBase/assets/role-based-changes.png)
+
+**To switch between user groups**:
+1. Select the profile icon from the JupiterOne dashboard.
+2. Choose the group listed under **Permission by group**, choose the desired group for which you'd like to utilize.
+
+> **NOTE**: All Permissions will allow for all available permissions across groups that a user belongs to. Permissions across groups are in a sense 'rounded up'. For example, if a user is part of the Administrator group, their edit access from that group would override view permissions in any other group they may be a part of while `All permissions` is selected. To swap to the read-only view, they would need to choose a particular group.
