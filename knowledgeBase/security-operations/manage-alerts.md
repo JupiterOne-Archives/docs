@@ -83,7 +83,8 @@ J1 provides the ability to trigger the following actions when the query evaluati
   - Issue Type: type of issue you want the Jira ticket to be, such as task or bug.
   - Entity Class: (mandatory field) the class of the new ticket entity that you want to assign to the ticket, such as vulnerability or policy.
   - Integrations Instance: select the Jira instance from the dropdown menu.
-  - Additional Fields: you can add any other of the Jira ticket fields if you want to return that information. 
+  - Additional Fields: you can add any other of the Jira ticket fields if you want to return that information.
+  - Auto-Resolve: Automatically closes Jira tickets when there are no more results that match the alert rule. For example, whenever the rule goes from zero results to >0 results, JupiterOne will open a new Jira ticket. Whenever the query returns an empty result set, the previously opened ticket will be marked as **Resolved** via the Jira integration. Note: this will not close any Jira tickets upon alert dismissal 
 
   Read more about the [J1 alert rule schema](../APIs/alert-rule-schema.md).
   
