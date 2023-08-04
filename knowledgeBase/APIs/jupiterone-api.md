@@ -585,11 +585,13 @@ Example result
 
 ## Validate and Optimize Queries
 
-You can use the validate and optimize j1ql endpoints to validate and/or optimize your queries.
+The validate and optimize j1ql endpoints are used to validate and/or optimize j1ql queries.
 
 ### Validate queries
 
 The validate endpoint takes in an array of queries sent as a json object in the request body. It returns an array of objects containing the query and a boolean flag indicating whether the query is valid or not.
+
+### Sample request
 
 ```text
 POST /j1ql/validate
@@ -616,7 +618,7 @@ POST /j1ql/validate
 
 ### Optimize queries
 
-The optimize endpoint validates and optimizes a query. It takes in an array of queries and return an array of objects containing the original query, the optimized query, and a list of optimizations that are suggested, and a valid boolean flag indicating whether the query is valid or not.  
+The optimize endpoint validates and optimizes a query. It takes in an array of queries and return an array of objects containing the original query, the optimized query, a list of optimizations that are suggested, and a valid boolean flag indicating whether the query is valid or not.  
 
 #### Sample request
 
