@@ -2,20 +2,20 @@
 
 You can use Postman with the JupiterOne API to [import and export data](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/). [Examples of requests](./api-postman.md) you can make after you have exported your J1 data such as saved queries to Postman are available.
 
-The JupiterOne platform exposes a number of public GraphQL endpoints. 
+The JupiterOne platform exposes a number of public GraphQL endpoints.
 
 **Base URL**: `https://graphql.us.jupiterone.io`
 
 - For query and graph operations
 - For alerts and rules operations
 
-**Rate Limits**: Rate limiting is enforced based on your account tier: 
+**Rate Limits**: Rate limiting is enforced based on your account tier:
 
 - Free: 10/min, no burst
 - Freemium: 30/min, no burst
 - Enterprise: 30-60/min with burst
 
-A `429` HTTP response code indicates the limit has been reached. 
+A `429` HTTP response code indicates the limit has been reached.
 
 **Authentication**: The JupiterOne APIs use a Bearer Token to authenticate. Include the API key in the header as a Bearer Token. You also need to include `JupiterOne-Account` as a header parameter. You can find the `Jupiterone-Account` value in your account by running the following J1QL query:
 
@@ -39,6 +39,7 @@ curl --location --request POST 'https://graphql.us.jupiterone.io' \
 }
 EOF
 ```
+
 **Example cURL command using Bash**
 
 ````bash
@@ -84,13 +85,7 @@ curl --location --request POST 'https://graphql.api.us.jupiterone.io' \
 EOF
 ````
 
-
-
-
-
 An experimental [node.js client and CLI](https://github.com/JupiterOne/jupiterone-client-nodejs) is available on Github.
-
-
 
 ## Entity and Relationship Queries
 
@@ -109,8 +104,8 @@ Optionally, additional parameters can be provided:
 - `flags`:
   - `computedProperties`: When set to `true`, vertices will be tagged with additional information to indicate if there are noteworthy traits that are worth surfacing.
   - `rowMetadata`: When set to `true`, table results will return metadata about the requested objects under a `_meta` property.
-  - `variableResultSize`: When set to `true` the API will return the largest result size possible. Without this flag, the result size will be limited to 250 rows. This flag is recommended for use in cases where a larger result size is preferable and an indeterminate/variable number of return results is acceptable. 
-- `scopeFilters`: An array of `JSON` map of filters that define the desired vertex. They have precedence over filters supplied in the query.   
+  - `variableResultSize`: When set to `true` the API will return the largest result size possible. Without this flag, the result size will be limited to 250 rows. This flag is recommended for use in cases where a larger result size is preferable and an indeterminate/variable number of return results is acceptable.
+- `scopeFilters`: An array of `JSON` map of filters that define the desired vertex. They have precedence over filters supplied in the query.
 
 **Note:**
 `variableResultSize` can increase the rate of your pagination flow because the API will return the largest number of rows possible per request. The exact number of rows returned will not always be the same, but will be larger than the default -- hence the name, _variable_ result size.
@@ -588,6 +583,73 @@ Example result
 }
 ```
 
+## Validate and Optimize Queries
+
+You can use the validate and optimize j1ql endpoints to validate and/or optimize your queries.
+
+### Validate queries
+
+The validate endpoint takes in an array of queries sent as a json object in the request body. It returns an array of objects containing the query and a boolean flag indicating whether the query is valid or not.
+
+```text
+POST /j1ql/validate
+```
+
+```json
+{
+    "queries": [
+        "Find Person as p that relates to User"
+    ]
+}
+```
+
+#### Sample response
+
+```json
+[
+    {
+        "query": "Find Person as p that relates to User",
+        "valid": true
+    }
+]
+```
+
+### Optimize queries
+
+The optimize endpoint takes in an array of queries and return an array of objects containing the original query, the optimized query with auto applied queries, the list of optimizations that were auto-applied and suggested optimizations that the user can apply, and a valid boolean flag indicating whether the query is valid or not.
+
+#### Sample request
+
+```text
+POST /j1ql/optimize
+```
+
+```json
+{
+    "queries": [
+        "Find Person as p that relates to User"
+    ]
+}
+```
+
+#### Sample response
+
+```json
+[
+    {
+        "valid": true,
+        "originalQuery": "FIND Person AS p\n  THAT RELATES TO User",
+        "optimizations": [
+            {
+                "name": "Add Relationship Direction(s) (Suggested)",
+                "description": "Many relationships can be made faster by supplying a direction. By querying the data catalog, we can supply a direction for relationships between known entity pairings where the relationship only goes in one direction."
+            }
+        ],
+        "optimizedQuery": "FIND Person AS p\n  THAT RELATES TO << User"
+    }
+]
+```
+
 ## Entity Mutations
 
 ### Create Entity
@@ -883,8 +945,6 @@ Variables:
 ```
 
 `hardDelete` is a flag that completely removes all information related to the relationship in a way that is not recoverable.
-
-
 
 ## Entity and Relationship Synchronization (Bulk Upload)
 
@@ -1674,7 +1734,6 @@ GET https://api.us.jupiterone.io/entities/${ENTITY_ID}/raw-data/${ENTRY_NAME}/ve
 
 ## Building CSV Report
 
-
 ```graphql
 mutation BuildCsv(
   $filters: VertexFilters
@@ -1707,7 +1766,6 @@ Variables:
 ```
 
 ## Alert and Rules Operations
-
 
 ### List alert rules
 
@@ -1757,9 +1815,11 @@ Variables:
     }
   }
 ```
+
 variables:
 
 Filtering for `ACTIVE` Alerts
+
 ```json
 {
   "alertStatus": "ACTIVE",
@@ -1767,6 +1827,7 @@ Filtering for `ACTIVE` Alerts
 ```
 
 Filtering for `INACTIVE` Alerts
+
 ```json
 {
   "alertStatus": "INACTIVE",
@@ -1774,6 +1835,7 @@ Filtering for `INACTIVE` Alerts
 ```
 
 Filtering for `DISMISSED` Alerts
+
 ```json
 {
   "alertStatus": "DISMISSED",
@@ -1781,6 +1843,7 @@ Filtering for `DISMISSED` Alerts
 ```
 
 To apply a limit to the number of results returned, pass a `limit` variable.
+
 ```json
 {
   "limit": 10
@@ -2136,7 +2199,6 @@ variables:
 
 ## Question Operations
 
-
 ### Create a Question
 
 ```graphql
@@ -2296,20 +2358,20 @@ variables:
   "id": "slj3098s03j-i2ojd0j2-sjkkdjf"
 }
 ```
-### Search for questions
 
+### Search for questions
 
 query:
 
 ```graphql
 query GetQuestions($searchQuery: String) {
-	questions (searchQuery: $searchQuery) {
-		questions {
-			id
-			name
-			description
-		}
-	}
+ questions (searchQuery: $searchQuery) {
+  questions {
+   id
+   name
+   description
+  }
+ }
 }
  ```
 
@@ -2320,19 +2382,20 @@ variables:
   "searchQuery": "encrypted"
 }
 ```
- 
-### Evaluate a question:
+
+### Evaluate a question
 
 query:
 
 ```graphql
 query EvaluateQuestion($id: ID!) {
-	evaluateQuestion (id: $id) {
-		answerText
-		outputs {name, value}
-	}
+ evaluateQuestion (id: $id) {
+  answerText
+  outputs {name, value}
+ }
 }
 ```
+
 variables:
 
 ```json
@@ -2546,6 +2609,7 @@ query testQuery (
 The `status` and `errorsOccurred` properties indicate the result of the job.
 
 #### job.status
+
 | Status                | Definition                                                                                                                     |
 |-----------------------|--------------------------------------------------------------------------------------------------------------------------------|
 | IN_PROGRESS           | The job is currently ingesting and processing the data retrieved from the source.                                              |
@@ -2554,8 +2618,8 @@ The `status` and `errorsOccurred` properties indicate the result of the job.
 | FAILED                | The job failed to ingest and/or process the data. No changes were made to the data within JupiterOne.                          |
 
 #### job.errorsOccurred
-During the execution of a job, if an error level job event is logged, the `errorsOccurred` boolean is set to true. A job with status `FAILED` or `COMPLETED_WITH_ERRORS` will always have `errorsOccurred` set to true.
 
+During the execution of a job, if an error level job event is logged, the `errorsOccurred` boolean is set to true. A job with status `FAILED` or `COMPLETED_WITH_ERRORS` will always have `errorsOccurred` set to true.
 
 ## Trigger an Integration Job via API
 
@@ -2644,6 +2708,7 @@ Body:
     }"
 }
 ```
+
 ## Additional API Examples
 
 **Creating entities and a relationship between them**
@@ -2731,7 +2796,7 @@ const relationship = await j1Client.mutate({
 ## IAM Operations
 
 **Note:**
-The IAM API only works for accounts configured with SSO. Email support@jupiterone.com to enable access to these APIs because J1 must verify your company domain name.
+The IAM API only works for accounts configured with SSO. Email <support@jupiterone.com> to enable access to these APIs because J1 must verify your company domain name.
 
 **Note:**
 `accessAdmin` permission is required for all IAM operations.
@@ -3011,10 +3076,6 @@ type JSON = {
 
 queryPolicy
 
-
-
-
-
 **abacPermissions**
 
 ABAC permissions define application access for members of a perticular group. Setting this property via the IAM API will **overwrite** any existing permissions for the given group. If updating this property, _always_ define the full list of `permissions` that should be granted.
@@ -3175,9 +3236,7 @@ Sample (S4): `createIamGroup`
 
 **Access All Actions and Resources**
 
-You can use an API token to access all actions and resources 
-
-
+You can use an API token to access all actions and resources
 
 ### Update IAM Group
 
@@ -3256,7 +3315,7 @@ type permission = string; // must be a valid permission string
 | _Integrations_           |  READ  |       `accessIntegrations` |
 | _Endpoint Compliance_    |  READ  | `accessEndpointCompliance` |
 
-**Permission Strings: ADMIN** 
+**Permission Strings: ADMIN**
 
 | DISPLAY NAME (J1 APP)    | ACCESS |                PERMISSION |
 | :----------------------- | :----: | ------------------------: |
