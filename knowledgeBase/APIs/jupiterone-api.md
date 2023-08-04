@@ -616,7 +616,7 @@ POST /j1ql/validate
 
 ### Optimize queries
 
-The optimize endpoint takes in an array of queries and return an array of objects containing the original query, the optimized query with auto applied queries, the list of optimizations that were auto-applied and suggested optimizations that the user can apply, and a valid boolean flag indicating whether the query is valid or not.
+The optimize endpoint optimizes and validates a query. It takes in an array of queries and return an array of objects containing the original query, the optimized query with auto-applied optimizations, the list of optimizations that were auto-applied and suggested optimizations that the user can apply, and a valid boolean flag indicating whether the query is valid or not.
 
 #### Sample request
 
