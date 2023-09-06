@@ -84,9 +84,9 @@ recommended that an Administrator or Owner install the application.
 
 NOTE: For detailed instructions on how to configure JupiterOne Alert Rules,
 please see the
-[JupiterOne Alert Rule configuration documentation](https://support.jupiterone.io/hc/en-us/articles/360022720474-6-9-Alerts-and-Alert-Rules).
+[JupiterOne Alert Rule configuration documentation](https://docs.jupiterone.io/features/insights-and-alerts/alerts).
 Additionally, see the
-[JupiterOne Alert Rule Schema documentation](https://support.jupiterone.io/hc/en-us/articles/360039711354-Alert-Rule-Schema)
+[JupiterOne Alert Rule Schema documentation](https://docs.jupiterone.io/api/data-model/alert-rule-schema#configuring-a-rule)
 for technical details on alert rule/action properties.
 
 JupiterOne can deliver Slack messages directly to any channel or to specific
